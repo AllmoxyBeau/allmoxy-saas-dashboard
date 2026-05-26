@@ -3,9 +3,9 @@
 // ("MySQL Import / Last updated just now"), Row 2 is the real header.
 
 import fs from 'node:fs';
-import * as XLSX from '/Users/beaulewis/Documents/Claude/Projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
 
-const FILE = '/Users/beaulewis/Documents/Claude/Projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
+const FILE = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
 const wb = XLSX.read(fs.readFileSync(FILE), { type: 'buffer' });
 const sheet = wb.Sheets['allmoxy_core_customer'];
 

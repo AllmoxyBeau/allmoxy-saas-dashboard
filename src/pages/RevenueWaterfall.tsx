@@ -15,11 +15,14 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import Collapse from '@mui/material/Collapse';
 import { ResponsiveContainer, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, ReferenceLine, Line, ComposedChart } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
+import CsvExportButton from '../components/common/CsvExportButton';
+import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type NewDetail = { name: string; mrr: number };
@@ -27,6 +30,7 @@ type ChurnDetail = { name: string; mrr: number };
 type ChangeDetail = { name: string; prev_mrr: number; new_mrr: number; delta: number };
 type MonthlyDetails = {
   new: NewDetail[];
+  reactivated?: NewDetail[];
   expansion: ChangeDetail[];
   contraction: ChangeDetail[];
   churn: ChurnDetail[];
@@ -36,12 +40,14 @@ type MonthlyRow = {
   month: string;
   starting_mrr: number;
   new_mrr: number;
+  reactivated_mrr?: number;
   expansion_mrr: number;
   contraction_mrr: number;
   churn_mrr: number;
   ending_mrr: number;
   net_new_mrr: number;
   new_logos: number;
+  reactivated_logos?: number;
   churned_logos: number;
   gross_churn_rate_monthly: number | null;
   net_churn_rate_monthly: number | null;
@@ -52,7 +58,7 @@ type MonthlyRow = {
   details: MonthlyDetails;
 };
 
-type DrillCategory = 'new' | 'expansion' | 'contraction' | 'churn';
+type DrillCategory = 'new' | 'reactivated' | 'expansion' | 'contraction' | 'churn';
 
 type WaterfallSnapshot = {
   monthly: MonthlyRow[];
@@ -62,6 +68,7 @@ type WaterfallSnapshot = {
     starting_mrr: number;
     ending_mrr: number;
     new_mrr: number;
+    reactivated_mrr?: number;
     expansion_mrr: number;
     contraction_mrr: number;
     churn_mrr: number;
@@ -117,13 +124,20 @@ function quickRatioColor(v: number | null): 'success.main' | 'warning.main' | 'e
 }
 
 export default function RevenueWaterfall() {
-  const { data, isLoading, error } = useSheetTab('mrr_waterfall');
-  const snap = data as unknown as WaterfallSnapshot | undefined;
+  const [source, setSource] = useState<'qb' | 'txns'>('qb');
+  const { data: qbData, isLoading: qbLoading, error: qbError } = useSheetTab('mrr_waterfall');
+  const { data: txnData, isLoading: txnLoading, error: txnError } = useSheetTab('mrr_waterfall_txns');
+  const qbSnap = qbData as unknown as WaterfallSnapshot | undefined;
+  const txnSnap = txnData as unknown as WaterfallSnapshot | undefined;
+  const snap = source === 'txns' ? txnSnap : qbSnap;
+  const isLoading = source === 'txns' ? txnLoading : qbLoading;
+  const error = source === 'txns' ? txnError : qbError;
 
   const [preset, setPreset] = useState<Preset>('12M');
   const [fromMonth, setFromMonth] = useState<string>('');
   const [toMonth, setToMonth] = useState<string>('');
   const [headerWindow, setHeaderWindow] = useState<'3M' | '6M' | '12M'>('12M');
+  const monthlyTable = useCollapse(true);
   const [drill, setDrill] = useState<{ month: string; category: DrillCategory } | null>(null);
 
   function openDrill(month: string, category: DrillCategory) {
@@ -174,13 +188,14 @@ export default function RevenueWaterfall() {
     if (rows.length === 0) return null;
     const starting = rows[0].starting_mrr;
     const ending = rows[rows.length - 1].ending_mrr;
-    const sum = (k: 'new_mrr' | 'expansion_mrr' | 'contraction_mrr' | 'churn_mrr') =>
-      rows.reduce((a, r) => a + (r[k] ?? 0), 0);
+    const sum = (k: 'new_mrr' | 'reactivated_mrr' | 'expansion_mrr' | 'contraction_mrr' | 'churn_mrr') =>
+      rows.reduce((a, r) => a + ((r as MonthlyRow)[k] ?? 0), 0);
     const new_mrr = sum('new_mrr');
+    const reactivated = sum('reactivated_mrr');
     const expansion = sum('expansion_mrr');
     const contraction = sum('contraction_mrr');
     const churn = sum('churn_mrr');
-    const net_new = new_mrr + expansion - contraction - churn;
+    const net_new = new_mrr + reactivated + expansion - contraction - churn;
     const windowGrr = starting > 0 ? (starting - churn - contraction) / starting : null;
     const windowNrr = starting > 0 ? (starting - churn - contraction + expansion) / starting : null;
     const windowGrossChurn = starting > 0 ? churn / starting : null;
@@ -190,7 +205,7 @@ export default function RevenueWaterfall() {
     const annual_nrr = annualize(windowNrr);
     const annual_gross_churn_rate =
       windowGrossChurn == null ? null : 1 - Math.pow(Math.max(1 - windowGrossChurn, 0), exp);
-    const quick_ratio = churn + contraction > 0 ? (new_mrr + expansion) / (churn + contraction) : null;
+    const quick_ratio = churn + contraction > 0 ? (new_mrr + reactivated + expansion) / (churn + contraction) : null;
     return {
       windowStart: rows[0].month,
       windowEnd: rows[rows.length - 1].month,
@@ -198,6 +213,7 @@ export default function RevenueWaterfall() {
       starting_mrr: starting,
       ending_mrr: ending,
       new_mrr,
+      reactivated_mrr: reactivated,
       expansion_mrr: expansion,
       contraction_mrr: contraction,
       churn_mrr: churn,
@@ -226,22 +242,34 @@ export default function RevenueWaterfall() {
       <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={1} sx={{ mb: 2 }}>
         {headerStats ? (
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            {headerWindow} window: {monthLabelLong(headerStats.windowStart)} – {monthLabelLong(headerStats.windowEnd)} · rates annualized for comparability
+            {headerWindow} window: {monthLabelLong(headerStats.windowStart)} – {monthLabelLong(headerStats.windowEnd)} · rates annualized for comparability · source: {source === 'txns' ? 'Stripe transactions' : 'QuickBooks MRR by Month'}
           </Typography>
         ) : (
           <span />
         )}
-        <ToggleButtonGroup
-          size="small"
-          exclusive
-          value={headerWindow}
-          onChange={(_, v) => v && setHeaderWindow(v as '3M' | '6M' | '12M')}
-          sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
-        >
-          <ToggleButton value="3M">Trailing 3M</ToggleButton>
-          <ToggleButton value="6M">Trailing 6M</ToggleButton>
-          <ToggleButton value="12M">Trailing 12M</ToggleButton>
-        </ToggleButtonGroup>
+        <Stack direction="row" spacing={1}>
+          <ToggleButtonGroup
+            size="small"
+            exclusive
+            value={source}
+            onChange={(_, v) => v && setSource(v as 'qb' | 'txns')}
+            sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
+          >
+            <ToggleButton value="qb" title="QuickBooks-derived MRR by Month tab (current source of truth)">QB</ToggleButton>
+            <ToggleButton value="txns" title="Built directly from Stripe Sync transactions, post-overrides">Stripe txns</ToggleButton>
+          </ToggleButtonGroup>
+          <ToggleButtonGroup
+            size="small"
+            exclusive
+            value={headerWindow}
+            onChange={(_, v) => v && setHeaderWindow(v as '3M' | '6M' | '12M')}
+            sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
+          >
+            <ToggleButton value="3M">Trailing 3M</ToggleButton>
+            <ToggleButton value="6M">Trailing 6M</ToggleButton>
+            <ToggleButton value="12M">Trailing 12M</ToggleButton>
+          </ToggleButtonGroup>
+        </Stack>
       </Stack>
 
       {/* Header cards — annualized for whichever window is selected */}
@@ -368,11 +396,12 @@ export default function RevenueWaterfall() {
                 <ReferenceLine y={0} stroke="#8B949E" />
                 <RTooltip
                   labelFormatter={(v) => monthLabelLong(String(v))}
-                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
                   formatter={(v: number, name: string) => {
                     const absVal = Math.abs(v);
                     const labels: Record<string, string> = {
                       new_mrr: 'New',
+                      reactivated_mrr: 'Reactivated',
                       expansion_mrr: 'Expansion',
                       neg_contraction: 'Contraction',
                       neg_churn: 'Churn',
@@ -382,6 +411,7 @@ export default function RevenueWaterfall() {
                   }}
                 />
                 <Bar dataKey="new_mrr" stackId="movement" fill="#1A9E5C" name="new_mrr" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'new')} />
+                <Bar dataKey="reactivated_mrr" stackId="movement" fill="#9F7AEA" name="reactivated_mrr" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'reactivated')} />
                 <Bar dataKey="expansion_mrr" stackId="movement" fill="#2C73FF" name="expansion_mrr" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'expansion')} />
                 <Bar dataKey="neg_contraction" stackId="movement" fill="#F59E0B" name="neg_contraction" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'contraction')} />
                 <Bar dataKey="neg_churn" stackId="movement" fill="#DA3633" name="neg_churn" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'churn')} />
@@ -392,6 +422,7 @@ export default function RevenueWaterfall() {
         )}
         <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
           <LegendSwatch color="#1A9E5C" label="New MRR" />
+          <LegendSwatch color="#9F7AEA" label="Reactivated" />
           <LegendSwatch color="#2C73FF" label="Expansion" />
           <LegendSwatch color="#F59E0B" label="Contraction" />
           <LegendSwatch color="#DA3633" label="Churn" />
@@ -399,14 +430,43 @@ export default function RevenueWaterfall() {
         </Stack>
       </Paper>
 
-      {/* Month-by-month table */}
+      {/* Month-by-month table — uses the same date filter as the chart above. Newest first. */}
       <Paper sx={{ p: 3 }}>
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-          <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-            Month-by-month detail · latest 12 complete months
-          </Typography>
-          <InfoIcon info={<><strong>What it is:</strong> The waterfall in table form, with NRR and Quick Ratio computed for each month.<br /><br /><strong>Data:</strong> Same source as the chart above (per-customer MRR deltas from the MRR by Month tab). NRR = (Starting − Churn − Contraction + Expansion) ÷ Starting. Quick = (New + Expansion) ÷ (Contraction + Churn).<br /><br /><strong>Click any dollar cell</strong> (New / Exp / Contr / Churn) to drill into the customers that drove it.</>} />
+        <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" sx={{ mb: monthlyTable.open ? 2 : 0 }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <CollapseToggle open={monthlyTable.open} onToggle={monthlyTable.toggle} label="month-by-month detail" />
+            <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+              Month-by-month detail
+              {fromMonth && toMonth ? ` · ${monthLabelLong(fromMonth)} → ${monthLabelLong(toMonth)} (${visible.length} months)` : ''}
+            </Typography>
+            <InfoIcon info={<><strong>What it is:</strong> The waterfall in table form, with NRR and Quick Ratio computed for each month. Range matches the chart filter above — change the preset / custom dates to expand or narrow the view. Sorted newest first.<br /><br /><strong>Data:</strong> Same source as the chart above (per-customer MRR deltas from the MRR by Month tab). NRR = (Starting − Churn − Contraction + Expansion) ÷ Starting. Quick = (New + Expansion) ÷ (Contraction + Churn).<br /><br /><strong>Click any dollar cell</strong> (New / Reactiv. / Exp / Contr / Churn) to drill into the customers that drove it.</>} />
+          </Stack>
+          {snap && (
+            <CsvExportButton
+              filename={`revenue_waterfall_${fromMonth ?? ''}_to_${toMonth ?? ''}`}
+              columns={[
+                { key: 'month', label: 'Month' },
+                { key: 'starting_mrr', label: 'Starting MRR' },
+                { key: 'new_mrr', label: 'New MRR' },
+                { key: 'reactivated_mrr', label: 'Reactivated MRR', getValue: (r) => r.reactivated_mrr ?? 0 },
+                { key: 'expansion_mrr', label: 'Expansion MRR' },
+                { key: 'contraction_mrr', label: 'Contraction MRR' },
+                { key: 'churn_mrr', label: 'Churn MRR' },
+                { key: 'net_new_mrr', label: 'Net new MRR' },
+                { key: 'ending_mrr', label: 'Ending MRR' },
+                { key: 'new_logos', label: 'New logos' },
+                { key: 'reactivated_logos', label: 'Reactivated logos', getValue: (r) => r.reactivated_logos ?? 0 },
+                { key: 'churned_logos', label: 'Churned logos' },
+                { key: 'gross_churn_rate_monthly', label: 'Gross churn (mo)' },
+                { key: 'nrr_monthly', label: 'NRR (mo)' },
+                { key: 'grr_monthly', label: 'GRR (mo)' },
+                { key: 'quick_ratio', label: 'Quick ratio' },
+              ]}
+              rows={snap.monthly.filter((r) => fromMonth && toMonth && r.month >= fromMonth && r.month <= toMonth).slice().reverse()}
+            />
+          )}
         </Stack>
+        <Collapse in={monthlyTable.open} unmountOnExit>
         {isLoading || !snap ? (
           <Skeleton variant="rectangular" height={400} />
         ) : (
@@ -416,6 +476,7 @@ export default function RevenueWaterfall() {
                 <TableCell>Month</TableCell>
                 <TableCell align="right">Starting</TableCell>
                 <TableCell align="right">+ New</TableCell>
+                <TableCell align="right">+ Reactiv.</TableCell>
                 <TableCell align="right">+ Exp.</TableCell>
                 <TableCell align="right">− Contr.</TableCell>
                 <TableCell align="right">− Churn</TableCell>
@@ -426,7 +487,11 @@ export default function RevenueWaterfall() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {snap.monthly.slice(-12).map((r) => {
+              {snap.monthly
+                .filter((r) => fromMonth && toMonth && r.month >= fromMonth && r.month <= toMonth)
+                .slice()
+                .reverse()
+                .map((r) => {
                 const hoverCell = { cursor: 'pointer', '&:hover': { bgcolor: 'rgba(44, 115, 255, 0.08)' } } as const;
                 return (
                   <TableRow key={r.month}>
@@ -436,6 +501,9 @@ export default function RevenueWaterfall() {
                     </TableCell>
                     <TableCell align="right" sx={{ color: 'success.main', ...hoverCell }} onClick={() => openDrill(r.month, 'new')}>
                       {USD0.format(r.new_mrr)}
+                    </TableCell>
+                    <TableCell align="right" sx={{ color: '#9F7AEA', ...hoverCell }} onClick={() => openDrill(r.month, 'reactivated')}>
+                      {USD0.format(r.reactivated_mrr ?? 0)}
                     </TableCell>
                     <TableCell align="right" sx={{ color: 'primary.main', ...hoverCell }} onClick={() => openDrill(r.month, 'expansion')}>
                       {USD0.format(r.expansion_mrr)}
@@ -465,6 +533,7 @@ export default function RevenueWaterfall() {
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1, fontStyle: 'italic' }}>
           Click any New / Expansion / Contraction / Churn value (in the table or chart) to see the contributing customers.
         </Typography>
+        </Collapse>
       </Paper>
 
       {drill && snap && (() => {
@@ -473,31 +542,38 @@ export default function RevenueWaterfall() {
         const { category, month } = drill;
         const title =
           category === 'new' ? 'New MRR'
+          : category === 'reactivated' ? 'Reactivated MRR'
           : category === 'expansion' ? 'Expansion MRR'
           : category === 'contraction' ? 'Contraction MRR'
           : 'Churn MRR';
         const total =
           category === 'new' ? row.new_mrr
+          : category === 'reactivated' ? (row.reactivated_mrr ?? 0)
           : category === 'expansion' ? row.expansion_mrr
           : category === 'contraction' ? row.contraction_mrr
           : row.churn_mrr;
         const accent =
           category === 'new' ? 'rgba(26, 158, 92, 0.5)'
+          : category === 'reactivated' ? 'rgba(159, 122, 234, 0.5)'
           : category === 'expansion' ? 'rgba(44, 115, 255, 0.5)'
           : category === 'contraction' ? 'rgba(245, 158, 11, 0.5)'
           : 'rgba(218, 54, 51, 0.5)';
         const count =
           category === 'new' ? row.details.new.length
+          : category === 'reactivated' ? (row.details.reactivated?.length ?? 0)
           : category === 'expansion' ? row.details.expansion.length
           : category === 'contraction' ? row.details.contraction.length
           : row.details.churn.length;
         const subtitle = `${category === 'contraction' || category === 'churn' ? '−' : '+'}${USD0.format(total)} across ${count} customer${count === 1 ? '' : 's'} · click to reconcile against the sheet`;
 
-        if (category === 'new' || category === 'churn') {
-          const rows = category === 'new' ? row.details.new : row.details.churn;
+        if (category === 'new' || category === 'reactivated' || category === 'churn') {
+          const rows =
+            category === 'new' ? row.details.new
+            : category === 'reactivated' ? (row.details.reactivated ?? [])
+            : row.details.churn;
           const columns: DrillColumn<NewDetail | ChurnDetail>[] = [
             { key: 'name', label: 'Customer' },
-            { key: 'mrr', label: category === 'new' ? 'MRR added' : 'MRR lost', align: 'right', render: (r) => USD0.format(r.mrr) },
+            { key: 'mrr', label: category === 'churn' ? 'MRR lost' : 'MRR added', align: 'right', render: (r) => USD0.format(r.mrr) },
             {
               key: 'pct',
               label: `% of ${title}`,
@@ -545,6 +621,8 @@ export default function RevenueWaterfall() {
           />
         );
       })()}
+
+      <ReconcilePanel qb={qbSnap} txn={txnSnap} fromMonth={fromMonth} toMonth={toMonth} />
     </Box>
   );
 }
@@ -594,5 +672,96 @@ function LegendSwatch({ color, label }: { color: string; label: string }) {
         {label}
       </Typography>
     </Stack>
+  );
+}
+
+// Side-by-side reconciliation between QB-driven and transaction-driven waterfalls.
+// Lists every visible month with its ending_mrr from each source plus the delta —
+// quick way to spot months where the two pipelines disagree (often points to an
+// override that's needed or stale).
+function ReconcilePanel({
+  qb, txn, fromMonth, toMonth,
+}: {
+  qb: WaterfallSnapshot | undefined;
+  txn: WaterfallSnapshot | undefined;
+  fromMonth: string;
+  toMonth: string;
+}) {
+  if (!qb || !txn || !fromMonth || !toMonth) return null;
+  const qbByMonth = new Map(qb.monthly.map((r) => [r.month, r]));
+  const txnByMonth = new Map(txn.monthly.map((r) => [r.month, r]));
+  const months = qb.monthly
+    .map((r) => r.month)
+    .filter((m) => m >= fromMonth && m <= toMonth)
+    .sort()
+    .reverse();
+  const rows = months.map((m) => {
+    const q = qbByMonth.get(m);
+    const t = txnByMonth.get(m);
+    return {
+      month: m,
+      qb_ending: q?.ending_mrr ?? null,
+      txn_ending: t?.ending_mrr ?? null,
+      delta_ending: q && t ? Math.round((t.ending_mrr - q.ending_mrr) * 100) / 100 : null,
+      qb_net_new: q?.net_new_mrr ?? null,
+      txn_net_new: t?.net_new_mrr ?? null,
+      delta_net_new: q && t ? Math.round((t.net_new_mrr - q.net_new_mrr) * 100) / 100 : null,
+    };
+  });
+  const maxAbsDelta = rows.reduce((a, r) => Math.max(a, Math.abs(r.delta_ending ?? 0)), 0);
+
+  return (
+    <Paper sx={{ p: 3, mt: 3 }}>
+      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+        <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+          Source reconciliation · QB vs Stripe transactions
+        </Typography>
+        <InfoIcon info={
+          <>
+            <strong>What it is:</strong> Per-month comparison between the QB-driven waterfall (MRR by Month tab) and the transaction-driven waterfall (Stripe Sync transactions, post-overrides). Δ shows where the two diverge.
+            <br /><br />
+            <strong>How to read:</strong> A small Δ ($0–$500/mo) is normal — Stripe fees vs QB net handling, multi-sub aggregation, rate-change rounding. Larger Δs usually mean either an annual prepayer's billing month (transaction-side spikes; QB-side smooths) or a misclassified charge that needs a transaction_overrides entry.
+            <br /><br />
+            <strong>Largest Δ in window:</strong> {USD0.format(maxAbsDelta)}.
+          </>
+        } />
+      </Stack>
+      <Box sx={{ overflowX: 'auto' }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: 12.5 }}>
+          <thead>
+            <tr style={{ color: '#8B949E', textAlign: 'right', borderBottom: '1px solid #21262D' }}>
+              <th style={{ textAlign: 'left', padding: '8px 12px 8px 0' }}>Month</th>
+              <th style={{ padding: '8px 12px' }}>QB ending</th>
+              <th style={{ padding: '8px 12px' }}>TXN ending</th>
+              <th style={{ padding: '8px 12px' }}>Δ ending</th>
+              <th style={{ padding: '8px 12px' }}>QB net new</th>
+              <th style={{ padding: '8px 12px' }}>TXN net new</th>
+              <th style={{ padding: '8px 0 8px 12px' }}>Δ net new</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => {
+              const sigEnding = Math.abs(r.delta_ending ?? 0) >= 1000;
+              const sigNet = Math.abs(r.delta_net_new ?? 0) >= 1000;
+              return (
+                <tr key={r.month} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                  <td style={{ padding: '6px 12px 6px 0', color: '#E6EDF3' }}>{monthLabelLong(r.month)}</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{r.qb_ending != null ? USD0.format(r.qb_ending) : '—'}</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{r.txn_ending != null ? USD0.format(r.txn_ending) : '—'}</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: sigEnding ? '#F59E0B' : '#8B949E', fontWeight: sigEnding ? 600 : 400 }}>
+                    {r.delta_ending != null ? (r.delta_ending >= 0 ? '+' : '') + USD0.format(r.delta_ending) : '—'}
+                  </td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{r.qb_net_new != null ? USD0.format(r.qb_net_new) : '—'}</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{r.txn_net_new != null ? USD0.format(r.txn_net_new) : '—'}</td>
+                  <td style={{ padding: '6px 0 6px 12px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: sigNet ? '#F59E0B' : '#8B949E', fontWeight: sigNet ? 600 : 400 }}>
+                    {r.delta_net_new != null ? (r.delta_net_new >= 0 ? '+' : '') + USD0.format(r.delta_net_new) : '—'}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Box>
+    </Paper>
   );
 }

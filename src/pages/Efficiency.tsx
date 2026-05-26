@@ -488,7 +488,7 @@ function TrendChart({
               <RTooltip
                 labelFormatter={(v) => monthLabel(String(v))}
                 formatter={(v: number) => [yFormatter(v), title]}
-                contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
               />
               <Line type="monotone" dataKey={dataKey} stroke={color} strokeWidth={2} dot={{ r: 2, fill: color }} connectNulls />
             </LineChart>

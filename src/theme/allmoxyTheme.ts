@@ -145,6 +145,25 @@ export const allmoxyTheme = createTheme({
         },
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: '#161B22',
+          color: '#FFFFFF',
+          border: '1px solid #21262D',
+          fontSize: 12,
+          lineHeight: 1.5,
+          padding: '6px 10px',
+          maxWidth: 360,
+        },
+        arrow: {
+          color: '#161B22',
+          '&::before': {
+            border: '1px solid #21262D',
+          },
+        },
+      },
+    },
   },
 });
 

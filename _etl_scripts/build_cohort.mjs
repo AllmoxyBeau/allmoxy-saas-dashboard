@@ -16,7 +16,7 @@ import path from 'node:path';
 
 const SNAPSHOTS =
   process.argv[2] ||
-  '/Users/beaulewis/Documents/Claude/Projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/src/data/snapshots';
+  '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
 
 const classification = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'classification_master.json'), 'utf8'));
 const core = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'allmoxy_core_customer.json'), 'utf8'));

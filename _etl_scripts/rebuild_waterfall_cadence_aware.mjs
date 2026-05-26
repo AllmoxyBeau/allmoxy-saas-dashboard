@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SNAP = '/Users/beaulewis/Documents/Claude/Projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/src/data/snapshots';
+const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
 const subByMonth = JSON.parse(fs.readFileSync(path.join(SNAP, 'subscription_by_month.json'), 'utf8'));
 const waterfall = JSON.parse(fs.readFileSync(path.join(SNAP, 'mrr_waterfall.json'), 'utf8'));
 

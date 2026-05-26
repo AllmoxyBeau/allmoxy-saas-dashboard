@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const CSV_PATH = '/tmp/instances.csv';
-const SNAP = '/Users/beaulewis/Documents/Claude/Projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/src/data/snapshots';
+const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
 
 // Tiny CSV parser that respects quoted fields with commas.
 function parseCsv(text) {

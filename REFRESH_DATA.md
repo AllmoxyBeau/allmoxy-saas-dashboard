@@ -65,6 +65,13 @@ Manual overrides (not regenerated — edit by hand):
 - `src/data/annual_payers.json`
 - `src/data/connect_customer_overrides.json`
 
+Optional snapshot (requires HubSpot Private App token):
+- `churn_corpus.json` — produced by `_etl_scripts/build_churn_corpus.mjs`. Pulls every note / email / call / task / ticket from HubSpot for each churned customer. `refresh_all.mjs` runs it automatically when `HUBSPOT_TOKEN` is set in the environment, and skips it cleanly otherwise. To enable:
+  1. Create a HubSpot Private App (Settings → Integrations → Private Apps) with the scopes listed in `.env.sample`.
+  2. Paste the token into `.env.local` as `HUBSPOT_TOKEN=pat-na1-...`.
+  3. Before refresh: `set -a; source .env.local; set +a; node _etl_scripts/refresh_all.mjs`
+  4. First pull takes 5–15 minutes (rate-limited at 5 req/sec). Subsequent pulls are similar — there's no incremental mode yet.
+
 ---
 
 ## One-command refresh prompt

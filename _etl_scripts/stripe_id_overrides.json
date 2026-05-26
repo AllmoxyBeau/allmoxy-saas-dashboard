@@ -1,0 +1,20 @@
+{
+  "comment": "Inject missing stripe_customer_ids into the build pipeline when allmoxy_core_customer's stripe_customer_id_* fields are empty. This is a stop-gap until the customer record gets the IDs filled in directly in the source xlsx — once that happens, the override is harmlessly redundant. Each override appends to the customer's stripe_customer_ids array if not already present.",
+  "updated_at": "2026-05-01",
+  "overrides": [
+    {
+      "allmoxy_customer_id": 2060,
+      "name": "Formations",
+      "stripe_customer_ids": ["cus_UNWDyyeMOkW4BO"],
+      "reason": "Formations paid $750 on 2026-04-30 (Stripe sub) but was missing from allmoxy_core_customer's stripe_customer_id_* fields, which made the charge orphan in the MRR by Month tab as a phantom $750 line in row 6.",
+      "added_by": "Beau, 2026-05-01"
+    },
+    {
+      "allmoxy_customer_id": 2064,
+      "name": "Windsor Place",
+      "stripe_customer_ids": ["cus_ULd18BXCrI7KKB"],
+      "reason": "Windsor Place paid $250 on 2026-04-16 (Stripe sub) but was missing from allmoxy_core_customer's stripe_customer_id_* fields. (Note: the ID contains a capital I, not lowercase l, in 'CrI7KKB' — confirmed against Stripe Sync raw data.)",
+      "added_by": "Beau, 2026-05-01"
+    }
+  ]
+}

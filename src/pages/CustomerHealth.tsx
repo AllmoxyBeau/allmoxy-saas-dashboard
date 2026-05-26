@@ -12,11 +12,14 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import Collapse from '@mui/material/Collapse';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
+import CustomerLink from '../components/common/CustomerLink';
+import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type ConcentrationSlice = { n: number; customers: number; mrr: number; pct: number | null };
@@ -86,6 +89,8 @@ export default function CustomerHealth() {
   const snap = data as unknown as CustomerHealthSnapshot | undefined;
 
   const [drill, setDrill] = useState<DrillKind | null>(null);
+  const topTable = useCollapse(true);
+  const dunningTable = useCollapse(true);
   function openDrill(d: DrillKind) {
     setDrill(d);
     setTimeout(() => {
@@ -178,7 +183,7 @@ export default function CustomerHealth() {
                 <YAxis yAxisId="left" stroke="#8B949E" fontSize={11} width={40} />
                 <YAxis yAxisId="right" orientation="right" stroke="#8B949E" fontSize={11} width={55} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
                 <RTooltip
-                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
                   formatter={(v: number, name: string) => {
                     if (name === 'mrr') return [USD0.format(v), 'MRR'];
                     return [v, 'Customers'];
@@ -200,12 +205,14 @@ export default function CustomerHealth() {
       </Paper>
 
       <Paper sx={{ p: 3, mb: 3 }}>
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: topTable.open ? 2 : 0 }}>
+          <CollapseToggle open={topTable.open} onToggle={topTable.toggle} label="top 25 customers" />
           <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
             Top 25 customers by current MRR
           </Typography>
           <InfoIcon info={<><strong>What it is:</strong> Ranked roster of the 25 biggest subscription customers for the reference month, with current MRR, % of total MRR, lifetime revenue, tenure, and a flag column for dunning.<br /><br /><strong>Data:</strong> Current MRR from the MRR by Month tab · lifetime revenue from Stripe Sync succeeded charges · years since first payment · failed-charge count from Stripe Sync in the last 3 months.</>} />
         </Stack>
+        <Collapse in={topTable.open} unmountOnExit>
         {isLoading || !snap ? (
           <Skeleton variant="rectangular" height={400} />
         ) : (
@@ -225,7 +232,9 @@ export default function CustomerHealth() {
               {snap.top_customers.map((c, idx) => (
                 <TableRow key={c.allmoxy_customer_id ?? idx}>
                   <TableCell sx={{ color: 'text.secondary' }}>{idx + 1}</TableCell>
-                  <TableCell sx={{ fontWeight: 500 }}>{c.name}</TableCell>
+                  <TableCell sx={{ fontWeight: 500 }}>
+                    <CustomerLink id={c.allmoxy_customer_id} name={c.name} />
+                  </TableCell>
                   <TableCell align="right" sx={{ fontWeight: 500 }}>
                     {USD0.format(c.current_mrr)}
                   </TableCell>
@@ -246,11 +255,13 @@ export default function CustomerHealth() {
             </TableBody>
           </Table>
         )}
+        </Collapse>
       </Paper>
 
       <Paper sx={{ p: 3 }}>
-        <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: 2 }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: dunningTable.open ? 2 : 0 }}>
           <Stack direction="row" spacing={1} alignItems="center">
+            <CollapseToggle open={dunningTable.open} onToggle={dunningTable.toggle} label="dunning watch list" />
             <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
               Dunning watch list · failed charges in trailing 3 months
             </Typography>
@@ -271,6 +282,7 @@ export default function CustomerHealth() {
             </Typography>
           )}
         </Stack>
+        <Collapse in={dunningTable.open} unmountOnExit>
         {isLoading || !snap ? (
           <Skeleton variant="rectangular" height={320} />
         ) : snap.dunning_customers.length === 0 ? (
@@ -290,7 +302,9 @@ export default function CustomerHealth() {
             <TableBody>
               {snap.dunning_customers.map((d, idx) => (
                 <TableRow key={d.allmoxy_customer_id ?? idx}>
-                  <TableCell sx={{ fontWeight: 500 }}>{d.name}</TableCell>
+                  <TableCell sx={{ fontWeight: 500 }}>
+                    <CustomerLink id={d.allmoxy_customer_id} name={d.name} />
+                  </TableCell>
                   <TableCell align="right">{USD0.format(d.current_mrr)}</TableCell>
                   <TableCell align="right">
                     <Chip
@@ -311,12 +325,13 @@ export default function CustomerHealth() {
             </TableBody>
           </Table>
         )}
+        </Collapse>
       </Paper>
 
       {drill && snap && (() => {
         const topCustomerColumns: DrillColumn<TopCustomer>[] = [
           { key: 'rank', label: '#', render: (_r) => '', align: 'left' },
-          { key: 'name', label: 'Customer' },
+          { key: 'name', label: 'Customer', render: (r) => <CustomerLink id={r.allmoxy_customer_id} name={r.name} /> },
           { key: 'current_mrr', label: 'Current MRR', align: 'right', render: (r) => USD0.format(r.current_mrr) },
           {
             key: 'pct_of_mrr',
@@ -366,7 +381,7 @@ export default function CustomerHealth() {
 
         // dunning
         const dunningColumns: DrillColumn<DunningCustomer>[] = [
-          { key: 'name', label: 'Customer' },
+          { key: 'name', label: 'Customer', render: (r) => <CustomerLink id={r.allmoxy_customer_id} name={r.name} /> },
           { key: 'current_mrr', label: 'Current MRR', align: 'right', render: (r) => USD0.format(r.current_mrr) },
           { key: 'failed_3mo', label: 'Failed attempts', align: 'right' },
           { key: 'failed_3mo_amount', label: 'Total $ failed', align: 'right', render: (r) => USD0.format(r.failed_3mo_amount) },

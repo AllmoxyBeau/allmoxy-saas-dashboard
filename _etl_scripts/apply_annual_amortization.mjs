@@ -15,8 +15,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const ROOT = '/Users/beaulewis/Documents/Claude/Projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
-const SNAP = path.join(ROOT, 'src/data/snapshots');
+const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const SNAP = path.join(ROOT, 'public/snapshots');
 
 const ANNUAL_THRESHOLD = 3000;
 const AMORTIZE_MONTHS = 12;
@@ -157,14 +157,18 @@ const monthsSorted = Object.keys(totalsByMonth).sort();
 const today = new Date();
 const currentYM = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
-// Build customer → month → sub map.
+// Build customer → month → sub map AND first-MRR-month per customer (used to
+// distinguish a brand-new logo from a reactivation).
 const custMrr = new Map();
+const firstMrrMonth = new Map();
 for (const row of subByMonth.rows) {
   const m = {};
   for (const [k, v] of Object.entries(row)) {
     if (/^\d{4}-\d{2}$/.test(k) && typeof v === 'number' && v > 0) m[k] = v;
   }
   custMrr.set(row.customer_name, m);
+  const months = Object.keys(m).sort();
+  if (months.length > 0) firstMrrMonth.set(row.customer_name, months[0]);
 }
 
 const newMonthly = [];
@@ -173,9 +177,9 @@ for (let i = 1; i < monthsSorted.length; i++) {
   const cur = monthsSorted[i];
   if (cur >= currentYM) break;
 
-  let newMrr = 0, expansion = 0, contraction = 0, churn = 0, starting = 0, ending = 0;
-  let newLogos = 0, churnedLogos = 0;
-  const details = { new: [], expansion: [], contraction: [], churn: [] };
+  let newMrr = 0, reactivatedMrr = 0, expansion = 0, contraction = 0, churn = 0, starting = 0, ending = 0;
+  let newLogos = 0, reactivatedLogos = 0, churnedLogos = 0;
+  const details = { new: [], reactivated: [], expansion: [], contraction: [], churn: [] };
 
   for (const [name, byMonth] of custMrr.entries()) {
     const p = byMonth[prev] ?? 0;
@@ -183,9 +187,16 @@ for (let i = 1; i < monthsSorted.length; i++) {
     starting += p;
     ending += n;
     if (p === 0 && n > 0) {
-      newMrr += n;
-      newLogos++;
-      details.new.push({ name, mrr: round2(n) });
+      // True new logo only if cur is their first-ever MRR month; otherwise reactivation.
+      if (firstMrrMonth.get(name) === cur) {
+        newMrr += n;
+        newLogos++;
+        details.new.push({ name, mrr: round2(n) });
+      } else {
+        reactivatedMrr += n;
+        reactivatedLogos++;
+        details.reactivated.push({ name, mrr: round2(n) });
+      }
     } else if (p > 0 && n === 0) {
       churn += p;
       churnedLogos++;
@@ -193,18 +204,18 @@ for (let i = 1; i < monthsSorted.length; i++) {
     } else if (n > p) {
       const delta = n - p;
       expansion += delta;
-      details.expansion.push({ name, mrr: round2(delta), prev: round2(p), cur: round2(n) });
+      details.expansion.push({ name, prev_mrr: round2(p), new_mrr: round2(n), delta: round2(delta) });
     } else if (n < p) {
       const delta = p - n;
       contraction += delta;
-      details.contraction.push({ name, mrr: round2(delta), prev: round2(p), cur: round2(n) });
+      details.contraction.push({ name, prev_mrr: round2(p), new_mrr: round2(n), delta: round2(delta) });
     }
   }
 
-  const net = newMrr + expansion - contraction - churn;
+  const net = newMrr + reactivatedMrr + expansion - contraction - churn;
   const grr = starting > 0 ? (starting - churn - contraction) / starting : 1;
   const nrr = starting > 0 ? (starting - churn - contraction + expansion) / starting : 1;
-  const qr = (churn + contraction) > 0 ? (newMrr + expansion) / (churn + contraction) : null;
+  const qr = (churn + contraction) > 0 ? (newMrr + reactivatedMrr + expansion) / (churn + contraction) : null;
   const grossChurn = starting > 0 ? (churn + contraction) / starting : 0;
   const netChurn = starting > 0 ? (churn + contraction - expansion) / starting : 0;
   const expRate = starting > 0 ? expansion / starting : 0;
@@ -213,12 +224,14 @@ for (let i = 1; i < monthsSorted.length; i++) {
     month: cur,
     starting_mrr: round2(starting),
     new_mrr: round2(newMrr),
+    reactivated_mrr: round2(reactivatedMrr),
     expansion_mrr: round2(expansion),
     contraction_mrr: round2(contraction),
     churn_mrr: round2(churn),
     ending_mrr: round2(ending),
     net_new_mrr: round2(net),
     new_logos: newLogos,
+    reactivated_logos: reactivatedLogos,
     churned_logos: churnedLogos,
     gross_churn_rate_monthly: round2(grossChurn * 10000) / 10000,
     net_churn_rate_monthly: round2(netChurn * 10000) / 10000,
@@ -228,8 +241,9 @@ for (let i = 1; i < monthsSorted.length; i++) {
     quick_ratio: qr != null ? Math.round(qr * 10) / 10 : null,
     details: {
       new: details.new.sort((a, b) => b.mrr - a.mrr).slice(0, 25),
-      expansion: details.expansion.sort((a, b) => b.mrr - a.mrr).slice(0, 25),
-      contraction: details.contraction.sort((a, b) => b.mrr - a.mrr).slice(0, 25),
+      reactivated: details.reactivated.sort((a, b) => b.mrr - a.mrr).slice(0, 25),
+      expansion: details.expansion.sort((a, b) => b.delta - a.delta).slice(0, 25),
+      contraction: details.contraction.sort((a, b) => b.delta - a.delta).slice(0, 25),
       churn: details.churn.sort((a, b) => b.mrr - a.mrr).slice(0, 25),
     },
   });

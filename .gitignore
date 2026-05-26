@@ -21,6 +21,10 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 
+# Data snapshots & source spreadsheets (customer financial data — never commit)
+public/snapshots
+_source_xlsx
+
 # Editor
 .vscode/*
 !.vscode/settings.json

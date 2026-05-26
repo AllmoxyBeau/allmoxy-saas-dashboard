@@ -19,6 +19,7 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
+  LabelList,
 } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
@@ -177,6 +178,29 @@ export default function NorthStar() {
     if (!fromMonth || !toMonth) return [];
     return completeMonths.filter((r) => r.month >= fromMonth && r.month <= toMonth);
   }, [completeMonths, fromMonth, toMonth]);
+
+  // Per-row total of the currently visible streams. Used as the source for the bar-top
+  // label on the stacked MRR chart so the label sits at the actual top of the visible
+  // stack (not the all-streams total, which would float when a stream is toggled off).
+  const visibleRangeWithTotal = useMemo(() => {
+    return visibleRange.map((r) => {
+      const total =
+        (visibleStreams.subscription ? (r.mrr_subscription || 0) : 0) +
+        (visibleStreams.services ? (r.mrr_services || 0) : 0) +
+        (visibleStreams.connect ? (r.mrr_connect || 0) : 0);
+      return { ...r, mrr_total_visible: total };
+    });
+  }, [visibleRange, visibleStreams]);
+
+  // Pick the topmost visible stream — that's the Bar that should host the total label so it
+  // renders at the top of the stack. Falls back gracefully if all streams are off.
+  const topVisibleStream: 'subscription' | 'services' | 'connect' | null = visibleStreams.connect
+    ? 'connect'
+    : visibleStreams.services
+      ? 'services'
+      : visibleStreams.subscription
+        ? 'subscription'
+        : null;
 
   function max(a: string, b: string) {
     return a > b ? a : b;
@@ -358,7 +382,8 @@ export default function NorthStar() {
         ) : (
           <Box sx={{ height: 260 }}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={visibleRange} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
+              {/* Top margin bumped so the count label above the tallest bar has room. */}
+              <BarChart data={visibleRange} margin={{ top: 22, right: 16, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
                 <XAxis
                   dataKey="month"
@@ -369,7 +394,7 @@ export default function NorthStar() {
                 <YAxis stroke="#8B949E" fontSize={11} width={40} />
                 <Tooltip
                   labelFormatter={(v) => monthLabel(String(v))}
-                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
                   cursor={{ fill: 'rgba(44, 115, 255, 0.06)' }}
                 />
                 <Bar
@@ -380,7 +405,15 @@ export default function NorthStar() {
                   onClick={(p: { payload?: { month: string } }) =>
                     p.payload && openDrill({ kind: 'bar', month: p.payload.month, stream: 'subscription' })
                   }
-                />
+                >
+                  {/* Total above each bar — simple integer since logo_qty is a count. */}
+                  <LabelList
+                    dataKey="logo_qty"
+                    position="top"
+                    style={{ fill: '#C9D1D9', fontSize: 10, fontWeight: 500 }}
+                    formatter={(v: number) => (v != null ? v.toLocaleString() : '')}
+                  />
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </Box>
@@ -404,7 +437,10 @@ export default function NorthStar() {
         ) : (
           <Box sx={{ height: 260 }}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={visibleRange} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
+              {/* visibleRangeWithTotal adds mrr_total_visible per row (sum of currently-visible
+                  streams) so the bar-top label sits at the actual top of the stack rather than
+                  floating when a stream is toggled off. */}
+              <BarChart data={visibleRangeWithTotal} margin={{ top: 22, right: 16, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
                 <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={11} />
                 <YAxis
@@ -417,11 +453,23 @@ export default function NorthStar() {
                   cursor={{ fill: 'rgba(44, 115, 255, 0.06)' }}
                   labelFormatter={(v) => monthLabel(String(v))}
                   formatter={(v: number, name: string) => [USD0.format(v), name]}
-                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
                 />
-                <Bar name="Subscription" dataKey="mrr_subscription" stackId="mrr" fill="#2C73FF" hide={!visibleStreams.subscription} cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill({ kind: 'bar', month: p.payload.month, stream: 'subscription' })} />
-                <Bar name="Services" dataKey="mrr_services" stackId="mrr" fill="#1A9E5C" hide={!visibleStreams.services} cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill({ kind: 'bar', month: p.payload.month, stream: 'services' })} />
-                <Bar name="Connect" dataKey="mrr_connect" stackId="mrr" fill="#F59E0B" hide={!visibleStreams.connect} cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill({ kind: 'bar', month: p.payload.month, stream: 'connect' })} />
+                <Bar name="Subscription" dataKey="mrr_subscription" stackId="mrr" fill="#2C73FF" hide={!visibleStreams.subscription} cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill({ kind: 'bar', month: p.payload.month, stream: 'subscription' })}>
+                  {topVisibleStream === 'subscription' && (
+                    <LabelList dataKey="mrr_total_visible" position="top" style={{ fill: '#C9D1D9', fontSize: 10, fontWeight: 500 }} formatter={(v: number) => (v ? USD_COMPACT.format(v) : '')} />
+                  )}
+                </Bar>
+                <Bar name="Services" dataKey="mrr_services" stackId="mrr" fill="#1A9E5C" hide={!visibleStreams.services} cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill({ kind: 'bar', month: p.payload.month, stream: 'services' })}>
+                  {topVisibleStream === 'services' && (
+                    <LabelList dataKey="mrr_total_visible" position="top" style={{ fill: '#C9D1D9', fontSize: 10, fontWeight: 500 }} formatter={(v: number) => (v ? USD_COMPACT.format(v) : '')} />
+                  )}
+                </Bar>
+                <Bar name="Connect" dataKey="mrr_connect" stackId="mrr" fill="#F59E0B" hide={!visibleStreams.connect} cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill({ kind: 'bar', month: p.payload.month, stream: 'connect' })}>
+                  {topVisibleStream === 'connect' && (
+                    <LabelList dataKey="mrr_total_visible" position="top" style={{ fill: '#C9D1D9', fontSize: 10, fontWeight: 500 }} formatter={(v: number) => (v ? USD_COMPACT.format(v) : '')} />
+                  )}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </Box>

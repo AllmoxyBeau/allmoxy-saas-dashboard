@@ -9,10 +9,20 @@ import Skeleton from '@mui/material/Skeleton';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, ReferenceLine, ComposedChart, Bar } from 'recharts';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import Collapse from '@mui/material/Collapse';
 
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
+import CsvExportButton from '../components/common/CsvExportButton';
+import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
+import type { CsvColumn } from '../lib/csvExport';
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type WaterfallMonthlyRow = {
@@ -136,6 +146,7 @@ export default function UnitEconomics() {
 
   const [drill, setDrill] = useState<DrillKind | null>(null);
   const [headerWindow, setHeaderWindow] = useState<'3M' | '6M' | '12M'>('12M');
+  const ttmTable = useCollapse(true);
   function openDrill(d: DrillKind) {
     setDrill(d);
     setTimeout(() => {
@@ -241,6 +252,113 @@ export default function UnitEconomics() {
     const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     return snap.monthly.filter((m) => m.month < currentMonth).slice(-24);
   }, [snap]);
+
+  // Rolling trailing-12-month unit economics, anchored at each month M (window = M-11..M).
+  // Each row gives a smoothed snapshot of how UE would have looked if you'd run a TTM at that
+  // anchor — far less noisy than literal single-month UE (where a month with 0 new logos sends
+  // CAC to infinity). Same math the 12M header cards use, applied per anchor month.
+  const monthlyTtm = useMemo(() => {
+    if (!snap || snap.monthly.length < 12) return [];
+    const endMonth = snap.ttm?.windowEnd ?? snap.monthly[snap.monthly.length - 1].month;
+    const completeRows = snap.monthly.filter((r) => r.month <= endMonth);
+    const wfMonthly = wf?.monthly ?? [];
+
+    const out: Array<{
+      month: string;
+      cac: number | null;
+      ltv: number | null;
+      ltv_cac_ratio: number | null;
+      cac_payback_months: number | null;
+      monthly_churn_rate: number | null;
+      annual_churn_rate: number | null;
+      gross_margin: number | null;
+      subscription_gross_margin: number | null;
+      avg_mrr_per_customer: number | null;
+      new_logos: number;
+      snm_expense: number;
+    }> = [];
+
+    for (let i = 11; i < completeRows.length; i++) {
+      const rows = completeRows.slice(i - 11, i + 1);
+      const last = rows[rows.length - 1];
+
+      const sum = (k: keyof MonthlyRow) =>
+        rows.reduce((a, r) => a + (typeof r[k] === 'number' ? (r[k] as number) : 0), 0);
+
+      const total_income = sum('total_income');
+      const gross_profit = sum('gross_profit');
+      const snm_expense = sum('snm_expense');
+      const new_logos = sum('new_logos');
+
+      const gross_margin = total_income > 0 ? gross_profit / total_income : null;
+
+      let subGmNum = 0;
+      let subGmDen = 0;
+      for (const r of rows) {
+        if (r.subscription_gross_margin != null && r.subscription_revenue > 0) {
+          subGmNum += r.subscription_gross_margin * r.subscription_revenue;
+          subGmDen += r.subscription_revenue;
+        }
+      }
+      const subscription_gross_margin = subGmDen > 0 ? subGmNum / subGmDen : null;
+
+      const cac = new_logos > 0 ? snm_expense / new_logos : null;
+      const avg_mrr_per_customer = last.avg_mrr_per_customer;
+
+      const wfRows = wfMonthly.filter((r) => r.month >= rows[0].month && r.month <= last.month);
+      const monthlyChurnAvg =
+        wfRows.length > 0
+          ? wfRows.reduce((s, r) => s + (r.gross_churn_rate_monthly ?? 0), 0) / wfRows.length
+          : null;
+      const annual_churn_rate =
+        monthlyChurnAvg == null ? null : 1 - Math.pow(Math.max(1 - monthlyChurnAvg, 0), 12);
+
+      const ltv =
+        avg_mrr_per_customer != null && subscription_gross_margin != null && monthlyChurnAvg != null && monthlyChurnAvg > 0
+          ? (avg_mrr_per_customer * subscription_gross_margin) / monthlyChurnAvg
+          : null;
+      const cac_payback_months =
+        cac != null && avg_mrr_per_customer != null && subscription_gross_margin != null && avg_mrr_per_customer * subscription_gross_margin > 0
+          ? cac / (avg_mrr_per_customer * subscription_gross_margin)
+          : null;
+      const ltv_cac_ratio = ltv != null && cac != null && cac > 0 ? ltv / cac : null;
+
+      out.push({
+        month: last.month,
+        cac,
+        ltv,
+        ltv_cac_ratio,
+        cac_payback_months,
+        monthly_churn_rate: monthlyChurnAvg,
+        annual_churn_rate,
+        gross_margin,
+        subscription_gross_margin,
+        avg_mrr_per_customer,
+        new_logos,
+        snm_expense,
+      });
+    }
+    return out;
+  }, [snap, wf]);
+
+  // Show the most recent 24 anchor months in the table — keeps the scroll manageable while
+  // still showing two years of trajectory. Reversed so the latest month sits at the top.
+  const monthlyTtmVisible = useMemo(() => monthlyTtm.slice(-24).reverse(), [monthlyTtm]);
+
+  const monthlyTtmCsvColumns: CsvColumn<(typeof monthlyTtm)[number]>[] = [
+    { key: 'month', label: 'Anchor month' },
+    { key: 'cac', label: 'CAC' },
+    { key: 'ltv', label: 'LTV' },
+    { key: 'ltv_cac_ratio', label: 'LTV:CAC' },
+    { key: 'cac_payback_months', label: 'CAC payback (months)' },
+    { key: 'monthly_churn_rate', label: 'Monthly churn rate' },
+    { key: 'annual_churn_rate', label: 'Annual churn rate' },
+    { key: 'gross_margin', label: 'Gross margin' },
+    { key: 'subscription_gross_margin', label: 'Subscription gross margin' },
+    { key: 'avg_mrr_per_customer', label: 'Avg MRR per customer (anchor month)' },
+    { key: 'new_logos', label: 'New logos in window' },
+    { key: 'snm_expense', label: 'S&M spend in window' },
+  ];
 
   return (
     <Box>
@@ -399,7 +517,7 @@ export default function UnitEconomics() {
                     <RTooltip
                       labelFormatter={(v) => monthLabel(String(v))}
                       formatter={(v: number) => [USD0.format(v), 'CAC']}
-                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
                     />
                     <Line type="monotone" dataKey="cac" stroke="#2C73FF" strokeWidth={2} dot={{ r: 2.5, fill: '#2C73FF' }} connectNulls />
                   </LineChart>
@@ -428,7 +546,7 @@ export default function UnitEconomics() {
                     <YAxis yAxisId="right" orientation="right" stroke="#8B949E" fontSize={11} width={30} />
                     <RTooltip
                       labelFormatter={(v) => monthLabel(String(v))}
-                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
                     />
                     <Bar yAxisId="left" dataKey="snm_expense" fill="rgba(44, 115, 255, 0.4)" name="S&M $" />
                     <Line yAxisId="right" type="monotone" dataKey="new_logos" stroke="#1A9E5C" strokeWidth={2} dot={{ r: 2.5, fill: '#1A9E5C' }} name="New logos" />
@@ -459,7 +577,7 @@ export default function UnitEconomics() {
                     <RTooltip
                       labelFormatter={(v) => monthLabel(String(v))}
                       formatter={(v: number) => [`${(v * 100).toFixed(1)}%`, 'GM']}
-                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
                     />
                     <Line type="monotone" dataKey="gross_margin" stroke="#1A9E5C" strokeWidth={2} dot={{ r: 2.5, fill: '#1A9E5C' }} connectNulls />
                   </LineChart>
@@ -488,7 +606,7 @@ export default function UnitEconomics() {
                     <RTooltip
                       labelFormatter={(v) => monthLabel(String(v))}
                       formatter={(v: number) => [USD0.format(v), 'Avg MRR']}
-                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
                     />
                     <Line type="monotone" dataKey="avg_mrr_per_customer" stroke="#2C73FF" strokeWidth={2} dot={{ r: 2.5, fill: '#2C73FF' }} connectNulls />
                   </LineChart>
@@ -498,6 +616,76 @@ export default function UnitEconomics() {
           </Paper>
         </Grid>
       </Grid>
+
+      {/* Rolling trailing-12 UE by anchor month — full month-over-month trajectory */}
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={1} sx={{ mb: ttmTable.open ? 2 : 0 }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <CollapseToggle open={ttmTable.open} onToggle={ttmTable.toggle} label="unit economics by month" />
+            <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+              Unit economics by month · trailing 12 anchored at each month
+            </Typography>
+            <InfoIcon info={<><strong>What it is:</strong> Every headline UE metric, computed as a trailing-12-month window anchored at the row's month. So the row for Apr 2026 represents how UE looked across May 2025 → Apr 2026.<br /><br /><strong>Why TTM instead of literal monthly:</strong> Single-month UE is noisy — a month with 0 new logos sends CAC to infinity; a quiet churn month inflates LTV. TTM smoothing matches how these metrics are actually used in board decks.<br /><br /><strong>Color bands:</strong> Same benchmarks as the headline cards (green = healthy, yellow = caution, red = below threshold).</>} />
+          </Stack>
+          <CsvExportButton
+            filename={`unit_economics_monthly_ttm_${monthlyTtm.length > 0 ? monthlyTtm[monthlyTtm.length - 1].month : 'empty'}`}
+            columns={monthlyTtmCsvColumns}
+            rows={monthlyTtm}
+            label="Export full series"
+          />
+        </Stack>
+        <Collapse in={ttmTable.open} unmountOnExit>
+        {isLoading ? (
+          <Skeleton variant="rectangular" height={400} />
+        ) : monthlyTtmVisible.length === 0 ? (
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            Not enough monthly data to build a trailing-12 window yet.
+          </Typography>
+        ) : (
+          <TableContainer sx={{ maxHeight: 540 }}>
+            <Table size="small" stickyHeader sx={{ '& td, & th': { whiteSpace: 'nowrap' }, '& td': { fontVariantNumeric: 'tabular-nums' } }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ position: 'sticky', left: 0, zIndex: 3, bgcolor: 'background.paper' }}>Month</TableCell>
+                  <TableCell align="right">CAC</TableCell>
+                  <TableCell align="right">LTV</TableCell>
+                  <TableCell align="right">LTV : CAC</TableCell>
+                  <TableCell align="right">Payback</TableCell>
+                  <TableCell align="right">Annual churn</TableCell>
+                  <TableCell align="right">GM</TableCell>
+                  <TableCell align="right">Sub GM</TableCell>
+                  <TableCell align="right">Avg MRR / cust</TableCell>
+                  <TableCell align="right">New logos (12M)</TableCell>
+                  <TableCell align="right">S&M (12M)</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {monthlyTtmVisible.map((r) => (
+                  <TableRow key={r.month} hover>
+                    <TableCell sx={{ position: 'sticky', left: 0, zIndex: 1, bgcolor: 'background.paper', fontWeight: 500 }}>{monthLabel(r.month)}</TableCell>
+                    <TableCell align="right">{r.cac != null ? USD0.format(r.cac) : '—'}</TableCell>
+                    <TableCell align="right">{r.ltv != null ? USD0.format(r.ltv) : '—'}</TableCell>
+                    <TableCell align="right" sx={{ color: ltvCacColor(r.ltv_cac_ratio), fontWeight: 500 }}>{ratio(r.ltv_cac_ratio)}</TableCell>
+                    <TableCell align="right" sx={{ color: paybackColor(r.cac_payback_months), fontWeight: 500 }}>{months(r.cac_payback_months)}</TableCell>
+                    <TableCell align="right" sx={{ color: churnColor(r.annual_churn_rate), fontWeight: 500 }}>{pct(r.annual_churn_rate, 1)}</TableCell>
+                    <TableCell align="right" sx={{ color: gmColor(r.gross_margin) }}>{pct(r.gross_margin)}</TableCell>
+                    <TableCell align="right">{pct(r.subscription_gross_margin)}</TableCell>
+                    <TableCell align="right">{r.avg_mrr_per_customer != null ? USD0.format(r.avg_mrr_per_customer) : '—'}</TableCell>
+                    <TableCell align="right">{r.new_logos}</TableCell>
+                    <TableCell align="right">{USD_COMPACT.format(r.snm_expense)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+        {monthlyTtm.length > 24 && (
+          <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1 }}>
+            Showing the latest 24 of {monthlyTtm.length} anchor months · use Export CSV for the full series back to {monthlyTtm[0].month}.
+          </Typography>
+        )}
+        </Collapse>
+      </Paper>
 
       {/* Services unit economics — separate view, since services is non-recurring */}
       <Paper sx={{ p: 3 }}>

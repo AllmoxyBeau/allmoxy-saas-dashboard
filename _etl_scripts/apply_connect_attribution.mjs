@@ -17,8 +17,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const ROOT = '/Users/beaulewis/Documents/Claude/Projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
-const SNAP = path.join(ROOT, 'src/data/snapshots');
+const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const SNAP = path.join(ROOT, 'public/snapshots');
 
 const overrides = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/connect_customer_overrides.json'), 'utf8'));
 const profiles = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8'));

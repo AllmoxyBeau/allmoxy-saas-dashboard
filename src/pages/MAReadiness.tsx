@@ -11,12 +11,14 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import Collapse from '@mui/material/Collapse';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import ErrorIcon from '@mui/icons-material/Error';
 
 import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
+import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type UnitEconSnap = {
@@ -92,6 +94,7 @@ export default function MAReadiness() {
   const { data: wfData } = useSheetTab('mrr_waterfall');
   const { data: mrrData } = useSheetTab('mrr_by_month');
   const { data: healthData } = useSheetTab('customer_health');
+  const checklistTable = useCollapse(true);
 
   const ue = ueData as unknown as UnitEconSnap | undefined;
   const wf = wfData as unknown as WaterfallSnap | undefined;
@@ -343,12 +346,14 @@ export default function MAReadiness() {
 
       {/* Diligence checklist */}
       <Paper sx={{ p: 3 }}>
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: checklistTable.open ? 2 : 0 }}>
+          <CollapseToggle open={checklistTable.open} onToggle={checklistTable.toggle} label="diligence checklist" />
           <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
             Diligence readiness checklist
           </Typography>
           <InfoIcon info={<><strong>What it is:</strong> Checklist of the data and operational artifacts a well-run business should have on hand — what's already surfaced by this dashboard vs. what still needs to be produced or maintained elsewhere.<br /><br /><strong>Green ✓</strong> = in place · <strong>Amber ⚠</strong> = partial coverage · <strong>Red ✗</strong> = needs work.</>} />
         </Stack>
+        <Collapse in={checklistTable.open} unmountOnExit>
         <Table size="small">
           <TableHead>
             <TableRow>
@@ -378,6 +383,7 @@ export default function MAReadiness() {
           <Chip size="small" icon={<WarningAmberIcon />} label={`${checklist.filter((c) => c.status === 'partial').length} partial`} sx={{ bgcolor: 'rgba(245, 158, 11, 0.12)', color: 'warning.main' }} />
           <Chip size="small" icon={<ErrorIcon />} label={`${checklist.filter((c) => c.status === 'gap').length} gap`} sx={{ bgcolor: 'rgba(218, 54, 51, 0.12)', color: 'error.main' }} />
         </Stack>
+        </Collapse>
       </Paper>
     </Box>
   );

@@ -13,15 +13,19 @@ import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Tooltip from '@mui/material/Tooltip';
+import Chip from '@mui/material/Chip';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, ReferenceLine, Cell } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel';
+import CustomerLink from '../components/common/CustomerLink';
 import InfoIcon from '../components/common/InfoIcon';
+import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type CohortRow = {
@@ -109,6 +113,8 @@ export default function CohortRetention() {
   const [metric, setMetric] = useState<Metric>('dollar');
   const [showPre2018, setShowPre2018] = useState(false);
   const [drill, setDrill] = useState<{ cohortYear: number; month?: string } | null>(null);
+  const [drillFilter, setDrillFilter] = useState<'all' | 'active' | 'cancelled'>('all');
+  const cohortTable = useCollapse(true);
   function openDrill(cohortYear: number, month?: string) {
     setDrill({ cohortYear, month });
     setTimeout(() => {
@@ -364,7 +370,9 @@ export default function CohortRetention() {
                 <YAxis stroke="#8B949E" fontSize={11} width={50} tickFormatter={(v) => `${v}%`} />
                 <ReferenceLine y={50} stroke="#8B949E" strokeDasharray="4 4" />
                 <RTooltip
-                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6 }}
+                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }}
+                  labelStyle={{ color: '#FFFFFF' }}
+                  itemStyle={{ color: '#FFFFFF' }}
                   formatter={(v: number, _n: string, payload: { payload?: CohortRow }) => {
                     const row = payload?.payload;
                     if (!row) return [`${v}%`, 'Retention'];
@@ -388,12 +396,14 @@ export default function CohortRetention() {
       </Paper>
 
       <Paper sx={{ p: 3 }}>
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: cohortTable.open ? 2 : 0 }}>
+          <CollapseToggle open={cohortTable.open} onToggle={cohortTable.toggle} label="cohort detail" />
           <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
             Cohort detail
           </Typography>
           <InfoIcon info={<><strong>What it is:</strong> Tabular version of the cohort breakdown. Shows signup count, currently-active count, churned count, retention % and age for each cohort year.<br /><br /><strong>Data:</strong> Same source as the bar chart above — computed directly from Stripe Sync transaction dates joined against the customer roster. Click any row to drill into that cohort's members.</>} />
         </Stack>
+        <Collapse in={cohortTable.open} unmountOnExit>
         {isLoading || !snap ? (
           <Skeleton variant="rectangular" height={400} />
         ) : (
@@ -440,33 +450,45 @@ export default function CohortRetention() {
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1, fontStyle: 'italic' }}>
           Click a cohort row, a heatmap cell, or a bar to see the underlying customers — export any list to CSV.
         </Typography>
+        </Collapse>
       </Paper>
 
       {drill && snap && (() => {
         const entry = snap.cohortTriangle[String(drill.cohortYear)];
         if (!entry) return null;
 
-        let members = entry.members;
+        // First scope: month cell filters to who was active that month;
+        // year click keeps the full cohort.
+        let scopedMembers = entry.members;
         let titleSuffix = `· ${entry.initialLogos} signups`;
-        let subtitle = `${entry.members.filter((m) => m.active_today).length} still active · ${entry.members.filter((m) => !m.active_today).length} churned · sorted by lifetime revenue`;
+        let subtitle = `${entry.members.filter((m) => m.active_today).length} still active · ${entry.members.filter((m) => !m.active_today).length} cancelled · sorted by lifetime revenue`;
 
         if (drill.month) {
-          // Filter to members who were active during the selected cell's month.
           const [y, m] = drill.month.split('-').map(Number);
           const monthStart = new Date(y, m - 1, 1);
           const monthEnd = new Date(y, m, 0, 23, 59, 59);
-          members = entry.members.filter((mm) => {
+          scopedMembers = entry.members.filter((mm) => {
             if (!mm.first_payment || !mm.last_payment) return false;
             const fp = new Date(mm.first_payment);
             const lp = new Date(mm.last_payment);
             return fp <= monthEnd && lp >= monthStart;
           });
-          titleSuffix = `· ${drill.month} · ${members.length} active`;
-          subtitle = `Members of the ${drill.cohortYear} cohort who were paying in ${drill.month}`;
+          titleSuffix = `· ${drill.month}`;
+          subtitle = `Members of the ${drill.cohortYear} cohort who were paying in ${drill.month}. Filter by status with the chips below.`;
         }
 
+        const activeCount = scopedMembers.filter((m) => m.active_today).length;
+        const cancelledCount = scopedMembers.length - activeCount;
+
+        // Then apply the active/cancelled chip filter on top.
+        const members = scopedMembers.filter((mm) => {
+          if (drillFilter === 'all') return true;
+          if (drillFilter === 'active') return mm.active_today;
+          return !mm.active_today;
+        });
+
         const columns: DrillColumn<CohortMember>[] = [
-          { key: 'name', label: 'Customer' },
+          { key: 'name', label: 'Customer', render: (r) => <CustomerLink id={r.allmoxy_customer_id} name={r.name} /> },
           { key: 'allmoxy_customer_id', label: 'Allmoxy ID', align: 'right' },
           { key: 'first_payment', label: 'First payment' },
           { key: 'last_payment', label: 'Last payment' },
@@ -474,22 +496,55 @@ export default function CohortRetention() {
           { key: 'lifetime_revenue', label: 'Lifetime revenue', align: 'right', render: (r) => USD0.format(r.lifetime_revenue) },
           {
             key: 'active_today',
-            label: 'Active today',
+            label: 'Status',
             align: 'center',
-            render: (r) => (r.active_today ? '✓' : '—'),
-            exportValue: (r) => (r.active_today ? 'yes' : 'no'),
+            render: (r) => (
+              <Chip
+                size="small"
+                label={r.active_today ? 'Active' : 'Cancelled'}
+                color={r.active_today ? 'success' : 'default'}
+                variant={r.active_today ? 'filled' : 'outlined'}
+                sx={{ height: 20, fontSize: 10.5, fontWeight: 500 }}
+              />
+            ),
+            exportValue: (r) => (r.active_today ? 'active' : 'cancelled'),
           },
         ];
 
         return (
-          <DrillDownPanel
-            title={`${drill.cohortYear} cohort ${titleSuffix}`}
-            subtitle={subtitle}
-            rows={members as unknown as Array<Record<string, unknown>>}
-            columns={columns as unknown as DrillColumn<Record<string, unknown>>[]}
-            filename={`cohort_${drill.cohortYear}${drill.month ? `_${drill.month}` : ''}`}
-            onClose={() => setDrill(null)}
-          />
+          <Box>
+            <Stack direction="row" spacing={1} sx={{ mt: 3, mb: 1 }} flexWrap="wrap" useFlexGap>
+              <Chip
+                size="small"
+                label={`All · ${scopedMembers.length}`}
+                color={drillFilter === 'all' ? 'primary' : 'default'}
+                variant={drillFilter === 'all' ? 'filled' : 'outlined'}
+                onClick={() => setDrillFilter('all')}
+              />
+              <Chip
+                size="small"
+                label={`Active · ${activeCount}`}
+                color={drillFilter === 'active' ? 'success' : 'default'}
+                variant={drillFilter === 'active' ? 'filled' : 'outlined'}
+                onClick={() => setDrillFilter('active')}
+              />
+              <Chip
+                size="small"
+                label={`Cancelled · ${cancelledCount}`}
+                color={drillFilter === 'cancelled' ? 'error' : 'default'}
+                variant={drillFilter === 'cancelled' ? 'filled' : 'outlined'}
+                onClick={() => setDrillFilter('cancelled')}
+              />
+            </Stack>
+            <DrillDownPanel
+              title={`${drill.cohortYear} cohort ${titleSuffix} · ${members.length} ${drillFilter === 'all' ? 'members' : drillFilter}`}
+              subtitle={subtitle}
+              rows={members as unknown as Array<Record<string, unknown>>}
+              columns={columns as unknown as DrillColumn<Record<string, unknown>>[]}
+              filename={`cohort_${drill.cohortYear}${drill.month ? `_${drill.month}` : ''}_${drillFilter}`}
+              onClose={() => { setDrill(null); setDrillFilter('all'); }}
+            />
+          </Box>
         );
       })()}
     </Box>
