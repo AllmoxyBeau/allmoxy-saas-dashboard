@@ -29,8 +29,10 @@ _source_xlsx
 # stays local; ETL pulls fresh copies on demand.
 _etl_scripts/cache
 
-# Note: public/snapshots/*.json IS committed so Vercel deploys have the data.
-# The repo MUST remain private. Anyone with repo access can read this data.
+# Data snapshots — NEVER commit. Contain per-customer MRR, P&L, EBITDA, etc.
+# Snapshots live on Beau's laptop and (eventually) Supabase Storage. The
+# Vercel build will fetch them at deploy time, not from the repo.
+public/snapshots
 
 # Editor
 .vscode/*
