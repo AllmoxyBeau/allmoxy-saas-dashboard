@@ -21,9 +21,16 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 
-# Data snapshots & source spreadsheets (customer financial data — never commit)
-public/snapshots
+# Source spreadsheets (raw xlsx with customer financial data — never commit)
 _source_xlsx
+
+# ETL cache (regeneratable — re-download via _etl_scripts/sync_hubspot.mjs etc.)
+# Includes raw HubSpot API exports with stripe IDs and owner emails. Always
+# stays local; ETL pulls fresh copies on demand.
+_etl_scripts/cache
+
+# Note: public/snapshots/*.json IS committed so Vercel deploys have the data.
+# The repo MUST remain private. Anyone with repo access can read this data.
 
 # Editor
 .vscode/*

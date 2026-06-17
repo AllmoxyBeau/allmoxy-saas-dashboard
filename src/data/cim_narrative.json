@@ -1,0 +1,142 @@
+{
+  "_comment": "CIM narrative content. Sourced from the Allmoxy Marketing Canon (Google Drive shared folder) — specifically messaging/positioning.md, messaging/narrative.md, messaging/proof.md, and the Four-Audience Value Narrative. Edit freely; the dashboard hot-reloads. If any block contradicts the canon, the canon wins — update both.",
+  "company": {
+    "name": "Allmoxy",
+    "tagline": "The operating system for the woodworking industry.",
+    "ai_vision_line": "The work runs on Allmoxy. So will the intelligence.",
+    "headquarters": "Ogden, UT",
+    "year_founded": 2012,
+    "website": "allmoxy.com",
+    "stage": "Profitable SaaS · Founder-led · Bootstrapped",
+    "category": "Vertical SaaS · Configured Wood Manufacturing Operating System"
+  },
+  "document": {
+    "title": "Confidential Information Memorandum",
+    "subtitle": "Working draft — prepared from live dashboard data",
+    "classification": "STRICTLY CONFIDENTIAL · FOR APPROVED RECIPIENTS ONLY",
+    "advisor": "—",
+    "contact": "—"
+  },
+  "executive_summary_lede": "Allmoxy is the operating system for the **$22B U.S. custom cabinet and configured wood manufacturing market — 5,000+ small and mid-size businesses** that sit between too-simple tools and too-complex ERP. Allmoxy is the purpose-built central platform: the hub that holds their orders, their customer relationships, and the transaction infrastructure that connects every business in the industry.",
+  "company_overview": "Allmoxy was founded in **2012** by Beau Lewis to give cabinet, closet, millwork, and architectural-woodwork shops a real operating system — the layer that lets them capture orders effortlessly, get paid, automate the office, and run the whole shop on one connected system. The business is **profitable**, **bootstrapped**, and **founder-led**.\n\nAllmoxy's customer base spans the nine in-motion segments of the canonical Allmoxy Marketing Canon (Cabinetry, Closets & Home Organization, Architectural Woodwork, Millwork, Retail Fixtures, Contract Furniture, Dealer/Showroom, Designers, Residential Furniture), with the deepest concentration in **Cabinetry** — specifically **Component Manufacturers** (door, drawer-box, and face-frame shops selling to other cabinet shops) and **Custom Cabinet Shops**.\n\n**Why now.** Four forces make Allmoxy urgent today:\n\n1. **The labor and knowledge squeeze.** Skilled woodworking labor is scarce; the most experienced people are retiring with process knowledge in their heads. Shops are forced to do more with fewer, less-experienced hands.\n\n2. **The ownership handoff.** A generation of shop founders is selling or handing off. New owners — and the PE roll-ups consolidating the trade — expect modern systems and clean operational data, not a binder and a spreadsheet that only the founder understood.\n\n3. **Buyers expect to serve themselves.** Cabinet-shop customers (dealers, builders, designers, homeowners) live in an Amazon-everywhere world. Faxing an order sheet feels broken. Shops that offer a real ordering portal win business — even from customers they've never met.\n\n4. **The AI inflection.** Intelligence runs on data. The shops and platforms holding clean, structured operational data will own the AI layer of this trade; the rest can't participate. Allmoxy is the system of record before the AI era rewards whoever already is.\n\n**The enemy Allmoxy displaces.** A disconnected, manual shop running on a manila folder of printouts in a rack, a wall calendar telling the floor which packet to grab next, fax sheets, five tools that don't talk, and one person (\"IT Tim\") who holds the home-grown system together in their head. Lose the folder, lose the job; lose Tim, lose the business. Every order re-keyed by hand. Every job built from late or wrong information. It works — barely — until it doesn't.\n\n**Why Allmoxy is hard to copy.** Five things:\n\n• **Purpose-built for configured manufacturing.** The data model is built on the reality that every order is a unique specification moving through a lifecycle — not a SKU checkout (e-commerce) and not a standardized production run (ERP). A generalist can't bolt that on.\n\n• **Meets shops where they are.** Allmoxy integrates with QuickBooks and whatever design/engineering package the shop already runs (Cabinet Vision, Microvellum, KCD, Mozaik, SketchUp, Chief Architect). It does not design, and it does not drive the optimized CNC — it runs the order, money, and job *around* those tools. Switching is low-risk; once installed, stickiness is high.\n\n• **The operating-layer moat.** Customers say it plainly: *\"I'd die without Allmoxy\"* (Kitchen Vision and Bath). *\"I don't understand how someone could run a shop without Allmoxy\"* (NJ Drawers). When a business lives in a platform, it stays.\n\n• **The connected-network moat (rolling out).** A custom shop's outgoing purchase is a component manufacturer's incoming order. Allmoxy is building the web where one shop's buy is another's sell — all on one platform, with AI extracting the bill-of-materials directly from the design and tracking supplier status. Every connected participant makes the next more valuable. Customers are already asking their *vendors* to build Allmoxy sites.\n\n• **Industry depth.** Allmoxy's canonical 20-segment / 69-sub-segment framework + cabinet-industry-taxonomy mean the platform understands the trade — products, materials, operations, customer types — at a granularity generic software cannot match.",
+  "market_opportunity": "**Market: ~$22B U.S. custom cabinet and configured wood manufacturing — 5,000+ small and mid-size businesses.** TAM cross-checked against FDMC 300 + IBISWorld NAICS 33711 (kitchen cabinet manufacturing), 33721 (office furniture), and 32191 (millwork).\n\nThese businesses share a common operational shape — every order is a unique specification, every job moves through a lifecycle, and every customer is a relationship rather than a checkout event.\n\n**Primary buyers (in-motion segments):** Cabinetry, Closets & Home Organization, Architectural Woodwork, Millwork, Residential Furniture, Contract/Institutional Furniture, Retail Fixtures, Dealer/Showroom, Designers. Allmoxy actively sells to 9 of the canonical 20 industry segments; the other 11 are tracked as context-only.",
+  "competitive_wedge": [
+    {
+      "alternative": "Too-simple tools",
+      "examples": "Spreadsheets, QuickBooks alone, fax/email orders, generic e-commerce",
+      "why_it_breaks": "Can't handle configured orders; no shop-floor flow; everything re-keyed manually",
+      "where_allmoxy_wins": "Purpose-built for per-order configuration and the order-to-cash lifecycle"
+    },
+    {
+      "alternative": "Too-complex ERP",
+      "examples": "Epicor, Infor, Sage X3, JobBOSS, Fishbowl",
+      "why_it_breaks": "Wrong shape for a custom shop; consultants, six-figure implementation, full-time admins",
+      "where_allmoxy_wins": "Built for SMB custom manufacturers; shops run it themselves"
+    },
+    {
+      "alternative": "Design software",
+      "examples": "Cabinet Vision, Microvellum, KCD, Mozaik, 2020 Design",
+      "why_it_breaks": "Handles the front end (design / engineering); never meant to run orders, customers, or cash",
+      "where_allmoxy_wins": "Partner, not competitor — design tools do the front end, Allmoxy does the back end"
+    },
+    {
+      "alternative": "Home-grown system",
+      "examples": "Spreadsheets, Access, custom-coded pricing",
+      "why_it_breaks": "Brittle, undocumented, one person holds it together (\"IT Tim\")",
+      "where_allmoxy_wins": "A maintained platform configured to the shop's rules; the architect stops being the help desk"
+    }
+  ],
+  "buying_committee": [
+    { "persona": "Owner Owen", "role": "Economic buyer", "what_they_want": "Growth without the chaos — more orders, faster lead times, fewer remakes, without adding office staff." },
+    { "persona": "Office Anna", "role": "Champion + daily user", "what_they_want": "Stop re-keying the same order into three places. Stop fielding \"where's my order?\" calls." },
+    { "persona": "IT Tim", "role": "Technical gatekeeper", "what_they_want": "Stop being the help desk for a brittle home-grown system only they understand. Be the architect instead." },
+    { "persona": "Sales Sam", "role": "Influencer", "what_they_want": "Accurate pricing closes faster; honest lead times; a portal that makes the shop look buttoned-up." },
+    { "persona": "Manufacturing Mike", "role": "Influencer", "what_they_want": "Accurate, complete job info reaches the floor the first time — fewer remakes, less wasted material." }
+  ],
+  "product_overview": "**One promise: Grow without the chaos.** More orders and jobs, faster lead times, fewer remakes — without adding office staff or losing your mind.\n\nFour pillars deliver the promise. Every pillar is universal across catalog/reorder shops and project/custom-job shops; the segment determines which one or two lead.\n\n**Pillar 1 — Capture orders effortlessly.** Every order and job comes in complete, without the team chasing it. Catalog shops give customers a 24/7 ordering portal; project shops capture the job and its specs while the design stays in the shop's CAD and flows in.\n\n**Pillar 2 — Get paid.** Pricing, terms, and payment handled in one place. The money side runs with the order; cash flow doesn't depend on chasing it.\n\n**Pillar 3 — Automate your office.** The repetitive office work runs itself — routing orders, generating cutlists and documents, applying pricing and surcharges, sending status updates, syncing to QuickBooks. Information lands in the right place at the right time without anyone shepherding it.\n\n**Pillar 4 — One system that gets smarter.** The whole shop runs on one connected system — every order and job, its specs, status, schedule, and money — instead of a manila folder, a wall calendar, spreadsheets, and knowledge stuck in someone's head. Because it all lives there, it keeps getting smarter and reaches outward to suppliers. The **AI engine** (near-term) reads and writes the information in tools shops already use, so integration isn't a manual slog. The **interconnected purchasing web** (near-term) extracts what a shop needs to buy directly from the design, lets the shop buy those components from manufacturers right inside Allmoxy, and tracks their status — one shop's buy is another's sell, all on one platform.\n\n**Allmoxy architecture — what runs where.** Every customer has the same platform; segment-specific value is delivered via configuration, not packaging:\n\n• **L1 — Platform Foundation** (universal): customer database, transaction infrastructure (payments, invoicing, AR), operations infrastructure (jobs, tasks, workflow), and platform infrastructure (API, integrations with Cabinet Vision / Microvellum / QuickBooks / carriers / payment processors).\n\n• **L2 — Company Configuration** (configured once per company): B2B ordering portal, catalog management, configure-to-order pricing, design-software integration, job workflows, dealer/account management.\n\n• **L3 — Account-Level Rules** (configured per customer of the customer): per-dealer pricing tiers, credit terms, lead-time commitments, custom portal branding.\n\n• **L4 — Order/Job Behavior** (per order or job): change orders, submittals, milestone billing, retainage, job costing, client-facing status portal.\n\n• **L5 — Product/Item Configuration** (per item): configure-to-order rules, finish/material compatibility, option dependencies, dimension validation.\n\n**What Allmoxy is NOT.** Allmoxy does not design. It is not a 3D designer, a space planner, or a CAD tool. Shops design and engineer in whatever package they already use (Cabinet Vision, Microvellum, Mozaik, SketchUp, Chief Architect, ClosetPro, KCDw, 2020). Those files and specs flow in; Allmoxy runs everything around them. Allmoxy does not drive the optimized CNC — the shop's engineering package does. Allmoxy can output directly to simpler machines (chop saws, door machines like an S90) — relevant mostly to component manufacturers.",
+  "growth_drivers": [
+    "**Inbound product-market fit.** New logos arrive primarily through customer referrals and organic search — customers actively recommend Allmoxy to their own customers, and shops are asking their *vendors* to build Allmoxy sites (Kitch). The motion does not require an outbound sales team at current scale.",
+    "**Labor / knowledge squeeze is forcing the buy.** Skilled woodworking labor is scarce; experienced staff is retiring. Shops have to do more with fewer hands — automating order processing becomes how they survive a hire they couldn't make. (BTJ runs hundreds of orders a week with two office employees.)",
+    "**Ownership turnover and PE roll-ups.** A generation of founders is handing off or selling. New owners and PE consolidators expect modern systems and clean operational data, not a binder and a one-person home-grown system. Allmoxy is the modernization layer.",
+    "**Component-manufacturer cluster compounds.** Allmoxy's deepest fit is the Component Manufacturer sub-segment — cabinet doors, drawer boxes, face frames sold to other shops. This cluster continues to consolidate to Allmoxy as the platform's B2B-portal and configure-to-order capabilities mature.",
+    "**Dealer-portal network effects.** When a manufacturer adopts Allmoxy, their dealers transact through an Allmoxy-hosted portal — exposing every dealer to the platform and creating both upstream (more manufacturer wins) and downstream (dealer-side instances) acquisition.",
+    "**The interconnected purchasing web (rolling out).** AI extracts a shop's bill-of-materials from the design, and they buy those components from manufacturers right inside Allmoxy. One shop's buy is another's sell. Every connected participant makes the next more valuable — a network effect a single-shop tool can't replicate.",
+    "**The AI moat.** The shops on Allmoxy already hold clean, structured operational data. As the AI era rewards whoever already owns the data, Allmoxy customers are positioned to benefit — and the platform is positioned to become the trade's intelligence layer."
+  ],
+  "key_risks": [
+    "**Customer concentration.** The top 10 customers contribute a meaningful share of subscription MRR; loss of a marquee account would be visible. Concentration figures are reported in §13 of this document on a **post-amortization** basis (annual lump-sums spread across their coverage months).",
+    "**Single-founder key-person dependency.** Allmoxy is founder-led, with operational and strategic leadership concentrated in the CEO. M&A diligence should assess succession depth, second-tier management bench, and transition plans.",
+    "**Design-software adjacency.** Cabinet Vision (Hexagon), Microvellum, and 2020 Design (Cyncly) have historically partnered with Allmoxy but operate adjacent products. A strategic shift by any of them into the back-end ordering layer would compress positioning. Tracked via integration health and partner-relationship documentation.",
+    "**Macroeconomic exposure.** Residential remodel + new-construction is a meaningful end market for cabinet customers. Sustained housing softness compresses customer growth and reactivates churn risk on smaller shops.",
+    "**Proof-point gaps that diligence will examine.** The canonical Proof Library (`messaging/proof.md`) is explicit about three gaps: (1) **Pillar 2 (Get Paid) has no customer proof point yet** — capability is real, customer evidence is still being collected; (2) **the AI engine + interconnected purchasing web are forward-looking** — the operating layer is proven, the AI/marketplace layer is roadmap; (3) **proof-point segment coverage is cabinetry/millwork/door-shop heavy** — Closets, Architectural Woodwork, Contract Furniture, and Dealer/Designer accounts have light public proof to date.",
+    "**Churn measurement gap.** A subset of historical churns lacks recorded reason codes in the CRM; the Churn Investigator surface uses AI inference from CSM notes to backfill, but the underlying notes-hygiene is a process gap. Buyers will examine the unattributed share.",
+    "**Annual-payer revenue smoothing.** A small number of annual-pay customers have lump-sum charges amortized across their coverage months via configured overrides — buyers reviewing raw Stripe data will see un-amortized lump-sum charges and need the reconciliation walked through (covered in §20 Appendix)."
+  ],
+  "operations_overview": "Operations are lean and run on the platform Allmoxy sells. Customer Success is concentrated on a small team handling onboarding, configuration, and ongoing account management. Engineering is in-house and operates on a continuous-release cadence. Finance runs on QuickBooks with this dashboard providing the management-reporting layer above it. **There is no outside investor cap table; founder retains control.** HubSpot is the CRM system of record for the canonical customer-segmentation framework. Detailed operational benchmarks (S&M as % of revenue, R&D as % of revenue, headcount, gross margin) are derived live from the Unit Economics and P&L sections of this document.",
+  "customer_proof": {
+    "_comment": "Customer proof points pulled verbatim from messaging/proof.md (the Allmoxy Marketing Canon). 'Single-customer results, not base-wide averages' — phrase as such in any copy. Usage restrictions per proof.md: Kitch quotes OK but do NOT use Kitch name/logo on the website scroll/marquee. Canary not used at all.",
+    "quantified": [
+      { "metric": "Order entry time", "before": "~2 hours", "after": "~2 minutes", "source": "Customer of Fryburg", "pillar": "Capture orders" },
+      { "metric": "Order → shop floor", "before": "~90 minutes", "after": "~90 seconds", "source": "Panhandle", "pillar": "One system" },
+      { "metric": "Customer self-service rate", "before": null, "after": "98–99% of customers order themselves", "source": "Justin, BTJ", "pillar": "Capture orders" },
+      { "metric": "Volume vs. headcount", "before": null, "after": "Hundreds of orders/week with 2 office employees", "source": "Justin, BTJ", "pillar": "The promise + Automate the office" },
+      { "metric": "Ordering availability", "before": null, "after": "24/7", "source": "Steve Harmon, DC", "pillar": "Capture orders" }
+    ],
+    "quotes": [
+      { "text": "98–99% of our customers are now placing orders themselves. I can't even quantify the time it has saved us. We're processing hundreds of customer orders with only two office employees.", "attribution": "Justin, BTJ", "theme": "The promise — grow without the chaos" },
+      { "text": "Our customers can place orders 24 hours a day, 7 days a week.", "attribution": "Steve Harmon, DC", "theme": "Capture orders" },
+      { "text": "With Allmoxy we are receiving orders in the middle of the night from customers we've never even heard of before!", "attribution": "Harrison, Greyloch", "theme": "Capture orders" },
+      { "text": "When I use Allmoxy it takes two minutes to submit an order!", "attribution": "Customer of Fryburg", "theme": "Capture orders" },
+      { "text": "The automations make sure that order information and data are always in the right place at the right time.", "attribution": "Matt, Lewis Cabinet", "theme": "Automate the office" },
+      { "text": "An order comes in and everything is ready to go. One of our secrets to success is Allmoxy, but we do not keep it a secret — we recommend you guys to all our customers.", "attribution": "Peter, NJ Drawers", "theme": "One system" },
+      { "text": "Allmoxy empowers us to use, control and manipulate our data as we need it.", "attribution": "Ken, Midwest", "theme": "One system" },
+      { "text": "The product validations ensure that there are no questions between the shop floor and the office.", "attribution": "Matt, Lewis Cabinet", "theme": "One system" },
+      { "text": "We could get an order and send it to the shop floor within a minute and a half… It would have taken an hour and a half before.", "attribution": "Panhandle", "theme": "One system" },
+      { "text": "I don't understand how someone who owns a shop could run without Allmoxy!", "attribution": "Peter, NJ Drawers (echoed by Lahn, Red Rock Milling)", "theme": "Loyalty / renewal" },
+      { "text": "I'd die without Allmoxy.", "attribution": "Kha Vu, Kitchen Vision and Bath", "theme": "Loyalty / renewal" },
+      { "text": "We just got a new door vendor and they don't have online ordering, and I said, 'please build an Allmoxy site,' because the people we order from with Allmoxy make our lives so much easier.", "attribution": "Andrew Hibbs, Kitch", "theme": "Advocacy — pulling vendors onto the platform" }
+    ],
+    "advocates": [
+      { "customer": "BTJ", "person": "Justin", "notes": "Strongest quantified story (self-service + lean office)" },
+      { "customer": "NJ Drawers", "person": "Peter", "notes": "Actively recommends Allmoxy to their own customers" },
+      { "customer": "Diamond CNC", "person": "Mike, Rob", "notes": "\"As valuable as your CNC\"" },
+      { "customer": "Red Rock Milling", "person": "Lahn / Lon", "notes": "Renewal advocate" },
+      { "customer": "Kitch", "person": "Andrew Hibbs", "notes": "Strong story — quotes OK; no name/logo on website scroll" },
+      { "customer": "Kitchen Vision and Bath", "person": "Kha Vu", "notes": "Short, punchy quote" },
+      { "customer": "Greyloch", "person": "Harrison", "notes": "Net-new orders via portal" },
+      { "customer": "Lewis Cabinet", "person": "Matt", "notes": "Validations / office↔floor accuracy" },
+      { "customer": "Midwest", "person": "Ken", "notes": "Data control" },
+      { "customer": "DC", "person": "Steve Harmon", "notes": "24/7 ordering" }
+    ],
+    "usage_note": "Proof points reflect single-customer results, not base-wide averages — phrase as such in any external use. Aggregate metrics (base-wide order volume, $ GMV, average lead-time reduction) are documented gaps in `messaging/proof.md` and would harden diligence materially when collected."
+  },
+  "definitions": {
+    "MRR": "Monthly Recurring Revenue — sum of per-customer subscription charges in the reference month, after amortization of annual lump-sum payments across the 12-month coverage window.",
+    "ARR": "Annual Recurring Revenue — Subscription MRR × 12. Services and Connect revenue are non-recurring and tracked separately; not included in ARR.",
+    "NRR": "Net Revenue Retention — anchor-cohort metric. NRR(M) = (Starting MRR of cohort billing in month M-12 − Churn − Contraction + Expansion observed by month M) / Starting MRR.",
+    "GRR": "Gross Revenue Retention — same cohort, NRR without Expansion. GRR(M) = (Starting − Churn − Contraction) / Starting.",
+    "LTV": "Customer Lifetime Value — Trailing-12 gross profit per customer ÷ annual churn rate. Trailing-12 windowed to smooth one-off months.",
+    "CAC": "Customer Acquisition Cost — Trailing-12 Sales & Marketing expense (QuickBooks lines 6050 / 6300 / 6310) ÷ new logos in same window.",
+    "Payback months": "CAC ÷ (ARPU × Gross Margin). Months of subscription gross profit required to recoup CAC.",
+    "Magic Number": "(ARR added in Q × 4) / S&M spend in prior quarter. >0.75 healthy; >1.0 exceptional.",
+    "Quick Ratio": "(New MRR + Expansion MRR) / (Churn MRR + Contraction MRR). >4 healthy; >2 acceptable.",
+    "Component Manufacturer": "Cabinetry sub-segment — companies producing components (cabinet doors, drawer boxes, face frames, organizational hardware) sold to other shops rather than to homeowners or dealers.",
+    "Annualized MRR": "Portion of monthly MRR representing 1/12 of an annual lump-sum payment, recognized smoothly across the 12-month coverage window."
+  },
+  "data_sources": [
+    "**Stripe** — payment-level transaction data (per-customer charges, refunds, types) syncing into the Meta Reconcile Tool.",
+    "**HubSpot** — customer-level CRM record: Primary Segment, Sub Segment, Pay Status, Churn Reason, Contract Status, Custom Domain Subscription IDs.",
+    "**QuickBooks** — accounting source of record for P&L, S&M and COGS line items, and EBITDA.",
+    "**Allmoxy Meta Data Reconcile Tool (Google Sheets)** — analyst-curated reconciliation layer joining Stripe, HubSpot, and Allmoxy customer IDs into a single canonical roster.",
+    "**Stripe Connect Revenue (Google Sheets, 6 annual files)** — annual aggregation of affiliate fees by acct_ ID and month.",
+    "**Allmoxy Marketing Canon (Google Drive shared folder)** — the canonical positioning, messaging, proof library, segmentation framework, and buyer personas. This CIM's narrative content traces verbatim to `messaging/positioning.md`, `messaging/narrative.md`, `messaging/proof.md`, and `registry/segments.md`.",
+    "**Manual override files in the repo:** `annual_payers.json` (amortization targets), `annual_amortization_overrides.json` (per-transaction custom schedules), `variance_overrides.json` (non-churn $0-month overrides), `transaction_overrides.json` (per-transaction stream reclassifications), `connect_customer_overrides.json` (Connect acct_ → customer mapping)."
+  ],
+  "methodology_notes": [
+    "**Amortization of annual payments.** Customers in `annual_payers.json` who pay $3K+ at once have their charges spread as amount/N over N months. Default N=12, override-capable per transaction (see B&B Door $32K example: 15 months covering 3 retroactive + 12 forward).",
+    "**Variance overrides.** Customers with legitimate non-churn $0 months (card failure, tiered/usage-based billing, payment pause) are carry-forwarded to prior MRR via `variance_overrides.json` so the waterfall doesn't misclassify them as churn.",
+    "**Two waterfall views.** The primary `mrr_waterfall` is built from the per-customer monthly subscription matrix (post-amortization). A parallel `mrr_waterfall_txns` is built directly from Stripe transactions (pre-amortization) as a cross-check; an annual lump-sum customer appears as a $32K \"reactivation\" in the txn view but a smooth $2,134/mo in the primary view.",
+    "**Sub-segment data.** Pulled from HubSpot's `sub_segment_framework` Company property and cached at `_etl_scripts/cache/hubspot_segments.json`. Currently 389/593 customers carry a sub-segment value; the remainder are gradually populated as HubSpot data hygiene continues.",
+    "**Proof discipline.** Per `messaging/proof.md`: every customer-facing claim traces to a specific quote or metric in the Proof Library. Single-customer results are phrased as such, not as base-wide averages. The canonical proof gaps (no Pillar 2 proof point yet, AI-engine proof is forward-looking, segment coverage is cabinetry-heavy) are documented in §20 of this CIM under Key Risks."
+  ]
+}

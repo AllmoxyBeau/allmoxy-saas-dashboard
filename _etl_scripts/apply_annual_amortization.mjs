@@ -3,7 +3,11 @@
  * Apply annual-payer amortization to existing snapshots in-place.
  *
  * For every customer ID in src/data/annual_payers.json:
- *   - Subscription charges >= $3000  → amortized amount/12 over 12 months forward (incl. origin month)
+ *   - Subscription charges >= $3000  → amortized amount/12 over 12 months forward (incl. origin month),
+ *     unless _etl_scripts/annual_amortization_overrides.json has a matching entry for this transaction
+ *     (matched by customer ID + origin month + amount range), in which case the override's start_month
+ *     and months count are used. This allows charges that span more than 12 months, or that back-date
+ *     coverage to months before the charge.
  *   - Subscription charges < $3000  → credited full to origin month (likely historical monthly billing)
  *
  * Affects: customer_profiles.json, subscription_by_month.json, mrr_by_month.json, mrr_waterfall.json
@@ -24,6 +28,16 @@ const AMORTIZE_MONTHS = 12;
 const annualCfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/annual_payers.json'), 'utf8'));
 const ANNUAL_IDS = new Set(annualCfg.annual_payer_ids);
 
+const OVERRIDES_PATH = path.join(ROOT, '_etl_scripts/annual_amortization_overrides.json');
+const overridesCfg = fs.existsSync(OVERRIDES_PATH)
+  ? JSON.parse(fs.readFileSync(OVERRIDES_PATH, 'utf8'))
+  : { overrides: [] };
+const overridesByCustomerId = new Map();
+for (const o of (overridesCfg.overrides || [])) {
+  if (!overridesByCustomerId.has(o.allmoxy_customer_id)) overridesByCustomerId.set(o.allmoxy_customer_id, []);
+  overridesByCustomerId.get(o.allmoxy_customer_id).push(o);
+}
+
 const profiles = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8'));
 const subByMonth = JSON.parse(fs.readFileSync(path.join(SNAP, 'subscription_by_month.json'), 'utf8'));
 const mrrByMonth = JSON.parse(fs.readFileSync(path.join(SNAP, 'mrr_by_month.json'), 'utf8'));
@@ -40,6 +54,15 @@ function ymFromDate(iso) {
 
 function round2(n) { return Math.round(n * 100) / 100; }
 
+function findOverride(customerId, origin, amount) {
+  const list = overridesByCustomerId.get(customerId) ?? [];
+  return list.find((o) =>
+    o.origin_month === origin
+    && amount >= (o.amount_match_min ?? 0)
+    && amount <= (o.amount_match_max ?? Number.POSITIVE_INFINITY)
+  );
+}
+
 function amortizeCustomer(profile) {
   // Build fresh per-month subscription from transactions.
   // Returns { monthlySub: { [ym]: number }, monthlyAnnualized: Set<ym>, monthlyPayDate: { [ym]: isoDate } }
@@ -53,9 +76,15 @@ function amortizeCustomer(profile) {
     if (!origin) continue;
     const payDate = (t.created || '').slice(0, 10);
     if (t.amount >= ANNUAL_THRESHOLD) {
-      const per = t.amount / AMORTIZE_MONTHS;
-      for (let k = 0; k < AMORTIZE_MONTHS; k++) {
-        const m = addMonths(origin, k);
+      const override = findOverride(profile.allmoxy_customer_id, origin, t.amount);
+      const months = override?.months ?? AMORTIZE_MONTHS;
+      const startMonth = override?.start_month ?? origin;
+      if (override) {
+        console.log(`  override hit: ${profile.name} · $${t.amount.toFixed(2)} on ${payDate} → ${months} months starting ${startMonth} (${override.reason ?? 'no reason given'})`);
+      }
+      const per = t.amount / months;
+      for (let k = 0; k < months; k++) {
+        const m = addMonths(startMonth, k);
         monthlySub[m] = round2((monthlySub[m] ?? 0) + per);
         monthlyAnnualized.add(m);
         if (!monthlyPayDate[m]) monthlyPayDate[m] = payDate;
@@ -110,6 +139,16 @@ for (const profile of profiles.rows) {
   profile.peak_month = peakMonth;
   profile.peak_month_total = round2(peakTotal);
   profile.current_subscription_mrr = round2(newHistory[profile.latest_month]?.subscription ?? 0);
+  // Status flag must reflect the POST-amortization reality. The upstream status
+  // is computed from payment-activity recency in build_customer_profiles —
+  // which incorrectly marks annual payers 'churned' if their last lump-sum
+  // falls outside the current 12-month window. After amortization stamps
+  // future months with the spread, recompute: a customer with positive MRR in
+  // the latest complete month is 'active'.
+  if (profile.current_subscription_mrr > 0 && profile.status === 'churned') {
+    profile.status = 'active';
+    profile.status_corrected_by_amortization = true;
+  }
 
   // --- 2. Update subscription_by_month row for this customer ---
   const subRow = subByMonth.rows.find((r) => r.customer_name === profile.name);
@@ -130,6 +169,54 @@ for (const profile of profiles.rows) {
 }
 
 console.log(`Amortized ${changed} annual-payer customer(s).`);
+
+// --- 2.5. Apply variance overrides (carry-forward for non-churn $0 months) ---
+// Stops the waterfall from classifying card-failure / tiered-billing / paused
+// customers as churn. Synthesizes the prior month's MRR value into the current
+// month so subscription_by_month, monthly_history, and the rebuilt waterfall
+// all see the customer as stable. Must run BEFORE the totals/waterfall rebuild.
+const VARIANCE_OVERRIDES_PATH = path.join(ROOT, '_etl_scripts/variance_overrides.json');
+const varianceCfg = fs.existsSync(VARIANCE_OVERRIDES_PATH)
+  ? JSON.parse(fs.readFileSync(VARIANCE_OVERRIDES_PATH, 'utf8'))
+  : { overrides: [] };
+for (const o of (varianceCfg.overrides || [])) {
+  if (o.type !== 'carry_forward') continue;
+  const subRow = subByMonth.rows.find((r) => r.customer_name === o.customer_name);
+  if (!subRow) {
+    console.warn(`  variance override: "${o.customer_name}" not found in subscription_by_month — skipping`);
+    continue;
+  }
+  const prevMonth = addMonths(o.month, -1);
+  const prevVal = subRow[prevMonth];
+  if (typeof prevVal !== 'number' || prevVal <= 0) {
+    console.warn(`  variance override: ${o.customer_name} ${prevMonth} has no positive MRR — can't carry forward to ${o.month}`);
+    continue;
+  }
+  const existing = subRow[o.month];
+  if (typeof existing === 'number' && existing > 0) {
+    console.log(`  carry_forward (no-op): ${o.customer_name} already has $${existing} in ${o.month}`);
+    continue;
+  }
+  subRow[o.month] = prevVal;
+  if (subRow.payment_dates) {
+    const prevDate = subRow.payment_dates[prevMonth];
+    if (prevDate) subRow.payment_dates[o.month] = prevDate;
+  }
+  // Mirror into customer_profiles.monthly_history so per-customer views agree.
+  const profile = profiles.rows.find((p) => p.name === o.customer_name);
+  if (profile) {
+    if (!profile.monthly_history) profile.monthly_history = {};
+    const old = profile.monthly_history[o.month] || { subscription: 0, services: 0, connect: 0, total: 0 };
+    profile.monthly_history[o.month] = {
+      ...old,
+      subscription: prevVal,
+      total: round2(prevVal + (old.services || 0) + (old.connect || 0)),
+      carried_forward: true,
+      carry_forward_reason: o.reason ?? 'non-churn carry-forward',
+    };
+  }
+  console.log(`  carry_forward: ${o.customer_name} ${o.month} ← $${prevVal} from ${prevMonth} (${o.reason ?? 'no reason given'})`);
+}
 
 // --- 3. Recompute mrr_by_month totals from subscription_by_month ---
 // Build month → {sumSub, logoQty} from subByMonth.

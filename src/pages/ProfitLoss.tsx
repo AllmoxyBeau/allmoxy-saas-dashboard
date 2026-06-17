@@ -173,7 +173,7 @@ export default function ProfitLoss() {
     );
   }
 
-  const cols = [...view.visibleMonths].reverse(); // newest first
+  const cols = view.visibleMonths; // oldest → newest, left to right
   const snapNn: PnlSnap = snap; // narrow once for closures below
 
   // Build parent → children map (keys in original snapshot order).

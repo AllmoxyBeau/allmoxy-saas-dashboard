@@ -16,12 +16,13 @@ import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
 import { useSheetTab } from '../hooks/useSheetTab';
+import { hubspotCompanyUrl } from '../lib/hubspot';
 import annualPayersConfig from '../data/annual_payers.json';
 
 type Transaction = {
@@ -76,6 +77,9 @@ type CustomerProfile = {
   all_custom_domain_stripe_subscription_ids?: string[];
   hubspot_instance_name?: string | null;
   hubspot_record_id?: string | null;
+  instance_owner?: string | null;
+  instance_owner_first_name?: string | null;
+  hubspot_owner_name?: string | null;
   monthly_history: Record<string, MonthlyCell>;
   transactions: Transaction[];
 };
@@ -109,6 +113,34 @@ type ChurnSubpatternsSnap = {
   customer_subpatterns: Record<string, string[]>;
 };
 
+// public/snapshots/orders_verified.json — per-customer year-level verified
+// order counts + invoice $. One record per customer keyed by allmoxy_customer_id.
+type OrdersVerifiedYear = {
+  order_count: number;
+  total_usd: number;
+  subtotal_usd?: number;
+  b2b_subtotal_usd?: number;
+};
+type OrdersVerifiedRecord = {
+  allmoxy_customer_id: number;
+  name: string;
+  installer_id: string | null;
+  subdomain: string | null;
+  years: Record<string, OrdersVerifiedYear>;
+  monthly_avg: Record<string, number>;
+  monthly_supplement?: Record<string, number>;
+  live_date: string | null;
+  live_date_source: string | null;
+  is_launched: boolean;
+  months_to_launch: number | null;
+  total_lifetime_orders: number;
+  total_lifetime_usd: number;
+  monthly_avg_current_year: number;
+  monthly_avg_prior_year: number;
+  monthly_avg_yoy_pct: number | null;
+  latest_year_with_orders: string | null;
+};
+
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 const USD_COMPACT = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact', maximumFractionDigits: 1 });
 
@@ -135,6 +167,19 @@ const filterCustomers = createFilterOptions<CustomerProfile>({
 
 const COMMITTED_ANNUAL_IDS = new Set<number>(annualPayersConfig.annual_payer_ids);
 const PENDING_STORAGE_KEY = 'allmoxy.annual_payers.pending';
+const BID_ONLY_STORAGE_KEY = 'allmoxy.bid_only.pending';
+
+// Bid-only override store: aid → boolean. Used by the Customer Detail toggle
+// to mark customers who use Allmoxy primarily for bids/quotes (not verified orders).
+// Stored in localStorage until exported and committed to _etl_scripts/bid_only_customers.json.
+type BidOnlyMap = Record<string, boolean>;
+function readBidOnly(): BidOnlyMap {
+  try { const raw = localStorage.getItem(BID_ONLY_STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+  catch { return {}; }
+}
+function writeBidOnly(next: BidOnlyMap) {
+  try { localStorage.setItem(BID_ONLY_STORAGE_KEY, JSON.stringify(next)); } catch {}
+}
 
 type PendingMap = Record<string, boolean>; // id -> pending desired state
 
@@ -213,12 +258,20 @@ export default function CustomerDetail() {
   // the page works without them, that section just won't render.
   const { data: inferencesData } = useSheetTab('churn_inferences');
   const { data: subpatternsData } = useSheetTab('churn_subpatterns');
+  // Churn Risk Matrix scoring — surface the customer's 5-signal health score
+  // here so the per-customer drill shows what the risk page sees.
+  const { data: riskData } = useSheetTab('churn_risk_matrix');
+  // Verified orders — per-customer year-level order counts + invoice $. Used
+  // for the "Orders Verified Trends" chart under the monthly revenue timeline.
+  const { data: ordersVerifiedData } = useSheetTab('orders_verified');
   const snap = data as unknown as { rows: CustomerProfile[] } | undefined;
   const cohort = cohortData as unknown as CohortSnap | undefined;
   const inferences = inferencesData as unknown as ChurnInferencesSnap | undefined;
   const subpatterns = subpatternsData as unknown as ChurnSubpatternsSnap | undefined;
+  const risk = riskData as unknown as { customers: Array<{ allmoxy_customer_id: number; tier: string; total_score: number; signal_1_orders: number; signal_2_launch: number; signal_3_recency: number; signal_4_risk: number; signal_5_tenure: number; orders_detail: string; signal_2_detail?: string; days_since_last_contact: number | null; launch_status: string; is_launched: boolean; live_date: string | null; orders_monthly_avg_current: number; orders_monthly_avg_prior: number; orders_yoy_pct: number | null; arr_at_risk: number; narrative: string; is_bid_only?: boolean }> } | undefined;
 
   const [pending, setPending] = useState<PendingMap>(() => readPending());
+  const [bidOnlyMap, setBidOnlyMap] = useState<BidOnlyMap>(() => readBidOnly());
   // Pending churn-reason overrides — id → { reason, evidence, updatedAt }. Persists locally
   // until an ETL pass folds them into customer_profiles or churn_inferences. While pending,
   // the "Update" UI surfaces a "Pending" chip so the user knows it hasn't landed yet.
@@ -397,9 +450,6 @@ export default function CustomerDetail() {
                 <Typography variant="h5" sx={{ fontWeight: 500 }}>
                   {selected.name}
                 </Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  Allmoxy ID {selected.allmoxy_customer_id}
-                </Typography>
                 <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
                   <MetaBit label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
                   <MetaBit label="First payment" value={formatDateMDY(selected.first_payment_date)} />
@@ -412,13 +462,23 @@ export default function CustomerDetail() {
                 {/* HubSpot Instance Sync Sheet — only render when at least one field is populated.
                     Churn reason is shown in its own "Churn analysis" panel below, so it isn't
                     duplicated here. */}
-                {(selected.primary_segment || selected.pay_status || selected.contract_status) && (
-                  <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
-                    {selected.primary_segment && <MetaBit label="Segment" value={selected.primary_segment} />}
-                    {selected.pay_status && <MetaBit label="Pay status" value={selected.pay_status} />}
-                    {selected.contract_status && <MetaBit label="Contract" value={selected.contract_status} />}
-                  </Stack>
-                )}
+                {(() => {
+                  const accountRep =
+                    selected.instance_owner_first_name?.trim() ||
+                    selected.instance_owner?.trim() ||
+                    selected.hubspot_owner_name?.trim() ||
+                    null;
+                  const hasAny = selected.primary_segment || selected.pay_status || selected.contract_status || accountRep;
+                  if (!hasAny) return null;
+                  return (
+                    <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
+                      {accountRep && <MetaBit label="Account rep" value={accountRep} />}
+                      {selected.primary_segment && <MetaBit label="Segment" value={selected.primary_segment} />}
+                      {selected.pay_status && <MetaBit label="Pay status" value={selected.pay_status} />}
+                      {selected.contract_status && <MetaBit label="Contract" value={selected.contract_status} />}
+                    </Stack>
+                  );
+                })()}
                 {/* External links — instance URL, HubSpot, and ALL Stripe IDs */}
                 {(() => {
                   // Collect every distinct sub_id we know about (primary + secondary
@@ -451,7 +511,7 @@ export default function CustomerDetail() {
                         <ExternalLink
                           label="HubSpot ID"
                           display={selected.hubspot_company_id}
-                          href={`https://app.hubspot.com/contacts/0/company/${selected.hubspot_company_id}`}
+                          href={hubspotCompanyUrl(selected.hubspot_company_id) ?? '#'}
                         />
                       )}
                       {selected.stripe_customer_ids[0] && (
@@ -482,6 +542,18 @@ export default function CustomerDetail() {
                     </Stack>
                   );
                 })()}
+                {/* Internal IDs row — below the external links so the eye lands
+                    on the action links first (URL / HubSpot / Stripe) and the
+                    bare identifiers sit below as secondary reference info. */}
+                <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
+                  <MetaBit label="Allmoxy ID" value={String(selected.allmoxy_customer_id)} />
+                  {selected.installer_id && (
+                    <MetaBit label="Installer ID" value={selected.installer_id} />
+                  )}
+                  {selected.installer_directory && (
+                    <MetaBit label="Installer URL" value={selected.installer_directory} />
+                  )}
+                </Stack>
               </Stack>
               <Stack direction="column" spacing={1} alignItems={{ xs: 'flex-start', md: 'flex-end' }}>
                 <Chip
@@ -532,9 +604,8 @@ export default function CustomerDetail() {
 
           {/* Churn analysis panel — reads from churn_inferences.json (AI-classified reasons)
               and churn_subpatterns.json (finer-grained tags), plus any local override the user
-              has staged. Always renders so the user can record a reason for customers that
-              don't have one yet. */}
-          {(() => {
+              has staged. Only renders for churned customers — non-churned have nothing to analyze. */}
+          {selected.status === 'churned' && (() => {
             const customerKey = String(selected.allmoxy_customer_id);
             const inf = inferences?.customers.find((c) => c.allmoxy_customer_id === selected.allmoxy_customer_id) ?? null;
             const subTags = subpatterns?.customer_subpatterns?.[customerKey] ?? [];
@@ -587,6 +658,99 @@ export default function CustomerDetail() {
             </Grid>
           </Grid>
 
+          {/* Churn Risk Health Score */}
+          {(() => {
+            const riskEntry = risk?.customers?.find((r) => r.allmoxy_customer_id === selected.allmoxy_customer_id);
+            if (!riskEntry) return null;
+            // Bid-only override (from localStorage) takes precedence over snapshot data.
+            // If on, we visually pretend Signals 1 + 2 are maxed (the ETL applies the
+            // same logic, but we want immediate visual feedback before the next refresh).
+            const aidKey = String(selected.allmoxy_customer_id);
+            const localBidOnly = bidOnlyMap[aidKey];
+            const isBidOnly = localBidOnly !== undefined ? localBidOnly : !!riskEntry.is_bid_only;
+            const persistedBidOnly = !!riskEntry.is_bid_only;
+            const bidOnlyPending = localBidOnly !== undefined && localBidOnly !== persistedBidOnly;
+            // Synthesize tier when local override differs from snapshot
+            const effectiveScore = isBidOnly && !persistedBidOnly
+              ? riskEntry.total_score + (35 - riskEntry.signal_1_orders) + (25 - riskEntry.signal_2_launch)
+              : riskEntry.total_score;
+            const effectiveTier = isBidOnly && !persistedBidOnly && effectiveScore >= 40 ? 'green'
+              : (isBidOnly && !persistedBidOnly ? 'yellow' : riskEntry.tier);
+            const tierColor = effectiveTier === 'red' ? '#D63A4D' : effectiveTier === 'yellow' ? '#F5A623' : effectiveTier === 'green' ? '#1A9E5C' : '#94a3b8';
+            const tierLabel = effectiveTier === 'red' ? 'CRITICAL' : effectiveTier === 'yellow' ? 'WATCH' : effectiveTier === 'green' ? 'HEALTHY' : 'UNSCORED';
+            return (
+              <Paper sx={{ p: 3, mb: 3, borderLeft: '4px solid', borderColor: tierColor }}>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }} flexWrap="wrap">
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    Churn Risk · Health Score
+                  </Typography>
+                  <Box sx={{ flexGrow: 1 }} />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        checked={isBidOnly}
+                        onChange={(e) => {
+                          const next = { ...bidOnlyMap };
+                          if (e.target.checked === persistedBidOnly) {
+                            // matches snapshot — clear local override
+                            delete next[aidKey];
+                          } else {
+                            next[aidKey] = e.target.checked;
+                          }
+                          setBidOnlyMap(next);
+                          writeBidOnly(next);
+                        }}
+                      />
+                    }
+                    label={
+                      <Stack direction="row" spacing={0.5} alignItems="center">
+                        <Typography variant="caption" sx={{ fontSize: 12 }}>Bid-only customer</Typography>
+                        {bidOnlyPending && (
+                          <Chip label="pending" size="small" color="warning" sx={{ height: 16, fontSize: 9 }} />
+                        )}
+                        <InfoIcon info={
+                          <>
+                            Mark customers who use Allmoxy primarily for <strong>bids/quotes</strong> that never convert to verified orders.
+                            They're real paying customers — the order-volume signal just doesn't apply.<br /><br />
+                            When ON: Signal 1 (Order Volume) and Signal 2 (Launch Status) are treated as MAX (+60 pts combined), so they aren't penalized for missing order data.
+                            Other signals (engagement recency, risk keywords, tenure) still apply.<br /><br />
+                            Stored in localStorage until you export the pending overrides and commit to <code>_etl_scripts/bid_only_customers.json</code>.
+                          </>
+                        } />
+                      </Stack>
+                    }
+                  />
+                </Stack>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={4} md={3}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>Tier</Typography>
+                    <Typography variant="h4" sx={{ fontWeight: 600, color: tierColor, mt: 0.5 }}>{tierLabel}</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                      Score: {riskEntry.total_score} · ARR at risk: {USD0.format(riskEntry.arr_at_risk)}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={8} md={9}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>Signal breakdown</Typography>
+                    <Box component="table" sx={{ mt: 0.5, width: '100%', borderCollapse: 'collapse', '& td, & th': { borderBottom: '1px solid', borderColor: 'divider', py: 0.5, fontSize: 12, textAlign: 'left' } }}>
+                      <tbody>
+                        <tr><td>1 · Order Volume</td><td style={{ color: '#6B7280' }}>{riskEntry.orders_detail}</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{riskEntry.signal_1_orders >= 0 ? '+' : ''}{riskEntry.signal_1_orders}</td></tr>
+                        <tr><td>2 · Launch Status</td><td style={{ color: '#6B7280' }}>{riskEntry.signal_2_detail || riskEntry.launch_status}</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{riskEntry.signal_2_launch >= 0 ? '+' : ''}{riskEntry.signal_2_launch}</td></tr>
+                        <tr><td>3 · Engagement Recency</td><td style={{ color: '#6B7280' }}>{riskEntry.days_since_last_contact != null ? `${riskEntry.days_since_last_contact}d since last contact` : 'No HubSpot recency data'}</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{riskEntry.signal_3_recency >= 0 ? '+' : ''}{riskEntry.signal_3_recency}</td></tr>
+                        <tr><td>4 · Risk Signals</td><td style={{ color: '#6B7280' }}>{riskEntry.signal_4_risk === 0 ? 'None recorded' : 'See notes scan'}</td><td style={{ textAlign: 'right', fontWeight: 600, color: riskEntry.signal_4_risk < 0 ? '#D63A4D' : undefined }}>{riskEntry.signal_4_risk}</td></tr>
+                        <tr><td>5 · Tenure × Launch</td><td style={{ color: '#6B7280' }}>{selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)}y tenure, ${riskEntry.launch_status}` : '—'}</td><td style={{ textAlign: 'right', fontWeight: 600, color: riskEntry.signal_5_tenure < 0 ? '#D63A4D' : undefined }}>{riskEntry.signal_5_tenure}</td></tr>
+                        <tr><td colSpan={2} style={{ fontWeight: 700, paddingTop: 6 }}>Total</td><td style={{ textAlign: 'right', fontWeight: 700, color: tierColor, paddingTop: 6 }}>{riskEntry.total_score}</td></tr>
+                      </tbody>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1.5, fontSize: 11 }}>
+                  See the full attack list at <a href="/churn-risk-matrix" style={{ color: '#2C73FF' }}>/churn-risk-matrix</a>.
+                </Typography>
+              </Paper>
+            );
+          })()}
+
           {/* Monthly revenue timeline */}
           <Paper sx={{ p: 3, mb: 3 }}>
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
@@ -625,6 +789,87 @@ export default function CustomerDetail() {
               <LegendSwatch color="#F59E0B" label="Connect" />
             </Stack>
           </Paper>
+
+          {/* Orders Verified Trends — per-year order count + invoice $. Joined
+              from orders_verified.json which itself is built from the xlsx
+              Raw Data tab. Only renders when this customer has order data. */}
+          {(() => {
+            const ovByCustomer = (ordersVerifiedData as unknown as { by_customer?: Record<string, OrdersVerifiedRecord> } | undefined)?.by_customer;
+            const ov = ovByCustomer?.[String(selected.allmoxy_customer_id)];
+            if (!ov || !ov.years) return null;
+            const yearRows = Object.entries(ov.years)
+              .map(([year, y]) => ({
+                year,
+                order_count: y.order_count || 0,
+                total_usd: y.total_usd || 0,
+              }))
+              .filter((r) => r.order_count > 0 || r.total_usd > 0)
+              .sort((a, b) => a.year.localeCompare(b.year));
+            if (yearRows.length === 0) return null;
+            const lifetimeOrders = ov.total_lifetime_orders || 0;
+            const lifetimeUsd = ov.total_lifetime_usd || 0;
+            const yoyPct = ov.monthly_avg_yoy_pct;
+            const yoyLabel = yoyPct == null
+              ? null
+              : yoyPct === -1
+                ? null
+                : (yoyPct >= 0 ? '+' : '') + Math.round(yoyPct * 100) + '%';
+            const curMA = ov.monthly_avg_current_year || 0;
+            const prevMA = ov.monthly_avg_prior_year || 0;
+            return (
+              <Paper sx={{ p: 3, mb: 3 }}>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    Orders verified trends · by year
+                  </Typography>
+                  <InfoIcon info={
+                    <>
+                      <strong>What it is:</strong> Verified order count and invoice $ for each year this customer has run orders through Allmoxy.<br /><br />
+                      <strong>Data:</strong> Joined from the "Raw Data" tab of <code>Orders Verified Data.xlsx</code> via the orders_verified snapshot. Bars show invoice dollars (left axis); the line shows order count (right axis).<br /><br />
+                      Currently {lifetimeOrders.toLocaleString()} lifetime orders / {USD0.format(lifetimeUsd)} lifetime $.
+                    </>
+                  } />
+                </Stack>
+                <Stack direction="row" spacing={3} sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
+                  <MetaBit label="Lifetime orders" value={lifetimeOrders.toLocaleString()} />
+                  <MetaBit label="Lifetime invoice $" value={USD0.format(lifetimeUsd)} />
+                  {ov.live_date && <MetaBit label="Live date" value={ov.live_date} />}
+                  {ov.months_to_launch != null && <MetaBit label="Months to launch" value={`${ov.months_to_launch} mo`} />}
+                  {curMA > 0 && <MetaBit label="Current MA" value={`${USD0.format(curMA)}/mo`} />}
+                  {prevMA > 0 && <MetaBit label="Prior year MA" value={`${USD0.format(prevMA)}/mo`} />}
+                  {yoyLabel && (
+                    <MetaBit
+                      label="YoY"
+                      value={yoyLabel}
+                    />
+                  )}
+                </Stack>
+                <Box sx={{ height: 260 }}>
+                  <ResponsiveContainer>
+                    <ComposedChart data={yearRows}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
+                      <XAxis dataKey="year" stroke="#8B949E" fontSize={11} />
+                      <YAxis yAxisId="left" stroke="#8B949E" fontSize={11} width={60} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                      <YAxis yAxisId="right" orientation="right" stroke="#8B949E" fontSize={11} width={45} tickFormatter={(v) => Number(v).toLocaleString()} />
+                      <RTooltip
+                        formatter={(v: number, name: string) => {
+                          if (name === 'Invoice $') return [USD0.format(v), name];
+                          return [Number(v).toLocaleString(), name];
+                        }}
+                        contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }}
+                        labelStyle={{ color: '#FFFFFF' }}
+                        itemStyle={{ color: '#FFFFFF' }}
+                        cursor={{ fill: 'rgba(44, 115, 255, 0.06)' }}
+                      />
+                      <Legend wrapperStyle={{ fontSize: 11, color: '#8B949E' }} />
+                      <Bar yAxisId="left" name="Invoice $" dataKey="total_usd" fill="#2C73FF" />
+                      <Line yAxisId="right" name="Order count" type="monotone" dataKey="order_count" stroke="#F59E0B" strokeWidth={2} dot={{ r: 3, fill: '#F59E0B' }} />
+                    </ComposedChart>
+                  </ResponsiveContainer>
+                </Box>
+              </Paper>
+            );
+          })()}
 
           {/* Milestones + cohort context */}
           <Grid container spacing={2} sx={{ mb: 3 }}>

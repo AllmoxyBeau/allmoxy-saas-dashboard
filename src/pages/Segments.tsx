@@ -12,6 +12,8 @@ import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
@@ -25,6 +27,7 @@ import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
 import CsvExportButton from '../components/common/CsvExportButton';
 import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
+import { segmentColor, segmentLabel } from '../lib/segmentsRegistry';
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type MonthlyCell = { subscription: number; services: number; connect: number; total: number };
@@ -32,6 +35,7 @@ type ProfileRow = {
   allmoxy_customer_id: number;
   name: string;
   primary_segment: string | null;
+  sub_segment: string | null;
   pay_status: string | null;
   current_subscription_mrr: number;
   lifetime_total: number;
@@ -39,6 +43,13 @@ type ProfileRow = {
   first_payment_date: string | null;
   monthly_history: Record<string, MonthlyCell>;
   latest_month: string;
+};
+
+type SubSegmentRow = {
+  name: string;
+  customerCount: number;
+  activeCount: number;
+  currentMrr: number;
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -57,12 +68,9 @@ function fmtPct(v: number | null | undefined, digits = 0) {
   return `${(v * 100).toFixed(digits)}%`;
 }
 
-// Color palette for segments (cycles for any beyond 14).
-const SEGMENT_COLORS = [
-  '#2C73FF', '#1A9E5C', '#F5A623', '#E53E3E', '#9F7AEA',
-  '#38B2AC', '#ED8936', '#48BB78', '#4299E1', '#ECC94B',
-  '#ED64A6', '#0BC5EA', '#A0AEC0', '#F687B3', '#68D391',
-];
+// Segment colors come from the canonical registry — 9 distinct GTM colors for
+// the segments Allmoxy sells to / influences, charcoal for the 11 context-only
+// segments, neutral grey for the Unsegmented bucket. See src/lib/segmentsRegistry.ts.
 
 type SegmentRow = {
   name: string;
@@ -78,6 +86,7 @@ type SegmentRow = {
   avgMrr: number | null;
   newLogos12m: number;
   lifetimeRevenue: number;
+  subSegments: SubSegmentRow[];
 };
 
 type Filter = 'all' | 'active' | 'cancelled';
@@ -98,6 +107,15 @@ export default function Segments() {
   const [drillSegment, setDrillSegment] = useState<string | null>(null);
   const scorecardTable = useCollapse(true);
   const drillTable = useCollapse(true);
+  // Which primary-segment rows are expanded to show their sub-segment breakdown.
+  const [expandedSubs, setExpandedSubs] = useState<Set<string>>(() => new Set());
+  function toggleSub(name: string) {
+    setExpandedSubs((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name); else next.add(name);
+      return next;
+    });
+  }
   type DrillSortKey = 'name' | 'pay_status' | 'current_subscription_mrr' | 'lifetime_total' | 'first_payment_date';
   const [drillSearch, setDrillSearch] = useState('');
   const [drillPayStatus, setDrillPayStatus] = useState<string>('all');
@@ -174,6 +192,32 @@ export default function Segments() {
       const billingCustomers = customers.filter((c) => (c.current_subscription_mrr ?? 0) > 0).length;
       const avgMrr = billingCustomers > 0 ? currentMrr / billingCustomers : null;
       const newLogos12m = customers.filter((c) => isWithinLast12Months(c.first_payment_date)).length;
+
+      // Aggregate sub-segments within this primary segment.
+      const subBuckets = new Map<string, ProfileRow[]>();
+      for (const c of customers) {
+        const s = (c.sub_segment ?? '').trim() || '(unspecified)';
+        if (!subBuckets.has(s)) subBuckets.set(s, []);
+        subBuckets.get(s)!.push(c);
+      }
+      const subSegments: SubSegmentRow[] = [];
+      for (const [subName, subCustomers] of subBuckets) {
+        const subActive = subCustomers.filter((c) => !isCancelled(c));
+        subSegments.push({
+          name: subName,
+          customerCount: subCustomers.length,
+          activeCount: subActive.length,
+          currentMrr: subCustomers.reduce((s, c) => s + (c.current_subscription_mrr ?? 0), 0),
+        });
+      }
+      // Sort by current MRR desc, with "(unspecified)" pinned to the bottom.
+      subSegments.sort((a, b) => {
+        const aUnk = a.name === '(unspecified)';
+        const bUnk = b.name === '(unspecified)';
+        if (aUnk !== bUnk) return aUnk ? 1 : -1;
+        return b.currentMrr - a.currentMrr;
+      });
+
       segments.push({
         name,
         isUnsegmented: name === 'Unsegmented',
@@ -188,6 +232,7 @@ export default function Segments() {
         avgMrr,
         newLogos12m,
         lifetimeRevenue,
+        subSegments,
       });
     }
 
@@ -213,9 +258,12 @@ export default function Segments() {
       return row;
     });
 
-    // Color assignment — stable across renders.
+    // Color assignment — canonical GTM palette (mirrors registry/segments.md).
+    // Sells-to segments get their distinct hex; context-only segments get charcoal.
     const colorByName: Record<string, string> = {};
-    chartSegments.forEach((s, i) => { colorByName[s.name] = SEGMENT_COLORS[i % SEGMENT_COLORS.length]; });
+    for (const s of segments) {
+      colorByName[s.name] = segmentColor(s.isUnsegmented ? null : s.name);
+    }
 
     // Headline KPIs
     const totalCustomers = profiles.length;
@@ -384,40 +432,75 @@ export default function Segments() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {visibleSegments.map((s) => {
+            {visibleSegments.flatMap((s) => {
               const isSelected = drillSegment === s.name;
-              return (
+              const isExpanded = expandedSubs.has(s.name);
+              const hasSubs = s.subSegments.length > 1 || (s.subSegments.length === 1 && s.subSegments[0].name !== '(unspecified)');
+              const rows: React.ReactNode[] = [];
+              rows.push(
                 <TableRow
                   key={s.name}
                   hover
-                  onClick={() => setDrillSegment(isSelected ? null : s.name)}
                   sx={{
                     cursor: 'pointer',
                     bgcolor: isSelected ? 'rgba(44, 115, 255, 0.08)' : 'transparent',
                     opacity: s.isUnsegmented ? 0.65 : 1,
                   }}
                 >
-                  <TableCell>
+                  <TableCell onClick={() => setDrillSegment(isSelected ? null : s.name)}>
                     <Stack direction="row" spacing={1} alignItems="center">
+                      {hasSubs ? (
+                        <IconButton
+                          size="small"
+                          onClick={(e) => { e.stopPropagation(); toggleSub(s.name); }}
+                          sx={{ p: 0.25 }}
+                          aria-label={isExpanded ? `Collapse sub-segments for ${s.name}` : `Expand sub-segments for ${s.name}`}
+                        >
+                          {isExpanded ? <KeyboardArrowDownIcon fontSize="small" /> : <KeyboardArrowRightIcon fontSize="small" />}
+                        </IconButton>
+                      ) : (
+                        <Box sx={{ width: 24 }} />
+                      )}
                       {!s.isUnsegmented && (
                         <Box sx={{ width: 10, height: 10, bgcolor: view.colorByName[s.name] ?? '#8B949E', borderRadius: '2px' }} />
                       )}
                       <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                        {s.name}
+                        {s.isUnsegmented ? s.name : segmentLabel(s.name)}
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell align="right">{s.customerCount.toLocaleString()}</TableCell>
-                  <TableCell align="right" sx={{ color: 'success.main' }}>{filter === 'cancelled' ? '—' : s.activeCount.toLocaleString()}</TableCell>
-                  <TableCell align="right" sx={{ color: 'error.main' }}>{filter === 'active' ? '—' : s.cancelledCount.toLocaleString()}</TableCell>
-                  <TableCell align="right">{fmtPct(s.retentionPct, 1)}</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 500 }}>{USD0.format(s.currentMrr)}</TableCell>
-                  <TableCell align="right">{s.avgMrr != null ? USD0.format(s.avgMrr) : '—'}</TableCell>
-                  <TableCell align="right">{USD0.format(s.servicesTTM)}</TableCell>
-                  <TableCell align="right">{USD0.format(s.connectTTM)}</TableCell>
-                  <TableCell align="right">{s.newLogos12m}</TableCell>
+                  <TableCell align="right" onClick={() => setDrillSegment(isSelected ? null : s.name)}>{s.customerCount.toLocaleString()}</TableCell>
+                  <TableCell align="right" sx={{ color: 'success.main' }} onClick={() => setDrillSegment(isSelected ? null : s.name)}>{filter === 'cancelled' ? '—' : s.activeCount.toLocaleString()}</TableCell>
+                  <TableCell align="right" sx={{ color: 'error.main' }} onClick={() => setDrillSegment(isSelected ? null : s.name)}>{filter === 'active' ? '—' : s.cancelledCount.toLocaleString()}</TableCell>
+                  <TableCell align="right" onClick={() => setDrillSegment(isSelected ? null : s.name)}>{fmtPct(s.retentionPct, 1)}</TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 500 }} onClick={() => setDrillSegment(isSelected ? null : s.name)}>{USD0.format(s.currentMrr)}</TableCell>
+                  <TableCell align="right" onClick={() => setDrillSegment(isSelected ? null : s.name)}>{s.avgMrr != null ? USD0.format(s.avgMrr) : '—'}</TableCell>
+                  <TableCell align="right" onClick={() => setDrillSegment(isSelected ? null : s.name)}>{USD0.format(s.servicesTTM)}</TableCell>
+                  <TableCell align="right" onClick={() => setDrillSegment(isSelected ? null : s.name)}>{USD0.format(s.connectTTM)}</TableCell>
+                  <TableCell align="right" onClick={() => setDrillSegment(isSelected ? null : s.name)}>{s.newLogos12m}</TableCell>
                 </TableRow>
               );
+              if (isExpanded) {
+                for (const sub of s.subSegments) {
+                  rows.push(
+                    <TableRow key={`${s.name}::${sub.name}`} sx={{ bgcolor: 'rgba(255,255,255,0.02)' }}>
+                      <TableCell sx={{ pl: 6, color: 'text.secondary', fontSize: 13, borderLeft: `3px solid ${view.colorByName[s.name] ?? '#8B949E'}` }}>
+                        ↳ {sub.name}
+                      </TableCell>
+                      <TableCell align="right" sx={{ color: 'text.secondary' }}>{sub.customerCount.toLocaleString()}</TableCell>
+                      <TableCell align="right" sx={{ color: 'success.main', opacity: 0.85 }}>{filter === 'cancelled' ? '—' : sub.activeCount.toLocaleString()}</TableCell>
+                      <TableCell align="right" sx={{ color: 'error.main', opacity: 0.85 }}>{filter === 'active' ? '—' : (sub.customerCount - sub.activeCount).toLocaleString()}</TableCell>
+                      <TableCell align="right" sx={{ color: 'text.secondary' }}>{fmtPct(sub.customerCount > 0 ? sub.activeCount / sub.customerCount : null, 1)}</TableCell>
+                      <TableCell align="right" sx={{ color: 'text.secondary' }}>{USD0.format(sub.currentMrr)}</TableCell>
+                      <TableCell align="right" sx={{ color: 'text.secondary' }}>—</TableCell>
+                      <TableCell align="right" sx={{ color: 'text.secondary' }}>—</TableCell>
+                      <TableCell align="right" sx={{ color: 'text.secondary' }}>—</TableCell>
+                      <TableCell align="right" sx={{ color: 'text.secondary' }}>—</TableCell>
+                    </TableRow>
+                  );
+                }
+              }
+              return rows;
             })}
           </TableBody>
         </Table>
@@ -464,7 +547,7 @@ export default function Segments() {
               <CollapseToggle open={drillTable.open} onToggle={drillTable.toggle} label="segment customers" />
               <Box sx={{ width: 12, height: 12, bgcolor: view.colorByName[drillSegment] ?? '#8B949E', borderRadius: '2px' }} />
               <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                Customers · {drillSegment}
+                Customers · {segmentLabel(drillSegment)}
               </Typography>
               <Chip label={`${segFiltered.toLocaleString()} ${filter === 'all' ? 'total' : filter}`} size="small" variant="outlined" />
             </Stack>

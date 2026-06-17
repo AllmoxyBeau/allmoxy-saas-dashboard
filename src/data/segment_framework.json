@@ -1,0 +1,134 @@
+{
+  "comment": "Canonical Primary + Sub Segment framework as defined in HubSpot Company properties primary_segment_framework and sub_segment_framework. Pulled from HubSpot 2026-06-12. Sub-segments grouped by primary segment for UI affordances. The grouping is editorial (HubSpot stores a flat list); update src/data/segment_framework.json as the framework evolves.",
+  "updated_at": "2026-06-12",
+  "source": "HubSpot Company properties (primary_segment_framework, sub_segment_framework)",
+  "primary_segments": [
+    "Cabinetry",
+    "Closets & Home Organization",
+    "Architectural Woodwork",
+    "Millwork",
+    "Retail Fixtures & Store Fixtures",
+    "Contract / Institutional Furniture",
+    "Dealer / Showroom",
+    "Designers",
+    "Installer / Contractor",
+    "Distribution / Wholesale",
+    "Hardware Supply",
+    "Machinery / Equipment",
+    "Lumber / Sawmill / Primary Wood",
+    "Residential Furniture",
+    "Specialty Wood Products",
+    "Panel Products / Engineered Wood",
+    "Countertops",
+    "Windows & Doors (Fenestration)",
+    "Hardwood Flooring",
+    "Other / Unclassified"
+  ],
+  "sub_segments_by_primary": {
+    "Cabinetry": [
+      "Component Manufacturer",
+      "Custom Cabinet Shop",
+      "Production Cabinet Manufacturer",
+      "Bath / Vanity Specialist",
+      "Finishing Specialist",
+      "Refacing Specialist",
+      "Outdoor / Specialty Cabinetry",
+      "Dealer Private Label"
+    ],
+    "Closets & Home Organization": [
+      "Closet Component Manufacturer",
+      "Custom Closet Company",
+      "Garage Storage Solutions",
+      "Wire / Steel Closets"
+    ],
+    "Architectural Woodwork": [
+      "Commercial Casework",
+      "Architectural Millwork",
+      "Mixed (Casework + Millwork)"
+    ],
+    "Millwork": [
+      "Mouldings & Profiles",
+      "Interior Doors (Millwork)",
+      "Stairs & Railings",
+      "Trim & Boards",
+      "Decorative Millwork",
+      "Moulding - Mixed / Full Line"
+    ],
+    "Residential Furniture": [
+      "Casegoods",
+      "Upholstered Furniture",
+      "Outdoor / Patio Furniture",
+      "Childrens / Juvenile Furniture",
+      "Bedroom / Matress Foundations"
+    ],
+    "Contract / Institutional Furniture": [
+      "Seating",
+      "Casegoods / Storage",
+      "Tables & Surfaces",
+      "Panel Systems",
+      "Mixed / Full-Line FF&E"
+    ],
+    "Retail Fixtures & Store Fixtures": [
+      "National Retail Rollouts",
+      "Specialty / Boutique Fixtures",
+      "Point-of-Purchase Displays",
+      "Visual Merchandising"
+    ],
+    "Dealer / Showroom": [
+      "Kitchen & Bath Dealer",
+      "Multi-Line Dealer",
+      "Designer Showroom",
+      "Closet Dealer"
+    ],
+    "Distribution / Wholesale": [
+      "Lumber Yard",
+      "Millwork Distributor",
+      "Cabinet Distributor",
+      "Two-Step Distributor",
+      "Specialty Wood Distributor"
+    ],
+    "Hardware Supply": [
+      "Hardware Manufacturer",
+      "Hardware Distributor",
+      "Organizational Hardware",
+      "Decorative Hardware Brand",
+      "Specialty / Niche Hardware"
+    ],
+    "Designers": [
+      "Interiro Designer",
+      "Kitchen & Bath Designer",
+      "Architect"
+    ],
+    "Installer / Contractor": [
+      "Design-Build Firm",
+      "General Contractor",
+      "Home Builder",
+      "Remodeler",
+      "Cabinet Installation Specialist"
+    ],
+    "Windows & Doors (Fenestration)": [
+      "Wood Clad Windows",
+      "Vinyl Windows",
+      "Entry Doors",
+      "Patio Doors"
+    ],
+    "Hardwood Flooring": [
+      "Solid Hardwood Flooring",
+      "Engineered Flooring"
+    ],
+    "Machinery / Equipment": [
+      "CNC Machine OEM",
+      "Machinery Dealer / Distributor",
+      "Tooling & Aftermarket Parts",
+      "Used / Refurbished Equipment Seller",
+      "CAM Software / Automation Systems"
+    ],
+    "Other / Unclassified": [
+      "Other"
+    ],
+    "Specialty Wood Products": [],
+    "Panel Products / Engineered Wood": [],
+    "Countertops": [],
+    "Lumber / Sawmill / Primary Wood": []
+  }
+}

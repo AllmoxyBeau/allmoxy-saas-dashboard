@@ -29,6 +29,16 @@ export const KNOWN_SNAPSHOTS = [
   'services_by_month',
   'subscription_by_month',
   'unit_economics',
+  'adjustments_register',
+  'stripe_qb_reconciliation',
+  'annual_amortization_evidence',
+  'ebitda_bridge',
+  'invariant_test_results',
+  'metric_definitions',
+  'churn_research_classifications',
+  'orders_verified',
+  'churn_risk_matrix',
+  'time_to_value',
 ] as const;
 
 export type SnapshotName = (typeof KNOWN_SNAPSHOTS)[number];

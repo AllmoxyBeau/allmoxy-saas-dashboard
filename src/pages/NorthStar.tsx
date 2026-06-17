@@ -26,6 +26,9 @@ import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
 import { useSheetTab } from '../hooks/useSheetTab';
+import annualPayersCfg from '../data/annual_payers.json';
+
+const ANNUAL_PAYER_IDS = new Set<number>(annualPayersCfg.annual_payer_ids);
 
 type ActiveCustomer = {
   name: string;
@@ -96,6 +99,29 @@ function addMonths(iso: string, delta: number): string {
 }
 
 type ServicesRow = { customer_name: string } & Record<string, number | null>;
+type ServicesTransaction = {
+  created: string;
+  amount: number;
+  amount_refunded?: number;
+  net_amount?: number;
+  type: string;
+  status: string;
+  description?: string;
+};
+type MonthlyHistoryCell = {
+  subscription?: number;
+  services?: number;
+  connect?: number;
+  total?: number;
+  annualized?: boolean;
+};
+type CustomerProfileRow = {
+  allmoxy_customer_id?: number;
+  name: string;
+  transactions?: ServicesTransaction[];
+  monthly_history?: Record<string, MonthlyHistoryCell>;
+};
+type CustomerProfilesSnap = { rows: CustomerProfileRow[] };
 type ConnectRow = { month: string; connect_fees: number | null };
 
 export default function NorthStar() {
@@ -109,7 +135,9 @@ export default function NorthStar() {
   const { data: subMonthlyData } = useSheetTab('subscription_by_month');
   const subMonthly = subMonthlyData as unknown as { rows: Array<{ customer_name: string } & Record<string, number | null>> } | undefined;
   const { data: connectByCustomerData } = useSheetTab('connect_by_customer_month');
+  const { data: customerProfilesData } = useSheetTab('customer_profiles');
   const connectByCustomer = connectByCustomerData as unknown as { rows: Array<{ customer_name: string } & Record<string, number | null>> } | undefined;
+  const customerProfiles = customerProfilesData as unknown as CustomerProfilesSnap | undefined;
 
   const [drill, setDrill] = useState<DrillKind | null>(null);
   function openDrill(d: DrillKind) {
@@ -143,6 +171,20 @@ export default function NorthStar() {
   // Most recent *complete* month — the current month's data is partial.
   const headline = [...rows].reverse().find((r) => r.month < currentMonth) ?? null;
   const partial = rows.find((r) => r.month === currentMonth) ?? null;
+
+  // Sum of amortized annual-payer subscription contributions to the headline month
+  // (the slice of mrr_subscription that came from annualized lump-sum payments,
+  // 1/12 per month over a 12-month window — not regular monthly recurring revenue).
+  const annualizedSubscription = useMemo(() => {
+    if (!headline || !customerProfiles?.rows) return 0;
+    let sum = 0;
+    for (const p of customerProfiles.rows) {
+      if (p.allmoxy_customer_id == null || !ANNUAL_PAYER_IDS.has(p.allmoxy_customer_id)) continue;
+      const cell = p.monthly_history?.[headline.month];
+      if (cell?.annualized && typeof cell.subscription === 'number') sum += cell.subscription;
+    }
+    return Math.round(sum * 100) / 100;
+  }, [headline, customerProfiles]);
 
   const completeMonths = useMemo(() => rows.filter((r) => r.month < currentMonth), [rows, currentMonth]);
   const firstMonth = completeMonths[0]?.month;
@@ -244,7 +286,12 @@ export default function NorthStar() {
             hint={headline ? `${monthLabel(headline.month)} · Stream 1 · click` : 'loading'}
             stream="Stream 1"
             onClick={() => openDrill({ kind: 'subscription' })}
-            info={<><strong>What it is:</strong> Total subscription MRR for the latest complete month — the recurring-revenue engine of the business.<br /><br /><strong>Data:</strong> Sum of per-customer subscription MRR from the MRR by Month tab for the headline month.<br /><br /><strong>Click:</strong> Drill to each subscribing customer with their MRR and % of total.</>}
+            info={<><strong>What it is:</strong> Total subscription MRR for the latest complete month — the recurring-revenue engine of the business.<br /><br /><strong>Data:</strong> Sum of per-customer subscription MRR from the MRR by Month tab for the headline month.<br /><br /><strong>Includes:</strong> regular monthly subscriptions <em>plus</em> 1/12 of any annual lump-sum payments still in their 12-month amortization window (annual-payer list: <code>src/data/annual_payers.json</code>).<br /><br /><strong>Click:</strong> Drill to each contributing transaction; filter for annual vs. regular.</>}
+            footerChip={
+              annualizedSubscription > 0
+                ? { label: `incl. ${USD0.format(annualizedSubscription)} annualized`, tooltip: '1/12 portions of annual lump-sum payments from annual-payer customers' }
+                : null
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6} md={2.4}>
@@ -497,9 +544,9 @@ export default function NorthStar() {
         <NorthStarDrill
           drill={drill}
           health={health}
-          servicesData={servicesData as unknown as { rows: ServicesRow[] } | undefined}
           subMonthly={subMonthly}
           connectByCustomer={connectByCustomer}
+          customerProfiles={customerProfiles}
           headlineMonth={headline.month}
           onClose={() => setDrill(null)}
         />
@@ -516,6 +563,7 @@ function MetricCard({
   pending = false,
   onClick,
   info,
+  footerChip,
 }: {
   label: string;
   value: string | null;
@@ -524,6 +572,7 @@ function MetricCard({
   pending?: boolean;
   onClick?: () => void;
   info?: React.ReactNode;
+  footerChip?: { label: string; tooltip?: string } | null;
 }) {
   return (
     <Paper
@@ -565,6 +614,22 @@ function MetricCard({
       <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
         {hint}
       </Typography>
+      {footerChip && (
+        <Chip
+          label={footerChip.label}
+          size="small"
+          title={footerChip.tooltip}
+          sx={{
+            mt: 0.75,
+            height: 20,
+            fontSize: 11,
+            fontWeight: 500,
+            bgcolor: 'rgba(159, 122, 234, 0.14)',
+            color: '#9F7AEA',
+            border: '1px solid rgba(159, 122, 234, 0.3)',
+          }}
+        />
+      )}
     </Paper>
   );
 }
@@ -631,21 +696,78 @@ function LegendToggle({
 function NorthStarDrill({
   drill,
   health,
-  servicesData,
   subMonthly,
   connectByCustomer,
+  customerProfiles,
   headlineMonth,
   onClose,
 }: {
   drill: DrillKind;
   health: CustomerHealthSnap | undefined;
-  servicesData: { rows: ServicesRow[] } | undefined;
   subMonthly: { rows: Array<{ customer_name: string } & Record<string, number | null>> } | undefined;
   connectByCustomer: { rows: Array<{ customer_name: string } & Record<string, number | null>> } | undefined;
+  customerProfiles: CustomerProfilesSnap | undefined;
   headlineMonth: string;
   onClose: () => void;
 }) {
+  // Helper: extract per-transaction rows of a given type for a given YYYY-MM,
+  // drawing from customer_profiles (the only snapshot with transaction-level dates).
+  //
+  // For subscription, annual-payer customers' lump-sum transactions are REPLACED
+  // by a synthetic amortized row (1/12 of the lump sum, from monthly_history) so
+  // the drill total reconciles to the post-amortization mrr_subscription headline.
+  // Annualized rows are tagged so the drill can filter on them.
+  function transactionsForMonth(month: string, type: 'services' | 'subscription' | 'connect') {
+    const profileRows = customerProfiles?.rows ?? [];
+    const txns: Array<{ date: string; customer: string; amount: number; description: string; is_annualized: boolean }> = [];
+    for (const p of profileRows) {
+      const isAnnualPayer = type === 'subscription'
+        && p.allmoxy_customer_id != null
+        && ANNUAL_PAYER_IDS.has(p.allmoxy_customer_id);
+      const cell = isAnnualPayer ? p.monthly_history?.[month] : undefined;
+      if (isAnnualPayer && cell?.annualized && typeof cell.subscription === 'number' && cell.subscription > 0) {
+        // Synthetic amortized row — replaces this annual payer's raw subscription
+        // transactions for the month. Date is the origin lump-sum (the customer's
+        // most recent >=$3K subscription charge), so the user can see which
+        // payment is being amortized.
+        const origin = (p.transactions ?? [])
+          .filter((t) => t.type === 'subscription' && t.status === 'succeeded' && ((typeof t.net_amount === 'number' ? t.net_amount : t.amount) ?? 0) >= 3000)
+          .sort((a, b) => (a.created < b.created ? 1 : a.created > b.created ? -1 : 0))[0];
+        const lumpSum = origin ? Math.round(((typeof origin.net_amount === 'number' ? origin.net_amount : origin.amount) ?? 0) * 100) / 100 : 0;
+        txns.push({
+          date: origin?.created ?? `${month}-01`,
+          customer: p.name,
+          amount: Math.round(cell.subscription * 100) / 100,
+          description: lumpSum > 0
+            ? `Annualized 1/12 of ${USD0.format(lumpSum)} lump-sum${origin?.description ? ` · ${origin.description}` : ''}`
+            : 'Annualized 1/12 of annual lump-sum',
+          is_annualized: true,
+        });
+        continue; // skip this customer's raw subscription txns for the month
+      }
+      const list = p.transactions ?? [];
+      for (const t of list) {
+        if (t.type !== type || t.status !== 'succeeded') continue;
+        const created = t.created ?? '';
+        if (!created.startsWith(month)) continue;
+        const amount = (typeof t.net_amount === 'number' ? t.net_amount : t.amount) ?? 0;
+        if (amount <= 0) continue;
+        txns.push({
+          date: created,
+          customer: p.name,
+          amount: Math.round(amount * 100) / 100,
+          description: t.description ?? '',
+          is_annualized: false,
+        });
+      }
+    }
+    return txns.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  }
+
   const active = health?.all_active_customers ?? [];
+  // Filter for the subscription drill: show all rows, annual-payer amortized
+  // contributions only, or regular monthly subscription transactions only.
+  const [subFilter, setSubFilter] = useState<'all' | 'annualized' | 'regular'>('all');
 
   // Stacked-bar click: month + stream → per-customer breakdown for that month.
   if (drill.kind === 'bar') {
@@ -694,40 +816,32 @@ function NorthStarDrill({
       );
     }
     if (stream === 'services') {
-      const rows = (servicesData?.rows ?? [])
-        .map((r) => {
-          const dates = (r as { payment_dates?: Record<string, string> }).payment_dates ?? {};
-          return {
-            name: r.customer_name,
-            services: typeof r[month] === 'number' ? (r[month] as number) : 0,
-            payment_date: dates[month] ?? null,
-          };
-        })
-        .filter((r) => r.services > 0)
-        .sort((a, b) => b.services - a.services);
-      const total = rows.reduce((s, r) => s + r.services, 0);
+      const rows = transactionsForMonth(month, 'services');
+      const total = rows.reduce((s, r) => s + r.amount, 0);
+      const uniqueCustomers = new Set(rows.map((r) => r.customer)).size;
       const columns: DrillColumn<(typeof rows)[number]>[] = [
-        { key: 'name', label: 'Customer' },
-        { key: 'services', label: `${month} services $`, align: 'right', render: (r) => USD0.format(r.services) },
+        {
+          key: 'date',
+          label: 'Date',
+          render: (r) => formatDateMDY(r.date),
+          exportValue: (r) => formatDateMDY(r.date),
+          sortValue: (r) => r.date,
+        },
+        { key: 'customer', label: 'Customer' },
+        { key: 'amount', label: 'Amount', align: 'right', render: (r) => USD0.format(r.amount) },
         {
           key: 'pct',
           label: '% of month total',
           align: 'right',
-          render: (r) => (total > 0 ? `${((r.services / total) * 100).toFixed(2)}%` : '—'),
-          exportValue: (r) => (total > 0 ? r.services / total : 0),
+          render: (r) => (total > 0 ? `${((r.amount / total) * 100).toFixed(2)}%` : '—'),
+          exportValue: (r) => (total > 0 ? r.amount / total : 0),
         },
-        {
-          key: 'payment_date',
-          label: 'Payment date',
-          render: (r) => formatDateMDY((r as { payment_date: string | null }).payment_date),
-          exportValue: (r) => formatDateMDY((r as { payment_date: string | null }).payment_date),
-          sortValue: (r) => (r as { payment_date: string | null }).payment_date ?? '',
-        },
+        { key: 'description', label: 'Description' },
       ];
       return (
         <DrillDownPanel
           title={`Services revenue · ${monthLabel(month)}`}
-          subtitle={`${rows.length} customers · ${USD0.format(total)} · sorted by $ desc`}
+          subtitle={`${rows.length} transactions · ${uniqueCustomers} customers · ${USD0.format(total)} · newest first`}
           accent="rgba(26, 158, 92, 0.5)"
           rows={rows as unknown as Array<Record<string, unknown>>}
           columns={columns as unknown as DrillColumn<Record<string, unknown>>[]}
@@ -821,7 +935,7 @@ function NorthStarDrill({
     );
   }
 
-  if (drill.kind === 'active_logos' || drill.kind === 'subscription' || drill.kind === 'blended') {
+  if (drill.kind === 'active_logos' || drill.kind === 'blended') {
     const sorted = [...active].sort((a, b) => b.current_mrr - a.current_mrr);
     const totalMrr = sorted.reduce((s, c) => s + c.current_mrr, 0);
     const columns: DrillColumn<ActiveCustomer>[] = [
@@ -839,7 +953,6 @@ function NorthStarDrill({
     ];
     const titleMap: Record<string, string> = {
       active_logos: 'Active paying customers',
-      subscription: 'Subscription MRR contributors',
       blended: 'Blended MRR contributors',
     };
     return (
@@ -854,33 +967,116 @@ function NorthStarDrill({
     );
   }
 
-  if (drill.kind === 'services') {
-    const rows = (servicesData?.rows ?? [])
-      .map((r) => {
-        const current = typeof r[headlineMonth] === 'number' ? (r[headlineMonth] as number) : 0;
-        let lifetime = 0;
-        for (const [k, v] of Object.entries(r)) {
-          if (k === 'customer_name') continue;
-          if (typeof v === 'number' && v > 0) lifetime += v;
-        }
-        return {
-          name: r.customer_name,
-          current_month_services: Math.round(current * 100) / 100,
-          lifetime_services_revenue: Math.round(lifetime * 100) / 100,
-        };
-      })
-      .filter((r) => r.current_month_services > 0)
-      .sort((a, b) => b.current_month_services - a.current_month_services);
-    const total = rows.reduce((s, r) => s + r.current_month_services, 0);
+  if (drill.kind === 'subscription') {
+    const allRows = transactionsForMonth(headlineMonth, 'subscription');
+    const rows =
+      subFilter === 'annualized' ? allRows.filter((r) => r.is_annualized)
+      : subFilter === 'regular' ? allRows.filter((r) => !r.is_annualized)
+      : allRows;
+    const total = rows.reduce((s, r) => s + r.amount, 0);
+    const grandTotal = allRows.reduce((s, r) => s + r.amount, 0);
+    const annualizedTotal = allRows.filter((r) => r.is_annualized).reduce((s, r) => s + r.amount, 0);
+    const uniqueCustomers = new Set(rows.map((r) => r.customer)).size;
     const columns: DrillColumn<(typeof rows)[number]>[] = [
-      { key: 'name', label: 'Customer' },
-      { key: 'current_month_services', label: `${headlineMonth} services $`, align: 'right', render: (r) => USD0.format(r.current_month_services) },
-      { key: 'lifetime_services_revenue', label: 'Lifetime services $', align: 'right', render: (r) => USD0.format(r.lifetime_services_revenue) },
+      {
+        key: 'date',
+        label: 'Date',
+        render: (r) => formatDateMDY(r.date),
+        exportValue: (r) => formatDateMDY(r.date),
+        sortValue: (r) => r.date,
+      },
+      { key: 'customer', label: 'Customer' },
+      {
+        key: 'type',
+        label: 'Type',
+        render: (r) => (
+          <Chip
+            label={r.is_annualized ? 'Annualized' : 'Monthly'}
+            size="small"
+            sx={{
+              height: 18,
+              fontSize: 10,
+              fontWeight: 500,
+              bgcolor: r.is_annualized ? 'rgba(159, 122, 234, 0.14)' : 'rgba(44, 115, 255, 0.10)',
+              color: r.is_annualized ? '#9F7AEA' : 'primary.main',
+            }}
+          />
+        ),
+        exportValue: (r) => (r.is_annualized ? 'Annualized' : 'Monthly'),
+        sortValue: (r) => (r.is_annualized ? 1 : 0),
+      },
+      { key: 'amount', label: `${headlineMonth} amount`, align: 'right', render: (r) => USD0.format(r.amount) },
+      {
+        key: 'pct',
+        label: '% of month total',
+        align: 'right',
+        render: (r) => (grandTotal > 0 ? `${((r.amount / grandTotal) * 100).toFixed(2)}%` : '—'),
+        exportValue: (r) => (grandTotal > 0 ? r.amount / grandTotal : 0),
+      },
+      { key: 'description', label: 'Description' },
+    ];
+    return (
+      <Box id="drill-down-panel">
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
+          <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            Filter
+          </Typography>
+          <ToggleButtonGroup
+            value={subFilter}
+            exclusive
+            size="small"
+            onChange={(_, v) => v && setSubFilter(v)}
+            sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
+          >
+            <ToggleButton value="all">All ({allRows.length})</ToggleButton>
+            <ToggleButton value="regular">Regular monthly ({allRows.filter((r) => !r.is_annualized).length})</ToggleButton>
+            <ToggleButton value="annualized">Annual payments ({allRows.filter((r) => r.is_annualized).length})</ToggleButton>
+          </ToggleButtonGroup>
+          {annualizedTotal > 0 && (
+            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+              · {USD0.format(annualizedTotal)} annualized of {USD0.format(grandTotal)} total
+            </Typography>
+          )}
+        </Stack>
+        <DrillDownPanel
+          title={`Subscription MRR contributors · ${headlineMonth}`}
+          subtitle={`${rows.length} ${rows.length === 1 ? 'row' : 'rows'} · ${uniqueCustomers} customers · ${USD0.format(total)} shown${subFilter !== 'all' ? ` (of ${USD0.format(grandTotal)} total)` : ''} · newest first`}
+          rows={rows as unknown as Array<Record<string, unknown>>}
+          columns={columns as unknown as DrillColumn<Record<string, unknown>>[]}
+          filename={`subscription_${headlineMonth}${subFilter === 'all' ? '' : '_' + subFilter}`}
+          onClose={onClose}
+        />
+      </Box>
+    );
+  }
+
+  if (drill.kind === 'services') {
+    const rows = transactionsForMonth(headlineMonth, 'services');
+    const total = rows.reduce((s, r) => s + r.amount, 0);
+    const uniqueCustomers = new Set(rows.map((r) => r.customer)).size;
+    const columns: DrillColumn<(typeof rows)[number]>[] = [
+      {
+        key: 'date',
+        label: 'Date',
+        render: (r) => formatDateMDY(r.date),
+        exportValue: (r) => formatDateMDY(r.date),
+        sortValue: (r) => r.date,
+      },
+      { key: 'customer', label: 'Customer' },
+      { key: 'amount', label: `${headlineMonth} amount`, align: 'right', render: (r) => USD0.format(r.amount) },
+      {
+        key: 'pct',
+        label: '% of month total',
+        align: 'right',
+        render: (r) => (total > 0 ? `${((r.amount / total) * 100).toFixed(2)}%` : '—'),
+        exportValue: (r) => (total > 0 ? r.amount / total : 0),
+      },
+      { key: 'description', label: 'Description' },
     ];
     return (
       <DrillDownPanel
-        title={`Services customers · ${headlineMonth}`}
-        subtitle={`${rows.length} customers · ${USD0.format(total)} services revenue this month`}
+        title={`Services transactions · ${headlineMonth}`}
+        subtitle={`${rows.length} transactions · ${uniqueCustomers} customers · ${USD0.format(total)} this month · newest first`}
         rows={rows as unknown as Array<Record<string, unknown>>}
         columns={columns as unknown as DrillColumn<Record<string, unknown>>[]}
         filename={`services_${headlineMonth}`}

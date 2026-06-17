@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -16,11 +16,13 @@ import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel
 import InfoIcon from '../components/common/InfoIcon';
 import CustomerLink from '../components/common/CustomerLink';
 import { useSheetTab } from '../hooks/useSheetTab';
+import { segmentColor, segmentLabel } from '../lib/segmentsRegistry';
 
 type ProfileRow = {
   allmoxy_customer_id: number;
   name: string;
   primary_segment: string | null;
+  sub_segment: string | null;
   churn_reason: string | null;
   pay_status: string | null;
   last_payment_date: string | null;
@@ -33,7 +35,74 @@ type ProfileRow = {
   failed_3mo_amount: number | null;
   hubspot_company_id: string | null;
   cohort_year: number | null;
+  status?: string;
+  excluded_from_logo_count?: boolean;
 };
+
+// Canonical 13 Allmoxy Churn Playbook reasons. The user-classification UI
+// (Churn Investigator) emits only these values; the deep-research agent's
+// proposed_churn_reason is mapped onto these via mapProposedToCanonical.
+const CANONICAL_CHURN_REASONS = [
+  'Failed Implementation',
+  'Features',
+  'Pricing',
+  'Business Model Change',
+  'Moved to Other Solution',
+  'Paid and Never Used',
+  'Out of Business',
+  'Customer Stakeholder Misalignment',
+  'Ownership Transition',
+  'Timing Not Right',
+  'Payment Failure',
+  'Catalog Unidentified',
+  'Unresponsive',
+] as const;
+
+// User-classification store written by the Churn Investigator. Same key as
+// ChurnInvestigator.tsx — `allmoxy:churn-classifications:v1`. Each entry is a
+// per-customer record with reasons[] + notes + timestamp + classifier name.
+type UserClassification = {
+  reasons: string[];
+  notes: string;
+  classified_at: string;
+  classified_by: string;
+};
+
+// Deep-research classification (public/snapshots/churn_research_classifications.json).
+// Keyed by allmoxy_customer_id. Lives in churn_research_batches/ batch files in
+// the repo; consolidated by _etl_scripts/consolidate_churn_research.mjs.
+type ResearchClassification = {
+  allmoxy_customer_id: number;
+  proposed_churn_reason: string;
+  confidence: 'high' | 'medium' | 'low';
+  evidence_quotes?: Array<{ date: string | null; quote: string; interpretation: string }>;
+  recommended_action?: string;
+  source_batch?: string;
+};
+type ResearchSnap = {
+  classifications_by_customer_id: Record<string, ResearchClassification>;
+};
+
+function mapProposedToCanonical(proposed: string | null | undefined): string | null {
+  if (!proposed) return null;
+  if (proposed.includes('FALSE POSITIVE')) return null;
+  const p = proposed.toLowerCase();
+  if (p.startsWith('features')) return 'Features';
+  if (p.startsWith('pricing')) return 'Pricing';
+  if (p.startsWith('payment failure')) return 'Payment Failure';
+  if (p.startsWith('unresponsive')) return 'Unresponsive';
+  if (p.startsWith('catalog unidentified')) return 'Catalog Unidentified';
+  if (p.startsWith('out of business')) return 'Out of Business';
+  if (p.startsWith('paid and never used')) return 'Paid and Never Used';
+  if (p.startsWith('business model change')) return 'Business Model Change';
+  if (p.startsWith('moved to other solution')) return 'Moved to Other Solution';
+  if (p.startsWith('failed implementation')) return 'Failed Implementation';
+  if (p.startsWith('customer stakeholder misalignment')) return 'Customer Stakeholder Misalignment';
+  if (p.startsWith('ownership transition')) return 'Ownership Transition';
+  if (p.startsWith('timing not right')) return 'Timing Not Right';
+  const exact = (CANONICAL_CHURN_REASONS as readonly string[]).find((r) => r.toLowerCase() === p);
+  return exact ?? null;
+}
 
 // Shape of each entry in public/snapshots/churn_inferences.json.
 // We treat the inference as a fallback when HubSpot has no recorded reason.
@@ -208,6 +277,10 @@ type Cluster = {
   avgPeakMrr: number | null;
   topSegment: string | null;
   topSegmentCount: number;
+  topSubSegment: string | null;
+  topSubSegmentCount: number;
+  segmentBreakdown: Array<{ name: string; count: number; dollars: number }>;
+  subSegmentBreakdown: Array<{ name: string; count: number; dollars: number }>;
   customers: ProfileRow[];
   inferredCount: number;  // how many of `customers` got their reason from churn_inferences vs HubSpot
   initiative: string;
@@ -215,7 +288,7 @@ type Cluster = {
   category: string;
 };
 
-type ReasonSource = 'hubspot' | 'ai-high' | 'ai-medium' | 'ai-low' | 'none';
+type ReasonSource = 'hubspot' | 'user' | 'research-high' | 'research-medium' | 'research-low' | 'ai-high' | 'ai-medium' | 'ai-low' | 'none';
 
 export default function ChurnPatterns() {
   const { data, isLoading, error } = useSheetTab('customer_profiles');
@@ -229,6 +302,30 @@ export default function ChurnPatterns() {
   // without it; chips just don't appear.
   const { data: subpatternsData } = useSheetTab('churn_subpatterns');
   const subpatterns = subpatternsData as unknown as SubpatternsSnap | undefined;
+
+  // Deep-research classifications from the agent (127 customers across 13 batch files).
+  // Higher quality than the AI inferences — used as a fallback BEFORE the inferences.
+  const { data: researchData } = useSheetTab('churn_research_classifications');
+  const research = researchData as unknown as ResearchSnap | undefined;
+
+  // Per-customer user classifications written by the Churn Investigator (localStorage).
+  // These OVERRIDE everything else when present — the user is the source of truth.
+  // We listen to a window 'storage' event to pick up changes from the Investigator tab.
+  const [userClassifications, setUserClassifications] = useState<Record<string, UserClassification>>(() => {
+    try { return JSON.parse(localStorage.getItem('allmoxy:churn-classifications:v1') || '{}'); }
+    catch { return {}; }
+  });
+  useEffect(() => {
+    function reload() {
+      try { setUserClassifications(JSON.parse(localStorage.getItem('allmoxy:churn-classifications:v1') || '{}')); }
+      catch {}
+    }
+    window.addEventListener('storage', reload);
+    // Also poll once a second when this tab is visible — the storage event only fires
+    // for CROSS-tab changes; same-tab edits in the Investigator wouldn't fire it.
+    const interval = window.setInterval(() => { if (document.visibilityState === 'visible') reload(); }, 1500);
+    return () => { window.removeEventListener('storage', reload); window.clearInterval(interval); };
+  }, []);
 
   const [drillReason, setDrillReason] = useState<string | null>(null);
   // Selected sub-pattern filter inside the drill panel. Null = show all rows.
@@ -250,22 +347,60 @@ export default function ChurnPatterns() {
     const infMap = new Map<number, Inference>();
     for (const inf of inferences?.customers ?? []) infMap.set(inf.allmoxy_customer_id, inf);
 
-    // Filter to actual churns. Existing rule: lifetime > 0 AND no current MRR.
-    // Additionally exclude any customer whose inference flagged them as a false-positive annual payer —
-    // these are pay_status=Cancelled in source data but are actually active annual contracts.
+    // Filter to actual churns. Rules:
+    // 1. status === 'churned' — the canonical lifecycle flag (post-amortization,
+    //    post-status-overrides). This is what the rest of the dashboard uses;
+    //    using a different definition here would create headline-number drift.
+    // 2. NOT excluded_from_logo_count — drops dedupes, sub-instances, test
+    //    artifacts, affiliate-not-customer, false-positive-needs-review, and
+    //    never_paid records (lifetime ≤ $0). These all carry the flag set by
+    //    apply_customer_status_overrides / apply_never_paid_classification.
+    // 3. NOT flagged by old inference as false_positive_annual_payer (legacy
+    //    backstop; annual_payer false positives should already be handled by
+    //    rule 1 + amortization, but keeping this for safety).
     const churned = profiles.rows.filter((r) => {
-      if (!((r.lifetime_subscription || 0) > 0 && (r.current_subscription_mrr || 0) <= 0)) return false;
+      if (r.excluded_from_logo_count) return false;
+      if (r.status !== 'churned') return false;
       const inf = infMap.get(r.allmoxy_customer_id);
       if (inf?.current_status === 'false_positive_annual_payer') return false;
       return true;
     });
 
     // Resolve each customer's effective reason string + source.
-    // Priority: HubSpot churn_reason (authoritative) → inferred reason (only when toggle on, and only
-    // for reasons that aren't the "needs review" / annual-payer placeholders) → NO_REASON.
+    // Priority cascade (highest authority first):
+    //   1. HubSpot recorded churn_reason — authoritative
+    //   2. User classification (Churn Investigator localStorage) — owner's call
+    //   3. Deep-research classification (agent batch files) — high-quality CSM
+    //      evidence research, mapped to the canonical 13
+    //   4. AI inference (legacy churn_inferences.json)
+    //   5. NO_REASON
+    // Steps 2-4 are gated on the "+ AI inferences" toggle (the page semantic is
+    // "show HubSpot only" vs "include everything else"). User classifications
+    // get included on the toggle as well, because they are explicit overrides.
     const resolveReason = (c: ProfileRow): { reason: string; source: ReasonSource } => {
+      // 1. HubSpot is authoritative
       if (c.churn_reason && c.churn_reason.trim()) return { reason: c.churn_reason, source: 'hubspot' };
       if (!includeInferred) return { reason: NO_REASON, source: 'none' };
+
+      // 2. User classification (Churn Investigator localStorage)
+      const userClass = userClassifications[String(c.allmoxy_customer_id)];
+      if (userClass?.reasons && userClass.reasons.length > 0) {
+        return { reason: userClass.reasons.join('; '), source: 'user' };
+      }
+
+      // 3. Deep-research classification (agent work)
+      const rc = research?.classifications_by_customer_id?.[String(c.allmoxy_customer_id)];
+      if (rc) {
+        const canonical = mapProposedToCanonical(rc.proposed_churn_reason);
+        if (canonical) {
+          const src: ReasonSource =
+            rc.confidence === 'high' ? 'research-high' :
+            rc.confidence === 'medium' ? 'research-medium' : 'research-low';
+          return { reason: canonical, source: src };
+        }
+      }
+
+      // 4. AI inference (legacy)
       const inf = infMap.get(c.allmoxy_customer_id);
       if (!inf) return { reason: NO_REASON, source: 'none' };
       // Skip low-confidence default-Unresponsive for customers with $0 lifetime / pre-CSM-era — these
@@ -274,22 +409,32 @@ export default function ChurnPatterns() {
       if (inf.confidence === 'low' && inf.suggested_reason === 'Unresponsive') {
         return { reason: NO_REASON, source: 'none' };
       }
+      // Placeholder reasons (any parenthesized "we couldn't find evidence" marker)
+      // aren't real cluster values — they come from extend_churn_inferences.mjs
+      // placeholder entries. Map to NO_REASON so they don't pollute the clusters.
+      if (typeof inf.suggested_reason === 'string' && /^\(.*\)$/.test(inf.suggested_reason.trim())) {
+        return { reason: NO_REASON, source: 'none' };
+      }
       const src: ReasonSource = inf.confidence === 'high' ? 'ai-high' : inf.confidence === 'medium' ? 'ai-medium' : 'ai-low';
       return { reason: inf.suggested_reason, source: src };
     };
 
     // Capture-rate by year of last payment. Track HubSpot-only AND HubSpot+AI separately so the
-    // chart can show both lines — the gap is the value the AI inferences add.
+    // chart can show both lines — the gap is the value the AI inferences + research + user
+    // classifications collectively add.
     const byYear: Record<string, { total: number; captured: number; capturedWithAi: number }> = {};
     for (const c of churned) {
       const yr = c.last_payment_date ? c.last_payment_date.slice(0, 4) : 'unknown';
       if (!byYear[yr]) byYear[yr] = { total: 0, captured: 0, capturedWithAi: 0 };
       byYear[yr].total++;
-      const hubspotHas = !!c.churn_reason;
+      const hubspotHas = !!(c.churn_reason && c.churn_reason.trim());
+      const userHas = !!userClassifications[String(c.allmoxy_customer_id)]?.reasons?.length;
+      const rc = research?.classifications_by_customer_id?.[String(c.allmoxy_customer_id)];
+      const researchHas = !!(rc && mapProposedToCanonical(rc.proposed_churn_reason));
       const inf = infMap.get(c.allmoxy_customer_id);
       const aiHasUsable = inf && !(inf.confidence === 'low' && inf.suggested_reason === 'Unresponsive');
       if (hubspotHas) byYear[yr].captured++;
-      if (hubspotHas || aiHasUsable) byYear[yr].capturedWithAi++;
+      if (hubspotHas || userHas || researchHas || aiHasUsable) byYear[yr].capturedWithAi++;
     }
     const captureByYear = Object.entries(byYear)
       .filter(([y]) => /^\d{4}$/.test(y))
@@ -304,14 +449,17 @@ export default function ChurnPatterns() {
       }));
     // Cluster by reason. Split combo reasons (semicolon-separated) and weight $ equally.
     const totalDollars = churned.reduce((s, c) => s + (c.lifetime_subscription || 0), 0);
-    const byReason: Record<string, { count: number; dollars: number; tenureSum: number; tenureN: number; peakSum: number; peakN: number; segments: Record<string, number>; customers: ProfileRow[]; inferredCount: number }> = {};
+    type SegBuckets = Record<string, { count: number; dollars: number }>;
+    const byReason: Record<string, { count: number; dollars: number; tenureSum: number; tenureN: number; peakSum: number; peakN: number; segments: SegBuckets; subSegments: SegBuckets; customers: ProfileRow[]; inferredCount: number }> = {};
     for (const c of churned) {
       const { reason: rawReason, source } = resolveReason(c);
       const reasons = rawReason.split(';').map((s) => s.trim()).filter(Boolean);
       const weight = (c.lifetime_subscription || 0) / reasons.length;
-      const isInferred = source.startsWith('ai-');
+      // "Inferred" = anything non-HubSpot. Used by the cluster to show what
+      // share of its $ comes from the inference layer vs authoritative HubSpot.
+      const isInferred = source !== 'hubspot' && source !== 'none';
       for (const r of reasons) {
-        if (!byReason[r]) byReason[r] = { count: 0, dollars: 0, tenureSum: 0, tenureN: 0, peakSum: 0, peakN: 0, segments: {}, customers: [], inferredCount: 0 };
+        if (!byReason[r]) byReason[r] = { count: 0, dollars: 0, tenureSum: 0, tenureN: 0, peakSum: 0, peakN: 0, segments: {}, subSegments: {}, customers: [], inferredCount: 0 };
         byReason[r].count++;
         byReason[r].dollars += weight;
         byReason[r].customers.push(c);
@@ -319,13 +467,25 @@ export default function ChurnPatterns() {
         if (c.years_with_us != null) { byReason[r].tenureSum += c.years_with_us; byReason[r].tenureN++; }
         if (c.peak_month_total != null) { byReason[r].peakSum += c.peak_month_total; byReason[r].peakN++; }
         const seg = c.primary_segment || '(unsegmented)';
-        byReason[r].segments[seg] = (byReason[r].segments[seg] || 0) + 1;
+        if (!byReason[r].segments[seg]) byReason[r].segments[seg] = { count: 0, dollars: 0 };
+        byReason[r].segments[seg].count++;
+        byReason[r].segments[seg].dollars += weight;
+        const sub = c.sub_segment || '(unspecified)';
+        if (!byReason[r].subSegments[sub]) byReason[r].subSegments[sub] = { count: 0, dollars: 0 };
+        byReason[r].subSegments[sub].count++;
+        byReason[r].subSegments[sub].dollars += weight;
       }
     }
 
     const clusters: Cluster[] = Object.entries(byReason).map(([reason, d]) => {
       const init = INITIATIVES[reason] ?? { initiative: 'No mapped initiative for this category — review playbook config.', tier: 'mixed' as InitiativeTier, category: 'Other' };
-      const segs = Object.entries(d.segments).sort((a, b) => b[1] - a[1]);
+      const segmentBreakdown = Object.entries(d.segments)
+        .map(([name, v]) => ({ name, count: v.count, dollars: v.dollars }))
+        .sort((a, b) => b.count - a.count);
+      const subSegmentBreakdown = Object.entries(d.subSegments)
+        .map(([name, v]) => ({ name, count: v.count, dollars: v.dollars }))
+        .sort((a, b) => b.count - a.count);
+      const namedSub = subSegmentBreakdown.find((s) => s.name !== '(unspecified)') ?? null;
       return {
         reason,
         count: d.count,
@@ -333,8 +493,12 @@ export default function ChurnPatterns() {
         pctOfDollars: totalDollars > 0 ? d.dollars / totalDollars : 0,
         avgTenure: d.tenureN > 0 ? d.tenureSum / d.tenureN : null,
         avgPeakMrr: d.peakN > 0 ? d.peakSum / d.peakN : null,
-        topSegment: segs[0]?.[0] ?? null,
-        topSegmentCount: segs[0]?.[1] ?? 0,
+        topSegment: segmentBreakdown[0]?.name ?? null,
+        topSegmentCount: segmentBreakdown[0]?.count ?? 0,
+        topSubSegment: namedSub?.name ?? null,
+        topSubSegmentCount: namedSub?.count ?? 0,
+        segmentBreakdown,
+        subSegmentBreakdown,
         customers: d.customers,
         inferredCount: d.inferredCount,
         initiative: init.initiative,
@@ -344,7 +508,7 @@ export default function ChurnPatterns() {
     }).sort((a, b) => b.dollars - a.dollars);
 
     return { churnedAll: churned, totalChurnDollars: totalDollars, captureByYear, clusters, inferenceMap: infMap };
-  }, [profiles, inferences, includeInferred]);
+  }, [profiles, inferences, includeInferred, research, userClassifications]);
 
   const noReasonCluster = clusters.find((c) => c.reason === NO_REASON);
   const biggestRealCluster = clusters.find((c) => c.reason !== NO_REASON);
@@ -406,11 +570,19 @@ export default function ChurnPatterns() {
           <Box>
             <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               Reason source
-              <InfoIcon info={<><strong>HubSpot only:</strong> the original view — uses the Churn Playbook reason a CSM recorded in HubSpot. Anything without a recorded reason falls into "(no reason recorded)".<br /><br /><strong>+ AI inferences:</strong> overlays Claude-generated reason classifications from <code>churn_inferences.json</code> for customers HubSpot doesn't have a reason for. High/medium confidence calls are derived from quoted CSM notes; low-confidence Unresponsive entries are filtered out to avoid diluting signal.</>} />
+              <InfoIcon info={<>
+                <strong>HubSpot only:</strong> uses ONLY the Churn Playbook reason a CSM recorded in HubSpot. Anything without a recorded reason falls into "(no reason recorded)".<br /><br />
+                <strong>+ AI inferences:</strong> overlays four sources, in priority order:<br />
+                1. <strong>Your classifications</strong> from the Churn Investigator (localStorage, owner's final answer).<br />
+                2. <strong>Deep-research classifications</strong> from <code>churn_research_classifications.json</code> — 127 customers researched by an agent pulling HubSpot company + notes + deals + tickets, mapped to the canonical 13 reasons.<br />
+                3. <strong>Legacy AI inferences</strong> from <code>churn_inferences.json</code> — original Claude-generated suggestions for customers research/user haven't reached yet.<br />
+                4. Falls back to "(no reason recorded)".<br /><br />
+                Low-confidence Unresponsive entries from the legacy AI layer are filtered out to avoid diluting signal.
+              </>} />
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.25 }}>
               {includeInferred
-                ? `AI-inferred reasons fill in for ${(inferenceMap?.size ?? 0).toLocaleString()} customers HubSpot has no recorded reason for.`
+                ? `Layered: ${Object.keys(userClassifications).length} user-classified · ${Object.keys(research?.classifications_by_customer_id ?? {}).length} deep-researched · ${(inferenceMap?.size ?? 0).toLocaleString()} legacy AI-inferred.`
                 : 'Showing only the reasons HubSpot CSMs recorded in the Churn Playbook.'}
             </Typography>
           </Box>
@@ -421,7 +593,7 @@ export default function ChurnPatterns() {
             onChange={(_e, v) => { if (v !== null) setIncludeInferred(v === 'with-ai'); }}
           >
             <ToggleButton value="hubspot-only">HubSpot only</ToggleButton>
-            <ToggleButton value="with-ai">+ AI inferences</ToggleButton>
+            <ToggleButton value="with-ai">+ user / research / AI</ToggleButton>
           </ToggleButtonGroup>
         </Stack>
       </Paper>
@@ -441,7 +613,7 @@ export default function ChurnPatterns() {
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32, width: '60%' }} /> : (
               <>
                 <Typography variant="h4" sx={{ fontWeight: 500 }}>{USD_COMPACT.format(totalChurnDollars)}</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>Across {churnedAll.length} accounts (incl. annual-payer false positives — fix in `annual_payers.json`)</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>Across {churnedAll.length} accounts</Typography>
               </>
             )}
           </Paper>
@@ -603,9 +775,29 @@ export default function ChurnPatterns() {
                         />
                       )}
                     </Stack>
-                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
-                      {c.category}
-                    </Typography>
+                    <Stack direction="row" spacing={0.5} alignItems="center" flexWrap="wrap" sx={{ mt: 0.75 }}>
+                      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                        {c.category}
+                      </Typography>
+                      {c.topSegment && c.topSegment !== '(unsegmented)' && (
+                        <Chip
+                          label={`${segmentLabel(c.topSegment)} ${c.topSegmentCount}/${c.count}`}
+                          size="small"
+                          variant="outlined"
+                          sx={{ height: 18, fontSize: 10, ml: 0.5, color: segmentColor(c.topSegment), borderColor: segmentColor(c.topSegment) }}
+                          title={`Most-impacted primary segment in this cluster: ${segmentLabel(c.topSegment)} (${c.topSegmentCount} of ${c.count} customers).`}
+                        />
+                      )}
+                      {c.topSubSegment && (
+                        <Chip
+                          label={`${c.topSubSegment} ${c.topSubSegmentCount}/${c.count}`}
+                          size="small"
+                          variant="outlined"
+                          sx={{ height: 18, fontSize: 10, color: 'text.secondary', borderColor: 'rgba(139,148,158,0.5)' }}
+                          title={`Most-impacted sub-segment in this cluster.`}
+                        />
+                      )}
+                    </Stack>
                   </Grid>
                   <Grid item xs={6} md={1.5}>
                     <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', fontSize: 10 }}>$ AT STAKE</Typography>
@@ -654,7 +846,25 @@ export default function ChurnPatterns() {
             exportValue: (r) => r.name,
             sortValue: (r) => r.name?.toLowerCase() ?? '',
           },
-          { key: 'primary_segment', label: 'Segment', render: (r) => r.primary_segment || '—' },
+          {
+            key: 'primary_segment',
+            label: 'Segment',
+            render: (r) => {
+              if (!r.primary_segment) return '—';
+              const color = segmentColor(r.primary_segment);
+              return (
+                <Chip
+                  label={segmentLabel(r.primary_segment)}
+                  size="small"
+                  variant="outlined"
+                  sx={{ height: 20, fontSize: 11, color, borderColor: color }}
+                />
+              );
+            },
+            exportValue: (r) => (r.primary_segment ? segmentLabel(r.primary_segment) : ''),
+            sortValue: (r) => r.primary_segment ?? '',
+          },
+          { key: 'sub_segment', label: 'Sub-segment', render: (r) => r.sub_segment || '—' },
           { key: 'lifetime_subscription', label: 'Lifetime sub $', align: 'right', render: (r) => USD0.format(r.lifetime_subscription || 0) },
           { key: 'peak_month_total', label: 'Peak MRR', align: 'right', render: (r) => r.peak_month_total != null ? USD0.format(r.peak_month_total) : '—' },
           { key: 'years_with_us', label: 'Tenure (y)', align: 'right', render: (r) => r.years_with_us != null ? r.years_with_us.toFixed(1) : '—' },
@@ -683,8 +893,64 @@ export default function ChurnPatterns() {
           },
         ];
         const filenameBase = `churn_pattern_${drillCluster.reason.replace(/\W+/g, '_')}` + (drillSubpattern ? `__${drillSubpattern}` : '');
+        const namedSegmentBreakdown = drillCluster.segmentBreakdown.filter((s) => s.name !== '(unsegmented)');
+        const namedSubSegmentBreakdown = drillCluster.subSegmentBreakdown.filter((s) => s.name !== '(unspecified)');
         return (
           <>
+            {/* Segment + sub-segment breakdown for this cluster. Shows how the churn $
+                in this reason cluster distributes across the canonical Allmoxy segments
+                (Lens 1 from segmentation framework) — answers "which segments are hit
+                hardest by this churn reason?". */}
+            {(namedSegmentBreakdown.length > 0 || namedSubSegmentBreakdown.length > 0) && (
+              <Paper sx={{ p: 2, mb: 1.5, bgcolor: 'rgba(255,255,255,0.02)' }}>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.25 }}>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>
+                    Where this churn lives · by segment
+                  </Typography>
+                </Stack>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={6}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', fontSize: 10, mb: 0.5 }}>PRIMARY SEGMENT</Typography>
+                    <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap>
+                      {namedSegmentBreakdown.map((s) => {
+                        const color = segmentColor(s.name);
+                        return (
+                          <Chip
+                            key={s.name}
+                            label={`${segmentLabel(s.name)} · ${s.count} · ${USD_COMPACT.format(s.dollars)}`}
+                            size="small"
+                            variant="outlined"
+                            sx={{ height: 22, fontSize: 11, color, borderColor: color, mb: 0.5 }}
+                            title={`${s.count} customers · ${USD0.format(s.dollars)} weighted churn $`}
+                          />
+                        );
+                      })}
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', fontSize: 10, mb: 0.5 }}>SUB-SEGMENT</Typography>
+                    {namedSubSegmentBreakdown.length === 0 ? (
+                      <Typography variant="caption" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
+                        No sub-segment data for this cluster (customers missing HubSpot sub_segment_framework).
+                      </Typography>
+                    ) : (
+                      <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap>
+                        {namedSubSegmentBreakdown.map((s) => (
+                          <Chip
+                            key={s.name}
+                            label={`${s.name} · ${s.count} · ${USD_COMPACT.format(s.dollars)}`}
+                            size="small"
+                            variant="outlined"
+                            sx={{ height: 22, fontSize: 11, color: 'text.secondary', borderColor: 'rgba(139,148,158,0.5)', mb: 0.5 }}
+                            title={`${s.count} customers · ${USD0.format(s.dollars)} weighted churn $`}
+                          />
+                        ))}
+                      </Stack>
+                    )}
+                  </Grid>
+                </Grid>
+              </Paper>
+            )}
             {/* Sub-pattern filter chips. Rendered as a separate Paper above DrillDownPanel.
                 Clicking a chip toggles the filter; clicking the active one clears it.
                 "Untagged" chip filters to customers in this cluster who didn't match any

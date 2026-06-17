@@ -1,0 +1,27 @@
+{
+  "comment": "Per-customer field overrides — applied AFTER build_customer_profiles.mjs and AFTER the Sync-sheet enrichment, so they win over whatever the ETL inferred. Used when source data is wrong, ambiguous, or stale (e.g. a Stripe customer ID that HubSpot misattributes to a different company, a typo in the Directory column, an owner that needs to be reassigned). Each override is keyed by allmoxy_customer_id. Manage via _etl_scripts/edit_customer.mjs (don't edit by hand unless you know the field name).",
+  "updated_at": "2026-06-17",
+  "allowed_fields": [
+    "name",
+    "customer_name",
+    "hubspot_instance_name",
+    "installer_id",
+    "installer_directory",
+    "instance_owner",
+    "instance_owner_first_name",
+    "primary_segment",
+    "sub_segment",
+    "pay_status",
+    "contract_status",
+    "churn_reason"
+  ],
+  "overrides": {
+    "16": {
+      "installer_id": "155",
+      "_note": "Sync sheet currently labels aid 16 as Cabinet Warehouse — core says Door Company",
+      "_set_at": "2026-06-17",
+      "installer_directory": "thecabinetdoorco",
+      "hubspot_instance_name": "The Door Company"
+    }
+  }
+}

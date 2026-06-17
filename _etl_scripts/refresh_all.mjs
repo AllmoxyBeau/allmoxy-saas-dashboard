@@ -435,6 +435,19 @@ runScript('apply_transaction_overrides.mjs', null);
 console.log('  applying annual-payer amortization…');
 runScript('apply_annual_amortization.mjs', null);
 
+// Apply customer-status overrides (sub-instance-of-parent, comp arrangements).
+// Final say on status — must run AFTER amortization which already adjusts status
+// for annual-coverage customers. These overrides cover the cases amortization
+// can't (no Stripe activity but business-arrangement-active).
+console.log('  applying customer status overrides…');
+runScript('apply_customer_status_overrides.mjs', null);
+
+// Auto-classify never-paid customers (lifetime=$0, 0 transactions, no manual
+// override). They were never customers, so they should NOT be in churn/logo
+// counts. Runs AFTER status overrides so it doesn't clobber them.
+console.log('  classifying never-paid customers…');
+runScript('apply_never_paid_classification.mjs', null);
+
 // Reconcile cohort_retention's "active today" with customer_profiles after all
 // upstream adjustments. Must run AFTER apply_annual_amortization so the patch
 // reads the final canonical MRR values.
@@ -448,6 +461,71 @@ runScript('build_waterfall_from_txns.mjs', null);
 runScript('build_roster.mjs', null); // writes its own output file
 runScript('build_unit_econ.mjs', 'unit_economics');
 runScript('build_pnl.mjs', null); // writes pnl_by_month.json itself
+
+// Annual-amortization evidence registry (QoE-4). Joins annual_payers + overrides +
+// synthetic transactions + realized monthly_history into one drilldown surface.
+// Must run AFTER amortization + status overrides so realized monthly_history is final.
+runScript('build_annual_amortization_evidence.mjs', null); // writes annual_amortization_evidence.json itself
+
+// Adjusted EBITDA bridge (QoE-5). NI → standard EBITDA add-backs → GAAP EBITDA →
+// QoE adjustments (owner-comp normalization, one-time costs, discretionary perks)
+// → Adjusted EBITDA. Must run AFTER build_pnl since it reads pnl_by_month.
+runScript('build_ebitda_bridge.mjs', null); // writes ebitda_bridge.json itself
+
+// Adjustments Register — consolidates every override / data adjustment we make to raw
+// source data into one auditable surface for QoE / diligence review. Runs LAST so it
+// can compute dollar-impact figures from the final post-adjustment customer_profiles.
+runScript('build_adjustments_register.mjs', null); // writes adjustments_register.json itself
+
+// QoE-7 Metric definitions — publish from _etl_scripts/ to public/snapshots/.
+runScript('build_metric_definitions.mjs', null);
+
+// Orders Verified — parses Orders Verified Data.xlsx into per-customer per-year
+// volume data. Feeds Signal 1 (Order Volume) of the Churn Risk Matrix.
+runScript('build_orders_verified.mjs', null); // writes orders_verified.json itself
+
+// Churn Risk Matrix — applies the 5-signal scoring model (skill: allmoxy-monthly-
+// dashboard) to every active paying customer. Reads orders_verified.json + the
+// optional at_risk_hubspot_signals.json cache. Adapts thresholds to data
+// availability and emits the 3×3 risk-impact matrix + per-customer breakdown.
+runScript('build_churn_risk_matrix.mjs', null); // writes churn_risk_matrix.json itself
+
+// Time to Value — focused view on verified-order data. Categorizes every active
+// paying customer as gym_member / hygiene_gap / dormant / declining / healthy
+// and surfaces "$ paid without value" as the headline metric.
+runScript('build_time_to_value.mjs', null); // writes time_to_value.json itself
+
+// QoE-6 Invariant tests — run AFTER all snapshots are built so they can cross-check
+// for consistency. Writes invariant_test_results.json. Exits non-zero on error-severity
+// failures, but we capture that without halting refresh_all (warnings/errors are
+// informational; the dashboard surfaces them so a reviewer can act).
+try {
+  runScript('run_invariant_tests.mjs', null);
+} catch (e) {
+  console.warn(`  invariant tests reported errors (exit ${e.status ?? '?'}) — see invariant_test_results.json`);
+}
+
+// Stripe ↔ QuickBooks reconciliation — per-month tie-out of Stripe transactions to
+// QB revenue lines. Must run AFTER pnl + customer_profiles are written so both sides
+// are available. This is the report a QoE reviewer asks for first.
+runScript('build_stripe_qb_reconciliation.mjs', null); // writes stripe_qb_reconciliation.json itself
+
+// Extend churn_inferences with placeholder entries for any unattributed churned
+// customer not yet in the inference set, so QoE-3 (churn-reason backfill) tracks
+// the full universe of unattributed churns, not just the inference snapshot.
+runScript('extend_churn_inferences.mjs', null); // rewrites churn_inferences.json in place
+
+// Consolidate the deep-research batch files into a single keyed snapshot the
+// Churn Investigator can join onto each customer card. Each entry carries the
+// agent-proposed reason + verbatim evidence quotes + alternative-reasons-ruled-out.
+runScript('consolidate_churn_research.mjs', null); // writes churn_research_classifications.json itself
+
+// Sub-pattern keyword detection (auto) + manual-override merge. The auto pass
+// keyword-matches over churn notes + Churn Details xlsx. The override pass merges
+// manual classifications from _etl_scripts/churn_subpattern_overrides.json on top
+// (union semantics — manual tags add to, never overwrite, auto-detected tags).
+runScript('build_churn_subpatterns.mjs', null); // writes churn_subpatterns.json itself
+runScript('apply_churn_subpattern_overrides.mjs', null);
 
 // Churn-corpus pull from HubSpot. Conditional on HUBSPOT_TOKEN being set in the
 // environment — without it, the script aborts immediately, so we skip cleanly and

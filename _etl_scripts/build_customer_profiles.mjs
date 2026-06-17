@@ -17,6 +17,104 @@ const SNAPSHOTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dash
 
 const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
 
+// ---------- HubSpot segment cache ----------
+// The Hubspot Instance Sync Sheet tab only carries primary_segment_framework, not
+// sub_segment_framework. To surface sub-segment in the dashboard we cache the field
+// from HubSpot via the Claude MCP connector (the local HUBSPOT_TOKEN is 401-ing).
+// Cache schema: { byHubspotId: { "<hs_object_id>": { primary, sub, name } } }.
+// Refresh by re-pulling via MCP, or replace this step with a direct fetch_hubspot_segments.mjs
+// once the token is rotated.
+const HUBSPOT_SEGMENTS_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_segments.json';
+const hubspotSegmentsCache = fs.existsSync(HUBSPOT_SEGMENTS_CACHE_PATH)
+  ? JSON.parse(fs.readFileSync(HUBSPOT_SEGMENTS_CACHE_PATH, 'utf8'))?.byHubspotId ?? {}
+  : {};
+
+// ---------- Live HubSpot API cache (produced by sync_hubspot.mjs) ----------
+// When present, overlays live HubSpot-native values onto the xlsx-derived
+// profile fields. Joins primarily by stripe_company_id with fallbacks to
+// HubSpot Company ID. Only the HubSpot-native subset is overlaid — Pay Status,
+// Subscription IDs, Churn Reason stay xlsx-sourced (those columns live in
+// Stripe and the Allmoxy core DB, not in HubSpot). Refresh by running:
+//   node _etl_scripts/sync_hubspot.mjs
+const HUBSPOT_API_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_companies.json';
+const HUBSPOT_OWNERS_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_owners.json';
+const hubspotLiveByStripeId = new Map();
+const hubspotLiveByCompanyId = new Map();
+let hubspotLiveLoadedAt = null;
+if (fs.existsSync(HUBSPOT_API_CACHE_PATH)) {
+  try {
+    const cache = JSON.parse(fs.readFileSync(HUBSPOT_API_CACHE_PATH, 'utf8'));
+    hubspotLiveLoadedAt = cache.fetched_at;
+    for (const c of cache.companies || []) {
+      if (c.stripe_company_id) hubspotLiveByStripeId.set(c.stripe_company_id, c);
+      if (c.hs_object_id) hubspotLiveByCompanyId.set(String(c.hs_object_id), c);
+      if (c.id) hubspotLiveByCompanyId.set(String(c.id), c);
+    }
+    process.stderr.write(`HubSpot API enrichment cache loaded (${cache.companies?.length || 0} companies, fetched_at=${hubspotLiveLoadedAt})\n`);
+  } catch (err) {
+    process.stderr.write(`Warning: failed to load HubSpot API cache: ${err.message}\n`);
+  }
+}
+// Returns the live HubSpot row for a customer (by any of their stripe IDs, or
+// their HubSpot Company ID). Returns null when no match. Picks the row with
+// the freshest hs_lastmodifieddate when multiple match (multi-instance).
+function hubspotLiveForCustomer(stripeIds, hubspotCompanyId) {
+  const candidates = [];
+  for (const id of stripeIds || []) {
+    const hit = hubspotLiveByStripeId.get(id);
+    if (hit) candidates.push(hit);
+  }
+  if (hubspotCompanyId) {
+    const hit = hubspotLiveByCompanyId.get(String(hubspotCompanyId).trim());
+    if (hit) candidates.push(hit);
+  }
+  if (candidates.length === 0) return null;
+  if (candidates.length === 1) return candidates[0];
+  // Multiple — prefer lifecycle=customer, then freshest modified date
+  candidates.sort((a, b) => {
+    const aIsCust = a.lifecyclestage === 'customer' ? 0 : 1;
+    const bIsCust = b.lifecyclestage === 'customer' ? 0 : 1;
+    if (aIsCust !== bIsCust) return aIsCust - bIsCust;
+    const aDate = a.hs_lastmodifieddate || '';
+    const bDate = b.hs_lastmodifieddate || '';
+    return bDate.localeCompare(aDate);
+  });
+  return candidates[0];
+}
+
+// ---------- Synthetic transactions (off-Stripe payments: checks, wires, ACH) ----------
+// Customers who pay via channels other than Stripe (mailed checks, bank wires,
+// ACH transfers) have payments invisible to our raw Stripe ingest. This file
+// injects them into the customer's transactions array so they flow through
+// amortization, MRR, and waterfall just like Stripe charges. Keyed by
+// allmoxy_customer_id; the injected transaction shape matches the Stripe
+// transaction shape downstream code expects.
+const SYNTHETIC_TXNS_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/synthetic_transactions.json';
+const syntheticTxnsByCustomerId = new Map();
+try {
+  const raw = JSON.parse(fs.readFileSync(SYNTHETIC_TXNS_PATH, 'utf8'));
+  for (const t of raw.transactions ?? []) {
+    const id = Number(t.allmoxy_customer_id);
+    if (!Number.isFinite(id)) continue;
+    if (!syntheticTxnsByCustomerId.has(id)) syntheticTxnsByCustomerId.set(id, []);
+    syntheticTxnsByCustomerId.get(id).push({
+      created: t.created,
+      amount: t.amount,
+      amount_refunded: t.amount_refunded ?? 0,
+      net_amount: t.net_amount ?? t.amount,
+      type: t.type,
+      status: t.status ?? 'succeeded',
+      description: t.description ?? '',
+      // Mark synthetic so downstream code (and the Adjustments Register) can
+      // distinguish off-Stripe payments from real Stripe charges.
+      synthetic: true,
+      payment_method: t.payment_method ?? 'unknown',
+    });
+  }
+} catch (e) {
+  console.warn('No synthetic_transactions.json found or unreadable:', e.message);
+}
+
 // ---------- Stripe ID overrides (manual injection for missing source IDs) ----------
 // Used when allmoxy_core_customer's stripe_customer_id_* fields are empty for a
 // customer who has charges in Stripe Sync — without this, the customer's
@@ -137,6 +235,18 @@ const hubspotNameAmbiguous = new Set(); // names that appear in 2+ rows (skip na
       churn_reason: get('Churn Reason'),
       primary_segment: get('Primary Segment'),
       hubspot_record_id: get('Record ID'),
+      // Instance owner from the Hubspot Sync Sheet: col Q = "Owner" (full name
+      // or owner id), col R = "First name". Use First name as the display label
+      // since that's what the CS team uses day-to-day.
+      instance_owner: get('Owner'),
+      instance_owner_first_name: get('First name'),
+      // Production installer URL (subdomain). Authoritative when populated —
+      // overrides the core record's installer_directory, which sometimes points
+      // at the Sandbox subdomain (e.g. Dot Custom Cabinets: core says
+      // "dotcabinetsusa2020", production is "dotcabinetsusa"). Resolution rules
+      // (Production > Pre-Sale > Sandbox) ensure we pick the production row.
+      directory: get('Directory'),
+      installer_id_from_hub: get('Installer ID'),
       _realm: realm,
       _payRank: PAY_PRIORITY[pay] ?? 9,
       _realmRank: REALM_PRIORITY[realm] ?? 9,
@@ -550,12 +660,28 @@ for (const id of allIds) {
     }
   }
 
+  // Prefer Hubspot Instance Sync Sheet's Directory/Installer ID columns when
+  // present (production realm wins via resolveWinner). Falls back to the
+  // allmoxy_core_customer values for customers without a Sync row. Fixes the
+  // dotcabinetsusa-vs-dotcabinetsusa2020 split and similar Sandbox aliases.
+  const installerDirectory = hub?.directory ?? core?.installer_directory ?? null;
+  const installerId = (hub?.installer_id_from_hub != null && hub.installer_id_from_hub !== '')
+    ? String(hub.installer_id_from_hub)
+    : (core?.installer_id ?? null);
+  // Live HubSpot overlay — when sync_hubspot.mjs has run recently, prefer its
+  // values for HubSpot-native fields. Falls back silently to xlsx when no live
+  // match. Stripe-sourced fields (pay_status, subscription IDs, churn_reason)
+  // are intentionally NOT overlaid — those don't live in HubSpot.
+  const live = hubspotLiveForCustomer(core?.stripe_customer_ids ?? [], core?.hubspot_company_id);
+  const liveOwnerFirstName = live?.owner_first_name ?? null;
+  const liveOwnerFullName = live?.owner_full_name ?? null;
+
   profiles.push({
     allmoxy_customer_id: id,
     name,
     hubspot_company_id: core?.hubspot_company_id ?? null,
-    installer_id: core?.installer_id ?? null,
-    installer_directory: core?.installer_directory ?? null,
+    installer_id: installerId,
+    installer_directory: installerDirectory,
     stripe_customer_ids: core?.stripe_customer_ids ?? [],
     harvest_id: core?.harvest_id ?? null,
     master_classification_name: sync?.meta_master_name ?? null,
@@ -566,11 +692,37 @@ for (const id of allIds) {
     cohort_year: cohortYear,
     status,
     active_today: activeToday,
-    // HubSpot fields (null when no match in Hubspot Instance Sync Sheet)
+    // HubSpot fields. Values prefer LIVE API data (refreshed by sync_hubspot.mjs)
+    // when available; fall back to xlsx Sync Sheet otherwise. Pay status,
+    // subscription IDs, and churn reason stay xlsx-only — those columns live in
+    // Stripe and the Allmoxy core DB, not in HubSpot.
     pay_status: hub?.pay_status ?? null,
-    contract_status: hub?.contract_status ?? null,
+    contract_status: live?.contract_status ?? hub?.contract_status ?? null,
     churn_reason: hub?.churn_reason ?? null,
-    primary_segment: hub?.primary_segment ?? null,
+    primary_segment: live?.primary_segment_framework ?? hub?.primary_segment ?? null,
+    // Instance owner. Prefer the live HubSpot owner (refreshed nightly) over
+    // the xlsx Sync Sheet's First-name column, which lags by however long
+    // since the last manual xlsx export.
+    instance_owner: liveOwnerFullName ?? hub?.instance_owner ?? null,
+    instance_owner_first_name: liveOwnerFirstName ?? hub?.instance_owner_first_name ?? null,
+    sub_segment: live?.sub_segment_framework ?? (() => {
+      const hsId = core?.hubspot_company_id != null ? String(core.hubspot_company_id) : null;
+      return hsId && hubspotSegmentsCache[hsId] ? (hubspotSegmentsCache[hsId].sub ?? null) : null;
+    })(),
+    // NEW live-only fields — only populated when sync_hubspot.mjs has run.
+    // Stay null until the API cache is built; nothing breaks if absent.
+    notes_last_contacted: live?.notes_last_contacted ?? null,
+    customer_health_cs_pulse: live?.customer_health_cs_pulse ?? null,
+    is_launched_per_hubspot: live?.is_this_customer_launched_ ?? null,
+    actual_launch_date: live?.actual_launch_date ?? null,
+    goal_launch_date: live?.goal_launch_date ?? null,
+    cs_start_date: live?.cs_start_date ?? null,
+    vip_legacy_customer: live?.vip_legacy_customer ?? null,
+    allmoxy_main_poc: live?.allmoxy_main_poc ?? null,
+    hubspot_lifecyclestage: live?.lifecyclestage ?? null,
+    hubspot_owner_id: live?.hubspot_owner_id ?? null,
+    hubspot_owner_email: live?.owner_email ?? null,
+    hubspot_data_fetched_at: live ? hubspotLiveLoadedAt : null,
     stripe_subscription_id: hub?.stripe_subscription_id ?? null,
     custom_domain_stripe_subscription_id: hub?.custom_domain_stripe_subscription_id ?? null,
     all_stripe_subscription_ids: hub?.all_stripe_subscription_ids ?? [],
@@ -677,6 +829,50 @@ const dedupedProfiles = mergeDuplicateProfiles(profiles);
 const mergedCount = profiles.length - dedupedProfiles.length;
 profiles.length = 0;
 profiles.push(...dedupedProfiles);
+
+// Inject synthetic (off-Stripe) transactions into every customer profile that
+// has any in synthetic_transactions.json. These checks / wires / ACH payments
+// don't flow through Stripe so they're invisible to our raw ingest; injecting
+// them into customer_profiles.transactions makes them visible to downstream
+// amortization, MRR rollups, and the waterfall. Also stamps them into
+// monthly_history so non-annual-payer customers (who don't get re-amortized)
+// still reflect the payment in subscription_by_month and mrr_by_month.
+let syntheticInjected = 0;
+for (const profile of profiles) {
+  const synth = syntheticTxnsByCustomerId.get(profile.allmoxy_customer_id) || [];
+  if (synth.length === 0) continue;
+  profile.transactions = [...(profile.transactions || []), ...synth];
+  profile.transaction_count = (profile.transaction_count || 0) + synth.length;
+  // Stamp into monthly_history at the payment month. apply_annual_amortization
+  // will rewrite monthly_history for annual_payers based on their full
+  // transaction list, so this stamp gets refined there. For non-annual-payers,
+  // this stamp is what surfaces the payment in monthly snapshots.
+  if (!profile.monthly_history) profile.monthly_history = {};
+  for (const t of synth) {
+    const ym = (t.created || '').slice(0, 7);
+    if (!ym) continue;
+    const cur = profile.monthly_history[ym] || { subscription: 0, services: 0, connect: 0, total: 0 };
+    const amt = t.net_amount ?? t.amount ?? 0;
+    const stream = t.type === 'subscription' ? 'subscription' : t.type === 'services' ? 'services' : t.type === 'connect' ? 'connect' : 'subscription';
+    cur[stream] = Math.round(((cur[stream] || 0) + amt) * 100) / 100;
+    cur.total = Math.round(((cur.subscription || 0) + (cur.services || 0) + (cur.connect || 0)) * 100) / 100;
+    profile.monthly_history[ym] = cur;
+  }
+  // Recompute lifetime + last_payment_date to include the synthetic.
+  for (const t of synth) {
+    const amt = t.net_amount ?? t.amount ?? 0;
+    profile.lifetime_total = Math.round(((profile.lifetime_total || 0) + amt) * 100) / 100;
+    if (t.type === 'subscription') profile.lifetime_subscription = Math.round(((profile.lifetime_subscription || 0) + amt) * 100) / 100;
+    else if (t.type === 'services') profile.lifetime_services = Math.round(((profile.lifetime_services || 0) + amt) * 100) / 100;
+    else if (t.type === 'connect') profile.lifetime_connect = Math.round(((profile.lifetime_connect || 0) + amt) * 100) / 100;
+    const date = (t.created || '').slice(0, 10);
+    if (date && (!profile.last_payment_date || date > profile.last_payment_date)) {
+      profile.last_payment_date = date;
+    }
+  }
+  syntheticInjected += synth.length;
+}
+if (syntheticInjected > 0) process.stderr.write(`injected ${syntheticInjected} synthetic (off-Stripe) transactions\n`);
 
 // Sort by lifetime total desc for default ordering.
 profiles.sort((a, b) => b.lifetime_total - a.lifetime_total);

@@ -20,6 +20,7 @@ import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
 import CsvExportButton from '../components/common/CsvExportButton';
 import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
+import CustomerLink from '../components/common/CustomerLink';
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type MrrRow = {
@@ -782,7 +783,9 @@ export default function CurrentMonth() {
                         const stripeId = r.stripeIds[0];
                         return (
                           <TableRow key={`row-${r.rowKey}`}>
-                            <TableCell>{r.customerName}</TableCell>
+                            <TableCell>
+                              <CustomerLink id={r.customerId} name={r.customerName} />
+                            </TableCell>
                             <TableCell sx={{ color: 'text.secondary', fontVariantNumeric: 'tabular-nums' }}>{r.subLabel}</TableCell>
                             <TableCell>
                               <Chip label={categoryLabel(r.category)} size="small" color={categoryChipColor(r.category)} variant="outlined" />

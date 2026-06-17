@@ -1,0 +1,138 @@
+{
+  "comment": "Manual sub-pattern classifications for churned customers, applied on top of the auto-generated churn_subpatterns.json (which uses keyword detection over notes + Churn Details xlsx). Each entry records the evidence basis behind the tag(s) so a QoE reviewer can audit the call. Tags MERGE with auto-detected tags (union, no overwrite). Built and applied by _etl_scripts/apply_churn_subpattern_overrides.mjs as a post-step after build_churn_subpatterns.mjs.",
+  "updated_at": "2026-06-12",
+  "added_by": "Beau Lewis (via Claude evidence review of 31 untagged Failed Implementation customers)",
+  "overrides": [
+    {
+      "allmoxy_customer_id": 148,
+      "name": "KIB Direct",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_no_catalog_definition", "fi_cs_responsiveness"],
+      "evidence": "Research notes: 'KIB has wall cabinets that are all different heights. These need to be double checked' (2020-01-27) + 'needs the non cabinet box pairings and edgebanding pairings to be set up on the backend of 3D' (2020-01-16). Customer's catalog had inconsistencies AND outstanding setup work was on Allmoxy's side."
+    },
+    {
+      "allmoxy_customer_id": 156,
+      "name": "Mountain Millwork",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_no_catalog_definition", "fi_cs_responsiveness"],
+      "evidence": "Customer 'wanted EVERY product type in Allmoxy's database — massively over-scoped catalog ambition'. Then their 'instance got deleted/completely wiped' within first year and CSM didn't know how — catastrophic implementation failure."
+    },
+    {
+      "allmoxy_customer_id": 531,
+      "name": "Subtle Cabinets",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_bandwidth_stalled"],
+      "evidence": "Quote: 'Kickoff was 4/24/25, multiple onboarding/working sessions through 5/14/25, then no further engagement.' Classic small-shop bandwidth signal — kickoff happened but momentum died after ~3 weeks."
+    },
+    {
+      "allmoxy_customer_id": 98,
+      "name": "Modern Kitchen Pros LLC",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_cs_responsiveness"],
+      "evidence": "Quote: 'Matt Hamel (customer) was emailing without responses from Allmoxy. Internal team didn't know status' (2019-03-15). CS dropped the ball — customer was actively trying to engage."
+    },
+    {
+      "allmoxy_customer_id": 143,
+      "name": "Ameuro Wood Fixtures",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_bandwidth_stalled", "fi_wrong_stakeholder"],
+      "evidence": "Quote: 'Mekelle was working on this and needed some info from Eric but he basically said he didn't have the answers and would have to put this on hold' (2019-07-09). Champion Eric didn't have answers/authority — paused implementation on customer side."
+    },
+    {
+      "allmoxy_customer_id": 53,
+      "name": "Express Reface",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_setup_cost_shock"],
+      "evidence": "Mar 5 2021: pricing committed at $250 first 3 months → $618/mo after. Mar 18 2021 (13 days later): customer cancelled, asked for $250 refund, granted. Classic sticker-shock / buyer's remorse before any work happened."
+    },
+    {
+      "allmoxy_customer_id": 194,
+      "name": "Ponder Home",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_bandwidth_stalled"],
+      "evidence": "Onboarding note: 'Yoder family starting a second company for cabinets and flooring'. HubSpot description still says 'COMING SOON to 903 PONDER AVENUE' — the business may never have actually opened. New-business bandwidth issue."
+    },
+    {
+      "allmoxy_customer_id": 215,
+      "name": "Michigan Woodwork",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_bandwidth_stalled"],
+      "evidence": "Quote: 'These guys just went inactive for 7 days. They're at risk of falling off' (2020-01-14). Within their first months. Last payment 2020-03 — fell off shortly after."
+    },
+    {
+      "allmoxy_customer_id": 261,
+      "name": "Wheat Country Woodworks Llc",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_diy_attempt_failed", "fi_bandwidth_stalled"],
+      "evidence": "At signup, owner Austin Jantz was 'very busy and known to be a slow self-builder'. Customer was on Cabinet Vision before Allmoxy. Transition never completed — self-build attempt stalled."
+    },
+    {
+      "allmoxy_customer_id": 286,
+      "name": "Closets N More, Inc",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_cs_responsiveness"],
+      "evidence": "Customer disputed an Allmoxy charge (Mar 2021): 'were you aware of them wanting to cancel? They are disputing our charge'. Internal: 'Did you find out how they tried to cancel? Who did they talk to?' — Allmoxy's cancellation-request tracking failed. Same process failure pattern as Porter's / Open Garage."
+    },
+    {
+      "allmoxy_customer_id": 345,
+      "name": "3iflex",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_no_catalog_definition"],
+      "evidence": "Quote: '3iflex is looking to create a custom cabinet catalog. They use Mosaik currently. They are considering Cabinet Vision or Microvellum.' Multi-tool shopping + no defined catalog structure. Sales qualification gap."
+    },
+    {
+      "allmoxy_customer_id": 451,
+      "name": "Woodstock Cabinet Company",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_setup_cost_shock", "fi_no_catalog_definition"],
+      "evidence": "Signed Jun 2023 at $1599/mo with 'Integration estimate: 60-100 hours'. Customer wanted barcoding + imports/exports — heavy integration scope. 35-employee/$5M Cabinet Vision migration. Last payment Jul 2023 — sticker shock + scope after $250 trial."
+    },
+    {
+      "allmoxy_customer_id": 452,
+      "name": "Cedar Creek Woodworks",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_bandwidth_stalled", "fi_setup_cost_shock"],
+      "evidence": "Quote: '$250 USD per month, no contract' + 'Sean is requesting to cancel. He does not have a contract with us at the moment' (Nov 2023). Floor-pricing-no-contract pattern — cancelled without ever committing."
+    },
+    {
+      "allmoxy_customer_id": 100,
+      "name": "Heritage Woodwright",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_bandwidth_stalled"],
+      "evidence": "Quote: 'he needs a services touch, sounds like...' (Apr 2019). Implementation help was flagged but never engaged. Last payment Apr 2019. Single substantive note then years of silence."
+    },
+    {
+      "allmoxy_customer_id": 277,
+      "name": "Randiri",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_cs_responsiveness", "fi_no_catalog_definition"],
+      "evidence": "Customer in Bogor City, West Java (Indonesia) — time zone / language barrier. Needed help with basic workflow (collecting cash/check payments) in Nov 2020. Help was provided in self-serve article form; customer didn't complete implementation. Asymmetric support gap."
+    },
+    {
+      "allmoxy_customer_id": 512,
+      "name": "Burger's Cabinet Shop",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_no_catalog_definition", "fi_bandwidth_stalled"],
+      "evidence": "Oct 2024 demo: owner Doug acknowledged 'no real processes right now, using spreadsheets and drawing jobs'. Paid $250 initial fee. Last payment Nov 2024 — only ~1 month after demo. Never completed implementation. No SKU structure to migrate."
+    },
+    {
+      "allmoxy_customer_id": 201,
+      "name": "Vonmod Ltd.",
+      "parent_reason": "Failed Implementation",
+      "subpatterns": ["fi_setup_cost_shock"],
+      "evidence": "Feb 2022: legacy customer trying to re-engage at $399/mo with '$7,000-$11,000 estimate for integrations'. Multi-vertical scope (kitchens + closets + vanities). $2M / 11-employee shop. Cabinet Vision migration. Never converted — integration estimate killed it."
+    }
+  ],
+  "untagged_with_hubspot_reason_only": {
+    "comment": "These 14 customers have HubSpot Failed Implementation reason but no detailed CSM evidence in our research/inference snapshots, so a confident sub-pattern can't be assigned without further investigation. Left untagged so the page accurately reflects 'we know parent reason but not the specific sub-pattern'. Future research pass could close these.",
+    "customer_ids": [362, 459, 334, 245, 359, 506, 508, 349, 419, 236, 381, 321, 288, 182],
+    "names": [
+      "One Source Cabinets", "EuroContempo", "Chester Cabinets", "Create More Space",
+      "MTD Kitchen", "The Cabinet Warehouse", "WF Cabinetry", "Byrcon Wood Products Ltd.",
+      "Rocky Mountain Cabinets", "Timberlane Finish Solutions Llc", "Embolden Designer Doors, Llc",
+      "Canadian Closets Plus Inc", "Proyectos Olivo Sa De Cv", "Centorbi Cabinetry"
+    ],
+    "combined_lifetime_dollars": 173460,
+    "next_action": "Run another HubSpot research pass over these specifically — pull notes + emails + tickets to identify which FI sub-pattern fits each."
+  }
+}
