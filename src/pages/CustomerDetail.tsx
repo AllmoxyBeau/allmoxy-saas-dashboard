@@ -23,7 +23,7 @@ import DrillDownPanel from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
 import { useSheetTab } from '../hooks/useSheetTab';
 import { hubspotCompanyUrl } from '../lib/hubspot';
-import annualPayersConfig from '../data/annual_payers.json';
+import annualPayersConfig from '../data/annual_payer_ids.json';
 
 type Transaction = {
   created: string | null;

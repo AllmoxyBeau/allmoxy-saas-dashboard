@@ -18,7 +18,7 @@ import Divider from '@mui/material/Divider';
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel';
 import { useSheetTab } from '../hooks/useSheetTab';
-import annualPayersConfig from '../data/annual_payers.json';
+import annualPayersConfig from '../data/annual_payer_ids.json';
 import connectOverrides from '../data/connect_customer_overrides.json';
 
 type Profile = {

@@ -26,7 +26,7 @@ import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
 import { useSheetTab } from '../hooks/useSheetTab';
-import annualPayersCfg from '../data/annual_payers.json';
+import annualPayersCfg from '../data/annual_payer_ids.json';
 
 const ANNUAL_PAYER_IDS = new Set<number>(annualPayersCfg.annual_payer_ids);
 
