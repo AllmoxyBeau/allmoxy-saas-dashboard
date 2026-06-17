@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-17T21:04:57.651Z",
+  "fetched_at": "2026-06-17T23:58:49.883Z",
   "total": 22,
   "passed": 19,
   "errors": 0,
@@ -32,7 +32,7 @@
       "name": "unattributed count (profiles, excluding duplicates) = churn_inferences count",
       "severity": "error",
       "passed": true,
-      "detail": "unattributed=171 · inferences=171",
+      "detail": "unattributed=169 · inferences=169",
       "examples": []
     },
     {
@@ -92,7 +92,7 @@
       "examples": [
         "#38 Panhandle Door Inc.: lifetime=$438740 vs sum=$431082 (Δ $7658, tol $4387.4)",
         "#13 Timberline Doors: lifetime=$317587.7 vs sum=$314370.2 (Δ $3217.5, tol $3175.88)",
-        "#31 Bella Imc: lifetime=$49445 vs sum=$50103 (Δ $-658, tol $494.45)",
+        "#31 Bella Imc: lifetime=$49246 vs sum=$49904 (Δ $-658, tol $492.46)",
         "#332 Cober Cabinets: lifetime=$12622 vs sum=$11786 (Δ $836, tol $126.22)",
         "#422 Rocky Mountain Custom Cabinets: lifetime=$23870 vs sum=$19875 (Δ $3995, tol $238.7)"
       ]

@@ -235,6 +235,10 @@ const hubspotNameAmbiguous = new Set(); // names that appear in 2+ rows (skip na
       churn_reason: get('Churn Reason'),
       primary_segment: get('Primary Segment'),
       hubspot_record_id: get('Record ID'),
+      // HubSpot Company ID from Sync Sheet col B — used as fallback when the
+      // core allmoxy_core_customer table doesn't have it (common for newer
+      // customers added to HubSpot but not yet linked in core).
+      hubspot_company_id_from_hub: hubspotCompanyId,
       // Instance owner from the Hubspot Sync Sheet: col Q = "Owner" (full name
       // or owner id), col R = "First name". Use First name as the display label
       // since that's what the CS team uses day-to-day.
@@ -676,10 +680,16 @@ for (const id of allIds) {
   const liveOwnerFirstName = live?.owner_first_name ?? null;
   const liveOwnerFullName = live?.owner_full_name ?? null;
 
+  // HubSpot Company ID: prefer the core table's value; fall back to the Sync
+  // Sheet's "Company ID" column when core hasn't been populated yet (common
+  // for newer customers added in HubSpot first).
+  const hubspotCompanyIdResolved = core?.hubspot_company_id
+    ?? (hub?.hubspot_company_id_from_hub ? String(hub.hubspot_company_id_from_hub) : null);
+
   profiles.push({
     allmoxy_customer_id: id,
     name,
-    hubspot_company_id: core?.hubspot_company_id ?? null,
+    hubspot_company_id: hubspotCompanyIdResolved,
     installer_id: installerId,
     installer_directory: installerDirectory,
     stripe_customer_ids: core?.stripe_customer_ids ?? [],

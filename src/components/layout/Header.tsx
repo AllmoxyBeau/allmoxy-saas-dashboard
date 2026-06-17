@@ -189,11 +189,11 @@ export default function Header() {
 
         {/* Last-refreshed timestamp shown next to the refresh button */}
         {(builtAgo || hubspotAgo) && (
-          <Box sx={{ display: { xs: 'none', sm: 'flex' }, flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.2 }}>
-            <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+          <Box sx={{ display: { xs: 'none', sm: 'flex' }, flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.1 }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Last refreshed
             </Typography>
-            <Typography variant="caption" sx={{ color: 'text.primary', fontWeight: 600, fontSize: 12 }}>
+            <Typography variant="caption" sx={{ color: 'text.primary', fontWeight: 500, fontSize: 9.5 }}>
               {builtAgo ?? '—'}
               {hubspotAgo && hubspotAgo !== builtAgo && (
                 <Box component="span" sx={{ color: 'text.secondary', fontWeight: 400, ml: 0.5 }}>
