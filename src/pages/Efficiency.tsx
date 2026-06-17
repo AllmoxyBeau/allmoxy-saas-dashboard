@@ -5,8 +5,6 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, ReferenceLine } from 'recharts';
@@ -38,11 +36,6 @@ type WaterfallSnap = { monthly: WaterfallMonthly[] };
 
 type MrrSnap = { rows: Array<{ month: string; mrr_subscription: number | null }> };
 
-const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-
-function pct(v: number | null | undefined, digits = 1) {
-  return v == null ? '—' : `${(v * 100).toFixed(digits)}%`;
-}
 function ratio(v: number | null | undefined) { return v == null ? '—' : `${v.toFixed(2)}x`; }
 function monthLabel(iso: string) {
   const [y, m] = iso.split('-').map(Number);
