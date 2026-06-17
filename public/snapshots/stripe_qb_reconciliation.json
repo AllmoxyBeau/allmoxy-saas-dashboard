@@ -1,0 +1,179 @@
+{
+  "fetched_at": "2026-06-16T02:44:16.815Z",
+  "comment": "Stripe ↔ QuickBooks per-month reconciliation. Stripe side is sum of customer_profiles.transactions (status=succeeded) by type; QB side is the corresponding pnl_by_month line items. Variance = Stripe minus QB-recognized. Tie-out status: tight (≤1% variance), acceptable (≤5%), investigate (>5%). See `reconciling_items` for canonical reasons for residual variance.",
+  "rows": [
+    {
+      "month": "2026-01",
+      "stripe": {
+        "subscription": 225411.68,
+        "services": 27028.7,
+        "connect": 0,
+        "other": 0,
+        "refunds": 20.57,
+        "total": 252440.38
+      },
+      "qb": {
+        "subscription_revenue": 225702.3,
+        "annual_deferred": 3033.41,
+        "subscription_recognized": 228735.71,
+        "services_revenue": 27029.27,
+        "affiliate_revenue": 0,
+        "subscription_tax": -3667.65,
+        "stripe_fee_income": 32707.64,
+        "total_income": 284806.74
+      },
+      "variance": {
+        "subscription_dollars": -3324.03,
+        "subscription_pct": -0.014532186513422097,
+        "services_dollars": -0.57,
+        "services_pct": -0.00002108824988613118
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2026-02",
+      "stripe": {
+        "subscription": 226677.19,
+        "services": 29068.2,
+        "connect": 0,
+        "other": 0,
+        "refunds": 40,
+        "total": 255745.39
+      },
+      "qb": {
+        "subscription_revenue": 226284.19,
+        "annual_deferred": 3033.41,
+        "subscription_recognized": 229317.6,
+        "services_revenue": 29779.35,
+        "affiliate_revenue": 0,
+        "subscription_tax": -3615.71,
+        "stripe_fee_income": 37777.11,
+        "total_income": 300384.05
+      },
+      "variance": {
+        "subscription_dollars": -2640.41,
+        "subscription_pct": -0.01151420562573493,
+        "services_dollars": -711.15,
+        "services_pct": -0.023880642122813343
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2026-03",
+      "stripe": {
+        "subscription": 236400.1,
+        "services": 34301.8,
+        "connect": 0,
+        "other": 0,
+        "refunds": 137,
+        "total": 270701.9
+      },
+      "qb": {
+        "subscription_revenue": 236373.1,
+        "annual_deferred": 3173,
+        "subscription_recognized": 239546.1,
+        "services_revenue": 34391.8,
+        "affiliate_revenue": 0,
+        "subscription_tax": -3607.78,
+        "stripe_fee_income": 42756.16,
+        "total_income": 313088.17
+      },
+      "variance": {
+        "subscription_dollars": -3146,
+        "subscription_pct": -0.01313317144382659,
+        "services_dollars": -90,
+        "services_pct": -0.002616902866381151
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2026-04",
+      "stripe": {
+        "subscription": 229206.16,
+        "services": 19380.1,
+        "connect": 0,
+        "other": 0,
+        "refunds": 286.63,
+        "total": 248586.26
+      },
+      "qb": {
+        "subscription_revenue": 229226.16,
+        "annual_deferred": 3173,
+        "subscription_recognized": 232399.16,
+        "services_revenue": 19380.1,
+        "affiliate_revenue": 0,
+        "subscription_tax": -3566.28,
+        "stripe_fee_income": 43297.38,
+        "total_income": 291564.08
+      },
+      "variance": {
+        "subscription_dollars": -3193,
+        "subscription_pct": -0.013739292345118632,
+        "services_dollars": 0,
+        "services_pct": 0
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2026-05",
+      "stripe": {
+        "subscription": 262791.98,
+        "services": 19809,
+        "connect": 0,
+        "other": 0,
+        "refunds": 20,
+        "total": 282600.98
+      },
+      "qb": {
+        "subscription_revenue": 230789.48,
+        "annual_deferred": 3173,
+        "subscription_recognized": 233962.48,
+        "services_revenue": 19809,
+        "affiliate_revenue": 0,
+        "subscription_tax": -3331.77,
+        "stripe_fee_income": 41286.2,
+        "total_income": 291727.62
+      },
+      "variance": {
+        "subscription_dollars": 28829.5,
+        "subscription_pct": 0.1232227492203022,
+        "services_dollars": 0,
+        "services_pct": 0
+      },
+      "tie_out_status": "investigate"
+    }
+  ],
+  "reconciling_items": [
+    {
+      "label": "Annual lump-sum cash receipts",
+      "description": "Stripe records the full lump-sum amount in the month it was charged (e.g., B&B Door's $32,002.50 in May 2026). QB defers and recognizes monthly via Line 4100 \"Annual Deferred Monthly\" (~$3,173/mo). Variance reconciles over the 12–15 month coverage window.",
+      "sign": "Stripe > QB in receipt month; Stripe < QB in subsequent months."
+    },
+    {
+      "label": "Sales tax inclusion",
+      "description": "Stripe gross charges include sales tax collected; QB separately books Line 4050 \"Monthly Subscription Tax\" (negative) to remove the pass-through. The Stripe-side numbers in this reconciliation use net_amount (post-refund) but still include any sales tax collected.",
+      "sign": "Small consistent positive variance in Stripe subscription line."
+    },
+    {
+      "label": "Per-transaction stream reclassifications",
+      "description": "Some transactions are reclassified by `transaction_overrides.json` (e.g., Panhandle's $7,658 March charge moved from subscription → services). Stripe still shows them under their original type until you apply the overrides; QB books them per the corrected classification.",
+      "sign": "Lumpy variance in specific months matching override entries."
+    },
+    {
+      "label": "Refund timing",
+      "description": "Stripe net_amount nets refunds against the original charge in the original month. QB books refunds in the period the refund occurred. Variance possible when a refund occurs in a different month than the charge.",
+      "sign": "Small; ad-hoc."
+    },
+    {
+      "label": "Stripe Connect fees",
+      "description": "Affiliate / Connect revenue is recorded in QB via Line 4200 \"Stripe Fee Income\" (Allmoxy's markup) and Line 4600 \"Affiliate Referral Income\". The Stripe-side `connect` column in `customer_profiles.transactions` is currently empty because Connect fees are tracked separately in the 6 Stripe Connect Revenue sheets, not in customer Stripe accounts. The Connect line in this report is informational only — Connect-side reconciliation lives in the Connect sheets.",
+      "sign": "Connect column in Stripe is $0 by design; QB has the real number."
+    }
+  ],
+  "summary": {
+    "n_months": 5,
+    "n_tight": 0,
+    "n_acceptable": 4,
+    "n_investigate": 1
+  }
+}

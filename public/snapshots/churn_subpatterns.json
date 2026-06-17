@@ -1,0 +1,425 @@
+{
+  "tab": "churn_subpatterns",
+  "fetchedAt": "2026-06-16T02:44:17.110Z",
+  "generatedBy": "build_churn_subpatterns.mjs — keyword detection over customer_profiles + churn_inferences + Churn Details.xlsx",
+  "notes": "Each customer can have multiple sub-pattern tags within their parent churn-reason cluster. Sub-patterns are not mutually exclusive.",
+  "subpattern_definitions": {
+    "fi_bandwidth_stalled": {
+      "label": "Bandwidth stalled",
+      "parent": "Failed Implementation",
+      "description": "Owner could not dedicate the time. Implementation paused indefinitely, never resumed."
+    },
+    "fi_diy_attempt_failed": {
+      "label": "DIY attempt failed",
+      "parent": "Failed Implementation",
+      "description": "Customer chose self-build at signup, struggled, then refused to engage paid services."
+    },
+    "fi_cs_responsiveness": {
+      "label": "Allmoxy CS dropped ball",
+      "parent": "Failed Implementation",
+      "description": "CSM team failed to respond, lost the train, missed comms, or wrong stakeholder targeted by our side."
+    },
+    "fi_sales_overpromise": {
+      "label": "Sales over-promise",
+      "parent": "Failed Implementation",
+      "description": "Customer believed they were buying features or integrations that did not really exist."
+    },
+    "fi_third_party_services_quality": {
+      "label": "3rd-party services quality",
+      "parent": "Failed Implementation",
+      "description": "Catalog built by an affiliate / outsourced contractor who got it wrong or lacked expertise."
+    },
+    "fi_wrong_stakeholder": {
+      "label": "Wrong stakeholder / owner not in loop",
+      "parent": "Failed Implementation",
+      "description": "Owner / decision-maker wasn’t involved; middle-manager started without authority, or multi-stakeholder confusion."
+    },
+    "fi_no_catalog_definition": {
+      "label": "Catalog not yet defined",
+      "parent": "Failed Implementation",
+      "description": "Customer didn’t have a defined SKU/product structure to map into Allmoxy; they wanted Allmoxy to figure it out for them."
+    },
+    "fi_setup_cost_shock": {
+      "label": "Setup-cost sticker shock",
+      "parent": "Failed Implementation",
+      "description": "Customer agreed to monthly subscription but flinched at the integration / build-out quote."
+    },
+    "fi_feature_gap_blocked": {
+      "label": "Product feature gap blocked launch",
+      "parent": "Failed Implementation",
+      "description": "A real product limitation prevented the customer from launching, despite both sides trying."
+    },
+    "fi_customer_team_turnover": {
+      "label": "Customer team turnover mid-impl",
+      "parent": "Failed Implementation",
+      "description": "Key staff or management on the customer side left, halting progress."
+    },
+    "fi_enduser_adoption_failure": {
+      "label": "End-user adoption failure",
+      "parent": "Failed Implementation",
+      "description": "Allmoxy was built and live, but the customer’s own customers (dealers, end-users) wouldn’t adopt it."
+    },
+    "fi_financial_distress": {
+      "label": "Financial distress masked as failed impl",
+      "parent": "Failed Implementation",
+      "description": "Customer was running out of money during implementation; payments failing."
+    },
+    "feat_3d_designer": {
+      "label": "3D Designer reliability / accuracy",
+      "parent": "Features",
+      "description": "3D designer rendering accuracy, custom moldings, complex shapes, broken outputs."
+    },
+    "feat_export_integration": {
+      "label": "Cabinet Vision / Microvellum / 2020 export",
+      "parent": "Features",
+      "description": "Customer needed export to a downstream design/MRP tool that Allmoxy couldn’t produce cleanly."
+    },
+    "feat_inventory_erp": {
+      "label": "Inventory / ERP / barcoding",
+      "parent": "Features",
+      "description": "Customer expected ERP-grade features (inventory tracking, barcoding, production capacity) that Allmoxy isn’t built for."
+    },
+    "feat_reports": {
+      "label": "Reporting depth missing",
+      "parent": "Features",
+      "description": "Customer cited insufficient reports as the gap."
+    },
+    "feat_dynamic_attributes_validations": {
+      "label": "Dynamic attributes / validation rigidity",
+      "parent": "Features",
+      "description": "Attribute model / validation system too rigid for the customer’s catalog complexity."
+    },
+    "feat_b2b": {
+      "label": "B2B features missing",
+      "parent": "Features",
+      "description": "B2B-specific gaps: order-level settings, multi-currency, dealer flows."
+    },
+    "feat_pricing_formula_bugs": {
+      "label": "Pricing-formula / catalog accuracy bugs",
+      "parent": "Features",
+      "description": "Customer launched but the catalog priced wrong / cut-list calculations were inaccurate."
+    },
+    "feat_api_integration": {
+      "label": "API / custom integration gap",
+      "parent": "Features",
+      "description": "Customer wanted API or custom integration that wasn’t available or wasn’t prioritized."
+    },
+    "feat_accounting_part_numbers": {
+      "label": "Part numbers / QuickBooks fields missing",
+      "parent": "Features",
+      "description": "Customer needed line-item part numbers or QuickBooks-tracking fields the system didn’t produce."
+    },
+    "feat_business_model_mismatch": {
+      "label": "Wrong-shape product for their business",
+      "parent": "Features",
+      "description": "Customer’s product type (granite, project-based, etc.) wasn’t well-served by Allmoxy."
+    },
+    "feat_competitor_better_fit": {
+      "label": "Competitor cited as better fit",
+      "parent": "Features",
+      "description": "Customer named a specific competitor that fit their needs better."
+    },
+    "feat_unspecified": {
+      "label": "(Reason not given / vague)",
+      "parent": "Features",
+      "description": "Tagged Features Missing in HubSpot or by CS, but no specific feature named."
+    }
+  },
+  "customer_subpatterns": {
+    "32": [
+      "fi_feature_gap_blocked",
+      "feat_3d_designer"
+    ],
+    "51": [
+      "fi_sales_overpromise",
+      "fi_setup_cost_shock"
+    ],
+    "53": [
+      "fi_setup_cost_shock"
+    ],
+    "78": [
+      "feat_accounting_part_numbers"
+    ],
+    "86": [
+      "fi_feature_gap_blocked",
+      "feat_export_integration",
+      "feat_inventory_erp",
+      "feat_dynamic_attributes_validations"
+    ],
+    "96": [
+      "fi_cs_responsiveness",
+      "fi_wrong_stakeholder"
+    ],
+    "98": [
+      "fi_cs_responsiveness"
+    ],
+    "100": [
+      "fi_bandwidth_stalled"
+    ],
+    "111": [
+      "feat_3d_designer"
+    ],
+    "119": [
+      "feat_competitor_better_fit"
+    ],
+    "142": [
+      "fi_diy_attempt_failed"
+    ],
+    "143": [
+      "fi_bandwidth_stalled",
+      "fi_wrong_stakeholder"
+    ],
+    "148": [
+      "fi_no_catalog_definition",
+      "fi_cs_responsiveness"
+    ],
+    "156": [
+      "fi_no_catalog_definition",
+      "fi_cs_responsiveness"
+    ],
+    "173": [
+      "fi_bandwidth_stalled"
+    ],
+    "194": [
+      "fi_bandwidth_stalled"
+    ],
+    "197": [
+      "feat_3d_designer"
+    ],
+    "201": [
+      "fi_setup_cost_shock"
+    ],
+    "212": [
+      "fi_cs_responsiveness",
+      "fi_financial_distress"
+    ],
+    "215": [
+      "fi_bandwidth_stalled"
+    ],
+    "219": [
+      "feat_export_integration"
+    ],
+    "227": [
+      "fi_third_party_services_quality"
+    ],
+    "228": [
+      "feat_b2b"
+    ],
+    "242": [
+      "feat_reports",
+      "feat_competitor_better_fit"
+    ],
+    "255": [
+      "feat_3d_designer"
+    ],
+    "259": [
+      "fi_cs_responsiveness"
+    ],
+    "261": [
+      "fi_diy_attempt_failed",
+      "fi_bandwidth_stalled"
+    ],
+    "272": [
+      "feat_inventory_erp",
+      "feat_competitor_better_fit"
+    ],
+    "277": [
+      "fi_cs_responsiveness",
+      "fi_no_catalog_definition"
+    ],
+    "286": [
+      "fi_cs_responsiveness"
+    ],
+    "294": [
+      "fi_bandwidth_stalled",
+      "fi_customer_team_turnover"
+    ],
+    "296": [
+      "fi_diy_attempt_failed",
+      "fi_third_party_services_quality"
+    ],
+    "299": [
+      "fi_bandwidth_stalled"
+    ],
+    "302": [
+      "feat_business_model_mismatch"
+    ],
+    "307": [
+      "fi_bandwidth_stalled",
+      "fi_financial_distress"
+    ],
+    "317": [
+      "feat_inventory_erp",
+      "feat_reports"
+    ],
+    "325": [
+      "feat_unspecified"
+    ],
+    "337": [
+      "feat_business_model_mismatch"
+    ],
+    "342": [
+      "fi_cs_responsiveness"
+    ],
+    "345": [
+      "fi_no_catalog_definition"
+    ],
+    "352": [
+      "fi_diy_attempt_failed"
+    ],
+    "356": [
+      "fi_bandwidth_stalled"
+    ],
+    "364": [
+      "fi_cs_responsiveness"
+    ],
+    "365": [
+      "fi_bandwidth_stalled"
+    ],
+    "366": [
+      "fi_wrong_stakeholder"
+    ],
+    "370": [
+      "fi_diy_attempt_failed"
+    ],
+    "372": [
+      "fi_no_catalog_definition",
+      "fi_enduser_adoption_failure"
+    ],
+    "374": [
+      "feat_business_model_mismatch"
+    ],
+    "380": [
+      "fi_bandwidth_stalled",
+      "fi_cs_responsiveness"
+    ],
+    "383": [
+      "feat_business_model_mismatch"
+    ],
+    "389": [
+      "fi_cs_responsiveness"
+    ],
+    "390": [
+      "fi_bandwidth_stalled"
+    ],
+    "394": [
+      "feat_api_integration"
+    ],
+    "397": [
+      "fi_bandwidth_stalled",
+      "fi_financial_distress"
+    ],
+    "398": [
+      "fi_cs_responsiveness"
+    ],
+    "409": [
+      "fi_bandwidth_stalled"
+    ],
+    "411": [
+      "fi_bandwidth_stalled"
+    ],
+    "412": [
+      "feat_unspecified"
+    ],
+    "413": [
+      "fi_bandwidth_stalled",
+      "fi_setup_cost_shock"
+    ],
+    "414": [
+      "fi_bandwidth_stalled"
+    ],
+    "421": [
+      "feat_dynamic_attributes_validations"
+    ],
+    "430": [
+      "feat_b2b"
+    ],
+    "431": [
+      "fi_diy_attempt_failed",
+      "fi_no_catalog_definition"
+    ],
+    "435": [
+      "fi_diy_attempt_failed"
+    ],
+    "436": [
+      "feat_competitor_better_fit"
+    ],
+    "451": [
+      "fi_setup_cost_shock",
+      "fi_no_catalog_definition"
+    ],
+    "452": [
+      "fi_bandwidth_stalled",
+      "fi_setup_cost_shock"
+    ],
+    "465": [
+      "fi_sales_overpromise",
+      "fi_feature_gap_blocked",
+      "feat_export_integration"
+    ],
+    "469": [
+      "fi_bandwidth_stalled"
+    ],
+    "472": [
+      "fi_third_party_services_quality",
+      "fi_feature_gap_blocked"
+    ],
+    "477": [
+      "feat_export_integration",
+      "feat_business_model_mismatch",
+      "feat_competitor_better_fit"
+    ],
+    "490": [
+      "fi_financial_distress"
+    ],
+    "495": [
+      "fi_no_catalog_definition"
+    ],
+    "503": [
+      "fi_customer_team_turnover",
+      "fi_financial_distress"
+    ],
+    "512": [
+      "fi_no_catalog_definition",
+      "fi_bandwidth_stalled"
+    ],
+    "519": [
+      "feat_3d_designer",
+      "feat_inventory_erp",
+      "feat_competitor_better_fit"
+    ],
+    "522": [
+      "fi_feature_gap_blocked",
+      "fi_financial_distress"
+    ],
+    "531": [
+      "fi_bandwidth_stalled"
+    ]
+  },
+  "manual_overrides_applied": {
+    "source": "_etl_scripts/churn_subpattern_overrides.json",
+    "updated_at": "2026-06-12",
+    "added_by": "Beau Lewis (via Claude evidence review of 31 untagged Failed Implementation customers)",
+    "newly_tagged_customers": 17,
+    "added_tags_to_existing_customers": 0,
+    "newly_tagged_ids": [
+      148,
+      156,
+      531,
+      98,
+      143,
+      53,
+      194,
+      215,
+      261,
+      286,
+      345,
+      451,
+      452,
+      100,
+      277,
+      512,
+      201
+    ]
+  }
+}

@@ -1,0 +1,517 @@
+{
+  "fetched_at": "2026-06-16T02:44:15.743Z",
+  "comment": "Annual-amortization evidence registry (QoE-4). Per annual-payer, captures: source payment trace (Stripe / check / wire), the actual realized amortization on monthly_history, any custom override window, QB deferred-revenue treatment, and sign-off. A QoE reviewer should be able to answer \"show me every annualized dollar in the MRR series and prove it\" from this file alone. Built by _etl_scripts/build_annual_amortization_evidence.mjs.",
+  "summary": {
+    "annual_payer_count": 2,
+    "total_amortized_dollars": 147355.5,
+    "total_annualized_months": 94,
+    "payers_with_overrides": 1,
+    "payers_with_synthetic_payments": 1,
+    "payers_with_contract_link": 0,
+    "payers_verified": 2
+  },
+  "entries": [
+    {
+      "allmoxy_customer_id": 293,
+      "customer_name": "B&B Door Co.",
+      "status": "active",
+      "current_subscription_mrr": 2133.5,
+      "hubspot_company_id": "5094378641",
+      "billing_cadence": "annual",
+      "typical_annual_amount": 32002.5,
+      "typical_months": 15,
+      "default_amortization_window": "15 months (3 retroactive + 12 forward) per signed contract — see annual_amortization_overrides.json",
+      "contract_signed_date": null,
+      "contract_link": null,
+      "evidence_files": [],
+      "qb_treatment": "Lump-sum receipt posted to '4100 Annual Deferred Monthly' liability account; recognized as $2,133.50/month over 15 months into '4000 Subscription Revenue'.",
+      "notes": "B&B Door is the only multi-year annual override on file. Coverage runs Mar 2026 through May 2027 from the May 27 2026 charge.",
+      "annualized_months": [
+        {
+          "month": "2022-03",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-04",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-05",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-06",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-07",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-08",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-09",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-10",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-11",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2022-12",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-01",
+          "subscription": 2883.66
+        },
+        {
+          "month": "2023-02",
+          "subscription": 2883.66
+        },
+        {
+          "month": "2023-03",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-04",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-05",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-06",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-07",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-08",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-09",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-10",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-11",
+          "subscription": 1441.83
+        },
+        {
+          "month": "2023-12",
+          "subscription": 3340.83
+        },
+        {
+          "month": "2024-01",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-02",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-03",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-04",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-05",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-06",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-07",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-08",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-09",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-10",
+          "subscription": 1899
+        },
+        {
+          "month": "2024-11",
+          "subscription": 1899
+        },
+        {
+          "month": "2025-02",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-03",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-04",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-05",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-06",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-07",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-08",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-09",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-10",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-11",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2025-12",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2026-01",
+          "subscription": 1993.92
+        },
+        {
+          "month": "2026-03",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-04",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-05",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-06",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-07",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-08",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-09",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-10",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-11",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2026-12",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2027-01",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2027-02",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2027-03",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2027-04",
+          "subscription": 2133.5
+        },
+        {
+          "month": "2027-05",
+          "subscription": 2133.5
+        }
+      ],
+      "annualized_month_count": 60,
+      "total_amortized_dollars": 113321.46,
+      "stripe_payments": [
+        {
+          "created": "2022-03-07 9:33:50",
+          "amount": 17302,
+          "stripe_id": null,
+          "description": "Invoice 235F2DF9-0002"
+        },
+        {
+          "created": "2023-01-05 9:09:03",
+          "amount": 17302,
+          "stripe_id": null,
+          "description": "Invoice 235F2DF9-0003"
+        },
+        {
+          "created": "2023-12-20 8:11:48",
+          "amount": 22788,
+          "stripe_id": null,
+          "description": "Invoice 235F2DF9-0004"
+        },
+        {
+          "created": "2025-02-10 14:46:39",
+          "amount": 23927,
+          "stripe_id": null,
+          "description": "Allmoxy 2025 Contract"
+        },
+        {
+          "created": "2026-05-27 16:21:22",
+          "amount": 32002.5,
+          "stripe_id": null,
+          "description": "Invoice 235F2DF9-0005"
+        }
+      ],
+      "stripe_payment_count": 5,
+      "synthetic_payments": [],
+      "synthetic_payment_count": 0,
+      "overrides": [
+        {
+          "origin_month": "2026-05",
+          "start_month": "2026-03",
+          "months": 15,
+          "amount_match_min": 32000,
+          "amount_match_max": 32100,
+          "monthly_amortized": 2136.67,
+          "reason": "B&B Door $32,002.50 paid 2026-05-27 covers Mar 2026 through May 2027 — 3 retroactive months (Mar/Apr/May 2026) plus 12 forward (Jun 2026 → May 2027)."
+        }
+      ],
+      "override_count": 1,
+      "verified_by": "Beau",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "allmoxy_customer_id": 15,
+      "customer_name": "Mid Michigan Wood",
+      "status": "active",
+      "current_subscription_mrr": 1039.5,
+      "hubspot_company_id": "1128632982",
+      "billing_cadence": "annual",
+      "typical_annual_amount": 12474,
+      "typical_months": 12,
+      "default_amortization_window": "12 months forward from payment date (default).",
+      "contract_signed_date": null,
+      "contract_link": null,
+      "evidence_files": [],
+      "qb_treatment": "Off-Stripe payment (mailed check Dec 2025). Deposited via bank, posted to '4100 Annual Deferred Monthly' liability account; recognized as $1,039.50/month over 12 months into '4000 Subscription Revenue'.",
+      "notes": "Pays by mailed paper check, NOT through Stripe. Payment captured via _etl_scripts/synthetic_transactions.json. Prior payment Nov 2024 ($11,880 via Stripe charge pi_3QG583HkM2QhTtxh1Ud9U0rs).",
+      "annualized_months": [
+        {
+          "month": "2024-01",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-02",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-03",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-04",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-05",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-06",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-07",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-08",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-09",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-10",
+          "subscription": 806.67
+        },
+        {
+          "month": "2024-11",
+          "subscription": 1796.67
+        },
+        {
+          "month": "2024-12",
+          "subscription": 1796.67
+        },
+        {
+          "month": "2025-01",
+          "subscription": 990
+        },
+        {
+          "month": "2025-02",
+          "subscription": 990
+        },
+        {
+          "month": "2025-03",
+          "subscription": 990
+        },
+        {
+          "month": "2025-04",
+          "subscription": 990
+        },
+        {
+          "month": "2025-05",
+          "subscription": 990
+        },
+        {
+          "month": "2025-06",
+          "subscription": 990
+        },
+        {
+          "month": "2025-07",
+          "subscription": 990
+        },
+        {
+          "month": "2025-08",
+          "subscription": 990
+        },
+        {
+          "month": "2025-09",
+          "subscription": 990
+        },
+        {
+          "month": "2025-10",
+          "subscription": 990
+        },
+        {
+          "month": "2025-12",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-01",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-02",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-03",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-04",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-05",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-06",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-07",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-08",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-09",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-10",
+          "subscription": 1039.5
+        },
+        {
+          "month": "2026-11",
+          "subscription": 1039.5
+        }
+      ],
+      "annualized_month_count": 34,
+      "total_amortized_dollars": 34034.04,
+      "stripe_payments": [
+        {
+          "created": "2024-01-03 12:50:39",
+          "amount": 9680,
+          "stripe_id": null,
+          "description": "Invoice 839E08F3-0001"
+        },
+        {
+          "created": "2024-11-07 8:46:26",
+          "amount": 11880,
+          "stripe_id": null,
+          "description": "Invoice 839E08F3-0002"
+        },
+        {
+          "created": "2025-12-15",
+          "amount": 12474,
+          "stripe_id": null,
+          "description": "Annual subscription renewal — paid by mailed check (Dec 2025). Off-Stripe payment captured via synthetic_transactions ov"
+        }
+      ],
+      "stripe_payment_count": 3,
+      "synthetic_payments": [
+        {
+          "created": "2025-12-15",
+          "amount": 12474,
+          "payment_method": "check",
+          "evidence": null,
+          "description": "Annual subscription renewal — paid by mailed check (Dec 2025). Off-Stripe payment captured via synthetic_transactions override.",
+          "reason": "Customer renewed annual subscription via mailed paper check in December 2025; payment never flowed through Stripe so it's invisible to our raw transaction ingest. Without this override, their amortization window (Nov 2024 lump-sum → Oct 2025 coverage) ends and they appear churned. With this override, the $12,474 amortizes as ~$1,039.50/mo over Dec 2025 → Nov 2026.",
+          "added_by": "Beau, 2026-06-12"
+        }
+      ],
+      "synthetic_payment_count": 1,
+      "overrides": [],
+      "override_count": 0,
+      "verified_by": "Beau",
+      "verified_at": "2026-06-12"
+    }
+  ]
+}

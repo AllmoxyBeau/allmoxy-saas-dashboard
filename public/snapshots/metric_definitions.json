@@ -1,0 +1,637 @@
+{
+  "comment": "QoE-7: canonical definitions for every metric a banker / buyer / QoE reviewer will see in the dashboard. Each entry specifies what the metric means in plain English, its exact formula, source files, the time window it covers, every adjustment applied to the raw data, where it is displayed, and a sign-off. This is the FIRST document a reviewer should read — every other artifact in the data room flows from these definitions. Built by hand and committed to git; published to the dashboard as a snapshot.",
+  "updated_at": "2026-06-12",
+  "verified_by": "Beau Lewis (CEO/owner)",
+  "categories": [
+    {
+      "key": "revenue",
+      "label": "Revenue",
+      "description": "Monthly recurring revenue, services revenue, affiliate revenue, and derived rollups."
+    },
+    {
+      "key": "customer_state",
+      "label": "Customer state",
+      "description": "Active, churned, paused — how a customer's lifecycle stage is determined."
+    },
+    {
+      "key": "churn",
+      "label": "Churn",
+      "description": "Churned logos, churn dollars, attribution to a churn reason."
+    },
+    {
+      "key": "retention",
+      "label": "Retention",
+      "description": "Cohort retention, net revenue retention, revenue retention."
+    },
+    {
+      "key": "unit_economics",
+      "label": "Unit economics",
+      "description": "ARPU, LTV, CAC, payback, gross margin."
+    },
+    {
+      "key": "pnl_ebitda",
+      "label": "P&L & EBITDA",
+      "description": "Net Income, Gross Profit, GAAP EBITDA, Adjusted EBITDA, and the QoE bridge."
+    },
+    {
+      "key": "adjustments",
+      "label": "Adjustments",
+      "description": "Every override / data adjustment we apply to raw source data."
+    }
+  ],
+  "metrics": [
+    {
+      "id": "mrr_subscription",
+      "name": "Subscription MRR",
+      "category": "revenue",
+      "definition": "Monthly recurring subscription revenue from Allmoxy SaaS billing. Excludes one-time services, affiliate (Connect) fees, and tax. Annual-payer lump sums are amortized so the series shows true run-rate, not lumpy receipts.",
+      "formula": "Per month m: sum across all active customers of monthly_history[m].subscription. Annual-payer charges (≥ $3K from customers in annual_payers.json) are spread as amount/months over their coverage window (default 12 months forward; override-driven windows for specific customers).",
+      "source_files": [
+        "public/snapshots/mrr_by_month.json",
+        "public/snapshots/customer_profiles.json"
+      ],
+      "source_lineage": "Authoritative source = QB 'MRR by Month' tab in Meta Reconcile xlsx. Cross-checked against transaction-stream rollup from Stripe payments captured in customer_profiles.transactions. Both should agree within 0.5% in recent months — see invariant tests.",
+      "window": "Point-in-time, per calendar month",
+      "adjustments": [
+        "Annual-payer amortization (annual_payers.json + annual_amortization_overrides.json)",
+        "Synthetic-transaction injection for off-Stripe payments (_etl_scripts/synthetic_transactions.json)",
+        "Variance carry-forward for non-churn $0 months (variance_overrides.json)",
+        "Transaction stream reclassifications (transaction_overrides.json — e.g., Panhandle's $7,658 misclassified service charge moved out of subscription)"
+      ],
+      "displayed_on": [
+        "/overview",
+        "/revenue-waterfall",
+        "/current-month",
+        "/net-revenue-retention"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "mrr_services",
+      "name": "Services revenue",
+      "category": "revenue",
+      "definition": "Non-recurring services revenue (implementation, training, custom development billed by the hour). Per month, the amount earned.",
+      "formula": "Per month m: monthly total from QB 'Services by Month' tab (summary row, not customer-sum, because the QB sheet's summary row carries authoritative totals).",
+      "source_files": [
+        "public/snapshots/services_by_month.json",
+        "public/snapshots/mrr_by_month.json"
+      ],
+      "source_lineage": "QB 'Services by Month' tab in Meta Reconcile xlsx. Customer-level rows are accurate for drill-down but the monthly TOTAL is taken from the sheet's summary row (which uses live QB formulas).",
+      "window": "Point-in-time, per calendar month",
+      "adjustments": [
+        "Transaction stream reclassifications (e.g., Panhandle $7,658 reclassified FROM subscription TO services)"
+      ],
+      "displayed_on": [
+        "/overview",
+        "/current-month"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "mrr_connect",
+      "name": "Connect (affiliate) revenue",
+      "category": "revenue",
+      "definition": "Affiliate revenue earned via Stripe Connect — fees Allmoxy collects when customers transact through our platform with their end customers (their cabinet buyers). Per month, the amount earned.",
+      "formula": "Sum of all transactions in the 6 annual 'Stripe Connect Revenue' xlsx files' 'Data for Pivot' tabs, grouped by month. Customer attribution: name on the row, with acct_id → name fallback for older years (2018-19, 2020-21, 2022-23) that ship #N/A names. Unmapped acct_ids resolved via src/data/connect_customer_overrides.json.",
+      "source_files": [
+        "public/snapshots/connect_by_month.json",
+        "public/snapshots/connect_by_customer_month.json"
+      ],
+      "source_lineage": "6 annual Stripe Connect Revenue xlsx files (2018-2019 through 2026), unioned. ~N Stripe Connect acct_ids that cannot be mapped to a canonical customer are skipped (dormant / one-off accounts).",
+      "window": "Point-in-time, per calendar month",
+      "adjustments": [
+        "connect_customer_overrides.json: name → allmoxy_customer_id mappings for affiliate attribution"
+      ],
+      "displayed_on": [
+        "/overview",
+        "/current-month"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "mrr_blended",
+      "name": "Blended MRR",
+      "category": "revenue",
+      "definition": "Total monthly recurring revenue across all streams: subscription + services + connect. Used for headline 'top-line MRR' on the Overview and CIM Packet.",
+      "formula": "Per month m: mrr_subscription[m] + mrr_services[m] + mrr_connect[m].",
+      "source_files": [
+        "public/snapshots/mrr_by_month.json"
+      ],
+      "source_lineage": "Derived from the three component streams (see their individual definitions).",
+      "window": "Point-in-time, per calendar month",
+      "adjustments": [
+        "Inherits all adjustments from the three component streams."
+      ],
+      "displayed_on": [
+        "/overview",
+        "/current-month",
+        "/cim-packet"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "avg_mrr_blended",
+      "name": "Average MRR per customer",
+      "category": "revenue",
+      "definition": "Average revenue per active customer (logo) per month, across all revenue streams.",
+      "formula": "Per month m: mrr_blended[m] / logo_qty[m]. logo_qty is the active-subscription logo count from the MRR by Month tab.",
+      "source_files": [
+        "public/snapshots/mrr_by_month.json"
+      ],
+      "source_lineage": "Computed at refresh time from mrr_blended and logo_qty.",
+      "window": "Point-in-time, per calendar month",
+      "adjustments": [
+        "Inherits all adjustments from blended MRR and logo count."
+      ],
+      "displayed_on": [
+        "/overview",
+        "/current-month"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "logo_qty",
+      "name": "Active logo count",
+      "category": "customer_state",
+      "definition": "Number of distinct paying customers ('logos') with active subscription billing in a given month. Excludes records flagged as duplicates of another customer (excluded_from_logo_count=true).",
+      "formula": "Per month m: count of customers where monthly_history[m].subscription > 0 AND status='active' AND NOT excluded_from_logo_count. Source is QB's 'MRR by Month' tab 'Logo Qty' row.",
+      "source_files": [
+        "public/snapshots/mrr_by_month.json",
+        "public/snapshots/customer_profiles.json"
+      ],
+      "source_lineage": "QB tab is authoritative for the historical series. Latest month verified against customer_profiles via invariant tests.",
+      "window": "Point-in-time, per calendar month",
+      "adjustments": [
+        "Duplicate-record dedupe: customers flagged excluded_from_logo_count (Ruck Cabinet Doors → Thomas Creek, Ultra Craftsmanship → Ultrashelf, AWI Tacoma → AWI parent) are not counted as their own logo.",
+        "Status overrides: comp arrangements DO count as a logo; sub-instance-of-parent and duplicate_of records do NOT."
+      ],
+      "displayed_on": [
+        "/overview",
+        "/logo-waterfall",
+        "/current-month"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "customer_status",
+      "name": "Customer status (active / churned / paused)",
+      "category": "customer_state",
+      "definition": "A customer's current lifecycle stage. 'Active' = paid in the recent window OR has positive amortized MRR; 'Churned' = no payment activity beyond the recency cutoff and no amortized coverage; 'Paused' = explicit pause flag.",
+      "formula": "Initial status assigned by build_customer_profiles based on payment-recency heuristic. Then mutated by: (1) apply_annual_amortization — flips status to 'active' for annual payers with positive post-amortization MRR; (2) apply_customer_status_overrides — final say on status, supports arrangement_type in [sub_instance_of_parent, comp, duplicate_of].",
+      "source_files": [
+        "public/snapshots/customer_profiles.json",
+        "_etl_scripts/customer_status_overrides.json"
+      ],
+      "source_lineage": "Built from Stripe transaction recency, then overridden where business arrangement (annual billing, sub-instance, comp, duplicate) differs from the simple recency heuristic.",
+      "window": "Point-in-time (as of latest refresh)",
+      "adjustments": [
+        "Annual amortization auto-fix (flips false-positive churn → active)",
+        "Manual customer_status_overrides for business arrangements"
+      ],
+      "displayed_on": [
+        "/overview",
+        "/churn-investigator",
+        "/customer-health",
+        "everywhere via CustomerLink"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "churned_logos",
+      "name": "Churned logos",
+      "category": "churn",
+      "definition": "Number of customers (logos) currently in churned state. Excludes duplicates/sub-instances flagged excluded_from_logo_count.",
+      "formula": "count of customers where status='churned' AND NOT excluded_from_logo_count.",
+      "source_files": [
+        "public/snapshots/customer_profiles.json"
+      ],
+      "source_lineage": "customer_profiles.status (after all overrides) is canonical.",
+      "window": "Point-in-time",
+      "adjustments": [
+        "Annual-payer false-positive correction; duplicate dedupe; status overrides (per customer_status definition)."
+      ],
+      "displayed_on": [
+        "/churn-investigator",
+        "/churn-patterns",
+        "/logo-waterfall"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "churn_reason_attribution",
+      "name": "Churn reason attribution",
+      "category": "churn",
+      "definition": "Whether a churned customer has a recorded 'why' on their HubSpot Company record. The canonical reason set is 13 categories (Failed Implementation, Features, Pricing, Business Model Change, Moved to Other Solution, Paid and Never Used, Out of Business, Customer Stakeholder Misalignment, Ownership Transition, Timing Not Right, Payment Failure, Catalog Unidentified, Unresponsive).",
+      "formula": "Per customer: HubSpot's 'churn_reason' property if set; otherwise classified by AI inference (Churn Investigator page) into one of the 13 categories, with confidence high/medium/low and supporting evidence quote.",
+      "source_files": [
+        "public/snapshots/customer_profiles.json",
+        "public/snapshots/churn_inferences.json"
+      ],
+      "source_lineage": "HubSpot Companies (canonical) via classification_master. Churn_inferences is an AI-classified fill-in based on CSM notes / engagement history for customers without a HubSpot reason.",
+      "window": "Point-in-time",
+      "adjustments": [
+        "extend_churn_inferences purges from the inference set: (a) annual payers (false-positive churns), (b) customers whose status is no longer churned, (c) customers who now have a HubSpot reason, (d) customers excluded_from_logo_count (duplicates).",
+        "User-classifications (made via the Churn Investigator UI) override the AI inference for export to HubSpot."
+      ],
+      "displayed_on": [
+        "/churn-investigator",
+        "/churn-patterns"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "cohort_retention",
+      "name": "Cohort retention",
+      "category": "retention",
+      "definition": "For a sign-up cohort (e.g., all customers who first paid in 2022-Q3), the share still actively paying at each subsequent month-since-sign-up.",
+      "formula": "For each (cohort_month, months_since_signup) cell: count of customers in cohort with monthly_history[cohort_month + months_since_signup].subscription > 0, divided by cohort size. After apply_annual_amortization, the 'active today' column reflects POST-amortization MRR (so annual payers don't false-positive churn out of late months).",
+      "source_files": [
+        "public/snapshots/cohort_retention.json"
+      ],
+      "source_lineage": "Built from customer_profiles.monthly_history. patch_cohort_active.mjs reconciles the 'active today' column against customer_profiles after all upstream adjustments.",
+      "window": "Historical (full history) per cohort month",
+      "adjustments": [
+        "Inherits all customer_profiles adjustments (amortization, synthetic transactions, status overrides)."
+      ],
+      "displayed_on": [
+        "/cohort-retention"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "nrr",
+      "name": "Net Revenue Retention (NRR)",
+      "category": "retention",
+      "definition": "Of the revenue a cohort generated in their starting month, what percentage remains 12 months later (accounting for expansion, contraction, and churn). >100% = expansion exceeds churn.",
+      "formula": "For each cohort_month: sum of subscription MRR from that cohort in month N+12 / sum of subscription MRR from that cohort in month N.",
+      "source_files": [
+        "public/snapshots/cohort_retention.json"
+      ],
+      "source_lineage": "Derived from cohort_retention dollar series.",
+      "window": "Trailing 12 months from each cohort starting month",
+      "adjustments": [
+        "Inherits cohort_retention adjustments."
+      ],
+      "displayed_on": [
+        "/net-revenue-retention"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "arpu",
+      "name": "ARPU (Average Revenue Per User)",
+      "category": "unit_economics",
+      "definition": "Average monthly subscription revenue per active customer. Used as input to LTV.",
+      "formula": "Per period: mrr_subscription[period] / count of customers with subscription > 0 in that period.",
+      "source_files": [
+        "public/snapshots/unit_economics.json"
+      ],
+      "source_lineage": "Computed from mrr_by_month + customer_profiles.",
+      "window": "Per calendar month (or rolling, depending on the chart)",
+      "adjustments": [
+        "Inherits mrr_subscription adjustments."
+      ],
+      "displayed_on": [
+        "/unit-economics"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "ltv",
+      "name": "LTV (Lifetime Value)",
+      "category": "unit_economics",
+      "definition": "Expected total subscription revenue from an average customer over their entire lifetime, accounting for ARPU and churn rate.",
+      "formula": "ARPU × (1 / monthly_churn_rate) × gross_margin. Reported as a point-in-time estimate based on the trailing window.",
+      "source_files": [
+        "public/snapshots/unit_economics.json"
+      ],
+      "source_lineage": "Computed from ARPU, churn rate, and gross margin.",
+      "window": "Point-in-time, computed from a trailing window",
+      "adjustments": [
+        "Inherits inputs."
+      ],
+      "displayed_on": [
+        "/unit-economics"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "cac",
+      "name": "CAC (Customer Acquisition Cost)",
+      "category": "unit_economics",
+      "definition": "Total sales & marketing spend divided by new customers acquired in the period. Sales spend = 6050 Marketing Payroll + 6300 Marketing & Advertising + 6500 Sales Expenses; new customers = first-paid logos in the period.",
+      "formula": "(marketing_payroll + marketing_advertising + sales_expenses) over period / count of first-paid customers in period.",
+      "source_files": [
+        "public/snapshots/unit_economics.json",
+        "public/snapshots/pnl_by_month.json"
+      ],
+      "source_lineage": "Marketing/sales lines from QB P&L; new-customer count from customer_profiles sign-ups.",
+      "window": "Per quarter or rolling, depending on the chart",
+      "adjustments": [
+        "None directly; inherits P&L line-item categorization (QB's chart of accounts)."
+      ],
+      "displayed_on": [
+        "/unit-economics",
+        "/efficiency"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "payback_period",
+      "name": "CAC Payback Period",
+      "category": "unit_economics",
+      "definition": "Months required for an average new customer's gross-margin contribution to recover their acquisition cost.",
+      "formula": "CAC / (ARPU × gross_margin).",
+      "source_files": [
+        "public/snapshots/unit_economics.json"
+      ],
+      "source_lineage": "Computed.",
+      "window": "Point-in-time",
+      "adjustments": [
+        "Inherits ARPU, gross margin, CAC adjustments."
+      ],
+      "displayed_on": [
+        "/unit-economics"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "gross_margin",
+      "name": "Gross margin",
+      "category": "unit_economics",
+      "definition": "(Revenue − COGS) / Revenue. COGS includes credit-card fees, billable expenses, sales commissions, services commissions, and affiliate commissions.",
+      "formula": "(total_income − total_cogs) / total_income, where total_cogs = 5000 Credit Card Acceptance Fees + 5100 Billable Expenses + 5200 Sales Commission + 5300 Services Commissions + 5400 Affiliate Commissions.",
+      "source_files": [
+        "public/snapshots/pnl_by_month.json"
+      ],
+      "source_lineage": "QB P&L (Profit and Loss tab) of Allmoxy+LLC_Profit+and+Loss.xlsx.",
+      "window": "Per calendar month, YTD, or TTM",
+      "adjustments": [
+        "None — pure QB GAAP basis."
+      ],
+      "displayed_on": [
+        "/profit-loss",
+        "/efficiency",
+        "/unit-economics"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "net_income",
+      "name": "Net Income (GAAP)",
+      "category": "pnl_ebitda",
+      "definition": "GAAP net income per QuickBooks P&L. Bottom-line earnings after all revenue, COGS, operating expenses, and other income/expenses.",
+      "formula": "QB 'Net Income' subtotal row in the Profit and Loss tab. = Total Income − Total COGS − Total Operating Expenses + Net Other Income.",
+      "source_files": [
+        "public/snapshots/pnl_by_month.json"
+      ],
+      "source_lineage": "QB P&L (Allmoxy+LLC_Profit+and+Loss.xlsx → 'Profit and Loss' sheet).",
+      "window": "Per calendar month; YTD and TTM available where 12+ months of data are loaded",
+      "adjustments": [
+        "None — pure GAAP basis straight from QB."
+      ],
+      "displayed_on": [
+        "/profit-loss",
+        "/ebitda-bridge"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "gaap_ebitda",
+      "name": "GAAP EBITDA",
+      "category": "pnl_ebitda",
+      "definition": "Earnings Before Interest, Tax, Depreciation, and Amortization — standard add-backs to net income for SaaS valuation comparability.",
+      "formula": "Net Income + 7011 Loan Interest + 7300 Tax & Penalties + 7400 Depreciation + 7405 Amortization.",
+      "source_files": [
+        "public/snapshots/ebitda_bridge.json"
+      ],
+      "source_lineage": "Computed from pnl_by_month line items.",
+      "window": "YTD, latest month, and TTM (when 12+ months of P&L data are loaded)",
+      "adjustments": [
+        "None — pure GAAP-to-EBITDA mechanical add-backs."
+      ],
+      "displayed_on": [
+        "/ebitda-bridge",
+        "/cim-packet"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "adjusted_ebitda",
+      "name": "Adjusted EBITDA",
+      "category": "pnl_ebitda",
+      "definition": "GAAP EBITDA plus QoE adjustments (owner-comp normalization to market, one-time non-recurring expenses like M&A advisory fees, discretionary owner perks). The number a banker presents as run-rate earning power.",
+      "formula": "GAAP EBITDA + sum of QoE add-backs configured in _etl_scripts/ebitda_adjustments.json (positive = add back to EBITDA; negative = subtract).",
+      "source_files": [
+        "public/snapshots/ebitda_bridge.json",
+        "_etl_scripts/ebitda_adjustments.json"
+      ],
+      "source_lineage": "Add-backs are user-maintained, with reason + evidence + owner sign-off for each entry. The bridge auto-recomputes on every refresh.",
+      "window": "YTD, latest month, TTM (when available)",
+      "adjustments": [
+        "Owner compensation normalization (placeholder — needs market benchmark vs Beau's W2+benefits)",
+        "One-time legal/M&A advisory fees (placeholder — pull from 6810 Accounting + 6800 Professional Services as they hit)",
+        "Discretionary owner perks (placeholder — review 6900 Meals, 6400 Travel, 7200 Culture for non-business spend)"
+      ],
+      "displayed_on": [
+        "/ebitda-bridge",
+        "/cim-packet"
+      ],
+      "verified_by": "Beau Lewis (framework); per-line owner sign-off pending",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "annual_payer_amortization",
+      "name": "Annual-payer amortization",
+      "category": "adjustments",
+      "definition": "Annual customers who pay a lump sum upfront have their charge spread across the months it covers, so MRR shows true run-rate rather than spikes. Two customers on file: B&B Door (#293) and Mid Michigan Wood (#15).",
+      "formula": "For each annual_payer_id and each charge ≥ $3K in their Stripe transactions: spread the dollars as amount / months over the coverage window. Default window: 12 months forward. Override windows (annual_amortization_overrides.json) support backdated and multi-year coverage — B&B Door uses 15 months (3 retroactive + 12 forward).",
+      "source_files": [
+        "src/data/annual_payers.json",
+        "_etl_scripts/annual_amortization_overrides.json",
+        "public/snapshots/annual_amortization_evidence.json"
+      ],
+      "source_lineage": "User-maintained whitelist; payer_details (contract link, QB treatment, verified-by) maintained as evidence.",
+      "window": "Applied to ALL months an annual charge covers.",
+      "adjustments": [
+        "See /annual-amortization-evidence for the per-customer drill-down."
+      ],
+      "displayed_on": [
+        "/annual-amortization-evidence",
+        "/adjustments-register"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "synthetic_transaction",
+      "name": "Synthetic (off-Stripe) transaction",
+      "category": "adjustments",
+      "definition": "Payments received outside Stripe (mailed checks, wires, ACH) that need to flow through the customer's monthly_history as if they were Stripe charges. Required for customers who pay by other means.",
+      "formula": "Each entry in _etl_scripts/synthetic_transactions.json is injected into the customer's transactions array during build_customer_profiles, then participates in amortization and downstream rollups.",
+      "source_files": [
+        "_etl_scripts/synthetic_transactions.json"
+      ],
+      "source_lineage": "User-maintained. Currently: Mid Michigan Wood $12,474 mailed check (2025-12-15).",
+      "window": "Applied at the customer level for the specific transaction date.",
+      "adjustments": [
+        "See /adjustments-register for the full list."
+      ],
+      "displayed_on": [
+        "/adjustments-register",
+        "/annual-amortization-evidence",
+        "any per-customer drill-down"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "variance_carry_forward",
+      "name": "Variance carry-forward override",
+      "category": "adjustments",
+      "definition": "When a non-churned customer shows $0 in a given month (because of a card failure, tiered billing reset, payment pause, or off-Stripe payment) the prior month's MRR is carried forward so the MRR series doesn't false-positive-churn them.",
+      "formula": "For each entry in _etl_scripts/variance_overrides.json: in (customer, month), set monthly_history[month].subscription = prior-month value (or explicit override amount).",
+      "source_files": [
+        "_etl_scripts/variance_overrides.json"
+      ],
+      "source_lineage": "User-maintained. Currently: Bella Inc, Raumplus, Drawer Works for 2026-05 (carry-forward — payments due late month).",
+      "window": "Applied to the specific (customer, month) pair.",
+      "adjustments": [
+        "See /adjustments-register."
+      ],
+      "displayed_on": [
+        "/adjustments-register"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "transaction_reclassification",
+      "name": "Transaction stream reclassification",
+      "category": "adjustments",
+      "definition": "When a Stripe charge was classified into the wrong revenue stream (e.g., a one-time service charge incorrectly hit subscription), the override moves it. Currently 1 known case: Panhandle Door $7,658 service charge originally tagged subscription.",
+      "formula": "For each entry in _etl_scripts/transaction_overrides.json: locate the matching transaction by (customer, month, amount), and move its 'type' from 'from' to 'to' (e.g., subscription → services). Optionally moves the transaction between customers.",
+      "source_files": [
+        "_etl_scripts/transaction_overrides.json"
+      ],
+      "source_lineage": "User-maintained.",
+      "window": "Applied at the transaction level.",
+      "adjustments": [
+        "See /adjustments-register."
+      ],
+      "displayed_on": [
+        "/adjustments-register"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "status_override",
+      "name": "Customer status override",
+      "category": "adjustments",
+      "definition": "Forces a customer's status to a specific value (active/churned/paused) when the payment-recency heuristic would otherwise misclassify them. Three arrangement types: sub_instance_of_parent (secondary instance billed under a parent's subscription), comp (free/comp arrangement), duplicate_of (same business as another Allmoxy record, usually a rename/rebrand).",
+      "formula": "For each entry in _etl_scripts/customer_status_overrides.json: set profile.status = force_status (or, for duplicate_of, mirror the parent's status); set current_subscription_mrr = standalone_mrr (typically 0). Sets excluded_from_logo_count=true for sub_instance_of_parent and duplicate_of so downstream logo counts don't double-count.",
+      "source_files": [
+        "_etl_scripts/customer_status_overrides.json"
+      ],
+      "source_lineage": "User-maintained. Currently: AWI Tacoma/Tree Products (sub-instance of AWI parent), Ruck Cabinet Doors (duplicate of Thomas Creek), Ultra Craftsmanship (duplicate of Ultrashelf).",
+      "window": "Applied at customer level, post-amortization.",
+      "adjustments": [
+        "See /adjustments-register."
+      ],
+      "displayed_on": [
+        "/adjustments-register"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "stripe_qb_reconciliation",
+      "name": "Stripe ↔ QuickBooks reconciliation",
+      "category": "adjustments",
+      "definition": "Per-month tie-out of Stripe payment totals against QuickBooks revenue lines. Each month is tagged status=tight (<1%), acceptable (≤5%), or investigate (>5%) based on the variance.",
+      "formula": "For each month: Stripe-side = sum of customer_profiles.transactions in that month (filtered to subscription type); QB-side = pnl_by_month.subscription_revenue + annual_deferred for that month. Variance % = (Stripe − QB) / Stripe.",
+      "source_files": [
+        "public/snapshots/stripe_qb_reconciliation.json"
+      ],
+      "source_lineage": "Built from customer_profiles and pnl_by_month.",
+      "window": "Per calendar month, all available history",
+      "adjustments": [
+        "Reconciling items section explains known variance sources (annual deferred timing, intra-month settlement lag, etc.)"
+      ],
+      "displayed_on": [
+        "/stripe-qb-reconciliation"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    },
+    {
+      "id": "churn_risk_health_score",
+      "name": "Churn Risk Health Score",
+      "category": "churn",
+      "definition": "A 5-signal weighted health score (0–100) for every active paying customer, indicating churn risk. Tiered into 🟢 Healthy (≥70), 🟡 Watch (40–69), 🔴 Critical (<40). Derived from the allmoxy-monthly-dashboard skill's scoring model and surfaced on the Churn Risk Matrix page + each customer's detail panel.",
+      "formula": "total_score = signal_1_orders + signal_2_launch + signal_3_recency + signal_4_risk + signal_5_tenure. Signals: (1) Order Volume up to +35 (35 = running orders this year vs prior; 15 = declining >50% YoY; 0 = dropped off / dormant; −10 = gym member / never ran a verified order). (2) Launch Status up to +25 (25 = Live Date present AND running orders; 18 = Live Date present, current state unclear; 12 = partial / orders without Live Date; 0 = no Live Date AND no orders). (3) Engagement Recency up to +20 (20 = ≤14d since last HubSpot contact; 15 = 15–30d; 8 = 31–60d; 3 = 61–90d; 0 = 90+d). (4) Risk Signals up to −20 (penalty from a HubSpot note-keyword scan: cancel intent, dissatisfaction, competitor mention, no-shows, etc. — capped at −20). (5) Tenure × Launch Trajectory up to −15 (gym-member penalty: 0/−5/−10/−15 for tenure 0–6mo / 7–12 / 13–18 / 19+mo when not launched). Hard overrides: hard_override_red=true → Red regardless; never_launched + 18+mo tenure → never Green; launched + active contact + no risk → never Red.",
+      "source_files": [
+        "public/snapshots/churn_risk_matrix.json",
+        "public/snapshots/orders_verified.json",
+        "_etl_scripts/cache/at_risk_hubspot_signals.json",
+        "_etl_scripts/build_churn_risk_matrix.mjs"
+      ],
+      "source_lineage": "Three input sources: (a) Orders Verified Data.xlsx — Raw Data sheet (per-customer-per-year order counts), Monthly Average sheet (YoY trend basis), Month to Month Veified Raw Data sheet (Live Date for Launch Status); (b) HubSpot Companies via MCP get_crm_objects — notes_last_contacted property for Signal 3, recent note bodies for Signal 4 (when scan run); (c) customer_profiles for tenure (years_with_us) and active-paying cohort filter.",
+      "window": "Point-in-time (latest refresh) for all signals. Order data compares current calendar year YTD vs prior full year (Monthly Average sheet prorates by months active).",
+      "adjustments": [
+        "Cohort filter: all paying customers — status NOT IN ('churned', 'never_paid') AND NOT excluded_from_logo_count AND lifetime_subscription > $0. Includes status='active' (currently paying or between cycles) AND status='at_risk' (failed charges in trailing 3 months but still our customer). Currently scopes to 215 customers.",
+        "Order data joined via installer_id → customer_profiles.installer_id (the 'Allmoxy ID' column in the orders xlsx is misnamed — actually the year).",
+        "Monthly Average sheet preferred over per-month raw data for YoY because it auto-prorates partial years.",
+        "Live Date from orders xlsx replaces HubSpot note-scan for Signal 2 Launch Status (hard data > inferred).",
+        "Hard overrides applied last to honor business judgment regardless of computed score."
+      ],
+      "displayed_on": [
+        "/churn-risk-matrix",
+        "/customer-detail"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-15"
+    },
+    {
+      "id": "invariant_tests",
+      "name": "Invariant tests (QoE-6)",
+      "category": "adjustments",
+      "definition": "Automated self-consistency checks run as the final step of refresh_all. 22 tests across 6 areas: churn attribution, status overrides, amortization integrity, MRR reconciliation, adjustments register completeness, and EBITDA bridge math.",
+      "formula": "Each test verifies one invariant. Severity: 'error' (hard inconsistency, refresh exits non-zero), 'warn' (punch-list item — known/expected drift). Results written to invariant_test_results.json.",
+      "source_files": [
+        "_etl_scripts/run_invariant_tests.mjs",
+        "public/snapshots/invariant_test_results.json"
+      ],
+      "source_lineage": "Run on every refresh.",
+      "window": "Latest refresh",
+      "adjustments": [
+        "N/A — this IS the check."
+      ],
+      "displayed_on": [
+        "/invariant-tests"
+      ],
+      "verified_by": "Beau Lewis",
+      "verified_at": "2026-06-12"
+    }
+  ],
+  "fetched_at": "2026-06-16T02:44:15.924Z"
+}

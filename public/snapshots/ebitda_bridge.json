@@ -1,0 +1,151 @@
+{
+  "fetched_at": "2026-06-16T02:44:15.789Z",
+  "comment": "Adjusted EBITDA bridge (QoE-5). GAAP Net Income → standard EBITDA add-backs (interest, tax, D&A) → GAAP EBITDA → QoE adjustments (owner-comp normalization, one-time costs, discretionary perks) → Adjusted EBITDA. Three time windows: YTD, latest month, TTM. QoE add-backs are user-maintained in _etl_scripts/ebitda_adjustments.json. Built by _etl_scripts/build_ebitda_bridge.mjs.",
+  "source": {
+    "pnl_months": 5,
+    "pnl_window": "2026-01 – 2026-05",
+    "qoe_adjustment_count": 3,
+    "qoe_adjustments_placeholder_count": 3
+  },
+  "bridges": {
+    "ytd_current": {
+      "window": "ytd_current",
+      "start": "2026-01",
+      "end": "2026-05",
+      "months_in_window": 5,
+      "total_revenue": 1481570.66,
+      "net_income": 136251.83,
+      "add_backs_to_ebitda": [
+        {
+          "key": "interest",
+          "label": "Interest expense (7011 Loan Interest)",
+          "amount": 14583.55
+        },
+        {
+          "key": "tax",
+          "label": "Taxes (7300 Tax & Penalties)",
+          "amount": 0
+        },
+        {
+          "key": "depreciation",
+          "label": "Depreciation (7400)",
+          "amount": 0
+        },
+        {
+          "key": "amortization",
+          "label": "Amortization (7405)",
+          "amount": 0
+        }
+      ],
+      "gaap_ebitda": 150835.38,
+      "gaap_ebitda_margin": 0.1,
+      "qoe_adjustments": [
+        {
+          "id": "owner-comp-normalization-placeholder",
+          "label": "Owner compensation normalization",
+          "category": "owner_compensation",
+          "amount": 0,
+          "reason": "PLACEHOLDER — fill in the difference between Beau's current Allmoxy compensation (W2 + benefits) and the market rate a buyer would pay for a CEO replacement. If currently UNDER-market, this is a negative adjustment (subtract from EBITDA). If OVER-market, positive (add back). Pull Beau's 2026 W2 + Gusto medical/dental from src/data/payroll or HubSpot, and use the market benchmark referenced in the CIM Packet.",
+          "evidence": null,
+          "verified_by": null,
+          "verified_at": null,
+          "is_placeholder": true
+        },
+        {
+          "id": "transaction-legal-fees-placeholder",
+          "label": "One-time legal/advisory fees for sale process",
+          "category": "one_time",
+          "amount": 0,
+          "reason": "PLACEHOLDER — any legal, M&A advisory, or QoE prep fees that hit the P&L specifically for the sale process. These won't recur post-close. Pull from 6810 Accounting and 6800 Professional Services line items.",
+          "evidence": null,
+          "verified_by": null,
+          "verified_at": null,
+          "is_placeholder": true
+        },
+        {
+          "id": "discretionary-owner-perks-placeholder",
+          "label": "Discretionary owner perks / personal expenses",
+          "category": "discretionary",
+          "amount": 0,
+          "reason": "PLACEHOLDER — personal expenses, travel, meals, or other benefits run through the P&L that a new owner would not continue. Common buckets: meals (6900), travel (6400), culture/morale (7200/7260). Be conservative — only add back what's clearly personal vs. business.",
+          "evidence": null,
+          "verified_by": null,
+          "verified_at": null,
+          "is_placeholder": true
+        }
+      ],
+      "qoe_adjustment_total": 0,
+      "adjusted_ebitda": 150835.38,
+      "adjusted_ebitda_margin": 0.1,
+      "placeholder_adjustment_count": 3,
+      "label": "YTD 2026"
+    },
+    "latest_month": {
+      "window": "latest_month",
+      "start": "2026-05",
+      "end": "2026-05",
+      "months_in_window": 1,
+      "total_revenue": 291727.62,
+      "net_income": 31837.58,
+      "add_backs_to_ebitda": [
+        {
+          "key": "interest",
+          "label": "Interest expense (7011 Loan Interest)",
+          "amount": 2916.71
+        },
+        {
+          "key": "tax",
+          "label": "Taxes (7300 Tax & Penalties)",
+          "amount": 0
+        },
+        {
+          "key": "depreciation",
+          "label": "Depreciation (7400)",
+          "amount": 0
+        },
+        {
+          "key": "amortization",
+          "label": "Amortization (7405)",
+          "amount": 0
+        }
+      ],
+      "gaap_ebitda": 34754.29,
+      "gaap_ebitda_margin": 0.12,
+      "qoe_adjustments": [
+        {
+          "id": "owner-comp-normalization-placeholder",
+          "label": "Owner compensation normalization",
+          "category": "owner_compensation",
+          "amount": 0,
+          "reason": "PLACEHOLDER — fill in the difference between Beau's current Allmoxy compensation (W2 + benefits) and the market rate a buyer would pay for a CEO replacement. If currently UNDER-market, this is a negative adjustment (subtract from EBITDA). If OVER-market, positive (add back). Pull Beau's 2026 W2 + Gusto medical/dental from src/data/payroll or HubSpot, and use the market benchmark referenced in the CIM Packet.",
+          "evidence": null,
+          "verified_by": null,
+          "verified_at": null,
+          "is_placeholder": true
+        },
+        {
+          "id": "discretionary-owner-perks-placeholder",
+          "label": "Discretionary owner perks / personal expenses",
+          "category": "discretionary",
+          "amount": 0,
+          "reason": "PLACEHOLDER — personal expenses, travel, meals, or other benefits run through the P&L that a new owner would not continue. Common buckets: meals (6900), travel (6400), culture/morale (7200/7260). Be conservative — only add back what's clearly personal vs. business.",
+          "evidence": null,
+          "verified_by": null,
+          "verified_at": null,
+          "is_placeholder": true
+        }
+      ],
+      "qoe_adjustment_total": 0,
+      "adjusted_ebitda": 34754.29,
+      "adjusted_ebitda_margin": 0.12,
+      "placeholder_adjustment_count": 2,
+      "label": "Latest month (2026-05)"
+    },
+    "ttm": {
+      "window": "ttm",
+      "label": "TTM (unavailable)",
+      "unavailable": true,
+      "reason": "Only 5 month(s) of P&L data available (2026-01 – 2026-05). TTM bridge will activate automatically once the QB P&L export covers 12+ months. Upload an extended Profit and Loss xlsx to /Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy+LLC_Profit+and+Loss.xlsx and re-run refresh_all."
+    }
+  }
+}

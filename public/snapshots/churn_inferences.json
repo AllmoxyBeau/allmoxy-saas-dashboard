@@ -1,0 +1,3176 @@
+{
+  "tab": "churn_inferences",
+  "fetchedAt": "2026-06-16T16:12:19.990Z",
+  "generatedBy": "Claude HubSpot MCP analysis — all 252 cancelled-without-reason customers classified. Each classification backed by quoted CSM note evidence where available; long-tail customers with $0 lifetime or pre-CSM-era churn default to low-confidence Unresponsive with recommendations to exclude from analysis. False-positive annual payers (B&B Door, Mid Michigan) excluded. | Updated with evidence from Churn Details.xlsx (former CS-rep historical notes). | Extended 2026-06-12: appended 19 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-15: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-15: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 4 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review.",
+  "customer_count": 171,
+  "notes": "Suggested reasons map to existing HubSpot Churn Playbook taxonomy. 'false_positive_annual_payer' is not a churn — flag for annual_payers.json override. Use the CSV export on the page to bulk-update HubSpot Churn Reason fields. | Extended 2026-06-12: appended 19 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-12: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-15: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-15: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 4 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review. | Extended 2026-06-16: appended 0 placeholder entries (current_status='no_csm_notes_available') so every churned customer without a recorded reason is visible to QoE review.",
+  "customers": [
+    {
+      "allmoxy_customer_id": 197,
+      "name": "The Cabinet Face",
+      "hubspot_company_id": "2247772862",
+      "lifetime_subscription": 26206,
+      "years_with_us": 7.3,
+      "current_status": "churned",
+      "suggested_reason": "Features; Business Model Change",
+      "confidence": "high",
+      "evidence_quote": "UX never lent to being a direct to consumer system. As Allmoxy grew our goals changed but Kyles goals remained the same. 9 months ago Jess and Kyle changed gears to make the system work well for internal estimates. Last 6 months sales have tanked so theres no need for the system. Wanted 3D but it's too clunky and doesn't work well in his eyes. [Retention call 11/22/24]",
+      "evidence_date": "2024-11-22",
+      "signals": [
+        "Direct-to-consumer use case never fit",
+        "3D designer deemed 'too clunky'",
+        "Sales decline drove decision",
+        "Apr 2026: 'aren't paying and haven't logged in in 2 years'"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2247772862",
+      "recommended_action": "Set HubSpot Churn Reason: 'Features; Business Model Change'"
+    },
+    {
+      "allmoxy_customer_id": 377,
+      "name": "Reid MFG LLC",
+      "hubspot_company_id": "1456026571",
+      "lifetime_subscription": 25973,
+      "years_with_us": 4.1,
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "Note volume exceeded MCP response token limit (90K chars) — full notes available in HubSpot UI for human review.",
+      "evidence_date": null,
+      "signals": [
+        "20+ notes exist but couldn't be inlined in this pass"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1456026571",
+      "recommended_action": "Manual review in HubSpot — high-$ account warrants 10 minutes from CSM"
+    },
+    {
+      "allmoxy_customer_id": 413,
+      "name": "Premier Custom Millwork & Surfaces, Inc",
+      "hubspot_company_id": "9703635719",
+      "lifetime_subscription": 24430,
+      "years_with_us": 3.6,
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation; Paid and Never Used",
+      "confidence": "high",
+      "evidence_quote": "Bandwidth - Jesse has tried to implement Allmoxy Since October of 2022 and hasn't been able to get there partially due to his own lack of time. He recognizes this falls on him. Due to the $150/per hour service fees, the time needed to build out the rest of our product lines and the limitations in flexibility of pricing, we will be terminating our services with Allmoxy. Total Paid (Oct 22'-Dec 24') Subscription $23,624 Services $16,911 — still never got any value from utilizing the Allmoxy system.",
+      "evidence_date": "2025-01-02",
+      "signals": [
+        "27 months paying without launching",
+        "Multiple missed scoping meetings",
+        "Services fees cited as blocker",
+        "Customer admitted bandwidth issue"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/9703635719",
+      "recommended_action": "Set HubSpot Churn Reason: 'Failed Implementation; Paid and Never Used'"
+    },
+    {
+      "allmoxy_customer_id": 111,
+      "name": "Martin Wood Products",
+      "hubspot_company_id": "1128625396",
+      "lifetime_subscription": 23476,
+      "years_with_us": 7.5,
+      "current_status": "churned",
+      "suggested_reason": "Features; Business Model Change",
+      "confidence": "high",
+      "evidence_quote": "When he first started it was just gonna be a door and molding shop, was a great fit for that. Now they are 70% high end residential cabinetry, appliances, windows, and complex exterior door systems. He is afraid it isn't going to be the long-term solution. He can't get 250K worth of a job out of our designer (CV has those). [Churn risk note 10/30/24]",
+      "evidence_date": "2024-10-30",
+      "signals": [
+        "Business shifted upmarket (door/molding → luxury cabinet)",
+        "Wanted 3D designer capability",
+        "Cabinet Vision identified as the alternative",
+        "Multiple 3D design meeting no-shows"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128625396",
+      "recommended_action": "Set HubSpot Churn Reason: 'Features; Business Model Change'"
+    },
+    {
+      "allmoxy_customer_id": 86,
+      "name": "CPM DBA - Christopher Peacock",
+      "hubspot_company_id": "1729418005",
+      "lifetime_subscription": 21360,
+      "years_with_us": 7.6,
+      "current_status": "paused_escalated",
+      "suggested_reason": "Failed Implementation; Features",
+      "confidence": "high",
+      "evidence_quote": "Status on account is paused (subscription and catalog work) due to escalation related to Dynamic Attributes. Concerns: Dynamic attributes within product attributes needed for overall better designer experience, order level functionality is heavily utilized and validations are too clunky. Folders not talking to Cabinet Vision. Estimate was given to Peacock and Kathy expressed it was off putting to get a bill when they've invested this much. [May-Aug 2024]",
+      "evidence_date": "2024-08-01",
+      "signals": [
+        "$100K+ in services work",
+        "Dynamic Attributes feature blocker",
+        "Cabinet Vision export limitations",
+        "Customer paused services over invoice dispute",
+        "Multi-stakeholder enterprise account (Peacock + consultants + NetSuite integrator)"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1729418005",
+      "recommended_action": "VERIFY STATUS — listed as 'paused' not churned. Set Churn Reason 'Failed Implementation; Features' only if confirmed cancelled."
+    },
+    {
+      "allmoxy_customer_id": 78,
+      "name": "Stair Fittings, Inc.",
+      "hubspot_company_id": "1128346673",
+      "lifetime_subscription": 20260,
+      "years_with_us": 7.6,
+      "current_status": "churned",
+      "suggested_reason": "Features; Catalog Unidentified",
+      "confidence": "medium",
+      "evidence_quote": "Renewal 2024: Using Allmoxy as a bidding tool... Allmoxy doesn't generate a part number which they need for quickbooks tracking. It would be a herculean effort for back end programming that it wouldn't be worth the squeeze. Doesn't have plans to get the catalog done and rounded out this year. Could be doing $200k-$250k in revenue per month if they fully were to launch within the system. [Feb 2024]",
+      "evidence_date": "2024-02-29",
+      "signals": [
+        "7+ years using only as a bidding tool, never fully launched",
+        "QuickBooks part-number export gap",
+        "Customer never completed catalog setup",
+        "Massive untapped potential ($200K+ MRR if launched)"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346673",
+      "recommended_action": "Set HubSpot Churn Reason: 'Features; Catalog Unidentified' — long-tenure account that never reached value capture"
+    },
+    {
+      "allmoxy_customer_id": 482,
+      "name": "Southern Idaho Cabinets LLC",
+      "hubspot_company_id": "1129180296",
+      "lifetime_subscription": 19975,
+      "years_with_us": 4.1,
+      "current_status": "churned",
+      "suggested_reason": "Payment Failure",
+      "confidence": "high",
+      "evidence_quote": "Churn risk 12/31/24. Last login 10/9/24. Good amount of orders but stopped in October. Payment failed.",
+      "evidence_date": "2024-12-31",
+      "signals": [
+        "Was actively running orders until Oct 2024",
+        "Payment failed and stopped logging in same month",
+        "Card update attempt earlier in year (Aug 2024)"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129180296",
+      "recommended_action": "Set HubSpot Churn Reason: 'Payment Failure' — involuntary churn; possible win-back candidate"
+    },
+    {
+      "allmoxy_customer_id": 40,
+      "name": "Cabaxis",
+      "hubspot_company_id": "1129215232",
+      "lifetime_subscription": 29750,
+      "years_with_us": 7.1,
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "Only 2 notes on file: 'I had a conf. call with Brian, Jamie and Phil. I reiterated what had already been discussed in email. They are thinking about how serious they are in building the bridge.' [Jan 2019]",
+      "evidence_date": "2019-01-16",
+      "signals": [
+        "Only 2 notes (both 4+ years old)",
+        "No recent CSM activity",
+        "High lifetime $ but no churn investigation done"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129215232",
+      "recommended_action": "Manual review — high-$ account with no recent CSM notes is itself a process finding"
+    },
+    {
+      "allmoxy_customer_id": 24,
+      "name": "Timeless Cabinetry",
+      "hubspot_company_id": "1456019170",
+      "lifetime_subscription": 19644,
+      "years_with_us": 7.2,
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "No notes returned from HubSpot.",
+      "evidence_date": null,
+      "signals": [
+        "Zero notes on HubSpot record despite 7+ year tenure and $19K lifetime"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1456019170",
+      "recommended_action": "Manual review — long-tenure / high-$ account with NO notes is a major process finding"
+    },
+    {
+      "allmoxy_customer_id": 287,
+      "name": "Egr Construction Inc",
+      "hubspot_company_id": "2932241039",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "HubSpot company record exists but contains zero notes/emails/tasks. No CSM-recorded engagement.",
+      "evidence_date": null,
+      "signals": [
+        "Zero notes on HubSpot record",
+        "Last paid 2021-12-13",
+        "$19,060 lifetime sub, 5.3 years tenure"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2932241039",
+      "recommended_action": "Long-tail customer with no CSM notes. Defer manual review or accept Unresponsive as default.",
+      "lifetime_subscription": 19060,
+      "years_with_us": 5.3
+    },
+    {
+      "allmoxy_customer_id": 35,
+      "name": "Pinnacle Cabinet & Millwork",
+      "hubspot_company_id": "17328468535",
+      "current_status": "churned",
+      "suggested_reason": "Business Model Change",
+      "confidence": "high",
+      "evidence_quote": "Pinnacle Cabinets originally intended to use Allmoxy for both custom cabinets and door line sales. The cabinet use case was abandoned early due to the complexity of custom work. The door line has not generated anticipated business... Market feedback suggests a lack of fit between Allmoxy's order-based model and Pinnacle's custom workflows. Pinnacle's customers (builders, contractors) typically send floorplans and expect design work, not to self-service orders online. [Retention meeting 11/19/25]",
+      "evidence_date": "2025-11-19",
+      "signals": [
+        "11/19/25 retention meeting documented model misfit (custom-cabinet workflow vs Allmoxy order-based)",
+        "Door line sales did not materialize as anticipated (originally 2-3M tier)",
+        "Customer requested to cancel after team discussion despite rate hold offer"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/17328468535",
+      "recommended_action": "Accept — non-preventable. Their customers' floorplan-based workflow fundamentally doesn't fit Allmoxy's self-service order model.",
+      "lifetime_subscription": 16825,
+      "years_with_us": 7.5
+    },
+    {
+      "allmoxy_customer_id": 238,
+      "name": "Organizetosize",
+      "hubspot_company_id": "3380465843",
+      "current_status": "churned",
+      "suggested_reason": "Timing Not Right; Paid and Never Used",
+      "confidence": "medium",
+      "evidence_quote": "Just too busy between the two businesses... Lots of changes (ups and downs)... Juggling the two businesses (design to size & organize to size)... Haven't been able to run a marketing campaign yet. [Renewal notes 7/31/24]",
+      "evidence_date": "2024-07-31",
+      "signals": [
+        "Owner overwhelmed by parallel business (Design to Size + Organize to Size)",
+        "Could not run marketing campaign to drive Allmoxy revenue",
+        "Some Etsy/B2B orders but never reached anticipated volume"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3380465843",
+      "recommended_action": "Bandwidth-constrained owner — likely not preventable by us, but watch for similar profile in qualification (single-owner side businesses).",
+      "lifetime_subscription": 16468,
+      "years_with_us": 5.9
+    },
+    {
+      "allmoxy_customer_id": 148,
+      "name": "KIB Direct",
+      "hubspot_company_id": "1129183061",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Notes on file are all from 2019-2020 covering 3D image/catalog setup and color asset handoff with Derek. No churn-era CSM notes found.",
+      "evidence_date": "2020-01-27",
+      "signals": [
+        "Last paid 2020-08-27 — 5+ years stale",
+        "No CSM notes after 2020 cutoff",
+        "Long tenure (7.3 years on books) with no recent engagement"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129183061",
+      "recommended_action": "Pre-CSM-era churn — accept Unresponsive as default, or interview Beau/Brady if account was historically significant.",
+      "lifetime_subscription": 15813.13,
+      "years_with_us": 7.3
+    },
+    {
+      "allmoxy_customer_id": 295,
+      "name": "Prodigy Cabinetry",
+      "hubspot_company_id": "4725506521",
+      "current_status": "churned",
+      "suggested_reason": "Pricing",
+      "confidence": "high",
+      "evidence_quote": "Had a blunt conversation with Tod that these will be the terms remaining after his next payment of $1856 on July 14. Instance fee will be $250/USD until January 14 2022 where he will return to the payment of $1856 USD per month for the remainder of the contract... [7/7/21] | Cancellation Fee Paid 03/7/2022 | QB invoice contract cancellation cost - Prodigy Cabinetry $4,600. [2/25/22]",
+      "evidence_date": "2022-03-07",
+      "signals": [
+        "Rate negotiation conflict — temporarily dropped from $1856 to $250/mo for 6 months",
+        "Customer cancelled contract early and paid $4,600 cancellation fee",
+        "Blunt-conversation note suggests pricing was the persistent friction"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4725506521",
+      "recommended_action": "Pricing-driven churn under prior contract terms. Confirm current pricing rationale is more graduated for high-MRR shops in similar tier.",
+      "lifetime_subscription": 14492,
+      "years_with_us": 5.3
+    },
+    {
+      "allmoxy_customer_id": 257,
+      "name": "Wrightcraft Closets",
+      "hubspot_company_id": "4210744827",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used",
+      "confidence": "high",
+      "evidence_quote": "Potential churn risk note 10/30/24: Launched. Looks like they just use Allmoxy as a bidding system. Apparently they want a lower monthly cost but they are only paying $250/m. | 2022 note: these guys haven't done revenue in a year... moved to CS/retention.",
+      "evidence_date": "2024-10-30",
+      "signals": [
+        "Customer used Allmoxy purely as a bidding tool, not for production orders",
+        "Already at floor pricing ($250/mo) yet still considered too high",
+        "Years with zero revenue through the system per CSM"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4210744827",
+      "recommended_action": "Block bidding-only usage at floor pricing in qualification — they consume support without value capture.",
+      "lifetime_subscription": 14000,
+      "years_with_us": 5.8
+    },
+    {
+      "allmoxy_customer_id": 280,
+      "name": "Cooper Enterprises, Inc.",
+      "hubspot_company_id": "4682854200",
+      "current_status": "churned",
+      "suggested_reason": "Moved to Other Solution",
+      "confidence": "high",
+      "evidence_quote": "Spoke with Bryson and he feels that Allmoxy is not the best fit for them right now. Going to reengage in about 6 months [4/2/25] | Used us previously for fine doors only. Changing to closet systems through different configurator. Order entry system. [12/6/24]",
+      "evidence_date": "2025-04-02",
+      "signals": [
+        "Customer explicitly stated 'not the best fit'",
+        "Moved closet line to a different configurator",
+        "Used Allmoxy previously for door-only — narrowing usage pattern"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4682854200",
+      "recommended_action": "Track the competing closet configurator. Re-engage in Q4 2025 per Bryson's '6 month' window.",
+      "lifetime_subscription": 12683,
+      "years_with_us": 5.5
+    },
+    {
+      "allmoxy_customer_id": 332,
+      "name": "Cober Cabinets",
+      "hubspot_company_id": "6248622368",
+      "current_status": "churned",
+      "suggested_reason": "Out of Business",
+      "confidence": "high",
+      "evidence_quote": "Cober is currently in legal proceedings with the company and their card began failing to run in January. Due to the legality of the situation, I won't be pursuing a card on file. [4/25/24]",
+      "evidence_date": "2024-04-25",
+      "signals": [
+        "Active legal proceedings against the customer/company",
+        "Card began failing January 2024 — pre-cancellation pattern",
+        "Prior dispute: 'She insists our software was misrepresented on big projects' (Dec 2022) but resolved to 85% fit"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/6248622368",
+      "recommended_action": "Accept — legal/financial distress drove cancellation. Non-preventable.",
+      "lifetime_subscription": 12622,
+      "years_with_us": 4.9
+    },
+    {
+      "allmoxy_customer_id": 380,
+      "name": "Custom Pro Millwork",
+      "hubspot_company_id": "8552349807",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation",
+      "confidence": "high",
+      "evidence_quote": "Norman replied saying he wants to cancel: 'Yes. I requested in the past and no one responded. I also called every phone number I have and no one answered or called back. The shame is I really wanted this catalog and no one even bothered to follow up...' [8/3/23] | Norman is unresponsive and when he does, expresses a lot of frustration. Likely to churn. Left off with him needed to review Juans work after meeting to try and save account and attempted cancelation. [2/27/24 CS Playbook]",
+      "evidence_date": "2024-02-27",
+      "signals": [
+        "Never launched (gym-membership-style paused subscription)",
+        "Customer's primary complaint was Allmoxy's responsiveness/delivery — 'great product but delivery is not there'",
+        "Multiple attempted cancellations across 2023-2024"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/8552349807",
+      "recommended_action": "Preventable-high — process compliance failure on our side. Notes corroborate failed implementation + poor responsiveness.",
+      "lifetime_subscription": 11687,
+      "years_with_us": 4.1
+    },
+    {
+      "allmoxy_customer_id": 142,
+      "name": "Rosehill Woodcrafters Ltd",
+      "hubspot_company_id": "1128625445",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation",
+      "confidence": "high",
+      "evidence_quote": "This customer is officially cancelling for the time being. I have spent multiple meetings with them trying to save it but they aren't interested at the time being to make it priority and we all know this thing is not going to build itself. They also don't want to invest the resources to have a 3rd part do it. [11/10/21]",
+      "evidence_date": "2021-11-10",
+      "signals": [
+        "Customer would not invest internal resources to complete catalog/setup",
+        "Refused to engage a third-party services build",
+        "Stalled in implementation — never reached launch"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128625445",
+      "recommended_action": "Preventable-high — onboarding gate (90-day launch milestone) would have closed this earlier.",
+      "lifetime_subscription": 11396.67,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 74,
+      "name": "Scherr's Cabinet and Doors, Inc.",
+      "hubspot_company_id": "1128633044",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used",
+      "confidence": "medium",
+      "evidence_quote": "$499/month. 12 month contract. 1-3 Million in revenue. Legacy discount B2B Door shop. $799/Month before discount. [3/2/22 demo notes] | Broc Hill had the instance for a year but not touched it. Maybe sell some services. [4/4/20]",
+      "evidence_date": "2022-03-02",
+      "signals": [
+        "Had the instance over a year without touching it (2020 note)",
+        "Legacy discount applied — long-tenured but inactive",
+        "No revenue activity captured post-2022"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128633044",
+      "recommended_action": "Preventable-high — same onboarding gate as Rosehill / Pinnacle. Long instance dormancy is a strong early-warning signal.",
+      "lifetime_subscription": 11390,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 490,
+      "name": "Qualita Services - Forma Cabinets",
+      "hubspot_company_id": "15680705695",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation",
+      "confidence": "high",
+      "evidence_quote": "Cancellation Playbook: Close/Lost Reason: Not Able to Set Up. Not using the system. [3/4/24]",
+      "evidence_date": "2024-03-04",
+      "signals": [
+        "Cancellation playbook explicitly recorded 'Not Able to Set Up'",
+        "10 weeks of onboarding meetings (Jan-March 2024) — heavy implementation effort",
+        "Catalog/pricing complexity persisted through multiple Juan/Aaron passes",
+        "Tirssa (POC) repeatedly broke pricing during catalog editing"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/15680705695",
+      "recommended_action": "Preventable-high — POC lacked technical depth to maintain catalog. Productized onboarding (less customer-edited catalog) would have helped.",
+      "lifetime_subscription": 11038,
+      "years_with_us": 2.4
+    },
+    {
+      "allmoxy_customer_id": 153,
+      "name": "Homestead Cabinet",
+      "hubspot_company_id": "1128355975",
+      "current_status": "churned",
+      "suggested_reason": "Ownership Transition; Features",
+      "confidence": "medium",
+      "evidence_quote": "Got transferred over to clay (the new owner) but didn't connect with him. Need to get these guys on a demo. Left a voicemail and set task to call him back. [4/4/22] | Mark is saying allmoxy couldn't do 'Something' they were looking for. He couldn't remember. [11/9/21]",
+      "evidence_date": "2022-04-04",
+      "signals": [
+        "Ownership transition (Mark → Clay) coincided with payment lapse",
+        "Prior owner cited a feature gap ('something Allmoxy couldn't do') but couldn't recall details",
+        "No CSM response captured after the new-owner handoff attempts"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128355975",
+      "recommended_action": "Preventable-low — ownership-transition early warning. Build M&A radar trigger for HubSpot ownership changes.",
+      "lifetime_subscription": 10546.95,
+      "years_with_us": 7.3
+    },
+    {
+      "allmoxy_customer_id": 263,
+      "name": "Safina Cabinetry",
+      "hubspot_company_id": "4397735512",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used",
+      "confidence": "high",
+      "evidence_quote": "Cancellation Playbook 3/4/24: Close/Lost Reason: Not using the system. | These guys have completed most of the onboarding. enough to start running orders, but don't seem to be using the system anymore. Would most likely fall back into sales court. [2/23/23] | Not enrolling in a renewal sequence. No revenue. Moving to the CS/Retention pipeline! [10/11/22]",
+      "evidence_date": "2024-03-04",
+      "signals": [
+        "Onboarding completed but customer never ran revenue",
+        "Multiple touchpoints over 18 months showing 'no revenue' state",
+        "Payment failed Jan 2024, briefly recovered card, then cancelled March 2024"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4397735512",
+      "recommended_action": "Preventable-high — onboarding gate at 90 days without first order. Should not have made it to year 2.",
+      "lifetime_subscription": 10500,
+      "years_with_us": 5.7
+    },
+    {
+      "allmoxy_customer_id": 420,
+      "name": "Di Bosco Cabinets & Millwork Ltd.",
+      "hubspot_company_id": "10261668660",
+      "current_status": "churned",
+      "suggested_reason": "Pricing; Ownership Transition",
+      "confidence": "low",
+      "evidence_quote": "Di Bosco will be moving shop locations and are potentially wanting to pause their account to cut costs during the transition. [1/12/24]",
+      "evidence_date": "2024-01-12",
+      "signals": [
+        "Cost-cutting during physical shop relocation triggered pause request",
+        "Catalog managed via third-party affiliate (Chris Doyle) — not direct customer ownership",
+        "No follow-up notes after shop move"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/10261668660",
+      "recommended_action": "Pull post-Jan 2024 emails/tasks to confirm whether they returned post-move or fully churned.",
+      "lifetime_subscription": 10366,
+      "years_with_us": 3.4
+    },
+    {
+      "allmoxy_customer_id": 312,
+      "name": "ClosetParts",
+      "hubspot_company_id": "10477335318",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "HubSpot company record contains zero notes/emails/tasks.",
+      "evidence_date": null,
+      "signals": [
+        "Zero notes on HubSpot record",
+        "Last paid 2022-09-14",
+        "$10,365 lifetime sub, 5.1 years tenure"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/10477335318",
+      "recommended_action": "Pre-CSM-playbook era — accept Unresponsive as default or interview Beau/Sarah on this name.",
+      "lifetime_subscription": 10365,
+      "years_with_us": 5.1
+    },
+    {
+      "allmoxy_customer_id": 495,
+      "name": "Lane 17 Cabinet Co.",
+      "hubspot_company_id": "18265063445",
+      "current_status": "churned",
+      "suggested_reason": "Timing Not Right; Failed Implementation",
+      "confidence": "high",
+      "evidence_quote": "Alex hasn't had the bandwidth to invest into setting up Allmoxy as he needs it to function. Alex learned throughout the last year that he and his partner, Jason, need to first define their catalog offering within Microvellum so they can then use this outline to match up Allmoxy. Essentially they put the horse in front of the cart and weren't ready to actually implement Allmoxy. [2/11/25 Retention Plan Meeting]",
+      "evidence_date": "2025-02-11",
+      "signals": [
+        "Customer requested 90-day pause; never came back",
+        "Owner explicitly said they didn't define their offering before signing",
+        "Multiple pauses (May→June, then full pause Mar 2025)"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/18265063445",
+      "recommended_action": "Preventable-low — sales qualification should have flagged 'catalog not yet defined' as not-ready signal.",
+      "lifetime_subscription": 10139,
+      "years_with_us": 2.2
+    },
+    {
+      "allmoxy_customer_id": 407,
+      "name": "Cutting Edge Cabinet Inc",
+      "hubspot_company_id": "1128346671",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used",
+      "confidence": "high",
+      "evidence_quote": "Cancellation Playbook 8/12/24: Customer Close/Lost: Paid and Never Used. Close/Lost Reason: 'We are now using quick books for payroll. We have not been using online ordering. We have completed our contract.' | Launched Customer Playbook 2/27/24: 'No, using it as internal pricing tool... most difficult: Expectations for how they want to use Allmoxy not within current product offering.' Health: Red.",
+      "evidence_date": "2024-08-12",
+      "signals": [
+        "Cancellation playbook explicitly tagged 'Paid and Never Used'",
+        "Customer used it only as internal pricing tool, never for customer orders",
+        "Pivoted to QuickBooks for payroll instead"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346671",
+      "recommended_action": "Preventable-high — same onboarding-gate pattern. Customer didn't fit Allmoxy's order-based model.",
+      "lifetime_subscription": 9776,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 290,
+      "name": "Synergy Kitchens",
+      "hubspot_company_id": "5155294919",
+      "current_status": "churned",
+      "suggested_reason": "Out of Business; Unresponsive",
+      "confidence": "high",
+      "evidence_quote": "I haven't been able to get in touch with Shawn since 2021. I even found a company facebook page where he was refuting rumors that his company was going under, so I think he's dealing with a LOT. I'll let you decide how you want to proceed, but we've reached out probably 20 times with no response. [2/23/23] | Shawn is requesting to cancel [3/13/24] | billing failed 3 times [3/5/24]",
+      "evidence_date": "2023-02-23",
+      "signals": [
+        "Owner publicly refuting 'going under' rumors on company Facebook",
+        "Unreachable for 2+ years; 20+ outreach attempts",
+        "Multiple billing failures preceding cancel"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/5155294919",
+      "recommended_action": "Accept — financial distress + going-out-of-business signals. Non-preventable.",
+      "lifetime_subscription": 9250,
+      "years_with_us": 5.4
+    },
+    {
+      "allmoxy_customer_id": 465,
+      "name": "Ryder Manufacturing",
+      "hubspot_company_id": "16923339369",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation; Features",
+      "confidence": "high",
+      "evidence_quote": "Ryder is requesting to cancel as well as a full or partial refund of what they have paid. 'We just spoke with 2020 and they advised us that Allmoxy cannot interface with 2020. From the beginning we communicated our need to have a catalog with 2020 was our priority. We were led to believe Allmoxy could help us create a catalog for 2020, instead Allmoxy looked to us to do all the work. We were also led to believe that somehow Allmoxy would work with 2020. We have spent well over $12,000 with you that was a complete waste of our time and money.' [5/3/24]",
+      "evidence_date": "2024-05-03",
+      "signals": [
+        "Customer was sold on a 2020 integration that did not exist",
+        "Refund request for entire $12K spend",
+        "Hard cancellation, sales-misrepresentation framing"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/16923339369",
+      "recommended_action": "Preventable-high — sales over-promised feature parity with 2020. Tighten qualification on 'requires X integration' deals.",
+      "lifetime_subscription": 8991,
+      "years_with_us": 2.8
+    },
+    {
+      "allmoxy_customer_id": 375,
+      "name": "Texas Premier Cabinets",
+      "hubspot_company_id": "8112032308",
+      "current_status": "churned",
+      "suggested_reason": "Unresponsive",
+      "confidence": "high",
+      "evidence_quote": "I have reached out via email, phone call and texted on Jeffs personal cell. He has multiple failed payments and has been out of contract since last year. [3/13/24] | Bid: 104, Verified: 2 [8/21/23]",
+      "evidence_date": "2024-03-13",
+      "signals": [
+        "Multi-channel outreach failed (email/phone/text)",
+        "Multiple failed payments",
+        "Used as bidding only (104 bids, 2 verified orders)"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/8112032308",
+      "recommended_action": "Preventable-low — health-score auto-flag at 6 months of no engagement would have surfaced earlier.",
+      "lifetime_subscription": 7297.1,
+      "years_with_us": 4.2
+    },
+    {
+      "allmoxy_customer_id": 473,
+      "name": "PAS Designs LLC",
+      "hubspot_company_id": "16998659248",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used; Moved to Other Solution",
+      "confidence": "high",
+      "evidence_quote": "Pavel doesn't think it makes any sense to pay so much for Allmoxy as they don't use it a lot. They have had maybe one customer order. For production they use Moziak. One seat there costs $50. They can have customers input things through Moziak and get the order right. The Allmoxy system is good and maybe when they are bigger or grow more they could possibly use Allmoxy but they cannot justify it at this time... If it was cheaper would it be more appealing? Pavel said maybe if it was $200 or something. [9/19/24 Retention Meeting]",
+      "evidence_date": "2024-09-19",
+      "signals": [
+        "Using Mozaik ($50/seat) as primary production tool",
+        "One customer order in entire tenure",
+        "Owner ghosted CS for months before cancel"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/16998659248",
+      "recommended_action": "Track Mozaik as competitive substitute for this segment. Pricing floor consideration: $200/mo retains some of these.",
+      "lifetime_subscription": 7242,
+      "years_with_us": 2.7
+    },
+    {
+      "allmoxy_customer_id": 208,
+      "name": "Brantwood Cabinetry",
+      "hubspot_company_id": "2517677319",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "HubSpot company record contains zero notes/emails/tasks.",
+      "evidence_date": null,
+      "signals": [
+        "Zero notes on HubSpot record",
+        "Last paid 2021-06-01",
+        "$7,000 lifetime sub, 6.6 years tenure"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2517677319",
+      "recommended_action": "Pre-CSM-playbook era — accept Unresponsive as default.",
+      "lifetime_subscription": 7000,
+      "years_with_us": 6.6
+    },
+    {
+      "allmoxy_customer_id": 378,
+      "name": "Aw Woodcraft Llc",
+      "hubspot_company_id": "7347139197",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used",
+      "confidence": "high",
+      "evidence_quote": "Started Allmoxy with the hope to get more standardized but never fully used it, that is why he cancelled it. Said he was going to reach out when they decide to start that side of the business. [9/26/25] | Adam at AW Woodcraft is asking to pause for 6 months [9/20/23]",
+      "evidence_date": "2025-09-26",
+      "signals": [
+        "Customer explicitly stated 'never fully used it'",
+        "Multiple pauses across tenure (Jan-Apr 2023, Sep 2023+)",
+        "Standardization goal didn't materialize for their high-end custom work"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/7347139197",
+      "recommended_action": "Preventable-high — same pattern. Custom work shops don't fit standardized order model.",
+      "lifetime_subscription": 6986,
+      "years_with_us": 4
+    },
+    {
+      "allmoxy_customer_id": 220,
+      "name": "Calibro Casework",
+      "hubspot_company_id": "3094563650",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "HubSpot company record contains zero notes/emails/tasks.",
+      "evidence_date": null,
+      "signals": [
+        "Zero notes on HubSpot record",
+        "Last paid 2022-02-26",
+        "$6,500 lifetime sub, 6.2 years tenure"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3094563650",
+      "recommended_action": "Pre-CSM-playbook era — accept Unresponsive as default.",
+      "lifetime_subscription": 6500,
+      "years_with_us": 6.2
+    },
+    {
+      "allmoxy_customer_id": 50,
+      "name": "Crown Cabinetry",
+      "hubspot_company_id": "1455991290",
+      "current_status": "churned",
+      "suggested_reason": "Customer Stakeholder Misalignment; Features",
+      "confidence": "high",
+      "evidence_quote": "Cancellation Playbook 5/17/24: Close/Lost: Internal Disagreement, Not Able to Set Up. 'Poor software performance and customer support. Your software costed me 1.2M contract.' JD Hired someone to do all of his backend stuff which ended up causing issues. He stated that he had lack of support with staff and had to train Allmoxy employees how to do their jobs. | Brady call 5/8: 'JD basically said in a nice way that I respect you but I didn't feel like he was heard by your people. He felt like Broc and Kenzi were all about the contract and were hard asses with him.'",
+      "evidence_date": "2024-05-17",
+      "signals": [
+        "Customer hired their own backend contractor — caused integration issues",
+        "Felt unheard / lacking executive sponsorship from Allmoxy leadership",
+        "Cited a 1.2M contract loss attributed to Allmoxy performance"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1455991290",
+      "recommended_action": "Preventable-low — executive-sponsor program. Legacy customers (Brady was the original relationship) need multi-threaded support; CS-only handoff broke trust.",
+      "lifetime_subscription": 6293,
+      "years_with_us": 7.2
+    },
+    {
+      "allmoxy_customer_id": 32,
+      "name": "Rocky Mountain Cabinet And Millwork",
+      "hubspot_company_id": "4466122848",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation; Features",
+      "confidence": "high",
+      "evidence_quote": "Broc Hill wondering about this one as well, shows payment has not been made since last april... [2/24/22] || CS-rep note (Churn Details xlsx, 2024 sheet): Could not set up catalog/launch — '3D designer issues caused issues with end customers orders resulting in customer blaming Allmoxy for losing them 1.2M contract. Poor software performance and customer support also mentioned.'",
+      "evidence_date": "2022-02-24",
+      "signals": [
+        "Updated from Churn Details xlsx (former CS-rep notes, 2024)",
+        "Payment lapsed April 2021 per Feb 2022 note",
+        "Only 2-3 sparse notes overall",
+        "Pre-CSM-playbook era"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4466122848",
+      "recommended_action": "Long-tail unresponsive — accept as default.",
+      "lifetime_subscription": 6250,
+      "years_with_us": 5.7
+    },
+    {
+      "allmoxy_customer_id": 175,
+      "name": "Woodenthings",
+      "hubspot_company_id": "1129212902",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "Brady Lewis and Sarah Pierce Did this get taken care of? Are they cancelling? I don't see any notes. [5/4/20]",
+      "evidence_date": "2020-05-04",
+      "signals": [
+        "Internal note questioned cancellation but no resolution captured",
+        "Only 3 notes total, none churn-specific",
+        "Last paid 2021-03-10 — old"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129212902",
+      "recommended_action": "Pre-CSM-playbook era — accept Unresponsive as default.",
+      "lifetime_subscription": 6108.5,
+      "years_with_us": 7.1
+    },
+    {
+      "allmoxy_customer_id": 267,
+      "name": "Elite Marble",
+      "hubspot_company_id": "1128356026",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "Custom Pricing: Flat $250/month, not tier. [12/5/19]",
+      "evidence_date": "2019-12-05",
+      "signals": [
+        "Only 1 note in HubSpot — pricing config from 2019",
+        "Last paid 2021-07-02",
+        "Pre-CSM-playbook era"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128356026",
+      "recommended_action": "Pre-CSM-playbook era — accept Unresponsive as default.",
+      "lifetime_subscription": 6075,
+      "years_with_us": 7.5
+    },
+    {
+      "allmoxy_customer_id": 522,
+      "name": "VHC Wood Products",
+      "hubspot_company_id": "28357317958",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation",
+      "confidence": "medium",
+      "evidence_quote": "CS Onboarding Playbook 2/6/25: 'Using this in hopes to boost sales and help their business recover from a horrible year last year.' | Multi-month implementation (Feb-Mar 2025) working through MRP/Cabinet Vision exporter bugs, 3D Designer concerns, countertop product setup. Last paid 2025-05-15.",
+      "evidence_date": "2025-03-17",
+      "signals": [
+        "Customer goal was 'recover from a horrible year' — financial pressure context",
+        "Extensive ongoing fixes during onboarding (export bugs, 3D Designer issues)",
+        "Churned shortly after go-live testing"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/28357317958",
+      "recommended_action": "Preventable-high — implementation stretched past launch window. Pull most-recent emails/cancellation playbook (if exists) to confirm exact reason.",
+      "lifetime_subscription": 5500,
+      "years_with_us": 1.3
+    },
+    {
+      "allmoxy_customer_id": 266,
+      "name": "Durabella",
+      "hubspot_company_id": "2226016964",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "Sarah Pierce do you know what happened to this churn? Why did he churn? [6/18/24] — internal CSM also unsure",
+      "evidence_date": "2024-06-18",
+      "signals": [
+        "CSM Sarah Pierce did not know reason at time of inquiry",
+        "Only sparse notes from 2021-2024",
+        "Last paid 2022-04-17 — old"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2226016964",
+      "recommended_action": "Pre-CSM-playbook churn — interview Sarah/Madison if they recall, else accept Unresponsive as default.",
+      "lifetime_subscription": 5500,
+      "years_with_us": 6.8
+    },
+    {
+      "allmoxy_customer_id": 174,
+      "name": "Page Custom Supply LLC",
+      "hubspot_company_id": "1746197458",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "Custom Pricing: Flat $250/month, not tier. [12/5/19] — only note in HubSpot",
+      "evidence_date": "2019-12-05",
+      "signals": [
+        "Only 1 note total in HubSpot",
+        "Last paid 2020-12-10 — pre-CSM era",
+        "$5,341 lifetime sub, 7.1 years tenure"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1746197458",
+      "recommended_action": "Pre-CSM-playbook era — accept Unresponsive as default.",
+      "lifetime_subscription": 5340.65,
+      "years_with_us": 7.1
+    },
+    {
+      "allmoxy_customer_id": 181,
+      "name": "Boswell Wasatch Millwork",
+      "hubspot_company_id": "1129177312",
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "I met with them today and then got approved for the product I built. [6/27/19] — only note",
+      "evidence_date": "2019-06-27",
+      "signals": [
+        "Only 1 note from 2019",
+        "Last paid 2020-10-25 — pre-CSM era",
+        "Long-tenure tail churn"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129177312",
+      "recommended_action": "Pre-CSM-playbook era — accept Unresponsive as default.",
+      "lifetime_subscription": 5229.39,
+      "years_with_us": 6.9
+    },
+    {
+      "allmoxy_customer_id": 95,
+      "name": "REHAU Colombia",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked to this Allmoxy customer.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2021-09-26",
+        "$4,665 lifetime sub, 7.6 years tenure",
+        "Likely international/REHAU partner account"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "International/partner account — investigate whether tied to REHAU global parent before classifying.",
+      "lifetime_subscription": 4665,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 436,
+      "name": "Cfh Team",
+      "hubspot_company_id": "13629673126",
+      "current_status": "churned",
+      "suggested_reason": "Features; Moved to Other Solution",
+      "confidence": "high",
+      "evidence_quote": "Chesky is trying not to have customers enter all parts through Allmoxy because they get frustrated. When you have a couple thousand parts to enter it's very time consuming... He currently exports out of closet pro and into closet vision... Whereas with Allmoxy all he sees is parts. He doesn't know where and what to tweak and it gets confusing. [10/9/24 Retention Meeting]",
+      "evidence_date": "2024-10-09",
+      "signals": [
+        "Custom-closet shop — Allmoxy's parts-level UX too granular for their customers",
+        "Using Closet Pro + Cabinet Vision as primary; Allmoxy as supplemental",
+        "Multiple rounds of pricing concessions ($899→$250) failed to drive adoption",
+        "Aug 2024 IWF booth meeting: 'His clients won't buy from him if he uses allmoxy'"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/13629673126",
+      "recommended_action": "Preventable-low — same custom-closet pattern as Wrightcraft/PAS Designs. Qualification should flag 'custom closets with 1000+ parts per order' as poor fit.",
+      "lifetime_subscription": 4548,
+      "years_with_us": 3.3
+    },
+    {
+      "allmoxy_customer_id": 216,
+      "name": "Wilder Cabinets",
+      "hubspot_company_id": "2632146148",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2021-01-05.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2021-01-05"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2632146148",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 4033.78,
+      "years_with_us": 6.4
+    },
+    {
+      "allmoxy_customer_id": 151,
+      "name": "Cabinets Beyond Inc.",
+      "hubspot_company_id": "1290248268",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2020-06-13.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2020-06-13"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1290248268",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3880,
+      "years_with_us": 7.3
+    },
+    {
+      "allmoxy_customer_id": 254,
+      "name": "MCI",
+      "hubspot_company_id": "4207115663",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2021-08-30.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2021-08-30"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4207115663",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3780,
+      "years_with_us": 5.8
+    },
+    {
+      "allmoxy_customer_id": 274,
+      "name": "Bouchard-Pierce",
+      "hubspot_company_id": "4632656228",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2021-12-17.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2021-12-17"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4632656228",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3750,
+      "years_with_us": 5.6
+    },
+    {
+      "allmoxy_customer_id": 135,
+      "name": "Tremethick Woodworks",
+      "hubspot_company_id": "1129319694",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2021-07-01.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2021-07-01"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129319694",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3640,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 214,
+      "name": "Tracy L Yarborough",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked. Last paid 2021-02-01.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Individual/sole-proprietor name",
+        "Pre-CSM-playbook era"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Likely individual/test account — accept Unresponsive.",
+      "lifetime_subscription": 3500,
+      "years_with_us": 6.5
+    },
+    {
+      "allmoxy_customer_id": 226,
+      "name": "Decorative Woodwork Supply",
+      "hubspot_company_id": "1746191816",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2021-04-24.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2021-04-24"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1746191816",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3500,
+      "years_with_us": 6.2
+    },
+    {
+      "allmoxy_customer_id": 481,
+      "name": "Commack Kitchen And Bath",
+      "hubspot_company_id": "17895182657",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2024-10-31.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2024-10-31"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/17895182657",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3422.48,
+      "years_with_us": 2.6
+    },
+    {
+      "allmoxy_customer_id": 228,
+      "name": "Easy Custom Kitchen",
+      "hubspot_company_id": "3130808959",
+      "current_status": "churned",
+      "suggested_reason": "Features",
+      "confidence": "high",
+      "evidence_quote": "Account has been paused due to the Order Level Settings not matching for B2B instances. Vic and his team do not have hours to input orders and this is what is needed without the order level settings matching. The account will be paused until this feature is completed. [12/8/23 — DEV-5761] | 3/5/24 onboarding: 'goal launch date: As soon as the order level setting match for b2b resellers (Feature) is built'",
+      "evidence_date": "2023-12-08",
+      "signals": [
+        "Customer explicitly paused waiting for B2B order-level-settings feature (DEV-5761)",
+        "Feature gap blocked their launch entirely",
+        "B2B reseller use case underserved by current product"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3130808959",
+      "recommended_action": "Preventable-high — direct feature-request blocker. Verify DEV-5761 status; if shipped, recovery candidate.",
+      "lifetime_subscription": 3376.91,
+      "years_with_us": 6.2
+    },
+    {
+      "allmoxy_customer_id": 401,
+      "name": "The Cabinet Spot, Inc",
+      "hubspot_company_id": "17140145494",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2023-11-27.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2023-11-27"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/17140145494",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3337,
+      "years_with_us": 4.2
+    },
+    {
+      "allmoxy_customer_id": 41,
+      "name": "Porta Door Company, Inc.",
+      "hubspot_company_id": "1128346608",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2020-09-03.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2020-09-03"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346608",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3250,
+      "years_with_us": 6.7
+    },
+    {
+      "allmoxy_customer_id": 59,
+      "name": "L & A Custom Homes Inc.",
+      "hubspot_company_id": "1128346578",
+      "current_status": "churned",
+      "suggested_reason": "Business Model Change",
+      "confidence": "medium",
+      "evidence_quote": "I have a task set up here to renegotiate pricing. This is what the email states. 'first 3 months at $250 USD with a re-evaluation of cost with annual contract after 3 months.' This is the owner of durabella as well. [10/1/21] || CS-rep note (Churn Details xlsx): 'Durabella Above' — points to linked owner Durabella (aid=266) which the CS rep marked Business Model Change. Same owner. Mirrors Durabella's classification.",
+      "evidence_date": "2021-10-01",
+      "signals": [
+        "Updated from Churn Details xlsx (former CS-rep notes, 2022)",
+        "Owner overlaps with Durabella (aid=266) — common owner across both accounts",
+        "Pricing-renegotiation flag at $250/3mo discount",
+        "Pre-CSM-playbook era — sparse follow-up notes"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346578",
+      "recommended_action": "Linked to Durabella churn (same owner). If Durabella is later classified, mirror reason here.",
+      "lifetime_subscription": 3250,
+      "years_with_us": 4.8
+    },
+    {
+      "allmoxy_customer_id": 120,
+      "name": "Blue Mountain Millwork & Cabinetry",
+      "hubspot_company_id": "4267515418",
+      "current_status": "churned",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Blue Mountain cancelled their instance... where should I move this to on the Onboarding board? [9/23/21]",
+      "evidence_date": "2021-09-23",
+      "signals": [
+        "Cancel confirmed but no reason captured",
+        "Pre-CSM-playbook era",
+        "Last paid 2021-08-02"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4267515418",
+      "recommended_action": "Accept Unresponsive — confirmed cancel without recorded reason.",
+      "lifetime_subscription": 3250,
+      "years_with_us": 5.8
+    },
+    {
+      "allmoxy_customer_id": 249,
+      "name": "Gt Woodcraft",
+      "hubspot_company_id": "2555039042",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2021-06-10.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Long-tenured customer who went silent",
+        "Last paid 2021-06-10"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2555039042",
+      "recommended_action": "Accept Unresponsive as default. Interview Beau/Sarah if account had legacy significance.",
+      "lifetime_subscription": 3250,
+      "years_with_us": 5.9
+    },
+    {
+      "allmoxy_customer_id": 188,
+      "name": "Ottawa Kitchens By Design",
+      "hubspot_company_id": "2113628293",
+      "current_status": "churned",
+      "suggested_reason": "Unresponsive",
+      "confidence": "medium",
+      "evidence_quote": "I have called 3 different numbers 3 times. I cannot get ahold of these guys. [9/25/20]",
+      "evidence_date": "2020-09-25",
+      "signals": [
+        "3 numbers × 3 attempts = no contact",
+        "Pre-CSM-playbook era",
+        "Customer went silent late 2020"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2113628293",
+      "recommended_action": "Accept Unresponsive — multi-channel outreach failed.",
+      "lifetime_subscription": 3000,
+      "years_with_us": 6.9
+    },
+    {
+      "allmoxy_customer_id": 466,
+      "name": "Manhattan Laminates",
+      "hubspot_company_id": "16964823124",
+      "current_status": "churned",
+      "suggested_reason": "Business Model Change",
+      "confidence": "high",
+      "evidence_quote": "Spoke to Julio on 10/15 about them wanting to cancel both B2B instances. They are terminating their business relationship with both companies. I refunded them for their payment that ran on 10/14. [10/15/24]",
+      "evidence_date": "2024-10-15",
+      "signals": [
+        "Terminated B2B partnership with NYDD (parent)",
+        "Cancelled both linked B2B instances simultaneously",
+        "Julio runs all 3 instances (NYDD, Manhattan, Rugby) — multi-account churn risk"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/16964823124",
+      "recommended_action": "Accept — B2B partnership dissolution. Non-preventable from Allmoxy's side. Check NYDD + Rugby for related churns.",
+      "lifetime_subscription": 2887.52,
+      "years_with_us": 2.8
+    },
+    {
+      "allmoxy_customer_id": 467,
+      "name": "Rugby Architectural Building Products",
+      "hubspot_company_id": null,
+      "current_status": "churned",
+      "suggested_reason": "Business Model Change",
+      "confidence": "high",
+      "evidence_quote": "Sibling cancellation to Manhattan Laminates (aid=466). Per the 10/15/24 cancellation note on Manhattan: 'Spoke to Julio on 10/15 about them wanting to cancel both B2B instances. They are terminating their business relationship with both companies.'",
+      "evidence_date": "2024-10-15",
+      "signals": [
+        "Cancelled simultaneously with Manhattan Laminates (B2B sibling)",
+        "Julio ran all 3 instances (NYDD, Manhattan, Rugby) — B2B partnership dissolved",
+        "No HubSpot record linked directly to Rugby"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Mirror Manhattan Laminates classification — same root cause.",
+      "lifetime_subscription": 2887.01,
+      "years_with_us": 2.8
+    },
+    {
+      "allmoxy_customer_id": 503,
+      "name": "Three creeks custom cabinets",
+      "hubspot_company_id": "20723158069",
+      "current_status": "churned",
+      "suggested_reason": "Out of Business; Failed Implementation",
+      "confidence": "high",
+      "evidence_quote": "Customer not formally churned. Has been unreachable and hasn't responded since October... Did not have a great implementation experience, the pricing always seemed way off to the customer... He was starting his own business but had issues with retaining employees. I have a feeling his business was unsuccessful and may have closed his doors. [3/19/25 Churn notes]",
+      "evidence_date": "2025-03-19",
+      "signals": [
+        "Customer building own business, struggled with employee retention",
+        "Catalog had numerous pricing/validation errors (Oct 2024 testing)",
+        "Stopped paying after September 2024 insufficient-funds failures",
+        "Card never tried again after Sept failures — possibly business closed"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/20723158069",
+      "recommended_action": "Accept — financial collapse + catalog quality issues. Catalog QA gate would have helped earlier.",
+      "lifetime_subscription": 2855.22,
+      "years_with_us": 1.9
+    },
+    {
+      "allmoxy_customer_id": 472,
+      "name": "J3 Products Group, Inc.",
+      "hubspot_company_id": "17285919240",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation; Customer Stakeholder Misalignment",
+      "confidence": "high",
+      "evidence_quote": "Rocky catalog implementation. Customer lacks trust in Allmoxy expertise and has been unhappy with the level of testing he's had to do along the build and lift on his end in building the Microvellum exporter. Has hired a Microvellum consultant to assist with build out on his end. Sales has given multiple discounts/pauses on subscriptions. History of talking down to services team and Allmoxy dropping the ball in communication on CS side early in partnership. [5/21/24 Account History]",
+      "evidence_date": "2024-05-21",
+      "signals": [
+        "Multiple discount/pause cycles indicating extended dissatisfaction",
+        "Customer hired their own Microvellum consultant (lost trust in our team)",
+        "Formal escalation required — Madison + Sarah took over after early CS failures",
+        "Wanted to fully rebuild catalog after >1 year of work"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/17285919240",
+      "recommended_action": "Preventable-high — escalation should have triggered earlier. Microvellum exporter complexity was undersold at start.",
+      "lifetime_subscription": 2817,
+      "years_with_us": 2.7
+    },
+    {
+      "allmoxy_customer_id": 170,
+      "name": "Great Basin Cabinet",
+      "hubspot_company_id": "1129175616",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2020-02-12.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-02-12"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129175616",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 2750,
+      "years_with_us": 7.1
+    },
+    {
+      "allmoxy_customer_id": 203,
+      "name": "Merrill Woodworking",
+      "hubspot_company_id": "2496206588",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2021-05-01.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2021-05-01"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2496206588",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 2750,
+      "years_with_us": 6.7
+    },
+    {
+      "allmoxy_customer_id": 242,
+      "name": "Manor Commercial Sales Group Llc.",
+      "hubspot_company_id": "3873376448",
+      "current_status": "churned",
+      "suggested_reason": "Moved to Other Solution; Features",
+      "confidence": "high",
+      "evidence_quote": "I spoke with Derek today and said that they canceled. They are now invested in a software called Knowify. He did mention that Allmoxy had too many mistakes and not enough reports. [10/13/21]",
+      "evidence_date": "2021-10-13",
+      "signals": [
+        "Moved to Knowify",
+        "Customer cited 'too many mistakes and not enough reports' as drivers",
+        "Reporting gap is a recurring feature complaint"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3873376448",
+      "recommended_action": "Track Knowify as competitor. Reporting roadmap gap acknowledged.",
+      "lifetime_subscription": 2626.91,
+      "years_with_us": 6
+    },
+    {
+      "allmoxy_customer_id": 156,
+      "name": "Mountain Millwork",
+      "hubspot_company_id": "1233473903",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2020-01-03.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-01-03"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1233473903",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 2580,
+      "years_with_us": 7.3
+    },
+    {
+      "allmoxy_customer_id": 199,
+      "name": "Legacy Mill & Cabinet NW llc",
+      "hubspot_company_id": "2291968923",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2020-05-04.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-05-04"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2291968923",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 2500,
+      "years_with_us": 6.8
+    },
+    {
+      "allmoxy_customer_id": 276,
+      "name": "Open Garage Company",
+      "hubspot_company_id": "4872221598",
+      "current_status": "churned",
+      "suggested_reason": "Customer Stakeholder Misalignment",
+      "confidence": "high",
+      "evidence_quote": "I just spoke with Doug. He said that he has asked to cancel his Allmoxy Subscription months ago. I asked him for some detail and pain points. He said 'the customer service Fu*%$# Sucks'. He was polite with me as I was with him. I offered him some support options and he said no and asked again to cancel. [8/27/21]",
+      "evidence_date": "2021-08-27",
+      "signals": [
+        "Customer cancelled months earlier but request was not actioned",
+        "Explicit and emphatic CS dissatisfaction",
+        "Refused saved-account support options when offered"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4872221598",
+      "recommended_action": "Process fix — cancellation requests must be tracked. Customer felt ignored for months.",
+      "lifetime_subscription": 2500,
+      "years_with_us": 5.5
+    },
+    {
+      "allmoxy_customer_id": 269,
+      "name": "Harlan Cabinets, Inc.",
+      "hubspot_company_id": "1128633050",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used",
+      "confidence": "high",
+      "evidence_quote": "From David Wagler: 'We would like to cancel our subscription for now since we aren't utilizing the program at all. I'm going to wait and see how Chad's stuff works out and we will revisit then.' [8/20/19, captured 5/1/20]",
+      "evidence_date": "2019-08-20",
+      "signals": [
+        "Customer explicit: 'aren't utilizing the program at all'",
+        "Wanted to wait on a parallel solution ('Chad's stuff') before re-evaluating",
+        "Long-tenured legacy customer who never adopted"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128633050",
+      "recommended_action": "Preventable-high — same onboarding gate pattern.",
+      "lifetime_subscription": 2390,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 200,
+      "name": "Macbuilt Inc",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2020-04-30"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually for this customer name.",
+      "lifetime_subscription": 2250,
+      "years_with_us": 6.7
+    },
+    {
+      "allmoxy_customer_id": 519,
+      "name": "Rigel EMC",
+      "hubspot_company_id": "25299799206",
+      "current_status": "churned",
+      "suggested_reason": "Moved to Other Solution; Features",
+      "confidence": "high",
+      "evidence_quote": "Churn Playbook 10/8/25: 'Moved to Other Solution. Notes: Looking to move to Odoo or 2020 Insight. TEK build, their customers want a more visual 3D aspect, not the list set up like Allmoxy. Customers never really adopted.' | Cancellation note 10/7/25: 'Customers prefer 3D visualizers, renderings, or drawings instead of list-based workflows provided by Allmoxy. Client was unable to get any users excited or willing to adopt the platform.'",
+      "evidence_date": "2025-10-08",
+      "signals": [
+        "Customers wanted 3D visualizers; Allmoxy's list-based UI didn't fit",
+        "Considering Odoo or 2020 Insight",
+        "Customer adoption failed — couldn't get end-users excited",
+        "TEK-build (fast onboarding) — feature gap wasn't a build-quality issue"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/25299799206",
+      "recommended_action": "Recurring feature-gap signal: 3D visualizer / visual configurator. Several recent churns cite this. Worth roadmap consideration.",
+      "lifetime_subscription": 2240,
+      "years_with_us": 1.4
+    },
+    {
+      "allmoxy_customer_id": 167,
+      "name": "Cabinet Central Inc.",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2021-04-02"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually for this customer name.",
+      "lifetime_subscription": 2171,
+      "years_with_us": 7.2
+    },
+    {
+      "allmoxy_customer_id": 121,
+      "name": "Calmark Cabinetry & Woodwork Ltd",
+      "hubspot_company_id": "1128633050",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2019-10-26.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-10-26"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128633050",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 2140,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 484,
+      "name": "Fusion",
+      "hubspot_company_id": "2156926191",
+      "current_status": "churned",
+      "suggested_reason": "Ownership Transition; Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "the email you sent to them a few days ago bounced and I *think* it's because Chris doesn't work there anymore so his isn't a valid email address. [1/6/20] | Only follow-up note exists",
+      "evidence_date": "2020-01-06",
+      "signals": [
+        "Primary contact (Chris) left the company; email bounced",
+        "No replacement contact captured",
+        "Account went dormant after stakeholder change"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2156926191",
+      "recommended_action": "Preventable-low — multi-threaded contact strategy would have saved.",
+      "lifetime_subscription": 2023.93,
+      "years_with_us": 2.5
+    },
+    {
+      "allmoxy_customer_id": 531,
+      "name": "Subtle Cabinets",
+      "hubspot_company_id": "37315206577",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation",
+      "confidence": "high",
+      "evidence_quote": "These guys haven't paid since December? Are they churned or do we need to remove access? [4/15/26] | Kickoff was 4/24/25, multiple onboarding/working sessions through 5/14/25, then no further engagement notes. Customer never launched.",
+      "evidence_date": "2026-04-15",
+      "signals": [
+        "6-month onboarding effort (Apr-May 2025) but never launched",
+        "Customer juggling multiple priorities (CNC setup, active jobs, lean 2-person team)",
+        "Computer crash mid-onboarding lost a week of Cabinet Vision data",
+        "Stopped paying December 2025 — silent churn"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/37315206577",
+      "recommended_action": "Preventable-high — small-shop bandwidth signal at kickoff. 90-day launch gate would have surfaced earlier.",
+      "lifetime_subscription": 2000,
+      "years_with_us": 1.1
+    },
+    {
+      "allmoxy_customer_id": 192,
+      "name": "Custom Cabinet Components",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2020-02-24"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually for this customer name.",
+      "lifetime_subscription": 2000,
+      "years_with_us": 6.8
+    },
+    {
+      "allmoxy_customer_id": 253,
+      "name": "Forge, Inc",
+      "hubspot_company_id": "4116884133",
+      "current_status": "churned",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Forge inc. canceled their membership. [10/14/21]",
+      "evidence_date": "2021-10-14",
+      "signals": [
+        "Single cancellation-confirmation note, no reason recorded",
+        "Pre-CSM-playbook era"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4116884133",
+      "recommended_action": "Accept Unresponsive — confirmed cancel with no reason captured.",
+      "lifetime_subscription": 2000,
+      "years_with_us": 5.9
+    },
+    {
+      "allmoxy_customer_id": 98,
+      "name": "Modern Kitchen Pros LLC",
+      "hubspot_company_id": "1128625386",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes in HubSpot. No CSM-recorded churn reason. Last paid 2019-09-12.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-09-12"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128625386",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1890,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 179,
+      "name": "International Office Products",
+      "hubspot_company_id": "1866029805",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-01-02.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-01-02"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1866029805",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1750,
+      "years_with_us": 7
+    },
+    {
+      "allmoxy_customer_id": 510,
+      "name": "Xinja Llc",
+      "hubspot_company_id": "22723559969",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used; Timing Not Right",
+      "confidence": "high",
+      "evidence_quote": "Garity Hathaway called and wants to pause or cancel their subscription because they don't use it and are getting charged. [3/6/25] | Spoke with Garity after Madison canceled their $250 subscription. She said they have Allmoxy in mind but right now is not the best time as they are swamped. She asked that I revisit this in the next 3-6 months. [3/7/25] | No contract - public sign up and didn't go through traditional sales or implementation process. [3/11/25]",
+      "evidence_date": "2025-03-07",
+      "signals": [
+        "Public self-signup — bypassed sales qualification entirely",
+        "Customer never used the system but was being charged",
+        "Owner cited 'swamped' / wrong timing",
+        "Asked to re-engage in 3-6 months"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/22723559969",
+      "recommended_action": "Self-signup channel needs a usage gate at 30 days — auto-pause/refund if no activity. Same pattern would catch other no-launch self-signups.",
+      "lifetime_subscription": 1750,
+      "years_with_us": 1.7
+    },
+    {
+      "allmoxy_customer_id": 458,
+      "name": "Zauber Woodworks, Llc",
+      "hubspot_company_id": "15970121783",
+      "current_status": "churned",
+      "suggested_reason": "Out of Business; Unresponsive",
+      "confidence": "medium",
+      "evidence_quote": "this customer is not current. I see in Installer it has been since 2023 since we've received payment but I just want to triple check. [2/15/24] | This account is delinquent please add a task [10/18/23] | Biggest issues: Can't get workers in the shop or in general... Lost two employees that were very knowledgable of the shop. [6/7/23 — at signup]",
+      "evidence_date": "2024-02-15",
+      "signals": [
+        "Lost key staff before signing up — workforce-constrained at start",
+        "Card delinquent by Oct 2023, payment ceased shortly after launch",
+        "No engagement after delinquency note"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/15970121783",
+      "recommended_action": "Preventable-low — sales should have flagged workforce-loss signal at qualification (similar to Three Creeks pattern).",
+      "lifetime_subscription": 1598,
+      "years_with_us": 2.9
+    },
+    {
+      "allmoxy_customer_id": 143,
+      "name": "Ameuro Wood Fixtures",
+      "hubspot_company_id": "1128625378",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-06-11.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-06-11"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128625378",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1543.25,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 189,
+      "name": "Silhouette",
+      "hubspot_company_id": "1128625460",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used",
+      "confidence": "medium",
+      "evidence_quote": "Steve (owner) mentioned he knows you and Beau pretty well. Said they dabbled with Allmoxy years ago but never really got it going the way they wanted it to. Said he's open to another conversation. [9/30/25] | this guy has been SOLD on Allmoxy but would never give us the data. You may be able to upsell him quite easily, revive the site and sell services that I think is all he needed. [4/3/20]",
+      "evidence_date": "2025-09-30",
+      "signals": [
+        "Customer never provided catalog data — onboarding stalled at data-gathering",
+        "Owner acknowledges 'dabbled but never got it going'",
+        "Re-engagement candidate per Sept 2025 reach-out"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128625460",
+      "recommended_action": "Re-engagement target — owner is warm. Productized onboarding (less data-asking) would unlock similar shops.",
+      "lifetime_subscription": 1503.5,
+      "years_with_us": 7.2
+    },
+    {
+      "allmoxy_customer_id": 259,
+      "name": "Cabinet Farm",
+      "hubspot_company_id": "4298600819",
+      "current_status": "churned",
+      "suggested_reason": "Business Model Change; Failed Implementation",
+      "confidence": "high",
+      "evidence_quote": "I spoke with Dillion today. He canceled and will not be needing this software any longer. He is building CNCs now. I asked him for feedback and he said that the setup wasn't as easy as it could have been. He said that there was a delay in response to questions that needed answers. [10/13/21]",
+      "evidence_date": "2021-10-13",
+      "signals": [
+        "Customer pivoted business to building CNC machines",
+        "Cited 'setup wasn't easy' and 'delay in response' on the way out",
+        "Combined product-pivot + onboarding friction"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4298600819",
+      "recommended_action": "Accept — business model pivot. CS responsiveness gap is recurring secondary signal.",
+      "lifetime_subscription": 1500,
+      "years_with_us": 5.8
+    },
+    {
+      "allmoxy_customer_id": 264,
+      "name": "A.N.A. Custom Millwork",
+      "hubspot_company_id": "4436161862",
+      "current_status": "churned",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Samantha Alexander This would be a good one to reach out to. Cancelled back in March of last year. [2/2/22 — referring to March 2021 cancel]",
+      "evidence_date": "2021-03-01",
+      "signals": [
+        "Cancelled March 2021 with no reason captured",
+        "Pre-CSM-playbook era"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4436161862",
+      "recommended_action": "Accept Unresponsive — no captured reason.",
+      "lifetime_subscription": 1500,
+      "years_with_us": 5.6
+    },
+    {
+      "allmoxy_customer_id": 134,
+      "name": "San Benito Shutter",
+      "hubspot_company_id": "1123960962",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-04-24.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-04-24"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1123960962",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1480,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 314,
+      "name": "Fetzer Architectural Woodwork",
+      "hubspot_company_id": "2441934712",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2021-09-26.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2021-09-26"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2441934712",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1380,
+      "years_with_us": 5.1
+    },
+    {
+      "allmoxy_customer_id": 227,
+      "name": "Demetra Cabinetry",
+      "hubspot_company_id": "2478195346",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation; Customer Stakeholder Misalignment",
+      "confidence": "medium",
+      "evidence_quote": "Ricky is more confused after jeff coming than before jeff came. Looks like he's still learning. Ricky feels like its not ready because of Jeff. The issue is jeff didn't know what he was doing. Demetra wanted barcodes and scanners. Jeff said he doesn't do that. [7/28/20] | Customer wanted to use 3d designer + Cabinet Vision port — feature didn't exist [2/22/24 re-pitch]",
+      "evidence_date": "2020-07-28",
+      "signals": [
+        "Onsite consultant (Jeff) didn't know the system — wasted customer's time",
+        "Customer expected ERP-grade features (barcodes, scanners) that we don't provide",
+        "Wanted 3D designer + Cabinet Vision port (recurring feature ask)"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2478195346",
+      "recommended_action": "Preventable-high — services-rep quality control gap. Third-party services partners need vetting.",
+      "lifetime_subscription": 1250,
+      "years_with_us": 6.1
+    },
+    {
+      "allmoxy_customer_id": 230,
+      "name": "Aka Enterprises",
+      "hubspot_company_id": "3338762963",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-08-07.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-08-07"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3338762963",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1250,
+      "years_with_us": 6.1
+    },
+    {
+      "allmoxy_customer_id": 241,
+      "name": "Kitchen Design",
+      "hubspot_company_id": "3894903547",
+      "current_status": "churned",
+      "suggested_reason": "Ownership Transition",
+      "confidence": "medium",
+      "evidence_quote": "Steve no longer works at Kitchen Design [9/7/22] | demo notes 9/15/22 still discussing $1899/mo as if active, but never reactivated. POC departure preceded churn.",
+      "evidence_date": "2022-09-07",
+      "signals": [
+        "Primary POC (Steve) departed the company",
+        "Renewal attempt failed without primary champion"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3894903547",
+      "recommended_action": "Preventable-low — same multi-threaded-contact gap as Homestead/Fusion.",
+      "lifetime_subscription": 1250,
+      "years_with_us": 6
+    },
+    {
+      "allmoxy_customer_id": 163,
+      "name": "Porter's Custom Cabinets",
+      "hubspot_company_id": "1129177388",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation",
+      "confidence": "low",
+      "evidence_quote": "These guys asked to cancel and wanted a refund of that first $250. Broc agreed. So I've asked Sarah to refund them via Stripe and I deleted their instance. [3/18/21] | Discussed pricing with Larry at $250 for the first 3 months and the remaining 9 at $618 per month. He is supposed to call me monday [3/5/21]",
+      "evidence_date": "2021-03-18",
+      "signals": [
+        "Cancelled within 2 weeks of signing — never launched",
+        "Pre-CSM-playbook era"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129177388",
+      "recommended_action": "Sales-qualification failure pattern.",
+      "lifetime_subscription": 1205,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 52,
+      "name": "EuroTec Doors",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2019-06-15"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 1140,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 53,
+      "name": "Express Reface",
+      "hubspot_company_id": "2450201434",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-06-14.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-06-14"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2450201434",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1140,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 55,
+      "name": "Heritage Woodworks, LLC",
+      "hubspot_company_id": "1128346674",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-06-08.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-06-08"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346674",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1140,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 346,
+      "name": "Andersen Closets",
+      "hubspot_company_id": "7221166633",
+      "current_status": "churned",
+      "suggested_reason": "Timing Not Right; Paid and Never Used",
+      "confidence": "low",
+      "evidence_quote": "I called him for our scheduled meeting. He said he is too busy to stop and hasn't slept. I told him about our door and let him know we would be happy to jump in and help. He is going to send me over information to quote them services. [10/3/19]",
+      "evidence_date": "2019-10-03",
+      "signals": [
+        "Owner overwhelmed, never sent the requested info",
+        "Pre-CSM-playbook era — only single thin note"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/7221166633",
+      "recommended_action": "Bandwidth-constrained owner pattern.",
+      "lifetime_subscription": 1117,
+      "years_with_us": 4.6
+    },
+    {
+      "allmoxy_customer_id": 145,
+      "name": "Easy Build Cabinets",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2020-03-25"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 1105,
+      "years_with_us": 7.5
+    },
+    {
+      "allmoxy_customer_id": 193,
+      "name": "Kitchencorp",
+      "hubspot_company_id": "2260143334",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-10-27.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-10-27"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2260143334",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1000,
+      "years_with_us": 6.8
+    },
+    {
+      "allmoxy_customer_id": 212,
+      "name": "Sierra Architectural Products",
+      "hubspot_company_id": "2624447548",
+      "current_status": "churned",
+      "suggested_reason": "Customer Stakeholder Misalignment; Failed Implementation",
+      "confidence": "medium",
+      "evidence_quote": "They cancelled allmoxy because the didn't fully understand the platform and felt mis treated. Jay agreed to continue his agreement and get his instance live. [3/24/20] | The email was incorrect in the system which is why none of our emails have been reaching Jay. [3/24/20]",
+      "evidence_date": "2020-03-24",
+      "signals": [
+        "Customer felt 'mistreated' on first attempt; cancelled then re-engaged",
+        "Email comms broken — wrong email on file for primary contact",
+        "Owner Jay vs systems engineer Richard split — multi-stakeholder confusion"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2624447548",
+      "recommended_action": "Same pattern as Crown Cabinetry — legacy contact channel failures + customer feeling unheard.",
+      "lifetime_subscription": 1000,
+      "years_with_us": 6.5
+    },
+    {
+      "allmoxy_customer_id": 258,
+      "name": "Aspen Millworks",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2020-11-30"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 1000,
+      "years_with_us": 5.7
+    },
+    {
+      "allmoxy_customer_id": 281,
+      "name": "Exclusive Design Cabinetry",
+      "hubspot_company_id": "5028979513",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2021-03-14.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2021-03-14"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/5028979513",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1000,
+      "years_with_us": 5.4
+    },
+    {
+      "allmoxy_customer_id": 326,
+      "name": "Casework Logic",
+      "hubspot_company_id": "4971105445",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2021-04-07.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2021-04-07"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4971105445",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 1000,
+      "years_with_us": 5.4
+    },
+    {
+      "allmoxy_customer_id": 327,
+      "name": "Nadler Cabinet Services",
+      "hubspot_company_id": "6443301255",
+      "current_status": "churned",
+      "suggested_reason": "Timing Not Right; Paid and Never Used",
+      "confidence": "medium",
+      "evidence_quote": "Timing is not right. [11/15/21] | Yechiel called and cancelled. We will be reaching out in two months. [10/8/21] | have we done anything with these guys? I don't show any activity with them since they started. Their trello board is also inactive. [8/25/21]",
+      "evidence_date": "2021-10-08",
+      "signals": [
+        "Customer explicitly cited 'timing'",
+        "Zero activity from sign-up to cancel",
+        "Trello onboarding board never moved"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/6443301255",
+      "recommended_action": "Onboarding-gate signal — zero activity within first month should auto-flag.",
+      "lifetime_subscription": 1000,
+      "years_with_us": 4.9
+    },
+    {
+      "allmoxy_customer_id": 81,
+      "name": "Rasmussen Custom Cabinetry",
+      "hubspot_company_id": "1125203951",
+      "current_status": "churned",
+      "suggested_reason": "Business Model Change",
+      "confidence": "high",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-05-25. || CS-rep note (Churn Details xlsx): Business Model Change — 'Moved back to using quickbooks exclusively so there is no longer a need for Allmoxy. Munns Door and Mill uses Allmoxy but Rasmussen no longer does. Munns and Rasmussen are connected. Colton owns Munns.' Adds to Allmoxy→QuickBooks substitution pattern.",
+      "evidence_date": "2024",
+      "signals": [
+        "Updated from Churn Details xlsx (former CS-rep notes, 2024)",
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-05-25"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1125203951",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 988.53,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 209,
+      "name": "E and E garage Cabinets",
+      "hubspot_company_id": "1129207392",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-12-21.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-12-21"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129207392",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 976.25,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 61,
+      "name": "Marwood Design",
+      "hubspot_company_id": "1128625400",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-05-09.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-05-09"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128625400",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 890,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 103,
+      "name": "Lab57",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2019-05-14"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 890,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 125,
+      "name": "Georgia Hardwoods Inc",
+      "hubspot_company_id": "1128346587",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used; Moved to Other Solution",
+      "confidence": "high",
+      "evidence_quote": "Cancellation Playbook 8/15/24: Close/Lost: Paid and Never Used. Close/Lost Reason: 'moved back to using quickbooks exclusively so there is no longer a need for Allmoxy.' | Earlier: Health Pulse Green (2024 launched playbook) — but engagement dropped.",
+      "evidence_date": "2024-08-15",
+      "signals": [
+        "Cancellation playbook explicit: 'Paid and Never Used'",
+        "Reverted to QuickBooks-only (3rd churn citing this exact pivot)",
+        "Long-tenured legacy customer who never re-engaged after 2019 pricing renegotiation"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346587",
+      "recommended_action": "Preventable-high — Allmoxy-vs-QuickBooks substitution pattern (also: Cutting Edge, Cooper). For small shops, QuickBooks invoicing is 'good enough'.",
+      "lifetime_subscription": 890,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 96,
+      "name": "Atlanta Closet & Storage Solutions",
+      "hubspot_company_id": "1128356062",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation; Customer Stakeholder Misalignment",
+      "confidence": "medium",
+      "evidence_quote": "They've had the manager poking around at Allmoxy, trying it passively for a line of doors, but it was a failed attempt. When they did this, we were so thin we didn't help them with may resources. We need to get in there, get to the right guy, and show them the whole vision. [12/24/20]",
+      "evidence_date": "2020-12-24",
+      "signals": [
+        "Wrong-stakeholder pattern — manager played with it without owner buy-in",
+        "Pre-CSM era — 'we were so thin we didn't help them' (resource confession)",
+        "Customer used Allmoxy 'passively for a line of doors' only"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128356062",
+      "recommended_action": "Preventable-low — wrong-stakeholder pattern. Sales should require owner/decider participation in qualification.",
+      "lifetime_subscription": 825,
+      "years_with_us": 7.5
+    },
+    {
+      "allmoxy_customer_id": 184,
+      "name": "Cimarron Drawer",
+      "hubspot_company_id": "1128346667",
+      "current_status": "churned",
+      "suggested_reason": "Pricing",
+      "confidence": "medium",
+      "evidence_quote": "His main concern was the price and couldn't really justify the integration cost. I mentioned to him that we have gone a different direction with our sales team and that you have structured the pricing model differently. Based on his previous demo, it looks like Sam quoted him $2899 or $2399 (there are two different prices?) and 40-60 hours of integration. [3/21/25]",
+      "evidence_date": "2025-03-21",
+      "signals": [
+        "Customer explicit: price + integration cost too high",
+        "Quoted $2899/mo with 40-60 hours integration (~$6-9K)",
+        "Re-pitched in March 2025 with new pricing model"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346667",
+      "recommended_action": "Track new-pricing-model recovery. Re-engagement candidate.",
+      "lifetime_subscription": 750,
+      "years_with_us": 7
+    },
+    {
+      "allmoxy_customer_id": 194,
+      "name": "Ponder Home",
+      "hubspot_company_id": "2234736662",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-09-20.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-09-20"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2234736662",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 750,
+      "years_with_us": 6.8
+    },
+    {
+      "allmoxy_customer_id": 250,
+      "name": "Mr.",
+      "hubspot_company_id": "34494581252",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-08-25.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-08-25"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/34494581252",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 750,
+      "years_with_us": 5.9
+    },
+    {
+      "allmoxy_customer_id": 478,
+      "name": "Milestone Cabinetry & Interiors Inc",
+      "hubspot_company_id": "28356239671",
+      "current_status": "churned",
+      "suggested_reason": "Paid and Never Used",
+      "confidence": "low",
+      "evidence_quote": "Gary reached out about pausing his account for now. He's $250/mo. [9/19/22]",
+      "evidence_date": "2022-09-19",
+      "signals": [
+        "At floor pricing ($250/mo) and still requested pause",
+        "Pre-CSM-playbook era — no follow-up notes after pause"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/28356239671",
+      "recommended_action": "Floor-pricing pause→cancel pattern.",
+      "lifetime_subscription": 750,
+      "years_with_us": 2.6
+    },
+    {
+      "allmoxy_customer_id": 150,
+      "name": "Advanced Custom Cabinets",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2019-05-16"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 695,
+      "years_with_us": 7.3
+    },
+    {
+      "allmoxy_customer_id": 87,
+      "name": "DS Wood Solutions LLC",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2019-04-30"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 640,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 91,
+      "name": "United Team Mechanical",
+      "hubspot_company_id": "1129207393",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-04-05.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-04-05"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129207393",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 640,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 100,
+      "name": "Heritage Woodwright",
+      "hubspot_company_id": "1128356012",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-04-18.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-04-18"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128356012",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 640,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 155,
+      "name": "Maker Euro",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2019-06-06"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 630,
+      "years_with_us": 7.3
+    },
+    {
+      "allmoxy_customer_id": 149,
+      "name": "Mill Creek Shutters",
+      "hubspot_company_id": "1134385080",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-06-05.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-06-05"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1134385080",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 575,
+      "years_with_us": 7.4
+    },
+    {
+      "allmoxy_customer_id": 204,
+      "name": "Outside The Box Manufacturing Limited",
+      "hubspot_company_id": "2372253441",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-09-30.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-09-30"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2372253441",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 6.7
+    },
+    {
+      "allmoxy_customer_id": 205,
+      "name": "Post Form Laminating",
+      "hubspot_company_id": "1128346655",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-12-03.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-12-03"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346655",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 6.7
+    },
+    {
+      "allmoxy_customer_id": 215,
+      "name": "Michigan Woodwork",
+      "hubspot_company_id": "1128346619",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-03-01.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-03-01"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346619",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 6.4
+    },
+    {
+      "allmoxy_customer_id": 221,
+      "name": "Upper Canada Stretchers Inc",
+      "hubspot_company_id": "2962684864",
+      "current_status": "churned",
+      "suggested_reason": "Timing Not Right",
+      "confidence": "low",
+      "evidence_quote": "no clue how his instance got deleted. but confirmed he is not in the market for allmoxy right now [9/2/20]",
+      "evidence_date": "2020-09-02",
+      "signals": [
+        "Customer explicit: 'not in the market for allmoxy right now'",
+        "Instance was deleted before formal cancellation"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2962684864",
+      "recommended_action": "Accept Timing Not Right.",
+      "lifetime_subscription": 500,
+      "years_with_us": 6.3
+    },
+    {
+      "allmoxy_customer_id": 231,
+      "name": "Dm Supplies",
+      "hubspot_company_id": "3313227941",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-05-01.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-05-01"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3313227941",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 6.1
+    },
+    {
+      "allmoxy_customer_id": 239,
+      "name": "Curated Kitchen Design",
+      "hubspot_company_id": "3869546922",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-06-13.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-06-13"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3869546922",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 6
+    },
+    {
+      "allmoxy_customer_id": 260,
+      "name": "Kinon Surface Design Inc.",
+      "hubspot_company_id": "4380709900",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-10-23.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-10-23"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4380709900",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 5.7
+    },
+    {
+      "allmoxy_customer_id": 261,
+      "name": "Wheat Country Woodworks Llc",
+      "hubspot_company_id": "4310544774",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-09-10.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-09-10"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4310544774",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 5.8
+    },
+    {
+      "allmoxy_customer_id": 265,
+      "name": "Dennis Reeves Inc.",
+      "hubspot_company_id": "4458860723",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-11-08.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-11-08"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4458860723",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 5.7
+    },
+    {
+      "allmoxy_customer_id": 270,
+      "name": "Straight Edge Customs, LLC",
+      "hubspot_company_id": "4479213405",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-10-14.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-10-14"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4479213405",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 5.7
+    },
+    {
+      "allmoxy_customer_id": 286,
+      "name": "Closets N More, Inc",
+      "hubspot_company_id": "5194758592",
+      "current_status": "churned",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "I just want to clarify what you guys understand the current cancellation process to be for customers... were you aware of them wanting to cancel? They are disputing our charge [3/10/21]",
+      "evidence_date": "2021-03-10",
+      "signals": [
+        "Customer disputed a charge after cancel request not actioned",
+        "Pre-CSM-era cancellation process gap — internal note questioned what the process even was"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/5194758592",
+      "recommended_action": "Process failure — same cancel-request-not-tracked pattern as Open Garage / Porter's. Sub-pattern is real and recurring.",
+      "lifetime_subscription": 500,
+      "years_with_us": 5.3
+    },
+    {
+      "allmoxy_customer_id": 341,
+      "name": "Miracle Closets",
+      "hubspot_company_id": "6805571611",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2021-09-24.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2021-09-24"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/6805571611",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 4.7
+    },
+    {
+      "allmoxy_customer_id": 345,
+      "name": "3iflex",
+      "hubspot_company_id": "6619707986",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation",
+      "confidence": "medium",
+      "evidence_quote": "3iflex is looking to create a custom cabinet catalog. They use Mosaik currently. They are considering Cabinet Vision or Microvellum. They have a team to build out the catalog and are going to start with them. They were quoted $7,000 - $10,000 for the catalog plus 3D Designer. [7/29/21] | Their pipeline states that they have canceled. [10/18/21]",
+      "evidence_date": "2021-10-18",
+      "signals": [
+        "Custom-cabinet shop with $7-10K integration quote",
+        "Multi-tool consideration (Mosaik, Cabinet Vision, Microvellum) — never committed to single stack",
+        "Cancelled 3 months after signup — catalog build never started"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/6619707986",
+      "recommended_action": "Custom-shop + multi-tool-shopping pattern. Sales qualification should flag 'evaluating 3+ tools' as not-decided.",
+      "lifetime_subscription": 500,
+      "years_with_us": 4.8
+    },
+    {
+      "allmoxy_customer_id": 368,
+      "name": "Mooza Wood Arts",
+      "hubspot_company_id": "2527468454",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Moving from custom to semi-custom standardized products. $699 USD/month. Twelve-month contract. [10/10/23] | $1199/Month before discount $899/month after discount $7,000-$11,000 for integrations [2/14/22 — earlier demo]",
+      "evidence_date": "2023-10-10",
+      "signals": [
+        "Toronto small custom shop, 11 employees, $2-3M revenue",
+        "Multiple demos but only $500 lifetime sub — never converted to active",
+        "Was moving from custom to semi-custom — possible reason classification needed re-demo"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2527468454",
+      "recommended_action": "Bandwidth-constrained small custom shop pattern.",
+      "lifetime_subscription": 500,
+      "years_with_us": 4.3
+    },
+    {
+      "allmoxy_customer_id": 451,
+      "name": "Woodstock Cabinet Company",
+      "hubspot_company_id": "16053478921",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2023-07-12.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2023-07-12"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/16053478921",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 2.9
+    },
+    {
+      "allmoxy_customer_id": 452,
+      "name": "Cedar Creek Woodworks",
+      "hubspot_company_id": "8583683114",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation; Unresponsive",
+      "confidence": "high",
+      "evidence_quote": "Sean is requesting to cancel. He does not have a contract with us at the moment. I am waiting to hear back on cancellation form. [11/27/23] | Account canceling, passed on to Broc for next steps [11/21/23] | $250 USD per month, no contract yet [6/29/23] || CS-rep note (Churn Details xlsx): Setup Struggle — 'Very unresponsive. No answer on why but \"Allmoxy is not going to happen right now\"'",
+      "evidence_date": "2023-11-27",
+      "signals": [
+        "Updated from Churn Details xlsx (former CS-rep notes, 2024)",
+        "Cancelled within 5 months of signup at floor pricing ($250/mo)",
+        "Never signed a contract — likely never launched",
+        "Cabinet Vision shop with online-order-entry interest"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/8583683114",
+      "recommended_action": "Floor-pricing-no-contract churn pattern — auto-flag customers without signed contract at month 3.",
+      "lifetime_subscription": 500,
+      "years_with_us": 2.9
+    },
+    {
+      "allmoxy_customer_id": 470,
+      "name": "Render",
+      "hubspot_company_id": "17317067854",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2023-10-12.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2023-10-12"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/17317067854",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 500,
+      "years_with_us": 2.7
+    },
+    {
+      "allmoxy_customer_id": 138,
+      "name": "Custom Store Fixtures",
+      "hubspot_company_id": "1128632974",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-04-21.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-04-21"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128632974",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 455,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 152,
+      "name": "Edel Designs.com",
+      "hubspot_company_id": "9971175184",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-05-06.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-05-06"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/9971175184",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 445,
+      "years_with_us": 7.3
+    },
+    {
+      "allmoxy_customer_id": 154,
+      "name": "JDH Inc",
+      "hubspot_company_id": "2403730985",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-06-27.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-06-27"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2403730985",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 445,
+      "years_with_us": 7.2
+    },
+    {
+      "allmoxy_customer_id": 158,
+      "name": "Woodwright's Custom Woodwork",
+      "hubspot_company_id": "1664704331",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-05-25.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-05-25"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1664704331",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 445,
+      "years_with_us": 7.2
+    },
+    {
+      "allmoxy_customer_id": 118,
+      "name": "Advanced Millwork Components & Installations",
+      "hubspot_company_id": "1128346603",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-04-25.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-04-25"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346603",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 390,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 133,
+      "name": "Komponents",
+      "hubspot_company_id": "4619674657",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-03-10.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-03-10"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4619674657",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 390,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 352,
+      "name": "Nolram Bak Designs",
+      "hubspot_company_id": "7194152736",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation; Customer Stakeholder Misalignment",
+      "confidence": "medium",
+      "evidence_quote": "Not a happy customer - cancelled - not going to re-engage! [9/19/25] | Nolram bak is looking to create a component catalogue. They are a small shop looking to scale and streamline their processes. They use Mosaik... Marlon is going to attempt the build out on his own [10/29/21]",
+      "evidence_date": "2025-09-19",
+      "signals": [
+        "Customer signed up planning to self-build catalog — never launched",
+        "Final CSM note explicit: 'not happy, not going to re-engage'",
+        "Small shop with Mosaik already in place"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/7194152736",
+      "recommended_action": "Self-serve build attempts by small shops fail consistently — qualification should require services engagement for catalog-from-scratch.",
+      "lifetime_subscription": 299,
+      "years_with_us": 4.6
+    },
+    {
+      "allmoxy_customer_id": 124,
+      "name": "DreamSpace Interiors Corp.",
+      "hubspot_company_id": "1128346677",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-01-05.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-01-05"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346677",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 260,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 127,
+      "name": "Hitson Cabinets Inc",
+      "hubspot_company_id": "1128346589",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-01-07.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-01-07"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128346589",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 260,
+      "years_with_us": 7.6
+    },
+    {
+      "allmoxy_customer_id": 51,
+      "name": "Detroit Cabinet Manufacturing",
+      "hubspot_company_id": "5100701466",
+      "current_status": "churned",
+      "suggested_reason": "Pricing; Failed Implementation",
+      "confidence": "low",
+      "evidence_quote": "Terry didn't realize that there would be upfront costs...build out fee. I acknowledged the fee and initial investment and move the conversation to the benefits afterward [10/15/21] | Was concerned about the costs associated with integration for that so we will want to keep that very basic for him [1/13/22] | Biggest interest is in 3D designer Uses 2020 and Pro Kitchen [1/18/22]",
+      "evidence_date": "2024-09-23",
+      "signals": [
+        "Customer surprised by upfront integration fees — sales misalignment on cost",
+        "Interested in 3D designer (recurring feature ask)",
+        "Used 2020 and Pro Kitchen — multi-tool shop"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/5100701466",
+      "recommended_action": "Sales-pricing-transparency gap — customer 'didn't realize' upfront costs.",
+      "lifetime_subscription": 250,
+      "years_with_us": 5.4
+    },
+    {
+      "allmoxy_customer_id": 185,
+      "name": "Fabuwood Cabinetry Corp.",
+      "hubspot_company_id": "2192332613",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-06-18.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-06-18"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2192332613",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 250,
+      "years_with_us": 6.9
+    },
+    {
+      "allmoxy_customer_id": 187,
+      "name": "Mr Versa-tile Llc",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2019-06-21"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 250,
+      "years_with_us": 6.9
+    },
+    {
+      "allmoxy_customer_id": 190,
+      "name": "Smart Cabinet Solution",
+      "hubspot_company_id": "3524468460",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-06-17.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-06-17"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3524468460",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 250,
+      "years_with_us": 6.9
+    },
+    {
+      "allmoxy_customer_id": 195,
+      "name": "Aristocratic Cabinets",
+      "hubspot_company_id": "2092424511",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-06-17.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-06-17"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2092424511",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 250,
+      "years_with_us": 6.9
+    },
+    {
+      "allmoxy_customer_id": 202,
+      "name": "Dreamline, Inc.",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2019-09-05"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 250,
+      "years_with_us": 6.7
+    },
+    {
+      "allmoxy_customer_id": 213,
+      "name": "Strong Cabinetry",
+      "hubspot_company_id": "2670466471",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-12-04.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-12-04"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2670466471",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 250,
+      "years_with_us": 6.5
+    },
+    {
+      "allmoxy_customer_id": 233,
+      "name": "Kvo Cabinets Inc",
+      "hubspot_company_id": "3385084991",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-04-17.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-04-17"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3385084991",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 250,
+      "years_with_us": 6.1
+    },
+    {
+      "allmoxy_customer_id": 247,
+      "name": "Revere Cabinetry",
+      "hubspot_company_id": "3896564692",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-07-06.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-07-06"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3896564692",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 250,
+      "years_with_us": 5.9
+    },
+    {
+      "allmoxy_customer_id": 277,
+      "name": "Randiri",
+      "hubspot_company_id": "4922168602",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2020-11-29.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2020-11-29"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/4922168602",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 250,
+      "years_with_us": 5.5
+    },
+    {
+      "allmoxy_customer_id": 316,
+      "name": "Soluta In Ab Veniam",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2021-04-14"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 250,
+      "years_with_us": 5.1
+    },
+    {
+      "allmoxy_customer_id": 461,
+      "name": "Forum Works Llc",
+      "hubspot_company_id": "16625176684",
+      "current_status": "churned",
+      "suggested_reason": "Failed Implementation",
+      "confidence": "low",
+      "evidence_quote": "$599 USD/Month. 12-Month Contract. First Month for $250... integration: 60-100 hours [8/9/23] | Quoted between $5,500-$7,900 for the 2D build out and an additional $2,750 for the 3D Designer. [10/21/21 — earlier demo]",
+      "evidence_date": "2023-08-09",
+      "signals": [
+        "Custom-cabinet shop, 12-mo contract signed but only $250 lifetime sub",
+        "Microvellum + QuickBooks — multi-tool shop",
+        "Cancelled within months of signup"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/16625176684",
+      "recommended_action": "Floor-pricing-cancelled-early pattern.",
+      "lifetime_subscription": 250,
+      "years_with_us": 2.8
+    },
+    {
+      "allmoxy_customer_id": 476,
+      "name": "Apostles Joinery",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2023-10-10"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 250,
+      "years_with_us": 2.6
+    },
+    {
+      "allmoxy_customer_id": 487,
+      "name": "Reignworks Llc",
+      "hubspot_company_id": "18580889784",
+      "current_status": "churned",
+      "suggested_reason": "Pricing",
+      "confidence": "medium",
+      "evidence_quote": "Matthew demo'd with Sam in January of last year, and he was very interested in Allmoxy. He mentioned that his hesitation was the monthly cost... He mentioned that he's not sure if his current customers would be happy about transitioning from sending him their orders, to an online platform. Door manufacturer - unfinished Located in Georgia [2/19/25 + 7/8/25 re-pitch]",
+      "evidence_date": "2025-07-08",
+      "signals": [
+        "Customer explicit: monthly cost was hesitation",
+        "Mozaik shop, $1.2M revenue door manufacturer",
+        "Secondary concern: customers may not adopt online ordering"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/18580889784",
+      "recommended_action": "Pricing-and-customer-adoption double hurdle. Re-engagement candidate per new pricing model.",
+      "lifetime_subscription": 250,
+      "years_with_us": 2.4
+    },
+    {
+      "allmoxy_customer_id": 494,
+      "name": "The Premier Hub",
+      "hubspot_company_id": "19401914387",
+      "current_status": "churned",
+      "suggested_reason": "Pricing",
+      "confidence": "medium",
+      "evidence_quote": "Monthly pricing discussed: $1,200/month for $2M annual sales volume. Juan indicated this was higher than expected (they pay $382 for Mosaic licenses). Bobby adjusted pricing to $500-550/month based on current monthly sales of $100,000. [4/3/25 demo]",
+      "evidence_date": "2025-04-03",
+      "signals": [
+        "South Florida custom cabinet shop, 70/30 B2C/B2B",
+        "Direct price comparison: Mosaic $382/mo vs Allmoxy $1200 quoted",
+        "Pricing negotiated down to $500-550 but customer never converted to active",
+        "Wanted franchise rollout (Colorado partner)"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/19401914387",
+      "recommended_action": "Pricing-vs-Mosaic-license-cost is a recurring comparison point — third such customer this session.",
+      "lifetime_subscription": 250,
+      "years_with_us": 2.2
+    },
+    {
+      "allmoxy_customer_id": 512,
+      "name": "Burger's Cabinet Shop",
+      "hubspot_company_id": "23231364099",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Doug 20 employees Custom work 80% is dental offices... Microvellum... Paid the $250 fee [10/3/24] | Pricing documented on excel sheet [10/3/24 demo]",
+      "evidence_date": "2024-10-03",
+      "signals": [
+        "Dental office cabinet maker, $4-5M revenue",
+        "Paid $250 setup but no further activity"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/23231364099",
+      "recommended_action": "Demo paid but never launched — Tier 2 follow-up needed.",
+      "lifetime_subscription": 250,
+      "years_with_us": 1.6
+    },
+    {
+      "allmoxy_customer_id": 518,
+      "name": "Native Oak",
+      "hubspot_company_id": "26542115217",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2024-12-03.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2024-12-03"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/26542115217",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 250,
+      "years_with_us": 1.5
+    },
+    {
+      "allmoxy_customer_id": 166,
+      "name": "Black Forest Custom Carpentry",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "No HubSpot company record linked.",
+      "evidence_date": null,
+      "signals": [
+        "No HubSpot company ID",
+        "Last paid 2019-04-20"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 130,
+      "years_with_us": 7.2
+    },
+    {
+      "allmoxy_customer_id": 201,
+      "name": "Vonmod Ltd.",
+      "hubspot_company_id": "1128356050",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Zero or only stale (pre-2022) notes. Last paid 2019-08-02.",
+      "evidence_date": null,
+      "signals": [
+        "Pre-CSM-playbook era churn",
+        "Last paid 2019-08-02"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1128356050",
+      "recommended_action": "Accept Unresponsive as default.",
+      "lifetime_subscription": 100,
+      "years_with_us": 6.8
+    },
+    {
+      "allmoxy_customer_id": 303,
+      "name": "Innovative Cabinetry And Design",
+      "hubspot_company_id": null,
+      "current_status": "insufficient_data",
+      "suggested_reason": "(needs review)",
+      "confidence": "low",
+      "evidence_quote": "CS-rep note: 'Still active - Duplicate?' — flagged by former CS rep as potentially still active or duplicate account, not a real churn.",
+      "evidence_date": "2022",
+      "signals": [
+        "Updated from Churn Details xlsx (former CS-rep notes, 2022)",
+        "No HubSpot company ID",
+        "Last paid 2025-05-22"
+      ],
+      "hubspot_url": null,
+      "recommended_action": "Search HubSpot manually.",
+      "lifetime_subscription": 99,
+      "years_with_us": 1.1
+    },
+    {
+      "allmoxy_customer_id": 169,
+      "name": "Halkett Woodworking Inc.",
+      "hubspot_company_id": "1129299283",
+      "current_status": "insufficient_data",
+      "suggested_reason": "Unresponsive",
+      "confidence": "low",
+      "evidence_quote": "Customer has $0 lifetime subscription revenue — likely incomplete signup or test record. Last paid 2019-03-02 with $0 lifetime.",
+      "evidence_date": null,
+      "signals": [
+        "$0 lifetime subscription revenue",
+        "Last paid 2019-03-02",
+        "Likely incomplete signup, test/sandbox, or pre-payment-system legacy account"
+      ],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/1129299283",
+      "recommended_action": "Likely should be excluded from churn analysis — verify if real signup or test record.",
+      "lifetime_subscription": 65,
+      "years_with_us": 7.2
+    },
+    {
+      "allmoxy_customer_id": 515,
+      "name": "Tahoma Closetmakers",
+      "hubspot_company_id": "25314785919",
+      "lifetime_subscription": 13188,
+      "years_with_us": 1.6,
+      "current_status": "no_csm_notes_available",
+      "suggested_reason": "(needs manual review)",
+      "confidence": "low",
+      "evidence_quote": "No CSM notes found in HubSpot or Churn Details.xlsx during the May 2026 inference pass — appended here so this churned customer is not invisible to QoE review.",
+      "evidence_date": null,
+      "signals": [],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/25314785919",
+      "recommended_action": "Manually review: (a) HubSpot company notes/calls/emails, (b) Stripe payment history for cancellation pattern, (c) any CSM verbal handoff. Update HubSpot Churn Reason once classified."
+    },
+    {
+      "allmoxy_customer_id": 497,
+      "name": "Wedgewood Cabinetry",
+      "hubspot_company_id": "2462437185",
+      "lifetime_subscription": 5274,
+      "years_with_us": 2.2,
+      "current_status": "no_csm_notes_available",
+      "suggested_reason": "(needs manual review)",
+      "confidence": "low",
+      "evidence_quote": "No CSM notes found in HubSpot or Churn Details.xlsx during the May 2026 inference pass — appended here so this churned customer is not invisible to QoE review.",
+      "evidence_date": null,
+      "signals": [],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/2462437185",
+      "recommended_action": "Manually review: (a) HubSpot company notes/calls/emails, (b) Stripe payment history for cancellation pattern, (c) any CSM verbal handoff. Update HubSpot Churn Reason once classified."
+    },
+    {
+      "allmoxy_customer_id": 322,
+      "name": "Ultrashelf",
+      "hubspot_company_id": "3414592775",
+      "lifetime_subscription": 3250,
+      "years_with_us": 6.1,
+      "current_status": "no_csm_notes_available",
+      "suggested_reason": "(needs manual review)",
+      "confidence": "low",
+      "evidence_quote": "No CSM notes found in HubSpot or Churn Details.xlsx during the May 2026 inference pass — appended here so this churned customer is not invisible to QoE review.",
+      "evidence_date": null,
+      "signals": [],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/3414592775",
+      "recommended_action": "Manually review: (a) HubSpot company notes/calls/emails, (b) Stripe payment history for cancellation pattern, (c) any CSM verbal handoff. Update HubSpot Churn Reason once classified."
+    },
+    {
+      "allmoxy_customer_id": 207,
+      "name": "Allstyle Cabinet Doors",
+      "hubspot_company_id": "22397899652",
+      "lifetime_subscription": 2500,
+      "years_with_us": 6.6,
+      "current_status": "no_csm_notes_available",
+      "suggested_reason": "(needs manual review)",
+      "confidence": "low",
+      "evidence_quote": "No CSM notes found in HubSpot or Churn Details.xlsx during the May 2026 inference pass — appended here so this churned customer is not invisible to QoE review.",
+      "evidence_date": null,
+      "signals": [],
+      "hubspot_url": "https://app.hubspot.com/contacts/4910812/record/0-2/22397899652",
+      "recommended_action": "Manually review: (a) HubSpot company notes/calls/emails, (b) Stripe payment history for cancellation pattern, (c) any CSM verbal handoff. Update HubSpot Churn Reason once classified."
+    },
+    {
+      "allmoxy_customer_id": 4,
+      "name": "Allmoxy",
+      "hubspot_company_id": null,
+      "lifetime_subscription": 252,
+      "years_with_us": 7.3,
+      "current_status": "no_csm_notes_available",
+      "suggested_reason": "(needs manual review)",
+      "confidence": "low",
+      "evidence_quote": "No CSM notes found in HubSpot or Churn Details.xlsx during the May 2026 inference pass — appended here so this churned customer is not invisible to QoE review.",
+      "evidence_date": null,
+      "signals": [],
+      "hubspot_url": null,
+      "recommended_action": "Manually review: (a) HubSpot company notes/calls/emails, (b) Stripe payment history for cancellation pattern, (c) any CSM verbal handoff. Update HubSpot Churn Reason once classified."
+    }
+  ]
+}

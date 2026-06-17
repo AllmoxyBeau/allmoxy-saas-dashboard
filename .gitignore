@@ -29,10 +29,12 @@ _source_xlsx
 # stays local; ETL pulls fresh copies on demand.
 _etl_scripts/cache
 
-# Data snapshots — NEVER commit. Contain per-customer MRR, P&L, EBITDA, etc.
-# Snapshots live on Beau's laptop and (eventually) Supabase Storage. The
-# Vercel build will fetch them at deploy time, not from the repo.
-public/snapshots
+# Data snapshots — SOFT GATE (this week): committed so Vercel can serve them.
+# Repo MUST remain private. Anyone with repo access can read this data.
+# NEXT WEEK: migrate to Supabase Storage + build-time fetch, then re-add this
+# line to keep snapshots out of the repo permanently.
+#
+# public/snapshots
 
 # Financial / customer-specific config data — NEVER commit:
 # - ebitda_adjustments.json has actual $ adjustment values
