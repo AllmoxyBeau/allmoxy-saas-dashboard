@@ -108,7 +108,6 @@ export default function Customers() {
   }, [matrixRaw]);
 
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<Set<string>>(new Set());
   const [tierFilter, setTierFilter] = useState<Set<string>>(new Set());
   const [payStatusFilter, setPayStatusFilter] = useState<Set<string>>(new Set());
   const [ownerFilter, setOwnerFilter] = useState<Set<string>>(new Set());
@@ -139,19 +138,16 @@ export default function Customers() {
 
   // Distinct values for filter chips
   const facets = useMemo(() => {
-    const statuses = new Set<string>();
     const payStatuses = new Set<string>();
     const owners = new Set<string>();
     const segments = new Set<string>();
     for (const p of profiles) {
-      if (p.status) statuses.add(p.status);
       if (p.pay_status) payStatuses.add(p.pay_status);
       const o = ownerName(p);
       if (o) owners.add(o);
       if (p.primary_segment) segments.add(p.primary_segment);
     }
     return {
-      statuses: [...statuses].sort(),
       payStatuses: [...payStatuses].sort(),
       owners: [...owners].sort(),
       segments: [...segments].sort(),
@@ -165,7 +161,6 @@ export default function Customers() {
         const hay = `${p.name || ''} ${p.allmoxy_customer_id} ${p.installer_id || ''} ${p.installer_directory || ''}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
-      if (statusFilter.size > 0 && !statusFilter.has(p.status)) return false;
       if (payStatusFilter.size > 0 && !payStatusFilter.has(p.pay_status || '')) return false;
       if (tierFilter.size > 0) {
         const t = tierById.get(p.allmoxy_customer_id) ?? 'unscored';
@@ -175,7 +170,7 @@ export default function Customers() {
       if (segmentFilter.size > 0 && !segmentFilter.has(p.primary_segment || '')) return false;
       return true;
     });
-  }, [profiles, search, statusFilter, payStatusFilter, tierFilter, ownerFilter, segmentFilter, tierById]);
+  }, [profiles, search, payStatusFilter, tierFilter, ownerFilter, segmentFilter, tierById]);
 
   const sorted = useMemo(() => {
     const out = [...filtered];
@@ -285,7 +280,6 @@ export default function Customers() {
             sx={{ maxWidth: 480 }}
           />
 
-          <FilterRow label="Status" values={facets.statuses} selected={statusFilter} onToggle={(v) => toggleSetItem(statusFilter, v, setStatusFilter)} />
           <FilterRow
             label="Tier"
             values={['red', 'yellow', 'green', 'unscored']}
