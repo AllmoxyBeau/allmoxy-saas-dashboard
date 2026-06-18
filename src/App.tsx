@@ -29,6 +29,7 @@ const SubSegmentBackfill = lazy(() => import('./pages/SubSegmentBackfill'));
 const BankerHandoff = lazy(() => import('./pages/BankerHandoff'));
 const ChurnRiskMatrix = lazy(() => import('./pages/ChurnRiskMatrix'));
 const TimeToValue = lazy(() => import('./pages/TimeToValue'));
+const OrdersVerified = lazy(() => import('./pages/OrdersVerified'));
 const StripeQBReconciliation = lazy(() => import('./pages/StripeQBReconciliation'));
 const CustomerDetail = lazy(() => import('./pages/CustomerDetail'));
 const Customers = lazy(() => import('./pages/Customers'));
@@ -72,6 +73,7 @@ export default function App() {
         <Route path="sub-segment-backfill" element={<L><SubSegmentBackfill /></L>} />
         <Route path="churn-risk-matrix" element={<L><ChurnRiskMatrix /></L>} />
         <Route path="time-to-value" element={<L><TimeToValue /></L>} />
+        <Route path="orders-verified" element={<L><OrdersVerified /></L>} />
         {/* Financial / QoE / diligence routes — registered only when the
             SHOW_FINANCIAL_TABS feature flag is on. In production (Vercel env
             var unset) typing these URLs falls through to the catch-all and

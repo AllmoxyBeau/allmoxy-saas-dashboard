@@ -187,11 +187,21 @@ const hubspotNameAmbiguous = new Set(); // names that appear in 2+ rows (skip na
   const hub = XLSX.utils.sheet_to_json(wb.Sheets['Hubspot Instance Sync Sheet'], { header: 1, defval: null, raw: false });
   const hubHdr = hub[1] || [];
   const HH = {};
+  const HH_ALL = {}; // every column index per header name (for handling duplicates)
   hubHdr.forEach((c, i) => { if (c) {
     const k = String(c).trim();
-    // Two columns named "Pay Status" exist; first-seen wins as canonical mapping.
     if (HH[k] == null) HH[k] = i;
+    if (!HH_ALL[k]) HH_ALL[k] = [];
+    HH_ALL[k].push(i);
   }});
+  // The Sync Sheet has TWO "Pay Status" columns: the first is auto-fed from
+  // Stripe events (lags reality — lingers as "Active - Card Failure" even
+  // after the card is fixed), the second is the user-curated value in
+  // HubSpot. We want the manually-curated one — override the index map for
+  // Pay Status to the LAST occurrence so user edits take effect.
+  if (HH_ALL['Pay Status'] && HH_ALL['Pay Status'].length > 1) {
+    HH['Pay Status'] = HH_ALL['Pay Status'][HH_ALL['Pay Status'].length - 1];
+  }
   // First pass: collect ALL rows, indexed by both Stripe Company ID and Allmoxy
   // Customer ID. Either key on a row is enough to join — many customers (e.g.,
   // Safina id 263) only have an Allmoxy Customer ID populated in HubSpot, no

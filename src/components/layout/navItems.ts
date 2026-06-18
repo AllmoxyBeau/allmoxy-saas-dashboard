@@ -66,6 +66,7 @@ export const NAV_ENTRIES: NavEntry[] = [
       { label: 'Churn Patterns', path: '/churn-patterns' },
       { label: 'Churn Investigator', path: '/churn-investigator' },
       { label: 'Time to Value', path: '/time-to-value' },
+      { label: 'Orders Verified', path: '/orders-verified' },
     ],
   },
   {
