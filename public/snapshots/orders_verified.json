@@ -1,13 +1,13 @@
 {
-  "fetched_at": "2026-06-18T00:07:23.803Z",
+  "fetched_at": "2026-06-18T00:29:12.968Z",
   "source": "Orders Verified Data.xlsx · Raw Data + Monthly Average + Month to Month Veified Raw Data",
   "comment": "Per-customer verified order data. Three signals captured: (1) per-year order counts + USD totals (from Raw Data), (2) MONTHLY AVERAGE revenue by year (from Monthly Average sheet — used for apples-to-apples YoY trend since 2026 is partial), (3) Live Date (year customer went live) + Months to Launch (from Month to Month Veified Raw Data sheet — answers Launch Status without HubSpot note scanning).",
   "current_year": "2026",
   "prior_year": "2025",
-  "customer_count": 196,
-  "raw_data_rows_skipped": 15,
-  "monthly_average_rows_joined": 189,
-  "live_date_rows_joined": 189,
+  "customer_count": 197,
+  "raw_data_rows_skipped": 1,
+  "monthly_average_rows_joined": 190,
+  "live_date_rows_joined": 190,
   "by_customer": {
     "1": {
       "allmoxy_customer_id": 1,
@@ -1589,6 +1589,134 @@
       "monthly_avg_yoy_pct": 0.08,
       "monthly_avg_current_year": 142768.91,
       "monthly_avg_prior_year": 131931.03
+    },
+    "16": {
+      "allmoxy_customer_id": 16,
+      "name": "The Door Company",
+      "orders_xlsx_name": "The Door Company",
+      "installer_id": "155",
+      "subdomain": "thecabinetdoorco",
+      "years": {
+        "2013": {
+          "order_count": 20,
+          "total_usd": 8147.51,
+          "subtotal_usd": 7614.48,
+          "b2b_subtotal_usd": 0
+        },
+        "2014": {
+          "order_count": 51,
+          "total_usd": 27241.17,
+          "subtotal_usd": 25530.8,
+          "b2b_subtotal_usd": 0
+        },
+        "2015": {
+          "order_count": 73,
+          "total_usd": 35983.63,
+          "subtotal_usd": 33001.22,
+          "b2b_subtotal_usd": 0
+        },
+        "2016": {
+          "order_count": 50,
+          "total_usd": 22726.72,
+          "subtotal_usd": 20979.65,
+          "b2b_subtotal_usd": 0
+        },
+        "2017": {
+          "order_count": 39,
+          "total_usd": 25673.81,
+          "subtotal_usd": 23592.79,
+          "b2b_subtotal_usd": 0
+        },
+        "2018": {
+          "order_count": 32,
+          "total_usd": 17941.55,
+          "subtotal_usd": 16710.57,
+          "b2b_subtotal_usd": 0
+        },
+        "2019": {
+          "order_count": 54,
+          "total_usd": 38242.12,
+          "subtotal_usd": 35192.91,
+          "b2b_subtotal_usd": 0
+        },
+        "2020": {
+          "order_count": 89,
+          "total_usd": 53524.06,
+          "subtotal_usd": 49539.31,
+          "b2b_subtotal_usd": 0
+        },
+        "2021": {
+          "order_count": 142,
+          "total_usd": 89174.88,
+          "subtotal_usd": 82992.35,
+          "b2b_subtotal_usd": 0
+        },
+        "2022": {
+          "order_count": 148,
+          "total_usd": 148433.84,
+          "subtotal_usd": 139871.86,
+          "b2b_subtotal_usd": 0
+        },
+        "2023": {
+          "order_count": 100,
+          "total_usd": 90588.42,
+          "subtotal_usd": 84824.66,
+          "b2b_subtotal_usd": 0
+        },
+        "2024": {
+          "order_count": 199,
+          "total_usd": 150395.71,
+          "subtotal_usd": 140308.31,
+          "b2b_subtotal_usd": 0
+        },
+        "2025": {
+          "order_count": 227,
+          "total_usd": 193442.44,
+          "subtotal_usd": 181688.69,
+          "b2b_subtotal_usd": 0
+        },
+        "2026": {
+          "order_count": 38,
+          "total_usd": 85525.16,
+          "subtotal_usd": 85525.16,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2014": 2270.1,
+        "2015": 2998.64,
+        "2016": 1893.89,
+        "2017": 2139.48,
+        "2018": 1495.13,
+        "2019": 3186.84,
+        "2020": 4460.34,
+        "2021": 7431.24,
+        "2022": 12369.49,
+        "2023": 7549.04,
+        "2024": 12532.98,
+        "2025": 16120.2,
+        "2026": 17105.03
+      },
+      "live_date": "2014",
+      "live_date_xlsx": "2014",
+      "live_date_inferred": "2013",
+      "live_date_source": "xlsx",
+      "months_to_launch": null,
+      "is_launched": true,
+      "total_lifetime_orders": 1262,
+      "total_lifetime_usd": 987041.02,
+      "monthly_supplement": {
+        "2026-01": 12373.58,
+        "2026-02": 12845.45,
+        "2026-03": 20766.87,
+        "2026-04": 6655.08,
+        "2026-05": 32884.18
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": "2026",
+      "monthly_avg_yoy_pct": 0.06,
+      "monthly_avg_current_year": 17105.03,
+      "monthly_avg_prior_year": 16120.2
     },
     "17": {
       "allmoxy_customer_id": 17,
