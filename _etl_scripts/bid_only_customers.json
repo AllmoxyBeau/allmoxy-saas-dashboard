@@ -2,6 +2,7 @@
   "comment": "Customers who use Allmoxy primarily for BIDS/QUOTES that they never convert to verified orders. They're real paying customers getting product value, but verified-order-count is the wrong signal for them. Listing them here treats them as launched-and-active in the Churn Risk scorer: Signal 1 (Order Volume) and Signal 2 (Launch Status) are forced to MAX, Signal 3 (Engagement Recency) is forced to MAX (silence = autonomous bid activity), and Signal 5 (Tenure × Launch) gym-member penalty is waived. Only Signal 4 (Risk Keywords) still applies normally — if a bid-only customer's notes mention cancel intent or dissatisfaction, that still counts. Time to Value categorizes them as 'bid_only' (treated like 'healthy' in headlines).",
   "updated_at": "2026-06-18",
   "bid_only_allmoxy_customer_ids": [
+    164,
     330,
     529
   ]
