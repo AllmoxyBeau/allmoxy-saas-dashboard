@@ -68,13 +68,6 @@ const TIER_LABEL: Record<string, string> = {
   unscored: '—',
 };
 
-const STATUS_COLOR: Record<string, { bg: string; color: string }> = {
-  active: { bg: '#dcfce7', color: '#166534' },
-  at_risk: { bg: '#fef3c7', color: '#92400e' },
-  churned: { bg: '#fee2e2', color: '#991b1b' },
-  never_paid: { bg: '#e5e7eb', color: '#374151' },
-};
-
 function ownerName(p: Profile): string {
   return p.instance_owner_first_name?.trim() || p.instance_owner?.trim() || '';
 }
@@ -231,7 +224,6 @@ export default function Customers() {
       { key: 'name', label: 'Customer', getValue: (p: Profile) => p.name },
       { key: 'installer_id', label: 'Installer ID', getValue: (p: Profile) => p.installer_id ?? '' },
       { key: 'hubspot_company_id', label: 'HubSpot ID', getValue: (p: Profile) => p.hubspot_company_id ?? '' },
-      { key: 'status', label: 'Status', getValue: (p: Profile) => p.status },
       { key: 'tier', label: 'Tier', getValue: (p: Profile) => tierById.get(p.allmoxy_customer_id) ?? '' },
       { key: 'pay_status', label: 'Pay status', getValue: (p: Profile) => p.pay_status ?? '' },
       { key: 'owner', label: 'Owner', getValue: (p: Profile) => ownerName(p) },
@@ -317,7 +309,6 @@ export default function Customers() {
                 <SortHead label="Allmoxy ID" active={sortKey === 'aid'} dir={sortDir} onClick={() => toggleSort('aid')} align="right" />
                 <SortHead label="Installer ID" active={sortKey === 'installer_id'} dir={sortDir} onClick={() => toggleSort('installer_id')} align="right" />
                 <TableCell align="right" sx={{ fontWeight: 600, fontSize: 11, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>HubSpot</TableCell>
-                <SortHead label="Status" active={sortKey === 'status'} dir={sortDir} onClick={() => toggleSort('status')} />
                 <SortHead label="Tier" active={sortKey === 'tier'} dir={sortDir} onClick={() => toggleSort('tier')} />
                 <SortHead label="Pay status" active={sortKey === 'pay_status'} dir={sortDir} onClick={() => toggleSort('pay_status')} />
                 <SortHead label="Owner" active={sortKey === 'owner'} dir={sortDir} onClick={() => toggleSort('owner')} />
@@ -332,18 +323,17 @@ export default function Customers() {
               {isLoading && (
                 Array.from({ length: 8 }).map((_, i) => (
                   <TableRow key={`sk-${i}`}>
-                    {Array.from({ length: 13 }).map((__, j) => (
+                    {Array.from({ length: 12 }).map((__, j) => (
                       <TableCell key={j}><Skeleton variant="text" /></TableCell>
                     ))}
                   </TableRow>
                 ))
               )}
               {!isLoading && paged.length === 0 && (
-                <TableRow><TableCell colSpan={13} align="center" sx={{ py: 4, color: 'text.secondary' }}>No customers match the current filters.</TableCell></TableRow>
+                <TableRow><TableCell colSpan={12} align="center" sx={{ py: 4, color: 'text.secondary' }}>No customers match the current filters.</TableCell></TableRow>
               )}
               {!isLoading && paged.map((p) => {
                 const tier = tierById.get(p.allmoxy_customer_id);
-                const statusStyle = STATUS_COLOR[p.status] || { bg: '#e5e7eb', color: '#374151' };
                 return (
                   <TableRow key={p.allmoxy_customer_id} hover>
                     <TableCell sx={{ fontWeight: 500 }}>
@@ -353,13 +343,6 @@ export default function Customers() {
                     <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: 'text.secondary', fontSize: 12 }}>{p.installer_id ?? '—'}</TableCell>
                     <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', fontSize: 12 }}>
                       <HubSpotIdLink id={p.hubspot_company_id} showIcon />
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        label={p.status}
-                        size="small"
-                        sx={{ bgcolor: statusStyle.bg, color: statusStyle.color, fontWeight: 600, fontSize: 11, height: 20 }}
-                      />
                     </TableCell>
                     <TableCell>
                       {tier ? (
