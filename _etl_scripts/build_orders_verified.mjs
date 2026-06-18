@@ -20,11 +20,30 @@ import path from 'node:path';
 import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
 
 const SOURCE = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Orders Verified Data.xlsx';
-// May 2026 supplement — fills monthly_avg_current_year for customers whose
-// 2026 column is blank in the main Monthly Average sheet. Single-month
-// snapshot keyed by subdomain. Optional file — skipped if missing.
-const MAY_2026_SUPPLEMENT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Verified Orders May 2026.xlsx';
-const MAY_2026_MONTH = '2026-05';
+// Multi-month 2026 supplement — one tab per month (Jan, Feb, March, April,
+// May, ...). Each tab: { subdomain, total invoices }. When present, this
+// REPLACES the Raw Data tab's 2026 totals (which lag behind) and populates
+// per-month values in monthly_supplement so the dashboard can render true
+// monthly trends. Single-month "Verified Orders May 2026.xlsx" is the legacy
+// fallback if the multi-month file isn't there.
+const VERIFIED_2026_MONTHLY = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Verified Orders 2026.xlsx';
+const VERIFIED_2026_MAY_FALLBACK = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Verified Orders May 2026.xlsx';
+const VERIFIED_2026_YEAR = '2026';
+// Map a sheet name (e.g. "Jan", "May", "April") to its month-of-year number.
+const MONTH_NAME_TO_NUM = {
+  jan: '01', january: '01',
+  feb: '02', february: '02',
+  mar: '03', march: '03',
+  apr: '04', april: '04',
+  may: '05',
+  jun: '06', june: '06',
+  jul: '07', july: '07',
+  aug: '08', august: '08',
+  sep: '09', sept: '09', september: '09',
+  oct: '10', october: '10',
+  nov: '11', november: '11',
+  dec: '12', december: '12',
+};
 const OUT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots/orders_verified.json';
 const PROFILES = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots/customer_profiles.json';
 
@@ -168,60 +187,114 @@ for (let i = 1; i < maRows.length; i++) {
 }
 
 // ============================================================================
-// Pass 2b: May 2026 supplement (optional file)
-// The main Monthly Average sheet isn't always refreshed for the current year,
-// leaving customers like Stolbek ($813K), Westwind ($438K), and Wurth LAC
-// ($72K) with no 2026 MA — which makes Signal 1 fall back to annualized raw
-// counts. The supplement file ("Verified Orders May 2026.xlsx") has actual
-// May invoice totals by subdomain; we use these as the monthly_avg_current_year
-// for customers whose MA sheet entry is missing for 2026. We also stamp the
-// raw monthly cell into a separate `monthly_supplement` field for traceability.
+// Pass 2b: 2026 monthly supplement — REPLACES 2026 totals from Raw Data
+//
+// The new "Verified Orders 2026.xlsx" file has one tab per month (Jan/Feb/Mar/
+// Apr/May/etc.) with subdomain + total invoices for that month. We:
+//   1) Sum per-customer to get fresh 2026 YTD total_usd
+//   2) Populate monthly_supplement[YYYY-MM] for per-month dashboard charts
+//   3) Recompute monthly_avg_current_year as sum / months_loaded
+//   4) Overwrite years["2026"].total_usd with the authoritative value
+//
+// Falls back to the older single-tab "Verified Orders May 2026.xlsx" if the
+// multi-month file isn't present. Both files are optional — without either,
+// 2026 data comes from the Raw Data tab as before.
 // ============================================================================
 const currentYearStr = String(new Date().getFullYear());
-let supplementFilled = 0;
-let supplementOverridden = 0;
+
+function readMonthlySupplement() {
+  if (fs.existsSync(VERIFIED_2026_MONTHLY)) {
+    const wb = XLSX.read(fs.readFileSync(VERIFIED_2026_MONTHLY), { type: 'buffer' });
+    const monthData = {}; // { "2026-01": [{ subdomain, total }, ...], ... }
+    for (const sheetName of wb.SheetNames) {
+      const num = MONTH_NAME_TO_NUM[String(sheetName).trim().toLowerCase()];
+      if (!num) {
+        console.warn(`  ! 2026 supplement: unknown month tab "${sheetName}" — skipping`);
+        continue;
+      }
+      const key = `${VERIFIED_2026_YEAR}-${num}`;
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { defval: null });
+      monthData[key] = rows
+        .map((r) => ({
+          subdomain: String(r['subdomain'] || '').toLowerCase().trim(),
+          total: parseNum(r['total invoices']),
+        }))
+        .filter((r) => r.subdomain && r.total != null);
+    }
+    return { source: VERIFIED_2026_MONTHLY, monthData };
+  }
+  if (fs.existsSync(VERIFIED_2026_MAY_FALLBACK)) {
+    // Legacy fallback — single-tab May-only file
+    const wb = XLSX.read(fs.readFileSync(VERIFIED_2026_MAY_FALLBACK), { type: 'buffer' });
+    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: null });
+    return {
+      source: VERIFIED_2026_MAY_FALLBACK,
+      monthData: {
+        '2026-05': rows
+          .map((r) => ({ subdomain: String(r['subdomain'] || '').toLowerCase().trim(), total: parseNum(r['total invoices']) }))
+          .filter((r) => r.subdomain && r.total != null),
+      },
+    };
+  }
+  return null;
+}
+
+let supplementReplaced = 0;
 let supplementUnmatched = 0;
 const supplementUnmatchedExamples = [];
 try {
-  if (fs.existsSync(MAY_2026_SUPPLEMENT)) {
-    const supWb = XLSX.read(fs.readFileSync(MAY_2026_SUPPLEMENT), { type: 'buffer' });
-    const supSheetName = supWb.SheetNames[0];
-    const supRows = XLSX.utils.sheet_to_json(supWb.Sheets[supSheetName], { defval: null });
-    // Index existing byCustomer by subdomain for lookup
+  const sup = readMonthlySupplement();
+  if (sup) {
+    const monthKeys = Object.keys(sup.monthData).sort();
+    console.log(`2026 monthly supplement: ${path.basename(sup.source)} (${monthKeys.length} months: ${monthKeys.join(', ')})`);
     const customerBySubdomain = new Map();
     for (const c of byCustomer.values()) {
       if (c.subdomain) customerBySubdomain.set(String(c.subdomain).toLowerCase(), c);
     }
-    for (const row of supRows) {
-      const subdomain = String(row['subdomain'] || '').toLowerCase().trim();
-      const total = parseNum(row['total invoices']);
-      if (!subdomain || total <= 0) continue;
+    // For each customer that appears in ANY month tab, sum their values and
+    // populate the monthly + yearly fields. Authoritative — replaces Raw Data.
+    const perCustomer = new Map(); // subdomain → { months: {key: $}, total: sum }
+    for (const monthKey of monthKeys) {
+      for (const r of sup.monthData[monthKey]) {
+        if (!perCustomer.has(r.subdomain)) perCustomer.set(r.subdomain, { months: {}, total: 0 });
+        const entry = perCustomer.get(r.subdomain);
+        entry.months[monthKey] = Math.round(r.total * 100) / 100;
+        entry.total += r.total;
+      }
+    }
+    for (const [subdomain, entry] of perCustomer) {
       const c = customerBySubdomain.get(subdomain);
       if (!c) {
         supplementUnmatched++;
-        if (supplementUnmatchedExamples.length < 5) supplementUnmatchedExamples.push(`${subdomain} ($${Math.round(total).toLocaleString()})`);
+        if (supplementUnmatchedExamples.length < 5) supplementUnmatchedExamples.push(`${subdomain} ($${Math.round(entry.total).toLocaleString()})`);
         continue;
       }
-      // Record the per-month value for traceability
+      // Populate per-month traceability
       if (!c.monthly_supplement) c.monthly_supplement = {};
-      c.monthly_supplement[MAY_2026_MONTH] = Math.round(total * 100) / 100;
-      // Only fill the MA cell when 2026 is missing — don't overwrite real MA data
-      const existing = c.monthly_avg[currentYearStr] || 0;
-      if (existing === 0) {
-        c.monthly_avg[currentYearStr] = Math.round(total * 100) / 100;
-        c.monthly_avg_source_current_year = 'may_2026_supplement';
-        supplementFilled++;
-      } else {
-        supplementOverridden++; // already had MA data; supplement skipped
-      }
+      Object.assign(c.monthly_supplement, entry.months);
+      // Replace 2026 yearly total with supplement sum (authoritative)
+      if (!c.years[VERIFIED_2026_YEAR]) c.years[VERIFIED_2026_YEAR] = { order_count: 0, total_usd: 0, subtotal_usd: 0, b2b_subtotal_usd: 0 };
+      const prevTotal = c.years[VERIFIED_2026_YEAR].total_usd || 0;
+      c.years[VERIFIED_2026_YEAR].total_usd = Math.round(entry.total * 100) / 100;
+      c.years[VERIFIED_2026_YEAR].subtotal_usd = Math.round(entry.total * 100) / 100;
+      c.total_lifetime_usd += (entry.total - prevTotal);
+      // Set monthly_avg_current_year = sum / months_loaded
+      const monthsLoaded = Object.keys(entry.months).length;
+      c.monthly_avg[currentYearStr] = monthsLoaded > 0
+        ? Math.round((entry.total / monthsLoaded) * 100) / 100
+        : c.monthly_avg[currentYearStr] || 0;
+      c.monthly_avg_source_current_year = 'verified_orders_2026_monthly';
+      supplementReplaced++;
     }
-    console.log(`May 2026 supplement: ${supplementFilled} customers filled · ${supplementOverridden} skipped (already had MA) · ${supplementUnmatched} unmatched subdomains`);
+    console.log(`  ${supplementReplaced} customers updated · ${supplementUnmatched} unmatched subdomains`);
     if (supplementUnmatchedExamples.length > 0) {
       console.log(`  Unmatched examples: ${supplementUnmatchedExamples.join(', ')}`);
     }
+  } else {
+    console.log('No 2026 monthly supplement file found — using Raw Data 2026 values as-is.');
   }
 } catch (err) {
-  console.warn(`May 2026 supplement load failed: ${err.message}`);
+  console.warn(`2026 monthly supplement load failed: ${err.message}`);
 }
 
 // ============================================================================

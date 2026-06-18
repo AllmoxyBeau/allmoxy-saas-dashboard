@@ -797,12 +797,27 @@ export default function CustomerDetail() {
             const ovByCustomer = (ordersVerifiedData as unknown as { by_customer?: Record<string, OrdersVerifiedRecord> } | undefined)?.by_customer;
             const ov = ovByCustomer?.[String(selected.allmoxy_customer_id)];
             if (!ov || !ov.years) return null;
+            // Year rows for the chart. The current year is partial — we have
+            // YTD data through whichever month was last refreshed. We compute
+            // an annualized projection (YTD × 12 / months_loaded) so the user
+            // can compare 2026 apples-to-apples with prior full years.
+            const currentYear = new Date().getFullYear();
+            const monthsLoaded = Object.keys(ov.monthly_supplement || {}).length;
             const yearRows = Object.entries(ov.years)
-              .map(([year, y]) => ({
-                year,
-                order_count: y.order_count || 0,
-                total_usd: y.total_usd || 0,
-              }))
+              .map(([year, y]) => {
+                const isCurrentYear = Number(year) === currentYear;
+                const total = y.total_usd || 0;
+                const annualized = isCurrentYear && monthsLoaded > 0 && monthsLoaded < 12
+                  ? Math.round((total * 12 / monthsLoaded) * 100) / 100
+                  : total;
+                return {
+                  year,
+                  order_count: y.order_count || 0,
+                  total_usd: total,
+                  annualized,
+                  is_partial: isCurrentYear && monthsLoaded < 12,
+                };
+              })
               .filter((r) => r.order_count > 0 || r.total_usd > 0)
               .sort((a, b) => a.year.localeCompare(b.year));
             if (yearRows.length === 0) return null;
@@ -816,6 +831,13 @@ export default function CustomerDetail() {
                 : (yoyPct >= 0 ? '+' : '') + Math.round(yoyPct * 100) + '%';
             const curMA = ov.monthly_avg_current_year || 0;
             const prevMA = ov.monthly_avg_prior_year || 0;
+            // The annualized callout — only meaningful when we have a partial
+            // current year AND a prior year to compare against
+            const currentYearRow = yearRows.find((r) => Number(r.year) === currentYear);
+            const priorYearRow = yearRows.find((r) => Number(r.year) === currentYear - 1);
+            const annualizedDiffPct = currentYearRow?.is_partial && priorYearRow && priorYearRow.total_usd > 0
+              ? Math.round(((currentYearRow.annualized - priorYearRow.total_usd) / priorYearRow.total_usd) * 100)
+              : null;
             return (
               <Paper sx={{ p: 3, mb: 3 }}>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
@@ -830,6 +852,61 @@ export default function CustomerDetail() {
                     </>
                   } />
                 </Stack>
+                {/* Annualized callout — shown when current year is partial.
+                    Lets the user compare apples-to-apples with prior full years. */}
+                {currentYearRow?.is_partial && (
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 1.5,
+                      mb: 2,
+                      borderColor: 'primary.main',
+                      borderLeftWidth: 3,
+                      borderLeftStyle: 'solid',
+                      bgcolor: 'rgba(44, 115, 255, 0.04)',
+                    }}
+                  >
+                    <Stack direction="row" spacing={3} alignItems="center" flexWrap="wrap" useFlexGap>
+                      <Box>
+                        <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>
+                          {currentYear} YTD ({monthsLoaded}mo) annualized
+                        </Typography>
+                        <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main', lineHeight: 1.2 }}>
+                          {USD0.format(currentYearRow.annualized)}
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: 10 }}>
+                          actual YTD: {USD0.format(currentYearRow.total_usd)}
+                        </Typography>
+                      </Box>
+                      {priorYearRow && (
+                        <Box>
+                          <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>
+                            vs {currentYear - 1} actual
+                          </Typography>
+                          <Typography variant="h6" sx={{ fontWeight: 500, lineHeight: 1.2 }}>
+                            {USD0.format(priorYearRow.total_usd)}
+                          </Typography>
+                          {annualizedDiffPct != null && (
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                color: annualizedDiffPct >= 0 ? 'success.main' : 'error.main',
+                                fontWeight: 600,
+                                fontSize: 11,
+                              }}
+                            >
+                              {annualizedDiffPct >= 0 ? '+' : ''}{annualizedDiffPct}% if pace holds
+                            </Typography>
+                          )}
+                        </Box>
+                      )}
+                      <Box sx={{ flexGrow: 1 }} />
+                      <Typography variant="caption" sx={{ color: 'text.secondary', fontStyle: 'italic', fontSize: 10.5, maxWidth: 280 }}>
+                        Annualized = YTD ÷ {monthsLoaded} × 12. The lighter bar on the chart shows where {currentYear} would land if this pace continued.
+                      </Typography>
+                    </Stack>
+                  </Paper>
+                )}
                 <Stack direction="row" spacing={3} sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
                   <MetaBit label="Lifetime orders" value={lifetimeOrders.toLocaleString()} />
                   <MetaBit label="Lifetime invoice $" value={USD0.format(lifetimeUsd)} />
@@ -853,7 +930,7 @@ export default function CustomerDetail() {
                       <YAxis yAxisId="right" orientation="right" stroke="#8B949E" fontSize={11} width={45} tickFormatter={(v) => Number(v).toLocaleString()} />
                       <RTooltip
                         formatter={(v: number, name: string) => {
-                          if (name === 'Invoice $') return [USD0.format(v), name];
+                          if (name === 'Invoice $' || name === 'Annualized (projected)') return [USD0.format(v), name];
                           return [Number(v).toLocaleString(), name];
                         }}
                         contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }}
@@ -862,7 +939,22 @@ export default function CustomerDetail() {
                         cursor={{ fill: 'rgba(44, 115, 255, 0.06)' }}
                       />
                       <Legend wrapperStyle={{ fontSize: 11, color: '#8B949E' }} />
-                      <Bar yAxisId="left" name="Invoice $" dataKey="total_usd" fill="#2C73FF" />
+                      <Bar yAxisId="left" name="Invoice $" dataKey="total_usd" stackId="annualized" fill="#2C73FF" />
+                      {currentYearRow?.is_partial && (
+                        <Bar
+                          yAxisId="left"
+                          name="Annualized (projected)"
+                          dataKey={(d: { year: string; annualized: number; total_usd: number }) =>
+                            d.year === String(currentYear) ? Math.max(0, d.annualized - d.total_usd) : 0
+                          }
+                          stackId="annualized"
+                          fill="#2C73FF"
+                          fillOpacity={0.25}
+                          stroke="#2C73FF"
+                          strokeOpacity={0.4}
+                          strokeDasharray="3 3"
+                        />
+                      )}
                       <Line yAxisId="right" name="Order count" type="monotone" dataKey="order_count" stroke="#F59E0B" strokeWidth={2} dot={{ r: 3, fill: '#F59E0B' }} />
                     </ComposedChart>
                   </ResponsiveContainer>
