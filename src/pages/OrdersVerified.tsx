@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -16,6 +17,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import TablePagination from '@mui/material/TablePagination';
 import Skeleton from '@mui/material/Skeleton';
 import Alert from '@mui/material/Alert';
+import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend } from 'recharts';
 import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
 import CustomerLink from '../components/common/CustomerLink';
@@ -84,6 +86,7 @@ type Row = {
   yoy_pct: number | null;
   months_loaded: number;           // how many months of current-year data exist
   current_mrr: number;
+  years_by_total: Record<string, { order_count: number; total_usd: number }>;
 };
 
 type SortKey =
@@ -167,6 +170,7 @@ export default function OrdersVerified() {
         yoy_pct: ov.monthly_avg_yoy_pct,
         months_loaded: monthsLoaded,
         current_mrr: profile?.current_subscription_mrr || 0,
+        years_by_total: ov.years || {},
       });
     }
     return rows;
@@ -233,8 +237,74 @@ export default function OrdersVerified() {
     const totalAnnualized = filtered.reduce((s, r) => s + r.current_year_annualized, 0);
     const totalPriorYear = filtered.reduce((s, r) => s + r.prior_year_usd, 0);
     const totalLifetime = filtered.reduce((s, r) => s + r.lifetime_usd, 0);
+    const totalLifetimeOrders = filtered.reduce((s, r) => s + r.lifetime_orders, 0);
+    const totalMrr = filtered.reduce((s, r) => s + r.current_mrr, 0);
     const launchedCount = filtered.filter((r) => r.live_date).length;
-    return { count: filtered.length, totalAnnualized, totalPriorYear, totalLifetime, launchedCount };
+    const growingCount = filtered.filter((r) => r.yoy_pct != null && r.yoy_pct > 0).length;
+    const decliningCount = filtered.filter((r) => r.yoy_pct != null && r.yoy_pct < 0).length;
+    const yoyPct = totalPriorYear > 0
+      ? (totalAnnualized - totalPriorYear) / totalPriorYear
+      : null;
+    return {
+      count: filtered.length,
+      totalAnnualized,
+      totalPriorYear,
+      totalLifetime,
+      totalLifetimeOrders,
+      totalMrr,
+      launchedCount,
+      growingCount,
+      decliningCount,
+      yoyPct,
+    };
+  }, [filtered]);
+
+  // Build year-over-year chart data — aggregate each customer's per-year
+  // total across the filtered set. Current year's bar shows actual YTD plus
+  // a translucent "if pace continues" annualized projection on top.
+  const yearlyChart = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    const totals = new Map<string, { total_usd: number; orders: number; active_customers: number }>();
+    for (const r of filtered) {
+      for (const [year, y] of Object.entries(r.years_by_total)) {
+        const orderCount = y.order_count || 0;
+        const usd = y.total_usd || 0;
+        if (orderCount === 0 && usd === 0) continue;
+        if (!totals.has(year)) totals.set(year, { total_usd: 0, orders: 0, active_customers: 0 });
+        const e = totals.get(year)!;
+        e.total_usd += usd;
+        e.orders += orderCount;
+        e.active_customers += 1;
+      }
+    }
+    // Compute current-year annualized projection diff for the stacked bar
+    return [...totals.entries()]
+      .map(([year, v]) => {
+        const isCurrent = Number(year) === currentYear;
+        // Find avg months loaded across filtered customers contributing to this year
+        let monthsLoadedAvg = 12;
+        if (isCurrent) {
+          const monthsLoadedList = filtered
+            .filter((r) => (r.years_by_total[year]?.total_usd || 0) > 0)
+            .map((r) => r.months_loaded || 0)
+            .filter((m) => m > 0);
+          if (monthsLoadedList.length > 0) {
+            monthsLoadedAvg = monthsLoadedList.reduce((a, b) => a + b, 0) / monthsLoadedList.length;
+          }
+        }
+        const annualized = isCurrent && monthsLoadedAvg > 0 && monthsLoadedAvg < 12
+          ? (v.total_usd * 12) / monthsLoadedAvg
+          : v.total_usd;
+        return {
+          year,
+          actual_usd: Math.round(v.total_usd * 100) / 100,
+          projected_extra: Math.round(Math.max(0, annualized - v.total_usd) * 100) / 100,
+          orders: v.orders,
+          active_customers: v.active_customers,
+          is_partial: isCurrent && monthsLoadedAvg < 12,
+        };
+      })
+      .sort((a, b) => a.year.localeCompare(b.year));
   }, [filtered]);
 
   const csvColumns = useMemo(
@@ -271,31 +341,107 @@ export default function OrdersVerified() {
 
       {ordersError && <Alert severity="error" sx={{ mb: 2 }}>Failed to load orders_verified: {String(ordersError)}</Alert>}
 
-      {/* Summary strip */}
-      <Paper sx={{ p: 2, mb: 2 }}>
-        <Stack direction="row" spacing={4} alignItems="center" flexWrap="wrap" useFlexGap>
-          <Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5 }}>Customers</Typography>
-            <Typography variant="h6" sx={{ fontWeight: 500 }}>
-              {summary.count.toLocaleString()}
-              <Box component="span" sx={{ fontSize: 12, color: 'text.secondary', fontWeight: 400, ml: 0.5 }}>· {summary.launchedCount} launched</Box>
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5 }}>YTD annualized $</Typography>
-            <Typography variant="h6" sx={{ fontWeight: 500 }}>{USD_COMPACT.format(summary.totalAnnualized)}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5 }}>Prior year $</Typography>
-            <Typography variant="h6" sx={{ fontWeight: 500 }}>{USD_COMPACT.format(summary.totalPriorYear)}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5 }}>Lifetime $</Typography>
-            <Typography variant="h6" sx={{ fontWeight: 500 }}>{USD_COMPACT.format(summary.totalLifetime)}</Typography>
-          </Box>
-          <Box sx={{ flexGrow: 1 }} />
-          <CsvExportButton filename="orders_verified.csv" rows={sorted} columns={csvColumns} />
+      {/* Metric cards — KPI tiles for the filtered customer set */}
+      <Grid container spacing={2} sx={{ mb: 2 }} alignItems="stretch">
+        <Grid item xs={12} sm={6} md={2.4} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1 }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Customers</Typography>
+            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
+              <>
+                <Typography variant="h5" sx={{ fontWeight: 500 }}>{summary.count.toLocaleString()}</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{summary.launchedCount} launched · {USD0.format(summary.totalMrr)}/mo MRR</Typography>
+              </>
+            )}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1, borderLeft: '3px solid', borderColor: 'primary.main' }}>
+            <Stack direction="row" spacing={0.5} alignItems="center">
+              <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>YTD annualized</Typography>
+              <InfoIcon info="Sum of every filtered customer's current-year invoiced $ multiplied by (12 / months loaded). Apples-to-apples comparison with prior year total." />
+            </Stack>
+            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
+              <>
+                <Typography variant="h5" sx={{ fontWeight: 500, color: 'primary.main' }}>{USD_COMPACT.format(summary.totalAnnualized)}</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>Prior year: {USD_COMPACT.format(summary.totalPriorYear)}</Typography>
+              </>
+            )}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1, borderLeft: '3px solid', borderColor: summary.yoyPct != null && summary.yoyPct >= 0 ? 'success.main' : 'error.main' }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>YoY (cohort)</Typography>
+            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
+              <>
+                <Typography variant="h5" sx={{ fontWeight: 500, color: summary.yoyPct != null && summary.yoyPct >= 0 ? 'success.main' : 'error.main' }}>
+                  {summary.yoyPct == null ? '—' : `${summary.yoyPct >= 0 ? '+' : ''}${Math.round(summary.yoyPct * 100)}%`}
+                </Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{summary.growingCount} growing · {summary.decliningCount} declining</Typography>
+              </>
+            )}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1 }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Lifetime invoiced</Typography>
+            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
+              <>
+                <Typography variant="h5" sx={{ fontWeight: 500 }}>{USD_COMPACT.format(summary.totalLifetime)}</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{summary.totalLifetimeOrders.toLocaleString()} orders all-time</Typography>
+              </>
+            )}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Export</Typography>
+            <Box>
+              <CsvExportButton filename="orders_verified.csv" rows={sorted} columns={csvColumns} />
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+
+      {/* Yearly trend chart — aggregate of filtered customers' per-year invoiced $ */}
+      <Paper sx={{ p: 3, mb: 2 }}>
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>Yearly invoice $ — across {summary.count.toLocaleString()} filtered customer{summary.count === 1 ? '' : 's'}</Typography>
+          <InfoIcon info={
+            <>
+              <strong>What it is:</strong> Aggregate invoiced $ across all customers matching the current filters, by year.<br /><br />
+              <strong>Current year:</strong> the lighter top portion of the bar is the annualized projection (if YTD pace held for the full year). Line shows the count of customers active that year.<br /><br />
+              <strong>Filters:</strong> change segment/status above to compare cohorts side-by-side.
+            </>
+          } />
         </Stack>
+        {isLoading ? <Skeleton variant="rectangular" height={300} /> : yearlyChart.length === 0 ? (
+          <Typography variant="body2" sx={{ color: 'text.secondary', py: 4, textAlign: 'center' }}>No verified order data for the current filter.</Typography>
+        ) : (
+          <Box sx={{ height: 300 }}>
+            <ResponsiveContainer>
+              <ComposedChart data={yearlyChart} margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
+                <XAxis dataKey="year" stroke="#8B949E" fontSize={11} />
+                <YAxis yAxisId="left" stroke="#8B949E" fontSize={11} width={70} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                <YAxis yAxisId="right" orientation="right" stroke="#8B949E" fontSize={11} width={50} tickFormatter={(v) => Number(v).toLocaleString()} />
+                <RTooltip
+                  formatter={(v: number, name: string) => {
+                    if (name === 'Invoiced $' || name === 'Annualized (projected)') return [USD0.format(v), name];
+                    return [Number(v).toLocaleString(), name];
+                  }}
+                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }}
+                  labelStyle={{ color: '#FFFFFF' }}
+                  itemStyle={{ color: '#FFFFFF' }}
+                  cursor={{ fill: 'rgba(44, 115, 255, 0.06)' }}
+                />
+                <Legend wrapperStyle={{ fontSize: 11, color: '#8B949E' }} />
+                <Bar yAxisId="left" name="Invoiced $" dataKey="actual_usd" stackId="yr" fill="#2C73FF" />
+                <Bar yAxisId="left" name="Annualized (projected)" dataKey="projected_extra" stackId="yr" fill="#2C73FF" fillOpacity={0.25} stroke="#2C73FF" strokeOpacity={0.4} strokeDasharray="3 3" />
+                <Line yAxisId="right" name="Active customers" type="monotone" dataKey="active_customers" stroke="#F59E0B" strokeWidth={2} dot={{ r: 3, fill: '#F59E0B' }} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </Box>
+        )}
       </Paper>
 
       {/* Filters */}
