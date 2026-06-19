@@ -1,12 +1,12 @@
 {
-  "fetched_at": "2026-06-19T19:00:32.408Z",
+  "fetched_at": "2026-06-19T19:26:16.061Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "by_category": {
       "annual_payer_flag": 2,
       "amortization": 1,
       "variance": 3,
-      "reclassification": 1,
+      "reclassification": 2,
       "hygiene_stripe_id": 2,
       "synthetic_transaction": 1,
       "status_override": 16,
@@ -14,10 +14,10 @@
       "never_paid_classification": 1
     },
     "by_severity": {
-      "monetary": 24,
+      "monetary": 25,
       "hygiene": 4
     },
-    "total": 28
+    "total": 29
   },
   "adjustments": [
     {
@@ -130,7 +130,23 @@
       "reason": "Reclassified from subscription → services: Allmoxy Migration Project Invoice 5880 — Panhandle's one-off services project invoice. Two source-data issues to undo: (1) Stripe Sync's auto-classifier types it 'subscription' because the description doesn't contain 'services' (formula keyword match); (2) the latest Stripe Sync upload assigns it to allmoxy_customer_id 2018 (Stolbek) — sharing Stolbek's stripe_subscription_id sub_1T46pXHkM2QhTtxhSjowP9Pa — even though QuickBooks (and Beau, repeatedly) attribute the charge to Panhandle. Override moves the transaction back to Panhandle id 38 AND retypes it as services. Without this fix, Stolbek shows incorrectly as Contracted -$7,568 on Current Month (cluster matcher groups all of Stolbek's same-sub_id charges together). (transaction also moved from source customer Stolbek #2018)",
       "evidence": null,
       "source_file": "_etl_scripts/transaction_overrides.json",
-      "added_by": "updated_at 2026-04-30"
+      "added_by": "updated_at 2026-06-19"
+    },
+    {
+      "id": "reclassification-97-2026-05-2026-05-19",
+      "category": "reclassification",
+      "severity": "monetary",
+      "customer_name": "M2M components",
+      "customer_id": 97,
+      "period": "2026-05",
+      "txn_date": "2026-05-19",
+      "before": 1343,
+      "after": 1343,
+      "delta": 0,
+      "reason": "Reclassified from subscription → subscription: Invoice 5D66E5C-0014 — M2M components' May 2026 subscription charge. Stripe Sync attached this charge to Adentra (aid 2032) because at Stripe it was recorded against sub_1SfpdpHkM2QhTtxhvL2gCCn3 (Adentra's subscription). But all the evidence — invoice prefix `5D66E5C-` matches M2M's series (sequential between -0013 Apr and -0015 Jun), amount $1,343 matches M2M's exact MRR, date 5/19 fits M2M's 19th-of-month cadence — confirms this belongs on M2M. Adentra's normal pattern is $200/mo on the 18th (invoice prefix `RUECNDQP-`); the $1,343 was the only outlier on their ledger. Without this fix, M2M is missing a May payment and Adentra shows a false contraction (May $1,343 → June $200). (transaction also moved from source customer Adentra #2032)",
+      "evidence": null,
+      "source_file": "_etl_scripts/transaction_overrides.json",
+      "added_by": "updated_at 2026-06-19"
     },
     {
       "id": "hygiene-stripe-2060",
