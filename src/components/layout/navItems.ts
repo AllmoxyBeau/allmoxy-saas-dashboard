@@ -56,6 +56,9 @@ export const NAV_ENTRIES: NavEntry[] = [
       { label: 'Logo Waterfall', path: '/logo-waterfall' },
       { label: 'Cohort Retention', path: '/cohort-retention' },
       { label: 'Net Revenue Retention', path: '/net-revenue-retention' },
+      { label: 'Stripe Connect Revenue', path: '/stripe-connect-revenue' },
+      { label: 'Services', path: '/services' },
+      { label: 'Renewal Management', path: '/renewal-management' },
     ],
   },
   {
@@ -83,6 +86,14 @@ export const NAV_ENTRIES: NavEntry[] = [
   // present but NavTabs filters them out at render time when the user has
   // toggled "View as CS Rep" — see useViewMode() in src/config/features.ts.
   ...(SHOW_FINANCIAL_TABS_BUILD_FLAG ? FINANCIAL_GROUPS : []),
+  // Maintenance is always the last tab — admin-style data hygiene work that
+  // shouldn't lead the nav but should be reachable from anywhere.
+  {
+    label: 'Maintenance',
+    items: [
+      { label: 'Data Cleanup', path: '/data-cleanup' },
+    ],
+  },
 ];
 
 // Legacy flat list for any consumer that still expects it.

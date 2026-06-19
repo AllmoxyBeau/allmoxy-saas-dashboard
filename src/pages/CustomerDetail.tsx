@@ -14,6 +14,7 @@ import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ResponsiveContainer, BarChart, Bar, ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend } from 'recharts';
@@ -21,6 +22,8 @@ import { ResponsiveContainer, BarChart, Bar, ComposedChart, Line, XAxis, YAxis, 
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
+import HealthScoreInfo from '../components/common/HealthScoreInfo';
+import RenewalPanelContent, { type RenewalPanelRow } from '../components/common/RenewalPanelContent';
 import { useSheetTab } from '../hooks/useSheetTab';
 import { hubspotCompanyUrl } from '../lib/hubspot';
 import annualPayersConfig from '../data/annual_payer_ids.json';
@@ -115,8 +118,10 @@ type ChurnSubpatternsSnap = {
 
 // public/snapshots/orders_verified.json — per-customer year-level verified
 // order counts + invoice $. One record per customer keyed by allmoxy_customer_id.
+// order_count is null for 2026 (source xlsx has $ only). See memory:
+// 2026-order-counts-unavailable.
 type OrdersVerifiedYear = {
-  order_count: number;
+  order_count: number | null;
   total_usd: number;
   subtotal_usd?: number;
   b2b_subtotal_usd?: number;
@@ -264,11 +269,15 @@ export default function CustomerDetail() {
   // Verified orders — per-customer year-level order counts + invoice $. Used
   // for the "Orders Verified Trends" chart under the monthly revenue timeline.
   const { data: ordersVerifiedData } = useSheetTab('orders_verified');
+  // Renewal management — per-Instance renewal date, contract, cost-ratio
+  // trend, action tag. One renewal row per HubSpot Instance; joined to this
+  // customer via allmoxy_customer_id.
+  const { data: renewalData } = useSheetTab('renewal_management');
   const snap = data as unknown as { rows: CustomerProfile[] } | undefined;
   const cohort = cohortData as unknown as CohortSnap | undefined;
   const inferences = inferencesData as unknown as ChurnInferencesSnap | undefined;
   const subpatterns = subpatternsData as unknown as ChurnSubpatternsSnap | undefined;
-  const risk = riskData as unknown as { customers: Array<{ allmoxy_customer_id: number; tier: string; total_score: number; signal_1_orders: number; signal_2_launch: number; signal_3_recency: number; signal_4_risk: number; signal_5_tenure: number; orders_detail: string; signal_2_detail?: string; days_since_last_contact: number | null; launch_status: string; is_launched: boolean; live_date: string | null; orders_monthly_avg_current: number; orders_monthly_avg_prior: number; orders_yoy_pct: number | null; arr_at_risk: number; narrative: string; is_bid_only?: boolean }> } | undefined;
+  const risk = riskData as unknown as { customers: Array<{ allmoxy_customer_id: number; tier: string; total_score: number; signal_1_orders: number; signal_2_launch: number; signal_3_recency: number; signal_4_risk: number; signal_5_tenure: number; signal_6_pulse?: number; pulse_color?: 'green' | 'yellow' | 'red' | null; pulse_label?: string; pulse_detail?: string | null; orders_detail: string; signal_2_detail?: string; days_since_last_contact: number | null; launch_status: string; is_launched: boolean; live_date: string | null; orders_monthly_avg_current: number; orders_monthly_avg_prior: number; orders_yoy_pct: number | null; arr_at_risk: number; narrative: string; is_bid_only?: boolean }> } | undefined;
 
   const [pending, setPending] = useState<PendingMap>(() => readPending());
   const [bidOnlyMap, setBidOnlyMap] = useState<BidOnlyMap>(() => readBidOnly());
@@ -277,6 +286,10 @@ export default function CustomerDetail() {
   // the "Update" UI surfaces a "Pending" chip so the user knows it hasn't landed yet.
   const [churnOverrides, setChurnOverrides] = useState<ChurnOverrideMap>(() => readChurnOverrides());
   const [txnExpanded, setTxnExpanded] = useState(false);
+  // Renewal panel — expanded by default. Reuses the same expansion content
+  // from the Renewal Management page, surfaced inline on Customer Detail so
+  // the renewal context is visible immediately on any customer view.
+  const [renewalExpanded, setRenewalExpanded] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const customers = snap?.rows ?? [];
@@ -445,61 +458,122 @@ export default function CustomerDetail() {
         <>
           {/* Identity card */}
           <Paper sx={{ p: 3, mb: 3 }}>
-            <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} justifyContent="space-between" alignItems={{ xs: 'flex-start', md: 'center' }}>
-              <Stack>
-                <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                  {selected.name}
-                </Typography>
-                <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
-                  <MetaBit label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
-                  <MetaBit label="First payment" value={formatDateMDY(selected.first_payment_date)} />
-                  <MetaBit label="Last payment" value={formatDateMDY(selected.last_payment_date)} />
-                  <MetaBit label="Tenure" value={selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)} yrs` : '—'} />
-                  <MetaBit label="Cohort" value={selected.cohort_year != null ? String(selected.cohort_year) : '—'} />
-                  <MetaBit label="Transactions" value={selected.transaction_count.toLocaleString()} />
-                  <MetaBit label="Stripe fee %" value={selected.stripe_fee_percent != null ? `${selected.stripe_fee_percent.toFixed(2)}%` : '—'} />
+            {/* Top row: name on left, status cluster on right. Identity-level
+                signals only — meta fields live in the grouped sections below. */}
+            <Stack
+              direction={{ xs: 'column', md: 'row' }}
+              spacing={2}
+              justifyContent="space-between"
+              alignItems={{ xs: 'flex-start', md: 'flex-start' }}
+            >
+              <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                {selected.name}
+              </Typography>
+              <Stack direction="column" spacing={1} alignItems={{ xs: 'flex-start', md: 'flex-end' }}>
+                <Chip
+                  label={statusChipProps(selected.status).label}
+                  sx={{
+                    bgcolor: statusChipProps(selected.status).bgcolor,
+                    color: statusChipProps(selected.status).color,
+                    fontWeight: 500,
+                  }}
+                />
+                {selectedIsAnnual && (
+                  <Chip
+                    label={selectedIsPending ? 'Annual payer (pending)' : 'Annual payer · amortized'}
+                    size="small"
+                    sx={{
+                      bgcolor: selectedIsPending ? 'rgba(245, 158, 11, 0.18)' : 'rgba(44, 115, 255, 0.18)',
+                      color: selectedIsPending ? 'warning.main' : 'primary.main',
+                      fontWeight: 500,
+                    }}
+                  />
+                )}
+                <Stack direction="row" spacing={0.5} alignItems="center">
+                  <FormControlLabel
+                    sx={{ m: 0 }}
+                    control={
+                      <Switch
+                        size="small"
+                        checked={selectedIsAnnual}
+                        onChange={(_, v) => toggleAnnual(v)}
+                      />
+                    }
+                    label={
+                      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                        Annual payer
+                      </Typography>
+                    }
+                  />
+                  <InfoIcon info={<><strong>What it does:</strong> Flags this customer as paying annually upfront. The snapshot builder amortizes their large annual payment as amount/12 across the 12 months starting the payment date, so monthly MRR doesn't spike.<br /><br /><strong>Pending changes</strong> live in your browser until Claude rebuilds snapshots — once applied, this chip turns blue.</>} />
                 </Stack>
-                {/* HubSpot Instance Sync Sheet — only render when at least one field is populated.
-                    Churn reason is shown in its own "Churn analysis" panel below, so it isn't
-                    duplicated here. */}
-                {(() => {
-                  const accountRep =
-                    selected.instance_owner_first_name?.trim() ||
-                    selected.instance_owner?.trim() ||
-                    selected.hubspot_owner_name?.trim() ||
-                    null;
-                  const hasAny = selected.primary_segment || selected.pay_status || selected.contract_status || accountRep;
-                  if (!hasAny) return null;
-                  return (
-                    <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
-                      {accountRep && <MetaBit label="Account rep" value={accountRep} />}
-                      {selected.primary_segment && <MetaBit label="Segment" value={selected.primary_segment} />}
-                      {selected.pay_status && <MetaBit label="Pay status" value={selected.pay_status} />}
-                      {selected.contract_status && <MetaBit label="Contract" value={selected.contract_status} />}
-                    </Stack>
-                  );
-                })()}
-                {/* External links — instance URL, HubSpot, and ALL Stripe IDs */}
-                {(() => {
-                  // Collect every distinct sub_id we know about (primary + secondary
-                  // instances + custom domains). De-dupe in case primary_id appears
-                  // in the all-list too. Mark the custom-domain ones for visual emphasis.
-                  const customDomainSet = new Set(selected.all_custom_domain_stripe_subscription_ids ?? []);
-                  if (selected.custom_domain_stripe_subscription_id) customDomainSet.add(selected.custom_domain_stripe_subscription_id);
-                  const allSubsSet = new Set([
-                    ...(selected.all_stripe_subscription_ids ?? []),
-                    ...(selected.stripe_subscription_id ? [selected.stripe_subscription_id] : []),
-                    ...customDomainSet,
-                  ]);
-                  const allSubsList = [...allSubsSet];
-                  const hasAnyExternal =
-                    selected.installer_directory ||
-                    selected.hubspot_company_id ||
-                    selected.stripe_customer_ids.length > 0 ||
-                    allSubsList.length > 0;
-                  if (!hasAnyExternal) return null;
-                  return (
-                    <Stack direction="row" spacing={3} sx={{ mt: 1.5 }} flexWrap="wrap" useFlexGap alignItems="flex-start">
+              </Stack>
+            </Stack>
+
+            {/* Grouped meta sections — labeled subsets instead of one big squished
+                MetaBit row. Each row uses the same MetaBit component so visual
+                language stays consistent with the rest of the page. */}
+            <Stack spacing={2} sx={{ mt: 2.5 }}>
+              <CustomerSection label="Lifecycle">
+                <MetaBit label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
+                <MetaBit label="First payment" value={formatDateMDY(selected.first_payment_date)} />
+                <MetaBit label="Last payment" value={formatDateMDY(selected.last_payment_date)} />
+                <MetaBit label="Tenure" value={selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)} yrs` : '—'} />
+                <MetaBit label="Cohort" value={selected.cohort_year != null ? String(selected.cohort_year) : '—'} />
+              </CustomerSection>
+
+              {(() => {
+                const accountRep =
+                  selected.instance_owner_first_name?.trim() ||
+                  selected.instance_owner?.trim() ||
+                  selected.hubspot_owner_name?.trim() ||
+                  null;
+                const hasAny = selected.primary_segment || selected.pay_status || selected.contract_status || accountRep;
+                if (!hasAny) return null;
+                return (
+                  <CustomerSection label="Account (HubSpot Sync)">
+                    {accountRep && <MetaBit label="Account rep" value={accountRep} />}
+                    {selected.primary_segment && <MetaBit label="Segment" value={selected.primary_segment} />}
+                    {selected.pay_status && <MetaBit label="Pay status" value={selected.pay_status} />}
+                    {selected.contract_status && <MetaBit label="Contract" value={selected.contract_status} />}
+                  </CustomerSection>
+                );
+              })()}
+
+              <CustomerSection label="Billing">
+                <MetaBit label="Transactions" value={selected.transaction_count.toLocaleString()} />
+                <MetaBit label="Stripe fee %" value={selected.stripe_fee_percent != null ? `${selected.stripe_fee_percent.toFixed(2)}%` : '—'} />
+                {selected.failed_3mo_count > 0 && (
+                  <Stack sx={{ alignSelf: 'flex-end' }}>
+                    <Typography variant="caption" sx={{ color: 'error.main', fontWeight: 500 }}>
+                      {selected.failed_3mo_count} failed charge{selected.failed_3mo_count === 1 ? '' : 's'} in last 3 months · {USD0.format(selected.failed_3mo_amount)}
+                    </Typography>
+                  </Stack>
+                )}
+              </CustomerSection>
+
+              {/* Connected accounts — instance URL, HubSpot, and ALL Stripe IDs.
+                  Separated from the meta groups above by a divider so users
+                  visually distinguish "data" from "action links". */}
+              {(() => {
+                const customDomainSet = new Set(selected.all_custom_domain_stripe_subscription_ids ?? []);
+                if (selected.custom_domain_stripe_subscription_id) customDomainSet.add(selected.custom_domain_stripe_subscription_id);
+                const allSubsSet = new Set([
+                  ...(selected.all_stripe_subscription_ids ?? []),
+                  ...(selected.stripe_subscription_id ? [selected.stripe_subscription_id] : []),
+                  ...customDomainSet,
+                ]);
+                const allSubsList = [...allSubsSet];
+                const hasAnyExternal =
+                  selected.installer_directory ||
+                  selected.hubspot_company_id ||
+                  selected.stripe_customer_ids.length > 0 ||
+                  allSubsList.length > 0;
+                if (!hasAnyExternal) return null;
+                return (
+                  <>
+                    <Divider sx={{ my: 0.5 }} />
+                    <CustomerSection label="Connected accounts" gap={3}>
                       {selected.installer_directory && (
                         <ExternalLink
                           label="Allmoxy URL"
@@ -539,64 +613,23 @@ export default function CustomerDetail() {
                           />
                         );
                       })}
-                    </Stack>
-                  );
-                })()}
-                {/* Internal IDs row — below the external links so the eye lands
-                    on the action links first (URL / HubSpot / Stripe) and the
-                    bare identifiers sit below as secondary reference info. */}
-                <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
-                  <MetaBit label="Allmoxy ID" value={String(selected.allmoxy_customer_id)} />
-                  {selected.installer_id && (
-                    <MetaBit label="Installer ID" value={selected.installer_id} />
-                  )}
-                  {selected.installer_directory && (
-                    <MetaBit label="Installer URL" value={selected.installer_directory} />
-                  )}
-                </Stack>
-              </Stack>
-              <Stack direction="column" spacing={1} alignItems={{ xs: 'flex-start', md: 'flex-end' }}>
-                <Chip
-                  label={statusChipProps(selected.status).label}
-                  sx={{
-                    bgcolor: statusChipProps(selected.status).bgcolor,
-                    color: statusChipProps(selected.status).color,
-                    fontWeight: 500,
-                  }}
-                />
-                {selectedIsAnnual && (
-                  <Chip
-                    label={selectedIsPending ? 'Annual payer (pending)' : 'Annual payer · amortized'}
-                    size="small"
-                    sx={{
-                      bgcolor: selectedIsPending ? 'rgba(245, 158, 11, 0.18)' : 'rgba(44, 115, 255, 0.18)',
-                      color: selectedIsPending ? 'warning.main' : 'primary.main',
-                      fontWeight: 500,
-                    }}
-                  />
-                )}
-                <Stack direction="row" spacing={0.5} alignItems="center">
-                  <FormControlLabel
-                    sx={{ m: 0 }}
-                    control={
-                      <Switch
-                        size="small"
-                        checked={selectedIsAnnual}
-                        onChange={(_, v) => toggleAnnual(v)}
-                      />
-                    }
-                    label={
-                      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                        Annual payer
-                      </Typography>
-                    }
-                  />
-                  <InfoIcon info={<><strong>What it does:</strong> Flags this customer as paying annually upfront. The snapshot builder amortizes their large annual payment as amount/12 across the 12 months starting the payment date, so monthly MRR doesn't spike.<br /><br /><strong>Pending changes</strong> live in your browser until Claude rebuilds snapshots — once applied, this chip turns blue.</>} />
-                </Stack>
-                {selected.failed_3mo_count > 0 && (
-                  <Typography variant="caption" sx={{ color: 'error.main' }}>
-                    {selected.failed_3mo_count} failed charge{selected.failed_3mo_count === 1 ? '' : 's'} in last 3 months · {USD0.format(selected.failed_3mo_amount)}
-                  </Typography>
+                    </CustomerSection>
+                  </>
+                );
+              })()}
+
+              {/* Internal IDs strip — secondary reference info, lower visual weight.
+                  Installer URL dropped (redundant with the Allmoxy URL link above). */}
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{ pt: 0.5, opacity: 0.75 }}
+                flexWrap="wrap"
+                useFlexGap
+              >
+                <MetaBit label="Allmoxy ID" value={String(selected.allmoxy_customer_id)} />
+                {selected.installer_id && (
+                  <MetaBit label="Installer ID" value={selected.installer_id} />
                 )}
               </Stack>
             </Stack>
@@ -731,7 +764,10 @@ export default function CustomerDetail() {
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={8} md={9}>
-                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>Signal breakdown</Typography>
+                    <Stack direction="row" spacing={0.5} alignItems="center">
+                      <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>Signal breakdown</Typography>
+                      <HealthScoreInfo />
+                    </Stack>
                     <Box component="table" sx={{ mt: 0.5, width: '100%', borderCollapse: 'collapse', '& td, & th': { borderBottom: '1px solid', borderColor: 'divider', py: 0.5, fontSize: 12, textAlign: 'left' } }}>
                       <tbody>
                         <tr><td>1 · Order Volume</td><td style={{ color: '#6B7280' }}>{riskEntry.orders_detail}</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{riskEntry.signal_1_orders >= 0 ? '+' : ''}{riskEntry.signal_1_orders}</td></tr>
@@ -739,6 +775,34 @@ export default function CustomerDetail() {
                         <tr><td>3 · Engagement Recency</td><td style={{ color: '#6B7280' }}>{riskEntry.days_since_last_contact != null ? `${riskEntry.days_since_last_contact}d since last contact` : 'No HubSpot recency data'}</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{riskEntry.signal_3_recency >= 0 ? '+' : ''}{riskEntry.signal_3_recency}</td></tr>
                         <tr><td>4 · Risk Signals</td><td style={{ color: '#6B7280' }}>{riskEntry.signal_4_risk === 0 ? 'None recorded' : 'See notes scan'}</td><td style={{ textAlign: 'right', fontWeight: 600, color: riskEntry.signal_4_risk < 0 ? '#D63A4D' : undefined }}>{riskEntry.signal_4_risk}</td></tr>
                         <tr><td>5 · Tenure × Launch</td><td style={{ color: '#6B7280' }}>{selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)}y tenure, ${riskEntry.launch_status}` : '—'}</td><td style={{ textAlign: 'right', fontWeight: 600, color: riskEntry.signal_5_tenure < 0 ? '#D63A4D' : undefined }}>{riskEntry.signal_5_tenure}</td></tr>
+                        <tr>
+                          <td>
+                            6 · CS Health Pulse
+                            {riskEntry.pulse_color && (
+                              <Box component="span" sx={{
+                                ml: 0.75,
+                                px: 0.75,
+                                py: 0.1,
+                                fontSize: 10,
+                                fontWeight: 600,
+                                borderRadius: 0.75,
+                                textTransform: 'uppercase',
+                                bgcolor:
+                                  riskEntry.pulse_color === 'green' ? 'rgba(26, 158, 92, 0.18)' :
+                                  riskEntry.pulse_color === 'yellow' ? 'rgba(245, 166, 35, 0.18)' :
+                                  'rgba(214, 58, 77, 0.18)',
+                                color:
+                                  riskEntry.pulse_color === 'green' ? '#1A9E5C' :
+                                  riskEntry.pulse_color === 'yellow' ? '#B07206' :
+                                  '#D63A4D',
+                              }}>{riskEntry.pulse_color}</Box>
+                            )}
+                          </td>
+                          <td style={{ color: '#6B7280' }}>{riskEntry.pulse_detail ?? 'Not set in HubSpot'}</td>
+                          <td style={{ textAlign: 'right', fontWeight: 600, color: (riskEntry.signal_6_pulse ?? 0) < 0 ? '#D63A4D' : undefined }}>
+                            {(riskEntry.signal_6_pulse ?? 0) > 0 ? '+' : ''}{riskEntry.signal_6_pulse ?? 0}
+                          </td>
+                        </tr>
                         <tr><td colSpan={2} style={{ fontWeight: 700, paddingTop: 6 }}>Total</td><td style={{ textAlign: 'right', fontWeight: 700, color: tierColor, paddingTop: 6 }}>{riskEntry.total_score}</td></tr>
                       </tbody>
                     </Box>
@@ -812,13 +876,16 @@ export default function CustomerDetail() {
                   : total;
                 return {
                   year,
-                  order_count: y.order_count || 0,
+                  // Pass null through (vs 0) so Recharts skips the point. 2026
+                  // source xlsx has $ only — no order counts. See memory:
+                  // 2026-order-counts-unavailable.
+                  order_count: y.order_count == null ? null : y.order_count,
                   total_usd: total,
                   annualized,
                   is_partial: isCurrentYear && monthsLoaded < 12,
                 };
               })
-              .filter((r) => r.order_count > 0 || r.total_usd > 0)
+              .filter((r) => (r.order_count ?? 0) > 0 || r.total_usd > 0)
               .sort((a, b) => a.year.localeCompare(b.year));
             if (yearRows.length === 0) return null;
             const lifetimeOrders = ov.total_lifetime_orders || 0;
@@ -960,6 +1027,69 @@ export default function CustomerDetail() {
                   </ResponsiveContainer>
                 </Box>
               </Paper>
+            );
+          })()}
+
+          {/* Renewal — collapsible panel that mirrors what the Renewal
+              Management page shows in its row expansion. One row per HubSpot
+              Instance keyed by allmoxy_customer_id; if a customer has multiple
+              Instances (Production + Sandbox), we surface the Production one
+              by preferring rows that have a renewal date. */}
+          {(() => {
+            const renewalSnap = renewalData as unknown as { rows: Array<RenewalPanelRow & { allmoxy_customer_id: number; account_name: string }> } | undefined;
+            const renewalCandidates = (renewalSnap?.rows ?? []).filter((r) => r.allmoxy_customer_id === selected.allmoxy_customer_id);
+            if (renewalCandidates.length === 0) return null;
+            const renewalRow = renewalCandidates.find((r) => r.renewal_date) ?? renewalCandidates[0];
+            return (
+              <Box sx={{ mt: 3, mb: 3 }}>
+                <Paper
+                  onClick={() => setRenewalExpanded((v) => !v)}
+                  sx={{
+                    p: 2,
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    ...(renewalExpanded && { borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderBottom: 'none' }),
+                  }}
+                  role="button"
+                  aria-expanded={renewalExpanded}
+                  aria-controls="customer-renewal-panel"
+                >
+                  <Stack direction="row" alignItems="center" justifyContent="space-between">
+                    <Box sx={{ minWidth: 0 }}>
+                      <Typography variant="h6" sx={{ fontWeight: 500 }}>
+                        Renewal · {renewalRow.account_name || selected.name}
+                      </Typography>
+                      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                        {renewalRow.renewal_date
+                          ? <>Renews <strong>{renewalRow.renewal_date}</strong>{renewalRow.days_to_renewal != null && ` · ${renewalRow.days_to_renewal >= 0 ? `in ${renewalRow.days_to_renewal}d` : `${Math.abs(renewalRow.days_to_renewal)}d ago`}`} · {renewalRow.action_tag} · Cost ratio {renewalRow.cost_ratio_lifetime_pct != null ? `${renewalRow.cost_ratio_lifetime_pct.toFixed(2)}%` : '—'} lifetime</>
+                          : <>No renewal date in HubSpot · {renewalRow.action_tag} · Cost ratio {renewalRow.cost_ratio_lifetime_pct != null ? `${renewalRow.cost_ratio_lifetime_pct.toFixed(2)}%` : '—'} lifetime</>}
+                      </Typography>
+                    </Box>
+                    <IconButton
+                      size="small"
+                      aria-label={renewalExpanded ? 'Collapse renewal panel' : 'Expand renewal panel'}
+                      onClick={(e) => { e.stopPropagation(); setRenewalExpanded((v) => !v); }}
+                      sx={{ transform: renewalExpanded ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
+                    >
+                      <ExpandMoreIcon />
+                    </IconButton>
+                  </Stack>
+                </Paper>
+                <Collapse in={renewalExpanded}>
+                  <Paper
+                    id="customer-renewal-panel"
+                    sx={{
+                      p: 3,
+                      borderTopLeftRadius: 0,
+                      borderTopRightRadius: 0,
+                      borderTop: '1px dashed',
+                      borderColor: 'divider',
+                    }}
+                  >
+                    <RenewalPanelContent row={renewalRow} />
+                  </Paper>
+                </Collapse>
+              </Box>
             );
           })()}
 
@@ -1112,6 +1242,40 @@ function StatCard({
         {hint}
       </Typography>
     </Paper>
+  );
+}
+
+// Labeled wrapper used by the customer header card to group related MetaBits /
+// ExternalLinks under a small uppercase section heading (Lifecycle / Account /
+// Billing / Connected accounts). Replaces the old "one long flowing row of 14+
+// fields" layout — see CustomerDetail header card.
+function CustomerSection({
+  label,
+  children,
+  gap = 2,
+}: {
+  label: string;
+  children: React.ReactNode;
+  gap?: number;
+}) {
+  return (
+    <Stack spacing={0.75}>
+      <Typography
+        variant="caption"
+        sx={{
+          color: 'text.secondary',
+          fontSize: 10,
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          fontWeight: 600,
+        }}
+      >
+        {label}
+      </Typography>
+      <Stack direction="row" spacing={gap} flexWrap="wrap" useFlexGap>
+        {children}
+      </Stack>
+    </Stack>
   );
 }
 

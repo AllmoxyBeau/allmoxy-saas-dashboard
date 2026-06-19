@@ -82,6 +82,21 @@ const signalsByCustomer = new Map();
 for (const [k, v] of Object.entries(hubspotSignals?.by_customer_id || {})) signalsByCustomer.set(Number(k), v);
 console.log(`HubSpot signals for ${signalsByCustomer.size} customers${signalsByCustomer.size === 0 ? ' — Signals 2-5 will be zeroed' : ''}`);
 
+// ============================================================================
+// CS Health Pulse (Signal 6) — HubSpot Company-level property
+// `customer_health_cs_pulse`. Values are "Green(...)" / "Yellow(...)" / "Red(...)"
+// long-form strings; we extract the leading color word.
+// ============================================================================
+const hubspotCompanies = readJson(path.join(ROOT, '_etl_scripts/cache/hubspot_companies.json'));
+const pulseByCompanyId = new Map(); // hubspot_company_id (string) → 'green'|'yellow'|'red'
+for (const c of hubspotCompanies?.companies || []) {
+  const raw = String(c.customer_health_cs_pulse || '');
+  if (raw.startsWith('Green')) pulseByCompanyId.set(String(c.id), 'green');
+  else if (raw.startsWith('Yellow')) pulseByCompanyId.set(String(c.id), 'yellow');
+  else if (raw.startsWith('Red')) pulseByCompanyId.set(String(c.id), 'red');
+}
+console.log(`CS Health Pulse populated for ${pulseByCompanyId.size} HubSpot companies`);
+
 const today = new Date();
 const currentYear = String(today.getFullYear());
 const priorYear = String(today.getFullYear() - 1);
@@ -96,13 +111,26 @@ function scoreSignal1(c) {
   const o = ordersByCustomer.get(c.allmoxy_customer_id);
   if (!o) return { score: 0, label: 'no_order_data', detail: 'No verified order data on file' };
 
+  // 5-month signup grace period: don't penalize new customers for not having
+  // orders yet. Launch typically takes a few months; flagging a 2-month-old
+  // customer as "gym member" is a false positive. The penalty kicks in when
+  // they cross into month 5 since sign-up.
+  const signUpDate = c.sign_up_date ? new Date(c.sign_up_date) : null;
+  const monthsSinceSignup = signUpDate && !isNaN(signUpDate.getTime())
+    ? (today.getFullYear() - signUpDate.getFullYear()) * 12 + (today.getMonth() - signUpDate.getMonth())
+    : Infinity;
+  const inGracePeriod = monthsSinceSignup < 5;
+
   // Prefer Monthly Average (apples-to-apples partial-year normalization). When
   // missing (some customers are only in the Raw Data sheet), fall back to
   // year-level order_count from Raw Data so we don't false-flag heavy users
-  // as "dormant".
+  // as "dormant". 2026 order_count is null (source xlsx has $ only) — treat
+  // as unavailable, force MA path.
   const curMA = o.monthly_avg_current_year || 0;
   const prevMA = o.monthly_avg_prior_year || 0;
-  const curCount = o.years?.[currentYear]?.order_count || 0;
+  const curCountRaw = o.years?.[currentYear]?.order_count;
+  const curCountAvailable = curCountRaw != null;
+  const curCount = curCountRaw || 0;
   const prevCount = o.years?.[priorYear]?.order_count || 0;
   const totalLifetime = o.total_lifetime_orders || 0;
 
@@ -112,11 +140,17 @@ function scoreSignal1(c) {
   // to raw order counts for BOTH years so the units stay consistent. Annualize
   // the current year's partial YTD count (×12/months_elapsed) so a customer
   // doing the same orders/month as last year doesn't look like a decline.
+  //
+  // BUT: when current-year order_count is unavailable (2026), don't use the
+  // count fallback for curVal — that would falsely zero everyone. Use MA when
+  // we have it; otherwise treat as unknown (use prev-year as proxy).
   const hasBothMA = curMA > 0 && prevMA > 0;
   const monthsElapsed = today.getMonth() + 1; // 1-12, current calendar month
-  const curVal = hasBothMA ? curMA : (curCount * 12 / monthsElapsed);
+  const curVal = hasBothMA
+    ? curMA
+    : (curCountAvailable ? (curCount * 12 / monthsElapsed) : (curMA || prevMA));
   const prevVal = hasBothMA ? prevMA : prevCount;
-  const usingMA = hasBothMA;
+  const usingMA = hasBothMA || !curCountAvailable;
   const fmt = usingMA
     ? (n) => '$' + Math.round(n).toLocaleString() + '/mo avg'
     : (n) => Math.round(n).toLocaleString() + ' orders';
@@ -124,6 +158,13 @@ function scoreSignal1(c) {
     ? (n) => '$' + Math.round(n).toLocaleString() + '/mo avg'
     : (n) => `${curCount.toLocaleString()} YTD (annualized ${Math.round(n).toLocaleString()})`;
 
+  if (totalLifetime === 0 && inGracePeriod) {
+    return {
+      score: 0,
+      label: 'grace_period',
+      detail: `Signed up ${signUpDate.toISOString().slice(0, 10)} · ${monthsSinceSignup} mo since signup (within 5-mo grace — no penalty)`,
+    };
+  }
   if (totalLifetime === 0) {
     return { score: -10, label: 'gym_member', detail: 'Never ran a verified order (gym member pattern)' };
   }
@@ -157,14 +198,18 @@ function scoreSignal2(c) {
   // that's the strongest possible launch signal.
   const totalLifetime = o.total_lifetime_orders || 0;
   const curMA = o.monthly_avg_current_year || 0;
-  const curCount = o.years?.[currentYear]?.order_count || 0;
-  // "Running orders" check uses Monthly Average when available, falls back to
-  // raw year-level count from Raw Data for customers missing from the MA sheet.
-  const isRunningCurrentYear = curMA > 0 || curCount > 0;
+  const curCountRaw = o.years?.[currentYear]?.order_count;
+  const curCount = curCountRaw || 0;
+  const curUsd = o.years?.[currentYear]?.total_usd || 0;
+  // "Running orders" check uses Monthly Average when available, then year-level
+  // count, then year-level $ (since 2026 order_count is null — only $ is reliable).
+  const isRunningCurrentYear = curMA > 0 || curCount > 0 || curUsd > 0;
   if (o.is_launched && isRunningCurrentYear) {
     const detail = curMA > 0
       ? `Live ${o.live_date} · actively running orders (${'$' + Math.round(curMA).toLocaleString()}/mo avg in ${currentYear})`
-      : `Live ${o.live_date} · actively running orders (${curCount} in ${currentYear} YTD)`;
+      : curCountRaw != null && curCount > 0
+        ? `Live ${o.live_date} · actively running orders (${curCount} in ${currentYear} YTD)`
+        : `Live ${o.live_date} · actively running orders ($${Math.round(curUsd).toLocaleString()} invoiced in ${currentYear})`;
     return { score: 25, label: 'launched_active', detail };
   }
   if (o.is_launched && totalLifetime > 0) {
@@ -196,6 +241,23 @@ function scoreSignals2to5(c) {
     gym_member_cliff: s.gym_member_cliff ?? false,
     key_signal: s.key_signal ?? null,
   };
+}
+
+// ============================================================================
+// Signal 6: CS Health Pulse (HubSpot customer_health_cs_pulse on Company)
+// Heavy weight by design — this is human judgment from the CS rep that
+// aggregates relationship signals the automated scoring can't see (escalations,
+// executive sponsor changes, recent QBR sentiment). Not a full override —
+// red Pulse alone (-25) can't single-handedly tank a healthy customer; green
+// Pulse alone can't lift a struggling one. Unset = no signal (0).
+// ============================================================================
+function scoreSignal6(c) {
+  const hsId = c.hubspot_company_id ? String(c.hubspot_company_id) : null;
+  const color = hsId ? pulseByCompanyId.get(hsId) : null;
+  if (!color) return { score: 0, label: 'unset', color: null, detail: 'CS Health Pulse not set in HubSpot' };
+  if (color === 'green') return { score: 25, label: 'green', color: 'green', detail: 'CS Pulse: Green — in good standing, would advocate' };
+  if (color === 'yellow') return { score: 0, label: 'yellow', color: 'yellow', detail: 'CS Pulse: Yellow — fair/neutral standing, likely to renew' };
+  return { score: -25, label: 'red', color: 'red', detail: 'CS Pulse: Red — at risk per CS rep' };
 }
 
 // ============================================================================
@@ -250,7 +312,12 @@ function scoreCustomer(c) {
     signal_5_override_applied = true;
   }
 
-  const total = signal_1_orders + signal_2_launch + signal_3_recency + signal_4_risk + signal_5_tenure;
+  // Signal 6: CS Health Pulse (HubSpot rep judgment) — weighted heavily but
+  // not as a full override. +25 / 0 / -25 for green / yellow / red.
+  const s6 = scoreSignal6(c);
+  const signal_6_pulse = s6.score;
+
+  const total = signal_1_orders + signal_2_launch + signal_3_recency + signal_4_risk + signal_5_tenure + signal_6_pulse;
 
   // Determine tier + scoring-data status. We ALWAYS assign a tier — never
   // 'unscored' — because the page needs every cohort customer in one of the
@@ -287,13 +354,35 @@ function scoreCustomer(c) {
   if (s2to5?.tier_override_reason === 'hard_override_red') tier = 'red';
   if (s2to5?.gym_member_cliff) tier = 'red';
   if (s2to5?.launch_status === 'cancelled') tier = 'red';
-  // Active payer who's running orders + recent contact + no risk signals → never red
-  if (s1.label === 'running' && (s2to5?.days_since_last_contact ?? 999) <= 30 && signal_4_risk === 0 && s2to5?.launch_status === 'launched') {
+  // Active payer who's running orders + recent contact + no risk signals → never red.
+  // BUT: don't soften when CS rep explicitly set Pulse=red — that signal beats
+  // the heuristic.
+  if (s1.label === 'running' && (s2to5?.days_since_last_contact ?? 999) <= 30 && signal_4_risk === 0 && s2to5?.launch_status === 'launched' && signal_6_pulse >= 0) {
     if (tier === 'red') tier = 'yellow'; // soften it
   }
 
+  // Grace-period override: brand-new customers (signed up <5 mo ago, no orders
+  // yet) shouldn't show as red just because they haven't had time to launch.
+  // Without this, grace_period customers stay at score 0 and fall below every
+  // red threshold. Force green so they're treated as "healthy — onboarding"
+  // unless there are concrete negative signals (risk keywords, failed charges,
+  // hard override red).
+  const isGracePeriod = s1.label === 'grace_period';
+  const hasNegativeSignals = signal_4_risk < 0
+    || (c.failed_3mo_count || 0) > 0
+    || s2to5?.tier_override_reason === 'hard_override_red'
+    || s2to5?.gym_member_cliff
+    || s2to5?.launch_status === 'cancelled'
+    || signal_6_pulse < 0; // CS rep explicitly set Pulse=red — trust them over grace
+  if (isGracePeriod && !hasNegativeSignals) {
+    tier = 'green';
+  }
+
   // ARR at risk: current MRR × (1 - normalized score). The lower the score, the more ARR at risk.
-  const maxScore = (hasOrderData ? 35 : 0) + (hasHubspotData ? 45 : 0); // approx max positive
+  // Max positive: S1 (35) + S2 (25) + S3 (20) when hubspot data present, plus
+  // S6 (25) when CS Pulse is set. Used to normalize ARR at risk.
+  const hasPulse = s6.color != null;
+  const maxScore = (hasOrderData ? 35 : 0) + (hasHubspotData ? 45 : 0) + (hasPulse ? 25 : 0);
   const arrAtRisk = maxScore > 0 ? (c.current_subscription_mrr * 12) * Math.max(0, 1 - total / maxScore) : 0;
 
   // Compose a short narrative
@@ -310,6 +399,7 @@ function scoreCustomer(c) {
   }
   if ((c.failed_3mo_count || 0) > 0) narrative.push(`${c.failed_3mo_count} failed charges (3mo)`);
   if ((s2to5?.risk_signals || []).length) narrative.push(`${s2to5.risk_signals.length} risk signal(s)`);
+  if (s6.color) narrative.push(`CS Pulse: ${s6.color}`);
 
   const owner = lookupOwner(c);
   return {
@@ -330,7 +420,8 @@ function scoreCustomer(c) {
     signal_1_orders,
     orders_label: s1.label,
     orders_detail: s1.detail,
-    orders_current_year: ordersByCustomer.get(c.allmoxy_customer_id)?.years?.[currentYear]?.order_count || 0,
+    // Pass null through for current year — 2026 source data has $ only, no counts.
+    orders_current_year: ordersByCustomer.get(c.allmoxy_customer_id)?.years?.[currentYear]?.order_count ?? null,
     orders_prior_year: ordersByCustomer.get(c.allmoxy_customer_id)?.years?.[priorYear]?.order_count || 0,
     orders_lifetime: ordersByCustomer.get(c.allmoxy_customer_id)?.total_lifetime_orders || 0,
     orders_monthly_avg_current: ordersByCustomer.get(c.allmoxy_customer_id)?.monthly_avg_current_year || 0,
@@ -347,6 +438,11 @@ function scoreCustomer(c) {
     signal_4_risk,
     signal_5_tenure,
     signal_5_override_applied,
+    // Signal 6: CS Health Pulse (HubSpot rep judgment, +25 / 0 / -25)
+    signal_6_pulse,
+    pulse_color: s6.color,
+    pulse_label: s6.label,
+    pulse_detail: s6.detail,
     launch_status: s2FromOrders.label !== 'unknown' ? s2FromOrders.label : (s2to5?.launch_status ?? 'unknown'),
     launch_evidence: s2FromOrders.detail !== 'No order data — launch status unknown' ? s2FromOrders.detail : (s2to5?.launch_evidence ?? null),
     days_since_last_contact: s2to5?.days_since_last_contact ?? null,

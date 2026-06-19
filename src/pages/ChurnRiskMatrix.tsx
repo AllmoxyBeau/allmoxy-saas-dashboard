@@ -17,9 +17,12 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
+import HealthScoreInfo from '../components/common/HealthScoreInfo';
 import CsvExportButton from '../components/common/CsvExportButton';
 import CustomerLink from '../components/common/CustomerLink';
 import { useSheetTab } from '../hooks/useSheetTab';
@@ -51,6 +54,10 @@ type ScoredCustomer = {
   signal_3_recency: number;
   signal_4_risk: number;
   signal_5_tenure: number;
+  signal_6_pulse?: number;
+  pulse_color?: 'green' | 'yellow' | 'red' | null;
+  pulse_label?: string;
+  pulse_detail?: string | null;
   launch_status: string;
   launch_evidence: string | null;
   days_since_last_contact: number | null;
@@ -157,7 +164,7 @@ export default function ChurnRiskMatrix() {
       // Otherwise: recompute with bid-only effect (or removal)
       const s1New = effectiveBidOnly ? 35 : (c.is_bid_only ? 0 : c.signal_1_orders);
       const s2New = effectiveBidOnly ? 25 : (c.is_bid_only ? 0 : c.signal_2_launch);
-      const newTotal = s1New + s2New + c.signal_3_recency + c.signal_4_risk + c.signal_5_tenure;
+      const newTotal = s1New + s2New + c.signal_3_recency + c.signal_4_risk + c.signal_5_tenure + (c.signal_6_pulse || 0);
       // Tier — use full-mode thresholds when bid-only ON (effectively full data)
       let newTier: typeof c.tier;
       if (effectiveBidOnly) {
@@ -216,7 +223,11 @@ export default function ChurnRiskMatrix() {
 
   const [tierFilter, setTierFilter] = useState<'all' | 'red' | 'yellow' | 'green' | 'unscored'>('all');
   const [cellFilter, setCellFilter] = useState<string | null>(null); // e.g. "red_large"
-  const [ownerFilter, setOwnerFilter] = useState<string>('all');
+  // Multi-select dropdowns. Empty array = "all" (no filter). Owner and
+  // sub-segment are AND-combined: a customer must match at least one selected
+  // owner AND at least one selected sub-segment when filters are populated.
+  const [ownerFilter, setOwnerFilter] = useState<string[]>([]);
+  const [subSegmentFilter, setSubSegmentFilter] = useState<string[]>([]);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   // Sort state for the attack list. Default = ARR at risk desc (highest stakes first).
@@ -228,7 +239,7 @@ export default function ChurnRiskMatrix() {
     else { setSortKey(k); setSortDir(k === 'name' || k === 'owner' ? 'asc' : 'desc'); }
   }
 
-  // Owner counts for the filter chip strip (always based on the full cohort)
+  // Owner counts for the filter dropdown (always based on the full cohort)
   const ownerCounts = useMemo(() => {
     if (!snap) return [] as Array<{ name: string; count: number }>;
     const m = new Map<string, number>();
@@ -239,12 +250,31 @@ export default function ChurnRiskMatrix() {
     return [...m.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
   }, [snap]);
 
+  // Sub-segment counts for the filter dropdown. Drawn from the matrix snapshot
+  // which inherits sub_segment from customer_profiles. ~88% of customers have
+  // one populated; the rest fall under "(no sub-segment)".
+  const subSegmentCounts = useMemo(() => {
+    if (!snap) return [] as Array<{ name: string; count: number }>;
+    const m = new Map<string, number>();
+    for (const c of snap.customers) {
+      const key = c.sub_segment || '(no sub-segment)';
+      m.set(key, (m.get(key) ?? 0) + 1);
+    }
+    return [...m.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+  }, [snap]);
+
+  const ownerSet = useMemo(() => new Set(ownerFilter), [ownerFilter]);
+  const subSegmentSet = useMemo(() => new Set(subSegmentFilter), [subSegmentFilter]);
+
   // Owner-filtered snapshot — re-rolls matrix cells + totals from the subset of
-  // customers owned by the selected rep. When ownerFilter === 'all', uses snap
-  // as-is. Powers the 3x3 grid, column totals, KPI tiles, and tier toggle counts.
+  // customers owned by the selected rep(s). When no owner is selected, uses
+  // snap as-is. Powers the 3x3 grid, column totals, KPI tiles, and tier
+  // toggle counts. Sub-segment filter does NOT re-roll the matrix above the
+  // table; it only narrows the row list (per the spec — "filter the table
+  // also by sub-segment").
   const viewSnap = useMemo(() => {
-    if (!snap || ownerFilter === 'all') return snap;
-    const customers = snap.customers.filter((c) => (c.owner_name || '(unassigned)') === ownerFilter);
+    if (!snap || ownerSet.size === 0) return snap;
+    const customers = snap.customers.filter((c) => ownerSet.has(c.owner_name || '(unassigned)'));
     const matrix: Snapshot['matrix'] = {};
     for (const tier of ['red', 'yellow', 'green', 'unscored']) {
       for (const band of ['small', 'medium', 'large']) {
@@ -273,7 +303,7 @@ export default function ChurnRiskMatrix() {
       total_arr_at_risk: customers.reduce((s, c) => s + c.arr_at_risk, 0),
     };
     return { ...snap, customers, matrix, totals };
-  }, [snap, ownerFilter]);
+  }, [snap, ownerSet]);
 
   const filtered = useMemo(() => {
     if (!snap) return [];
@@ -284,11 +314,14 @@ export default function ChurnRiskMatrix() {
     } else if (tierFilter !== 'all') {
       rows = rows.filter((c) => c.tier === tierFilter);
     }
-    if (ownerFilter !== 'all') {
-      rows = rows.filter((c) => (c.owner_name || '(unassigned)') === ownerFilter);
+    if (ownerSet.size > 0) {
+      rows = rows.filter((c) => ownerSet.has(c.owner_name || '(unassigned)'));
+    }
+    if (subSegmentSet.size > 0) {
+      rows = rows.filter((c) => subSegmentSet.has(c.sub_segment || '(no sub-segment)'));
     }
     return rows;
-  }, [snap, tierFilter, cellFilter, ownerFilter]);
+  }, [snap, tierFilter, cellFilter, ownerSet, subSegmentSet]);
 
   // Apply current sort. Tier sorts in semantic risk order (red > yellow > green > unscored).
   const sorted = useMemo(() => {
@@ -338,7 +371,7 @@ export default function ChurnRiskMatrix() {
               <>
                 <Typography variant="h4" sx={{ fontWeight: 500, color: 'warning.main' }}>{USD0.format(viewSnap?.totals.total_arr_at_risk ?? 0)}</Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  of {USD0.format((viewSnap?.totals.total_mrr ?? 0) * 12)} {ownerFilter === 'all' ? 'cohort' : `${ownerFilter}'s`} ARR ({viewSnap?.totals.cohort_size ?? 0} customers)
+                  of {USD0.format((viewSnap?.totals.total_mrr ?? 0) * 12)} {ownerFilter.length === 0 ? 'cohort' : ownerFilter.length === 1 ? `${ownerFilter[0]}'s` : `${ownerFilter.length} owners'`} ARR ({viewSnap?.totals.cohort_size ?? 0} customers)
                 </Typography>
               </>
             )}
@@ -498,31 +531,85 @@ export default function ChurnRiskMatrix() {
           <ToggleButton value="green">🟢 Green ({viewSnap?.totals.green_count ?? 0})</ToggleButton>
         </ToggleButtonGroup>
 
-        {/* Owner filter — chip strip */}
+        {/* Owner filter — multi-select dropdown. Compact vs the chip strip;
+            select multiple owners to OR them together. Empty = all owners. */}
         {ownerCounts.length > 0 && (
-          <Stack direction="row" spacing={0.5} alignItems="center" flexWrap="wrap" useFlexGap>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', mr: 0.5 }}>Owner</Typography>
-            <Chip
-              label={`All (${snap?.totals.cohort_size ?? 0})`}
-              size="small"
-              variant={ownerFilter === 'all' ? 'filled' : 'outlined'}
-              onClick={() => setOwnerFilter('all')}
-              sx={{ height: 22, fontSize: 11, cursor: 'pointer' }}
-            />
-            {ownerCounts.map((o) => {
-              const isActive = ownerFilter === o.name;
-              return (
+          <Autocomplete
+            multiple
+            disableCloseOnSelect
+            size="small"
+            options={ownerCounts.map((o) => o.name)}
+            value={ownerFilter}
+            onChange={(_, v) => setOwnerFilter(v)}
+            getOptionLabel={(o) => {
+              const found = ownerCounts.find((x) => x.name === o);
+              return found ? `${found.name} (${found.count})` : o;
+            }}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
                 <Chip
-                  key={o.name}
-                  label={`${o.name} (${o.count})`}
+                  variant="filled"
+                  label={option}
                   size="small"
-                  variant={isActive ? 'filled' : 'outlined'}
-                  onClick={() => setOwnerFilter(isActive ? 'all' : o.name)}
-                  sx={{ height: 22, fontSize: 11, cursor: 'pointer' }}
+                  {...getTagProps({ index })}
+                  key={option}
+                  sx={{ height: 20, fontSize: 11 }}
                 />
-              );
-            })}
-          </Stack>
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder={ownerFilter.length === 0 ? 'All owners' : ''}
+                label="Owner"
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 12 },
+                  '& .MuiFormLabel-root': { fontSize: 12 },
+                }}
+              />
+            )}
+            sx={{ minWidth: 200, maxWidth: 360 }}
+          />
+        )}
+
+        {/* Sub-segment filter — multi-select dropdown. Same shape as owner. */}
+        {subSegmentCounts.length > 0 && (
+          <Autocomplete
+            multiple
+            disableCloseOnSelect
+            size="small"
+            options={subSegmentCounts.map((s) => s.name)}
+            value={subSegmentFilter}
+            onChange={(_, v) => setSubSegmentFilter(v)}
+            getOptionLabel={(o) => {
+              const found = subSegmentCounts.find((x) => x.name === o);
+              return found ? `${found.name} (${found.count})` : o;
+            }}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  variant="filled"
+                  label={option}
+                  size="small"
+                  {...getTagProps({ index })}
+                  key={option}
+                  sx={{ height: 20, fontSize: 11 }}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder={subSegmentFilter.length === 0 ? 'All sub-segments' : ''}
+                label="Sub-segment"
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 12 },
+                  '& .MuiFormLabel-root': { fontSize: 12 },
+                }}
+              />
+            )}
+            sx={{ minWidth: 220, maxWidth: 380 }}
+          />
         )}
 
         <Box sx={{ flexGrow: 1 }} />
@@ -648,7 +735,10 @@ export default function ChurnRiskMatrix() {
                       <TableRow>
                         <TableCell colSpan={9} sx={{ bgcolor: 'rgba(0,0,0,0.02)', borderTop: '1px dashed', borderColor: tierColor }}>
                           <Stack spacing={1.5} sx={{ p: 1 }}>
-                            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>Score Breakdown</Typography>
+                            <Stack direction="row" spacing={0.5} alignItems="center">
+                              <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>Score Breakdown</Typography>
+                              <HealthScoreInfo />
+                            </Stack>
                             <Table size="small" sx={{ '& td, & th': { fontSize: 11, py: 0.5 } }}>
                               <TableHead>
                                 <TableRow>
@@ -689,6 +779,34 @@ export default function ChurnRiskMatrix() {
                                   <TableCell>5 · Tenure × Launch</TableCell>
                                   <TableCell>{c.years_with_us != null ? `${c.years_with_us.toFixed(1)}y tenure, ${c.launch_status}` : '—'}</TableCell>
                                   <TableCell align="right" sx={{ fontWeight: 600, color: c.signal_5_tenure < 0 ? 'error.main' : 'text.secondary' }}>{c.signal_5_tenure}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>
+                                    6 · CS Health Pulse
+                                    {c.pulse_color && (
+                                      <Box component="span" sx={{
+                                        ml: 0.75,
+                                        px: 0.75,
+                                        py: 0.1,
+                                        fontSize: 10,
+                                        fontWeight: 600,
+                                        borderRadius: 0.75,
+                                        textTransform: 'uppercase',
+                                        bgcolor:
+                                          c.pulse_color === 'green' ? 'rgba(26, 158, 92, 0.18)' :
+                                          c.pulse_color === 'yellow' ? 'rgba(245, 166, 35, 0.18)' :
+                                          'rgba(214, 58, 77, 0.18)',
+                                        color:
+                                          c.pulse_color === 'green' ? '#1A9E5C' :
+                                          c.pulse_color === 'yellow' ? '#B07206' :
+                                          '#D63A4D',
+                                      }}>{c.pulse_color}</Box>
+                                    )}
+                                  </TableCell>
+                                  <TableCell>{c.pulse_detail ?? 'Not set in HubSpot'}</TableCell>
+                                  <TableCell align="right" sx={{ fontWeight: 600, color: (c.signal_6_pulse ?? 0) < 0 ? 'error.main' : 'text.secondary' }}>
+                                    {(c.signal_6_pulse ?? 0) > 0 ? '+' : ''}{c.signal_6_pulse ?? 0}
+                                  </TableCell>
                                 </TableRow>
                                 <TableRow>
                                   <TableCell colSpan={2} sx={{ fontWeight: 700 }}>Total</TableCell>

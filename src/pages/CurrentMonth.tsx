@@ -43,6 +43,16 @@ type Transaction = {
   status: string | null;
   description: string;
   stripe_subscription_id?: string | null;
+  // Stamped by apply_transaction_overrides when a lump catch-up payment has been
+  // reallocated across multiple billing months. The receipt row stays intact for
+  // cash-basis QB reconciliation; expandReallocations() below splits it into
+  // virtual per-month receipts so the variance categorizer sees normal cadence
+  // instead of one anomalous lump.
+  reallocated?: {
+    receipt_month: string;
+    allocations: Array<{ month: string; amount: number }>;
+    reason?: string | null;
+  };
 };
 // Effective post-refund amount for any transaction. Falls back to gross amount when
 // net_amount is missing (older snapshots / data without refund tracking).
@@ -50,6 +60,34 @@ function netAmount(t: Transaction): number {
   if (typeof t.net_amount === 'number') return t.net_amount;
   if (typeof t.amount_refunded === 'number') return Math.max(t.amount - t.amount_refunded, 0);
   return t.amount;
+}
+
+// Expand reallocated lump payments into per-allocation virtual transactions so
+// the cluster matcher sees normal monthly cadence. The original row is
+// REPLACED in the returned list (not kept alongside) to avoid double-counting.
+// Storage in customer_profiles.transactions[] is untouched — this is only the
+// view-friendly representation used by this page.
+function expandReallocations(txns: Transaction[]): Transaction[] {
+  const out: Transaction[] = [];
+  for (const t of txns) {
+    if (t.reallocated && Array.isArray(t.reallocated.allocations) && t.reallocated.allocations.length > 0) {
+      // Use day 01 for the synthesized date — most subscription cadences bill
+      // at the start of the month, and the variance categorizer just needs the
+      // month bucket and a plausible day for "expected day" calculation.
+      for (const alloc of t.reallocated.allocations) {
+        out.push({
+          ...t,
+          amount: alloc.amount,
+          net_amount: alloc.amount,
+          amount_refunded: 0,
+          created: `${alloc.month}-01 00:00:00`,
+        });
+      }
+      continue;
+    }
+    out.push(t);
+  }
+  return out;
 }
 type ProfileRow = {
   allmoxy_customer_id: number;
@@ -235,31 +273,36 @@ export default function CurrentMonth() {
 
     for (const p of profiles.rows) {
       const stripeIds = p.stripe_customer_ids ?? [];
+      // Reallocation-aware view of this customer's transactions: any reallocated
+      // lump (e.g., Rehau Pty's $1,698 May catch-up covering Mar + Apr) is
+      // virtually split into one row per allocation, so the cluster matcher
+      // sees normal monthly cadence instead of one anomalous high-amount blip.
+      const txns = expandReallocations(p.transactions);
       // succeeded-and-net-positive charges drive amount aggregation. A fully-refunded
       // charge (net $0) is treated as if it didn't happen — same as a failure.
       // ALL attempts (succeeded OR failed) drive the active-billing-cycle check.
       const isNetPositive = (t: Transaction) => netAmount(t) > 0.01;
-      const lookbackTxns = p.transactions.filter(
+      const lookbackTxns = txns.filter(
         (t) => t.created && t.type === 'subscription' && t.status === 'succeeded' && isNetPositive(t) && lookbackMonths.has(t.created.slice(0, 7))
       );
-      const lookbackAttempts = p.transactions.filter(
+      const lookbackAttempts = txns.filter(
         (t) => t.created && t.type === 'subscription' && (t.status === 'failed' || (t.status === 'succeeded' && isNetPositive(t))) && lookbackMonths.has(t.created.slice(0, 7))
       );
-      const currTxns = p.transactions.filter(
+      const currTxns = txns.filter(
         (t) => t.created && t.created.startsWith(cm) && t.type === 'subscription' && t.status === 'succeeded' && isNetPositive(t)
       );
       // ALL current-month subscription attempts (success OR failure) — used to detect
       // whether Stripe is still actively retrying. NextGen-style fully-refunded
       // charges are NOT counted as attempts (they're effectively reversals, not
       // dunning activity).
-      const currAttempts = p.transactions.filter(
+      const currAttempts = txns.filter(
         (t) => t.created && t.created.startsWith(cm) && t.type === 'subscription' && (t.status === 'failed' || (t.status === 'succeeded' && isNetPositive(t)))
       );
       if (lookbackTxns.length === 0 && currTxns.length === 0) continue;
 
       // Brand-new logo: NO succeeded subscription transactions in any month before cm.
       // (Wider than just the lookback — if they billed years ago, they're not new.)
-      const hasAnyPriorSub = p.transactions.some(
+      const hasAnyPriorSub = txns.some(
         (t) => t.created && t.type === 'subscription' && t.status === 'succeeded' && t.created.slice(0, 7) < cm
       );
 

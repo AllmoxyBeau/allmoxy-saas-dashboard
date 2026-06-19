@@ -1,9 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { etlApiPlugin } from './vite-plugin-etl-api';
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react()],
+    // etlApiPlugin: dev-only ETL admin API (POST /api/bid-only/toggle).
+    // Production builds on Vercel ignore it because `apply: 'serve'` scopes
+    // it to the dev server only.
+    plugins: [react(), etlApiPlugin()],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),

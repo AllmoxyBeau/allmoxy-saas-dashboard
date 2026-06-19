@@ -26,9 +26,49 @@ const COHORT = '/tmp/at_risk_cohort.json';
 const BATCH = '/tmp/hubspot_company_batch.json';
 const RISK = '/tmp/hubspot_risk_signals.json'; // Optional — populated by note-scan pass
 const OUT = path.join(ROOT, '_etl_scripts/cache/at_risk_hubspot_signals.json');
+const PROFILES = path.join(ROOT, 'public/snapshots/customer_profiles.json');
+const HS_CACHE = path.join(ROOT, '_etl_scripts/cache/hubspot_companies.json');
 
-const cohort = JSON.parse(fs.readFileSync(COHORT, 'utf8'));
-const batch = JSON.parse(fs.readFileSync(BATCH, 'utf8'));
+// Cohort: derived from customer_profiles.json — that file is the source of
+// truth and has merge-redirected HubSpot IDs after build_customer_profiles.mjs.
+// The legacy /tmp file froze the cohort at a point in time; we no longer use
+// it (was causing stale hubspot_company_id values to outlive HubSpot merges).
+const profs = JSON.parse(fs.readFileSync(PROFILES, 'utf8')).rows || [];
+const cohort = profs
+  .filter((p) => p.status !== 'churned' && p.status !== 'never_paid'
+    && !p.excluded_from_logo_count
+    && (p.lifetime_subscription || 0) > 0
+    && p.pay_status !== 'Cancelled'
+    && p.pay_status !== 'Active - Pause Granted')
+  .map((p) => ({
+    allmoxy_customer_id: p.allmoxy_customer_id,
+    name: p.name,
+    hubspot_company_id: p.hubspot_company_id,
+    current_subscription_mrr: p.current_subscription_mrr,
+    years_with_us: p.years_with_us,
+    failed_3mo_count: p.failed_3mo_count || 0,
+    installer_id: p.installer_id,
+  }));
+process.stderr.write(`Cohort: derived from customer_profiles.json (${cohort.length} customers)\n`);
+
+// HubSpot Company properties: prefer the manual /tmp batch when present, else
+// use the live API cache (cache/hubspot_companies.json). The cache has every
+// company; the batch was the cohort-sized subset from a manual MCP pull.
+const byHsId = new Map();
+if (fs.existsSync(BATCH)) {
+  const batch = JSON.parse(fs.readFileSync(BATCH, 'utf8'));
+  for (const obj of batch.objects || []) {
+    byHsId.set(String(obj.id), obj.properties || {});
+  }
+  process.stderr.write(`Company batch: /tmp file (${byHsId.size} companies)\n`);
+} else {
+  const cache = JSON.parse(fs.readFileSync(HS_CACHE, 'utf8'));
+  for (const c of cache.companies || []) {
+    byHsId.set(String(c.id), c);
+  }
+  process.stderr.write(`Company batch: live cache (${byHsId.size} companies)\n`);
+}
+
 const riskScan = fs.existsSync(RISK) ? JSON.parse(fs.readFileSync(RISK, 'utf8')) : null;
 const riskByHsId = new Map();
 if (riskScan?.by_hubspot_company_id) {
@@ -37,13 +77,10 @@ if (riskScan?.by_hubspot_company_id) {
   }
 }
 
-// Build hubspot_id -> properties map
-const byHsId = new Map();
-for (const obj of batch.objects || []) {
-  byHsId.set(String(obj.id), obj.properties || {});
-}
-
-const now = new Date('2026-06-15T00:00:00Z').getTime();
+// Dynamic now — each rebuild scores recency relative to the current date.
+// Previously frozen at a fixed date for reproducibility; switched to live so
+// "days since last contact" actually reflects today.
+const now = Date.now();
 
 function daysSince(iso) {
   if (!iso) return null;

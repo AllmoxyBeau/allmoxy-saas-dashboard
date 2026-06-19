@@ -25,7 +25,9 @@ import CsvExportButton from '../components/common/CsvExportButton';
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type OrdersYear = {
-  order_count: number;
+  // order_count is null for 2026 — source xlsx has $ only. See memory:
+  // 2026-order-counts-unavailable.
+  order_count: number | null;
   total_usd: number;
   subtotal_usd?: number;
   b2b_subtotal_usd?: number;
@@ -86,7 +88,7 @@ type Row = {
   yoy_pct: number | null;
   months_loaded: number;           // how many months of current-year data exist
   current_mrr: number;
-  years_by_total: Record<string, { order_count: number; total_usd: number }>;
+  years_by_total: Record<string, { order_count: number | null; total_usd: number }>;
 };
 
 type SortKey =
@@ -267,13 +269,15 @@ export default function OrdersVerified() {
     const totals = new Map<string, { total_usd: number; orders: number; active_customers: number }>();
     for (const r of filtered) {
       for (const [year, y] of Object.entries(r.years_by_total)) {
-        const orderCount = y.order_count || 0;
+        // 2026 order_count is null (source xlsx has $ only). Skip count
+        // aggregation when null, but still aggregate $.
+        const orderCount = y.order_count;
         const usd = y.total_usd || 0;
-        if (orderCount === 0 && usd === 0) continue;
+        if ((orderCount || 0) === 0 && usd === 0) continue;
         if (!totals.has(year)) totals.set(year, { total_usd: 0, orders: 0, active_customers: 0 });
         const e = totals.get(year)!;
         e.total_usd += usd;
-        e.orders += orderCount;
+        if (orderCount != null) e.orders += orderCount;
         e.active_customers += 1;
       }
     }

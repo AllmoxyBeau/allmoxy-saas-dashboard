@@ -66,14 +66,36 @@ const allmoxyIdByName = new Map();
 // and Stripe customer profiles), join by subdomain → installer_directory.
 const allmoxyIdBySubdomain = new Map();
 const nameById = new Map();
+
+// Some installer_ids / subdomains map to MULTIPLE profiles (e.g. an active
+// paying customer + a "never_paid" duplicate Allmoxy account that shares the
+// same installation). Verified orders flow into the shared installation, so
+// they should attribute to the actively-paying profile. Break collisions by
+// priority — paying > active/at_risk > churned > never_paid.
+const profilesById = new Map((profiles.rows || []).map((p) => [p.allmoxy_customer_id, p]));
+function profilePriority(p) {
+  if (!p) return -1;
+  if ((p.lifetime_total || 0) > 0) return 3;
+  if (p.status === 'active' || p.status === 'at_risk') return 2;
+  if (p.status === 'churned' || p.status === 'paused') return 1;
+  return 0;
+}
+function setBestAid(map, key, p) {
+  const existingAid = map.get(key);
+  if (existingAid == null) { map.set(key, p.allmoxy_customer_id); return; }
+  if (profilePriority(p) > profilePriority(profilesById.get(existingAid))) {
+    map.set(key, p.allmoxy_customer_id);
+  }
+}
+
 for (const p of profiles.rows || []) {
   if (p.installer_id != null && p.installer_id !== '') {
-    allmoxyIdByInstaller.set(String(p.installer_id), p.allmoxy_customer_id);
+    setBestAid(allmoxyIdByInstaller, String(p.installer_id), p);
   }
   if (p.installer_directory) {
-    allmoxyIdBySubdomain.set(String(p.installer_directory).toLowerCase(), p.allmoxy_customer_id);
+    setBestAid(allmoxyIdBySubdomain, String(p.installer_directory).toLowerCase(), p);
   }
-  if (p.name) allmoxyIdByName.set(normName(p.name), p.allmoxy_customer_id);
+  if (p.name) setBestAid(allmoxyIdByName, normName(p.name), p);
   nameById.set(p.allmoxy_customer_id, p.name);
 }
 
@@ -263,7 +285,34 @@ try {
       }
     }
     for (const [subdomain, entry] of perCustomer) {
-      const c = customerBySubdomain.get(subdomain);
+      let c = customerBySubdomain.get(subdomain);
+      if (!c) {
+        // Customer absent from Raw Data (e.g. signed up in 2026, no prior years
+        // of history). Try to create a record on the fly via the profile-level
+        // subdomain → installer_directory map.
+        const aid = allmoxyIdBySubdomain.get(subdomain);
+        if (aid != null && !byCustomer.has(aid)) {
+          byCustomer.set(aid, {
+            allmoxy_customer_id: aid,
+            name: nameById.get(aid) || null,
+            orders_xlsx_name: null,
+            installer_id: profilesById.get(aid)?.installer_id ?? null,
+            subdomain,
+            years: {},
+            monthly_avg: {},
+            live_date: null,
+            live_date_xlsx: null,
+            live_date_inferred: null,
+            live_date_source: null,
+            months_to_launch: null,
+            is_launched: false,
+            total_lifetime_orders: 0,
+            total_lifetime_usd: 0,
+          });
+          c = byCustomer.get(aid);
+          customerBySubdomain.set(subdomain, c);
+        }
+      }
       if (!c) {
         supplementUnmatched++;
         if (supplementUnmatchedExamples.length < 5) supplementUnmatchedExamples.push(`${subdomain} ($${Math.round(entry.total).toLocaleString()})`);
@@ -335,7 +384,10 @@ for (let i = 1; i < m2mRows.length; i++) {
 let inferredCount = 0;
 for (const c of byCustomer.values()) {
   for (const year of Object.keys(c.years).sort()) {
-    if ((c.years[year].order_count || 0) > 0) {
+    // Detect activity by either count OR dollars — supplement-only customers
+    // (e.g. signed up in 2026, no historical Raw Data) have $ but no count.
+    const hasActivity = (c.years[year].order_count || 0) > 0 || (c.years[year].total_usd || 0) > 0;
+    if (hasActivity) {
       c.live_date_inferred = year;
       break;
     }
@@ -355,6 +407,25 @@ for (const c of byCustomer.values()) {
 console.log(`Live Date inferred for ${inferredCount} customers (orders present but no xlsx Live Date)`);
 
 // ============================================================================
+// Pass 4b: Suppress 2026 order counts.
+//
+// The 2026 monthly source xlsx ("Verified Orders 2026.xlsx") carries $ invoiced
+// per month but does NOT carry an order_count column. So `years["2026"].order_count`
+// is unreliable — it either reflects stale Raw Data or 0, never the true count.
+// Null it out everywhere and back the contribution out of total_lifetime_orders
+// so downstream consumers (matrix Signal 1, charts) can detect null and skip
+// the order-count signal for 2026. Revisit when the source xlsx adds a count
+// column. See memory: 2026-order-counts-unavailable.
+// ============================================================================
+for (const c of byCustomer.values()) {
+  if (c.years[VERIFIED_2026_YEAR]) {
+    const stale = c.years[VERIFIED_2026_YEAR].order_count || 0;
+    c.total_lifetime_orders = Math.max(0, c.total_lifetime_orders - stale);
+    c.years[VERIFIED_2026_YEAR].order_count = null;
+  }
+}
+
+// ============================================================================
 // Compute derived fields per customer
 // ============================================================================
 const today = new Date();
@@ -363,10 +434,11 @@ const priorYear = String(today.getFullYear() - 1);
 const monthOfYear = today.getMonth() + 1; // 1-12
 
 for (const c of byCustomer.values()) {
-  // Latest year with orders
+  // Latest year with orders. Use count OR dollars (since 2026 order_count is
+  // suppressed, and supplement-only customers have $ but no count).
   let latest = null;
   for (const y of Object.keys(c.years).sort().reverse()) {
-    if ((c.years[y].order_count || 0) > 0) { latest = y; break; }
+    if ((c.years[y].order_count || 0) > 0 || (c.years[y].total_usd || 0) > 0) { latest = y; break; }
   }
   c.latest_year_with_orders = latest;
 

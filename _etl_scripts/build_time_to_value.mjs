@@ -90,10 +90,16 @@ for (const p of cohort) {
   // 12/months_elapsed) so the YoY comparison is apples-to-apples with prior
   // full year. Without this, mid-year customers look like they're declining 50%
   // even when their monthly run-rate is identical.
-  const curCount = o?.years?.[currentYear]?.order_count || 0;
+  const curCountRaw = o?.years?.[currentYear]?.order_count;
+  const curCount = curCountRaw || 0;
   const prevCount = o?.years?.[priorYear]?.order_count || 0;
   const monthsElapsed = today.getMonth() + 1;
-  const curOrders = curMA > 0 ? curMA : (curCount * 12 / monthsElapsed);
+  // 2026 order_count is null (source xlsx has $ only). When MA is available
+  // use it; otherwise fall back to prev MA as a proxy rather than treating
+  // unavailable as zero.
+  const curOrders = curMA > 0
+    ? curMA
+    : (curCountRaw != null ? (curCount * 12 / monthsElapsed) : prevMA);
   const prevOrders = prevMA > 0 ? prevMA : prevCount;
 
   // Months to launch — if Live Date is just a year, approximate as
@@ -110,6 +116,16 @@ for (const p of cohort) {
     monthsToLaunch = o.months_to_launch;
   }
 
+  // 5-month signup grace period: new customers haven't had time to launch
+  // yet, so don't flag them as gym_member / wasted. Mirrors the churn matrix
+  // grace logic. See memory: 2026-order-counts-unavailable (related: same
+  // pattern of "we don't have evidence yet" for brand-new signups).
+  const signUpDate = p.sign_up_date ? new Date(p.sign_up_date) : null;
+  const monthsSinceSignup = signUpDate && !isNaN(signUpDate.getTime())
+    ? (today.getFullYear() - signUpDate.getFullYear()) * 12 + (today.getMonth() - signUpDate.getMonth())
+    : Infinity;
+  const inGracePeriod = monthsSinceSignup < 5;
+
   // Categorize
   let category;
   let waste_label;
@@ -123,6 +139,10 @@ for (const p of cohort) {
   } else if (!o) {
     category = 'no_data';
     waste_label = 'No verified order data on file — needs join review';
+  } else if (!isLaunched && lifetimeOrders === 0 && inGracePeriod) {
+    category = 'onboarding';
+    waste_label = `New signup (${monthsSinceSignup} mo) — within 5-mo grace period, launch not yet expected`;
+    // No "wasted" framing during grace period — they're new, not lapsed.
   } else if (!isLaunched && lifetimeOrders === 0) {
     category = 'gym_member';
     waste_label = 'Never launched, never ran a verified order';
@@ -193,6 +213,7 @@ customers.sort((a, b) => (b.wasted_to_date - a.wasted_to_date) || (b.current_bur
 
 // Categories summary
 const categoryBuckets = {
+  onboarding: { label: 'Onboarding (signed up <5 mo ago, grace period)', customers: [] },
   gym_member: { label: 'Never launched (gym member)', customers: [] },
   never_launched_some_orders: { label: 'Hygiene gap (orders but no Live Date)', customers: [] },
   launched_dormant: { label: 'Launched but dormant', customers: [] },

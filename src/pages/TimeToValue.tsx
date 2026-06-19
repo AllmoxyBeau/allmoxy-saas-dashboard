@@ -42,7 +42,7 @@ type TtvCustomer = {
   lifetime_orders: number;
   monthly_avg_current_year: number;
   monthly_avg_prior_year: number;
-  category: 'gym_member' | 'never_launched_some_orders' | 'launched_dormant' | 'declining' | 'healthy' | 'bid_only' | 'no_data' | 'unknown';
+  category: 'onboarding' | 'gym_member' | 'never_launched_some_orders' | 'launched_dormant' | 'declining' | 'healthy' | 'bid_only' | 'no_data' | 'unknown';
   waste_label: string;
   wasted_to_date: number;
   current_burn_annualized: number;
@@ -75,6 +75,7 @@ type Snapshot = {
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 
 const CATEGORY_COLOR: Record<TtvCustomer['category'], string> = {
+  onboarding: '#2C73FF',
   gym_member: '#D63A4D',
   never_launched_some_orders: '#E67E22',
   launched_dormant: '#F5A623',
@@ -86,6 +87,7 @@ const CATEGORY_COLOR: Record<TtvCustomer['category'], string> = {
 };
 
 const CATEGORY_LABEL: Record<TtvCustomer['category'], string> = {
+  onboarding: 'Onboarding',
   gym_member: 'Gym Member',
   never_launched_some_orders: 'Hygiene Gap',
   launched_dormant: 'Dormant',
@@ -159,7 +161,7 @@ export default function TimeToValue() {
     const summary = {
       ...rawSnap.summary,
       total_wasted_to_date: customers.reduce((s, c) => s + c.wasted_to_date, 0),
-      total_annualized_burn_at_risk: customers.filter((c) => c.category !== 'healthy' && c.category !== 'bid_only').reduce((s, c) => s + c.current_burn_annualized, 0),
+      total_annualized_burn_at_risk: customers.filter((c) => c.category !== 'healthy' && c.category !== 'bid_only' && c.category !== 'onboarding').reduce((s, c) => s + c.current_burn_annualized, 0),
       gym_member_count: customers.filter((c) => c.category === 'gym_member').length,
       launched_dormant_count: customers.filter((c) => c.category === 'launched_dormant').length,
       declining_count: customers.filter((c) => c.category === 'declining').length,
@@ -201,7 +203,7 @@ export default function TimeToValue() {
     // Rebuild summary
     const summary: Snapshot['summary'] = {
       total_wasted_to_date: customers.reduce((s, c) => s + (c.wasted_to_date || 0), 0),
-      total_annualized_burn_at_risk: customers.filter((c) => c.category !== 'healthy' && c.category !== 'bid_only').reduce((s, c) => s + (c.current_burn_annualized || 0), 0),
+      total_annualized_burn_at_risk: customers.filter((c) => c.category !== 'healthy' && c.category !== 'bid_only' && c.category !== 'onboarding').reduce((s, c) => s + (c.current_burn_annualized || 0), 0),
       gym_member_count: customers.filter((c) => c.category === 'gym_member').length,
       launched_dormant_count: customers.filter((c) => c.category === 'launched_dormant').length,
       declining_count: customers.filter((c) => c.category === 'declining').length,
@@ -243,7 +245,7 @@ export default function TimeToValue() {
   const filtered = useMemo(() => {
     let rows = snap?.customers ?? [];
     if (filter === 'all') {/* no-op */}
-    else if (filter === 'at_risk') rows = rows.filter((c) => c.category !== 'healthy' && c.category !== 'no_data');
+    else if (filter === 'at_risk') rows = rows.filter((c) => c.category !== 'healthy' && c.category !== 'no_data' && c.category !== 'onboarding');
     else rows = rows.filter((c) => c.category === filter);
     if (ownerFilter !== 'all') {
       rows = rows.filter((c) => (c.owner_name || '(unassigned)') === ownerFilter);

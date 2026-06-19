@@ -40,6 +40,18 @@ const HUBSPOT_API_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allm
 const HUBSPOT_OWNERS_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_owners.json';
 const hubspotLiveByStripeId = new Map();
 const hubspotLiveByCompanyId = new Map();
+// Merge redirect: stale HubSpot Company ID → current surviving Company ID.
+// When HubSpot merges A into B, B's hs_merged_object_ids field gains A. We
+// use this to redirect xlsx-sourced IDs (which freeze at the time of entry)
+// to the current company. Critical because ~40 customer xlsx IDs reference
+// since-merged companies, including ones with recent CS activity.
+const hubspotMergeRedirect = new Map();
+// Name fallback: normalized name → array of { id, lifecyclestage }. Used as
+// last-resort fallback when the xlsx-sourced HubSpot id is wrong AND not in
+// the merge redirect (data-entry typo). Multi-candidate collisions prefer the
+// customer-lifecycle one.
+const hubspotByNormalizedName = new Map();
+const normName = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 let hubspotLiveLoadedAt = null;
 if (fs.existsSync(HUBSPOT_API_CACHE_PATH)) {
   try {
@@ -49,11 +61,52 @@ if (fs.existsSync(HUBSPOT_API_CACHE_PATH)) {
       if (c.stripe_company_id) hubspotLiveByStripeId.set(c.stripe_company_id, c);
       if (c.hs_object_id) hubspotLiveByCompanyId.set(String(c.hs_object_id), c);
       if (c.id) hubspotLiveByCompanyId.set(String(c.id), c);
+      // Populate merge redirects: each id listed in hs_merged_object_ids
+      // points to this surviving company.
+      if (c.hs_merged_object_ids) {
+        for (const oldId of String(c.hs_merged_object_ids).split(';').map(s => s.trim()).filter(Boolean)) {
+          hubspotMergeRedirect.set(oldId, String(c.id));
+        }
+      }
+      if (c.name) {
+        const k = normName(c.name);
+        if (!hubspotByNormalizedName.has(k)) hubspotByNormalizedName.set(k, []);
+        hubspotByNormalizedName.get(k).push({ id: String(c.id), lifecyclestage: c.lifecyclestage || null });
+      }
     }
-    process.stderr.write(`HubSpot API enrichment cache loaded (${cache.companies?.length || 0} companies, fetched_at=${hubspotLiveLoadedAt})\n`);
+    process.stderr.write(`HubSpot API enrichment cache loaded (${cache.companies?.length || 0} companies, ${hubspotMergeRedirect.size} merge redirects, ${hubspotByNormalizedName.size} unique names, fetched_at=${hubspotLiveLoadedAt})\n`);
   } catch (err) {
     process.stderr.write(`Warning: failed to load HubSpot API cache: ${err.message}\n`);
   }
+}
+
+// Resolve a (potentially stale) HubSpot Company ID to the current surviving
+// one. Cascade:
+//   1. xlsx id matches a current company → use as-is
+//   2. xlsx id appears in another company's hs_merged_object_ids → redirect
+//   3. customer name matches a HubSpot company name → use name match
+//      (prefers lifecyclestage='customer' when multiple candidates).
+// Step 3 catches data-entry typos in the xlsx where the HubSpot id was just
+// wrong (not merged). Without it, ~14 customers including Ecodomo silently
+// miss all HubSpot enrichment.
+function resolveHubspotCompanyId(rawId, customerName) {
+  if (rawId != null && rawId !== '') {
+    const id = String(rawId).trim();
+    if (hubspotLiveByCompanyId.has(id)) return id;
+    const redirected = hubspotMergeRedirect.get(id);
+    if (redirected) return redirected;
+  }
+  // Fall back to name match. Only triggers when the xlsx id is missing /
+  // unknown to HubSpot (so we don't override a legitimately-set id).
+  if (customerName) {
+    const candidates = hubspotByNormalizedName.get(normName(customerName)) || [];
+    if (candidates.length === 1) return candidates[0].id;
+    if (candidates.length > 1) {
+      const customer = candidates.find((c) => c.lifecyclestage === 'customer');
+      return (customer || candidates[0]).id;
+    }
+  }
+  return rawId != null && rawId !== '' ? String(rawId).trim() : null;
 }
 // Returns the live HubSpot row for a customer (by any of their stripe IDs, or
 // their HubSpot Company ID). Returns null when no match. Picks the row with
@@ -686,15 +739,27 @@ for (const id of allIds) {
   // values for HubSpot-native fields. Falls back silently to xlsx when no live
   // match. Stripe-sourced fields (pay_status, subscription IDs, churn_reason)
   // are intentionally NOT overlaid — those don't live in HubSpot.
-  const live = hubspotLiveForCustomer(core?.stripe_customer_ids ?? [], core?.hubspot_company_id);
+  // HubSpot Company ID — source of truth is the Hubspot Instance Sync Sheet's
+  // column B ("Company ID"). The Sync Sheet is HubSpot-managed and refreshes
+  // when companies are merged/created; allmoxy_core_customer's value freezes
+  // at row creation and silently rots. Read the Sync Sheet first, fall back to
+  // core only when the Sync Sheet has nothing (e.g. customers in core but
+  // missing from the sync export).
+  //
+  // Even after picking the right source, run through resolveHubspotCompanyId()
+  // for the rare cases where the Sync Sheet itself is stale (merge that
+  // happened between syncs, or a typo). Cascade: id → merge redirect → name
+  // match (lifecyclestage=customer preferred on collisions).
+  const hubspotCompanyIdRaw = (hub?.hubspot_company_id_from_hub != null && hub.hubspot_company_id_from_hub !== '')
+    ? String(hub.hubspot_company_id_from_hub)
+    : (core?.hubspot_company_id ?? null);
+  const hubspotCompanyIdResolved = resolveHubspotCompanyId(hubspotCompanyIdRaw, name);
+
+  // Live overlay AFTER redirect resolution so merged/renamed companies pick
+  // up the surviving record's enrichment (recency, pulse, owner).
+  const live = hubspotLiveForCustomer(core?.stripe_customer_ids ?? [], hubspotCompanyIdResolved);
   const liveOwnerFirstName = live?.owner_first_name ?? null;
   const liveOwnerFullName = live?.owner_full_name ?? null;
-
-  // HubSpot Company ID: prefer the core table's value; fall back to the Sync
-  // Sheet's "Company ID" column when core hasn't been populated yet (common
-  // for newer customers added in HubSpot first).
-  const hubspotCompanyIdResolved = core?.hubspot_company_id
-    ?? (hub?.hubspot_company_id_from_hub ? String(hub.hubspot_company_id_from_hub) : null);
 
   profiles.push({
     allmoxy_customer_id: id,

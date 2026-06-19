@@ -33,6 +33,14 @@ const ENV_PATH = path.join(ROOT, '.env.local');
 const CACHE_DIR = path.join(ROOT, '_etl_scripts/cache');
 const COMPANIES_OUT = path.join(CACHE_DIR, 'hubspot_companies.json');
 const OWNERS_OUT = path.join(CACHE_DIR, 'hubspot_owners.json');
+const INSTANCES_OUT = path.join(CACHE_DIR, 'hubspot_instances.json');
+
+// Allmoxy Instance custom object type (per the HubSpot URL we discovered in
+// the property settings page). Internal HubSpot name is `accounts` (plural
+// confirmed via /crm/v3/schemas). Carries the per-instance fields the Renewal
+// Management page needs — calculated_renewal_date, contract_status, monthly
+// flat fee, renewal expansion history, etc. — none of which live on Company.
+const INSTANCE_OBJECT_TYPE = '2-39181518';
 
 const args = new Set(process.argv.slice(2));
 const QUICK = args.has('--quick');
@@ -108,6 +116,12 @@ const COMPANY_PROPS = [
   'custom_domain',
   'createdate',
   'hs_lastmodifieddate',
+  // Merge tracking — when HubSpot merges Company A into Company B, B's record
+  // gains `hs_merged_object_ids` containing A's id. We use this to redirect
+  // stale ids (from the source xlsx Sync Sheet) to the current surviving
+  // company. Without it, ~60 customers map to ghost ids and miss recency /
+  // pulse / owner enrichment.
+  'hs_merged_object_ids',
 ];
 
 // --- Pull all companies (paginated) ----------------------------------------
@@ -133,6 +147,87 @@ async function pullCompanies() {
     if (!after) break;
   }
   return companies;
+}
+
+// --- The fields we want from each Instance (custom object 2-39181518) ------
+// Discovered via _etl_scripts/discover_instance_schema.mjs against the live
+// schema (120 total properties on the object). This subset covers the renewal
+// pipeline, contract details, ROI-relevant payment lifecycle, health signals,
+// engagement, and churn context. Joined to customer_profiles via
+// `allmoxy_customer_id` directly on the Instance (no association traversal).
+const INSTANCE_PROPS = [
+  // Identity / joins
+  'account_name',
+  'allmoxy_customer_id',
+  'installer_id',
+  'installer_url',
+  'stripe_company_id',
+  'stripe_subscription_id',
+  'stripe_connect_id',
+  'custom_domain_stripe_subscription_id',
+  // Renewal / contract
+  'calculated_renewal_date',
+  'renewal_date',
+  'contract_status',
+  'contract_length_months_',
+  'monthly_flat_fee',
+  'renewal_expansion_revenue',
+  'reason_s__for_no_renewal_expansion_revenue',
+  // Lifecycle dates
+  'instance_creation',
+  'payment_start_date',
+  'payment_pause_date',
+  'last_payment_date',
+  'merchant_connect_date',
+  'goal_launch_date__cloned_',
+  // Status / health
+  'status',
+  'is_this_customer_launched___cloned_',
+  'customer_health_cs_pulse__cloned_',
+  'health_score',
+  'health_score_status',
+  'vip_legacy_customer__cloned_',
+  'hs_current_customer',
+  // Ownership / journey
+  'hubspot_owner_id',
+  'hubspot_team_id',
+  'implementation_status',
+  'customer_s_purpose_of_adopting_allmoxy',
+  // Engagement signal
+  'customer_entered_orders___prev__billing_period',
+  // Churn context
+  'customer_closed_lost__cloned_',
+  'reason_why_customer_is_in_the_churn_assessment_meeting',
+  // Audit
+  'hs_createdate',
+  'hs_lastmodifieddate',
+];
+
+// --- Pull all Instances (paginated) ----------------------------------------
+async function pullInstances() {
+  const instances = [];
+  let after = undefined;
+  let page = 0;
+  const limit = 100;
+  const propsParam = INSTANCE_PROPS.join(',');
+  while (true) {
+    page++;
+    const url = `/crm/v3/objects/${INSTANCE_OBJECT_TYPE}?limit=${limit}&properties=${encodeURIComponent(propsParam)}${after ? `&after=${after}` : ''}`;
+    const data = await hub(url);
+    const batch = data.results || [];
+    for (const inst of batch) {
+      instances.push({
+        id: inst.id,
+        ...inst.properties,
+        createdAt: inst.createdAt,
+        updatedAt: inst.updatedAt,
+      });
+    }
+    process.stderr.write(`  page ${page}: ${batch.length} instances (total so far: ${instances.length})\n`);
+    after = data.paging?.next?.after;
+    if (!after) break;
+  }
+  return instances;
 }
 
 // --- Pull all owners --------------------------------------------------------
@@ -231,6 +326,58 @@ async function main() {
   process.stderr.write('\nNot pulled from HubSpot (these stay xlsx-sourced):\n');
   process.stderr.write('  - Installer ID, Directory, Allmoxy Customer ID, Realm  → allmoxy_core_customer tab\n');
   process.stderr.write('  - Pay Status, Stripe Subscription IDs, Churn Reason     → would need Stripe API\n');
+
+  // ─── Instance custom object sync ─────────────────────────────────────────
+  // Powers the Renewal Management page. Carries calculated_renewal_date,
+  // contract terms, monthly_flat_fee, renewal-expansion history, and the
+  // Instance-level Pulse — none of which live on the Company object.
+  process.stderr.write('\nPulling HubSpot Instances (paginated)...\n');
+  const instances = await pullInstances();
+  let withRenewal = 0, withContract = 0, withCustId = 0, withMonthlyFee = 0;
+  const byPayStatus = {};
+  const byContractStatus = {};
+  for (const i of instances) {
+    if (i.calculated_renewal_date || i.renewal_date) withRenewal++;
+    if (i.contract_status && i.contract_status !== 'No') withContract++;
+    if (i.allmoxy_customer_id) withCustId++;
+    if (i.monthly_flat_fee) withMonthlyFee++;
+    const ps = i.status || '(none)';
+    byPayStatus[ps] = (byPayStatus[ps] || 0) + 1;
+    const cs = i.contract_status || '(none)';
+    byContractStatus[cs] = (byContractStatus[cs] || 0) + 1;
+  }
+  fs.writeFileSync(INSTANCES_OUT, JSON.stringify({
+    fetched_at: new Date().toISOString(),
+    source: `HubSpot CRM API /crm/v3/objects/${INSTANCE_OBJECT_TYPE}`,
+    portal_id: '4910812',
+    object_type: INSTANCE_OBJECT_TYPE,
+    object_label: 'Instance',
+    instance_count: instances.length,
+    properties_fetched: INSTANCE_PROPS,
+    stats: {
+      with_allmoxy_customer_id: withCustId,
+      with_renewal_date: withRenewal,
+      with_active_contract: withContract,
+      with_monthly_flat_fee: withMonthlyFee,
+      by_pay_status: byPayStatus,
+      by_contract_status: byContractStatus,
+    },
+    instances,
+  }, null, 2));
+  process.stderr.write(`  → ${instances.length} instances → ${path.relative(ROOT, INSTANCES_OUT)}\n`);
+  process.stderr.write('\n  Field coverage:\n');
+  process.stderr.write(`    ${withCustId}/${instances.length} have allmoxy_customer_id (join key)\n`);
+  process.stderr.write(`    ${withRenewal}/${instances.length} have a renewal date\n`);
+  process.stderr.write(`    ${withContract}/${instances.length} have an active contract\n`);
+  process.stderr.write(`    ${withMonthlyFee}/${instances.length} have monthly_flat_fee set\n`);
+  process.stderr.write('  Pay status distribution:\n');
+  for (const [k, v] of Object.entries(byPayStatus).sort((a, b) => b[1] - a[1])) {
+    process.stderr.write(`    ${String(v).padStart(4)} ${k}\n`);
+  }
+  process.stderr.write('  Contract status distribution:\n');
+  for (const [k, v] of Object.entries(byContractStatus).sort((a, b) => b[1] - a[1])) {
+    process.stderr.write(`    ${String(v).padStart(4)} ${k}\n`);
+  }
 
   process.stderr.write('\nDone.\n');
 }

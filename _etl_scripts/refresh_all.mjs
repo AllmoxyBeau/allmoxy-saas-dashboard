@@ -435,6 +435,17 @@ runScript('apply_transaction_overrides.mjs', null);
 console.log('  applying annual-payer amortization…');
 runScript('apply_annual_amortization.mjs', null);
 
+// Re-attribute Stripe Connect fees via the explicit mapping in
+// connect_customer_overrides.json. build_customer_profiles joins by exact
+// lowercase name and silently drops customers whose name in
+// connect_by_customer_month differs from their profile name (e.g. "Fryburg
+// Door, Inc." vs "Fryburg Door - Mullwood"). This step overlays the manual
+// mapping so every mapped Connect customer gets monthly_history.connect +
+// lifetime_connect populated. Must run AFTER annual amortization because it
+// rewrites monthly_history totals using the amortized subscription value.
+console.log('  applying Stripe Connect attribution…');
+runScript('apply_connect_attribution.mjs', null);
+
 // Apply customer-status overrides (sub-instance-of-parent, comp arrangements).
 // Final say on status — must run AFTER amortization which already adjusts status
 // for annual-coverage customers. These overrides cover the cases amortization
@@ -494,6 +505,18 @@ runScript('build_churn_risk_matrix.mjs', null); // writes churn_risk_matrix.json
 // paying customer as gym_member / hygiene_gap / dormant / declining / healthy
 // and surfaces "$ paid without value" as the headline metric.
 runScript('build_time_to_value.mjs', null); // writes time_to_value.json itself
+
+// Renewal Management — joins HubSpot Instance object (renewal date, contract
+// terms, monthly flat fee, last-renewal-expansion history) to customer
+// financials + orders verified + churn matrix. Pre-computes ROI multipliers
+// (lifetime + annualized) and 24-month monthly ROI trend so drop-offs are
+// visible. Requires the new Instance sync in sync_hubspot.mjs to have run.
+runScript('build_renewal_management.mjs', null); // writes renewal_management.json itself
+
+// Data Cleanup — surfaces every detectable data-hygiene issue (Instance aid
+// missing, ghost HubSpot Company IDs, Connect mapping orphans, pay-status
+// drift). Drives the Maintenance → Data Cleanup page.
+runScript('build_data_cleanup.mjs', null); // writes data_cleanup.json itself
 
 // QoE-6 Invariant tests — run AFTER all snapshots are built so they can cross-check
 // for consistency. Writes invariant_test_results.json. Exits non-zero on error-severity

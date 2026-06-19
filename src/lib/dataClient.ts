@@ -39,6 +39,8 @@ export const KNOWN_SNAPSHOTS = [
   'orders_verified',
   'churn_risk_matrix',
   'time_to_value',
+  'renewal_management',
+  'data_cleanup',
 ] as const;
 
 export type SnapshotName = (typeof KNOWN_SNAPSHOTS)[number];
