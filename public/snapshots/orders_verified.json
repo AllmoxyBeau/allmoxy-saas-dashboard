@@ -1,10 +1,10 @@
 {
-  "fetched_at": "2026-06-18T00:53:51.282Z",
+  "fetched_at": "2026-06-19T17:57:19.669Z",
   "source": "Orders Verified Data.xlsx · Raw Data + Monthly Average + Month to Month Veified Raw Data",
   "comment": "Per-customer verified order data. Three signals captured: (1) per-year order counts + USD totals (from Raw Data), (2) MONTHLY AVERAGE revenue by year (from Monthly Average sheet — used for apples-to-apples YoY trend since 2026 is partial), (3) Live Date (year customer went live) + Months to Launch (from Month to Month Veified Raw Data sheet — answers Launch Status without HubSpot note scanning).",
   "current_year": "2026",
   "prior_year": "2025",
-  "customer_count": 197,
+  "customer_count": 264,
   "raw_data_rows_skipped": 1,
   "monthly_average_rows_joined": 190,
   "live_date_rows_joined": 190,
@@ -113,7 +113,7 @@
           "b2b_subtotal_usd": 119801.11
         },
         "2026": {
-          "order_count": 4783,
+          "order_count": null,
           "total_usd": 10542144.83,
           "subtotal_usd": 10542144.83,
           "b2b_subtotal_usd": 134705.45
@@ -144,7 +144,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 254904,
+      "total_lifetime_orders": 250121,
       "total_lifetime_usd": 215409328.75,
       "monthly_supplement": {
         "2026-01": 1957117.06,
@@ -245,7 +245,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1554,
+          "order_count": null,
           "total_usd": 2428214.38,
           "subtotal_usd": 2428214.38,
           "b2b_subtotal_usd": 0
@@ -273,7 +273,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 74811,
+      "total_lifetime_orders": 73257,
       "total_lifetime_usd": 58002164.45,
       "monthly_supplement": {
         "2026-01": 424315.01,
@@ -380,7 +380,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1040,
+          "order_count": null,
           "total_usd": 1231974.16,
           "subtotal_usd": 1231974.16,
           "b2b_subtotal_usd": 0
@@ -409,7 +409,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 70465,
+      "total_lifetime_orders": 69425,
       "total_lifetime_usd": 40871069.58,
       "monthly_supplement": {
         "2026-01": 219209.67,
@@ -516,7 +516,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 10,
+          "order_count": null,
           "total_usd": 164823.6,
           "subtotal_usd": 164823.6,
           "b2b_subtotal_usd": 0
@@ -545,7 +545,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3753,
+      "total_lifetime_orders": 3743,
       "total_lifetime_usd": 10950240.84,
       "monthly_supplement": {
         "2026-01": 13966.83,
@@ -652,7 +652,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 7,
+          "order_count": null,
           "total_usd": 32170.75,
           "subtotal_usd": 32170.75,
           "b2b_subtotal_usd": 0
@@ -681,7 +681,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3479,
+      "total_lifetime_orders": 3472,
       "total_lifetime_usd": 2510576.13,
       "monthly_supplement": {
         "2026-01": 0,
@@ -788,7 +788,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1089,
+          "order_count": null,
           "total_usd": 9208547.82,
           "subtotal_usd": 9208547.82,
           "b2b_subtotal_usd": 0
@@ -817,7 +817,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 112763,
+      "total_lifetime_orders": 111674,
       "total_lifetime_usd": 169073706.29,
       "monthly_supplement": {
         "2026-01": 1990358.76,
@@ -894,7 +894,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 5240,
+          "order_count": null,
           "total_usd": 7413122.44,
           "subtotal_usd": 7413122.44,
           "b2b_subtotal_usd": 0
@@ -918,7 +918,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 258208,
+      "total_lifetime_orders": 252968,
       "total_lifetime_usd": 132345240.12,
       "monthly_supplement": {
         "2026-01": 1440444.3,
@@ -1025,7 +1025,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 194,
+          "order_count": null,
           "total_usd": 289840.5,
           "subtotal_usd": 289840.5,
           "b2b_subtotal_usd": 0
@@ -1054,7 +1054,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 15205,
+      "total_lifetime_orders": 15011,
       "total_lifetime_usd": 9748882.81,
       "monthly_supplement": {
         "2026-01": 48447.12,
@@ -1161,7 +1161,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 938,
+          "order_count": null,
           "total_usd": 2432499.89,
           "subtotal_usd": 2432499.89,
           "b2b_subtotal_usd": 0
@@ -1190,7 +1190,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 74631,
+      "total_lifetime_orders": 73693,
       "total_lifetime_usd": 65762097.19,
       "monthly_supplement": {
         "2026-01": 348213.98,
@@ -1291,7 +1291,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1409,
+          "order_count": null,
           "total_usd": 3549767.01,
           "subtotal_usd": 3549767.01,
           "b2b_subtotal_usd": 0
@@ -1319,7 +1319,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 61747,
+      "total_lifetime_orders": 60338,
       "total_lifetime_usd": 72614425.39,
       "monthly_supplement": {
         "2026-01": 693675.52,
@@ -1414,7 +1414,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 131,
+          "order_count": null,
           "total_usd": 249180.51,
           "subtotal_usd": 249180.51,
           "b2b_subtotal_usd": 0
@@ -1440,7 +1440,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 4621,
+      "total_lifetime_orders": 4490,
       "total_lifetime_usd": 3860073.83,
       "monthly_supplement": {
         "2026-01": 59432.05,
@@ -1547,7 +1547,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 347,
+          "order_count": null,
           "total_usd": 713844.54,
           "subtotal_usd": 713844.54,
           "b2b_subtotal_usd": 0
@@ -1575,7 +1575,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 15188,
+      "total_lifetime_orders": 14841,
       "total_lifetime_usd": 13600405.96,
       "monthly_supplement": {
         "2026-01": 156331.28,
@@ -1676,7 +1676,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 38,
+          "order_count": null,
           "total_usd": 85525.16,
           "subtotal_usd": 85525.16,
           "b2b_subtotal_usd": 0
@@ -1703,7 +1703,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1262,
+      "total_lifetime_orders": 1224,
       "total_lifetime_usd": 987041.02,
       "monthly_supplement": {
         "2026-01": 12373.58,
@@ -1804,7 +1804,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 841,
+          "order_count": null,
           "total_usd": 1721979.04,
           "subtotal_usd": 1721979.04,
           "b2b_subtotal_usd": 0
@@ -1831,7 +1831,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 27289,
+      "total_lifetime_orders": 26448,
       "total_lifetime_usd": 26128436.39,
       "monthly_supplement": {
         "2026-01": 244625.05,
@@ -1932,7 +1932,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 270,
+          "order_count": null,
           "total_usd": 675579.68,
           "subtotal_usd": 675579.68,
           "b2b_subtotal_usd": 0
@@ -1959,7 +1959,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 8295,
+      "total_lifetime_orders": 8025,
       "total_lifetime_usd": 10461764.59,
       "monthly_supplement": {
         "2026-01": 198814.27,
@@ -2060,7 +2060,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 17,
+          "order_count": null,
           "total_usd": 1260319.16,
           "subtotal_usd": 1260319.16,
           "b2b_subtotal_usd": 0
@@ -2087,7 +2087,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 9617,
+      "total_lifetime_orders": 9600,
       "total_lifetime_usd": 57410363.73,
       "monthly_supplement": {
         "2026-01": 426180.46,
@@ -2182,7 +2182,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 781,
+          "order_count": null,
           "total_usd": 1114175.45,
           "subtotal_usd": 1114175.45,
           "b2b_subtotal_usd": 0
@@ -2209,7 +2209,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 30115,
+      "total_lifetime_orders": 29334,
       "total_lifetime_usd": 16084983.45,
       "monthly_supplement": {
         "2026-01": 154186.48,
@@ -2262,7 +2262,7 @@
           "b2b_subtotal_usd": 537.19
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -2375,7 +2375,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 451,
+          "order_count": null,
           "total_usd": 1061272.76,
           "subtotal_usd": 1061272.76,
           "b2b_subtotal_usd": 0
@@ -2402,7 +2402,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 15409,
+      "total_lifetime_orders": 14958,
       "total_lifetime_usd": 14260621.63,
       "monthly_supplement": {
         "2026-01": 215599.28,
@@ -2473,7 +2473,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 328,
+          "order_count": null,
           "total_usd": 1008490.02,
           "subtotal_usd": 1008490.02,
           "b2b_subtotal_usd": 0
@@ -2495,7 +2495,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 11818,
+      "total_lifetime_orders": 11490,
       "total_lifetime_usd": 8883201.91,
       "monthly_supplement": {
         "2026-01": 179692.85,
@@ -2578,7 +2578,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -2676,7 +2676,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 370,
+          "order_count": null,
           "total_usd": 1087820.56,
           "subtotal_usd": 1087820.56,
           "b2b_subtotal_usd": 0
@@ -2701,7 +2701,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 21399,
+      "total_lifetime_orders": 21029,
       "total_lifetime_usd": 132913557.03,
       "monthly_supplement": {
         "2026-01": 164447.11,
@@ -2772,7 +2772,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 215,
+          "order_count": null,
           "total_usd": 487838.15,
           "subtotal_usd": 487838.15,
           "b2b_subtotal_usd": 0
@@ -2794,7 +2794,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3469,
+      "total_lifetime_orders": 3254,
       "total_lifetime_usd": 5937135.45,
       "monthly_supplement": {
         "2026-01": 67765.24,
@@ -2865,7 +2865,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 230,
+          "order_count": null,
           "total_usd": 479433.7,
           "subtotal_usd": 479433.7,
           "b2b_subtotal_usd": 0
@@ -2888,7 +2888,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3811,
+      "total_lifetime_orders": 3581,
       "total_lifetime_usd": 5157750.64,
       "monthly_supplement": {
         "2026-01": 78131.81,
@@ -2965,7 +2965,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 343,
+          "order_count": null,
           "total_usd": 753643.08,
           "subtotal_usd": 753643.08,
           "b2b_subtotal_usd": 0
@@ -2989,7 +2989,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 17135,
+      "total_lifetime_orders": 16792,
       "total_lifetime_usd": 20298212.24,
       "monthly_supplement": {
         "2026-01": 180653.72,
@@ -3078,7 +3078,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 24,
+          "order_count": null,
           "total_usd": 270074.41,
           "subtotal_usd": 270074.41,
           "b2b_subtotal_usd": 0
@@ -3102,7 +3102,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 2810,
+      "total_lifetime_orders": 2786,
       "total_lifetime_usd": 7319300.21,
       "monthly_supplement": {
         "2026-01": 10232.48,
@@ -3155,7 +3155,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -3257,7 +3257,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 6,
+          "order_count": null,
           "total_usd": 19511.2,
           "subtotal_usd": 19511.2,
           "b2b_subtotal_usd": 0
@@ -3282,7 +3282,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 832,
+      "total_lifetime_orders": 826,
       "total_lifetime_usd": 4603064.36,
       "monthly_supplement": {
         "2026-01": 6016.24,
@@ -3341,7 +3341,7 @@
           "b2b_subtotal_usd": 407.24
         },
         "2026": {
-          "order_count": 254,
+          "order_count": null,
           "total_usd": 512080.41,
           "subtotal_usd": 512080.41,
           "b2b_subtotal_usd": 0
@@ -3358,7 +3358,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 965,
+      "total_lifetime_orders": 711,
       "total_lifetime_usd": 890305.58,
       "monthly_supplement": {
         "2026-01": 49669.04,
@@ -3441,7 +3441,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 12,
+          "order_count": null,
           "total_usd": 5926.05,
           "subtotal_usd": 5926.05,
           "b2b_subtotal_usd": 0
@@ -3456,7 +3456,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3353,
+      "total_lifetime_orders": 3341,
       "total_lifetime_usd": 4621381.16,
       "monthly_supplement": {
         "2026-01": 3818.22,
@@ -3539,7 +3539,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 2894,
+          "order_count": null,
           "total_usd": 4647609.81,
           "subtotal_usd": 4647609.81,
           "b2b_subtotal_usd": 0
@@ -3563,7 +3563,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 88579,
+      "total_lifetime_orders": 85685,
       "total_lifetime_usd": 72950949.65,
       "monthly_supplement": {
         "2026-01": 887526.05,
@@ -3640,7 +3640,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 16,
+          "order_count": null,
           "total_usd": 140612.9,
           "subtotal_usd": 140612.9,
           "b2b_subtotal_usd": 0
@@ -3664,7 +3664,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1400,
+      "total_lifetime_orders": 1384,
       "total_lifetime_usd": 2950338.06,
       "monthly_supplement": {
         "2026-01": 21113.94,
@@ -3747,7 +3747,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 486,
+          "order_count": null,
           "total_usd": 529251.03,
           "subtotal_usd": 529251.03,
           "b2b_subtotal_usd": 0
@@ -3772,7 +3772,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 22953,
+      "total_lifetime_orders": 22467,
       "total_lifetime_usd": 10822907.73,
       "monthly_supplement": {
         "2026-01": 107220.08,
@@ -3843,7 +3843,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1688,
+          "order_count": null,
           "total_usd": 2637482.1,
           "subtotal_usd": 2637482.1,
           "b2b_subtotal_usd": 0
@@ -3858,7 +3858,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 40883,
+      "total_lifetime_orders": 39195,
       "total_lifetime_usd": 38602838.66,
       "monthly_supplement": {
         "2026-01": 436343.93,
@@ -3887,7 +3887,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -3931,7 +3931,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 6,
+          "order_count": null,
           "total_usd": 11679.79,
           "subtotal_usd": 11679.79,
           "b2b_subtotal_usd": 0
@@ -3946,7 +3946,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 7,
+      "total_lifetime_orders": 1,
       "total_lifetime_usd": 12107.13,
       "monthly_supplement": {
         "2026-01": 0,
@@ -4023,7 +4023,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 3747,
+          "order_count": null,
           "total_usd": 3278855.03,
           "subtotal_usd": 3278855.03,
           "b2b_subtotal_usd": 0
@@ -4046,7 +4046,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 42860,
+      "total_lifetime_orders": 39113,
       "total_lifetime_usd": 22591513.93,
       "monthly_supplement": {
         "2026-01": 633985,
@@ -4123,7 +4123,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 135,
+          "order_count": null,
           "total_usd": 1212165.61,
           "subtotal_usd": 1212165.61,
           "b2b_subtotal_usd": 0
@@ -4145,7 +4145,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 5724,
+      "total_lifetime_orders": 5589,
       "total_lifetime_usd": 12121204.61,
       "monthly_supplement": {
         "2026-01": 234831.05,
@@ -4222,7 +4222,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 2217,
+          "order_count": null,
           "total_usd": 3215691.15,
           "subtotal_usd": 3215691.15,
           "b2b_subtotal_usd": 0
@@ -4246,7 +4246,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 49721,
+      "total_lifetime_orders": 47504,
       "total_lifetime_usd": 37022543.31,
       "monthly_supplement": {
         "2026-01": 636415.23,
@@ -4323,7 +4323,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 148,
+          "order_count": null,
           "total_usd": 100038.15,
           "subtotal_usd": 100038.15,
           "b2b_subtotal_usd": 0
@@ -4347,7 +4347,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 6555,
+      "total_lifetime_orders": 6407,
       "total_lifetime_usd": 2818190.32,
       "monthly_supplement": {
         "2026-01": 29487.45,
@@ -4418,7 +4418,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 34,
+          "order_count": null,
           "total_usd": 90665.74,
           "subtotal_usd": 90665.74,
           "b2b_subtotal_usd": 0
@@ -4433,7 +4433,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1016,
+      "total_lifetime_orders": 982,
       "total_lifetime_usd": 908301.84,
       "monthly_supplement": {
         "2026-01": 27625.97,
@@ -4486,7 +4486,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -4580,7 +4580,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 717,
+          "order_count": null,
           "total_usd": 1259992.73,
           "subtotal_usd": 1259992.73,
           "b2b_subtotal_usd": 0
@@ -4603,7 +4603,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 14447,
+      "total_lifetime_orders": 13730,
       "total_lifetime_usd": 15993184.27,
       "monthly_supplement": {
         "2026-01": 206861.54,
@@ -4674,7 +4674,7 @@
           "b2b_subtotal_usd": 57408.09
         },
         "2026": {
-          "order_count": 6,
+          "order_count": null,
           "total_usd": 25800.95,
           "subtotal_usd": 25800.95,
           "b2b_subtotal_usd": 10827.51
@@ -4697,7 +4697,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 570,
+      "total_lifetime_orders": 564,
       "total_lifetime_usd": 723763.74,
       "monthly_supplement": {
         "2026-01": 7643.07,
@@ -4768,7 +4768,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 565,
+          "order_count": null,
           "total_usd": 1242335.89,
           "subtotal_usd": 1242335.89,
           "b2b_subtotal_usd": 0
@@ -4791,7 +4791,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 14052,
+      "total_lifetime_orders": 13487,
       "total_lifetime_usd": 14855797.17,
       "monthly_supplement": {
         "2026-01": 219840.29,
@@ -4856,7 +4856,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 343,
+          "order_count": null,
           "total_usd": 290720.66,
           "subtotal_usd": 290720.66,
           "b2b_subtotal_usd": 0
@@ -4877,7 +4877,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 7350,
+      "total_lifetime_orders": 7007,
       "total_lifetime_usd": 7835329.86,
       "monthly_supplement": {
         "2026-01": 59316.61,
@@ -4954,7 +4954,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 103,
+          "order_count": null,
           "total_usd": 491552.5,
           "subtotal_usd": 491552.5,
           "b2b_subtotal_usd": 0
@@ -4977,7 +4977,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 4773,
+      "total_lifetime_orders": 4670,
       "total_lifetime_usd": 11040292.5,
       "monthly_supplement": {
         "2026-01": 146017.45,
@@ -5018,7 +5018,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -5080,7 +5080,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -5130,7 +5130,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -5206,7 +5206,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 169,
+          "order_count": null,
           "total_usd": 333227.44,
           "subtotal_usd": 333227.44,
           "b2b_subtotal_usd": 0
@@ -5226,7 +5226,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 5965,
+      "total_lifetime_orders": 5796,
       "total_lifetime_usd": 4097137.84,
       "monthly_supplement": {
         "2026-01": 78371.18,
@@ -5297,7 +5297,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 20,
+          "order_count": null,
           "total_usd": 248448.21,
           "subtotal_usd": 248448.21,
           "b2b_subtotal_usd": 0
@@ -5319,7 +5319,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1722,
+      "total_lifetime_orders": 1702,
       "total_lifetime_usd": 5358099.67,
       "monthly_supplement": {
         "2026-01": 56192.32,
@@ -5378,7 +5378,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 17,
+          "order_count": null,
           "total_usd": 124196.35,
           "subtotal_usd": 124196.35,
           "b2b_subtotal_usd": 0
@@ -5399,7 +5399,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 293,
+      "total_lifetime_orders": 276,
       "total_lifetime_usd": 964478.98,
       "monthly_supplement": {
         "2026-01": 24936.25,
@@ -5470,7 +5470,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 79,
+          "order_count": null,
           "total_usd": 94648.28,
           "subtotal_usd": 94648.28,
           "b2b_subtotal_usd": 0
@@ -5485,7 +5485,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 4553,
+      "total_lifetime_orders": 4474,
       "total_lifetime_usd": 3044760.81,
       "monthly_supplement": {
         "2026-01": 24899.15,
@@ -5514,7 +5514,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -5594,7 +5594,7 @@
           "b2b_subtotal_usd": 1140332.26
         },
         "2026": {
-          "order_count": 209,
+          "order_count": null,
           "total_usd": 421781,
           "subtotal_usd": 421781,
           "b2b_subtotal_usd": 245054.22
@@ -5609,7 +5609,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3723,
+      "total_lifetime_orders": 3514,
       "total_lifetime_usd": 4668078.89,
       "monthly_supplement": {
         "2026-01": 76284.56,
@@ -5674,7 +5674,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 151,
+          "order_count": null,
           "total_usd": 245680.87,
           "subtotal_usd": 245680.87,
           "b2b_subtotal_usd": 0
@@ -5696,7 +5696,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 6902,
+      "total_lifetime_orders": 6751,
       "total_lifetime_usd": 9046759.51,
       "monthly_supplement": {
         "2026-01": 52085.63,
@@ -5731,7 +5731,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -5812,7 +5812,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1563,
+          "order_count": null,
           "total_usd": 6800765.87,
           "subtotal_usd": 6800765.87,
           "b2b_subtotal_usd": 0
@@ -5832,7 +5832,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 21865,
+      "total_lifetime_orders": 20302,
       "total_lifetime_usd": 54049512.84,
       "monthly_supplement": {
         "2026-01": 1262621.12,
@@ -5903,7 +5903,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 652,
+          "order_count": null,
           "total_usd": 1162127.09,
           "subtotal_usd": 1162127.09,
           "b2b_subtotal_usd": 0
@@ -5926,7 +5926,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 14517,
+      "total_lifetime_orders": 13865,
       "total_lifetime_usd": 13344970.3,
       "monthly_supplement": {
         "2026-01": 201248.25,
@@ -5967,7 +5967,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 826,
+          "order_count": null,
           "total_usd": 11765862.18,
           "subtotal_usd": 11765862.18,
           "b2b_subtotal_usd": 0
@@ -5985,7 +5985,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 10524,
+      "total_lifetime_orders": 9698,
       "total_lifetime_usd": 55086452.67,
       "monthly_supplement": {
         "2026-01": 1171491.11,
@@ -6050,7 +6050,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 904,
+          "order_count": null,
           "total_usd": 1142696.41,
           "subtotal_usd": 1142696.41,
           "b2b_subtotal_usd": 0
@@ -6072,7 +6072,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 16563,
+      "total_lifetime_orders": 15659,
       "total_lifetime_usd": 10970282.97,
       "monthly_supplement": {
         "2026-01": 209572.11,
@@ -6113,7 +6113,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 9,
+          "order_count": null,
           "total_usd": 138351.62,
           "subtotal_usd": 138351.62,
           "b2b_subtotal_usd": 0
@@ -6131,7 +6131,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 66,
+      "total_lifetime_orders": 57,
       "total_lifetime_usd": 523927.43,
       "monthly_supplement": {
         "2026-01": 27091.6,
@@ -6196,7 +6196,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1874,
+          "order_count": null,
           "total_usd": 2463245.58,
           "subtotal_usd": 2463245.58,
           "b2b_subtotal_usd": 0
@@ -6218,7 +6218,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 60744,
+      "total_lifetime_orders": 58870,
       "total_lifetime_usd": 55986150.84,
       "monthly_supplement": {
         "2026-01": 440218.45,
@@ -6283,7 +6283,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 294,
+          "order_count": null,
           "total_usd": 249909.02,
           "subtotal_usd": 249909.02,
           "b2b_subtotal_usd": 0
@@ -6305,7 +6305,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 6719,
+      "total_lifetime_orders": 6425,
       "total_lifetime_usd": 3457212.84,
       "monthly_supplement": {
         "2026-01": 41948.63,
@@ -6364,7 +6364,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -6443,7 +6443,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 179,
+          "order_count": null,
           "total_usd": 782433.02,
           "subtotal_usd": 782433.02,
           "b2b_subtotal_usd": 0
@@ -6464,7 +6464,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 6355,
+      "total_lifetime_orders": 6176,
       "total_lifetime_usd": 11434648.65,
       "monthly_supplement": {
         "2026-01": 242987.07,
@@ -6529,7 +6529,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -6609,7 +6609,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 816,
+          "order_count": null,
           "total_usd": 4779961.59,
           "subtotal_usd": 4779961.59,
           "b2b_subtotal_usd": 0
@@ -6630,7 +6630,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 20477,
+      "total_lifetime_orders": 19661,
       "total_lifetime_usd": 62514854.52,
       "monthly_supplement": {
         "2026-01": 1005366.68,
@@ -6683,7 +6683,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -6755,7 +6755,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 33,
+          "order_count": null,
           "total_usd": 1421880.11,
           "subtotal_usd": 1421880.11,
           "b2b_subtotal_usd": 0
@@ -6773,7 +6773,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 668,
+      "total_lifetime_orders": 635,
       "total_lifetime_usd": 6463830.38,
       "monthly_supplement": {
         "2026-01": 315682.02,
@@ -6832,7 +6832,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1,
+          "order_count": null,
           "total_usd": 100657.23,
           "subtotal_usd": 100657.23,
           "b2b_subtotal_usd": 0
@@ -6847,7 +6847,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 50,
+      "total_lifetime_orders": 49,
       "total_lifetime_usd": 688278.65,
       "monthly_supplement": {
         "2026-01": 26904.12,
@@ -6888,7 +6888,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -6962,7 +6962,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1732,
+          "order_count": null,
           "total_usd": 1794701.65,
           "subtotal_usd": 1794701.65,
           "b2b_subtotal_usd": 0
@@ -6983,7 +6983,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 11141,
+      "total_lifetime_orders": 9409,
       "total_lifetime_usd": 8814591.41,
       "monthly_supplement": {
         "2026-01": 329436.09,
@@ -7048,7 +7048,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 164,
+          "order_count": null,
           "total_usd": 137230.23,
           "subtotal_usd": 137230.23,
           "b2b_subtotal_usd": 0
@@ -7070,7 +7070,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 6950,
+      "total_lifetime_orders": 6786,
       "total_lifetime_usd": 3247657.13,
       "monthly_supplement": {
         "2026-01": 23387.45,
@@ -7129,7 +7129,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 152,
+          "order_count": null,
           "total_usd": 1185486.03,
           "subtotal_usd": 1185486.03,
           "b2b_subtotal_usd": 0
@@ -7149,7 +7149,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3091,
+      "total_lifetime_orders": 2939,
       "total_lifetime_usd": 11347252.19,
       "monthly_supplement": {
         "2026-01": 187807.98,
@@ -7202,7 +7202,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 136,
+          "order_count": null,
           "total_usd": 301240.1,
           "subtotal_usd": 301240.1,
           "b2b_subtotal_usd": 0
@@ -7222,7 +7222,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3744,
+      "total_lifetime_orders": 3608,
       "total_lifetime_usd": 3010687.04,
       "monthly_supplement": {
         "2026-01": 79065.47,
@@ -7251,7 +7251,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -7325,7 +7325,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1,
+          "order_count": null,
           "total_usd": 5945.46,
           "subtotal_usd": 5945.46,
           "b2b_subtotal_usd": 0
@@ -7346,7 +7346,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 310,
+      "total_lifetime_orders": 309,
       "total_lifetime_usd": 900191.74,
       "monthly_supplement": {
         "2026-01": 5945.46,
@@ -7405,7 +7405,7 @@
           "b2b_subtotal_usd": 90494.23
         },
         "2026": {
-          "order_count": 19,
+          "order_count": null,
           "total_usd": 40161.28,
           "subtotal_usd": 40161.28,
           "b2b_subtotal_usd": 20008.5
@@ -7426,7 +7426,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 523,
+      "total_lifetime_orders": 504,
       "total_lifetime_usd": 885725.72,
       "monthly_supplement": {
         "2026-01": 2822.74,
@@ -7485,7 +7485,7 @@
           "b2b_subtotal_usd": 233133.7
         },
         "2026": {
-          "order_count": 79,
+          "order_count": null,
           "total_usd": 86079.45,
           "subtotal_usd": 86079.45,
           "b2b_subtotal_usd": 47263.47
@@ -7506,7 +7506,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1692,
+      "total_lifetime_orders": 1613,
       "total_lifetime_usd": 1046910.84,
       "monthly_supplement": {
         "2026-01": 10998.93,
@@ -7553,7 +7553,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -7579,6 +7579,44 @@
       },
       "monthly_avg_source_current_year": "verified_orders_2026_monthly",
       "latest_year_with_orders": "2025",
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "245": {
+      "allmoxy_customer_id": 245,
+      "name": "Create More Space",
+      "orders_xlsx_name": null,
+      "installer_id": "1315",
+      "subdomain": "createmorespace",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
       "monthly_avg_yoy_pct": -1,
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
@@ -7627,7 +7665,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 218,
+          "order_count": null,
           "total_usd": 1736802.98,
           "subtotal_usd": 1736802.98,
           "b2b_subtotal_usd": 0
@@ -7648,7 +7686,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 2378,
+      "total_lifetime_orders": 2160,
       "total_lifetime_usd": 9665846.21,
       "monthly_supplement": {
         "2026-01": 365731.91,
@@ -7662,6 +7700,44 @@
       "monthly_avg_yoy_pct": 0.4,
       "monthly_avg_current_year": 347360.6,
       "monthly_avg_prior_year": 247638.51
+    },
+    "255": {
+      "allmoxy_customer_id": 255,
+      "name": "True Lifestile Design",
+      "orders_xlsx_name": null,
+      "installer_id": null,
+      "subdomain": "truelifestile",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "256": {
       "allmoxy_customer_id": 256,
@@ -7707,7 +7783,7 @@
           "b2b_subtotal_usd": 1174689.45
         },
         "2026": {
-          "order_count": 1488,
+          "order_count": null,
           "total_usd": 2886635.18,
           "subtotal_usd": 2886635.18,
           "b2b_subtotal_usd": 271941.56
@@ -7728,7 +7804,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 28444,
+      "total_lifetime_orders": 26956,
       "total_lifetime_usd": 30678582.83,
       "monthly_supplement": {
         "2026-01": 463425.06,
@@ -7763,7 +7839,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -7837,7 +7913,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 387,
+          "order_count": null,
           "total_usd": 813141.53,
           "subtotal_usd": 813141.53,
           "b2b_subtotal_usd": 0
@@ -7857,7 +7933,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 7286,
+      "total_lifetime_orders": 6899,
       "total_lifetime_usd": 9285766.11,
       "monthly_supplement": {
         "2026-01": 150659.83,
@@ -7898,7 +7974,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -7954,7 +8030,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 83,
+          "order_count": null,
           "total_usd": 104825.88,
           "subtotal_usd": 104825.88,
           "b2b_subtotal_usd": 0
@@ -7972,7 +8048,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1467,
+      "total_lifetime_orders": 1384,
       "total_lifetime_usd": 1322146.36,
       "monthly_supplement": {
         "2026-01": 30836.97,
@@ -8031,7 +8107,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 591,
+          "order_count": null,
           "total_usd": 960303.37,
           "subtotal_usd": 960303.37,
           "b2b_subtotal_usd": 0
@@ -8052,7 +8128,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 8454,
+      "total_lifetime_orders": 7863,
       "total_lifetime_usd": 7244588.02,
       "monthly_supplement": {
         "2026-01": 148738.42,
@@ -8111,7 +8187,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 93,
+          "order_count": null,
           "total_usd": 496516.23,
           "subtotal_usd": 496516.23,
           "b2b_subtotal_usd": 0
@@ -8131,7 +8207,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 2647,
+      "total_lifetime_orders": 2554,
       "total_lifetime_usd": 4043420.89,
       "monthly_supplement": {
         "2026-01": 212282.32,
@@ -8172,7 +8248,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -8204,79 +8280,6 @@
       "monthly_avg_yoy_pct": -1,
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
-    },
-    "285": {
-      "allmoxy_customer_id": 285,
-      "name": "Mitchell Wood Worx",
-      "orders_xlsx_name": "Mitchell Wood Worx",
-      "installer_id": "1458",
-      "subdomain": "mitchellwoodworx",
-      "years": {
-        "2021": {
-          "order_count": 101,
-          "total_usd": 41393.84,
-          "subtotal_usd": 39073.15,
-          "b2b_subtotal_usd": 0
-        },
-        "2022": {
-          "order_count": 91,
-          "total_usd": 52898.56,
-          "subtotal_usd": 49904.31,
-          "b2b_subtotal_usd": 0
-        },
-        "2023": {
-          "order_count": 78,
-          "total_usd": 41970.15,
-          "subtotal_usd": 39594.47,
-          "b2b_subtotal_usd": 0
-        },
-        "2024": {
-          "order_count": 81,
-          "total_usd": 40109.78,
-          "subtotal_usd": 37839.42,
-          "b2b_subtotal_usd": 0
-        },
-        "2025": {
-          "order_count": 48,
-          "total_usd": 28932.38,
-          "subtotal_usd": 27294.68,
-          "b2b_subtotal_usd": 0
-        },
-        "2026": {
-          "order_count": 8,
-          "total_usd": 10297.22,
-          "subtotal_usd": 10297.22,
-          "b2b_subtotal_usd": 0
-        }
-      },
-      "monthly_avg": {
-        "2021": 3449.49,
-        "2022": 4408.21,
-        "2023": 3497.51,
-        "2024": 3342.48,
-        "2025": 2411.03,
-        "2026": 2059.44
-      },
-      "live_date": "2021",
-      "live_date_xlsx": "2021",
-      "live_date_inferred": "2021",
-      "live_date_source": "xlsx",
-      "months_to_launch": null,
-      "is_launched": true,
-      "total_lifetime_orders": 407,
-      "total_lifetime_usd": 215601.93,
-      "monthly_supplement": {
-        "2026-01": 2651.31,
-        "2026-02": 49.01,
-        "2026-03": 3022.12,
-        "2026-04": 1726.18,
-        "2026-05": 2848.6
-      },
-      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
-      "latest_year_with_orders": "2026",
-      "monthly_avg_yoy_pct": -0.15,
-      "monthly_avg_current_year": 2059.44,
-      "monthly_avg_prior_year": 2411.03
     },
     "289": {
       "allmoxy_customer_id": 289,
@@ -8310,7 +8313,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 29,
+          "order_count": null,
           "total_usd": 30205.59,
           "subtotal_usd": 30205.59,
           "b2b_subtotal_usd": 0
@@ -8329,7 +8332,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 508,
+      "total_lifetime_orders": 479,
       "total_lifetime_usd": 340815.92,
       "monthly_supplement": {
         "2026-01": 4341.61,
@@ -8382,7 +8385,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 16,
+          "order_count": null,
           "total_usd": 27516.68,
           "subtotal_usd": 27516.68,
           "b2b_subtotal_usd": 0
@@ -8401,7 +8404,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 483,
+      "total_lifetime_orders": 467,
       "total_lifetime_usd": 508560.65,
       "monthly_supplement": {
         "2026-01": 8531.71,
@@ -8454,7 +8457,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1212,
+          "order_count": null,
           "total_usd": 1656599.66,
           "subtotal_usd": 1656599.66,
           "b2b_subtotal_usd": 0
@@ -8473,7 +8476,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 14262,
+      "total_lifetime_orders": 13050,
       "total_lifetime_usd": 13301767.44,
       "monthly_supplement": {
         "2026-01": 266906.04,
@@ -8487,6 +8490,44 @@
       "monthly_avg_yoy_pct": 0.07,
       "monthly_avg_current_year": 331319.93,
       "monthly_avg_prior_year": 309129.37
+    },
+    "297": {
+      "allmoxy_customer_id": 297,
+      "name": "Remarkable Cabinets",
+      "orders_xlsx_name": null,
+      "installer_id": "1478",
+      "subdomain": "remarkablecabinets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "298": {
       "allmoxy_customer_id": 298,
@@ -8502,7 +8543,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -8558,7 +8599,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1509,
+          "order_count": null,
           "total_usd": 2449013.89,
           "subtotal_usd": 2449013.89,
           "b2b_subtotal_usd": 0
@@ -8575,7 +8616,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 9423,
+      "total_lifetime_orders": 7914,
       "total_lifetime_usd": 9764447.77,
       "monthly_supplement": {
         "2026-01": 443709.37,
@@ -8622,7 +8663,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 306,
+          "order_count": null,
           "total_usd": 748962.47,
           "subtotal_usd": 748962.47,
           "b2b_subtotal_usd": 0
@@ -8640,7 +8681,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3633,
+      "total_lifetime_orders": 3327,
       "total_lifetime_usd": 4614046.29,
       "monthly_supplement": {
         "2026-01": 128655.25,
@@ -8654,6 +8695,44 @@
       "monthly_avg_yoy_pct": 0.09,
       "monthly_avg_current_year": 149792.49,
       "monthly_avg_prior_year": 138001.32
+    },
+    "303": {
+      "allmoxy_customer_id": 303,
+      "name": "Innovative Cabinetry And Design",
+      "orders_xlsx_name": null,
+      "installer_id": "2047",
+      "subdomain": "thesandbox",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "304": {
       "allmoxy_customer_id": 304,
@@ -8693,7 +8772,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 209,
+          "order_count": null,
           "total_usd": 393193.54,
           "subtotal_usd": 393193.54,
           "b2b_subtotal_usd": 0
@@ -8713,7 +8792,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 4330,
+      "total_lifetime_orders": 4121,
       "total_lifetime_usd": 5032181.39,
       "monthly_supplement": {
         "2026-01": 40342.1,
@@ -8742,7 +8821,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -8810,7 +8889,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 46,
+          "order_count": null,
           "total_usd": 250866.49,
           "subtotal_usd": 250866.49,
           "b2b_subtotal_usd": 0
@@ -8830,7 +8909,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1615,
+      "total_lifetime_orders": 1569,
       "total_lifetime_usd": 4191760.19,
       "monthly_supplement": {
         "2026-01": 32183.7,
@@ -8883,7 +8962,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 5243,
+          "order_count": null,
           "total_usd": 2396312.21,
           "subtotal_usd": 2396312.21,
           "b2b_subtotal_usd": 0
@@ -8903,7 +8982,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 39700,
+      "total_lifetime_orders": 34457,
       "total_lifetime_usd": 15641556.27,
       "monthly_supplement": {
         "2026-01": 433496.74,
@@ -8956,7 +9035,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 293,
+          "order_count": null,
           "total_usd": 2194444.96,
           "subtotal_usd": 2194444.96,
           "b2b_subtotal_usd": 0
@@ -8976,7 +9055,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 8852,
+      "total_lifetime_orders": 8559,
       "total_lifetime_usd": 26714324.16,
       "monthly_supplement": {
         "2026-01": 658864.19,
@@ -9029,7 +9108,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 365,
+          "order_count": null,
           "total_usd": 672765.43,
           "subtotal_usd": 672765.43,
           "b2b_subtotal_usd": 0
@@ -9049,7 +9128,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 2737,
+      "total_lifetime_orders": 2372,
       "total_lifetime_usd": 2069571.49,
       "monthly_supplement": {
         "2026-01": 127221.81,
@@ -9102,7 +9181,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 22,
+          "order_count": null,
           "total_usd": 12402.21,
           "subtotal_usd": 12402.21,
           "b2b_subtotal_usd": 0
@@ -9117,7 +9196,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 219,
+      "total_lifetime_orders": 197,
       "total_lifetime_usd": 337818.19,
       "monthly_supplement": {
         "2026-01": 1954.92,
@@ -9170,7 +9249,7 @@
           "b2b_subtotal_usd": 297807.96
         },
         "2026": {
-          "order_count": 20,
+          "order_count": null,
           "total_usd": 69250.17,
           "subtotal_usd": 69250.17,
           "b2b_subtotal_usd": 45007.74
@@ -9190,7 +9269,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 525,
+      "total_lifetime_orders": 505,
       "total_lifetime_usd": 11404299,
       "monthly_supplement": {
         "2026-01": 20772.87,
@@ -9219,7 +9298,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -9249,6 +9328,72 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
+    "330": {
+      "allmoxy_customer_id": 330,
+      "name": "Wizzwood DBA - Quality Kitchens Inc.",
+      "orders_xlsx_name": "Quality Kitchens Inc.",
+      "installer_id": "1544",
+      "subdomain": "qualitykitchensinc",
+      "years": {
+        "2022": {
+          "order_count": 581,
+          "total_usd": 2473284.56,
+          "subtotal_usd": 2473284.56,
+          "b2b_subtotal_usd": 0
+        },
+        "2023": {
+          "order_count": 683,
+          "total_usd": 3226411.19,
+          "subtotal_usd": 3226411.19,
+          "b2b_subtotal_usd": 0
+        },
+        "2024": {
+          "order_count": 958,
+          "total_usd": 4116633.51,
+          "subtotal_usd": 4116633.51,
+          "b2b_subtotal_usd": 0
+        },
+        "2025": {
+          "order_count": 948,
+          "total_usd": 3566949.11,
+          "subtotal_usd": 3566917.42,
+          "b2b_subtotal_usd": 0
+        },
+        "2026": {
+          "order_count": null,
+          "total_usd": 1579908,
+          "subtotal_usd": 1579908,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2022": 206107.05,
+        "2023": 268867.6,
+        "2024": 343052.79,
+        "2025": 297245.76,
+        "2026": 315981.6
+      },
+      "live_date": "2022",
+      "live_date_xlsx": "2022",
+      "live_date_inferred": "2022",
+      "live_date_source": "xlsx",
+      "months_to_launch": null,
+      "is_launched": true,
+      "total_lifetime_orders": 3170,
+      "total_lifetime_usd": 14963186.37,
+      "monthly_supplement": {
+        "2026-01": 382658.64,
+        "2026-02": 316832.74,
+        "2026-03": 425663.94,
+        "2026-04": 211488,
+        "2026-05": 243264.68
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": "2026",
+      "monthly_avg_yoy_pct": 0.06,
+      "monthly_avg_current_year": 315981.6,
+      "monthly_avg_prior_year": 297245.76
+    },
     "332": {
       "allmoxy_customer_id": 332,
       "name": "Cober Cabinets",
@@ -9263,7 +9408,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -9294,72 +9439,6 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
-    "333": {
-      "allmoxy_customer_id": 333,
-      "name": "Quality Kitchens Inc.",
-      "orders_xlsx_name": "Quality Kitchens Inc.",
-      "installer_id": "1544",
-      "subdomain": "qualitykitchensinc",
-      "years": {
-        "2022": {
-          "order_count": 581,
-          "total_usd": 2473284.56,
-          "subtotal_usd": 2473284.56,
-          "b2b_subtotal_usd": 0
-        },
-        "2023": {
-          "order_count": 683,
-          "total_usd": 3226411.19,
-          "subtotal_usd": 3226411.19,
-          "b2b_subtotal_usd": 0
-        },
-        "2024": {
-          "order_count": 958,
-          "total_usd": 4116633.51,
-          "subtotal_usd": 4116633.51,
-          "b2b_subtotal_usd": 0
-        },
-        "2025": {
-          "order_count": 948,
-          "total_usd": 3566949.11,
-          "subtotal_usd": 3566917.42,
-          "b2b_subtotal_usd": 0
-        },
-        "2026": {
-          "order_count": 209,
-          "total_usd": 1579908,
-          "subtotal_usd": 1579908,
-          "b2b_subtotal_usd": 0
-        }
-      },
-      "monthly_avg": {
-        "2022": 206107.05,
-        "2023": 268867.6,
-        "2024": 343052.79,
-        "2025": 297245.76,
-        "2026": 315981.6
-      },
-      "live_date": "2022",
-      "live_date_xlsx": "2022",
-      "live_date_inferred": "2022",
-      "live_date_source": "xlsx",
-      "months_to_launch": null,
-      "is_launched": true,
-      "total_lifetime_orders": 3379,
-      "total_lifetime_usd": 14963186.37,
-      "monthly_supplement": {
-        "2026-01": 382658.64,
-        "2026-02": 316832.74,
-        "2026-03": 425663.94,
-        "2026-04": 211488,
-        "2026-05": 243264.68
-      },
-      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
-      "latest_year_with_orders": "2026",
-      "monthly_avg_yoy_pct": 0.06,
-      "monthly_avg_current_year": 315981.6,
-      "monthly_avg_prior_year": 297245.76
-    },
     "337": {
       "allmoxy_customer_id": 337,
       "name": "Cabinets Quick",
@@ -9374,7 +9453,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -9404,6 +9483,44 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
+    "338": {
+      "allmoxy_customer_id": 338,
+      "name": "Hogan's Cabinetry & Millwork",
+      "orders_xlsx_name": null,
+      "installer_id": "1568",
+      "subdomain": "hoganscabinetryandmillwork",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
     "339": {
       "allmoxy_customer_id": 339,
       "name": "RJM Cabinets",
@@ -9412,7 +9529,7 @@
       "subdomain": "rjmcabinets",
       "years": {
         "2026": {
-          "order_count": 2,
+          "order_count": null,
           "total_usd": 529.95,
           "subtotal_usd": 529.95,
           "b2b_subtotal_usd": 0
@@ -9427,7 +9544,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 2,
+      "total_lifetime_orders": 0,
       "total_lifetime_usd": 529.95,
       "monthly_supplement": {
         "2026-01": 0,
@@ -9474,7 +9591,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 678,
+          "order_count": null,
           "total_usd": 445897.33,
           "subtotal_usd": 445897.33,
           "b2b_subtotal_usd": 0
@@ -9493,7 +9610,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 10506,
+      "total_lifetime_orders": 9828,
       "total_lifetime_usd": 5656761.49,
       "monthly_supplement": {
         "2026-01": 57839.01,
@@ -9534,7 +9651,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 104,
+          "order_count": null,
           "total_usd": 258690.63,
           "subtotal_usd": 258690.63,
           "b2b_subtotal_usd": 0
@@ -9552,7 +9669,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 942,
+      "total_lifetime_orders": 838,
       "total_lifetime_usd": 1287161.28,
       "monthly_supplement": {
         "2026-01": 46013.35,
@@ -9599,7 +9716,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 6,
+          "order_count": null,
           "total_usd": 15655.2,
           "subtotal_usd": 15655.2,
           "b2b_subtotal_usd": 0
@@ -9616,7 +9733,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 78,
+      "total_lifetime_orders": 72,
       "total_lifetime_usd": 63879.67,
       "monthly_supplement": {
         "2026-01": 5035.77,
@@ -9663,7 +9780,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -9717,7 +9834,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 2,
+          "order_count": null,
           "total_usd": 26104.9,
           "subtotal_usd": 26104.9,
           "b2b_subtotal_usd": 0
@@ -9733,7 +9850,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 16,
+      "total_lifetime_orders": 14,
       "total_lifetime_usd": 89448.64,
       "monthly_supplement": {
         "2026-01": 489.69,
@@ -9780,7 +9897,7 @@
           "b2b_subtotal_usd": 293687.44
         },
         "2026": {
-          "order_count": 39,
+          "order_count": null,
           "total_usd": 50450.26,
           "subtotal_usd": 50450.26,
           "b2b_subtotal_usd": 28957.89
@@ -9799,7 +9916,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 656,
+      "total_lifetime_orders": 617,
       "total_lifetime_usd": 1040068.54,
       "monthly_supplement": {
         "2026-01": 15926.66,
@@ -9846,7 +9963,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 154,
+          "order_count": null,
           "total_usd": 532104.97,
           "subtotal_usd": 532104.97,
           "b2b_subtotal_usd": 0
@@ -9865,7 +9982,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3173,
+      "total_lifetime_orders": 3019,
       "total_lifetime_usd": 4347610.03,
       "monthly_supplement": {
         "2026-01": 58620.32,
@@ -9879,6 +9996,79 @@
       "monthly_avg_yoy_pct": 0.28,
       "monthly_avg_current_year": 106420.99,
       "monthly_avg_prior_year": 83209.49
+    },
+    "360": {
+      "allmoxy_customer_id": 360,
+      "name": "Elite Cabinets",
+      "orders_xlsx_name": "Mitchell Wood Worx",
+      "installer_id": "1458",
+      "subdomain": "mitchellwoodworx",
+      "years": {
+        "2021": {
+          "order_count": 101,
+          "total_usd": 41393.84,
+          "subtotal_usd": 39073.15,
+          "b2b_subtotal_usd": 0
+        },
+        "2022": {
+          "order_count": 91,
+          "total_usd": 52898.56,
+          "subtotal_usd": 49904.31,
+          "b2b_subtotal_usd": 0
+        },
+        "2023": {
+          "order_count": 78,
+          "total_usd": 41970.15,
+          "subtotal_usd": 39594.47,
+          "b2b_subtotal_usd": 0
+        },
+        "2024": {
+          "order_count": 81,
+          "total_usd": 40109.78,
+          "subtotal_usd": 37839.42,
+          "b2b_subtotal_usd": 0
+        },
+        "2025": {
+          "order_count": 48,
+          "total_usd": 28932.38,
+          "subtotal_usd": 27294.68,
+          "b2b_subtotal_usd": 0
+        },
+        "2026": {
+          "order_count": null,
+          "total_usd": 10297.22,
+          "subtotal_usd": 10297.22,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2021": 3449.49,
+        "2022": 4408.21,
+        "2023": 3497.51,
+        "2024": 3342.48,
+        "2025": 2411.03,
+        "2026": 2059.44
+      },
+      "live_date": "2021",
+      "live_date_xlsx": "2021",
+      "live_date_inferred": "2021",
+      "live_date_source": "xlsx",
+      "months_to_launch": null,
+      "is_launched": true,
+      "total_lifetime_orders": 399,
+      "total_lifetime_usd": 215601.93,
+      "monthly_supplement": {
+        "2026-01": 2651.31,
+        "2026-02": 49.01,
+        "2026-03": 3022.12,
+        "2026-04": 1726.18,
+        "2026-05": 2848.6
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": "2026",
+      "monthly_avg_yoy_pct": -0.15,
+      "monthly_avg_current_year": 2059.44,
+      "monthly_avg_prior_year": 2411.03
     },
     "361": {
       "allmoxy_customer_id": 361,
@@ -9918,7 +10108,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1,
+          "order_count": null,
           "total_usd": 339,
           "subtotal_usd": 339,
           "b2b_subtotal_usd": 0
@@ -9937,7 +10127,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 50,
+      "total_lifetime_orders": 49,
       "total_lifetime_usd": 644624.3,
       "monthly_supplement": {
         "2026-01": 0,
@@ -9984,7 +10174,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 2653,
+          "order_count": null,
           "total_usd": 3684557.71,
           "subtotal_usd": 3684557.71,
           "b2b_subtotal_usd": 0
@@ -10003,7 +10193,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 28208,
+      "total_lifetime_orders": 25555,
       "total_lifetime_usd": 20843546.58,
       "monthly_supplement": {
         "2026-01": 689961.96,
@@ -10017,6 +10207,82 @@
       "monthly_avg_yoy_pct": 0.15,
       "monthly_avg_current_year": 736911.54,
       "monthly_avg_prior_year": 643224.52
+    },
+    "367": {
+      "allmoxy_customer_id": 367,
+      "name": "Art of Drawers",
+      "orders_xlsx_name": null,
+      "installer_id": null,
+      "subdomain": "artofdrawers",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "371": {
+      "allmoxy_customer_id": 371,
+      "name": "Precision Elements",
+      "orders_xlsx_name": null,
+      "installer_id": "1660",
+      "subdomain": "precisionelements",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "377": {
       "allmoxy_customer_id": 377,
@@ -10032,7 +10298,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -10058,6 +10324,82 @@
       },
       "monthly_avg_source_current_year": "verified_orders_2026_monthly",
       "latest_year_with_orders": "2024",
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "378": {
+      "allmoxy_customer_id": 378,
+      "name": "Aw Woodcraft Llc",
+      "orders_xlsx_name": null,
+      "installer_id": null,
+      "subdomain": "awwoodcraft",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "379": {
+      "allmoxy_customer_id": 379,
+      "name": "The Old Home Place",
+      "orders_xlsx_name": null,
+      "installer_id": null,
+      "subdomain": "southernidahocabinets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
       "monthly_avg_yoy_pct": -1,
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
@@ -10094,7 +10436,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 874,
+          "order_count": null,
           "total_usd": 1077779.41,
           "subtotal_usd": 1077779.41,
           "b2b_subtotal_usd": 0
@@ -10113,7 +10455,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 10066,
+      "total_lifetime_orders": 9192,
       "total_lifetime_usd": 8588951.69,
       "monthly_supplement": {
         "2026-01": 226960.47,
@@ -10160,7 +10502,7 @@
           "b2b_subtotal_usd": 26933.56
         },
         "2026": {
-          "order_count": 5,
+          "order_count": null,
           "total_usd": 7156.11,
           "subtotal_usd": 7156.11,
           "b2b_subtotal_usd": 6394.78
@@ -10179,7 +10521,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 84,
+      "total_lifetime_orders": 79,
       "total_lifetime_usd": 123361.07,
       "monthly_supplement": {
         "2026-01": 0,
@@ -10226,7 +10568,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 95,
+          "order_count": null,
           "total_usd": 848861.77,
           "subtotal_usd": 848861.77,
           "b2b_subtotal_usd": 0
@@ -10244,7 +10586,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 966,
+      "total_lifetime_orders": 871,
       "total_lifetime_usd": 3851557.74,
       "monthly_supplement": {
         "2026-01": 155520.87,
@@ -10285,7 +10627,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -10356,7 +10698,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 81,
+          "order_count": null,
           "total_usd": 119517.16,
           "subtotal_usd": 119517.16,
           "b2b_subtotal_usd": 0
@@ -10376,7 +10718,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1824,
+      "total_lifetime_orders": 1743,
       "total_lifetime_usd": 2562529.55,
       "monthly_supplement": {
         "2026-01": 32059.99,
@@ -10417,7 +10759,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 254,
+          "order_count": null,
           "total_usd": 667577.17,
           "subtotal_usd": 667577.17,
           "b2b_subtotal_usd": 0
@@ -10435,7 +10777,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 4585,
+      "total_lifetime_orders": 4331,
       "total_lifetime_usd": 4628159.02,
       "monthly_supplement": {
         "2026-01": 124443.08,
@@ -10482,7 +10824,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 33,
+          "order_count": null,
           "total_usd": 209583.89,
           "subtotal_usd": 209583.89,
           "b2b_subtotal_usd": 0
@@ -10501,7 +10843,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 955,
+      "total_lifetime_orders": 922,
       "total_lifetime_usd": 1728245.64,
       "monthly_supplement": {
         "2026-01": 98971.61,
@@ -10542,7 +10884,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -10601,7 +10943,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 387,
+          "order_count": null,
           "total_usd": 640410.3,
           "subtotal_usd": 640410.3,
           "b2b_subtotal_usd": 0
@@ -10619,7 +10961,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 2480,
+      "total_lifetime_orders": 2093,
       "total_lifetime_usd": 3519508.63,
       "monthly_supplement": {
         "2026-01": 133923.68,
@@ -10633,6 +10975,44 @@
       "monthly_avg_yoy_pct": 0.1,
       "monthly_avg_current_year": 128082.06,
       "monthly_avg_prior_year": 116622.55
+    },
+    "399": {
+      "allmoxy_customer_id": 399,
+      "name": "Jerome J. Brezniski & Assoc., Ltd.",
+      "orders_xlsx_name": null,
+      "installer_id": "1733",
+      "subdomain": "jjba",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "400": {
       "allmoxy_customer_id": 400,
@@ -10666,7 +11046,7 @@
           "b2b_subtotal_usd": 14043.42
         },
         "2026": {
-          "order_count": 414,
+          "order_count": null,
           "total_usd": 533524.19,
           "subtotal_usd": 533524.19,
           "b2b_subtotal_usd": 0
@@ -10685,7 +11065,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 6360,
+      "total_lifetime_orders": 5946,
       "total_lifetime_usd": 3755671.39,
       "monthly_supplement": {
         "2026-01": 85676.01,
@@ -10699,6 +11079,44 @@
       "monthly_avg_yoy_pct": 0.07,
       "monthly_avg_current_year": 106704.84,
       "monthly_avg_prior_year": 99463.92
+    },
+    "401": {
+      "allmoxy_customer_id": 401,
+      "name": "The Cabinet Spot, Inc",
+      "orders_xlsx_name": null,
+      "installer_id": null,
+      "subdomain": "thecabinetspot",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "405": {
       "allmoxy_customer_id": 405,
@@ -10732,7 +11150,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 736,
+          "order_count": null,
           "total_usd": 1818566.86,
           "subtotal_usd": 1818566.86,
           "b2b_subtotal_usd": 0
@@ -10749,7 +11167,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 5632,
+      "total_lifetime_orders": 4896,
       "total_lifetime_usd": 6156176.22,
       "monthly_supplement": {
         "2026-01": 357985.27,
@@ -10778,7 +11196,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -10808,6 +11226,82 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
+    "416": {
+      "allmoxy_customer_id": 416,
+      "name": "Wilson Cabinetry",
+      "orders_xlsx_name": null,
+      "installer_id": "2044",
+      "subdomain": "wilsoncabinetry",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "418": {
+      "allmoxy_customer_id": 418,
+      "name": "Evolve Elements",
+      "orders_xlsx_name": null,
+      "installer_id": "2063",
+      "subdomain": "evolveelements",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
     "420": {
       "allmoxy_customer_id": 420,
       "name": "Di Bosco Cabinets & Millwork Ltd.",
@@ -10822,7 +11316,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -10879,7 +11373,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1214,
+          "order_count": null,
           "total_usd": 2666921.2,
           "subtotal_usd": 2666921.2,
           "b2b_subtotal_usd": 0
@@ -10897,7 +11391,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3997,
+      "total_lifetime_orders": 2783,
       "total_lifetime_usd": 6354839.74,
       "monthly_supplement": {
         "2026-01": 508645.69,
@@ -10926,7 +11420,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -10982,7 +11476,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 163,
+          "order_count": null,
           "total_usd": 246374.22,
           "subtotal_usd": 246374.22,
           "b2b_subtotal_usd": 0
@@ -11000,7 +11494,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1679,
+      "total_lifetime_orders": 1516,
       "total_lifetime_usd": 1510601.45,
       "monthly_supplement": {
         "2026-01": 39452.58,
@@ -11035,7 +11529,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 98,
+          "order_count": null,
           "total_usd": 352321.02,
           "subtotal_usd": 352321.02,
           "b2b_subtotal_usd": 0
@@ -11052,7 +11546,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 331,
+      "total_lifetime_orders": 233,
       "total_lifetime_usd": 483846.01,
       "monthly_supplement": {
         "2026-01": 50599.51,
@@ -11066,6 +11560,44 @@
       "monthly_avg_yoy_pct": 12.74,
       "monthly_avg_current_year": 70464.2,
       "monthly_avg_prior_year": 5127.39
+    },
+    "436": {
+      "allmoxy_customer_id": 436,
+      "name": "Cfh Team",
+      "orders_xlsx_name": null,
+      "installer_id": null,
+      "subdomain": "uniplank",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "437": {
       "allmoxy_customer_id": 437,
@@ -11087,7 +11619,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 5,
+          "order_count": null,
           "total_usd": 31820.69,
           "subtotal_usd": 31820.69,
           "b2b_subtotal_usd": 0
@@ -11104,7 +11636,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 185,
+      "total_lifetime_orders": 180,
       "total_lifetime_usd": 223002.88,
       "monthly_supplement": {
         "2026-01": 0,
@@ -11118,6 +11650,44 @@
       "monthly_avg_yoy_pct": -0.32,
       "monthly_avg_current_year": 6364.14,
       "monthly_avg_prior_year": 9313.03
+    },
+    "439": {
+      "allmoxy_customer_id": 439,
+      "name": "Neu-Bau LLC",
+      "orders_xlsx_name": null,
+      "installer_id": "1818",
+      "subdomain": "neubau",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "440": {
       "allmoxy_customer_id": 440,
@@ -11145,7 +11715,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 148,
+          "order_count": null,
           "total_usd": 225187.57,
           "subtotal_usd": 225187.57,
           "b2b_subtotal_usd": 0
@@ -11163,7 +11733,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 2412,
+      "total_lifetime_orders": 2264,
       "total_lifetime_usd": 1999482.78,
       "monthly_supplement": {
         "2026-01": 42770.08,
@@ -11204,7 +11774,7 @@
           "b2b_subtotal_usd": 8034.28
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -11251,7 +11821,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -11307,7 +11877,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 275,
+          "order_count": null,
           "total_usd": 474215.86,
           "subtotal_usd": 474215.86,
           "b2b_subtotal_usd": 0
@@ -11324,7 +11894,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 2187,
+      "total_lifetime_orders": 1912,
       "total_lifetime_usd": 2277022.89,
       "monthly_supplement": {
         "2026-01": 91472.17,
@@ -11365,7 +11935,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 14,
+          "order_count": null,
           "total_usd": 11190.08,
           "subtotal_usd": 11190.08,
           "b2b_subtotal_usd": 0
@@ -11381,7 +11951,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 84,
+      "total_lifetime_orders": 70,
       "total_lifetime_usd": 47484.22,
       "monthly_supplement": {
         "2026-01": 2822.27,
@@ -11395,6 +11965,44 @@
       "monthly_avg_yoy_pct": 0.03,
       "monthly_avg_current_year": 2238.02,
       "monthly_avg_prior_year": 2175.86
+    },
+    "448": {
+      "allmoxy_customer_id": 448,
+      "name": "Christopher CPM Home Llc",
+      "orders_xlsx_name": null,
+      "installer_id": null,
+      "subdomain": "cpm",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "449": {
       "allmoxy_customer_id": 449,
@@ -11416,7 +12024,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1457,
+          "order_count": null,
           "total_usd": 5294681.5,
           "subtotal_usd": 5294681.5,
           "b2b_subtotal_usd": 0
@@ -11433,7 +12041,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 5100,
+      "total_lifetime_orders": 3643,
       "total_lifetime_usd": 13078474.06,
       "monthly_supplement": {
         "2026-01": 1099792.5,
@@ -11486,7 +12094,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 141,
+          "order_count": null,
           "total_usd": 320929.14,
           "subtotal_usd": 320929.14,
           "b2b_subtotal_usd": 0
@@ -11505,7 +12113,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1765,
+      "total_lifetime_orders": 1624,
       "total_lifetime_usd": 3488478.64,
       "monthly_supplement": {
         "2026-01": 64518.09,
@@ -11534,7 +12142,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -11585,7 +12193,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -11637,7 +12245,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -11743,7 +12351,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 144,
+          "order_count": null,
           "total_usd": 1892505.17,
           "subtotal_usd": 1892505.17,
           "b2b_subtotal_usd": 0
@@ -11768,7 +12376,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 4062,
+      "total_lifetime_orders": 3918,
       "total_lifetime_usd": 13746215.32,
       "monthly_supplement": {
         "2026-01": 440237.39,
@@ -11809,7 +12417,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -11855,7 +12463,7 @@
           "b2b_subtotal_usd": 634.26
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -11905,7 +12513,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -11950,7 +12558,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12000,7 +12608,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12057,7 +12665,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 2662,
+          "order_count": null,
           "total_usd": 8837370.77,
           "subtotal_usd": 8837370.77,
           "b2b_subtotal_usd": 0
@@ -12074,7 +12682,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 11832,
+      "total_lifetime_orders": 9170,
       "total_lifetime_usd": 23557721.96,
       "monthly_supplement": {
         "2026-01": 1250342.87,
@@ -12109,7 +12717,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 19,
+          "order_count": null,
           "total_usd": 19518.42,
           "subtotal_usd": 19518.42,
           "b2b_subtotal_usd": 0
@@ -12125,7 +12733,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 101,
+      "total_lifetime_orders": 82,
       "total_lifetime_usd": 70749,
       "monthly_supplement": {
         "2026-01": 8039.75,
@@ -12160,7 +12768,7 @@
           "b2b_subtotal_usd": 11869.01
         },
         "2026": {
-          "order_count": 18,
+          "order_count": null,
           "total_usd": 32199.67,
           "subtotal_usd": 32199.67,
           "b2b_subtotal_usd": 0
@@ -12177,7 +12785,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 71,
+      "total_lifetime_orders": 53,
       "total_lifetime_usd": 61008.25,
       "monthly_supplement": {
         "2026-01": 0,
@@ -12206,7 +12814,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12262,7 +12870,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 1,
+          "order_count": null,
           "total_usd": 13990.11,
           "subtotal_usd": 13990.11,
           "b2b_subtotal_usd": 0
@@ -12279,7 +12887,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 274,
+      "total_lifetime_orders": 273,
       "total_lifetime_usd": 964436.38,
       "monthly_supplement": {
         "2026-01": 9274.45,
@@ -12293,6 +12901,44 @@
       "monthly_avg_yoy_pct": -0.97,
       "monthly_avg_current_year": 2798.02,
       "monthly_avg_prior_year": 84890.23
+    },
+    "489": {
+      "allmoxy_customer_id": 489,
+      "name": "Rehau Pty Ltd",
+      "orders_xlsx_name": null,
+      "installer_id": "1915",
+      "subdomain": "myrehau",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "491": {
       "allmoxy_customer_id": 491,
@@ -12314,7 +12960,7 @@
           "b2b_subtotal_usd": 219694.32
         },
         "2026": {
-          "order_count": 1536,
+          "order_count": null,
           "total_usd": 2326064.83,
           "subtotal_usd": 2326064.83,
           "b2b_subtotal_usd": 50749.06
@@ -12331,7 +12977,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 10955,
+      "total_lifetime_orders": 9419,
       "total_lifetime_usd": 9896457.69,
       "monthly_supplement": {
         "2026-01": 407131.26,
@@ -12345,6 +12991,44 @@
       "monthly_avg_yoy_pct": 0.01,
       "monthly_avg_current_year": 465212.97,
       "monthly_avg_prior_year": 461910.23
+    },
+    "495": {
+      "allmoxy_customer_id": 495,
+      "name": "Lane 17 Cabinet Co.",
+      "orders_xlsx_name": null,
+      "installer_id": "1937",
+      "subdomain": "lane17",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "496": {
       "allmoxy_customer_id": 496,
@@ -12360,7 +13044,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12404,7 +13088,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12454,7 +13138,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 19,
+          "order_count": null,
           "total_usd": 595004.94,
           "subtotal_usd": 595004.94,
           "b2b_subtotal_usd": 0
@@ -12471,7 +13155,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 156,
+      "total_lifetime_orders": 137,
       "total_lifetime_usd": 2722452.47,
       "monthly_supplement": {
         "2026-01": 235043.95,
@@ -12485,6 +13169,51 @@
       "monthly_avg_yoy_pct": 0.04,
       "monthly_avg_current_year": 119000.99,
       "monthly_avg_prior_year": 114065.79
+    },
+    "500": {
+      "allmoxy_customer_id": 500,
+      "name": "Mountain Showcase Group, Inc.",
+      "orders_xlsx_name": "Mountain Showcase Group, Inc.",
+      "installer_id": "1952",
+      "subdomain": "carolinaartisan",
+      "years": {
+        "2025": {
+          "order_count": 5,
+          "total_usd": 130028.18,
+          "subtotal_usd": 105701.3,
+          "b2b_subtotal_usd": 0
+        },
+        "2026": {
+          "order_count": null,
+          "total_usd": 76246.48,
+          "subtotal_usd": 76246.48,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2025": 10835.68,
+        "2026": 15249.3
+      },
+      "live_date": "2025",
+      "live_date_xlsx": "2025",
+      "live_date_inferred": "2025",
+      "live_date_source": "xlsx",
+      "months_to_launch": null,
+      "is_launched": true,
+      "total_lifetime_orders": 5,
+      "total_lifetime_usd": 206274.66,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 688.49,
+        "2026-04": 17165.78,
+        "2026-05": 58392.21
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": "2026",
+      "monthly_avg_yoy_pct": 0.41,
+      "monthly_avg_current_year": 15249.3,
+      "monthly_avg_prior_year": 10835.68
     },
     "502": {
       "allmoxy_customer_id": 502,
@@ -12506,7 +13235,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 453,
+          "order_count": null,
           "total_usd": 665957.47,
           "subtotal_usd": 665957.47,
           "b2b_subtotal_usd": 0
@@ -12523,7 +13252,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1711,
+      "total_lifetime_orders": 1258,
       "total_lifetime_usd": 2423600.37,
       "monthly_supplement": {
         "2026-01": 140737.67,
@@ -12558,7 +13287,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 131,
+          "order_count": null,
           "total_usd": 340674.98,
           "subtotal_usd": 340674.98,
           "b2b_subtotal_usd": 0
@@ -12574,7 +13303,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 465,
+      "total_lifetime_orders": 334,
       "total_lifetime_usd": 665176.53,
       "monthly_supplement": {
         "2026-01": 48456.13,
@@ -12588,6 +13317,234 @@
       "monthly_avg_yoy_pct": 1.52,
       "monthly_avg_current_year": 68135,
       "monthly_avg_prior_year": 27023.93
+    },
+    "506": {
+      "allmoxy_customer_id": 506,
+      "name": "The Cabinet Warehouse",
+      "orders_xlsx_name": null,
+      "installer_id": "1976",
+      "subdomain": "cabinetwarehouse",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "507": {
+      "allmoxy_customer_id": 507,
+      "name": "Ajia Group Inc.",
+      "orders_xlsx_name": null,
+      "installer_id": "1946",
+      "subdomain": "ajiagroup",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "508": {
+      "allmoxy_customer_id": 508,
+      "name": "WF Cabinetry",
+      "orders_xlsx_name": null,
+      "installer_id": "1981",
+      "subdomain": "wfcabinetry",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "510": {
+      "allmoxy_customer_id": 510,
+      "name": "Xinja Llc",
+      "orders_xlsx_name": null,
+      "installer_id": "1989",
+      "subdomain": "xinjabuilt",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "511": {
+      "allmoxy_customer_id": 511,
+      "name": "Countryside Cabinets",
+      "orders_xlsx_name": null,
+      "installer_id": "1991",
+      "subdomain": "countrysidecabinets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "512": {
+      "allmoxy_customer_id": 512,
+      "name": "Burger's Cabinet Shop",
+      "orders_xlsx_name": null,
+      "installer_id": "1995",
+      "subdomain": "bcs",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "513": {
       "allmoxy_customer_id": 513,
@@ -12609,7 +13566,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12659,7 +13616,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12703,7 +13660,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12753,7 +13710,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12784,6 +13741,158 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 5410.29
     },
+    "517": {
+      "allmoxy_customer_id": 517,
+      "name": "Ameridor, Inc",
+      "orders_xlsx_name": null,
+      "installer_id": "2007",
+      "subdomain": "ameridor",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "518": {
+      "allmoxy_customer_id": 518,
+      "name": "Native Oak",
+      "orders_xlsx_name": null,
+      "installer_id": null,
+      "subdomain": "nativeoak",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "519": {
+      "allmoxy_customer_id": 519,
+      "name": "Rigel EMC",
+      "orders_xlsx_name": null,
+      "installer_id": "2014",
+      "subdomain": "rigelemccompany",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "520": {
+      "allmoxy_customer_id": 520,
+      "name": "True Custom Kitchens And Millwork",
+      "orders_xlsx_name": null,
+      "installer_id": "2016",
+      "subdomain": "truecustom",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
     "521": {
       "allmoxy_customer_id": 521,
       "name": "Cabinet Doors NJ Llc",
@@ -12798,7 +13907,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 6,
+          "order_count": null,
           "total_usd": 2121.73,
           "subtotal_usd": 2121.73,
           "b2b_subtotal_usd": 0
@@ -12814,7 +13923,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 50,
+      "total_lifetime_orders": 44,
       "total_lifetime_usd": 32015.94,
       "monthly_supplement": {
         "2026-01": 1417.73,
@@ -12843,7 +13952,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -12887,7 +13996,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 3,
+          "order_count": null,
           "total_usd": 130568.87,
           "subtotal_usd": 130568.87,
           "b2b_subtotal_usd": 0
@@ -12903,7 +14012,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 22,
+      "total_lifetime_orders": 19,
       "total_lifetime_usd": 157093.96,
       "monthly_supplement": {
         "2026-01": 130568.87,
@@ -12932,7 +14041,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 13,
+          "order_count": null,
           "total_usd": 54902.72,
           "subtotal_usd": 54902.72,
           "b2b_subtotal_usd": 0
@@ -12948,7 +14057,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 75,
+      "total_lifetime_orders": 62,
       "total_lifetime_usd": 161736.29,
       "monthly_supplement": {
         "2026-01": 13589.4,
@@ -12977,7 +14086,7 @@
           "b2b_subtotal_usd": 100676.67
         },
         "2026": {
-          "order_count": 94,
+          "order_count": null,
           "total_usd": 227269.1,
           "subtotal_usd": 227269.1,
           "b2b_subtotal_usd": 57785.79
@@ -12993,7 +14102,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 204,
+      "total_lifetime_orders": 110,
       "total_lifetime_usd": 350080.29,
       "monthly_supplement": {
         "2026-01": 19618.86,
@@ -13022,7 +14131,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13066,7 +14175,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 157,
+          "order_count": null,
           "total_usd": 235760.94,
           "subtotal_usd": 235760.94,
           "b2b_subtotal_usd": 0
@@ -13082,7 +14191,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 902,
+      "total_lifetime_orders": 745,
       "total_lifetime_usd": 828059.82,
       "monthly_supplement": {
         "2026-01": 62276.98,
@@ -13111,7 +14220,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13142,6 +14251,82 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 1294.78
     },
+    "530": {
+      "allmoxy_customer_id": 530,
+      "name": "Heritage Wood Mills",
+      "orders_xlsx_name": null,
+      "installer_id": "2039",
+      "subdomain": "heritagewoodmills",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "531": {
+      "allmoxy_customer_id": 531,
+      "name": "Subtle Cabinets",
+      "orders_xlsx_name": null,
+      "installer_id": "2043",
+      "subdomain": "subtlecabinets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
     "532": {
       "allmoxy_customer_id": 532,
       "name": "SCP Cabinets",
@@ -13156,7 +14341,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13200,7 +14385,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13244,7 +14429,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13274,6 +14459,82 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
+    "535": {
+      "allmoxy_customer_id": 535,
+      "name": "Next Gen Cabinet Doors",
+      "orders_xlsx_name": null,
+      "installer_id": "2054",
+      "subdomain": "nextgencabinetdoors",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "536": {
+      "allmoxy_customer_id": 536,
+      "name": "Cabinet Doors Unlimited",
+      "orders_xlsx_name": null,
+      "installer_id": "2040",
+      "subdomain": "cabinetdoorsunlimited",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
     "537": {
       "allmoxy_customer_id": 537,
       "name": "Ideal Wood Designs",
@@ -13288,7 +14549,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 241,
+          "order_count": null,
           "total_usd": 196251.15,
           "subtotal_usd": 196251.15,
           "b2b_subtotal_usd": 0
@@ -13304,7 +14565,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 655,
+      "total_lifetime_orders": 414,
       "total_lifetime_usd": 448447.43,
       "monthly_supplement": {
         "2026-01": 34353.44,
@@ -13333,7 +14594,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13377,7 +14638,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 2,
+          "order_count": null,
           "total_usd": 11955.36,
           "subtotal_usd": 11955.36,
           "b2b_subtotal_usd": 0
@@ -13392,7 +14653,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 4,
+      "total_lifetime_orders": 2,
       "total_lifetime_usd": 17868.01,
       "monthly_supplement": {
         "2026-01": 2849.41,
@@ -13421,7 +14682,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13451,6 +14712,82 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
+    "541": {
+      "allmoxy_customer_id": 541,
+      "name": "Dovetail Wood Traditions",
+      "orders_xlsx_name": null,
+      "installer_id": "2060",
+      "subdomain": "dwt",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "542": {
+      "allmoxy_customer_id": 542,
+      "name": "Larkul",
+      "orders_xlsx_name": null,
+      "installer_id": "2061",
+      "subdomain": "larkul",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
     "543": {
       "allmoxy_customer_id": 543,
       "name": "Vlux",
@@ -13459,7 +14796,7 @@
       "subdomain": "vluxinc",
       "years": {
         "2026": {
-          "order_count": 4,
+          "order_count": null,
           "total_usd": 4044.4,
           "subtotal_usd": 4044.4,
           "b2b_subtotal_usd": 0
@@ -13474,7 +14811,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 4,
+      "total_lifetime_orders": 0,
       "total_lifetime_usd": 4044.4,
       "monthly_supplement": {
         "2026-01": 0,
@@ -13503,7 +14840,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13547,7 +14884,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 949,
+          "order_count": null,
           "total_usd": 1014536.95,
           "subtotal_usd": 1014536.95,
           "b2b_subtotal_usd": 0
@@ -13563,7 +14900,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1747,
+      "total_lifetime_orders": 798,
       "total_lifetime_usd": 1420740.26,
       "monthly_supplement": {
         "2026-01": 135677.04,
@@ -13592,7 +14929,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13622,6 +14959,44 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
+    "547": {
+      "allmoxy_customer_id": 547,
+      "name": "Closet Masters Design",
+      "orders_xlsx_name": null,
+      "installer_id": "2070",
+      "subdomain": "cmd",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 5,
+          "subtotal_usd": 5,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 1
+      },
+      "live_date": "2026",
+      "live_date_xlsx": null,
+      "live_date_inferred": "2026",
+      "live_date_source": "inferred",
+      "months_to_launch": null,
+      "is_launched": true,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 5,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 5
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": "2026",
+      "monthly_avg_yoy_pct": null,
+      "monthly_avg_current_year": 1,
+      "monthly_avg_prior_year": 0
+    },
     "548": {
       "allmoxy_customer_id": 548,
       "name": "Aluminum X Design",
@@ -13636,7 +15011,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 57,
+          "order_count": null,
           "total_usd": 350699.49,
           "subtotal_usd": 350699.49,
           "b2b_subtotal_usd": 0
@@ -13652,7 +15027,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 99,
+      "total_lifetime_orders": 42,
       "total_lifetime_usd": 498766.42,
       "monthly_supplement": {
         "2026-01": 16913.02,
@@ -13666,6 +15041,44 @@
       "monthly_avg_yoy_pct": 4.68,
       "monthly_avg_current_year": 70139.9,
       "monthly_avg_prior_year": 12338.91
+    },
+    "549": {
+      "allmoxy_customer_id": 549,
+      "name": "Crafted Cabinetry & Millwork",
+      "orders_xlsx_name": null,
+      "installer_id": "2072",
+      "subdomain": "craftedcabinetry",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "550": {
       "allmoxy_customer_id": 550,
@@ -13681,7 +15094,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 0,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13711,6 +15124,158 @@
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
+    "551": {
+      "allmoxy_customer_id": 551,
+      "name": "Hingeworks",
+      "orders_xlsx_name": null,
+      "installer_id": "2076",
+      "subdomain": "hingeworks",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "552": {
+      "allmoxy_customer_id": 552,
+      "name": "Premier Woodworking",
+      "orders_xlsx_name": null,
+      "installer_id": "2077",
+      "subdomain": "premierwoodworking",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "553": {
+      "allmoxy_customer_id": 553,
+      "name": "Carson's Custom Cabinets",
+      "orders_xlsx_name": null,
+      "installer_id": "2078",
+      "subdomain": "carsonscustomcabinets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "554": {
+      "allmoxy_customer_id": 554,
+      "name": "Closet Pro",
+      "orders_xlsx_name": null,
+      "installer_id": "2079",
+      "subdomain": "closetpro",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
     "555": {
       "allmoxy_customer_id": 555,
       "name": "Kci Storage Manufacturing",
@@ -13719,7 +15284,7 @@
       "subdomain": "kcistoragemfg",
       "years": {
         "2026": {
-          "order_count": 1,
+          "order_count": null,
           "total_usd": 44.89,
           "subtotal_usd": 44.89,
           "b2b_subtotal_usd": 0
@@ -13734,7 +15299,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 1,
+      "total_lifetime_orders": 0,
       "total_lifetime_usd": 44.89,
       "monthly_supplement": {
         "2026-01": 44.89,
@@ -13747,6 +15312,82 @@
       "latest_year_with_orders": "2026",
       "monthly_avg_yoy_pct": null,
       "monthly_avg_current_year": 8.98,
+      "monthly_avg_prior_year": 0
+    },
+    "2015": {
+      "allmoxy_customer_id": 2015,
+      "name": "Urbania Cabinets",
+      "orders_xlsx_name": null,
+      "installer_id": "2082",
+      "subdomain": "urbaniacabinets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2016": {
+      "allmoxy_customer_id": 2016,
+      "name": "Dewils",
+      "orders_xlsx_name": null,
+      "installer_id": "2083",
+      "subdomain": "dewils",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
     "2018": {
@@ -13763,7 +15404,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 5,
+          "order_count": null,
           "total_usd": 1141283.31,
           "subtotal_usd": 1141283.31,
           "b2b_subtotal_usd": 0
@@ -13779,7 +15420,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 6,
+      "total_lifetime_orders": 1,
       "total_lifetime_usd": 1198344.92,
       "monthly_supplement": {
         "2026-01": 0,
@@ -13794,50 +15435,119 @@
       "monthly_avg_current_year": 228256.66,
       "monthly_avg_prior_year": 4755.13
     },
-    "2027": {
-      "allmoxy_customer_id": 2027,
-      "name": "Mountain Showcase Group",
-      "orders_xlsx_name": "Mountain Showcase Group, Inc.",
-      "installer_id": "1952",
-      "subdomain": "carolinaartisan",
+    "2019": {
+      "allmoxy_customer_id": 2019,
+      "name": "Rise Up Labels",
+      "orders_xlsx_name": null,
+      "installer_id": "2085",
+      "subdomain": "riseuplabel",
       "years": {
-        "2025": {
-          "order_count": 5,
-          "total_usd": 130028.18,
-          "subtotal_usd": 105701.3,
-          "b2b_subtotal_usd": 0
-        },
         "2026": {
-          "order_count": 4,
-          "total_usd": 76246.48,
-          "subtotal_usd": 76246.48,
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
         }
       },
       "monthly_avg": {
-        "2025": 10835.68,
-        "2026": 15249.3
+        "2026": 0
       },
-      "live_date": "2025",
-      "live_date_xlsx": "2025",
-      "live_date_inferred": "2025",
-      "live_date_source": "xlsx",
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
       "months_to_launch": null,
-      "is_launched": true,
-      "total_lifetime_orders": 9,
-      "total_lifetime_usd": 206274.66,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
       "monthly_supplement": {
         "2026-01": 0,
         "2026-02": 0,
-        "2026-03": 688.49,
-        "2026-04": 17165.78,
-        "2026-05": 58392.21
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
       },
       "monthly_avg_source_current_year": "verified_orders_2026_monthly",
-      "latest_year_with_orders": "2026",
-      "monthly_avg_yoy_pct": 0.41,
-      "monthly_avg_current_year": 15249.3,
-      "monthly_avg_prior_year": 10835.68
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2025": {
+      "allmoxy_customer_id": 2025,
+      "name": "B & L Cabinets",
+      "orders_xlsx_name": null,
+      "installer_id": "2092",
+      "subdomain": "bnlcabinets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2026": {
+      "allmoxy_customer_id": 2026,
+      "name": "Santas Cabinets",
+      "orders_xlsx_name": null,
+      "installer_id": "2093",
+      "subdomain": "mikesantaswoodshop",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
     },
     "2028": {
       "allmoxy_customer_id": 2028,
@@ -13847,7 +15557,7 @@
       "subdomain": "crowndoordrawer",
       "years": {
         "2026": {
-          "order_count": 18,
+          "order_count": null,
           "total_usd": 81605.63,
           "subtotal_usd": 81605.63,
           "b2b_subtotal_usd": 0
@@ -13862,7 +15572,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 18,
+      "total_lifetime_orders": 0,
       "total_lifetime_usd": 81605.63,
       "monthly_supplement": {
         "2026-01": 0,
@@ -13875,6 +15585,82 @@
       "latest_year_with_orders": "2026",
       "monthly_avg_yoy_pct": null,
       "monthly_avg_current_year": 16321.13,
+      "monthly_avg_prior_year": 0
+    },
+    "2031": {
+      "allmoxy_customer_id": 2031,
+      "name": "Albritton Custom Cabinetry",
+      "orders_xlsx_name": null,
+      "installer_id": "2098",
+      "subdomain": "acc",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2032": {
+      "allmoxy_customer_id": 2032,
+      "name": "Adentra",
+      "orders_xlsx_name": null,
+      "installer_id": "2099",
+      "subdomain": "adentra",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
     },
     "2041": {
@@ -13891,7 +15677,7 @@
           "b2b_subtotal_usd": 0
         },
         "2026": {
-          "order_count": 2,
+          "order_count": null,
           "total_usd": 15881.7,
           "subtotal_usd": 15881.7,
           "b2b_subtotal_usd": 0
@@ -13906,7 +15692,7 @@
       "live_date_source": "xlsx",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3,
+      "total_lifetime_orders": 1,
       "total_lifetime_usd": 19628.44,
       "monthly_supplement": {
         "2026-01": 15881.7,
@@ -13921,6 +15707,44 @@
       "monthly_avg_current_year": 3176.34,
       "monthly_avg_prior_year": 0
     },
+    "2043": {
+      "allmoxy_customer_id": 2043,
+      "name": "Cadcode",
+      "orders_xlsx_name": null,
+      "installer_id": "2107",
+      "subdomain": "cadcode",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
     "2044": {
       "allmoxy_customer_id": 2044,
       "name": "Ecodomo",
@@ -13929,7 +15753,7 @@
       "subdomain": "ecodomo",
       "years": {
         "2026": {
-          "order_count": 3,
+          "order_count": null,
           "total_usd": 0,
           "subtotal_usd": 0,
           "b2b_subtotal_usd": 0
@@ -13944,7 +15768,7 @@
       "live_date_source": "inferred",
       "months_to_launch": null,
       "is_launched": true,
-      "total_lifetime_orders": 3,
+      "total_lifetime_orders": 0,
       "total_lifetime_usd": 0,
       "monthly_supplement": {
         "2026-01": 0,
@@ -13954,7 +15778,729 @@
         "2026-05": 0
       },
       "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2045": {
+      "allmoxy_customer_id": 2045,
+      "name": "Dimitrios & Company",
+      "orders_xlsx_name": null,
+      "installer_id": "2109",
+      "subdomain": "dimitriosandco",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2046": {
+      "allmoxy_customer_id": 2046,
+      "name": "Hempston Home",
+      "orders_xlsx_name": null,
+      "installer_id": "2110",
+      "subdomain": "hempston",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2047": {
+      "allmoxy_customer_id": 2047,
+      "name": "Western Cabinet Doors - The Door Stop",
+      "orders_xlsx_name": null,
+      "installer_id": "2111",
+      "subdomain": "cabinetdrawerboxes",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2048": {
+      "allmoxy_customer_id": 2048,
+      "name": "Graber Cabinets",
+      "orders_xlsx_name": null,
+      "installer_id": "2112",
+      "subdomain": "grabercabinets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2049": {
+      "allmoxy_customer_id": 2049,
+      "name": "Montouro Woodwork",
+      "orders_xlsx_name": null,
+      "installer_id": "2113",
+      "subdomain": "montouro",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2050": {
+      "allmoxy_customer_id": 2050,
+      "name": "Paquette Cabinetry",
+      "orders_xlsx_name": null,
+      "installer_id": "2114",
+      "subdomain": "paquettecabinetry",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2051": {
+      "allmoxy_customer_id": 2051,
+      "name": "Harbour City Kitchens",
+      "orders_xlsx_name": null,
+      "installer_id": "2115",
+      "subdomain": "westhavencabinetry",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 2097.69,
+          "subtotal_usd": 2097.69,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 419.54
+      },
+      "live_date": "2026",
+      "live_date_xlsx": null,
+      "live_date_inferred": "2026",
+      "live_date_source": "inferred",
+      "months_to_launch": null,
+      "is_launched": true,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 2097.69,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 2097.69
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
       "latest_year_with_orders": "2026",
+      "monthly_avg_yoy_pct": null,
+      "monthly_avg_current_year": 419.54,
+      "monthly_avg_prior_year": 0
+    },
+    "2052": {
+      "allmoxy_customer_id": 2052,
+      "name": "Batesville Cabinet Company",
+      "orders_xlsx_name": null,
+      "installer_id": "2116",
+      "subdomain": "smithlinebybatesvillecabinet",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 6975.89,
+          "subtotal_usd": 6975.89,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 1395.18
+      },
+      "live_date": "2026",
+      "live_date_xlsx": null,
+      "live_date_inferred": "2026",
+      "live_date_source": "inferred",
+      "months_to_launch": null,
+      "is_launched": true,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 6975.89,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 6975.89
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": "2026",
+      "monthly_avg_yoy_pct": null,
+      "monthly_avg_current_year": 1395.18,
+      "monthly_avg_prior_year": 0
+    },
+    "2053": {
+      "allmoxy_customer_id": 2053,
+      "name": "California Door Corporation",
+      "orders_xlsx_name": null,
+      "installer_id": "2117",
+      "subdomain": "caldoor",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2057": {
+      "allmoxy_customer_id": 2057,
+      "name": "Quick Kitchens",
+      "orders_xlsx_name": null,
+      "installer_id": "2121",
+      "subdomain": "quickkitchens",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2058": {
+      "allmoxy_customer_id": 2058,
+      "name": "Fleetwoods",
+      "orders_xlsx_name": null,
+      "installer_id": "2122",
+      "subdomain": "fleetwoods",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2059": {
+      "allmoxy_customer_id": 2059,
+      "name": "Top Design Closets",
+      "orders_xlsx_name": null,
+      "installer_id": "2123",
+      "subdomain": "topdesignclosets",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2060": {
+      "allmoxy_customer_id": 2060,
+      "name": "Formations",
+      "orders_xlsx_name": null,
+      "installer_id": "2124",
+      "subdomain": "formations",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 36.75,
+          "subtotal_usd": 36.75,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 7.35
+      },
+      "live_date": "2026",
+      "live_date_xlsx": null,
+      "live_date_inferred": "2026",
+      "live_date_source": "inferred",
+      "months_to_launch": null,
+      "is_launched": true,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 36.75,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 36.75
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": "2026",
+      "monthly_avg_yoy_pct": null,
+      "monthly_avg_current_year": 7.35,
+      "monthly_avg_prior_year": 0
+    },
+    "2062": {
+      "allmoxy_customer_id": 2062,
+      "name": "Elliot Woodworking",
+      "orders_xlsx_name": null,
+      "installer_id": "2126",
+      "subdomain": "elliotwoodworking",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2063": {
+      "allmoxy_customer_id": 2063,
+      "name": "Prestige Art Millwork",
+      "orders_xlsx_name": null,
+      "installer_id": "2127",
+      "subdomain": "pam",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2064": {
+      "allmoxy_customer_id": 2064,
+      "name": "Windsor Place",
+      "orders_xlsx_name": null,
+      "installer_id": "2128",
+      "subdomain": "windsorplace",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2065": {
+      "allmoxy_customer_id": 2065,
+      "name": "Innovate Media Canada",
+      "orders_xlsx_name": null,
+      "installer_id": "2129",
+      "subdomain": "r2ro",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2077": {
+      "allmoxy_customer_id": 2077,
+      "name": "Milestone Millwork",
+      "orders_xlsx_name": null,
+      "installer_id": "2136",
+      "subdomain": "milestonewholesale",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2078": {
+      "allmoxy_customer_id": 2078,
+      "name": "Idaho Custom Closets",
+      "orders_xlsx_name": null,
+      "installer_id": "2137",
+      "subdomain": "smarterparts",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
       "monthly_avg_yoy_pct": -1,
       "monthly_avg_current_year": 0,
       "monthly_avg_prior_year": 0
