@@ -1,12 +1,12 @@
 {
-  "fetched_at": "2026-06-19T19:26:16.061Z",
+  "fetched_at": "2026-06-19T20:19:17.301Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "by_category": {
       "annual_payer_flag": 2,
       "amortization": 1,
       "variance": 3,
-      "reclassification": 2,
+      "reclassification": 3,
       "hygiene_stripe_id": 2,
       "synthetic_transaction": 1,
       "status_override": 16,
@@ -14,10 +14,10 @@
       "never_paid_classification": 1
     },
     "by_severity": {
-      "monetary": 25,
+      "monetary": 26,
       "hygiene": 4
     },
-    "total": 29
+    "total": 30
   },
   "adjustments": [
     {
@@ -144,6 +144,22 @@
       "after": 1343,
       "delta": 0,
       "reason": "Reclassified from subscription → subscription: Invoice 5D66E5C-0014 — M2M components' May 2026 subscription charge. Stripe Sync attached this charge to Adentra (aid 2032) because at Stripe it was recorded against sub_1SfpdpHkM2QhTtxhvL2gCCn3 (Adentra's subscription). But all the evidence — invoice prefix `5D66E5C-` matches M2M's series (sequential between -0013 Apr and -0015 Jun), amount $1,343 matches M2M's exact MRR, date 5/19 fits M2M's 19th-of-month cadence — confirms this belongs on M2M. Adentra's normal pattern is $200/mo on the 18th (invoice prefix `RUECNDQP-`); the $1,343 was the only outlier on their ledger. Without this fix, M2M is missing a May payment and Adentra shows a false contraction (May $1,343 → June $200). (transaction also moved from source customer Adentra #2032)",
+      "evidence": null,
+      "source_file": "_etl_scripts/transaction_overrides.json",
+      "added_by": "updated_at 2026-06-19"
+    },
+    {
+      "id": "reclassification-489-2026-05-2026-05-05",
+      "category": "reclassification",
+      "severity": "monetary",
+      "customer_name": "Rehau Pty Ltd",
+      "customer_id": 489,
+      "period": "2026-05",
+      "txn_date": "2026-05-05",
+      "before": 1698,
+      "after": 1698,
+      "delta": 0,
+      "reason": "Reclassified from subscription → subscription: Reallocation of $1,698 catch-up payment received 2026-05-05 — Stripe charge description was 'March & April past due payments.' covering two failed invoices: 5952CF73-0010 (Mar 1, $849, failed) and 5952CF73-0011 (Apr 1, $849, failed). Without this reallocation, monthly_history reports $0 for Mar 2026, $0 for Apr 2026, and $1,698 for May 2026 — a misleading triple swing. With it, monthly_history reports $849/$849/$0 across Mar/Apr/May which matches the BILLING INTENT (accrual basis). QB RECONCILIATION: transactions[] is untouched — Stripe still shows the single $1,698 receipt on 5/5/2026 (cash basis), matching what QB's deposit/payment record will show. Difference is timing only: cash basis Mar+Apr = $0+$0 / May = $1,698; accrual basis Mar+Apr = $849+$849 / May = $0. Both sum to $1,698 across the three months.",
       "evidence": null,
       "source_file": "_etl_scripts/transaction_overrides.json",
       "added_by": "updated_at 2026-06-19"
