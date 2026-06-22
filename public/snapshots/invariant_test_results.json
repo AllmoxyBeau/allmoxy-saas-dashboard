@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-19T21:33:12.768Z",
+  "fetched_at": "2026-06-22T15:51:15.140Z",
   "total": 22,
   "passed": 19,
   "errors": 1,
@@ -81,11 +81,10 @@
       "name": "mrr_by_month subscription ≈ sum of customer_profiles monthly_history (last 24 months, ±0.5%)",
       "severity": "error",
       "passed": false,
-      "detail": "3 months out of tolerance",
+      "detail": "2 months out of tolerance",
       "examples": [
         "2026-03: mrr_by_month=$239483.1 vs profile-sum=$240332.1 (Δ $-849, tol $500)",
-        "2026-04: mrr_by_month=$232379.16 vs profile-sum=$233228.16 (Δ $-849, tol $500)",
-        "2026-05: mrr_by_month=$234769.66 vs profile-sum=$233071.66 (Δ $1698, tol $500)"
+        "2026-04: mrr_by_month=$232379.16 vs profile-sum=$233228.16 (Δ $-849, tol $500)"
       ]
     },
     {

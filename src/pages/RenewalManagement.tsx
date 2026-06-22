@@ -87,6 +87,19 @@ type RenewalRow = {
   action_tag: ActionTag;
   action_reason: string;
   customer_entered_orders_prev_billing_period: number | null;
+  quotes?: Array<{
+    id: string;
+    title: string | null;
+    status: string | null;
+    amount: number | null;
+    currency: string;
+    created_date: string | null;
+    expiration_date: string | null;
+    last_modified_date: string | null;
+    quote_number: string | null;
+    payment_status: string | null;
+    hubspot_url: string;
+  }>;
 };
 
 type Aggregates = {
@@ -106,6 +119,10 @@ type Aggregates = {
   median_cost_ratio_lifetime_pct: number | null;
   median_cost_ratio_annualized_pct: number | null;
   dropoff_count: number;
+  customers_with_quote?: number;
+  upcoming_renewals_with_quote?: number;
+  upcoming_renewals_without_quote?: number;
+  total_quote_count?: number;
 };
 
 type Snapshot = {
@@ -132,7 +149,7 @@ type SortKey = 'days_to_renewal' | 'arr' | 'mrr' | 'cost_ratio_lifetime' | 'cost
 // switches the filter (rather than ANDing) because the tiles slice
 // overlapping populations and an AND combination is rarely what the user
 // wants when drilling in from a headline number.
-type MetricFilter = 'next_90d' | 'next_180d' | 'next_12mo' | 'expansion' | 'contraction' | 'dropoff' | 'no_renewal_date' | null;
+type MetricFilter = 'next_90d' | 'next_180d' | 'next_12mo' | 'expansion' | 'contraction' | 'dropoff' | 'no_renewal_date' | 'with_quote' | 'no_quote_upcoming' | null;
 
 export default function RenewalManagement() {
   const { data, isLoading, error } = useSheetTab<Snapshot>('renewal_management');
@@ -200,6 +217,12 @@ export default function RenewalManagement() {
       if (metricFilter === 'expansion' && r.action_tag !== 'Expansion Opportunity') return false;
       if (metricFilter === 'contraction' && r.action_tag !== 'Contraction Risk') return false;
       if (metricFilter === 'dropoff' && (r.dropoff_pct == null || r.dropoff_pct > -0.25)) return false;
+      if (metricFilter === 'with_quote' && !((r.quotes?.length ?? 0) > 0)) return false;
+      if (metricFilter === 'no_quote_upcoming') {
+        const upcoming = r.days_to_renewal != null && r.days_to_renewal >= 0 && r.days_to_renewal <= 365;
+        if (!upcoming) return false;
+        if ((r.quotes?.length ?? 0) > 0) return false;
+      }
       return true;
     });
   }, [rows, actionFilter, ownerFilter, showOnlyWithRenewalDate, metricFilter]);
@@ -274,6 +297,10 @@ export default function RenewalManagement() {
     { key: 'pay_status', label: 'Pay Status', getValue: (r: RenewalRow) => r.pay_status },
     { key: 'cs_pulse', label: 'CS Pulse', getValue: (r: RenewalRow) => r.cs_pulse ?? '' },
     { key: 'owner', label: 'Owner', getValue: (r: RenewalRow) => r.owner_name ?? '' },
+    { key: 'quote_count', label: 'Quote Count', getValue: (r: RenewalRow) => r.quotes?.length ?? 0 },
+    { key: 'latest_quote_status', label: 'Latest Quote Status', getValue: (r: RenewalRow) => r.quotes?.[0]?.status ?? '' },
+    { key: 'latest_quote_amount', label: 'Latest Quote Amount', getValue: (r: RenewalRow) => r.quotes?.[0]?.amount ?? '' },
+    { key: 'latest_quote_url', label: 'Latest Quote URL', getValue: (r: RenewalRow) => r.quotes?.[0]?.hubspot_url ?? '' },
   ]), []);
 
   return (
@@ -357,6 +384,32 @@ export default function RenewalManagement() {
           valueColor="info.main"
           active={metricFilter === 'no_renewal_date'}
           onClick={() => toggleMetric('no_renewal_date')}
+          isLoading={isLoading}
+        />
+        <KpiTile
+          label="Upcoming w/ quote"
+          info="Of the renewals coming up in the next 12 months, how many have at least one HubSpot Quote on the customer's Company. Click to filter the table to these."
+          value={agg?.upcoming_renewals_with_quote}
+          sub={
+            agg?.upcoming_renewals_with_quote != null && agg?.upcoming_renewals_without_quote != null
+              ? `of ${agg.upcoming_renewals_with_quote + agg.upcoming_renewals_without_quote} upcoming · ${agg.upcoming_renewals_without_quote} without`
+              : '—'
+          }
+          accent="success.main"
+          valueColor="success.main"
+          active={metricFilter === 'with_quote'}
+          onClick={() => toggleMetric('with_quote')}
+          isLoading={isLoading}
+        />
+        <KpiTile
+          label="Upcoming · no quote"
+          info="Renewals in the next 12 months where the customer has zero HubSpot Quotes. Likely the CS prep list — quotes to be created before the renewal date. Click to filter."
+          value={agg?.upcoming_renewals_without_quote}
+          sub="Quote not yet started"
+          accent="warning.main"
+          valueColor="warning.main"
+          active={metricFilter === 'no_quote_upcoming'}
+          onClick={() => toggleMetric('no_quote_upcoming')}
           isLoading={isLoading}
         />
       </Grid>
@@ -510,6 +563,7 @@ export default function RenewalManagement() {
                   <TableSortLabel active={sortKey === 'tier'} direction={sortKey === 'tier' ? sortDir : 'asc'} onClick={() => toggleSort('tier')}>Health</TableSortLabel>
                 </TableCell>
                 <TableCell>Action</TableCell>
+                <TableCell>Quote</TableCell>
                 <TableCell>Owner</TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -556,12 +610,37 @@ export default function RenewalManagement() {
                       <TableCell sx={{ fontSize: 11 }}>
                         <Chip label={r.action_tag} size="small" sx={{ height: 20, fontSize: 10.5, bgcolor: ACTION_COLOR[r.action_tag] + '22', color: ACTION_COLOR[r.action_tag], fontWeight: 600 }} />
                       </TableCell>
+                      <TableCell sx={{ fontSize: 11 }}>
+                        {(r.quotes?.length ?? 0) === 0 ? (
+                          <Typography variant="caption" sx={{ color: 'text.disabled', fontStyle: 'italic' }}>none</Typography>
+                        ) : (() => {
+                          const latest = r.quotes![0]; // builder pre-sorts newest first
+                          const more = r.quotes!.length - 1;
+                          return (
+                            <Stack spacing={0.25} onClick={(e) => e.stopPropagation()}>
+                              <Box
+                                component="a"
+                                href={latest.hubspot_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                sx={{ color: 'primary.light', fontSize: 11, textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                              >
+                                {latest.amount != null ? `$${Math.round(latest.amount).toLocaleString()}` : 'quote'} ↗
+                              </Box>
+                              <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: 10 }}>
+                                {latest.status === 'APPROVAL_NOT_NEEDED' ? 'SENT' : (latest.status || '—')}
+                                {more > 0 && ` · +${more} more`}
+                              </Typography>
+                            </Stack>
+                          );
+                        })()}
+                      </TableCell>
                       <TableCell sx={{ fontSize: 12 }}>{r.owner_name || <Typography variant="caption" sx={{ color: 'text.disabled', fontStyle: 'italic' }}>unassigned</Typography>}</TableCell>
                       <TableCell sx={{ fontSize: 10, color: 'text.secondary' }}>{isExpanded ? '▲' : '▼'}</TableCell>
                     </TableRow>
                     {isExpanded && (
                       <TableRow>
-                        <TableCell colSpan={10} sx={{ bgcolor: 'rgba(0,0,0,0.02)', borderTop: '1px dashed', borderColor: tierColor }}>
+                        <TableCell colSpan={11} sx={{ bgcolor: 'rgba(0,0,0,0.02)', borderTop: '1px dashed', borderColor: tierColor }}>
                           <Stack spacing={2} sx={{ p: 1.5 }}>
                             <RenewalPanelContent row={r} />
                           </Stack>
@@ -647,6 +726,8 @@ function metricFilterLabel(m: MetricFilter): string {
     case 'contraction': return 'contraction risks';
     case 'dropoff': return 'ROI drop-offs';
     case 'no_renewal_date': return 'customers with no renewal date set';
+    case 'with_quote': return 'customers with at least one HubSpot quote';
+    case 'no_quote_upcoming': return 'upcoming renewals with no quote yet';
     default: return '';
   }
 }

@@ -33,6 +33,9 @@ const OrdersVerified = lazy(() => import('./pages/OrdersVerified'));
 const StripeConnectRevenue = lazy(() => import('./pages/StripeConnectRevenue'));
 const Services = lazy(() => import('./pages/Services'));
 const RenewalManagement = lazy(() => import('./pages/RenewalManagement'));
+const Contracts = lazy(() => import('./pages/Contracts'));
+const Implementation = lazy(() => import('./pages/Implementation'));
+const ImplementationSchedule = lazy(() => import('./pages/ImplementationSchedule'));
 const DataCleanup = lazy(() => import('./pages/DataCleanup'));
 const StripeQBReconciliation = lazy(() => import('./pages/StripeQBReconciliation'));
 const CustomerDetail = lazy(() => import('./pages/CustomerDetail'));
@@ -81,6 +84,9 @@ export default function App() {
         <Route path="stripe-connect-revenue" element={<L><StripeConnectRevenue /></L>} />
         <Route path="services" element={<L><Services /></L>} />
         <Route path="renewal-management" element={<L><RenewalManagement /></L>} />
+        <Route path="contracts" element={<L><Contracts /></L>} />
+        <Route path="implementation" element={<L><Implementation /></L>} />
+        <Route path="implementation-schedule" element={<L><ImplementationSchedule /></L>} />
         <Route path="data-cleanup" element={<L><DataCleanup /></L>} />
         {/* Financial / QoE / diligence routes — registered only when the
             SHOW_FINANCIAL_TABS feature flag is on. In production (Vercel env

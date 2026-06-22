@@ -43,8 +43,8 @@ export const NAV_ENTRIES: NavEntry[] = [
     label: 'Customers',
     items: [
       { label: 'All Customers', path: '/customers' },
-      { label: 'Rep Dashboard', path: '/rep-dashboard' },
       { label: 'Customer Detail', path: '/customer-detail' },
+      { label: 'Rep Dashboard', path: '/rep-dashboard' },
       { label: 'Custom Report', path: '/custom-report' },
     ],
   },
@@ -59,6 +59,14 @@ export const NAV_ENTRIES: NavEntry[] = [
       { label: 'Stripe Connect Revenue', path: '/stripe-connect-revenue' },
       { label: 'Services', path: '/services' },
       { label: 'Renewal Management', path: '/renewal-management' },
+      { label: 'Contracts', path: '/contracts' },
+    ],
+  },
+  {
+    label: 'Implementation',
+    items: [
+      { label: 'Implementation Overview', path: '/implementation' },
+      { label: 'Schedule', path: '/implementation-schedule' },
     ],
   },
   {

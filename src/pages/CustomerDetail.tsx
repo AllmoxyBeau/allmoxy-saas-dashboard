@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -7,23 +7,24 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
 import Chip from '@mui/material/Chip';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ResponsiveContainer, BarChart, Bar, ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel from '../components/common/DrillDownPanel';
 import InfoIcon from '../components/common/InfoIcon';
 import HealthScoreInfo from '../components/common/HealthScoreInfo';
-import RenewalPanelContent, { type RenewalPanelRow } from '../components/common/RenewalPanelContent';
+import RenewalPanelContent, { type RenewalPanelRow, type RenewalQuote } from '../components/common/RenewalPanelContent';
 import { useSheetTab } from '../hooks/useSheetTab';
 import { hubspotCompanyUrl } from '../lib/hubspot';
 import annualPayersConfig from '../data/annual_payer_ids.json';
@@ -87,13 +88,6 @@ type CustomerProfile = {
   transactions: Transaction[];
 };
 
-type Cohort = {
-  year: number;
-  initial: number;
-  active: number;
-  retentionPct: number | null;
-};
-type CohortSnap = { cohortSummary: Cohort[] };
 
 // public/snapshots/churn_inferences.json — Claude-MCP-generated reason fallback for customers
 // HubSpot has no recorded churn_reason for. See ChurnPatterns page for the full UI.
@@ -163,12 +157,6 @@ function monthLabelLong(iso: string) {
   const [y, m] = iso.split('-').map(Number);
   return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
-
-const filterCustomers = createFilterOptions<CustomerProfile>({
-  matchFrom: 'any',
-  stringify: (o) => o.name,
-  limit: 40,
-});
 
 const COMMITTED_ANNUAL_IDS = new Set<number>(annualPayersConfig.annual_payer_ids);
 const PENDING_STORAGE_KEY = 'allmoxy.annual_payers.pending';
@@ -256,8 +244,7 @@ function statusChipProps(status: CustomerProfile['status']) {
 }
 
 export default function CustomerDetail() {
-  const { data, isLoading } = useSheetTab('customer_profiles');
-  const { data: cohortData } = useSheetTab('cohort_retention');
+  const { data } = useSheetTab('customer_profiles');
   // Churn classifications: AI inferences cover customers HubSpot has no recorded reason for;
   // sub-patterns tag finer-grained "why" within each reason cluster. Both are optional —
   // the page works without them, that section just won't render.
@@ -273,8 +260,10 @@ export default function CustomerDetail() {
   // trend, action tag. One renewal row per HubSpot Instance; joined to this
   // customer via allmoxy_customer_id.
   const { data: renewalData } = useSheetTab('renewal_management');
+  // Implementation — JIRA stage (IPA epic) + Harvest hours/billable $ for this
+  // customer's services-revenue implementation project. One row per customer.
+  const { data: implementationData } = useSheetTab('implementation');
   const snap = data as unknown as { rows: CustomerProfile[] } | undefined;
-  const cohort = cohortData as unknown as CohortSnap | undefined;
   const inferences = inferencesData as unknown as ChurnInferencesSnap | undefined;
   const subpatterns = subpatternsData as unknown as ChurnSubpatternsSnap | undefined;
   const risk = riskData as unknown as { customers: Array<{ allmoxy_customer_id: number; tier: string; total_score: number; signal_1_orders: number; signal_2_launch: number; signal_3_recency: number; signal_4_risk: number; signal_5_tenure: number; signal_6_pulse?: number; pulse_color?: 'green' | 'yellow' | 'red' | null; pulse_label?: string; pulse_detail?: string | null; orders_detail: string; signal_2_detail?: string; days_since_last_contact: number | null; launch_status: string; is_launched: boolean; live_date: string | null; orders_monthly_avg_current: number; orders_monthly_avg_prior: number; orders_yoy_pct: number | null; arr_at_risk: number; narrative: string; is_bid_only?: boolean }> } | undefined;
@@ -290,7 +279,7 @@ export default function CustomerDetail() {
   // from the Renewal Management page, surfaced inline on Customer Detail so
   // the renewal context is visible immediately on any customer view.
   const [renewalExpanded, setRenewalExpanded] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const customers = snap?.rows ?? [];
 
@@ -318,31 +307,12 @@ export default function CustomerDetail() {
     return customers[0] ?? null;
   }, [customers, searchParams]);
 
-  function selectCustomer(id: number | null) {
-    if (id == null) return;
-    const next = new URLSearchParams(searchParams);
-    next.set('id', String(id));
-    next.delete('name');
-    setSearchParams(next, { replace: true });
-  }
-
-  // Sort customers alphabetically for the search list; limit display to speed render.
-  const sortedForSearch = useMemo(
-    () => [...customers].sort((a, b) => a.name.localeCompare(b.name)),
-    [customers]
-  );
-
   const chart = useMemo(() => {
     if (!selected) return [];
     return Object.entries(selected.monthly_history)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([month, v]) => ({ month, subscription: v.subscription, services: v.services, connect: v.connect }));
   }, [selected]);
-
-  const cohortContext = useMemo(() => {
-    if (!selected?.cohort_year || !cohort) return null;
-    return cohort.cohortSummary.find((c) => c.year === selected.cohort_year) ?? null;
-  }, [selected, cohort]);
 
   const selectedIsCommittedAnnual = selected ? COMMITTED_ANNUAL_IDS.has(selected.allmoxy_customer_id) : false;
   const selectedPending = selected ? pending[String(selected.allmoxy_customer_id)] : undefined;
@@ -385,7 +355,12 @@ export default function CustomerDetail() {
     <Box>
       <PageHeader
         title="Customer Detail"
-        subtitle="Pick any customer to see their full lifetime — revenue by stream, every transaction, milestones, and how their cohort is performing."
+        subtitle="A customer's full lifetime — revenue by stream, implementation, every transaction, and milestones."
+        actions={
+          <Button component={RouterLink} to="/customers" size="small" variant="outlined" startIcon={<ArrowBackIcon />}>
+            All Customers
+          </Button>
+        }
       />
 
       {pendingEntries.length > 0 && (
@@ -414,61 +389,102 @@ export default function CustomerDetail() {
         </Alert>
       )}
 
-      {/* Search / customer picker */}
-      <Paper sx={{ p: 2.5, mb: 3 }}>
-        <Autocomplete
-          options={sortedForSearch}
-          filterOptions={filterCustomers}
-          getOptionLabel={(o) => o.name}
-          value={selected}
-          onChange={(_, v) => selectCustomer(v?.allmoxy_customer_id ?? null)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search customers"
-              placeholder="Start typing a customer name..."
-              size="small"
-            />
-          )}
-          renderOption={(props, option) => {
-            const { key, ...rest } = props as { key?: React.Key } & React.HTMLAttributes<HTMLLIElement>;
-            return (
-              <Box component="li" key={key ?? option.allmoxy_customer_id} {...rest}>
-                <Stack direction="row" justifyContent="space-between" sx={{ width: '100%' }}>
-                  <Typography variant="body2">{option.name}</Typography>
-                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                    {USD_COMPACT.format(option.lifetime_total)} lifetime · {option.cohort_year ?? '—'} cohort
-                  </Typography>
-                </Stack>
-              </Box>
-            );
-          }}
-          isOptionEqualToValue={(a, b) => a.allmoxy_customer_id === b.allmoxy_customer_id}
-          loading={isLoading}
-        />
-      </Paper>
-
       {!selected ? (
         <Paper sx={{ p: 4, textAlign: 'center' }}>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Search a customer above to see their full profile.
+            No customer selected. Head to the{' '}
+            <Link component={RouterLink} to="/customers" underline="hover">Customers</Link>{' '}
+            page, filter for the customer, and click their name to open their detail here.
           </Typography>
         </Paper>
       ) : (
         <>
-          {/* Identity card */}
-          <Paper sx={{ p: 3, mb: 3 }}>
-            {/* Top row: name on left, status cluster on right. Identity-level
-                signals only — meta fields live in the grouped sections below. */}
+          {/* Identity card — name + status chips + annual-payer toggle. Light
+              and focused: just "who is this customer + what's their state." */}
+          <Paper sx={{ p: 3, mb: 2 }}>
             <Stack
               direction={{ xs: 'column', md: 'row' }}
               spacing={2}
               justifyContent="space-between"
               alignItems={{ xs: 'flex-start', md: 'flex-start' }}
             >
-              <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                {selected.name}
-              </Typography>
+              <Stack spacing={1}>
+                <Stack spacing={0.25}>
+                  <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                    {selected.name}
+                  </Typography>
+                  {/* Secondary IDs under the name — small, muted, monospace
+                      so they read as reference rather than competing with the
+                      name itself. */}
+                  <Typography variant="caption" sx={{ color: 'text.secondary', fontFamily: 'monospace', fontSize: 11 }}>
+                    Allmoxy ID {selected.allmoxy_customer_id}
+                    {selected.installer_id && ` · Installer ID ${selected.installer_id}`}
+                  </Typography>
+                </Stack>
+                {/* Connected accounts — Allmoxy URL, HubSpot, Stripe customer,
+                    and every Stripe Subscription ID. Inlined here directly
+                    under the IDs so the whole "who/where to find this
+                    customer in other systems" cluster lives together. */}
+                {(() => {
+                  const customDomainSet = new Set(selected.all_custom_domain_stripe_subscription_ids ?? []);
+                  if (selected.custom_domain_stripe_subscription_id) customDomainSet.add(selected.custom_domain_stripe_subscription_id);
+                  const allSubsSet = new Set([
+                    ...(selected.all_stripe_subscription_ids ?? []),
+                    ...(selected.stripe_subscription_id ? [selected.stripe_subscription_id] : []),
+                    ...customDomainSet,
+                  ]);
+                  const allSubsList = [...allSubsSet];
+                  const hasAnyExternal =
+                    selected.installer_directory ||
+                    selected.hubspot_company_id ||
+                    selected.stripe_customer_ids.length > 0 ||
+                    allSubsList.length > 0;
+                  if (!hasAnyExternal) return null;
+                  return (
+                    <Stack direction="row" spacing={3} flexWrap="wrap" useFlexGap alignItems="flex-start" sx={{ mt: 0.5 }}>
+                      {selected.installer_directory && (
+                        <ExternalLink
+                          label="Allmoxy URL"
+                          display={`${selected.installer_directory}.allmoxy.com`}
+                          href={`https://${selected.installer_directory}.allmoxy.com`}
+                        />
+                      )}
+                      {selected.hubspot_company_id && (
+                        <ExternalLink
+                          label="HubSpot ID"
+                          display={selected.hubspot_company_id}
+                          href={hubspotCompanyUrl(selected.hubspot_company_id) ?? '#'}
+                        />
+                      )}
+                      {selected.stripe_customer_ids[0] && (
+                        <ExternalLink
+                          label="Stripe Customer"
+                          display={selected.stripe_customer_ids[0]}
+                          href={`https://dashboard.stripe.com/customers/${selected.stripe_customer_ids[0]}`}
+                        />
+                      )}
+                      {allSubsList.map((subId, i) => {
+                        const isCustomDomain = customDomainSet.has(subId);
+                        const isPrimary = subId === selected.stripe_subscription_id && !isCustomDomain;
+                        const label = isCustomDomain
+                          ? `Custom Domain Sub${customDomainSet.size > 1 ? ` ${[...customDomainSet].indexOf(subId) + 1}` : ''}`
+                          : isPrimary
+                            ? 'Stripe Subscription'
+                            : `Stripe Sub ${i + 1}`;
+                        return (
+                          <ExternalLink
+                            key={subId}
+                            label={label}
+                            display={subId}
+                            href={`https://dashboard.stripe.com/subscriptions/${subId}`}
+                            emphasize={isCustomDomain}
+                          />
+                        );
+                      })}
+                    </Stack>
+                  );
+                })()}
+              </Stack>
               <Stack direction="column" spacing={1} alignItems={{ xs: 'flex-start', md: 'flex-end' }}>
                 <Chip
                   label={statusChipProps(selected.status).label}
@@ -510,129 +526,62 @@ export default function CustomerDetail() {
               </Stack>
             </Stack>
 
-            {/* Grouped meta sections — labeled subsets instead of one big squished
-                MetaBit row. Each row uses the same MetaBit component so visual
-                language stays consistent with the rest of the page. */}
-            <Stack spacing={2} sx={{ mt: 2.5 }}>
-              <CustomerSection label="Lifecycle">
-                <MetaBit label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
-                <MetaBit label="First payment" value={formatDateMDY(selected.first_payment_date)} />
-                <MetaBit label="Last payment" value={formatDateMDY(selected.last_payment_date)} />
-                <MetaBit label="Tenure" value={selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)} yrs` : '—'} />
-                <MetaBit label="Cohort" value={selected.cohort_year != null ? String(selected.cohort_year) : '—'} />
-              </CustomerSection>
-
-              {(() => {
-                const accountRep =
-                  selected.instance_owner_first_name?.trim() ||
-                  selected.instance_owner?.trim() ||
-                  selected.hubspot_owner_name?.trim() ||
-                  null;
-                const hasAny = selected.primary_segment || selected.pay_status || selected.contract_status || accountRep;
-                if (!hasAny) return null;
-                return (
-                  <CustomerSection label="Account (HubSpot Sync)">
-                    {accountRep && <MetaBit label="Account rep" value={accountRep} />}
-                    {selected.primary_segment && <MetaBit label="Segment" value={selected.primary_segment} />}
-                    {selected.pay_status && <MetaBit label="Pay status" value={selected.pay_status} />}
-                    {selected.contract_status && <MetaBit label="Contract" value={selected.contract_status} />}
-                  </CustomerSection>
-                );
-              })()}
-
-              <CustomerSection label="Billing">
-                <MetaBit label="Transactions" value={selected.transaction_count.toLocaleString()} />
-                <MetaBit label="Stripe fee %" value={selected.stripe_fee_percent != null ? `${selected.stripe_fee_percent.toFixed(2)}%` : '—'} />
-                {selected.failed_3mo_count > 0 && (
-                  <Stack sx={{ alignSelf: 'flex-end' }}>
-                    <Typography variant="caption" sx={{ color: 'error.main', fontWeight: 500 }}>
-                      {selected.failed_3mo_count} failed charge{selected.failed_3mo_count === 1 ? '' : 's'} in last 3 months · {USD0.format(selected.failed_3mo_amount)}
-                    </Typography>
-                  </Stack>
-                )}
-              </CustomerSection>
-
-              {/* Connected accounts — instance URL, HubSpot, and ALL Stripe IDs.
-                  Separated from the meta groups above by a divider so users
-                  visually distinguish "data" from "action links". */}
-              {(() => {
-                const customDomainSet = new Set(selected.all_custom_domain_stripe_subscription_ids ?? []);
-                if (selected.custom_domain_stripe_subscription_id) customDomainSet.add(selected.custom_domain_stripe_subscription_id);
-                const allSubsSet = new Set([
-                  ...(selected.all_stripe_subscription_ids ?? []),
-                  ...(selected.stripe_subscription_id ? [selected.stripe_subscription_id] : []),
-                  ...customDomainSet,
-                ]);
-                const allSubsList = [...allSubsSet];
-                const hasAnyExternal =
-                  selected.installer_directory ||
-                  selected.hubspot_company_id ||
-                  selected.stripe_customer_ids.length > 0 ||
-                  allSubsList.length > 0;
-                if (!hasAnyExternal) return null;
-                return (
-                  <>
-                    <Divider sx={{ my: 0.5 }} />
-                    <CustomerSection label="Connected accounts" gap={3}>
-                      {selected.installer_directory && (
-                        <ExternalLink
-                          label="Allmoxy URL"
-                          display={`${selected.installer_directory}.allmoxy.com`}
-                          href={`https://${selected.installer_directory}.allmoxy.com`}
-                        />
-                      )}
-                      {selected.hubspot_company_id && (
-                        <ExternalLink
-                          label="HubSpot ID"
-                          display={selected.hubspot_company_id}
-                          href={hubspotCompanyUrl(selected.hubspot_company_id) ?? '#'}
-                        />
-                      )}
-                      {selected.stripe_customer_ids[0] && (
-                        <ExternalLink
-                          label="Stripe Customer"
-                          display={selected.stripe_customer_ids[0]}
-                          href={`https://dashboard.stripe.com/customers/${selected.stripe_customer_ids[0]}`}
-                        />
-                      )}
-                      {allSubsList.map((subId, i) => {
-                        const isCustomDomain = customDomainSet.has(subId);
-                        const isPrimary = subId === selected.stripe_subscription_id && !isCustomDomain;
-                        const label = isCustomDomain
-                          ? `Custom Domain Sub${customDomainSet.size > 1 ? ` ${[...customDomainSet].indexOf(subId) + 1}` : ''}`
-                          : isPrimary
-                            ? 'Stripe Subscription'
-                            : `Stripe Sub ${i + 1}`;
-                        return (
-                          <ExternalLink
-                            key={subId}
-                            label={label}
-                            display={subId}
-                            href={`https://dashboard.stripe.com/subscriptions/${subId}`}
-                            emphasize={isCustomDomain}
-                          />
-                        );
-                      })}
-                    </CustomerSection>
-                  </>
-                );
-              })()}
-
-              {/* Internal IDs strip — secondary reference info, lower visual weight.
-                  Installer URL dropped (redundant with the Allmoxy URL link above). */}
-              <Stack
-                direction="row"
-                spacing={2}
-                sx={{ pt: 0.5, opacity: 0.75 }}
-                flexWrap="wrap"
-                useFlexGap
-              >
-                <MetaBit label="Allmoxy ID" value={String(selected.allmoxy_customer_id)} />
-                {selected.installer_id && (
-                  <MetaBit label="Installer ID" value={selected.installer_id} />
-                )}
-              </Stack>
-            </Stack>
+            {/* Lifecycle / Account / Billing — moved inside the profile card so
+                the whole "who is this customer" block reads as one section.
+                Still a 3-card grid (matches Customers / Renewal / Services). */}
+            {(() => {
+            const accountRep =
+              selected.instance_owner_first_name?.trim() ||
+              selected.instance_owner?.trim() ||
+              selected.hubspot_owner_name?.trim() ||
+              null;
+            const accountHasAny = selected.primary_segment || selected.pay_status || selected.contract_status || accountRep;
+            return (
+              <Grid container spacing={2} sx={{ mt: 2 }} alignItems="stretch">
+                <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex' }}>
+                  <Paper sx={{ p: 2.5, flexGrow: 1 }}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5, fontWeight: 600 }}>Lifecycle</Typography>
+                    <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
+                      <MetaBit label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
+                      <MetaBit label="First payment" value={formatDateMDY(selected.first_payment_date)} />
+                      <MetaBit label="Last payment" value={formatDateMDY(selected.last_payment_date)} />
+                      <MetaBit label="Tenure" value={selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)} yrs` : '—'} />
+                      <MetaBit label="Cohort" value={selected.cohort_year != null ? String(selected.cohort_year) : '—'} />
+                    </Stack>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex' }}>
+                  <Paper sx={{ p: 2.5, flexGrow: 1 }}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5, fontWeight: 600 }}>Account (HubSpot Sync)</Typography>
+                    {accountHasAny ? (
+                      <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
+                        {accountRep && <MetaBit label="Account rep" value={accountRep} />}
+                        {selected.primary_segment && <MetaBit label="Segment" value={selected.primary_segment} />}
+                        {selected.pay_status && <MetaBit label="Pay status" value={selected.pay_status} />}
+                        {selected.contract_status && <MetaBit label="Contract" value={selected.contract_status} />}
+                      </Stack>
+                    ) : (
+                      <Typography variant="caption" sx={{ display: 'block', mt: 1.5, color: 'text.disabled', fontStyle: 'italic' }}>No HubSpot Sync data</Typography>
+                    )}
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex' }}>
+                  <Paper sx={{ p: 2.5, flexGrow: 1, borderLeft: selected.failed_3mo_count > 0 ? '3px solid' : undefined, borderColor: selected.failed_3mo_count > 0 ? 'error.main' : undefined }}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5, fontWeight: 600 }}>Billing</Typography>
+                    <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
+                      <MetaBit label="Transactions" value={selected.transaction_count.toLocaleString()} />
+                      <MetaBit label="Stripe fee %" value={selected.stripe_fee_percent != null ? `${selected.stripe_fee_percent.toFixed(2)}%` : '—'} />
+                    </Stack>
+                    {selected.failed_3mo_count > 0 && (
+                      <Typography variant="caption" sx={{ display: 'block', mt: 1, color: 'error.main', fontWeight: 500 }}>
+                        ⚠ {selected.failed_3mo_count} failed charge{selected.failed_3mo_count === 1 ? '' : 's'} · {USD0.format(selected.failed_3mo_amount)} (last 3 mo)
+                      </Typography>
+                    )}
+                  </Paper>
+                </Grid>
+              </Grid>
+            );
+          })()}
           </Paper>
 
           {/* Churn analysis panel — reads from churn_inferences.json (AI-classified reasons)
@@ -691,6 +640,120 @@ export default function CustomerDetail() {
             </Grid>
           </Grid>
 
+          {/* Milestones — full-width timeline, surfaced above Implementation. */}
+          <Paper sx={{ p: 3, mb: 3 }}>
+            <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 2 }}>
+              Milestones
+            </Typography>
+            <MilestoneTimeline
+              events={([
+                { label: 'Signed up', date: selected.sign_up_date },
+                { label: 'First payment', date: selected.first_payment_date },
+                selected.peak_month
+                  ? {
+                      label: 'Peak month',
+                      date: `${selected.peak_month}-01`,
+                      subtitle: monthLabelLong(selected.peak_month),
+                      detail: USD0.format(selected.peak_month_total),
+                      accent: true,
+                    }
+                  : null,
+                { label: 'Last payment', date: selected.last_payment_date },
+              ] as Array<MilestoneEvent | null>).filter((e): e is MilestoneEvent => e != null)}
+            />
+          </Paper>
+
+          {/* Implementation — surfaced high (right under the revenue/MRR stats)
+              because the implementation project is a critical part of the
+              initial onboarding. This customer's services-revenue implementation
+              project: JIRA stage (IPA epic) + Harvest hours / billable $.
+              Sourced from the implementation snapshot, keyed by
+              allmoxy_customer_id. Hidden when the customer has no implementation
+              activity in either system. */}
+          {(() => {
+            const implSnap = implementationData as unknown as { rows: Array<{
+              allmoxy_customer_id: number; has_jira: boolean; has_harvest: boolean;
+              jira_key: string | null; jira_url: string | null; stage: string | null;
+              assignee: string | null; harvest_project_name: string | null;
+              billing_method: string | null; hourly_rate: number | null;
+              hours: number; billable_hours: number; billable_amount: number;
+              last_entry: string | null; is_active: boolean;
+              launch_status: 'pre_launch' | 'launched' | 'unknown';
+              implementation_type: string; first_order_year: number | null;
+              time_to_first_order_months: number | null; ttv_category: string | null;
+            }> } | undefined;
+            const impl = implSnap?.rows?.find((r) => r.allmoxy_customer_id === selected.allmoxy_customer_id);
+            if (!impl) return null;
+            const stageColor = !impl.stage ? '#8B949E'
+              : /discovery/i.test(impl.stage) ? '#2C73FF'
+              : /prototyp/i.test(impl.stage) ? '#7C5CFF'
+              : /waiting/i.test(impl.stage) ? '#F5A623'
+              : /done/i.test(impl.stage) ? '#1A9E5C'
+              : /hold|abandon/i.test(impl.stage) ? '#8B949E' : '#2C73FF';
+            // Live time-to-first-order clock from sign-up; 90-day target.
+            const signupDays = selected.sign_up_date ? Math.floor((Date.now() - new Date(selected.sign_up_date).getTime()) / 86400000) : null;
+            const slaColor = signupDays == null ? '#8B949E' : signupDays > 90 ? '#D63A4D' : signupDays >= 60 ? '#F5A623' : '#1A9E5C';
+            const typeColor = impl.implementation_type === 'Initial implementation' ? '#2C73FF' : '#8B949E';
+            return (
+              <Paper sx={{ p: 3, mb: 3 }}>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>Implementation</Typography>
+                  <InfoIcon info={<><strong>What it is:</strong> This customer's implementation project — services revenue. The team's goal is <strong>time to first order</strong>: customers with no first verified live order are in <strong>initial implementation</strong>; launched customers are doing <strong>catalog updates</strong>. <strong>Stage</strong> from JIRA, <strong>hours/$</strong> from Harvest.<br /><br />Manage the work on the <a href="/implementation" style={{ color: '#2C73FF' }}>Implementation Overview</a>.</>} />
+                  <Chip label={impl.implementation_type === 'Initial implementation' ? 'Initial implementation' : impl.implementation_type === 'Catalog update' ? 'Catalog update' : 'Unknown launch'} size="small" sx={{ height: 18, fontSize: 10, fontWeight: 600, bgcolor: typeColor + '22', color: typeColor }} />
+                  {impl.is_active
+                    ? <Chip label="Active" size="small" sx={{ height: 18, fontSize: 10, fontWeight: 600, bgcolor: 'rgba(26,158,92,0.18)', color: '#1A9E5C' }} />
+                    : <Chip label="Inactive" size="small" sx={{ height: 18, fontSize: 10, bgcolor: 'rgba(139,148,158,0.18)', color: '#8B949E' }} />}
+                  {impl.ttv_category === 'gym_member' && <Chip label="Stalled · never launched" size="small" sx={{ height: 18, fontSize: 10, fontWeight: 600, bgcolor: 'rgba(245,166,35,0.18)', color: '#B07206' }} />}
+                </Stack>
+
+                {/* Time-to-first-order banner — the headline for this customer. */}
+                <Box sx={{ mb: 2, p: 1.5, borderRadius: 1, bgcolor: 'action.hover', display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'baseline' }}>
+                  <Box>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10 }}>Signed up</Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 500 }}>{selected.sign_up_date ? selected.sign_up_date.slice(0, 10) : '—'}</Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10 }}>First order (value)</Typography>
+                    {impl.launch_status === 'launched' ? (
+                      <Typography variant="body2" sx={{ fontWeight: 600, color: '#1A9E5C' }}>
+                        {impl.first_order_year ? `Live ${impl.first_order_year}` : 'Launched'}{impl.time_to_first_order_months != null ? ` · ~${impl.time_to_first_order_months}mo to first order` : ''}
+                      </Typography>
+                    ) : impl.launch_status === 'pre_launch' ? (
+                      <Typography variant="body2" sx={{ fontWeight: 600, color: slaColor }}>
+                        No first order yet{signupDays != null ? ` · ${signupDays}d since sign-up` : ''}{signupDays != null && signupDays > 90 ? ' · overdue (>90d)' : ''}
+                      </Typography>
+                    ) : <Typography variant="body2" sx={{ color: 'text.disabled' }}>Unknown launch status</Typography>}
+                  </Box>
+                </Box>
+                <Grid container spacing={3}>
+                  <Grid item xs={6} sm={3}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10 }}>Stage</Typography>
+                    <Box sx={{ mt: 0.5 }}>
+                      {impl.stage ? <Chip label={impl.stage} size="small" sx={{ height: 22, fontSize: 11, fontWeight: 600, bgcolor: stageColor + '22', color: stageColor }} />
+                        : <Typography variant="body2" sx={{ color: 'text.disabled' }}>No JIRA epic</Typography>}
+                    </Box>
+                    {impl.assignee && <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>Owner: {impl.assignee}</Typography>}
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10 }}>Hours logged</Typography>
+                    <Typography variant="h6" sx={{ fontWeight: 500, fontVariantNumeric: 'tabular-nums' }}>{impl.has_harvest ? impl.hours.toLocaleString() : '—'}</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>{impl.has_harvest ? `${impl.billable_hours.toLocaleString()} billable` : 'no Harvest project'}</Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10 }}>Billable services $</Typography>
+                    <Typography variant="h6" sx={{ fontWeight: 500, color: 'success.main', fontVariantNumeric: 'tabular-nums' }}>{impl.has_harvest ? USD0.format(impl.billable_amount) : '—'}</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>{impl.billing_method || '—'}{impl.billing_method === 'Hourly' && impl.hourly_rate ? ` @ $${impl.hourly_rate}/hr` : ''}</Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10 }}>Last activity</Typography>
+                    <Typography variant="body1" sx={{ mt: 0.5 }}>{impl.last_entry || '—'}</Typography>
+                    {impl.jira_url && <Box component="a" href={impl.jira_url} target="_blank" rel="noopener noreferrer" sx={{ fontSize: 12, color: 'primary.light', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>{impl.jira_key} in JIRA ↗</Box>}
+                  </Grid>
+                </Grid>
+              </Paper>
+            );
+          })()}
+
           {/* Churn Risk Health Score */}
           {(() => {
             const riskEntry = risk?.customers?.find((r) => r.allmoxy_customer_id === selected.allmoxy_customer_id);
@@ -712,7 +775,7 @@ export default function CustomerDetail() {
             const tierColor = effectiveTier === 'red' ? '#D63A4D' : effectiveTier === 'yellow' ? '#F5A623' : effectiveTier === 'green' ? '#1A9E5C' : '#94a3b8';
             const tierLabel = effectiveTier === 'red' ? 'CRITICAL' : effectiveTier === 'yellow' ? 'WATCH' : effectiveTier === 'green' ? 'HEALTHY' : 'UNSCORED';
             return (
-              <Paper sx={{ p: 3, mb: 3, borderLeft: '4px solid', borderColor: tierColor }}>
+              <Paper sx={{ p: 3, mb: 3 }}>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }} flexWrap="wrap">
                   <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                     Churn Risk · Health Score
@@ -1086,64 +1149,91 @@ export default function CustomerDetail() {
                       borderColor: 'divider',
                     }}
                   >
-                    <RenewalPanelContent row={renewalRow} />
+                    <RenewalPanelContent row={renewalRow} hideQuotes />
                   </Paper>
                 </Collapse>
               </Box>
             );
           })()}
 
-          {/* Milestones + cohort context */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} md={6}>
-              <Paper sx={{ p: 3, height: '100%' }}>
-                <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 2 }}>
-                  Milestones
-                </Typography>
-                <MilestoneTimeline
-                  events={([
-                    { label: 'Signed up', date: selected.sign_up_date },
-                    { label: 'First payment', date: selected.first_payment_date },
-                    selected.peak_month
-                      ? {
-                          label: 'Peak month',
-                          date: `${selected.peak_month}-01`,
-                          subtitle: monthLabelLong(selected.peak_month),
-                          detail: USD0.format(selected.peak_month_total),
-                          accent: true,
-                        }
-                      : null,
-                    { label: 'Last payment', date: selected.last_payment_date },
-                  ] as Array<MilestoneEvent | null>).filter((e): e is MilestoneEvent => e != null)}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Paper sx={{ p: 3, height: '100%' }}>
-                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                    Cohort context
-                  </Typography>
-                  <InfoIcon info={<><strong>What it is:</strong> How this customer's signup-year cohort as a whole is performing — puts their lifetime in context of peers who joined the same year.<br /><br /><strong>Data:</strong> From the cohort_retention snapshot — counts of customers who joined in this cohort year and what % of them are still active today.</>} />
-                </Stack>
-                {cohortContext ? (
-                  <Stack spacing={1.5}>
-                    <Typography variant="body2">
-                      <strong>{cohortContext.year} cohort</strong> — {cohortContext.initial} customers signed up, {cohortContext.active} still active today
-                      {cohortContext.retentionPct != null ? ` (${cohortContext.retentionPct}% retention)` : ''}.
+          {/* Quotes — dedicated, always-visible card listing every HubSpot
+              Quote attached to this customer's Company. Quotes live on the
+              renewal_management snapshot rows; we aggregate across all of this
+              customer's renewal rows (a customer can have multiple Instances /
+              Production+Sandbox pairs), de-dupe by quote id, and sort newest
+              first. Surfaced as its own section here so it's not buried inside
+              the collapsible Renewal panel — that panel's own quotes block is
+              suppressed via hideQuotes to avoid showing the same table twice. */}
+          {(() => {
+            const renewalSnap = renewalData as unknown as { rows: Array<RenewalPanelRow & { allmoxy_customer_id: number }> } | undefined;
+            const rows = (renewalSnap?.rows ?? []).filter((r) => r.allmoxy_customer_id === selected.allmoxy_customer_id);
+            const byId = new Map<string, RenewalQuote>();
+            rows.forEach((r) => (r.quotes ?? []).forEach((q) => byId.set(q.id, q)));
+            const quotes = Array.from(byId.values()).sort((a, b) =>
+              (b.created_date ?? '').localeCompare(a.created_date ?? ''));
+            if (quotes.length === 0) return null;
+            return (
+              <Box sx={{ mb: 3 }}>
+                <Paper sx={{ p: 3 }}>
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+                    <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                      Quotes ({quotes.length})
                     </Typography>
-                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                      This customer contributes <strong>{USD0.format(selected.lifetime_total)}</strong> of lifetime revenue — one of {cohortContext.initial} cohort members.
-                    </Typography>
+                    <InfoIcon info={<><strong>What it is:</strong> Every HubSpot Quote attached to this customer's Company association(s), newest first. Click "Open in HubSpot" to jump to the quote.<br /><br /><strong>Status:</strong> comes from HubSpot's workflow — <code>APPROVAL_NOT_NEEDED</code> is HubSpot's term for "sent/active", <code>DRAFT</code> is in-progress.</>} />
                   </Stack>
-                ) : (
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Cohort data not available for this customer.
-                  </Typography>
-                )}
-              </Paper>
-            </Grid>
-          </Grid>
+                  <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', '& th, & td': { py: 0.75, fontSize: 13, textAlign: 'left', borderBottom: '1px solid', borderColor: 'divider' }, '& th': { fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10 } }}>
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th style={{ textAlign: 'right' }}>Amount</th>
+                        <th>Created</th>
+                        <th>Expires</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {quotes.map((q) => (
+                        <tr key={q.id}>
+                          <td style={{ fontWeight: 500 }}>{q.title || '(untitled)'}</td>
+                          <td>
+                            <Chip
+                              label={q.status === 'APPROVAL_NOT_NEEDED' ? 'SENT' : (q.status || '—')}
+                              size="small"
+                              sx={{
+                                height: 18,
+                                fontSize: 10,
+                                bgcolor: q.status === 'DRAFT' ? 'rgba(245, 166, 35, 0.18)' : q.status === 'APPROVAL_NOT_NEEDED' ? 'rgba(26, 158, 92, 0.18)' : 'rgba(139, 148, 158, 0.18)',
+                                color: q.status === 'DRAFT' ? '#B07206' : q.status === 'APPROVAL_NOT_NEEDED' ? '#1A9E5C' : '#475569',
+                                fontWeight: 600,
+                              }}
+                            />
+                          </td>
+                          <td style={{ textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                            {q.amount != null ? `${q.currency === 'USD' ? '$' : (q.currency + ' ')}${Math.round(q.amount).toLocaleString()}` : '—'}
+                          </td>
+                          <td style={{ color: '#6B7280' }}>{q.created_date ? q.created_date.slice(0, 10) : '—'}</td>
+                          <td style={{ color: '#6B7280' }}>{q.expiration_date ? q.expiration_date.slice(0, 10) : '—'}</td>
+                          <td style={{ textAlign: 'right' }}>
+                            <Box
+                              component="a"
+                              href={q.hubspot_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              sx={{ fontSize: 12, color: 'primary.light', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                            >
+                              Open in HubSpot ↗
+                            </Box>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Box>
+                </Paper>
+              </Box>
+            );
+          })()}
+
 
           {/* Transactions table (collapsed by default, click header to expand) */}
           <Box sx={{ mt: 3 }}>
@@ -1245,39 +1335,6 @@ function StatCard({
   );
 }
 
-// Labeled wrapper used by the customer header card to group related MetaBits /
-// ExternalLinks under a small uppercase section heading (Lifecycle / Account /
-// Billing / Connected accounts). Replaces the old "one long flowing row of 14+
-// fields" layout — see CustomerDetail header card.
-function CustomerSection({
-  label,
-  children,
-  gap = 2,
-}: {
-  label: string;
-  children: React.ReactNode;
-  gap?: number;
-}) {
-  return (
-    <Stack spacing={0.75}>
-      <Typography
-        variant="caption"
-        sx={{
-          color: 'text.secondary',
-          fontSize: 10,
-          textTransform: 'uppercase',
-          letterSpacing: '0.08em',
-          fontWeight: 600,
-        }}
-      >
-        {label}
-      </Typography>
-      <Stack direction="row" spacing={gap} flexWrap="wrap" useFlexGap>
-        {children}
-      </Stack>
-    </Stack>
-  );
-}
 
 function MetaBit({ label, value }: { label: string; value: string }) {
   return (

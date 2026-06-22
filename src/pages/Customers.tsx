@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -7,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import Chip from '@mui/material/Chip';
+import Autocomplete from '@mui/material/Autocomplete';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
@@ -108,14 +110,24 @@ export default function Customers() {
   }, [matrixRaw]);
 
   const [search, setSearch] = useState('');
-  const [tierFilter, setTierFilter] = useState<Set<string>>(new Set());
-  const [payStatusFilter, setPayStatusFilter] = useState<Set<string>>(new Set());
-  const [ownerFilter, setOwnerFilter] = useState<Set<string>>(new Set());
-  const [segmentFilter, setSegmentFilter] = useState<Set<string>>(new Set());
-  const [sortKey, setSortKey] = useState<SortKey>('mrr');
-  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+  // Multi-select dropdown filter state. Empty array = no filter on that
+  // facet. Switched from Set<string> (which was paired with chip strips) so
+  // the Autocomplete value prop type matches and the lists are easier to
+  // pass around / sort.
+  const [tierFilter, setTierFilter] = useState<string[]>([]);
+  const [payStatusFilter, setPayStatusFilter] = useState<string[]>([]);
+  const [ownerFilter, setOwnerFilter] = useState<string[]>([]);
+  const [segmentFilter, setSegmentFilter] = useState<string[]>([]);
+  const [sortKey, setSortKey] = useState<SortKey>('name');
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
+
+  // Memoized Sets so the per-row filter check is O(1) instead of O(n) per row.
+  const tierSet = useMemo(() => new Set(tierFilter), [tierFilter]);
+  const payStatusSet = useMemo(() => new Set(payStatusFilter), [payStatusFilter]);
+  const ownerSet = useMemo(() => new Set(ownerFilter), [ownerFilter]);
+  const segmentSet = useMemo(() => new Set(segmentFilter), [segmentFilter]);
 
   function toggleSort(k: SortKey) {
     if (sortKey === k) setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
@@ -126,31 +138,27 @@ export default function Customers() {
     setPage(0);
   }
 
-  function toggleSetItem(s: Set<string>, item: string, setter: (n: Set<string>) => void) {
-    const next = new Set(s);
-    if (next.has(item)) next.delete(item);
-    else next.add(item);
-    setter(next);
-    setPage(0);
-  }
-
   const profiles = profilesData?.rows ?? [];
 
-  // Distinct values for filter chips
+  // Distinct values for filter dropdowns + per-value counts. Counts always
+  // come from the unfiltered profile set so the dropdown shows the full
+  // distribution, not the active-filter slice.
   const facets = useMemo(() => {
-    const payStatuses = new Set<string>();
-    const owners = new Set<string>();
-    const segments = new Set<string>();
+    const payStatuses = new Map<string, number>();
+    const owners = new Map<string, number>();
+    const segments = new Map<string, number>();
     for (const p of profiles) {
-      if (p.pay_status) payStatuses.add(p.pay_status);
+      if (p.pay_status) payStatuses.set(p.pay_status, (payStatuses.get(p.pay_status) ?? 0) + 1);
       const o = ownerName(p);
-      if (o) owners.add(o);
-      if (p.primary_segment) segments.add(p.primary_segment);
+      if (o) owners.set(o, (owners.get(o) ?? 0) + 1);
+      if (p.primary_segment) segments.set(p.primary_segment, (segments.get(p.primary_segment) ?? 0) + 1);
     }
+    const sortByCount = (m: Map<string, number>) =>
+      [...m.entries()].sort((a, b) => b[1] - a[1]).map(([name, count]) => ({ name, count }));
     return {
-      payStatuses: [...payStatuses].sort(),
-      owners: [...owners].sort(),
-      segments: [...segments].sort(),
+      payStatuses: sortByCount(payStatuses),
+      owners: sortByCount(owners),
+      segments: sortByCount(segments),
     };
   }, [profiles]);
 
@@ -161,16 +169,16 @@ export default function Customers() {
         const hay = `${p.name || ''} ${p.allmoxy_customer_id} ${p.installer_id || ''} ${p.installer_directory || ''}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
-      if (payStatusFilter.size > 0 && !payStatusFilter.has(p.pay_status || '')) return false;
-      if (tierFilter.size > 0) {
+      if (payStatusSet.size > 0 && !payStatusSet.has(p.pay_status || '')) return false;
+      if (tierSet.size > 0) {
         const t = tierById.get(p.allmoxy_customer_id) ?? 'unscored';
-        if (!tierFilter.has(t)) return false;
+        if (!tierSet.has(t)) return false;
       }
-      if (ownerFilter.size > 0 && !ownerFilter.has(ownerName(p))) return false;
-      if (segmentFilter.size > 0 && !segmentFilter.has(p.primary_segment || '')) return false;
+      if (ownerSet.size > 0 && !ownerSet.has(ownerName(p))) return false;
+      if (segmentSet.size > 0 && !segmentSet.has(p.primary_segment || '')) return false;
       return true;
     });
-  }, [profiles, search, payStatusFilter, tierFilter, ownerFilter, segmentFilter, tierById]);
+  }, [profiles, search, payStatusSet, tierSet, ownerSet, segmentSet, tierById]);
 
   const sorted = useMemo(() => {
     const out = [...filtered];
@@ -244,27 +252,55 @@ export default function Customers() {
 
       {error && <Alert severity="error" sx={{ mb: 2 }}>Failed to load customer_profiles: {String(error)}</Alert>}
 
-      {/* Summary strip */}
-      <Paper sx={{ p: 2, mb: 2 }}>
-        <Stack direction="row" spacing={4} alignItems="center" flexWrap="wrap" useFlexGap>
-          <Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5 }}>Showing</Typography>
-            <Typography variant="h6" sx={{ fontWeight: 500 }}>{summary.count.toLocaleString()} <Box component="span" sx={{ fontSize: 12, color: 'text.secondary', fontWeight: 400 }}>of {profiles.length.toLocaleString()}</Box></Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5 }}>Filtered MRR</Typography>
-            <Typography variant="h6" sx={{ fontWeight: 500 }}>{USD0.format(summary.mrr)}<Box component="span" sx={{ fontSize: 11, color: 'text.secondary' }}>/mo</Box></Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10.5 }}>Filtered Lifetime Sub</Typography>
-            <Typography variant="h6" sx={{ fontWeight: 500 }}>{USD0.format(summary.lifetime)}</Typography>
-          </Box>
-          <Box sx={{ flexGrow: 1 }} />
-          <CsvExportButton filename="customers.csv" rows={sorted} columns={csvColumns} />
-        </Stack>
-      </Paper>
+      {/* KPI tiles — each metric in its own card to match the rest of the
+          dashboard. Tracks the filtered cohort, not the raw cohort. */}
+      <Grid container spacing={2} sx={{ mb: 2 }} alignItems="stretch">
+        <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1 }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Customers</Typography>
+            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
+              <>
+                <Typography variant="h5" sx={{ fontWeight: 500 }}>{summary.count.toLocaleString()}</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>of {profiles.length.toLocaleString()} total</Typography>
+              </>
+            )}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1, borderLeft: '3px solid', borderColor: 'primary.main' }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Filtered MRR</Typography>
+            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
+              <>
+                <Typography variant="h5" sx={{ fontWeight: 500, color: 'primary.main' }}>{USD0.format(summary.mrr)}</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>Current monthly recurring</Typography>
+              </>
+            )}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1 }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Filtered Lifetime Sub</Typography>
+            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
+              <>
+                <Typography variant="h5" sx={{ fontWeight: 500 }}>{USD0.format(summary.lifetime)}</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>All subscription $ to date</Typography>
+              </>
+            )}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+          <Paper sx={{ p: 2, flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Export</Typography>
+            <Box>
+              <CsvExportButton filename="customers.csv" rows={sorted} columns={csvColumns} />
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
 
-      {/* Filters */}
+      {/* Filters — search + four multi-select dropdowns. Dropdowns take far
+          less vertical space than the prior chip strips and behave the same
+          as on Churn Risk Matrix / Services / Renewal Management. */}
       <Paper sx={{ p: 2, mb: 2 }}>
         <Stack spacing={1.5}>
           <TextField
@@ -280,16 +316,41 @@ export default function Customers() {
             sx={{ maxWidth: 480 }}
           />
 
-          <FilterRow
-            label="Tier"
-            values={['red', 'yellow', 'green', 'unscored']}
-            selected={tierFilter}
-            renderLabel={(v) => `${v === 'red' ? '🔴' : v === 'yellow' ? '🟡' : v === 'green' ? '🟢' : '⚪'} ${TIER_LABEL[v] || v}`}
-            onToggle={(v) => toggleSetItem(tierFilter, v, setTierFilter)}
-          />
-          <FilterRow label="Pay status" values={facets.payStatuses} selected={payStatusFilter} onToggle={(v) => toggleSetItem(payStatusFilter, v, setPayStatusFilter)} />
-          <FilterRow label="Owner" values={facets.owners} selected={ownerFilter} onToggle={(v) => toggleSetItem(ownerFilter, v, setOwnerFilter)} />
-          <FilterRow label="Segment" values={facets.segments} selected={segmentFilter} onToggle={(v) => toggleSetItem(segmentFilter, v, setSegmentFilter)} />
+          <Stack direction="row" spacing={1.5} flexWrap="wrap" useFlexGap>
+            <MultiFilter
+              label="Tier"
+              options={[
+                { name: 'red', label: '🔴 Critical' },
+                { name: 'yellow', label: '🟡 Watch' },
+                { name: 'green', label: '🟢 Healthy' },
+                { name: 'unscored', label: '⚪ Unscored' },
+              ]}
+              value={tierFilter}
+              onChange={(v) => { setTierFilter(v); setPage(0); }}
+              placeholderAll="All tiers"
+            />
+            <MultiFilter
+              label="Pay status"
+              options={facets.payStatuses.map((f) => ({ name: f.name, label: `${f.name} (${f.count})` }))}
+              value={payStatusFilter}
+              onChange={(v) => { setPayStatusFilter(v); setPage(0); }}
+              placeholderAll="All pay statuses"
+            />
+            <MultiFilter
+              label="Owner"
+              options={facets.owners.map((f) => ({ name: f.name, label: `${f.name} (${f.count})` }))}
+              value={ownerFilter}
+              onChange={(v) => { setOwnerFilter(v); setPage(0); }}
+              placeholderAll="All owners"
+            />
+            <MultiFilter
+              label="Segment"
+              options={facets.segments.map((f) => ({ name: f.name, label: `${f.name} (${f.count})` }))}
+              value={segmentFilter}
+              onChange={(v) => { setSegmentFilter(v); setPage(0); }}
+              placeholderAll="All segments"
+            />
+          </Stack>
         </Stack>
       </Paper>
 
@@ -375,44 +436,57 @@ export default function Customers() {
   );
 }
 
-function FilterRow({
+// Compact multi-select dropdown for facet filters. Each option carries an
+// internal value (`name`) and a display label (which can include a count).
+// When nothing is selected we show the "All X" placeholder; otherwise a
+// chip per selected value with an × to remove. Renders nothing when there
+// are no options to choose from.
+function MultiFilter({
   label,
-  values,
-  selected,
-  onToggle,
-  renderLabel,
+  options,
+  value,
+  onChange,
+  placeholderAll,
 }: {
   label: string;
-  values: string[];
-  selected: Set<string>;
-  onToggle: (v: string) => void;
-  renderLabel?: (v: string) => string;
+  options: Array<{ name: string; label: string }>;
+  value: string[];
+  onChange: (v: string[]) => void;
+  placeholderAll: string;
 }) {
-  if (values.length === 0) return null;
+  if (options.length === 0) return null;
+  const labelByName = new Map(options.map((o) => [o.name, o.label]));
   return (
-    <Stack direction="row" spacing={0.5} alignItems="center" flexWrap="wrap" useFlexGap>
-      <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.06em', mr: 0.5, minWidth: 70 }}>{label}</Typography>
-      {values.map((v) => (
-        <Chip
-          key={v}
-          label={renderLabel ? renderLabel(v) : v}
-          size="small"
-          variant={selected.has(v) ? 'filled' : 'outlined'}
-          color={selected.has(v) ? 'primary' : 'default'}
-          onClick={() => onToggle(v)}
-          sx={{ height: 22, fontSize: 11 }}
-        />
-      ))}
-      {selected.size > 0 && (
-        <Chip
-          label="clear"
-          size="small"
-          variant="outlined"
-          onClick={() => { selected.forEach((v) => onToggle(v)); }}
-          sx={{ height: 22, fontSize: 11, color: 'text.secondary' }}
+    <Autocomplete
+      multiple
+      disableCloseOnSelect
+      size="small"
+      options={options.map((o) => o.name)}
+      value={value}
+      onChange={(_, v) => onChange(v)}
+      getOptionLabel={(n) => labelByName.get(n) ?? n}
+      renderTags={(values, getTagProps) =>
+        values.map((option, index) => (
+          <Chip
+            variant="filled"
+            label={option}
+            size="small"
+            {...getTagProps({ index })}
+            key={option}
+            sx={{ height: 20, fontSize: 11 }}
+          />
+        ))
+      }
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={label}
+          placeholder={value.length === 0 ? placeholderAll : ''}
+          sx={{ '& .MuiInputBase-input': { fontSize: 12 }, '& .MuiFormLabel-root': { fontSize: 12 } }}
         />
       )}
-    </Stack>
+      sx={{ minWidth: 200, maxWidth: 360 }}
+    />
   );
 }
 

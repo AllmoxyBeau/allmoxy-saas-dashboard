@@ -1,7 +1,7 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-06-19T22:47:51.384Z",
-  "cachedUntil": "2026-06-19T22:52:51.385Z",
+  "fetchedAt": "2026-06-22T15:44:24.206Z",
+  "cachedUntil": "2026-06-22T15:49:24.207Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
     "total_issues": 217,
@@ -120,7 +120,7 @@
       "instance_id": "22251716387",
       "account_name": "Cabinwood NY",
       "installer_id": "1711",
-      "pay_status": "Active",
+      "pay_status": "Active - Card Failure",
       "suggested_aid": 386,
       "suggested_customer_name": "Cabinwood NY",
       "action": "Open HubSpot Instance \"Cabinwood NY\", set Allmoxy Customer ID = 386"
@@ -2112,7 +2112,7 @@
       "instance_id": "34509675332",
       "account_name": "KCI Storage Manufacturing",
       "installer_id": "2080",
-      "pay_status": "Active - Card Failure",
+      "pay_status": "Active",
       "suggested_aid": 555,
       "suggested_customer_name": "Kci Storage Manufacturing",
       "action": "Open HubSpot Instance \"KCI Storage Manufacturing\", set Allmoxy Customer ID = 555"

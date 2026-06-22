@@ -42,6 +42,13 @@ const profiles = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.j
 const ordersByCustomer = JSON.parse(fs.readFileSync(path.join(SNAP, 'orders_verified.json'), 'utf8')).by_customer || {};
 const matrix = JSON.parse(fs.readFileSync(path.join(SNAP, 'churn_risk_matrix.json'), 'utf8'));
 const matrixRows = matrix.rows || matrix.customers || [];
+// Quotes — keyed by allmoxy_customer_id via Company association. Built on
+// first use below so we can still rebuild the page when the quotes cache
+// hasn't been refreshed yet.
+const quotesPath = path.join(CACHE, 'hubspot_quotes.json');
+const quotesRaw = fs.existsSync(quotesPath)
+  ? JSON.parse(fs.readFileSync(quotesPath, 'utf8')).quotes || []
+  : [];
 
 // ---------- profile index by every plausible join key ---------------------
 const byAid = new Map();
@@ -64,6 +71,34 @@ for (const p of profiles) {
 }
 
 const matrixByAid = new Map(matrixRows.map((r) => [r.allmoxy_customer_id, r]));
+
+// ---------- quotes-by-customer index --------------------------------------
+// Quote → Company (one-to-many possible) → allmoxy_customer_id. We map
+// company ids through customer_profiles.hubspot_company_id (which already
+// went through resolveHubspotCompanyId's merge-redirect + name fallback in
+// build_customer_profiles), so a quote pinned to a since-merged company id
+// can still attribute back.
+const aidByHubspotCompanyId = new Map();
+for (const p of profiles) {
+  if (p.hubspot_company_id) aidByHubspotCompanyId.set(String(p.hubspot_company_id), p.allmoxy_customer_id);
+}
+const quotesByAid = new Map();
+for (const q of quotesRaw) {
+  const seenAids = new Set();
+  for (const companyId of (q.associated_company_ids || [])) {
+    const aid = aidByHubspotCompanyId.get(String(companyId));
+    if (aid != null && !seenAids.has(aid)) {
+      seenAids.add(aid);
+      if (!quotesByAid.has(aid)) quotesByAid.set(aid, []);
+      quotesByAid.get(aid).push(q);
+    }
+  }
+}
+// Sort each customer's quotes newest-first by last-modified date so the most
+// recent quote always lands first in the rendered list.
+for (const list of quotesByAid.values()) {
+  list.sort((a, b) => String(b.hs_lastmodifieddate || b.hs_createdate || '').localeCompare(String(a.hs_lastmodifieddate || a.hs_createdate || '')));
+}
 
 function joinInstance(i) {
   // Cascade: installer_id (most reliable on Instance) → aid → sub_id → stripe
@@ -325,6 +360,24 @@ for (const i of instances) {
 
     // Churn context (for the few that are mid-conversation)
     customer_closed_lost: i.customer_closed_lost__cloned_ || null,
+
+    // Quotes — all quotes attached to this customer via Company association,
+    // newest first. Empty array when the customer has no quotes in HubSpot.
+    // We expose a lean shape so the page doesn't have to know HubSpot's full
+    // quote schema; full data is in cache/hubspot_quotes.json if needed.
+    quotes: (quotesByAid.get(aid) || []).map((q) => ({
+      id: q.id,
+      title: q.hs_title || null,
+      status: q.hs_status || null,
+      amount: q.hs_quote_amount != null ? Number(q.hs_quote_amount) : null,
+      currency: q.hs_currency || 'USD',
+      created_date: q.hs_createdate || null,
+      expiration_date: q.hs_expiration_date || null,
+      last_modified_date: q.hs_lastmodifieddate || null,
+      quote_number: q.hs_quote_number || null,
+      payment_status: q.hs_payment_status || null,
+      hubspot_url: q.hubspot_url || `https://app.hubspot.com/quotes/4910812/details/${q.id}`,
+    })),
   });
 }
 
@@ -349,6 +402,11 @@ const aggregates = {
   median_cost_ratio_lifetime_pct: null,
   median_cost_ratio_annualized_pct: null,
   dropoff_count: 0, // Cost ratio increased >25% in recent 3mo vs trailing 9mo
+  // Quote-coverage KPIs
+  customers_with_quote: 0,
+  upcoming_renewals_with_quote: 0, // renewal in next 12 mo AND has at least one quote
+  upcoming_renewals_without_quote: 0,
+  total_quote_count: 0,
 };
 
 for (const r of rows) {
@@ -373,6 +431,17 @@ for (const r of rows) {
   if (r.action_tag === 'Stable') aggregates.stable++;
   if (r.action_tag === 'Paused') aggregates.paused++;
   if (r.dropoff_pct != null && r.dropoff_pct >= 0.25) aggregates.dropoff_count++;
+  // Quote coverage
+  const hasQuote = (r.quotes || []).length > 0;
+  if (hasQuote) {
+    aggregates.customers_with_quote++;
+    aggregates.total_quote_count += r.quotes.length;
+  }
+  const inUpcomingWindow = r.days_to_renewal != null && r.days_to_renewal >= 0 && r.days_to_renewal <= 365;
+  if (inUpcomingWindow) {
+    if (hasQuote) aggregates.upcoming_renewals_with_quote++;
+    else aggregates.upcoming_renewals_without_quote++;
+  }
 }
 
 function median(arr) {
@@ -411,4 +480,5 @@ console.log(`  Next 12mo: ${aggregates.renewals_in_next_12mo} renewals · $${Mat
 console.log(`  Expansion opps: ${aggregates.expansion_opportunities} · Contraction risks: ${aggregates.contraction_risks} · Watch: ${aggregates.watch} · Stable: ${aggregates.stable} · Paused: ${aggregates.paused}`);
 console.log(`  Median cost ratio — lifetime: ${aggregates.median_cost_ratio_lifetime_pct}% · annualized: ${aggregates.median_cost_ratio_annualized_pct}%`);
 console.log(`  Cost-ratio drop-off flags (recent 3mo +25% vs trailing 9mo): ${aggregates.dropoff_count}`);
+console.log(`  Quote coverage: ${aggregates.customers_with_quote} customers have ${aggregates.total_quote_count} quote(s) · upcoming renewals w/ quote: ${aggregates.upcoming_renewals_with_quote} (vs ${aggregates.upcoming_renewals_without_quote} without)`);
 console.log(`  Unjoined active: ${unjoined.length} · Skipped sandboxes: ${skippedSandbox.length}`);

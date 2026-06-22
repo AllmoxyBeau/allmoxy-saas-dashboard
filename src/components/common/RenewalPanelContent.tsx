@@ -24,6 +24,20 @@ export type RenewalTrendPoint = {
   cost_ratio_pct: number | null;
 };
 
+export type RenewalQuote = {
+  id: string;
+  title: string | null;
+  status: string | null; // 'DRAFT' | 'APPROVAL_NOT_NEEDED' | ...
+  amount: number | null;
+  currency: string;
+  created_date: string | null;
+  expiration_date: string | null;
+  last_modified_date: string | null;
+  quote_number: string | null;
+  payment_status: string | null;
+  hubspot_url: string;
+};
+
 export type RenewalPanelRow = {
   renewal_date: string | null;
   days_to_renewal: number | null;
@@ -48,6 +62,7 @@ export type RenewalPanelRow = {
   implementation_status: string | null;
   pay_status: string;
   vip_legacy: string | null;
+  quotes?: RenewalQuote[];
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -63,7 +78,7 @@ const ACTION_COLOR: Record<string, string> = {
 // Two-column panel: cost-ratio monthly trend on the left, renewal context
 // table on the right. Used as the expansion-row content on the Renewal
 // Management page AND as a standalone collapsible section on Customer Detail.
-export default function RenewalPanelContent({ row }: { row: RenewalPanelRow }) {
+export default function RenewalPanelContent({ row, hideQuotes = false }: { row: RenewalPanelRow; hideQuotes?: boolean }) {
   const dropoffWorse = row.dropoff_pct != null && row.dropoff_pct >= 0.25;
   const dropoffBetter = row.dropoff_pct != null && row.dropoff_pct <= -0.25;
   return (
@@ -192,6 +207,68 @@ export default function RenewalPanelContent({ row }: { row: RenewalPanelRow }) {
           </tbody>
         </Box>
       </Grid>
+
+      {/* Quotes — full-width section spanning both columns, below the chart
+          and context table. Lists every quote attached to this customer's
+          HubSpot Company association(s), newest first. */}
+      {!hideQuotes && (row.quotes?.length ?? 0) > 0 && (
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={0.5} alignItems="center" sx={{ mb: 0.5 }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10, fontWeight: 600 }}>
+              Quotes ({row.quotes!.length})
+            </Typography>
+            <InfoIcon info="Every HubSpot Quote attached to this customer's Company. Click 'Open in HubSpot' to jump to the quote. Status comes from HubSpot's workflow — APPROVAL_NOT_NEEDED is HubSpot's term for 'sent/active', DRAFT is in-progress." />
+          </Stack>
+          <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', '& th, & td': { py: 0.5, fontSize: 12, textAlign: 'left', borderBottom: '1px solid', borderColor: 'divider' }, '& th': { fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10 } }}>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th style={{ textAlign: 'right' }}>Amount</th>
+                <th>Created</th>
+                <th>Expires</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {row.quotes!.map((q) => (
+                <tr key={q.id}>
+                  <td style={{ fontWeight: 500 }}>{q.title || '(untitled)'}</td>
+                  <td>
+                    <Chip
+                      label={q.status === 'APPROVAL_NOT_NEEDED' ? 'SENT' : (q.status || '—')}
+                      size="small"
+                      sx={{
+                        height: 18,
+                        fontSize: 10,
+                        bgcolor: q.status === 'DRAFT' ? 'rgba(245, 166, 35, 0.18)' : q.status === 'APPROVAL_NOT_NEEDED' ? 'rgba(26, 158, 92, 0.18)' : 'rgba(139, 148, 158, 0.18)',
+                        color: q.status === 'DRAFT' ? '#B07206' : q.status === 'APPROVAL_NOT_NEEDED' ? '#1A9E5C' : '#475569',
+                        fontWeight: 600,
+                      }}
+                    />
+                  </td>
+                  <td style={{ textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                    {q.amount != null ? `${q.currency === 'USD' ? '$' : (q.currency + ' ')}${Math.round(q.amount).toLocaleString()}` : '—'}
+                  </td>
+                  <td style={{ color: '#6B7280' }}>{q.created_date ? q.created_date.slice(0, 10) : '—'}</td>
+                  <td style={{ color: '#6B7280' }}>{q.expiration_date ? q.expiration_date.slice(0, 10) : '—'}</td>
+                  <td style={{ textAlign: 'right' }}>
+                    <Box
+                      component="a"
+                      href={q.hubspot_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{ fontSize: 11, color: 'primary.light', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                    >
+                      Open in HubSpot ↗
+                    </Box>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Box>
+        </Grid>
+      )}
     </Grid>
   );
 }

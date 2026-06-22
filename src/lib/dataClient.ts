@@ -40,6 +40,7 @@ export const KNOWN_SNAPSHOTS = [
   'churn_risk_matrix',
   'time_to_value',
   'renewal_management',
+  'implementation',
   'data_cleanup',
 ] as const;
 

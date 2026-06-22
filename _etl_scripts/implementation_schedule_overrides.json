@@ -1,0 +1,5 @@
+{
+  "_comment": "Committed implementation schedule from the weekly prioritization meeting. 'customer_priority' keys by allmoxy_customer_id -> 'P1'|'P2'|'P3'. 'tickets' keys by JIRA ticket key -> { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }. The Schedule page edits these in the browser (localStorage) until applied here. build_implementation.mjs seeds each ticket's start from its created date and end from its due date (or last update), then overlays these committed values.",
+  "customer_priority": {},
+  "tickets": {}
+}

@@ -564,4 +564,27 @@ if (!process.env.HUBSPOT_TOKEN) {
   runScript('build_churn_corpus.mjs', null); // writes churn_corpus.json itself
 }
 
+// Implementation (JIRA + Harvest, optional). Requires JIRA_* + HARVEST_* creds
+// in .env.local. The sync scripts read .env.local themselves, so we just probe
+// the file for the keys and skip cleanly if absent — leaving any existing
+// implementation.json in place. Wrapped so a JIRA/Harvest outage can't abort
+// the whole refresh.
+console.log('\n[7/5] Implementation (JIRA + Harvest, optional)');
+{
+  const envLocal = (() => { try { return fs.readFileSync(path.join(SCRIPTS, '..', '.env.local'), 'utf8'); } catch { return ''; } })();
+  const hasKey = (k) => process.env[k] || new RegExp(`^${k}=\\S`, 'm').test(envLocal);
+  const ready = ['JIRA_EMAIL', 'JIRA_API_TOKEN', 'HARVEST_ACCOUNT_ID', 'HARVEST_TOKEN'].every(hasKey);
+  if (!ready) {
+    console.log('  skipped — JIRA_*/HARVEST_* not set in .env.local. See .env.sample.');
+  } else {
+    try {
+      runScript('sync_jira.mjs', null);
+      runScript('sync_harvest.mjs', null);
+      runScript('build_implementation.mjs', null); // writes implementation.json itself
+    } catch (e) {
+      console.log('  ⚠ implementation refresh failed (kept previous snapshot):', e.message);
+    }
+  }
+}
+
 console.log('\nAll snapshots refreshed.');

@@ -34,6 +34,7 @@ const CACHE_DIR = path.join(ROOT, '_etl_scripts/cache');
 const COMPANIES_OUT = path.join(CACHE_DIR, 'hubspot_companies.json');
 const OWNERS_OUT = path.join(CACHE_DIR, 'hubspot_owners.json');
 const INSTANCES_OUT = path.join(CACHE_DIR, 'hubspot_instances.json');
+const QUOTES_OUT = path.join(CACHE_DIR, 'hubspot_quotes.json');
 
 // Allmoxy Instance custom object type (per the HubSpot URL we discovered in
 // the property settings page). Internal HubSpot name is `accounts` (plural
@@ -230,6 +231,55 @@ async function pullInstances() {
   return instances;
 }
 
+// --- Quotes ----------------------------------------------------------------
+// Per-quote properties that matter for the Renewal Management view: title,
+// status (DRAFT/PENDING_APPROVAL/APPROVAL_NOT_NEEDED/REJECTED/etc.), amount,
+// currency, creation + expiration dates, and the owner. The HubSpot UI URL
+// is reconstructable from the id but we capture it from the API response too.
+const QUOTE_PROPS = [
+  'hs_title',
+  'hs_status',
+  'hs_quote_amount',
+  'hs_currency',
+  'hs_createdate',
+  'hs_expiration_date',
+  'hs_lastmodifieddate',
+  'hubspot_owner_id',
+  'hs_quote_number',
+  'hs_quote_link',
+  'hs_payment_status',
+];
+
+// Pull all quotes paginated. Includes the `associations=companies` query so
+// the response also carries each quote's company association IDs — that's
+// how we tie a quote back to a customer (Company → allmoxy_customer_id).
+async function pullQuotes() {
+  const quotes = [];
+  let after = undefined;
+  let page = 0;
+  const limit = 100;
+  const propsParam = QUOTE_PROPS.join(',');
+  while (true) {
+    page++;
+    const url = `/crm/v3/objects/quotes?limit=${limit}&properties=${encodeURIComponent(propsParam)}&associations=companies${after ? `&after=${after}` : ''}`;
+    const data = await hub(url);
+    const batch = data.results || [];
+    for (const q of batch) {
+      const companyIds = (q.associations?.companies?.results ?? []).map((r) => String(r.id));
+      quotes.push({
+        id: String(q.id),
+        ...q.properties,
+        associated_company_ids: companyIds,
+        hubspot_url: `https://app.hubspot.com/quotes/4910812/details/${q.id}`,
+      });
+    }
+    process.stderr.write(`  page ${page}: ${batch.length} quotes (total so far: ${quotes.length})\n`);
+    after = data.paging?.next?.after;
+    if (!after) break;
+  }
+  return quotes;
+}
+
 // --- Pull all owners --------------------------------------------------------
 async function pullOwners() {
   const owners = [];
@@ -376,6 +426,40 @@ async function main() {
   }
   process.stderr.write('  Contract status distribution:\n');
   for (const [k, v] of Object.entries(byContractStatus).sort((a, b) => b[1] - a[1])) {
+    process.stderr.write(`    ${String(v).padStart(4)} ${k}\n`);
+  }
+
+  // ─── Quotes sync ─────────────────────────────────────────────────────────
+  // Powers the Renewal Management "renewals with quote" KPI + the per-row
+  // and per-customer quote links. Pulls company associations so each quote
+  // can be tied back to an allmoxy_customer_id downstream.
+  process.stderr.write('\nPulling HubSpot Quotes (paginated)...\n');
+  const quotes = await pullQuotes();
+  const byStatus = {};
+  let withCompany = 0, totalAmount = 0;
+  for (const q of quotes) {
+    const st = q.hs_status || '(none)';
+    byStatus[st] = (byStatus[st] || 0) + 1;
+    if (q.associated_company_ids.length > 0) withCompany++;
+    totalAmount += Number(q.hs_quote_amount) || 0;
+  }
+  fs.writeFileSync(QUOTES_OUT, JSON.stringify({
+    fetched_at: new Date().toISOString(),
+    source: 'HubSpot CRM API /crm/v3/objects/quotes?associations=companies',
+    portal_id: '4910812',
+    quote_count: quotes.length,
+    properties_fetched: QUOTE_PROPS,
+    stats: {
+      with_company_assoc: withCompany,
+      total_amount_all_statuses: Math.round(totalAmount * 100) / 100,
+      by_status: byStatus,
+    },
+    quotes,
+  }, null, 2));
+  process.stderr.write(`  → ${quotes.length} quotes → ${path.relative(ROOT, QUOTES_OUT)}\n`);
+  process.stderr.write(`    ${withCompany}/${quotes.length} have a company association\n`);
+  process.stderr.write('  Status distribution:\n');
+  for (const [k, v] of Object.entries(byStatus).sort((a, b) => b[1] - a[1])) {
     process.stderr.write(`    ${String(v).padStart(4)} ${k}\n`);
   }
 

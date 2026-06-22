@@ -18,28 +18,30 @@ function entryIsActive(pathname: string, entry: NavEntry): boolean {
   return isActiveLeaf(pathname, entry);
 }
 
-function GroupButton({ group, pathname }: { group: NavGroup; pathname: string }) {
+type HoverCtl = {
+  openLabel: string | null;
+  openNow: (label: string) => void;
+  closeSoon: () => void;
+  closeNow: () => void;
+};
+
+function GroupButton({ group, pathname, hover }: { group: NavGroup; pathname: string; hover: HoverCtl }) {
   const navigate = useNavigate();
   const anchorRef = useRef<HTMLButtonElement | null>(null);
-  const [open, setOpen] = useState(false);
   const active = entryIsActive(pathname, group);
+  const open = hover.openLabel === group.label;
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const select = (path: string) => {
-    setOpen(false);
-    navigate(path);
-  };
+  const select = (path: string) => { hover.closeNow(); navigate(path); };
 
   return (
     <Box
-      onMouseEnter={handleOpen}
-      onMouseLeave={handleClose}
+      onMouseEnter={() => hover.openNow(group.label)}
+      onMouseLeave={hover.closeSoon}
       sx={{ display: 'inline-flex' }}
     >
       <Button
         ref={anchorRef}
-        onClick={handleOpen}
+        onClick={() => (open ? hover.closeNow() : hover.openNow(group.label))}
         endIcon={<ArrowDropDownIcon />}
         disableRipple
         sx={{
@@ -65,12 +67,24 @@ function GroupButton({ group, pathname }: { group: NavGroup; pathname: string })
       <Menu
         anchorEl={anchorRef.current}
         open={open}
-        onClose={handleClose}
+        onClose={hover.closeNow}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        slotProps={{ paper: { sx: { mt: 0, minWidth: 220 } } }}
-        MenuListProps={{ onMouseLeave: handleClose, sx: { py: 0.5 } }}
+        // Let pointer events fall through the backdrop so hovering a sibling tab
+        // can switch the open menu; re-enable them on the menu paper itself.
+        slotProps={{
+          root: { sx: { pointerEvents: 'none' } },
+          paper: { sx: { mt: 0, minWidth: 220, pointerEvents: 'auto' } },
+        }}
+        MenuListProps={{
+          onMouseEnter: () => hover.openNow(group.label),
+          onMouseLeave: hover.closeSoon,
+          sx: { py: 0.5 },
+        }}
         disableScrollLock
+        disableAutoFocus
+        disableEnforceFocus
+        disableRestoreFocus
         keepMounted
       >
         {group.items.map((leaf) => {
@@ -95,11 +109,13 @@ function GroupButton({ group, pathname }: { group: NavGroup; pathname: string })
   );
 }
 
-function LeafButton({ leaf, pathname }: { leaf: NavLeaf; pathname: string }) {
+function LeafButton({ leaf, pathname, hover }: { leaf: NavLeaf; pathname: string; hover: HoverCtl }) {
   const navigate = useNavigate();
   const active = isActiveLeaf(pathname, leaf);
   return (
     <Button
+      // Hovering a plain tab should also dismiss any open dropdown.
+      onMouseEnter={hover.closeNow}
       onClick={() => navigate(leaf.path)}
       disableRipple
       sx={{
@@ -136,6 +152,18 @@ export default function NavTabs() {
     ? NAV_ENTRIES
     : NAV_ENTRIES.filter((e) => !e.financial);
 
+  // Single open-dropdown state shared across all groups, so opening one closes
+  // the others. A short close delay (hover intent) lets the pointer travel from
+  // a tab button to its menu without the menu flickering shut.
+  const [openLabel, setOpenLabel] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const hover: HoverCtl = {
+    openLabel,
+    openNow: (label) => { clearTimeout(closeTimer.current); setOpenLabel(label); },
+    closeSoon: () => { clearTimeout(closeTimer.current); closeTimer.current = setTimeout(() => setOpenLabel(null), 120); },
+    closeNow: () => { clearTimeout(closeTimer.current); setOpenLabel(null); },
+  };
+
   return (
     <Box
       sx={{
@@ -149,9 +177,9 @@ export default function NavTabs() {
       <Stack direction="row" spacing={0.5} alignItems="stretch">
         {visibleEntries.map((entry) =>
           isGroup(entry) ? (
-            <GroupButton key={entry.label} group={entry} pathname={pathname} />
+            <GroupButton key={entry.label} group={entry} pathname={pathname} hover={hover} />
           ) : (
-            <LeafButton key={entry.path} leaf={entry} pathname={pathname} />
+            <LeafButton key={entry.path} leaf={entry} pathname={pathname} hover={hover} />
           ),
         )}
       </Stack>

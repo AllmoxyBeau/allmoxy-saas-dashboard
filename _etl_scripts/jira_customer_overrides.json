@@ -1,0 +1,11 @@
+{
+  "_comment": "Manual JIRA-epic → allmoxy_customer_id overrides for implementation epics whose summary doesn't auto-match the customer roster by name. Keyed by epic key (e.g. 'IPA-504'). Set value to the allmoxy_customer_id. build_implementation.mjs reads this; check public/snapshots/implementation.json -> unmatched_jira_epics after a build to find candidates.",
+  "overrides": {
+    "IPA-490": 217,
+    "IPA-479": 117,
+    "IPA-470": 533,
+    "IPA-469": 540,
+    "IPA-449": 320,
+    "IPA-418": 3
+  }
+}
