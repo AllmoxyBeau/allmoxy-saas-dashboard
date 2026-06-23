@@ -189,18 +189,19 @@ export default function RepDashboard() {
     setSearchParams({ rep: name }, { replace: true });
   }
 
-  // The rep's full book = customers HubSpot considers actively paying. Matches
-  // the Customers-page pay_status filter (Active + Active - Card Failure +
-  // Active - Pause Granted) — this is the cohort a CSM/AE is responsible for.
-  // When 'all', no owner filter.
-  const ACTIVE_PAY_STATUSES = useMemo(() => new Set(['Active', 'Active - Card Failure', 'Active - Pause Granted']), []);
+  // A rep's book = every non-churned account they own that has paid
+  // subscription history. This matches the badge count exactly, so accounts
+  // whose current pay_status is blank/unset in HubSpot (but who are paying)
+  // still show up — rather than only customers whose pay_status is one of the
+  // "Active*" values. When 'all', no owner filter.
   const book = useMemo(
     () => profiles.filter((p) => {
-      if (!ACTIVE_PAY_STATUSES.has(p.pay_status || '')) return false;
+      if (p.status === 'churned' || p.status === 'never_paid') return false;
+      if ((p.lifetime_subscription || 0) <= 0) return false;
       if (isAll) return true;
       return repName(p) === selectedRep;
     }),
-    [profiles, selectedRep, isAll, ACTIVE_PAY_STATUSES],
+    [profiles, selectedRep, isAll],
   );
 
   // Card-failure subset — customers a rep should call to get their payment

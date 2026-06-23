@@ -37,6 +37,8 @@ const Contracts = lazy(() => import('./pages/Contracts'));
 const Implementation = lazy(() => import('./pages/Implementation'));
 const ImplementationSchedule = lazy(() => import('./pages/ImplementationSchedule'));
 const DataCleanup = lazy(() => import('./pages/DataCleanup'));
+const BackendPlan = lazy(() => import('./pages/BackendPlan'));
+const Features = lazy(() => import('./pages/Features'));
 const StripeQBReconciliation = lazy(() => import('./pages/StripeQBReconciliation'));
 const CustomerDetail = lazy(() => import('./pages/CustomerDetail'));
 const Customers = lazy(() => import('./pages/Customers'));
@@ -88,6 +90,7 @@ export default function App() {
         <Route path="implementation" element={<L><Implementation /></L>} />
         <Route path="implementation-schedule" element={<L><ImplementationSchedule /></L>} />
         <Route path="data-cleanup" element={<L><DataCleanup /></L>} />
+        <Route path="backend-plan" element={<L><BackendPlan /></L>} />
         {/* Financial / QoE / diligence routes — registered only when the
             SHOW_FINANCIAL_TABS feature flag is on. In production (Vercel env
             var unset) typing these URLs falls through to the catch-all and
@@ -108,6 +111,7 @@ export default function App() {
         )}
         <Route path="customers" element={<L><Customers /></L>} />
         <Route path="rep-dashboard" element={<L><RepDashboard /></L>} />
+        <Route path="features" element={<L><Features /></L>} />
         <Route path="customer-detail" element={<L><CustomerDetail /></L>} />
         <Route path="custom-report" element={<L><CustomReport /></L>} />
         <Route path="*" element={<Navigate to="/overview" replace />} />

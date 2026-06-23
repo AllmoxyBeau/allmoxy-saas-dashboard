@@ -452,6 +452,85 @@ function median(arr) {
 }
 aggregates.median_cost_ratio_lifetime_pct = median(rows.map((r) => r.cost_ratio_lifetime_pct));
 aggregates.median_cost_ratio_annualized_pct = median(rows.map((r) => r.cost_ratio_annualized_pct));
+
+// ---------- proposed expansion pricing -----------------------------------
+// For Expansion Opportunity rows, suggest a new MRR/ARR so the rep doesn't have
+// to math it. Anchor: realign the cost ratio (annual subscription ÷ annual
+// verified orders) to the HIGHER of the customer's own lifetime ratio and the
+// base median, applied to their current order run-rate. Then cap the per-
+// renewal uplift (gentle, +15%), floor at current (expansion only), round to
+// $25/mo. Self-corrects: customers already paying a fair ratio get no uplift.
+const MAX_UPLIFT = 0.15;            // +15% cap per renewal
+const CPI_BUMP = 0.03;             // suggested bump when already at/above value
+const baseMedianRatio = aggregates.median_cost_ratio_lifetime_pct; // %
+const roundTo = (v, step) => Math.round(v / step) * step;
+for (const r of rows) {
+  const isExpansion = r.action_tag === 'Expansion Opportunity';
+  // Opportunistic pricing: a healthy, in-contract customer that ISN'T tagged for
+  // expansion (orders flat/down) but sits below the value-based target ratio is
+  // still underpriced — surface a suggestion on the customer panel without
+  // changing its action_tag (so Renewal Management page counts stay growth-only).
+  // proposed_basis distinguishes the two so the UI can gate where each shows.
+  const healthyForPricing = r.risk_tier !== 'red' && r.action_tag !== 'Contraction Risk' && r.action_tag !== 'Paused';
+  const eligibleOpportunistic = !isExpansion && healthyForPricing && r.contract_status === 'Yes';
+  if (!isExpansion && !eligibleOpportunistic) continue;
+
+  const annualizedOrders = (r.orders_monthly_avg_current_year || 0) * 12;
+  const ownRatio = r.cost_ratio_lifetime_pct; // % or null
+  const hasOrderValue = annualizedOrders > 0 && ownRatio != null && baseMedianRatio != null;
+  const cap = round2(r.current_arr * (1 + MAX_UPLIFT));
+
+  if (hasOrderValue) {
+    const targetRatio = Math.max(ownRatio, baseMedianRatio); // % — "higher of the two"
+    const rawArr = round2((targetRatio / 100) * annualizedOrders);
+    const hasRoom = rawArr > r.current_arr;
+    // Opportunistic suggestions only exist when there's genuine room to realign.
+    if (eligibleOpportunistic && !hasRoom) continue;
+    if (!hasRoom) {
+      // Expansion-tagged but already at a fair rate vs value — don't push volume price.
+      r.proposed_arr = round2(r.current_arr * (1 + CPI_BUMP));
+      r.proposed_mrr = roundTo(r.proposed_arr / 12, 25);
+      r.expansion_confidence = 'high';
+      r.proposed_basis = 'growth';
+      r.expansion_rationale = `Already at value (cost ratio ${r.cost_ratio_annualized_pct ?? ownRatio}% vs target ${round2(targetRatio)}%). Suggest CPI +${Math.round(CPI_BUMP * 100)}% only.`;
+    } else {
+      const cappedArr = Math.min(rawArr, cap);
+      r.proposed_arr = round2(cappedArr);
+      r.proposed_mrr = roundTo(r.proposed_arr / 12, 25);
+      r.expansion_confidence = 'high';
+      const beyondCap = rawArr > cap;
+      const tail = beyondCap
+        ? `capped at +${Math.round(MAX_UPLIFT * 100)}% this renewal — phase remaining over future renewals.`
+        : `proposing the full realignment.`;
+      const yoyStr = r.orders_yoy_pct != null ? (r.orders_yoy_pct >= 0 ? '+' : '') + Math.round(r.orders_yoy_pct * 100) + '% YoY' : '—';
+      if (isExpansion) {
+        r.proposed_basis = 'growth';
+        r.expansion_rationale =
+          `Orders ${r.orders_yoy_pct != null ? yoyStr : 'growing'}; ` +
+          `cost ratio ${r.cost_ratio_annualized_pct ?? '—'}% vs target ${round2(targetRatio)}%. ` +
+          `Value supports ~$${Math.round(rawArr).toLocaleString()} ARR; ${tail}`;
+      } else {
+        r.proposed_basis = 'underpriced';
+        r.expansion_rationale =
+          `Underpriced vs peers — cost ratio ${r.cost_ratio_annualized_pct ?? ownRatio}% vs ${round2(targetRatio)}% target (orders ${yoyStr}). ` +
+          `Value supports ~$${Math.round(rawArr).toLocaleString()} ARR; ${tail}`;
+      }
+    }
+  } else if (isExpansion) {
+    // Expansion-tagged with no usable order data — capped growth pass-through.
+    // (Opportunistic underpricing can't be assessed without order value, so skip.)
+    const yoy = r.orders_yoy_pct != null ? Math.max(0, Math.min(r.orders_yoy_pct, MAX_UPLIFT)) : MAX_UPLIFT;
+    r.proposed_arr = round2(r.current_arr * (1 + yoy));
+    r.proposed_mrr = roundTo(r.proposed_arr / 12, 25);
+    r.expansion_confidence = 'low';
+    r.proposed_basis = 'growth';
+    r.expansion_rationale = `No verified-order value to price against — growth pass-through (+${Math.round(yoy * 100)}%). Confirm manually.`;
+  } else {
+    continue;
+  }
+  r.proposed_uplift_pct = r.current_arr > 0 ? round2((r.proposed_arr / r.current_arr - 1) * 100) : null;
+}
+
 aggregates.renewals_in_next_90d_arr = round2(aggregates.renewals_in_next_90d_arr);
 aggregates.renewals_in_next_180d_arr = round2(aggregates.renewals_in_next_180d_arr);
 aggregates.renewals_in_next_12mo_arr = round2(aggregates.renewals_in_next_12mo_arr);

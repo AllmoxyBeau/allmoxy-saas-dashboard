@@ -36,8 +36,32 @@ const hubspotSegmentsCache = fs.existsSync(HUBSPOT_SEGMENTS_CACHE_PATH)
 // Subscription IDs, Churn Reason stay xlsx-sourced (those columns live in
 // Stripe and the Allmoxy core DB, not in HubSpot). Refresh by running:
 //   node _etl_scripts/sync_hubspot.mjs
+// HubSpot checkbox (multi-select) properties come back as ';'-separated
+// strings; normalize to a clean array.
+const hsMulti = (v) => (v ? String(v).split(';').map((s) => s.trim()).filter(Boolean) : []);
+
 const HUBSPOT_API_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_companies.json';
 const HUBSPOT_OWNERS_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_owners.json';
+
+// Live Instance custom-object status, keyed by installer_id. This is the LIVE
+// pay status HubSpot shows on the Instance (e.g. "Active") — the xlsx Sync
+// Sheet's Pay Status column lags, so we prefer this. Skip sandbox instances and
+// prefer a real (non-empty) status when a customer has multiple instances.
+const HUBSPOT_INSTANCES_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_instances.json';
+const instanceStatusByInstaller = new Map();
+if (fs.existsSync(HUBSPOT_INSTANCES_CACHE_PATH)) {
+  try {
+    const inst = JSON.parse(fs.readFileSync(HUBSPOT_INSTANCES_CACHE_PATH, 'utf8')).instances || [];
+    for (const i of inst) {
+      if (!i.installer_id) continue;
+      if (/sandbox|\bdev\b|\btest\b/i.test(i.account_name || '')) continue;
+      const key = String(i.installer_id);
+      // Prefer the first non-empty status seen for an installer_id.
+      if (i.status && !instanceStatusByInstaller.get(key)) instanceStatusByInstaller.set(key, i.status);
+    }
+  } catch { /* ignore */ }
+}
+
 const hubspotLiveByStripeId = new Map();
 const hubspotLiveByCompanyId = new Map();
 // Merge redirect: stale HubSpot Company ID → current surviving Company ID.
@@ -781,7 +805,9 @@ for (const id of allIds) {
     // when available; fall back to xlsx Sync Sheet otherwise. Pay status,
     // subscription IDs, and churn reason stay xlsx-only — those columns live in
     // Stripe and the Allmoxy core DB, not in HubSpot.
-    pay_status: hub?.pay_status ?? null,
+    // Prefer the LIVE HubSpot Instance custom-object status over the lagging
+    // xlsx Sync Sheet Pay Status (matches how the Renewal page reads status).
+    pay_status: (installerId && instanceStatusByInstaller.get(String(installerId))) || hub?.pay_status || null,
     contract_status: live?.contract_status ?? hub?.contract_status ?? null,
     churn_reason: hub?.churn_reason ?? null,
     primary_segment: live?.primary_segment_framework ?? hub?.primary_segment ?? null,
@@ -808,6 +834,40 @@ for (const id of allIds) {
     hubspot_owner_id: live?.hubspot_owner_id ?? null,
     hubspot_owner_email: live?.owner_email ?? null,
     hubspot_data_fetched_at: live ? hubspotLiveLoadedAt : null,
+    // "Who They Are" firmographics / classification — all from the HubSpot
+    // Company object (live-only; null/empty until sync_hubspot.mjs has run).
+    // HubSpot checkbox (multi) props arrive as ';'-separated strings → arrays.
+    firmographics: live ? {
+      components_manufactured: hsMulti(live.components_manufactured),
+      software: {
+        accounting: hsMulti(live.accounting_software),
+        cam: hsMulti(live.cam_softwares),
+        design_3d: hsMulti(live.design_softwares),
+        crm: hsMulti(live.crm_software),
+        other: hsMulti(live.software),
+      },
+      revenue_band: live.revenue_band ?? null,
+      annual_revenue: live.annualrevenue != null ? Number(live.annualrevenue) : null,
+      employee_band: live.employee_band ?? null,
+      headcount: live.numberofemployees != null ? Number(live.numberofemployees) : null,
+      geographic_scope: live.geographical_reach ?? null,
+      city: live.city ?? null,
+      state: live.state ?? null,
+      country: live.country ?? null,
+      ownership_type: live.ownership_type ?? null,
+      founded_year: live.founded_year ?? null,
+      business_model: hsMulti(live.business_model),
+      end_customer_type: hsMulti(live.end_customer_type),
+      end_market: hsMulti(live.end_market),
+      // Product offering — what they make, how it's built, how it arrives.
+      product: {
+        customization_tier: live.customization_tier ?? null,
+        construction_methods: hsMulti(live.construction_methods),
+        assembly_model: hsMulti(live.assembly_model),
+        installation_model: hsMulti(live.installation_model),
+        technology_profile: hsMulti(live.technology_profile),
+      },
+    } : null,
     stripe_subscription_id: hub?.stripe_subscription_id ?? null,
     custom_domain_stripe_subscription_id: hub?.custom_domain_stripe_subscription_id ?? null,
     all_stripe_subscription_ids: hub?.all_stripe_subscription_ids ?? [],

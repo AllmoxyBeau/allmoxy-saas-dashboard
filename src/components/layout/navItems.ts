@@ -44,7 +44,6 @@ export const NAV_ENTRIES: NavEntry[] = [
     items: [
       { label: 'All Customers', path: '/customers' },
       { label: 'Customer Detail', path: '/customer-detail' },
-      { label: 'Rep Dashboard', path: '/rep-dashboard' },
       { label: 'Custom Report', path: '/custom-report' },
     ],
   },
@@ -70,8 +69,10 @@ export const NAV_ENTRIES: NavEntry[] = [
     ],
   },
   {
-    label: 'Churn & Health',
+    label: 'Customer Success',
     items: [
+      { label: 'Rep Dashboard', path: '/rep-dashboard' },
+      { label: 'Features', path: '/features' },
       { label: 'Customer Health', path: '/customer-health' },
       { label: 'Churn Risk Matrix', path: '/churn-risk-matrix' },
       { label: 'Churn Patterns', path: '/churn-patterns' },
@@ -100,6 +101,7 @@ export const NAV_ENTRIES: NavEntry[] = [
     label: 'Maintenance',
     items: [
       { label: 'Data Cleanup', path: '/data-cleanup' },
+      { label: 'Postgres Backend Plan', path: '/backend-plan' },
     ],
   },
 ];

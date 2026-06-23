@@ -164,6 +164,23 @@ for (const i of hsInstances) {
   }
 }
 
+// ---------- accepted resolutions (from the Data Cleanup page) -------------
+// Suppress any issue the team has accepted in the UI and committed to
+// data_cleanup_resolutions.json. Keyed '<category>:<identifier>'.
+const resolutionsPath = path.join(ROOT, '_etl_scripts/data_cleanup_resolutions.json');
+const resolved = fs.existsSync(resolutionsPath)
+  ? (JSON.parse(fs.readFileSync(resolutionsPath, 'utf8')).resolved || {})
+  : {};
+function issueKey(it) {
+  if (it.category === 'hubspot_instance_missing_aid') return `${it.category}:${it.instance_id}`;
+  if (it.category === 'connect_mapping_orphan') return `${it.category}:${it.connect_name}`;
+  return `${it.category}:${it.allmoxy_customer_id}`; // pay_status_drift, company_id_ghost
+}
+const activeIssues = issues.filter((it) => !resolved[issueKey(it)]);
+const resolvedCount = issues.length - activeIssues.length;
+issues.length = 0;
+issues.push(...activeIssues);
+
 // ---------- aggregates ----------------------------------------------------
 const byCategory = {};
 for (const it of issues) {
@@ -176,6 +193,7 @@ for (const it of issues) {
 
 const aggregates = {
   total_issues: issues.length,
+  resolved_count: resolvedCount,
   by_category: byCategory,
   by_severity: {
     high: issues.filter((i) => i.severity === 'high').length,
@@ -197,7 +215,7 @@ const out = {
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 2));
 console.log(`Wrote ${OUT}`);
-console.log(`  ${issues.length} issues across ${Object.keys(byCategory).length} categories`);
+console.log(`  ${issues.length} issues across ${Object.keys(byCategory).length} categories${resolvedCount ? ` (${resolvedCount} suppressed via accepted resolutions)` : ''}`);
 for (const [cat, agg] of Object.entries(byCategory)) {
   console.log(`    ${cat}: ${agg.count} (high:${agg.severity_counts.high}, med:${agg.severity_counts.medium}, low:${agg.severity_counts.low})`);
 }

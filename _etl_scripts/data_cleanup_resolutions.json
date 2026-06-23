@@ -1,0 +1,4 @@
+{
+  "_comment": "Accepted Data Cleanup suggestions from the dashboard, keyed '<category>:<identifier>' (identifier = instance_id for missing-aid, allmoxy_customer_id for pay-status-drift / company-id-ghost, connect_name for connect-orphan). build_data_cleanup.mjs SUPPRESSES any issue whose key appears here, so accepted items drop off the list for everyone after a rebuild. The value records the decision so the deeper source edit can be applied (set HubSpot Instance AID, pick the right pay_status, or remove the Connect mapping).",
+  "resolved": {}
+}

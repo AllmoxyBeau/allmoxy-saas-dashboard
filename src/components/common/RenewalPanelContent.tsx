@@ -63,6 +63,16 @@ export type RenewalPanelRow = {
   pay_status: string;
   vip_legacy: string | null;
   quotes?: RenewalQuote[];
+  // Proposed renewal pricing. 'growth' = orders-growth Expansion Opportunity;
+  // 'underpriced' = healthy/in-contract account below the value-based target ratio
+  // (orders flat) — surfaced on the customer panel only, not the page.
+  proposed_mrr?: number | null;
+  proposed_arr?: number | null;
+  proposed_uplift_pct?: number | null;
+  proposed_basis?: 'growth' | 'underpriced' | null;
+  expansion_rationale?: string | null;
+  expansion_confidence?: 'high' | 'low' | null;
+  current_arr?: number;
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -78,11 +88,51 @@ const ACTION_COLOR: Record<string, string> = {
 // Two-column panel: cost-ratio monthly trend on the left, renewal context
 // table on the right. Used as the expansion-row content on the Renewal
 // Management page AND as a standalone collapsible section on Customer Detail.
-export default function RenewalPanelContent({ row, hideQuotes = false }: { row: RenewalPanelRow; hideQuotes?: boolean }) {
+export default function RenewalPanelContent({ row, hideQuotes = false, showUnderpriced = false }: { row: RenewalPanelRow; hideQuotes?: boolean; showUnderpriced?: boolean }) {
   const dropoffWorse = row.dropoff_pct != null && row.dropoff_pct >= 0.25;
   const dropoffBetter = row.dropoff_pct != null && row.dropoff_pct <= -0.25;
+  // Show the proposed-price callout for tagged expansions everywhere; for
+  // underpriced (orders-flat) accounts only where the caller opts in (the
+  // customer panel), so Renewal Management page stays growth-expansion only.
+  const isUnderpriced = row.proposed_basis === 'underpriced';
+  const showProposed = row.proposed_mrr != null &&
+    (row.action_tag === 'Expansion Opportunity' || (showUnderpriced && isUnderpriced));
   return (
     <Grid container spacing={2} alignItems="stretch">
+      {/* Proposed renewal price — full-width callout so the rep sees a ready
+          number without doing the math. */}
+      {showProposed && (
+        <Grid item xs={12}>
+          <Box sx={{ p: 1.5, borderRadius: 1, border: '1px solid', borderColor: 'rgba(26,158,92,0.4)', bgcolor: 'rgba(26,158,92,0.08)' }}>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }} flexWrap="wrap" useFlexGap>
+              <Typography variant="caption" sx={{ color: '#1A9E5C', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10, fontWeight: 700 }}>Proposed renewal price</Typography>
+              <InfoIcon info="Suggested new price. Logic: realign the cost ratio (subscription ÷ verified orders) to the higher of this customer's lifetime ratio or the base median, applied to their current order run-rate — then cap the increase at +15% per renewal. A starting point, not a mandate; adjust as needed." />
+              {isUnderpriced && <Chip label="underpriced vs peers" size="small" sx={{ height: 16, fontSize: 9, bgcolor: 'rgba(26,158,92,0.18)', color: '#1A9E5C' }} />}
+              {row.expansion_confidence === 'low' && <Chip label="low confidence" size="small" sx={{ height: 16, fontSize: 9, bgcolor: 'rgba(245,166,35,0.18)', color: '#B07206' }} />}
+            </Stack>
+            <Stack direction="row" spacing={3} alignItems="baseline" flexWrap="wrap" useFlexGap>
+              <Box>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>MRR</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                  {USD0.format(row.current_mrr)} <Box component="span" sx={{ color: 'text.secondary', fontWeight: 400 }}>→</Box> <Box component="span" sx={{ color: '#1A9E5C' }}>{USD0.format(row.proposed_mrr ?? 0)}</Box>
+                  {row.proposed_uplift_pct != null && <Box component="span" sx={{ fontSize: 12, color: '#1A9E5C', ml: 0.5 }}>({row.proposed_uplift_pct >= 0 ? '+' : ''}{row.proposed_uplift_pct}%)</Box>}
+                </Typography>
+              </Box>
+              {row.proposed_arr != null && (
+                <Box>
+                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>ARR</Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    {USD0.format(row.current_arr ?? row.arr_up_for_renewal ?? 0)} <Box component="span" sx={{ color: 'text.secondary', fontWeight: 400 }}>→</Box> <Box component="span" sx={{ color: '#1A9E5C' }}>{USD0.format(row.proposed_arr ?? 0)}</Box>
+                  </Typography>
+                </Box>
+              )}
+            </Stack>
+            {row.expansion_rationale && (
+              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>{row.expansion_rationale}</Typography>
+            )}
+          </Box>
+        </Grid>
+      )}
       <Grid item xs={12} md={5} sx={{ display: 'flex' }}>
         {/* Stretch the cost-ratio chart to fill the column height so it
             visually balances the renewal-context table on the right and no

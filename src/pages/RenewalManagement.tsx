@@ -149,7 +149,7 @@ type SortKey = 'days_to_renewal' | 'arr' | 'mrr' | 'cost_ratio_lifetime' | 'cost
 // switches the filter (rather than ANDing) because the tiles slice
 // overlapping populations and an AND combination is rarely what the user
 // wants when drilling in from a headline number.
-type MetricFilter = 'next_90d' | 'next_180d' | 'next_12mo' | 'expansion' | 'contraction' | 'dropoff' | 'no_renewal_date' | 'with_quote' | 'no_quote_upcoming' | null;
+type MetricFilter = 'this_year' | 'next_90d' | 'next_180d' | 'next_12mo' | 'expansion' | 'contraction' | 'dropoff' | 'no_renewal_date' | 'with_quote' | 'no_quote_upcoming' | null;
 
 export default function RenewalManagement() {
   const { data, isLoading, error } = useSheetTab<Snapshot>('renewal_management');
@@ -186,6 +186,14 @@ export default function RenewalManagement() {
   // it from rows so the tile is always accurate.
   const noRenewalDateCount = useMemo(() => rows.filter((r) => !r.renewal_date).length, [rows]);
 
+  // Total ARR up for renewal in the current calendar year (any renewal dated
+  // this year, past or upcoming) — computed from rows so it's always current.
+  const currentYear = new Date().getFullYear();
+  const thisYear = useMemo(() => {
+    const matching = rows.filter((r) => r.renewal_date && r.renewal_date.slice(0, 4) === String(currentYear));
+    return { count: matching.length, arr: matching.reduce((s, r) => s + (r.arr_up_for_renewal || 0), 0) };
+  }, [rows, currentYear]);
+
   // Facets
   const ownerCounts = useMemo(() => {
     const m = new Map<string, number>();
@@ -211,6 +219,7 @@ export default function RenewalManagement() {
       }
       if (actionSet.size > 0 && !actionSet.has(r.action_tag)) return false;
       if (ownerSet.size > 0 && !ownerSet.has(r.owner_name || '(unassigned)')) return false;
+      if (metricFilter === 'this_year' && !(r.renewal_date && r.renewal_date.slice(0, 4) === String(currentYear))) return false;
       if (metricFilter === 'next_90d' && (r.days_to_renewal == null || r.days_to_renewal < 0 || r.days_to_renewal > 90)) return false;
       if (metricFilter === 'next_180d' && (r.days_to_renewal == null || r.days_to_renewal < 0 || r.days_to_renewal > 180)) return false;
       if (metricFilter === 'next_12mo' && (r.days_to_renewal == null || r.days_to_renewal < 0 || r.days_to_renewal > 365)) return false;
@@ -225,7 +234,7 @@ export default function RenewalManagement() {
       }
       return true;
     });
-  }, [rows, actionFilter, ownerFilter, showOnlyWithRenewalDate, metricFilter]);
+  }, [rows, actionFilter, ownerFilter, showOnlyWithRenewalDate, metricFilter, currentYear]);
 
   // Final filter — adds monthFilter on top of the chart base. This is what
   // the table renders.
@@ -315,6 +324,17 @@ export default function RenewalManagement() {
       {/* KPI tiles — click a tile to filter the table below to that slice;
           click again to clear. Mutually exclusive. */}
       <Grid container spacing={2} sx={{ mb: 2 }} alignItems="stretch">
+        <KpiTile
+          label={`${currentYear} ARR up for renewal`}
+          info={`Total ARR up for renewal across every customer whose renewal date falls in ${currentYear} (already-passed and upcoming this calendar year). ARR is monthly_flat_fee × 12 from HubSpot, or current MRR × 12 if HubSpot's value is missing. Click to filter the table to this year's renewals.`}
+          value={USD_COMPACT.format(thisYear.arr)}
+          sub={`${thisYear.count} renewal${thisYear.count === 1 ? '' : 's'} in ${currentYear}`}
+          accent="primary.main"
+          valueColor="primary.main"
+          active={metricFilter === 'this_year'}
+          onClick={() => toggleMetric('this_year')}
+          isLoading={isLoading}
+        />
         <KpiTile
           label="Renewals · next 90d"
           info="Customers with a renewal date in the next 90 days. Click to filter the table to just this set. ARR shown is monthly_flat_fee × 12 from HubSpot, or current MRR × 12 if HubSpot's value is missing."
@@ -719,6 +739,7 @@ function KpiTile({
 
 function metricFilterLabel(m: MetricFilter): string {
   switch (m) {
+    case 'this_year': return 'renewals dated this calendar year';
     case 'next_90d': return 'renewals in the next 90 days';
     case 'next_180d': return 'renewals in the next 180 days';
     case 'next_12mo': return 'renewals in the next 12 months';

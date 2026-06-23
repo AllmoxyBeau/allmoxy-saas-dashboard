@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-06-22T15:44:24.086Z",
-  "cachedUntil": "2026-06-22T15:49:24.086Z",
+  "fetchedAt": "2026-06-23T19:12:57.108Z",
+  "cachedUntil": "2026-06-23T19:17:57.108Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 207,
@@ -12,8 +12,8 @@
     "renewals_in_next_90d_arr": 357424.44,
     "renewals_in_next_180d": 54,
     "renewals_in_next_180d_arr": 673738.8,
-    "renewals_in_next_12mo": 92,
-    "renewals_in_next_12mo_arr": 1052790.96,
+    "renewals_in_next_12mo": 94,
+    "renewals_in_next_12mo_arr": 1068978.96,
     "expansion_opportunities": 32,
     "contraction_risks": 88,
     "watch": 1,
@@ -23,9 +23,9 @@
     "median_cost_ratio_annualized_pct": 0.98,
     "dropoff_count": 30,
     "customers_with_quote": 155,
-    "upcoming_renewals_with_quote": 58,
+    "upcoming_renewals_with_quote": 60,
     "upcoming_renewals_without_quote": 34,
-    "total_quote_count": 425
+    "total_quote_count": 427
   },
   "rows": [
     {
@@ -34,16 +34,16 @@
       "allmoxy_customer_id": 462,
       "join_via": "installer_id",
       "customer_name": "Imab Living",
-      "renewal_date": "2025-07-01",
-      "days_to_renewal": -357,
-      "calculated_renewal_date": "2025-07-01",
-      "renewal_date_manual": "2025-07-01",
+      "renewal_date": "2027-06-23",
+      "days_to_renewal": 364,
+      "calculated_renewal_date": "2027-06-23",
+      "renewal_date_manual": "2027-06-23",
       "contract_status": "Yes",
       "contract_length_months": 12,
-      "monthly_flat_fee_hubspot": 899,
-      "arr_up_for_renewal": 10788,
-      "last_renewal_expansion": null,
-      "last_no_expansion_reason": null,
+      "monthly_flat_fee_hubspot": 350,
+      "arr_up_for_renewal": 4200,
+      "last_renewal_expansion": "No",
+      "last_no_expansion_reason": "Subscription amount high for customers verified order amount;Implementation Issues;Current Escalation",
       "payment_start_date": "2023-07-19",
       "payment_pause_date": null,
       "instance_creation": "2023-07-19",
@@ -248,6 +248,19 @@
       "customer_closed_lost": null,
       "quotes": [
         {
+          "id": "40534827394",
+          "title": "Imab Living - 2026",
+          "status": "APPROVAL_NOT_NEEDED",
+          "amount": 350,
+          "currency": "USD",
+          "created_date": "2026-06-22T19:09:04.054Z",
+          "expiration_date": "2026-09-21T05:59:59.999Z",
+          "last_modified_date": "2026-06-22T19:40:58.110Z",
+          "quote_number": "20260622-130903581",
+          "payment_status": "PAYMENT_NOT_ENABLED",
+          "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/40534827394"
+        },
+        {
           "id": "145910932",
           "title": "IMAB Living l Allmoxy Subscription Agreement",
           "status": "APPROVAL_NOT_NEEDED",
@@ -269,7 +282,7 @@
       "join_via": "installer_id",
       "customer_name": "Hartley Group Coatings",
       "renewal_date": "2026-12-03",
-      "days_to_renewal": 163,
+      "days_to_renewal": 162,
       "calculated_renewal_date": "2026-12-03",
       "renewal_date_manual": "2026-12-22",
       "contract_status": "Yes",
@@ -282,7 +295,7 @@
       "payment_pause_date": null,
       "instance_creation": "2022-08-25",
       "merchant_connect_date": "2022-09-27",
-      "last_payment_date_hubspot": "2026-05-23",
+      "last_payment_date_hubspot": "2026-06-23",
       "goal_launch_date": null,
       "is_launched": "Yes",
       "pay_status": "Active",
@@ -520,7 +533,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/92630638"
         }
-      ]
+      ],
+      "proposed_arr": 10336.2,
+      "proposed_mrr": 850,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.7% vs 1.06% target (orders +7% YoY). Value supports ~$13,573 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22246805553",
@@ -529,7 +548,7 @@
       "join_via": "installer_id",
       "customer_name": "Self Woodworks",
       "renewal_date": "2025-09-11",
-      "days_to_renewal": -285,
+      "days_to_renewal": -286,
       "calculated_renewal_date": "2025-09-11",
       "renewal_date_manual": "2025-09-10",
       "contract_status": "Yes",
@@ -767,7 +786,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/155849653"
         }
-      ]
+      ],
+      "proposed_arr": 7373.54,
+      "proposed_mrr": 625,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.99% vs 1.06% target (orders +8% YoY). Value supports ~$7,374 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 7.05
     },
     {
       "instance_id": "22250944583",
@@ -776,7 +801,7 @@
       "join_via": "installer_id",
       "customer_name": "CP&W",
       "renewal_date": "2026-08-26",
-      "days_to_renewal": 64,
+      "days_to_renewal": 63,
       "calculated_renewal_date": "2026-08-26",
       "renewal_date_manual": "2026-08-26",
       "contract_status": "Yes",
@@ -1075,7 +1100,7 @@
       "join_via": "installer_id",
       "customer_name": "Rehau Inc.",
       "renewal_date": "2026-12-02",
-      "days_to_renewal": 162,
+      "days_to_renewal": 161,
       "calculated_renewal_date": "2026-12-02",
       "renewal_date_manual": "2026-12-02",
       "contract_status": "Yes",
@@ -1335,7 +1360,7 @@
       "join_via": "installer_id",
       "customer_name": "IFCC Inc - Imminik Finishing",
       "renewal_date": "2026-09-17",
-      "days_to_renewal": 86,
+      "days_to_renewal": 85,
       "calculated_renewal_date": "2026-09-17",
       "renewal_date_manual": "2026-09-17",
       "contract_status": "Yes",
@@ -1586,7 +1611,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/24954742833"
         }
-      ]
+      ],
+      "proposed_arr": 15924.51,
+      "proposed_mrr": 1325,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.41% vs 1.06% target (orders +16% YoY). Value supports ~$36,173 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22251716387",
@@ -1595,7 +1626,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabinwood NY",
       "renewal_date": "2026-08-29",
-      "days_to_renewal": 67,
+      "days_to_renewal": 66,
       "calculated_renewal_date": "2026-08-29",
       "renewal_date_manual": "2026-08-20",
       "contract_status": "Yes",
@@ -1881,7 +1912,7 @@
       "join_via": "installer_id",
       "customer_name": "Door Masters of Houston",
       "renewal_date": "2028-04-20",
-      "days_to_renewal": 667,
+      "days_to_renewal": 666,
       "calculated_renewal_date": "2028-04-20",
       "renewal_date_manual": "2028-04-20",
       "contract_status": "Yes",
@@ -2145,7 +2176,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/73867631"
         }
-      ]
+      ],
+      "proposed_arr": 20686.2,
+      "proposed_mrr": 1725,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 1.58% vs 2.24% target (orders +0% YoY). Value supports ~$25,494 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22253575081",
@@ -2154,7 +2191,7 @@
       "join_via": "installer_id",
       "customer_name": "Brave Custom Woodworking",
       "renewal_date": "2025-05-30",
-      "days_to_renewal": -389,
+      "days_to_renewal": -390,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2025-05-30",
       "contract_status": "Yes",
@@ -2379,7 +2416,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/134706843"
         }
-      ]
+      ],
+      "proposed_arr": 19135.36,
+      "proposed_mrr": 1600,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 1.18% vs 1.34% target (orders +4% YoY). Value supports ~$19,135 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 13.98
     },
     {
       "instance_id": "22253575082",
@@ -2388,7 +2431,7 @@
       "join_via": "installer_id",
       "customer_name": "Countryside Cabinets",
       "renewal_date": "2025-09-04",
-      "days_to_renewal": -292,
+      "days_to_renewal": -293,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2025-09-04",
       "contract_status": "Yes",
@@ -2601,7 +2644,7 @@
       "join_via": "installer_id",
       "customer_name": "Whitson Brothers LLC",
       "renewal_date": "2026-12-18",
-      "days_to_renewal": 178,
+      "days_to_renewal": 177,
       "calculated_renewal_date": "2026-12-18",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -2839,7 +2882,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/19501669690"
         }
-      ]
+      ],
+      "proposed_arr": 5520,
+      "proposed_mrr": 450,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 1.99% vs 3.61% target (orders —). Value supports ~$8,721 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22257293910",
@@ -2848,7 +2897,7 @@
       "join_via": "installer_id",
       "customer_name": "S&S Signature Millworks, Inc.",
       "renewal_date": "2024-08-20",
-      "days_to_renewal": -672,
+      "days_to_renewal": -673,
       "calculated_renewal_date": "2024-08-20",
       "renewal_date_manual": "2025-04-04",
       "contract_status": "No",
@@ -3346,7 +3395,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/49283900"
         }
-      ]
+      ],
+      "proposed_arr": 33765.15,
+      "proposed_mrr": 2825,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +30% YoY; cost ratio 0.68% vs target 1.06%. Value supports ~$45,657 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22258682923",
@@ -3355,7 +3410,7 @@
       "join_via": "installer_id",
       "customer_name": "Brushy Creek Custom Doors, LLC",
       "renewal_date": "2027-04-10",
-      "days_to_renewal": 291,
+      "days_to_renewal": 290,
       "calculated_renewal_date": "2027-04-10",
       "renewal_date_manual": "2027-04-13",
       "contract_status": "Yes",
@@ -3645,7 +3700,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/56655388"
         }
-      ]
+      ],
+      "proposed_arr": 42766.2,
+      "proposed_mrr": 3575,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.47% vs 1.06% target (orders +1% YoY). Value supports ~$83,414 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22258682926",
@@ -3654,7 +3715,7 @@
       "join_via": "installer_id",
       "customer_name": "Empyre Designs",
       "renewal_date": "2026-10-03",
-      "days_to_renewal": 102,
+      "days_to_renewal": 101,
       "calculated_renewal_date": "2026-10-03",
       "renewal_date_manual": "2026-10-03",
       "contract_status": "Yes",
@@ -3940,7 +4001,7 @@
       "join_via": "installer_id",
       "customer_name": "Everwood Inc.",
       "renewal_date": "2025-04-29",
-      "days_to_renewal": -420,
+      "days_to_renewal": -421,
       "calculated_renewal_date": "2025-04-29",
       "renewal_date_manual": "2025-06-02",
       "contract_status": "Yes",
@@ -4191,7 +4252,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/30525848"
         }
-      ]
+      ],
+      "proposed_arr": 16174.7,
+      "proposed_mrr": 1350,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.78% vs 1.06% target (orders +9% YoY). Value supports ~$19,054 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22259147175",
@@ -4200,7 +4267,7 @@
       "join_via": "installer_id",
       "customer_name": "Peterman Lumber",
       "renewal_date": "2025-04-03",
-      "days_to_renewal": -446,
+      "days_to_renewal": -447,
       "calculated_renewal_date": "2025-04-03",
       "renewal_date_manual": "2025-07-19",
       "contract_status": "Yes",
@@ -4473,7 +4540,7 @@
       "join_via": "installer_id",
       "customer_name": "Island Custom Cabinetry Ltd",
       "renewal_date": "2025-12-26",
-      "days_to_renewal": -179,
+      "days_to_renewal": -180,
       "calculated_renewal_date": "2025-12-26",
       "renewal_date_manual": "2025-12-26",
       "contract_status": "Yes",
@@ -4724,7 +4791,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/155998245"
         }
-      ]
+      ],
+      "proposed_arr": 11716.2,
+      "proposed_mrr": 975,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +28% YoY; cost ratio 0.8% vs target 1.06%. Value supports ~$13,537 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22261154591",
@@ -4733,7 +4806,7 @@
       "join_via": "installer_id",
       "customer_name": "Advanced Cabinet Doors",
       "renewal_date": "2025-07-26",
-      "days_to_renewal": -332,
+      "days_to_renewal": -333,
       "calculated_renewal_date": "2025-07-26",
       "renewal_date_manual": "2025-07-26",
       "contract_status": "Yes",
@@ -4971,7 +5044,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/75765263"
         }
-      ]
+      ],
+      "proposed_arr": 11730,
+      "proposed_mrr": 975,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.37% vs 1.06% target (orders -2% YoY). Value supports ~$29,565 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22261465650",
@@ -5200,7 +5279,7 @@
       "join_via": "installer_id",
       "customer_name": "Stanisci Design & Manufacturing",
       "renewal_date": "2025-06-04",
-      "days_to_renewal": -384,
+      "days_to_renewal": -385,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2025-06-04",
       "contract_status": "Yes",
@@ -5451,7 +5530,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/131695971"
         }
-      ]
+      ],
+      "proposed_arr": 48286.2,
+      "proposed_mrr": 4025,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +73% YoY; cost ratio 0.33% vs target 1.06%. Value supports ~$134,697 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22262390059",
@@ -5460,7 +5545,7 @@
       "join_via": "installer_id",
       "customer_name": "Classic Kitchen Doors",
       "renewal_date": "2024-05-09",
-      "days_to_renewal": -775,
+      "days_to_renewal": -776,
       "calculated_renewal_date": "2024-05-09",
       "renewal_date_manual": "2024-11-08",
       "contract_status": "No",
@@ -5707,7 +5792,7 @@
       "join_via": "installer_id",
       "customer_name": "Panhandle Door Inc.",
       "renewal_date": "2024-06-15",
-      "days_to_renewal": -738,
+      "days_to_renewal": -739,
       "calculated_renewal_date": "2024-06-15",
       "renewal_date_manual": null,
       "contract_status": "No",
@@ -6425,7 +6510,13 @@
       "action_reason": "Orders monthly avg +49% YoY",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 3090,
+      "proposed_mrr": 250,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Already at value (cost ratio 3.89% vs target 1.06%). Suggest CPI +3% only.",
+      "proposed_uplift_pct": 3
     },
     {
       "instance_id": "22263084450",
@@ -6434,7 +6525,7 @@
       "join_via": "installer_id",
       "customer_name": "Lewis Cabinet Specialties Group LLC",
       "renewal_date": "2025-12-03",
-      "days_to_renewal": -202,
+      "days_to_renewal": -203,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2025-12-03",
       "contract_status": "No",
@@ -6694,7 +6785,7 @@
       "join_via": "installer_id",
       "customer_name": "NJ Drawers",
       "renewal_date": "2026-08-29",
-      "days_to_renewal": 67,
+      "days_to_renewal": 66,
       "calculated_renewal_date": "2026-08-29",
       "renewal_date_manual": "2026-09-05",
       "contract_status": "Yes",
@@ -6958,7 +7049,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/92623915"
         }
-      ]
+      ],
+      "proposed_arr": 27686.25,
+      "proposed_mrr": 2300,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.88% vs 1.06% target (orders +3% YoY). Value supports ~$29,070 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22263390748",
@@ -6967,7 +7064,7 @@
       "join_via": "installer_id",
       "customer_name": "Cascade Distribution Group",
       "renewal_date": "2026-08-07",
-      "days_to_renewal": 45,
+      "days_to_renewal": 44,
       "calculated_renewal_date": "2026-08-07",
       "renewal_date_manual": "2026-08-07",
       "contract_status": "Yes",
@@ -7486,7 +7583,7 @@
       "join_via": "installer_id",
       "customer_name": "Roy's Wood Products, Inc.",
       "renewal_date": "2027-08-28",
-      "days_to_renewal": 431,
+      "days_to_renewal": 430,
       "calculated_renewal_date": "2027-08-28",
       "renewal_date_manual": "2027-04-25",
       "contract_status": "Yes",
@@ -7750,7 +7847,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/28312086"
         }
-      ]
+      ],
+      "proposed_arr": 43042.2,
+      "proposed_mrr": 3575,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.23% vs 1.06% target (orders +9% YoY). Value supports ~$173,011 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22265251713",
@@ -7759,7 +7862,7 @@
       "join_via": "installer_id",
       "customer_name": "Cut 2 Size Parts",
       "renewal_date": "2025-04-11",
-      "days_to_renewal": -438,
+      "days_to_renewal": -439,
       "calculated_renewal_date": "2025-04-11",
       "renewal_date_manual": "2025-04-10",
       "contract_status": "Yes",
@@ -8019,7 +8122,7 @@
       "join_via": "installer_id",
       "customer_name": "J&B Woodcrafts",
       "renewal_date": "2026-10-29",
-      "days_to_renewal": 128,
+      "days_to_renewal": 127,
       "calculated_renewal_date": "2026-10-29",
       "renewal_date_manual": "2027-10-28",
       "contract_status": "Yes",
@@ -8283,7 +8386,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/28491238042"
         }
-      ]
+      ],
+      "proposed_arr": 39675,
+      "proposed_mrr": 3300,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.45% vs 1.06% target (orders +13% YoY). Value supports ~$81,807 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22266180911",
@@ -8292,7 +8401,7 @@
       "join_via": "installer_id",
       "customer_name": "Dominion Dovetail",
       "renewal_date": "2026-07-22",
-      "days_to_renewal": 29,
+      "days_to_renewal": 28,
       "calculated_renewal_date": "2026-07-22",
       "renewal_date_manual": "2026-07-20",
       "contract_status": "Yes",
@@ -8556,7 +8665,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/14923595397"
         }
-      ]
+      ],
+      "proposed_arr": 5727,
+      "proposed_mrr": 475,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +155% YoY; cost ratio 0.31% vs target 1.06%. Value supports ~$17,115 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22267106657",
@@ -8565,7 +8680,7 @@
       "join_via": "installer_id",
       "customer_name": "Closet City",
       "renewal_date": "2026-04-10",
-      "days_to_renewal": -74,
+      "days_to_renewal": -75,
       "calculated_renewal_date": "2026-04-10",
       "renewal_date_manual": "2027-06-17",
       "contract_status": "Yes",
@@ -8842,7 +8957,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/26465939"
         }
-      ]
+      ],
+      "proposed_arr": 36473.4,
+      "proposed_mrr": 3050,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +27% YoY; cost ratio 0.77% vs target 1.06%. Value supports ~$43,807 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22267106658",
@@ -8851,7 +8972,7 @@
       "join_via": "installer_id",
       "customer_name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
       "renewal_date": "2025-01-18",
-      "days_to_renewal": -521,
+      "days_to_renewal": -522,
       "calculated_renewal_date": "2025-01-18",
       "renewal_date_manual": "2025-01-20",
       "contract_status": "No",
@@ -9124,7 +9245,7 @@
       "join_via": "installer_id",
       "customer_name": "Pinnacle Cabinets & Millwork",
       "renewal_date": "2027-01-24",
-      "days_to_renewal": 215,
+      "days_to_renewal": 214,
       "calculated_renewal_date": "2027-01-24",
       "renewal_date_manual": "2027-01-24",
       "contract_status": "Yes",
@@ -9344,7 +9465,7 @@
       "join_via": "installer_id",
       "customer_name": "Bywater Products",
       "renewal_date": "2024-10-16",
-      "days_to_renewal": -615,
+      "days_to_renewal": -616,
       "calculated_renewal_date": "2024-10-16",
       "renewal_date_manual": "2024-10-17",
       "contract_status": "No",
@@ -9604,7 +9725,7 @@
       "join_via": "installer_id",
       "customer_name": "The Cabinet Warehouse",
       "renewal_date": "2025-08-16",
-      "days_to_renewal": -311,
+      "days_to_renewal": -312,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2025-08-16",
       "contract_status": "Yes",
@@ -9957,7 +10078,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/34205966"
         }
-      ]
+      ],
+      "proposed_arr": 6900,
+      "proposed_mrr": 575,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +68% YoY; cost ratio 0.97% vs target 1.32%. Value supports ~$8,195 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22268396659",
@@ -9966,7 +10093,7 @@
       "join_via": "installer_id",
       "customer_name": "Ideal Drawer Box Inc",
       "renewal_date": "2025-03-19",
-      "days_to_renewal": -461,
+      "days_to_renewal": -462,
       "calculated_renewal_date": "2025-03-19",
       "renewal_date_manual": "2025-06-19",
       "contract_status": "Yes",
@@ -10217,7 +10344,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/75599476"
         }
-      ]
+      ],
+      "proposed_arr": 23446.2,
+      "proposed_mrr": 1950,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.79% vs 1.06% target (orders +2% YoY). Value supports ~$27,419 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22269003548",
@@ -10226,7 +10359,7 @@
       "join_via": "installer_id",
       "customer_name": "Red Rock Milling LLC",
       "renewal_date": "2026-08-11",
-      "days_to_renewal": 49,
+      "days_to_renewal": 48,
       "calculated_renewal_date": "2026-08-11",
       "renewal_date_manual": "2026-08-11",
       "contract_status": "Yes",
@@ -10490,7 +10623,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/140924782"
         }
-      ]
+      ],
+      "proposed_arr": 24660.46,
+      "proposed_mrr": 2050,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 1.4% vs 1.97% target (orders +10% YoY). Value supports ~$30,279 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22270239794",
@@ -10499,7 +10638,7 @@
       "join_via": "installer_id",
       "customer_name": "My Door Factory",
       "renewal_date": "2025-08-22",
-      "days_to_renewal": -305,
+      "days_to_renewal": -306,
       "calculated_renewal_date": "2025-08-22",
       "renewal_date_manual": "2025-11-30",
       "contract_status": "Yes",
@@ -10763,7 +10902,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/154771721"
         }
-      ]
+      ],
+      "proposed_arr": 13464.15,
+      "proposed_mrr": 1125,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.94% vs 1.06% target (orders -6% YoY). Value supports ~$13,464 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 12.2
     },
     {
       "instance_id": "22270239795",
@@ -10772,7 +10917,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabinet Company",
       "renewal_date": "2024-08-22",
-      "days_to_renewal": -670,
+      "days_to_renewal": -671,
       "calculated_renewal_date": "2024-08-22",
       "renewal_date_manual": "2025-02-21",
       "contract_status": "No",
@@ -11019,7 +11164,7 @@
       "join_via": "installer_id",
       "customer_name": "Nashville Plywood",
       "renewal_date": "2026-09-18",
-      "days_to_renewal": 87,
+      "days_to_renewal": 86,
       "calculated_renewal_date": "2026-09-18",
       "renewal_date_manual": "2026-10-11",
       "contract_status": "Yes",
@@ -11266,7 +11411,7 @@
       "join_via": "installer_id",
       "customer_name": "Ironwood Cabinet And Millworks",
       "renewal_date": "2024-04-23",
-      "days_to_renewal": -791,
+      "days_to_renewal": -792,
       "calculated_renewal_date": "2024-04-23",
       "renewal_date_manual": "2024-10-23",
       "contract_status": "No",
@@ -11760,7 +11905,7 @@
       "join_via": "installer_id",
       "customer_name": "Vision Kitchen & Bath",
       "renewal_date": "2026-12-30",
-      "days_to_renewal": 190,
+      "days_to_renewal": 189,
       "calculated_renewal_date": "2026-12-30",
       "renewal_date_manual": "2026-12-30",
       "contract_status": "Yes",
@@ -12033,7 +12178,7 @@
       "join_via": "installer_id",
       "customer_name": "Kitch Components Inc.",
       "renewal_date": "2025-02-20",
-      "days_to_renewal": -488,
+      "days_to_renewal": -489,
       "calculated_renewal_date": "2025-02-20",
       "renewal_date_manual": null,
       "contract_status": "No",
@@ -12319,7 +12464,7 @@
       "join_via": "installer_id",
       "customer_name": "Greyloch, LLC.",
       "renewal_date": "2025-02-15",
-      "days_to_renewal": -493,
+      "days_to_renewal": -494,
       "calculated_renewal_date": "2025-02-15",
       "renewal_date_manual": "2025-03-05",
       "contract_status": "Yes",
@@ -12557,7 +12702,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/66332541"
         }
-      ]
+      ],
+      "proposed_arr": 64680.6,
+      "proposed_mrr": 5400,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +47% YoY; cost ratio 0.2% vs target 1.06%. Value supports ~$299,324 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22272246382",
@@ -12786,7 +12937,7 @@
       "join_via": "installer_id",
       "customer_name": "Staley Custom Cabinets",
       "renewal_date": "2023-08-18",
-      "days_to_renewal": -1040,
+      "days_to_renewal": -1041,
       "calculated_renewal_date": "2023-08-18",
       "renewal_date_manual": null,
       "contract_status": "No",
@@ -13020,7 +13171,7 @@
       "join_via": "installer_id",
       "customer_name": "Cutting Edge Doors & Woodworking",
       "renewal_date": "2028-06-18",
-      "days_to_renewal": 726,
+      "days_to_renewal": 725,
       "calculated_renewal_date": "2028-06-18",
       "renewal_date_manual": "2028-06-18",
       "contract_status": "Yes",
@@ -13323,7 +13474,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/38765885"
         }
-      ]
+      ],
+      "proposed_arr": 51722.4,
+      "proposed_mrr": 4300,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.51% vs 1.06% target (orders +15% YoY). Value supports ~$93,735 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22272546452",
@@ -13552,7 +13709,7 @@
       "join_via": "installer_id",
       "customer_name": "Webster Door Company",
       "renewal_date": "2025-05-16",
-      "days_to_renewal": -403,
+      "days_to_renewal": -404,
       "calculated_renewal_date": "2025-05-16",
       "renewal_date_manual": "2025-06-05",
       "contract_status": "Yes",
@@ -13812,7 +13969,7 @@
       "join_via": "installer_id",
       "customer_name": "Diamond CNC",
       "renewal_date": "2025-02-15",
-      "days_to_renewal": -493,
+      "days_to_renewal": -494,
       "calculated_renewal_date": "2025-02-15",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -14050,7 +14207,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/35319337"
         }
-      ]
+      ],
+      "proposed_arr": 19905.1,
+      "proposed_mrr": 1650,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.96% vs 1.06% target (orders -19% YoY). Value supports ~$19,905 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 10.66
     },
     {
       "instance_id": "22272851613",
@@ -14059,7 +14222,7 @@
       "join_via": "installer_id",
       "customer_name": "LINDSEY DOORS",
       "renewal_date": "2025-06-05",
-      "days_to_renewal": -383,
+      "days_to_renewal": -384,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2025-06-05",
       "contract_status": "Yes",
@@ -14284,7 +14447,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/124137029"
         }
-      ]
+      ],
+      "proposed_arr": 28966.2,
+      "proposed_mrr": 2425,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 1.58% vs 2.17% target (orders -8% YoY). Value supports ~$34,683 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22273619477",
@@ -14401,7 +14570,7 @@
       "join_via": "installer_id",
       "customer_name": "M2M components",
       "renewal_date": "2025-02-01",
-      "days_to_renewal": -507,
+      "days_to_renewal": -508,
       "calculated_renewal_date": "2025-02-01",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -14626,7 +14795,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/121150288"
         }
-      ]
+      ],
+      "proposed_arr": 17274.51,
+      "proposed_mrr": 1450,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 2.02% vs 2.16% target (orders -2% YoY). Value supports ~$17,275 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 7.19
     },
     {
       "instance_id": "22273619479",
@@ -14882,7 +15057,7 @@
       "join_via": "installer_id",
       "customer_name": "Drawer Box Solutions",
       "renewal_date": "2024-07-14",
-      "days_to_renewal": -709,
+      "days_to_renewal": -710,
       "calculated_renewal_date": "2024-07-14",
       "renewal_date_manual": "2025-01-13",
       "contract_status": "No",
@@ -15129,7 +15304,7 @@
       "join_via": "installer_id",
       "customer_name": "CCF Industries",
       "renewal_date": "2026-12-18",
-      "days_to_renewal": 178,
+      "days_to_renewal": 177,
       "calculated_renewal_date": "2026-12-18",
       "renewal_date_manual": "2026-12-18",
       "contract_status": "Yes",
@@ -15380,7 +15555,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/147757946"
         }
-      ]
+      ],
+      "proposed_arr": 37246.2,
+      "proposed_mrr": 3100,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.56% vs 1.06% target (orders +1% YoY). Value supports ~$61,774 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22275813514",
@@ -15389,7 +15570,7 @@
       "join_via": "installer_id",
       "customer_name": "Tahoma Closetmakers",
       "renewal_date": "2025-10-31",
-      "days_to_renewal": -235,
+      "days_to_renewal": -236,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2025-10-31",
       "contract_status": "Yes",
@@ -15532,7 +15713,7 @@
       "join_via": "installer_id",
       "customer_name": "Westwind",
       "renewal_date": "2026-12-17",
-      "days_to_renewal": 177,
+      "days_to_renewal": 176,
       "calculated_renewal_date": "2026-12-17",
       "renewal_date_manual": "2026-12-17",
       "contract_status": "Yes",
@@ -15783,7 +15964,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/58829933"
         }
-      ]
+      ],
+      "proposed_arr": 50700.51,
+      "proposed_mrr": 4225,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.7% vs 1.06% target (orders —). Value supports ~$67,098 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22276891744",
@@ -15792,7 +15979,7 @@
       "join_via": "installer_id",
       "customer_name": "B & B Outdoor Furniture",
       "renewal_date": "2027-05-06",
-      "days_to_renewal": 317,
+      "days_to_renewal": 316,
       "calculated_renewal_date": "2027-05-06",
       "renewal_date_manual": "2027-05-04",
       "contract_status": "Yes",
@@ -16078,7 +16265,7 @@
       "join_via": "installer_id",
       "customer_name": "Jim Chambers Architectural Products",
       "renewal_date": "2024-05-03",
-      "days_to_renewal": -781,
+      "days_to_renewal": -782,
       "calculated_renewal_date": "2024-05-03",
       "renewal_date_manual": "2024-11-22",
       "contract_status": "No",
@@ -16091,7 +16278,7 @@
       "payment_pause_date": null,
       "instance_creation": "2021-01-08",
       "merchant_connect_date": "2021-01-11",
-      "last_payment_date_hubspot": "2026-05-23",
+      "last_payment_date_hubspot": "2026-06-23",
       "goal_launch_date": null,
       "is_launched": "Yes",
       "pay_status": "Active",
@@ -16338,7 +16525,7 @@
       "join_via": "installer_id",
       "customer_name": "Country Lazer",
       "renewal_date": "2027-09-04",
-      "days_to_renewal": 438,
+      "days_to_renewal": 437,
       "calculated_renewal_date": "2027-09-04",
       "renewal_date_manual": "2027-03-06",
       "contract_status": "Yes",
@@ -16589,7 +16776,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/37162139494"
         }
-      ]
+      ],
+      "proposed_arr": 1471.77,
+      "proposed_mrr": 125,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.53% vs 1.06% target (orders +11% YoY). Value supports ~$2,545 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22277200761",
@@ -16598,7 +16791,7 @@
       "join_via": "installer_id",
       "customer_name": "Smart Custom Closets",
       "renewal_date": "2026-08-15",
-      "days_to_renewal": 53,
+      "days_to_renewal": 52,
       "calculated_renewal_date": "2026-08-15",
       "renewal_date_manual": "2026-08-14",
       "contract_status": "Yes",
@@ -16836,7 +17029,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/104327053"
         }
-      ]
+      ],
+      "proposed_arr": 11253.49,
+      "proposed_mrr": 950,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 20.89% vs 35.71% target (orders -6% YoY). Value supports ~$16,728 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22277352840",
@@ -16845,7 +17044,7 @@
       "join_via": "installer_id",
       "customer_name": "Architectural Woods Inc",
       "renewal_date": "2026-08-17",
-      "days_to_renewal": 55,
+      "days_to_renewal": 54,
       "calculated_renewal_date": "2026-08-17",
       "renewal_date_manual": "2026-08-16",
       "contract_status": "Yes",
@@ -17065,7 +17264,7 @@
       "join_via": "installer_id",
       "customer_name": "Eldorado Plywood",
       "renewal_date": "2027-05-21",
-      "days_to_renewal": 332,
+      "days_to_renewal": 331,
       "calculated_renewal_date": "2027-05-21",
       "renewal_date_manual": "2027-06-02",
       "contract_status": "Yes",
@@ -17316,7 +17515,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/81338018"
         }
-      ]
+      ],
+      "proposed_arr": 21735,
+      "proposed_mrr": 1800,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.71% vs 1.06% target (orders +2% YoY). Value supports ~$28,345 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22277969726",
@@ -17779,7 +17984,7 @@
       "join_via": "installer_id",
       "customer_name": "Mid Michigan Wood",
       "renewal_date": "2026-12-17",
-      "days_to_renewal": 177,
+      "days_to_renewal": 176,
       "calculated_renewal_date": "2026-12-17",
       "renewal_date_manual": "2026-12-17",
       "contract_status": "Yes",
@@ -17802,7 +18007,7 @@
       "vip_legacy": "Yes",
       "implementation_status": null,
       "hubspot_owner_id": "90679002",
-      "owner_name": null,
+      "owner_name": "Connor",
       "current_mrr": 1039.5,
       "current_arr": 12474,
       "lifetime_subscription": 80491.29,
@@ -17983,8 +18188,8 @@
         }
       ],
       "dropoff_pct": 0.0661,
-      "risk_tier": null,
-      "risk_score": null,
+      "risk_tier": "green",
+      "risk_score": 85,
       "is_bid_only": false,
       "action_tag": "Stable",
       "action_reason": "Orders + health both holding",
@@ -18043,7 +18248,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/116734033"
         }
-      ]
+      ],
+      "proposed_arr": 14345.1,
+      "proposed_mrr": 1200,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.73% vs 1.06% target (orders +8% YoY). Value supports ~$18,160 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22277969730",
@@ -18052,7 +18263,7 @@
       "join_via": "installer_id",
       "customer_name": "Melbourne Architectural Millwork",
       "renewal_date": "2024-04-24",
-      "days_to_renewal": -790,
+      "days_to_renewal": -791,
       "calculated_renewal_date": "2024-04-24",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -18316,7 +18527,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/25747200378"
         }
-      ]
+      ],
+      "proposed_arr": 22080,
+      "proposed_mrr": 1850,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +40% YoY; cost ratio 0.46% vs target 1.06%. Value supports ~$44,184 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22278119756",
@@ -18325,7 +18542,7 @@
       "join_via": "installer_id",
       "customer_name": "Quality Craft Woodworks",
       "renewal_date": "2025-08-21",
-      "days_to_renewal": -306,
+      "days_to_renewal": -307,
       "calculated_renewal_date": "2025-08-21",
       "renewal_date_manual": "2025-10-14",
       "contract_status": "Yes",
@@ -18563,7 +18780,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/99014233"
         }
-      ]
+      ],
+      "proposed_arr": 6166.67,
+      "proposed_mrr": 525,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.47% vs 1.06% target (orders +8% YoY). Value supports ~$12,197 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22278731093",
@@ -18572,7 +18795,7 @@
       "join_via": "installer_id",
       "customer_name": "Lifespan Cabinets & Closets",
       "renewal_date": "2026-10-20",
-      "days_to_renewal": 119,
+      "days_to_renewal": 118,
       "calculated_renewal_date": "2026-10-20",
       "renewal_date_manual": "2026-10-20",
       "contract_status": "Yes",
@@ -18823,7 +19046,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/57353035"
         }
-      ]
+      ],
+      "proposed_arr": 10350,
+      "proposed_mrr": 875,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +41% YoY; cost ratio 0.76% vs target 1.06%. Value supports ~$12,631 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22278731095",
@@ -18832,7 +19061,7 @@
       "join_via": "installer_id",
       "customer_name": "Bella Imc",
       "renewal_date": "2025-01-22",
-      "days_to_renewal": -517,
+      "days_to_renewal": -518,
       "calculated_renewal_date": "2025-01-22",
       "renewal_date_manual": "2025-07-23",
       "contract_status": "No",
@@ -19079,7 +19308,7 @@
       "join_via": "installer_id",
       "customer_name": "Sherwood Shelving",
       "renewal_date": "2026-04-02",
-      "days_to_renewal": -82,
+      "days_to_renewal": -83,
       "calculated_renewal_date": "2026-04-02",
       "renewal_date_manual": "2026-10-07",
       "contract_status": "No",
@@ -19339,7 +19568,7 @@
       "join_via": "installer_id",
       "customer_name": "Bww Closets",
       "renewal_date": "2027-02-06",
-      "days_to_renewal": 228,
+      "days_to_renewal": 227,
       "calculated_renewal_date": "2027-02-06",
       "renewal_date_manual": "2027-02-03",
       "contract_status": "Yes",
@@ -19577,7 +19806,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/118831407"
         }
-      ]
+      ],
+      "proposed_arr": 20516.74,
+      "proposed_mrr": 1700,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +28% YoY; cost ratio 0.91% vs target 1.06%. Value supports ~$20,686 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22280090156",
@@ -19586,7 +19821,7 @@
       "join_via": "installer_id",
       "customer_name": "Quadro Cabinets",
       "renewal_date": "2027-06-17",
-      "days_to_renewal": 359,
+      "days_to_renewal": 358,
       "calculated_renewal_date": "2027-06-17",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -20079,7 +20314,7 @@
       "join_via": "installer_id",
       "customer_name": "Global Cabinet Supply",
       "renewal_date": "2025-03-15",
-      "days_to_renewal": -465,
+      "days_to_renewal": -466,
       "calculated_renewal_date": "2025-03-15",
       "renewal_date_manual": "2025-04-02",
       "contract_status": "Yes",
@@ -20313,7 +20548,7 @@
       "join_via": "installer_id",
       "customer_name": "Tntdoor",
       "renewal_date": "2027-07-03",
-      "days_to_renewal": 375,
+      "days_to_renewal": 374,
       "calculated_renewal_date": "2027-07-03",
       "renewal_date_manual": "2026-12-10",
       "contract_status": "Yes",
@@ -20564,7 +20799,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/42899571"
         }
-      ]
+      ],
+      "proposed_arr": 27600,
+      "proposed_mrr": 2300,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +76% YoY; cost ratio 0.37% vs target 1.73%. Value supports ~$110,731 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22281927582",
@@ -20573,7 +20814,7 @@
       "join_via": "installer_id",
       "customer_name": "Specialty Forest Products",
       "renewal_date": "2026-08-26",
-      "days_to_renewal": 64,
+      "days_to_renewal": 63,
       "calculated_renewal_date": "2026-08-26",
       "renewal_date_manual": "2026-08-24",
       "contract_status": "Yes",
@@ -20846,7 +21087,7 @@
       "join_via": "installer_id",
       "customer_name": "Thomas Creek",
       "renewal_date": "2024-09-26",
-      "days_to_renewal": -635,
+      "days_to_renewal": -636,
       "calculated_renewal_date": "2024-09-26",
       "renewal_date_manual": null,
       "contract_status": "No",
@@ -21110,7 +21351,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/27771190"
         }
-      ]
+      ],
+      "proposed_arr": 36022.14,
+      "proposed_mrr": 3000,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +28% YoY; cost ratio 0.54% vs target 1.06%. Value supports ~$60,962 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22282529932",
@@ -21119,7 +21366,7 @@
       "join_via": "installer_id",
       "customer_name": "Nexis3",
       "renewal_date": "2026-08-14",
-      "days_to_renewal": 52,
+      "days_to_renewal": 51,
       "calculated_renewal_date": "2026-08-14",
       "renewal_date_manual": "2026-08-13",
       "contract_status": "Yes",
@@ -21405,7 +21652,7 @@
       "join_via": "installer_id",
       "customer_name": "White Oak Custom Woodworking",
       "renewal_date": "2025-02-01",
-      "days_to_renewal": -507,
+      "days_to_renewal": -508,
       "calculated_renewal_date": "2025-02-01",
       "renewal_date_manual": "2025-02-01",
       "contract_status": "Yes",
@@ -21630,7 +21877,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/121157405"
         }
-      ]
+      ],
+      "proposed_arr": 5175,
+      "proposed_mrr": 425,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 2.07% vs 4.24% target (orders —). Value supports ~$9,226 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22282837573",
@@ -21850,7 +22103,13 @@
       "action_reason": "Orders monthly avg +518% YoY",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 3450,
+      "proposed_mrr": 300,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +518% YoY; cost ratio 3.88% vs target 12.29%. Value supports ~$9,498 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22282994273",
@@ -21859,7 +22118,7 @@
       "join_via": "installer_id",
       "customer_name": "Munns Door and Mill",
       "renewal_date": "2027-01-29",
-      "days_to_renewal": 220,
+      "days_to_renewal": 219,
       "calculated_renewal_date": "2027-01-29",
       "renewal_date_manual": "2027-02-02",
       "contract_status": "Yes",
@@ -22110,7 +22369,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/93581982"
         }
-      ]
+      ],
+      "proposed_arr": 16174.7,
+      "proposed_mrr": 1350,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +27% YoY; cost ratio 0.61% vs target 1.06%. Value supports ~$24,430 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22283299115",
@@ -22119,7 +22384,7 @@
       "join_via": "installer_id",
       "customer_name": "BTJ Cabinet Door Company",
       "renewal_date": "2026-07-10",
-      "days_to_renewal": 17,
+      "days_to_renewal": 16,
       "calculated_renewal_date": "2026-07-10",
       "renewal_date_manual": "2026-07-08",
       "contract_status": "Yes",
@@ -22383,7 +22648,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/34012515"
         }
-      ]
+      ],
+      "proposed_arr": 48576,
+      "proposed_mrr": 4050,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.61% vs 1.06% target (orders +1% YoY). Value supports ~$73,436 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22283511815",
@@ -22392,7 +22663,7 @@
       "join_via": "installer_id",
       "customer_name": "D3Customcabinets",
       "renewal_date": "2025-05-27",
-      "days_to_renewal": -392,
+      "days_to_renewal": -393,
       "calculated_renewal_date": "2025-05-27",
       "renewal_date_manual": "2025-11-20",
       "contract_status": "No",
@@ -22899,7 +23170,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabinet Parts to Go",
       "renewal_date": "2025-10-31",
-      "days_to_renewal": -235,
+      "days_to_renewal": -236,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2025-10-31",
       "contract_status": "No",
@@ -23091,7 +23362,7 @@
       "join_via": "installer_id",
       "customer_name": "Cullman Cabinet Supply",
       "renewal_date": "2026-07-02",
-      "days_to_renewal": 9,
+      "days_to_renewal": 8,
       "calculated_renewal_date": "2026-07-02",
       "renewal_date_manual": "2027-07-20",
       "contract_status": "Yes",
@@ -23390,7 +23661,7 @@
       "join_via": "installer_id",
       "customer_name": "Arkansas Wood Doors",
       "renewal_date": "2027-08-10",
-      "days_to_renewal": 413,
+      "days_to_renewal": 412,
       "calculated_renewal_date": "2027-08-10",
       "renewal_date_manual": "2027-08-09",
       "contract_status": "Yes",
@@ -23654,7 +23925,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/22760203137"
         }
-      ]
+      ],
+      "proposed_arr": 12410.6,
+      "proposed_mrr": 1025,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 1.03% vs 1.06% target (orders +10% YoY). Value supports ~$12,411 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 2.82
     },
     {
       "instance_id": "22285013336",
@@ -23663,7 +23940,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabsource - Innovative Cabinet",
       "renewal_date": "2026-12-22",
-      "days_to_renewal": 182,
+      "days_to_renewal": 181,
       "calculated_renewal_date": "2026-12-22",
       "renewal_date_manual": "2026-12-22",
       "contract_status": "Yes",
@@ -23883,7 +24160,7 @@
       "join_via": "installer_id",
       "customer_name": "B&B Door Co.",
       "renewal_date": "2027-06-03",
-      "days_to_renewal": 345,
+      "days_to_renewal": 344,
       "calculated_renewal_date": "2027-06-03",
       "renewal_date_manual": "2027-06-03",
       "contract_status": "Yes",
@@ -23906,7 +24183,7 @@
       "vip_legacy": "Yes",
       "implementation_status": null,
       "hubspot_owner_id": "90679002",
-      "owner_name": null,
+      "owner_name": "Connor",
       "current_mrr": 2133.5,
       "current_arr": 25602,
       "lifetime_subscription": 113571.46,
@@ -24087,8 +24364,8 @@
         }
       ],
       "dropoff_pct": 0.0528,
-      "risk_tier": null,
-      "risk_score": null,
+      "risk_tier": "green",
+      "risk_score": 85,
       "is_bid_only": false,
       "action_tag": "Stable",
       "action_reason": "Orders + health both holding",
@@ -24160,7 +24437,13 @@
           "payment_status": "PENDING",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/61812397"
         }
-      ]
+      ],
+      "proposed_arr": 29442.3,
+      "proposed_mrr": 2450,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.64% vs 1.06% target (orders +7% YoY). Value supports ~$42,144 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22285166624",
@@ -24394,7 +24677,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/113611853"
         }
-      ]
+      ],
+      "proposed_arr": 35866.2,
+      "proposed_mrr": 3000,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.56% vs 1.06% target (orders +1% YoY). Value supports ~$59,175 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22285166625",
@@ -24403,7 +24692,7 @@
       "join_via": "installer_id",
       "customer_name": "Terzano Cabinetry Inc",
       "renewal_date": "2026-09-11",
-      "days_to_renewal": 80,
+      "days_to_renewal": 79,
       "calculated_renewal_date": "2026-09-11",
       "renewal_date_manual": "2027-04-11",
       "contract_status": "Yes",
@@ -24663,7 +24952,7 @@
       "join_via": "installer_id",
       "customer_name": "Brandenberger Door MFG",
       "renewal_date": "2026-01-21",
-      "days_to_renewal": -153,
+      "days_to_renewal": -154,
       "calculated_renewal_date": "2026-01-21",
       "renewal_date_manual": "2026-01-20",
       "contract_status": "Yes",
@@ -24940,7 +25229,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/31793288007"
         }
-      ]
+      ],
+      "proposed_arr": 11040,
+      "proposed_mrr": 925,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.32% vs 1.06% target (orders +0% YoY). Value supports ~$32,054 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22285166627",
@@ -24949,7 +25244,7 @@
       "join_via": "installer_id",
       "customer_name": "Lga Cabinet Solutions",
       "renewal_date": "2026-10-29",
-      "days_to_renewal": 128,
+      "days_to_renewal": 127,
       "calculated_renewal_date": "2026-10-29",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -25443,7 +25738,7 @@
       "join_via": "installer_id",
       "customer_name": "Drawer Box Specialties",
       "renewal_date": "2024-05-08",
-      "days_to_renewal": -776,
+      "days_to_renewal": -777,
       "calculated_renewal_date": "2024-05-08",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -25707,7 +26002,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/11893815219"
         }
-      ]
+      ],
+      "proposed_arr": 82800,
+      "proposed_mrr": 6900,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +303% YoY; cost ratio 5.86% vs target 34.57%. Value supports ~$424,863 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22286093727",
@@ -25715,10 +26016,10 @@
       "allmoxy_customer_id": 432,
       "join_via": "installer_id",
       "customer_name": "Netley Millwork",
-      "renewal_date": "2026-04-26",
-      "days_to_renewal": -58,
-      "calculated_renewal_date": "2026-04-26",
-      "renewal_date_manual": "2026-04-25",
+      "renewal_date": "2027-06-23",
+      "days_to_renewal": 364,
+      "calculated_renewal_date": "2027-06-23",
+      "renewal_date_manual": "2028-06-23",
       "contract_status": "Yes",
       "contract_length_months": 12,
       "monthly_flat_fee_hubspot": 999,
@@ -25993,7 +26294,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/120492936"
         }
-      ]
+      ],
+      "proposed_arr": 13786.2,
+      "proposed_mrr": 1150,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +1274% YoY; cost ratio 1.42% vs target 6.76%. Value supports ~$57,161 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22287171403",
@@ -26002,7 +26309,7 @@
       "join_via": "installer_id",
       "customer_name": "Craftsman Specialty",
       "renewal_date": "2025-01-23",
-      "days_to_renewal": -516,
+      "days_to_renewal": -517,
       "calculated_renewal_date": "2025-01-23",
       "renewal_date_manual": "2026-03-10",
       "contract_status": "Yes",
@@ -26253,7 +26560,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/120658046"
         }
-      ]
+      ],
+      "proposed_arr": 17186.75,
+      "proposed_mrr": 1425,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.98% vs 1.06% target (orders -10% YoY). Value supports ~$17,187 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 8.67
     },
     {
       "instance_id": "22287171404",
@@ -26262,7 +26575,7 @@
       "join_via": "installer_id",
       "customer_name": "Drawer Works",
       "renewal_date": "2026-08-09",
-      "days_to_renewal": 47,
+      "days_to_renewal": 46,
       "calculated_renewal_date": "2026-08-09",
       "renewal_date_manual": "2026-08-30",
       "contract_status": "Yes",
@@ -26479,7 +26792,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/145228829"
         }
-      ]
+      ],
+      "proposed_arr": 15166.2,
+      "proposed_mrr": 1275,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +152% YoY; cost ratio 1.61% vs target 3.68%. Value supports ~$30,088 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22287937876",
@@ -26488,7 +26807,7 @@
       "join_via": "installer_id",
       "customer_name": "Rta Cabinetry Inc",
       "renewal_date": "2027-03-26",
-      "days_to_renewal": 276,
+      "days_to_renewal": 275,
       "calculated_renewal_date": "2027-03-26",
       "renewal_date_manual": "2027-03-25",
       "contract_status": "Yes",
@@ -26739,7 +27058,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/17504428679"
         }
-      ]
+      ],
+      "proposed_arr": 13248,
+      "proposed_mrr": 1100,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 3.47% vs 8.72% target (orders +14% YoY). Value supports ~$28,954 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22287937877",
@@ -26748,7 +27073,7 @@
       "join_via": "installer_id",
       "customer_name": "Phoenix-LLC",
       "renewal_date": "2025-07-17",
-      "days_to_renewal": -341,
+      "days_to_renewal": -342,
       "calculated_renewal_date": "2025-07-17",
       "renewal_date_manual": "2025-10-28",
       "contract_status": "Yes",
@@ -27228,7 +27553,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabredo LLC",
       "renewal_date": "2025-04-05",
-      "days_to_renewal": -444,
+      "days_to_renewal": -445,
       "calculated_renewal_date": "2025-04-05",
       "renewal_date_manual": "2025-04-05",
       "contract_status": "Yes",
@@ -27735,7 +28060,7 @@
       "join_via": "installer_id",
       "customer_name": "Mullet Door",
       "renewal_date": "2026-12-05",
-      "days_to_renewal": 165,
+      "days_to_renewal": 164,
       "calculated_renewal_date": "2026-12-05",
       "renewal_date_manual": "2026-12-05",
       "contract_status": "Yes",
@@ -28008,7 +28333,7 @@
       "join_via": "installer_id",
       "customer_name": "LV SERVICE SOLUTIONS",
       "renewal_date": "2025-08-17",
-      "days_to_renewal": -310,
+      "days_to_renewal": -311,
       "calculated_renewal_date": "2025-08-17",
       "renewal_date_manual": "2025-08-16",
       "contract_status": "Yes",
@@ -28031,7 +28356,7 @@
       "vip_legacy": null,
       "implementation_status": "Build Complete",
       "hubspot_owner_id": "90679002",
-      "owner_name": null,
+      "owner_name": "Connor",
       "current_mrr": 1398,
       "current_arr": 16776,
       "lifetime_subscription": 32853,
@@ -28212,8 +28537,8 @@
         }
       ],
       "dropoff_pct": -0.0855,
-      "risk_tier": null,
-      "risk_score": null,
+      "risk_tier": "green",
+      "risk_score": 60,
       "is_bid_only": false,
       "action_tag": "Expansion Opportunity",
       "action_reason": "Orders monthly avg +64% YoY",
@@ -28259,7 +28584,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/49643395"
         }
-      ]
+      ],
+      "proposed_arr": 17279.28,
+      "proposed_mrr": 1450,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Already at value (cost ratio 3.34% vs target 1.9%). Suggest CPI +3% only.",
+      "proposed_uplift_pct": 3
     },
     {
       "instance_id": "22288760734",
@@ -28268,7 +28599,7 @@
       "join_via": "installer_id",
       "customer_name": "Crest Cabinets",
       "renewal_date": "2023-05-28",
-      "days_to_renewal": -1122,
+      "days_to_renewal": -1123,
       "calculated_renewal_date": "2023-05-28",
       "renewal_date_manual": null,
       "contract_status": "No",
@@ -28722,7 +29053,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabinet Restylers, Inc",
       "renewal_date": "2025-10-15",
-      "days_to_renewal": -251,
+      "days_to_renewal": -252,
       "calculated_renewal_date": "2025-10-15",
       "renewal_date_manual": "2025-10-14",
       "contract_status": "Yes",
@@ -28973,7 +29304,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/30476307"
         }
-      ]
+      ],
+      "proposed_arr": 15166.2,
+      "proposed_mrr": 1275,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +61% YoY; cost ratio 0.06% vs target 1.06%. Value supports ~$224,823 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22289222560",
@@ -28982,7 +29319,7 @@
       "join_via": "installer_id",
       "customer_name": "NuDoors DBA - Spayce Integrated LLC",
       "renewal_date": "2027-04-04",
-      "days_to_renewal": 285,
+      "days_to_renewal": 284,
       "calculated_renewal_date": "2027-04-04",
       "renewal_date_manual": "2027-04-28",
       "contract_status": "Yes",
@@ -29242,7 +29579,7 @@
       "join_via": "installer_id",
       "customer_name": "Mountain Showcase Group",
       "renewal_date": "2026-09-21",
-      "days_to_renewal": 90,
+      "days_to_renewal": 89,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2026-09-21",
       "contract_status": "Yes",
@@ -29328,7 +29665,7 @@
       "join_via": "installer_id",
       "customer_name": "Drawers by Design",
       "renewal_date": "2026-12-17",
-      "days_to_renewal": 177,
+      "days_to_renewal": 176,
       "calculated_renewal_date": "2026-12-17",
       "renewal_date_manual": "2026-12-17",
       "contract_status": "Yes",
@@ -29579,7 +29916,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/31798108063"
         }
-      ]
+      ],
+      "proposed_arr": 29566.5,
+      "proposed_mrr": 2475,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.86% vs 1.06% target (orders +15% YoY). Value supports ~$31,605 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22291081627",
@@ -29588,7 +29931,7 @@
       "join_via": "installer_id",
       "customer_name": "Superior Woodworking",
       "renewal_date": "2027-06-12",
-      "days_to_renewal": 354,
+      "days_to_renewal": 353,
       "calculated_renewal_date": "2027-06-12",
       "renewal_date_manual": "2027-06-12",
       "contract_status": "Yes",
@@ -29839,7 +30182,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/18125141867"
         }
-      ]
+      ],
+      "proposed_arr": 1421.4,
+      "proposed_mrr": 125,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Already at value (cost ratio 2.95% vs target 1.06%). Suggest CPI +3% only.",
+      "proposed_uplift_pct": 3
     },
     {
       "instance_id": "22291235159",
@@ -29848,7 +30197,7 @@
       "join_via": "installer_id",
       "customer_name": "Salt City Mill - WC Doors",
       "renewal_date": "2025-01-22",
-      "days_to_renewal": -517,
+      "days_to_renewal": -518,
       "calculated_renewal_date": "2025-01-22",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -30086,7 +30435,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/65645865"
         }
-      ]
+      ],
+      "proposed_arr": 10596.6,
+      "proposed_mrr": 875,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Already at value (cost ratio 1.74% vs target 1.06%). Suggest CPI +3% only.",
+      "proposed_uplift_pct": 3
     },
     {
       "instance_id": "22291235160",
@@ -30095,7 +30450,7 @@
       "join_via": "installer_id",
       "customer_name": "Soelbergi",
       "renewal_date": "2026-08-27",
-      "days_to_renewal": 65,
+      "days_to_renewal": 64,
       "calculated_renewal_date": "2026-08-27",
       "renewal_date_manual": "2026-08-26",
       "contract_status": "Yes",
@@ -30359,7 +30714,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/151641462"
         }
-      ]
+      ],
+      "proposed_arr": 34237.39,
+      "proposed_mrr": 2850,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +24% YoY; cost ratio 0.13% vs target 1.06%. Value supports ~$234,265 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22291235161",
@@ -30602,7 +30963,7 @@
       "join_via": "installer_id",
       "customer_name": "Dot Custom Cabinets LLC",
       "renewal_date": "2027-02-27",
-      "days_to_renewal": 249,
+      "days_to_renewal": 248,
       "calculated_renewal_date": "2027-02-27",
       "renewal_date_manual": "2027-02-27",
       "contract_status": "Yes",
@@ -30875,7 +31236,7 @@
       "join_via": "installer_id",
       "customer_name": "The Door Company",
       "renewal_date": "2027-08-20",
-      "days_to_renewal": 423,
+      "days_to_renewal": 422,
       "calculated_renewal_date": "2027-08-20",
       "renewal_date_manual": "2027-02-18",
       "contract_status": "Yes",
@@ -31126,7 +31487,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/36736272805"
         }
-      ]
+      ],
+      "proposed_arr": 5500.98,
+      "proposed_mrr": 450,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 2.48% vs 2.68% target (orders +6% YoY). Value supports ~$5,501 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 7.86
     },
     {
       "instance_id": "22291978893",
@@ -31135,7 +31502,7 @@
       "join_via": "installer_id",
       "customer_name": "Drawer Connection - DC Drawers",
       "renewal_date": "2027-08-24",
-      "days_to_renewal": 427,
+      "days_to_renewal": 426,
       "calculated_renewal_date": "2027-08-24",
       "renewal_date_manual": "2027-08-11",
       "contract_status": "Yes",
@@ -31395,7 +31762,7 @@
       "join_via": "installer_id",
       "customer_name": "SouthernStone Cabinets",
       "renewal_date": "2025-05-17",
-      "days_to_renewal": -402,
+      "days_to_renewal": -403,
       "calculated_renewal_date": "2025-05-17",
       "renewal_date_manual": "2025-06-14",
       "contract_status": "Yes",
@@ -31672,7 +32039,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/38066329752"
         }
-      ]
+      ],
+      "proposed_arr": 48286.2,
+      "proposed_mrr": 4025,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.8% vs 1.06% target (orders +13% YoY). Value supports ~$55,827 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22296509113",
@@ -31681,7 +32054,7 @@
       "join_via": "installer_id",
       "customer_name": "Amco Distributors Inc.",
       "renewal_date": "2025-04-05",
-      "days_to_renewal": -444,
+      "days_to_renewal": -445,
       "calculated_renewal_date": "2025-04-05",
       "renewal_date_manual": "2025-04-11",
       "contract_status": "Yes",
@@ -31919,7 +32292,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/62409304"
         }
-      ]
+      ],
+      "proposed_arr": 11026.2,
+      "proposed_mrr": 925,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.4% vs 1.06% target (orders +2% YoY). Value supports ~$25,656 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22296509184",
@@ -31928,7 +32307,7 @@
       "join_via": "installer_id",
       "customer_name": "Mountain States Kitchen and Bath",
       "renewal_date": "2026-09-12",
-      "days_to_renewal": 81,
+      "days_to_renewal": 80,
       "calculated_renewal_date": "2026-09-12",
       "renewal_date_manual": "2026-09-11",
       "contract_status": "Yes",
@@ -32179,7 +32558,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/77313915"
         }
-      ]
+      ],
+      "proposed_arr": 16296.14,
+      "proposed_mrr": 1350,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 52.76% vs 111.68% target (orders +3% YoY). Value supports ~$29,993 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22296509185",
@@ -32655,7 +33040,7 @@
       "join_via": "installer_id",
       "customer_name": "Royal Plywood Co.",
       "renewal_date": "2026-08-21",
-      "days_to_renewal": 59,
+      "days_to_renewal": 58,
       "calculated_renewal_date": "2026-08-21",
       "renewal_date_manual": "2026-08-21",
       "contract_status": "Yes",
@@ -32928,7 +33313,7 @@
       "join_via": "installer_id",
       "customer_name": "Trimart",
       "renewal_date": "2024-06-21",
-      "days_to_renewal": -732,
+      "days_to_renewal": -733,
       "calculated_renewal_date": "2024-06-21",
       "renewal_date_manual": null,
       "contract_status": "No",
@@ -33413,7 +33798,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/74664774"
         }
-      ]
+      ],
+      "proposed_arr": 0,
+      "proposed_mrr": 0,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +96% YoY; cost ratio 0% vs target 1.06%. Value supports ~$4,193 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": null
     },
     {
       "instance_id": "22296968872",
@@ -33633,7 +34024,13 @@
       "action_reason": "Orders monthly avg +53% YoY",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 3450,
+      "proposed_mrr": 300,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +53% YoY; cost ratio 0.89% vs target 1.06%. Value supports ~$3,577 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22296968873",
@@ -33642,7 +34039,7 @@
       "join_via": "installer_id",
       "customer_name": "RJM Cabinets",
       "renewal_date": "2026-11-20",
-      "days_to_renewal": 150,
+      "days_to_renewal": 149,
       "calculated_renewal_date": "2026-11-20",
       "renewal_date_manual": "2026-11-26",
       "contract_status": "Yes",
@@ -33915,7 +34312,7 @@
       "join_via": "installer_id",
       "customer_name": "Karhu Fine Cabinetry",
       "renewal_date": "2026-12-13",
-      "days_to_renewal": 173,
+      "days_to_renewal": 172,
       "calculated_renewal_date": "2026-12-13",
       "renewal_date_manual": "2026-12-13",
       "contract_status": "Yes",
@@ -34409,7 +34806,7 @@
       "join_via": "installer_id",
       "customer_name": "KC Doors",
       "renewal_date": "2027-10-07",
-      "days_to_renewal": 471,
+      "days_to_renewal": 470,
       "calculated_renewal_date": "2027-10-07",
       "renewal_date_manual": "2026-10-06",
       "contract_status": "Yes",
@@ -34673,7 +35070,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/149121306"
         }
-      ]
+      ],
+      "proposed_arr": 31740,
+      "proposed_mrr": 2650,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.63% vs 1.45% target (orders +11% YoY). Value supports ~$63,286 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22297272735",
@@ -34682,7 +35085,7 @@
       "join_via": "installer_id",
       "customer_name": "Corona Millworks",
       "renewal_date": "2025-01-22",
-      "days_to_renewal": -517,
+      "days_to_renewal": -518,
       "calculated_renewal_date": "2025-01-22",
       "renewal_date_manual": "2025-01-22",
       "contract_status": "Yes",
@@ -34959,7 +35362,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/42715554"
         }
-      ]
+      ],
+      "proposed_arr": 63756,
+      "proposed_mrr": 5325,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.94% vs 2.29% target (orders +10% YoY). Value supports ~$134,598 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22297426341",
@@ -34968,7 +35377,7 @@
       "join_via": "installer_id",
       "customer_name": "KSC Sales Inc.",
       "renewal_date": "2025-09-11",
-      "days_to_renewal": -285,
+      "days_to_renewal": -286,
       "calculated_renewal_date": "2025-09-11",
       "renewal_date_manual": "2025-09-10",
       "contract_status": "Yes",
@@ -35215,7 +35624,7 @@
       "join_via": "installer_id",
       "customer_name": "Keystone Wood Specialties",
       "renewal_date": "2027-08-05",
-      "days_to_renewal": 408,
+      "days_to_renewal": 407,
       "calculated_renewal_date": "2027-08-05",
       "renewal_date_manual": "2027-08-05",
       "contract_status": "Yes",
@@ -35417,7 +35826,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/15839056683"
         }
-      ]
+      ],
+      "proposed_arr": 3450,
+      "proposed_mrr": 300,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +1081% YoY; cost ratio 0.96% vs target 36.12%. Value supports ~$113,188 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "22663383042",
@@ -35426,7 +35841,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabinet Doors NJ Llc",
       "renewal_date": "2026-01-10",
-      "days_to_renewal": -164,
+      "days_to_renewal": -165,
       "calculated_renewal_date": "2026-01-10",
       "renewal_date_manual": "2026-01-10",
       "contract_status": "Yes",
@@ -35604,7 +36019,7 @@
       "join_via": "installer_id",
       "customer_name": "Got Drawers",
       "renewal_date": "2027-01-26",
-      "days_to_renewal": 217,
+      "days_to_renewal": 216,
       "calculated_renewal_date": "2027-01-26",
       "renewal_date_manual": "2027-01-26",
       "contract_status": "Yes",
@@ -35792,7 +36207,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/34135184442"
         }
-      ]
+      ],
+      "proposed_arr": 3228.28,
+      "proposed_mrr": 275,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +23% YoY; cost ratio 2.43% vs target 2.45%. Value supports ~$3,228 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 0.8
     },
     {
       "instance_id": "23531341961",
@@ -35801,7 +36222,7 @@
       "join_via": "installer_id",
       "customer_name": "Advanced Hardware Supply",
       "renewal_date": "2026-02-04",
-      "days_to_renewal": -139,
+      "days_to_renewal": -140,
       "calculated_renewal_date": "2026-02-04",
       "renewal_date_manual": "2026-02-03",
       "contract_status": "Yes",
@@ -35970,7 +36391,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/15542412688"
         }
-      ]
+      ],
+      "proposed_arr": 3022.2,
+      "proposed_mrr": 250,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +344% YoY; cost ratio 0.48% vs target 1.06%. Value supports ~$5,782 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "23587056488",
@@ -35979,7 +36406,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabinetry Concepts",
       "renewal_date": "2026-02-12",
-      "days_to_renewal": -131,
+      "days_to_renewal": -132,
       "calculated_renewal_date": "2026-02-12",
       "renewal_date_manual": "2026-02-11",
       "contract_status": "Yes",
@@ -36213,7 +36640,7 @@
       "join_via": "installer_id",
       "customer_name": "True Custom Kitchens And Millwork",
       "renewal_date": "2026-01-09",
-      "days_to_renewal": -165,
+      "days_to_renewal": -166,
       "calculated_renewal_date": "2026-01-09",
       "renewal_date_manual": "2026-01-09",
       "contract_status": "Yes",
@@ -36411,7 +36838,7 @@
       "join_via": "installer_id",
       "customer_name": "Big Timber Millworks",
       "renewal_date": "2026-02-12",
-      "days_to_renewal": -131,
+      "days_to_renewal": -132,
       "calculated_renewal_date": "2026-02-12",
       "renewal_date_manual": "2026-02-11",
       "contract_status": "Yes",
@@ -36589,7 +37016,7 @@
       "join_via": "installer_id",
       "customer_name": "Elite Cabinet Components",
       "renewal_date": "2026-02-19",
-      "days_to_renewal": -124,
+      "days_to_renewal": -125,
       "calculated_renewal_date": "2026-02-19",
       "renewal_date_manual": "2026-02-18",
       "contract_status": "Yes",
@@ -36760,7 +37187,7 @@
       "join_via": "installer_id",
       "customer_name": "NXT Cabinets",
       "renewal_date": "2026-02-20",
-      "days_to_renewal": -123,
+      "days_to_renewal": -124,
       "calculated_renewal_date": "2026-02-20",
       "renewal_date_manual": "2026-02-19",
       "contract_status": "Yes",
@@ -36924,7 +37351,7 @@
       "join_via": "installer_id",
       "customer_name": "Heritage Wood Mills",
       "renewal_date": "2026-03-10",
-      "days_to_renewal": -105,
+      "days_to_renewal": -106,
       "calculated_renewal_date": "2026-03-10",
       "renewal_date_manual": "2026-03-10",
       "contract_status": "Yes",
@@ -37095,7 +37522,7 @@
       "join_via": "installer_id",
       "customer_name": "Wilson Cabinetry",
       "renewal_date": "2026-04-04",
-      "days_to_renewal": -80,
+      "days_to_renewal": -81,
       "calculated_renewal_date": "2026-04-04",
       "renewal_date_manual": "2026-04-04",
       "contract_status": "Yes",
@@ -37266,7 +37693,7 @@
       "join_via": "installer_id",
       "customer_name": "SCP Cabinets",
       "renewal_date": "2026-04-07",
-      "days_to_renewal": -77,
+      "days_to_renewal": -78,
       "calculated_renewal_date": "2026-04-07",
       "renewal_date_manual": "2026-04-07",
       "contract_status": "Yes",
@@ -37416,7 +37843,7 @@
       "join_via": "installer_id",
       "customer_name": "North American Components",
       "renewal_date": "2026-05-02",
-      "days_to_renewal": -52,
+      "days_to_renewal": -53,
       "calculated_renewal_date": "2026-05-02",
       "renewal_date_manual": "2026-05-01",
       "contract_status": "Yes",
@@ -37439,7 +37866,7 @@
       "vip_legacy": null,
       "implementation_status": null,
       "hubspot_owner_id": "90679002",
-      "owner_name": null,
+      "owner_name": "Connor",
       "current_mrr": 250,
       "current_arr": 3000,
       "lifetime_subscription": 3450,
@@ -37543,11 +37970,11 @@
         }
       ],
       "dropoff_pct": 0.0417,
-      "risk_tier": null,
-      "risk_score": null,
+      "risk_tier": "red",
+      "risk_score": 18,
       "is_bid_only": false,
       "action_tag": "Contraction Risk",
-      "action_reason": "Orders monthly avg -100% YoY",
+      "action_reason": "Health tier RED — focus on retention, not expansion",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
       "quotes": [
@@ -37586,7 +38013,7 @@
       "join_via": "installer_id",
       "customer_name": "Perez Enterprises",
       "renewal_date": "2027-05-20",
-      "days_to_renewal": 331,
+      "days_to_renewal": 330,
       "calculated_renewal_date": "2027-05-20",
       "renewal_date_manual": "2027-05-20",
       "contract_status": "Yes",
@@ -37608,8 +38035,8 @@
       "health_score": 40,
       "vip_legacy": null,
       "implementation_status": null,
-      "hubspot_owner_id": "35694294",
-      "owner_name": "Sarah",
+      "hubspot_owner_id": "90679002",
+      "owner_name": "Connor",
       "current_mrr": 750,
       "current_arr": 9000,
       "lifetime_subscription": 11295,
@@ -37789,7 +38216,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/39776437621"
         }
-      ]
+      ],
+      "proposed_arr": 10350,
+      "proposed_mrr": 875,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 32.11% vs 93.29% target (orders —). Value supports ~$26,151 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "29029901386",
@@ -37798,7 +38231,7 @@
       "join_via": "installer_id",
       "customer_name": "Brazen Fox Fabrication Inc",
       "renewal_date": "2027-06-18",
-      "days_to_renewal": 360,
+      "days_to_renewal": 359,
       "calculated_renewal_date": "2027-06-18",
       "renewal_date_manual": "2027-06-18",
       "contract_status": "Yes",
@@ -37948,7 +38381,7 @@
       "join_via": "installer_id",
       "customer_name": "Next Gen Cabinet Doors",
       "renewal_date": "2026-06-10",
-      "days_to_renewal": -13,
+      "days_to_renewal": -14,
       "calculated_renewal_date": "2026-06-10",
       "renewal_date_manual": null,
       "contract_status": null,
@@ -37970,8 +38403,8 @@
       "health_score": 33,
       "vip_legacy": null,
       "implementation_status": null,
-      "hubspot_owner_id": "35694294",
-      "owner_name": "Sarah",
+      "hubspot_owner_id": "90679003",
+      "owner_name": "Jon",
       "current_mrr": 0,
       "current_arr": 0,
       "lifetime_subscription": 1033.26,
@@ -38021,7 +38454,7 @@
       "join_via": "installer_id",
       "customer_name": "Ideal Wood Designs",
       "renewal_date": "2026-06-12",
-      "days_to_renewal": -11,
+      "days_to_renewal": -12,
       "calculated_renewal_date": "2026-06-12",
       "renewal_date_manual": "2026-06-11",
       "contract_status": "Yes",
@@ -38150,6 +38583,19 @@
       "customer_closed_lost": null,
       "quotes": [
         {
+          "id": "40602844674",
+          "title": "Ideal Wood Designs - Renewal",
+          "status": "APPROVAL_NOT_NEEDED",
+          "amount": 321,
+          "currency": "USD",
+          "created_date": "2026-06-23T15:37:22.847Z",
+          "expiration_date": "2026-09-22T05:59:59.999Z",
+          "last_modified_date": "2026-06-23T15:42:55.405Z",
+          "quote_number": "20260623-093722371",
+          "payment_status": "PAYMENT_NOT_ENABLED",
+          "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/40602844674"
+        },
+        {
           "id": "144190621",
           "title": "Ideal Drawer Box 2 - Allmoxy Subscription Agreement ",
           "status": "APPROVAL_NOT_NEEDED",
@@ -38162,7 +38608,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/144190621"
         }
-      ]
+      ],
+      "proposed_arr": 4140,
+      "proposed_mrr": 350,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +87% YoY; cost ratio 0.76% vs target 1.06%. Value supports ~$4,993 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "29582833299",
@@ -38171,7 +38623,7 @@
       "join_via": "installer_id",
       "customer_name": "Palmetto Cabinet Doors",
       "renewal_date": "2026-06-18",
-      "days_to_renewal": -5,
+      "days_to_renewal": -6,
       "calculated_renewal_date": "2026-06-18",
       "renewal_date_manual": "2026-06-18",
       "contract_status": "Yes",
@@ -38293,7 +38745,7 @@
       "join_via": "installer_id",
       "customer_name": "Midwest Floor Coverings",
       "renewal_date": "2026-12-10",
-      "days_to_renewal": 170,
+      "days_to_renewal": 169,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2026-12-10",
       "contract_status": "No",
@@ -38540,7 +38992,7 @@
       "join_via": "installer_id",
       "customer_name": "Conquest Cabinetry",
       "renewal_date": "2026-06-26",
-      "days_to_renewal": 3,
+      "days_to_renewal": 2,
       "calculated_renewal_date": "2026-06-26",
       "renewal_date_manual": "2026-06-25",
       "contract_status": "Yes",
@@ -38667,7 +39119,13 @@
       "action_reason": "Orders + health both holding",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 3726,
+      "proposed_mrr": 300,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 11.29% vs 20.31% target (orders —). Value supports ~$5,828 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "30213958978",
@@ -38676,7 +39134,7 @@
       "join_via": "installer_id",
       "customer_name": "Dovetail Wood Traditions",
       "renewal_date": "2026-07-02",
-      "days_to_renewal": 9,
+      "days_to_renewal": 8,
       "calculated_renewal_date": "2026-07-02",
       "renewal_date_manual": "2026-07-02",
       "contract_status": "Yes",
@@ -38805,7 +39263,7 @@
       "join_via": "installer_id",
       "customer_name": "Timberline Doors",
       "renewal_date": "2026-07-09",
-      "days_to_renewal": 16,
+      "days_to_renewal": 15,
       "calculated_renewal_date": null,
       "renewal_date_manual": "2026-07-09",
       "contract_status": "No",
@@ -39065,7 +39523,7 @@
       "join_via": "installer_id",
       "customer_name": "Precision Millwork Utah",
       "renewal_date": "2026-08-16",
-      "days_to_renewal": 54,
+      "days_to_renewal": 53,
       "calculated_renewal_date": "2026-08-16",
       "renewal_date_manual": "2026-08-15",
       "contract_status": null,
@@ -39243,7 +39701,7 @@
       "join_via": "installer_id",
       "customer_name": "Vlux",
       "renewal_date": "2026-11-06",
-      "days_to_renewal": 136,
+      "days_to_renewal": 135,
       "calculated_renewal_date": "2026-11-06",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -39358,7 +39816,7 @@
       "join_via": "installer_id",
       "customer_name": "KOA Komponents",
       "renewal_date": "2026-07-30",
-      "days_to_renewal": 37,
+      "days_to_renewal": 36,
       "calculated_renewal_date": "2026-07-30",
       "renewal_date_manual": "2026-07-29",
       "contract_status": "Yes",
@@ -39501,7 +39959,7 @@
       "join_via": "installer_id",
       "customer_name": "Cabinet Doors USA",
       "renewal_date": "2026-08-06",
-      "days_to_renewal": 44,
+      "days_to_renewal": 43,
       "calculated_renewal_date": "2026-08-06",
       "renewal_date_manual": "2026-08-04",
       "contract_status": "Yes",
@@ -39614,7 +40072,13 @@
       "action_reason": "Orders monthly avg +499% YoY",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 16311.6,
+      "proposed_mrr": 1350,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +499% YoY; cost ratio 0.58% vs target 1.06%. Value supports ~$25,810 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "32604331428",
@@ -39623,7 +40087,7 @@
       "join_via": "installer_id",
       "customer_name": "Closet Masters Design",
       "renewal_date": "2026-08-13",
-      "days_to_renewal": 51,
+      "days_to_renewal": 50,
       "calculated_renewal_date": "2026-08-13",
       "renewal_date_manual": "2026-08-12",
       "contract_status": "Yes",
@@ -39745,7 +40209,7 @@
       "join_via": "installer_id",
       "customer_name": "Aluminum X Design",
       "renewal_date": "2026-08-15",
-      "days_to_renewal": 53,
+      "days_to_renewal": 52,
       "calculated_renewal_date": "2026-08-15",
       "renewal_date_manual": "2026-08-14",
       "contract_status": null,
@@ -39858,7 +40322,13 @@
       "action_reason": "Orders monthly avg +468% YoY",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 3450,
+      "proposed_mrr": 300,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +468% YoY; cost ratio 0.36% vs target 1.06%. Value supports ~$8,922 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "32763807050",
@@ -39867,7 +40337,7 @@
       "join_via": "stripe_subscription_id",
       "customer_name": "Mitchell Wood Worx",
       "renewal_date": "2027-06-18",
-      "days_to_renewal": 360,
+      "days_to_renewal": 359,
       "calculated_renewal_date": "2027-06-18",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -40166,7 +40636,7 @@
       "join_via": "installer_id",
       "customer_name": "Capital Millwork",
       "renewal_date": "2026-08-22",
-      "days_to_renewal": 60,
+      "days_to_renewal": 59,
       "calculated_renewal_date": "2026-08-22",
       "renewal_date_manual": "2026-08-22",
       "contract_status": "Yes",
@@ -40179,7 +40649,7 @@
       "payment_pause_date": null,
       "instance_creation": "2025-08-22",
       "merchant_connect_date": null,
-      "last_payment_date_hubspot": "2026-05-22",
+      "last_payment_date_hubspot": "2026-06-22",
       "goal_launch_date": "2025-09-26",
       "is_launched": null,
       "pay_status": "Active",
@@ -40288,7 +40758,7 @@
       "join_via": "installer_id",
       "customer_name": "Hingeworks",
       "renewal_date": "2026-09-11",
-      "days_to_renewal": 80,
+      "days_to_renewal": 79,
       "calculated_renewal_date": "2026-09-11",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -40650,7 +41120,7 @@
       "join_via": "installer_id",
       "customer_name": "Kci Storage Manufacturing",
       "renewal_date": "2026-09-17",
-      "days_to_renewal": 86,
+      "days_to_renewal": 85,
       "calculated_renewal_date": "2026-09-17",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -41174,7 +41644,7 @@
       "join_via": "installer_id",
       "customer_name": "Urbania Cabinets",
       "renewal_date": "2026-09-27",
-      "days_to_renewal": 96,
+      "days_to_renewal": 95,
       "calculated_renewal_date": "2026-09-27",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -41502,7 +41972,7 @@
       "join_via": "installer_id",
       "customer_name": "Rise Up Labels",
       "renewal_date": "2027-01-21",
-      "days_to_renewal": 212,
+      "days_to_renewal": 211,
       "calculated_renewal_date": "2027-01-21",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -41515,7 +41985,7 @@
       "payment_pause_date": null,
       "instance_creation": "2025-10-08",
       "merchant_connect_date": null,
-      "last_payment_date_hubspot": "2026-05-22",
+      "last_payment_date_hubspot": "2026-06-22",
       "goal_launch_date": "2026-02-05",
       "is_launched": "No",
       "pay_status": "Active",
@@ -41524,8 +41994,8 @@
       "health_score": 40,
       "vip_legacy": "No",
       "implementation_status": null,
-      "hubspot_owner_id": "35694294",
-      "owner_name": "Sarah",
+      "hubspot_owner_id": "535437584",
+      "owner_name": "Carson",
       "current_mrr": 250,
       "current_arr": 3000,
       "lifetime_subscription": 1250,
@@ -41589,7 +42059,7 @@
       "join_via": "installer_id",
       "customer_name": "Prorustics",
       "renewal_date": "2026-10-16",
-      "days_to_renewal": 115,
+      "days_to_renewal": 114,
       "calculated_renewal_date": "2026-10-16",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -41697,7 +42167,7 @@
       "join_via": "installer_id",
       "customer_name": "Crown Door & Drawer",
       "renewal_date": "2026-11-07",
-      "days_to_renewal": 137,
+      "days_to_renewal": 136,
       "calculated_renewal_date": "2026-11-07",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -41798,7 +42268,7 @@
       "join_via": "installer_id",
       "customer_name": "Fletcher Design Co",
       "renewal_date": "2026-11-08",
-      "days_to_renewal": 138,
+      "days_to_renewal": 137,
       "calculated_renewal_date": "2026-11-08",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -41899,7 +42369,7 @@
       "join_via": "installer_id",
       "customer_name": "Albritton Custom Cabinetry",
       "renewal_date": "2026-11-12",
-      "days_to_renewal": 142,
+      "days_to_renewal": 141,
       "calculated_renewal_date": "2026-11-12",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -42000,7 +42470,7 @@
       "join_via": "installer_id",
       "customer_name": "Adentra",
       "renewal_date": "2026-11-19",
-      "days_to_renewal": 149,
+      "days_to_renewal": 148,
       "calculated_renewal_date": "2026-11-19",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -42115,7 +42585,7 @@
       "join_via": "installer_id",
       "customer_name": "Slide A Shelf",
       "renewal_date": "2027-06-10",
-      "days_to_renewal": 352,
+      "days_to_renewal": 351,
       "calculated_renewal_date": "2027-06-10",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -42243,7 +42713,7 @@
       "join_via": "installer_id",
       "customer_name": "Lane Industries",
       "renewal_date": "2026-11-24",
-      "days_to_renewal": 154,
+      "days_to_renewal": 153,
       "calculated_renewal_date": "2026-11-24",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -42395,7 +42865,7 @@
       "join_via": "installer_id",
       "customer_name": "Ecodomo",
       "renewal_date": "2026-12-24",
-      "days_to_renewal": 184,
+      "days_to_renewal": 183,
       "calculated_renewal_date": "2026-12-24",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -42489,7 +42959,7 @@
       "join_via": "installer_id",
       "customer_name": "Dimitrios & Company",
       "renewal_date": "2026-02-23",
-      "days_to_renewal": -120,
+      "days_to_renewal": -121,
       "calculated_renewal_date": "2026-02-23",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -42590,7 +43060,7 @@
       "join_via": "installer_id",
       "customer_name": "Stolbek",
       "renewal_date": "2027-01-24",
-      "days_to_renewal": 215,
+      "days_to_renewal": 214,
       "calculated_renewal_date": "2027-01-24",
       "renewal_date_manual": "2027-01-24",
       "contract_status": "Yes",
@@ -42612,8 +43082,8 @@
       "health_score": 25,
       "vip_legacy": null,
       "implementation_status": null,
-      "hubspot_owner_id": "35694294",
-      "owner_name": "Sarah",
+      "hubspot_owner_id": "90679003",
+      "owner_name": "Jon",
       "current_mrr": 400,
       "current_arr": 4800,
       "lifetime_subscription": 2000,
@@ -42682,7 +43152,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/118827281"
         }
-      ]
+      ],
+      "proposed_arr": 5520,
+      "proposed_mrr": 450,
+      "expansion_confidence": "high",
+      "proposed_basis": "growth",
+      "expansion_rationale": "Orders +4700% YoY; cost ratio 0.18% vs target 1.06%. Value supports ~$29,034 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15
     },
     {
       "instance_id": "46326012484",
@@ -42778,7 +43254,7 @@
       "join_via": "installer_id",
       "customer_name": "Western Cabinet Doors - The Door Stop",
       "renewal_date": "2027-02-04",
-      "days_to_renewal": 226,
+      "days_to_renewal": 225,
       "calculated_renewal_date": "2027-02-04",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -42858,7 +43334,7 @@
       "join_via": "installer_id",
       "customer_name": "Graber Cabinets",
       "renewal_date": "2027-02-06",
-      "days_to_renewal": 228,
+      "days_to_renewal": 227,
       "calculated_renewal_date": "2027-02-06",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -42952,7 +43428,7 @@
       "join_via": "installer_id",
       "customer_name": "Montouro Woodwork",
       "renewal_date": "2027-02-06",
-      "days_to_renewal": 228,
+      "days_to_renewal": 227,
       "calculated_renewal_date": "2027-02-06",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43032,7 +43508,7 @@
       "join_via": "installer_id",
       "customer_name": "Paquette Cabinetry",
       "renewal_date": "2027-02-10",
-      "days_to_renewal": 232,
+      "days_to_renewal": 231,
       "calculated_renewal_date": "2027-02-10",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43112,7 +43588,7 @@
       "join_via": "installer_id",
       "customer_name": "Harbour City Kitchens",
       "renewal_date": "2027-02-10",
-      "days_to_renewal": 232,
+      "days_to_renewal": 231,
       "calculated_renewal_date": "2027-02-10",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43210,7 +43686,13 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/81207875"
         }
-      ]
+      ],
+      "proposed_arr": 5004.27,
+      "proposed_mrr": 425,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 99.39% vs 99.4% target (orders —). Value supports ~$5,004 ARR; proposing the full realignment.",
+      "proposed_uplift_pct": 0.01
     },
     {
       "instance_id": "47920025715",
@@ -43219,7 +43701,7 @@
       "join_via": "installer_id",
       "customer_name": "Quality Kitchens Inc.",
       "renewal_date": "2025-05-22",
-      "days_to_renewal": -397,
+      "days_to_renewal": -398,
       "calculated_renewal_date": "2025-05-22",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43332,7 +43814,7 @@
       "join_via": "installer_id",
       "customer_name": "Batesville Cabinet Company",
       "renewal_date": "2027-03-09",
-      "days_to_renewal": 259,
+      "days_to_renewal": 258,
       "calculated_renewal_date": "2027-03-09",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43405,7 +43887,7 @@
       "join_via": "installer_id",
       "customer_name": "Five Cabinetry",
       "renewal_date": "2027-03-13",
-      "days_to_renewal": 263,
+      "days_to_renewal": 262,
       "calculated_renewal_date": "2027-03-13",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43478,7 +43960,7 @@
       "join_via": "installer_id",
       "customer_name": "Quick Kitchens",
       "renewal_date": "2027-03-13",
-      "days_to_renewal": 263,
+      "days_to_renewal": 262,
       "calculated_renewal_date": "2027-03-13",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43544,7 +44026,7 @@
       "join_via": "installer_id",
       "customer_name": "Fleetwoods",
       "renewal_date": "2027-03-20",
-      "days_to_renewal": 270,
+      "days_to_renewal": 269,
       "calculated_renewal_date": "2027-03-20",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43617,7 +44099,7 @@
       "join_via": "installer_id",
       "customer_name": "Top Design Closets",
       "renewal_date": "2027-03-21",
-      "days_to_renewal": 271,
+      "days_to_renewal": 270,
       "calculated_renewal_date": "2027-03-21",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43690,7 +44172,7 @@
       "join_via": "installer_id",
       "customer_name": "Multiwood",
       "renewal_date": "2027-04-01",
-      "days_to_renewal": 282,
+      "days_to_renewal": 281,
       "calculated_renewal_date": "2027-04-01",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43755,7 +44237,7 @@
       "join_via": "installer_id",
       "customer_name": "Elliot Woodworking",
       "renewal_date": "2027-04-09",
-      "days_to_renewal": 290,
+      "days_to_renewal": 289,
       "calculated_renewal_date": "2027-04-09",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43821,7 +44303,7 @@
       "join_via": "installer_id",
       "customer_name": "Windsor Place",
       "renewal_date": "2027-04-17",
-      "days_to_renewal": 298,
+      "days_to_renewal": 297,
       "calculated_renewal_date": "2027-04-17",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43887,7 +44369,7 @@
       "join_via": "installer_id",
       "customer_name": "Prestige Art Millwork",
       "renewal_date": "2027-04-15",
-      "days_to_renewal": 296,
+      "days_to_renewal": 295,
       "calculated_renewal_date": "2027-04-15",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -43909,8 +44391,8 @@
       "health_score": null,
       "vip_legacy": null,
       "implementation_status": null,
-      "hubspot_owner_id": "35694294",
-      "owner_name": "Sarah",
+      "hubspot_owner_id": "90679003",
+      "owner_name": "Jon",
       "current_mrr": 250,
       "current_arr": 3000,
       "lifetime_subscription": 750,
@@ -43953,7 +44435,7 @@
       "join_via": "installer_id",
       "customer_name": "Milestone Millwork",
       "renewal_date": "2027-05-08",
-      "days_to_renewal": 319,
+      "days_to_renewal": 318,
       "calculated_renewal_date": "2027-05-08",
       "renewal_date_manual": null,
       "contract_status": "Yes",
@@ -44012,7 +44494,7 @@
       "join_via": "installer_id",
       "customer_name": "Idaho Custom Closets",
       "renewal_date": "2027-05-12",
-      "days_to_renewal": 323,
+      "days_to_renewal": 322,
       "calculated_renewal_date": "2027-05-12",
       "renewal_date_manual": null,
       "contract_status": "Yes",

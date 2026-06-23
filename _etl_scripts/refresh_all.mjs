@@ -587,4 +587,24 @@ console.log('\n[7/5] Implementation (JIRA + Harvest, optional)');
   }
 }
 
+// Features (DEV board, optional). DEV tickets tagged with customers, weighted by
+// each tagged customer's revenue — a CS→Dev prioritization signal. Needs only
+// JIRA creds; build_features joins against the customer_profiles built above.
+console.log('\n[8/5] Features (JIRA DEV board, optional)');
+{
+  const envLocal = (() => { try { return fs.readFileSync(path.join(SCRIPTS, '..', '.env.local'), 'utf8'); } catch { return ''; } })();
+  const hasKey = (k) => process.env[k] || new RegExp(`^${k}=\\S`, 'm').test(envLocal);
+  const ready = ['JIRA_EMAIL', 'JIRA_API_TOKEN'].every(hasKey);
+  if (!ready) {
+    console.log('  skipped — JIRA_* not set in .env.local. See .env.sample.');
+  } else {
+    try {
+      runScript('sync_jira_features.mjs', null);
+      runScript('build_features.mjs', 'features');
+    } catch (e) {
+      console.log('  ⚠ features refresh failed (kept previous snapshot):', e.message);
+    }
+  }
+}
+
 console.log('\nAll snapshots refreshed.');

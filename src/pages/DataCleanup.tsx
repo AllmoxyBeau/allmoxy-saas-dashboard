@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -15,6 +15,7 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import Button from '@mui/material/Button';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
@@ -62,21 +63,56 @@ const SEVERITY_COLOR: Record<Severity, string> = {
   low: '#8B949E',
 };
 
+// Stable per-issue key — MUST match issueKey() in build_data_cleanup.mjs so an
+// accepted resolution suppresses the right issue on rebuild.
+function issueKey(i: Issue): string {
+  if (i.category === 'hubspot_instance_missing_aid') return `${i.category}:${i.instance_id}`;
+  if (i.category === 'connect_mapping_orphan') return `${i.category}:${i.connect_name}`;
+  return `${i.category}:${i.allmoxy_customer_id}`; // pay_status_drift, company_id_ghost
+}
+
+// Accepted suggestions live in the browser until applied to
+// _etl_scripts/data_cleanup_resolutions.json (same stage→Claude-applies pattern
+// as the annual-payer / schedule edits).
+const ACCEPTED_KEY = 'allmoxy.data_cleanup.accepted';
+type Accepted = Record<string, { decision: string; value: string | number | null; label: string }>;
+function readAccepted(): Accepted {
+  try { const raw = localStorage.getItem(ACCEPTED_KEY); return raw ? JSON.parse(raw) : {}; } catch { return {}; }
+}
+
 export default function DataCleanup() {
   const { data, isLoading, error } = useSheetTab<Snapshot>('data_cleanup');
   const snap = data as Snapshot | undefined;
   const [severityFilter, setSeverityFilter] = useState<Severity[]>([]);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [accepted, setAccepted] = useState<Accepted>(() => readAccepted());
 
+  useEffect(() => { try { localStorage.setItem(ACCEPTED_KEY, JSON.stringify(accepted)); } catch { /* ignore */ } }, [accepted]);
+
+  function acceptIssue(i: Issue, decision: string, value: string | number | null, label: string) {
+    setAccepted((prev) => ({ ...prev, [issueKey(i)]: { decision, value, label } }));
+  }
+
+  // Accepted issues drop out of the list immediately (optimistic); they become
+  // durable for everyone once the resolutions file is applied + rebuilt.
   const issuesByCategory = useMemo(() => {
     const m = new Map<string, Issue[]>();
     for (const it of snap?.issues ?? []) {
+      if (accepted[issueKey(it)]) continue;
       if (severityFilter.length > 0 && !severityFilter.includes(it.severity)) continue;
       if (!m.has(it.category)) m.set(it.category, []);
       m.get(it.category)!.push(it);
     }
     return [...m.entries()].sort((a, b) => b[1].length - a[1].length);
-  }, [snap, severityFilter]);
+  }, [snap, severityFilter, accepted]);
+
+  const acceptedEntries = Object.entries(accepted);
+
+  function copyResolutionsJson() {
+    const resolved: Record<string, { decision: string; value: string | number | null }> = {};
+    for (const [k, v] of acceptedEntries) resolved[k] = { decision: v.decision, value: v.value };
+    navigator.clipboard?.writeText(JSON.stringify({ resolved }, null, 2)).then(() => {}, () => {});
+  }
 
   function toggleSeverity(s: Severity) {
     setSeverityFilter((prev) => (prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]));
@@ -162,6 +198,22 @@ export default function DataCleanup() {
         <CsvExportButton filename={`data_cleanup_${new Date().toISOString().slice(0, 10)}`} rows={snap?.issues ?? []} columns={csvColumns} />
       </Stack>
 
+      {/* Accepted-suggestions banner — stage → ask Claude to apply. */}
+      {acceptedEntries.length > 0 && (
+        <Alert
+          severity="success"
+          sx={{ mb: 2 }}
+          action={
+            <Stack direction="row" spacing={1}>
+              <Button color="inherit" size="small" onClick={copyResolutionsJson}>Copy JSON</Button>
+              <Button color="inherit" size="small" onClick={() => setAccepted({})}>Clear</Button>
+            </Stack>
+          }
+        >
+          <strong>{acceptedEntries.length}</strong> accepted suggestion{acceptedEntries.length === 1 ? '' : 's'} (this browser only). Click <strong>Copy JSON</strong> and ask Claude to apply it to <code>data_cleanup_resolutions.json</code> + rebuild — then these clear for the whole team.
+        </Alert>
+      )}
+
       {/* Issue accordions by category */}
       {isLoading ? (
         <Skeleton variant="rectangular" height={400} />
@@ -193,7 +245,7 @@ export default function DataCleanup() {
               </Stack>
             </AccordionSummary>
             <AccordionDetails sx={{ p: 0 }}>
-              <CategoryTable category={cat} issues={list} />
+              <CategoryTable category={cat} issues={list} onAccept={acceptIssue} />
             </AccordionDetails>
           </Accordion>
         ))
@@ -221,7 +273,9 @@ function categoryDescription(cat: string): string {
   }
 }
 
-function CategoryTable({ category, issues }: { category: string; issues: Issue[] }) {
+type AcceptFn = (i: Issue, decision: string, value: string | number | null, label: string) => void;
+
+function CategoryTable({ category, issues, onAccept }: { category: string; issues: Issue[]; onAccept: AcceptFn }) {
   if (category === 'hubspot_instance_missing_aid') {
     return (
       <Table size="small">
@@ -233,12 +287,17 @@ function CategoryTable({ category, issues }: { category: string; issues: Issue[]
             <TableCell>Suggested AID</TableCell>
             <TableCell>Severity</TableCell>
             <TableCell>Action</TableCell>
+            <TableCell align="right">Accept</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {issues.map((i, idx) => (
             <TableRow key={i.instance_id ?? idx} hover>
-              <TableCell sx={{ fontWeight: 500 }}>{i.account_name}</TableCell>
+              <TableCell sx={{ fontWeight: 500 }}>
+                {i.suggested_aid
+                  ? <CustomerLink id={i.suggested_aid} name={i.account_name || ''}>{i.account_name}</CustomerLink>
+                  : i.account_name}
+              </TableCell>
               <TableCell sx={{ fontFamily: 'monospace', fontSize: 12 }}>{i.installer_id ?? '—'}</TableCell>
               <TableCell sx={{ fontSize: 12 }}>{i.pay_status}</TableCell>
               <TableCell sx={{ fontSize: 12 }}>
@@ -251,6 +310,13 @@ function CategoryTable({ category, issues }: { category: string; issues: Issue[]
               </TableCell>
               <TableCell><Chip label={i.severity} size="small" sx={{ height: 18, fontSize: 10, bgcolor: SEVERITY_COLOR[i.severity] + '22', color: SEVERITY_COLOR[i.severity], textTransform: 'capitalize' }} /></TableCell>
               <TableCell sx={{ fontSize: 11, color: 'text.secondary' }}>{i.action}</TableCell>
+              <TableCell align="right">
+                <Button
+                  size="small" variant="outlined"
+                  disabled={!i.suggested_aid}
+                  onClick={() => onAccept(i, 'set_instance_aid', i.suggested_aid ?? null, `Set Instance "${i.account_name}" Allmoxy ID → ${i.suggested_aid} (${i.suggested_customer_name})`)}
+                >Accept</Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -267,6 +333,7 @@ function CategoryTable({ category, issues }: { category: string; issues: Issue[]
             <TableCell>Pay Status</TableCell>
             <TableCell>Severity</TableCell>
             <TableCell>Action</TableCell>
+            <TableCell align="right">Accept</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -279,6 +346,12 @@ function CategoryTable({ category, issues }: { category: string; issues: Issue[]
               <TableCell sx={{ fontSize: 12 }}>{i.pay_status || '—'}</TableCell>
               <TableCell><Chip label={i.severity} size="small" sx={{ height: 18, fontSize: 10, bgcolor: SEVERITY_COLOR[i.severity] + '22', color: SEVERITY_COLOR[i.severity], textTransform: 'capitalize' }} /></TableCell>
               <TableCell sx={{ fontSize: 11, color: 'text.secondary' }}>{i.action}</TableCell>
+              <TableCell align="right">
+                <Button
+                  size="small" variant="outlined" color="warning"
+                  onClick={() => onAccept(i, 'remove_connect_mapping', i.connect_name ?? null, `Remove orphaned Connect mapping "${i.connect_name}"`)}
+                >Confirm removal</Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -295,7 +368,7 @@ function CategoryTable({ category, issues }: { category: string; issues: Issue[]
             <TableCell>xlsx Pay Status</TableCell>
             <TableCell>Installer ID</TableCell>
             <TableCell>Severity</TableCell>
-            <TableCell>Action</TableCell>
+            <TableCell align="right">Accept which?</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -308,7 +381,12 @@ function CategoryTable({ category, issues }: { category: string; issues: Issue[]
               <TableCell sx={{ fontSize: 12 }}>{i.xlsx_pay_status}</TableCell>
               <TableCell sx={{ fontFamily: 'monospace', fontSize: 12 }}>{i.installer_id}</TableCell>
               <TableCell><Chip label={i.severity} size="small" sx={{ height: 18, fontSize: 10, bgcolor: SEVERITY_COLOR[i.severity] + '22', color: SEVERITY_COLOR[i.severity], textTransform: 'capitalize' }} /></TableCell>
-              <TableCell sx={{ fontSize: 11, color: 'text.secondary' }}>{i.action}</TableCell>
+              <TableCell align="right">
+                <Stack direction="row" spacing={0.5} justifyContent="flex-end">
+                  <Button size="small" variant="outlined" onClick={() => onAccept(i, 'use_hubspot', i.hubspot_pay_status ?? null, `${i.customer_name}: pay status → "${i.hubspot_pay_status}" (HubSpot)`)}>HubSpot</Button>
+                  <Button size="small" variant="outlined" onClick={() => onAccept(i, 'use_xlsx', i.xlsx_pay_status ?? null, `${i.customer_name}: pay status → "${i.xlsx_pay_status}" (xlsx)`)}>xlsx</Button>
+                </Stack>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -324,6 +402,7 @@ function CategoryTable({ category, issues }: { category: string; issues: Issue[]
           <TableCell>Detail</TableCell>
           <TableCell>Severity</TableCell>
           <TableCell>Action</TableCell>
+          <TableCell align="right">Accept</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -335,6 +414,9 @@ function CategoryTable({ category, issues }: { category: string; issues: Issue[]
             <TableCell sx={{ fontSize: 12 }}>{i.hubspot_company_id ?? i.installer_id ?? '—'}</TableCell>
             <TableCell><Chip label={i.severity} size="small" sx={{ height: 18, fontSize: 10, bgcolor: SEVERITY_COLOR[i.severity] + '22', color: SEVERITY_COLOR[i.severity], textTransform: 'capitalize' }} /></TableCell>
             <TableCell sx={{ fontSize: 11, color: 'text.secondary' }}>{i.action}</TableCell>
+            <TableCell align="right">
+              <Button size="small" variant="outlined" onClick={() => onAccept(i, 'acknowledge', null, `${i.category_label}: ${i.customer_name || i.account_name}`)}>Accept</Button>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
