@@ -158,14 +158,22 @@ function scoreSignal1(c) {
     ? (n) => '$' + Math.round(n).toLocaleString() + '/mo avg'
     : (n) => `${curCount.toLocaleString()} YTD (annualized ${Math.round(n).toLocaleString()})`;
 
-  if (totalLifetime === 0 && inGracePeriod) {
+  // "Never ran an order" must be dollar-aware, not count-only: 2026 order_count
+  // is null (source xlsx has $ only), so a customer actively invoicing verified
+  // orders has total_lifetime_orders === 0 yet clearly HAS run orders. Treat any
+  // order dollars (monthly avg either year, or lifetime $) as having run — mirrors
+  // Signal 2's isRunningCurrentYear. Without this, 2026-launched customers get
+  // false-flagged as "gym member" and dragged to red. See orders-counts caveat.
+  const hasOrderDollars = curMA > 0 || prevMA > 0 || (o.total_lifetime_usd || 0) > 0;
+  const neverRanOrder = totalLifetime === 0 && !hasOrderDollars;
+  if (neverRanOrder && inGracePeriod) {
     return {
       score: 0,
       label: 'grace_period',
       detail: `Signed up ${signUpDate.toISOString().slice(0, 10)} · ${monthsSinceSignup} mo since signup (within 5-mo grace — no penalty)`,
     };
   }
-  if (totalLifetime === 0) {
+  if (neverRanOrder) {
     return { score: -10, label: 'gym_member', detail: 'Never ran a verified order (gym member pattern)' };
   }
   if (curVal === 0 && prevVal > 0) {
@@ -183,7 +191,16 @@ function scoreSignal1(c) {
     const signed = pctChange >= 0 ? `+${pctChange}` : `${pctChange}`;
     return { score: 35, label: 'running', detail: `${fmtCur(curVal)} in ${currentYear} (${signed}% vs ${priorYear})` };
   }
-  return { score: 35, label: 'running', detail: `${fmtCur(curVal)} in ${currentYear} (new this year, ${curCount} orders so far)` };
+  // New-this-year customer (no prior-year baseline). Credit as fully "running"
+  // only if the run-rate is non-trivial. A few $/mo of verified orders means they
+  // technically ran an order (so not gym-member) but aren't a meaningfully active
+  // account — score it neutral rather than green. Only in $/mo (MA) mode, where
+  // the threshold is interpretable; in order-count mode the scale differs.
+  const MINIMAL_ORDERS_MO = 100;
+  if (usingMA && curVal > 0 && curVal < MINIMAL_ORDERS_MO) {
+    return { score: 0, label: 'minimal_orders', detail: `Only ${fmt(curVal)} in ${currentYear} — minimal verified-order activity` };
+  }
+  return { score: 35, label: 'running', detail: `${fmtCur(curVal)} in ${currentYear}${curCountAvailable ? ` (new this year, ${curCount} orders so far)` : ' (new this year)'}` };
 }
 
 // ============================================================================

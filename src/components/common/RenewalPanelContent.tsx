@@ -73,6 +73,10 @@ export type RenewalPanelRow = {
   expansion_rationale?: string | null;
   expansion_confidence?: 'high' | 'low' | null;
   current_arr?: number;
+  // Uncapped reference price at a clean 1.0% cost ratio — full headroom vs the
+  // +15%-capped proposed price.
+  target_1pct_mrr?: number | null;
+  target_1pct_arr?: number | null;
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -123,6 +127,17 @@ export default function RenewalPanelContent({ row, hideQuotes = false, showUnder
                   <Typography variant="caption" sx={{ color: 'text.secondary' }}>ARR</Typography>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
                     {USD0.format(row.current_arr ?? row.arr_up_for_renewal ?? 0)} <Box component="span" sx={{ color: 'text.secondary', fontWeight: 400 }}>→</Box> <Box component="span" sx={{ color: '#1A9E5C' }}>{USD0.format(row.proposed_arr ?? 0)}</Box>
+                  </Typography>
+                </Box>
+              )}
+              {row.target_1pct_mrr != null && row.target_1pct_mrr > row.current_mrr && (
+                <Box>
+                  <Stack direction="row" spacing={0.5} alignItems="center">
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>At 1% cost ratio</Typography>
+                    <InfoIcon info="What this customer would pay if priced to a clean 1.0% cost ratio (subscription ÷ verified orders) — the uncapped, value-based target. The proposed price caps the increase at +15% per renewal, so this is the full headroom to phase toward over future renewals." />
+                  </Stack>
+                  <Typography variant="h6" sx={{ fontWeight: 600, color: 'text.secondary' }}>
+                    {USD0.format(row.target_1pct_mrr)}<Box component="span" sx={{ fontSize: 12, fontWeight: 400 }}>/mo · {USD0.format(row.target_1pct_arr ?? 0)} ARR</Box>
                   </Typography>
                 </Box>
               )}

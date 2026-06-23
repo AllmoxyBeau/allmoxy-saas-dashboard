@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-06-23T19:12:57.108Z",
-  "cachedUntil": "2026-06-23T19:17:57.108Z",
+  "fetchedAt": "2026-06-23T20:39:26.706Z",
+  "cachedUntil": "2026-06-23T20:44:26.706Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 207,
@@ -15,9 +15,9 @@
     "renewals_in_next_12mo": 94,
     "renewals_in_next_12mo_arr": 1068978.96,
     "expansion_opportunities": 32,
-    "contraction_risks": 88,
-    "watch": 1,
-    "stable": 80,
+    "contraction_risks": 84,
+    "watch": 2,
+    "stable": 83,
     "paused": 6,
     "median_cost_ratio_lifetime_pct": 1.06,
     "median_cost_ratio_annualized_pct": 0.98,
@@ -539,7 +539,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.7% vs 1.06% target (orders +7% YoY). Value supports ~$13,573 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 12804.58,
+      "target_1pct_mrr": 1075
     },
     {
       "instance_id": "22246805553",
@@ -792,7 +794,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.99% vs 1.06% target (orders +8% YoY). Value supports ~$7,374 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 7.05
+      "proposed_uplift_pct": 7.05,
+      "target_1pct_arr": 6956.17,
+      "target_1pct_mrr": 575
     },
     {
       "instance_id": "22250944583",
@@ -1617,7 +1621,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.41% vs 1.06% target (orders +16% YoY). Value supports ~$36,173 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 34125.12,
+      "target_1pct_mrr": 2850
     },
     {
       "instance_id": "22251716387",
@@ -2182,7 +2188,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 1.58% vs 2.24% target (orders +0% YoY). Value supports ~$25,494 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 11381.18,
+      "target_1pct_mrr": 950
     },
     {
       "instance_id": "22253575081",
@@ -2422,7 +2430,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 1.18% vs 1.34% target (orders +4% YoY). Value supports ~$19,135 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 13.98
+      "proposed_uplift_pct": 13.98,
+      "target_1pct_arr": 14280.12,
+      "target_1pct_mrr": 1200
     },
     {
       "instance_id": "22253575082",
@@ -2888,7 +2898,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 1.99% vs 3.61% target (orders —). Value supports ~$8,721 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 2415.77,
+      "target_1pct_mrr": 200
     },
     {
       "instance_id": "22257293910",
@@ -3401,7 +3413,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +30% YoY; cost ratio 0.68% vs target 1.06%. Value supports ~$45,657 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 43072.84,
+      "target_1pct_mrr": 3600
     },
     {
       "instance_id": "22258682923",
@@ -3706,7 +3720,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.47% vs 1.06% target (orders +1% YoY). Value supports ~$83,414 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 78692.52,
+      "target_1pct_mrr": 6550
     },
     {
       "instance_id": "22258682926",
@@ -4258,7 +4274,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.78% vs 1.06% target (orders +9% YoY). Value supports ~$19,054 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 17975.1,
+      "target_1pct_mrr": 1500
     },
     {
       "instance_id": "22259147175",
@@ -4797,7 +4815,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +28% YoY; cost ratio 0.8% vs target 1.06%. Value supports ~$13,537 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 12770.52,
+      "target_1pct_mrr": 1075
     },
     {
       "instance_id": "22261154591",
@@ -5050,7 +5070,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.37% vs 1.06% target (orders -2% YoY). Value supports ~$29,565 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 27891.05,
+      "target_1pct_mrr": 2325
     },
     {
       "instance_id": "22261465650",
@@ -5536,7 +5558,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +73% YoY; cost ratio 0.33% vs target 1.06%. Value supports ~$134,697 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 127072.36,
+      "target_1pct_mrr": 10600
     },
     {
       "instance_id": "22262390059",
@@ -6516,7 +6540,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Already at value (cost ratio 3.89% vs target 1.06%). Suggest CPI +3% only.",
-      "proposed_uplift_pct": 3
+      "proposed_uplift_pct": 3,
+      "target_1pct_arr": 772.1,
+      "target_1pct_mrr": 75
     },
     {
       "instance_id": "22263084450",
@@ -7055,7 +7081,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.88% vs 1.06% target (orders +3% YoY). Value supports ~$29,070 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 27424.71,
+      "target_1pct_mrr": 2275
     },
     {
       "instance_id": "22263390748",
@@ -7853,7 +7881,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.23% vs 1.06% target (orders +9% YoY). Value supports ~$173,011 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 163218.38,
+      "target_1pct_mrr": 13600
     },
     {
       "instance_id": "22265251713",
@@ -8392,7 +8422,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.45% vs 1.06% target (orders +13% YoY). Value supports ~$81,807 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 77176.59,
+      "target_1pct_mrr": 6425
     },
     {
       "instance_id": "22266180911",
@@ -8671,7 +8703,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +155% YoY; cost ratio 0.31% vs target 1.06%. Value supports ~$17,115 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 16146.37,
+      "target_1pct_mrr": 1350
     },
     {
       "instance_id": "22267106657",
@@ -8963,7 +8997,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +27% YoY; cost ratio 0.77% vs target 1.06%. Value supports ~$43,807 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 41327.5,
+      "target_1pct_mrr": 3450
     },
     {
       "instance_id": "22267106658",
@@ -10084,7 +10120,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +68% YoY; cost ratio 0.97% vs target 1.32%. Value supports ~$8,195 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 6208.58,
+      "target_1pct_mrr": 525
     },
     {
       "instance_id": "22268396659",
@@ -10350,7 +10388,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.79% vs 1.06% target (orders +2% YoY). Value supports ~$27,419 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 25866.71,
+      "target_1pct_mrr": 2150
     },
     {
       "instance_id": "22269003548",
@@ -10629,7 +10669,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 1.4% vs 1.97% target (orders +10% YoY). Value supports ~$30,279 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 15369.85,
+      "target_1pct_mrr": 1275
     },
     {
       "instance_id": "22270239794",
@@ -10908,7 +10950,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.94% vs 1.06% target (orders -6% YoY). Value supports ~$13,464 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 12.2
+      "proposed_uplift_pct": 12.2,
+      "target_1pct_arr": 12702.03,
+      "target_1pct_mrr": 1050
     },
     {
       "instance_id": "22270239795",
@@ -12708,7 +12752,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +47% YoY; cost ratio 0.2% vs target 1.06%. Value supports ~$299,324 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 282380.69,
+      "target_1pct_mrr": 23525
     },
     {
       "instance_id": "22272246382",
@@ -13480,7 +13526,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.51% vs 1.06% target (orders +15% YoY). Value supports ~$93,735 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 88429.38,
+      "target_1pct_mrr": 7375
     },
     {
       "instance_id": "22272546452",
@@ -14213,7 +14261,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.96% vs 1.06% target (orders -19% YoY). Value supports ~$19,905 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 10.66
+      "proposed_uplift_pct": 10.66,
+      "target_1pct_arr": 18778.39,
+      "target_1pct_mrr": 1575
     },
     {
       "instance_id": "22272851613",
@@ -14453,7 +14503,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 1.58% vs 2.17% target (orders -8% YoY). Value supports ~$34,683 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 15982.98,
+      "target_1pct_mrr": 1325
     },
     {
       "instance_id": "22273619477",
@@ -14801,7 +14853,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 2.02% vs 2.16% target (orders -2% YoY). Value supports ~$17,275 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 7.19
+      "proposed_uplift_pct": 7.19,
+      "target_1pct_arr": 7997.46,
+      "target_1pct_mrr": 675
     },
     {
       "instance_id": "22273619479",
@@ -15561,7 +15615,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.56% vs 1.06% target (orders +1% YoY). Value supports ~$61,774 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 58277.15,
+      "target_1pct_mrr": 4850
     },
     {
       "instance_id": "22275813514",
@@ -15970,7 +16026,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.7% vs 1.06% target (orders —). Value supports ~$67,098 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 63299.57,
+      "target_1pct_mrr": 5275
     },
     {
       "instance_id": "22276891744",
@@ -16782,7 +16840,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.53% vs 1.06% target (orders +11% YoY). Value supports ~$2,545 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 2400.92,
+      "target_1pct_mrr": 200
     },
     {
       "instance_id": "22277200761",
@@ -17035,7 +17095,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 20.89% vs 35.71% target (orders -6% YoY). Value supports ~$16,728 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 468.44,
+      "target_1pct_mrr": 50
     },
     {
       "instance_id": "22277352840",
@@ -17521,7 +17583,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.71% vs 1.06% target (orders +2% YoY). Value supports ~$28,345 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 26740.21,
+      "target_1pct_mrr": 2225
     },
     {
       "instance_id": "22277969726",
@@ -18254,7 +18318,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.73% vs 1.06% target (orders +8% YoY). Value supports ~$18,160 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 17132.27,
+      "target_1pct_mrr": 1425
     },
     {
       "instance_id": "22277969730",
@@ -18533,7 +18599,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +40% YoY; cost ratio 0.46% vs target 1.06%. Value supports ~$44,184 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 41683.27,
+      "target_1pct_mrr": 3475
     },
     {
       "instance_id": "22278119756",
@@ -18786,7 +18854,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.47% vs 1.06% target (orders +8% YoY). Value supports ~$12,197 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 11506.41,
+      "target_1pct_mrr": 950
     },
     {
       "instance_id": "22278731093",
@@ -19052,7 +19122,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +41% YoY; cost ratio 0.76% vs target 1.06%. Value supports ~$12,631 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 11916.39,
+      "target_1pct_mrr": 1000
     },
     {
       "instance_id": "22278731095",
@@ -19812,7 +19884,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +28% YoY; cost ratio 0.91% vs target 1.06%. Value supports ~$20,686 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 19515.4,
+      "target_1pct_mrr": 1625
     },
     {
       "instance_id": "22280090156",
@@ -20805,7 +20879,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +76% YoY; cost ratio 0.37% vs target 1.73%. Value supports ~$110,731 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 64006.11,
+      "target_1pct_mrr": 5325
     },
     {
       "instance_id": "22281927582",
@@ -21357,7 +21433,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +28% YoY; cost ratio 0.54% vs target 1.06%. Value supports ~$60,962 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 57511.49,
+      "target_1pct_mrr": 4800
     },
     {
       "instance_id": "22282529932",
@@ -21883,7 +21961,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 2.07% vs 4.24% target (orders —). Value supports ~$9,226 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 2175.98,
+      "target_1pct_mrr": 175
     },
     {
       "instance_id": "22282837573",
@@ -22109,7 +22189,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +518% YoY; cost ratio 3.88% vs target 12.29%. Value supports ~$9,498 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 772.79,
+      "target_1pct_mrr": 75
     },
     {
       "instance_id": "22282994273",
@@ -22375,7 +22457,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +27% YoY; cost ratio 0.61% vs target 1.06%. Value supports ~$24,430 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 23047.28,
+      "target_1pct_mrr": 1925
     },
     {
       "instance_id": "22283299115",
@@ -22654,7 +22738,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.61% vs 1.06% target (orders +1% YoY). Value supports ~$73,436 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 69279.24,
+      "target_1pct_mrr": 5775
     },
     {
       "instance_id": "22283511815",
@@ -23931,7 +24017,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 1.03% vs 1.06% target (orders +10% YoY). Value supports ~$12,411 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 2.82
+      "proposed_uplift_pct": 2.82,
+      "target_1pct_arr": 11708.12,
+      "target_1pct_mrr": 975
     },
     {
       "instance_id": "22285013336",
@@ -24443,7 +24531,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.64% vs 1.06% target (orders +7% YoY). Value supports ~$42,144 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 39758.39,
+      "target_1pct_mrr": 3325
     },
     {
       "instance_id": "22285166624",
@@ -24683,7 +24773,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.56% vs 1.06% target (orders +1% YoY). Value supports ~$59,175 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 55825.56,
+      "target_1pct_mrr": 4650
     },
     {
       "instance_id": "22285166625",
@@ -25235,7 +25327,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.32% vs 1.06% target (orders +0% YoY). Value supports ~$32,054 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 30239.83,
+      "target_1pct_mrr": 2525
     },
     {
       "instance_id": "22285166627",
@@ -26008,7 +26102,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +303% YoY; cost ratio 5.86% vs target 34.57%. Value supports ~$424,863 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 12289.93,
+      "target_1pct_mrr": 1025
     },
     {
       "instance_id": "22286093727",
@@ -26300,7 +26396,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +1274% YoY; cost ratio 1.42% vs target 6.76%. Value supports ~$57,161 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 8455.7,
+      "target_1pct_mrr": 700
     },
     {
       "instance_id": "22287171403",
@@ -26566,7 +26664,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.98% vs 1.06% target (orders -10% YoY). Value supports ~$17,187 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 8.67
+      "proposed_uplift_pct": 8.67,
+      "target_1pct_arr": 16213.91,
+      "target_1pct_mrr": 1350
     },
     {
       "instance_id": "22287171404",
@@ -26798,7 +26898,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +152% YoY; cost ratio 1.61% vs target 3.68%. Value supports ~$30,088 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 8176.2,
+      "target_1pct_mrr": 675
     },
     {
       "instance_id": "22287937876",
@@ -27064,7 +27166,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 3.47% vs 8.72% target (orders +14% YoY). Value supports ~$28,954 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 3320.44,
+      "target_1pct_mrr": 275
     },
     {
       "instance_id": "22287937877",
@@ -28590,7 +28694,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Already at value (cost ratio 3.34% vs target 1.9%). Suggest CPI +3% only.",
-      "proposed_uplift_pct": 3
+      "proposed_uplift_pct": 3,
+      "target_1pct_arr": 5030.01,
+      "target_1pct_mrr": 425
     },
     {
       "instance_id": "22288760734",
@@ -29310,7 +29416,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +61% YoY; cost ratio 0.06% vs target 1.06%. Value supports ~$224,823 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 212096.9,
+      "target_1pct_mrr": 17675
     },
     {
       "instance_id": "22289222560",
@@ -29922,7 +30030,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.86% vs 1.06% target (orders +15% YoY). Value supports ~$31,605 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 29816.06,
+      "target_1pct_mrr": 2475
     },
     {
       "instance_id": "22291081627",
@@ -30188,7 +30298,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Already at value (cost ratio 2.95% vs target 1.06%). Suggest CPI +3% only.",
-      "proposed_uplift_pct": 3
+      "proposed_uplift_pct": 3,
+      "target_1pct_arr": 468.27,
+      "target_1pct_mrr": 50
     },
     {
       "instance_id": "22291235159",
@@ -30441,7 +30553,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Already at value (cost ratio 1.74% vs target 1.06%). Suggest CPI +3% only.",
-      "proposed_uplift_pct": 3
+      "proposed_uplift_pct": 3,
+      "target_1pct_arr": 5896.34,
+      "target_1pct_mrr": 500
     },
     {
       "instance_id": "22291235160",
@@ -30720,7 +30834,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +24% YoY; cost ratio 0.13% vs target 1.06%. Value supports ~$234,265 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 221005.15,
+      "target_1pct_mrr": 18425
     },
     {
       "instance_id": "22291235161",
@@ -31493,7 +31609,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 2.48% vs 2.68% target (orders +6% YoY). Value supports ~$5,501 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 7.86
+      "proposed_uplift_pct": 7.86,
+      "target_1pct_arr": 2052.6,
+      "target_1pct_mrr": 175
     },
     {
       "instance_id": "22291978893",
@@ -32045,7 +32163,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.8% vs 1.06% target (orders +13% YoY). Value supports ~$55,827 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 52666.68,
+      "target_1pct_mrr": 4400
     },
     {
       "instance_id": "22296509113",
@@ -32298,7 +32418,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.4% vs 1.06% target (orders +2% YoY). Value supports ~$25,656 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 24203.76,
+      "target_1pct_mrr": 2025
     },
     {
       "instance_id": "22296509184",
@@ -32564,7 +32686,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 52.76% vs 111.68% target (orders +3% YoY). Value supports ~$29,993 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 268.56,
+      "target_1pct_mrr": 25
     },
     {
       "instance_id": "22296509185",
@@ -33804,7 +33928,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +96% YoY; cost ratio 0% vs target 1.06%. Value supports ~$4,193 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": null
+      "proposed_uplift_pct": null,
+      "target_1pct_arr": 3955.77,
+      "target_1pct_mrr": 325
     },
     {
       "instance_id": "22296968872",
@@ -34030,7 +34156,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +53% YoY; cost ratio 0.89% vs target 1.06%. Value supports ~$3,577 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 3374.71,
+      "target_1pct_mrr": 275
     },
     {
       "instance_id": "22296968873",
@@ -34243,11 +34371,11 @@
         }
       ],
       "dropoff_pct": null,
-      "risk_tier": "red",
-      "risk_score": 18,
+      "risk_tier": "green",
+      "risk_score": 80,
       "is_bid_only": false,
-      "action_tag": "Contraction Risk",
-      "action_reason": "Health tier RED — focus on retention, not expansion",
+      "action_tag": "Stable",
+      "action_reason": "Orders + health both holding",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
       "quotes": [
@@ -34303,7 +34431,15 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/30196741558"
         }
-      ]
+      ],
+      "proposed_arr": 6021.91,
+      "proposed_mrr": 500,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 411.71% vs 4721.31% target (orders —). Value supports ~$60,049 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 12.72,
+      "target_1pct_mrr": 0
     },
     {
       "instance_id": "22297118295",
@@ -35076,7 +35212,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.63% vs 1.45% target (orders +11% YoY). Value supports ~$63,286 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 43645.6,
+      "target_1pct_mrr": 3625
     },
     {
       "instance_id": "22297272735",
@@ -35368,7 +35506,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 0.94% vs 2.29% target (orders +10% YoY). Value supports ~$134,598 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 58776.33,
+      "target_1pct_mrr": 4900
     },
     {
       "instance_id": "22297426341",
@@ -35832,7 +35972,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +1081% YoY; cost ratio 0.96% vs target 36.12%. Value supports ~$113,188 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 3133.65,
+      "target_1pct_mrr": 250
     },
     {
       "instance_id": "22663383042",
@@ -36213,7 +36355,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +23% YoY; cost ratio 2.43% vs target 2.45%. Value supports ~$3,228 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 0.8
+      "proposed_uplift_pct": 0.8,
+      "target_1pct_arr": 1317.66,
+      "target_1pct_mrr": 100
     },
     {
       "instance_id": "23531341961",
@@ -36397,7 +36541,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +344% YoY; cost ratio 0.48% vs target 1.06%. Value supports ~$5,782 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 5454.46,
+      "target_1pct_mrr": 450
     },
     {
       "instance_id": "23587056488",
@@ -38222,7 +38368,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 32.11% vs 93.29% target (orders —). Value supports ~$26,151 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 280.32,
+      "target_1pct_mrr": 25
     },
     {
       "instance_id": "29029901386",
@@ -38614,7 +38762,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +87% YoY; cost ratio 0.76% vs target 1.06%. Value supports ~$4,993 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 4710.03,
+      "target_1pct_mrr": 400
     },
     {
       "instance_id": "29582833299",
@@ -39125,7 +39275,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 11.29% vs 20.31% target (orders —). Value supports ~$5,828 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 286.93,
+      "target_1pct_mrr": 25
     },
     {
       "instance_id": "30213958978",
@@ -39800,14 +39952,22 @@
         }
       ],
       "dropoff_pct": null,
-      "risk_tier": "red",
-      "risk_score": 30,
+      "risk_tier": "green",
+      "risk_score": 80,
       "is_bid_only": false,
-      "action_tag": "Contraction Risk",
-      "action_reason": "Health tier RED — focus on retention, not expansion",
+      "action_tag": "Stable",
+      "action_reason": "Orders + health both holding",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 22242.15,
+      "proposed_mrr": 1850,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 199.26% vs 395.75% target (orders —). Value supports ~$38,414 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 97.07,
+      "target_1pct_mrr": 0
     },
     {
       "instance_id": "32038726536",
@@ -40078,7 +40238,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +499% YoY; cost ratio 0.58% vs target 1.06%. Value supports ~$25,810 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 24348.89,
+      "target_1pct_mrr": 2025
     },
     {
       "instance_id": "32604331428",
@@ -40194,7 +40356,7 @@
       ],
       "dropoff_pct": null,
       "risk_tier": "red",
-      "risk_score": 15,
+      "risk_score": 25,
       "is_bid_only": false,
       "action_tag": "Contraction Risk",
       "action_reason": "Health tier RED — focus on retention, not expansion",
@@ -40328,7 +40490,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +468% YoY; cost ratio 0.36% vs target 1.06%. Value supports ~$8,922 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 8416.79,
+      "target_1pct_mrr": 700
     },
     {
       "instance_id": "32763807050",
@@ -41219,14 +41383,22 @@
         }
       ],
       "dropoff_pct": null,
-      "risk_tier": "red",
-      "risk_score": 30,
+      "risk_tier": "yellow",
+      "risk_score": 40,
       "is_bid_only": false,
-      "action_tag": "Contraction Risk",
-      "action_reason": "Health tier RED — focus on retention, not expansion",
+      "action_tag": "Watch",
+      "action_reason": "Health tier YELLOW — monitor through renewal",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 4416,
+      "proposed_mrr": 375,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 3563.47% vs 7128.54% target (orders —). Value supports ~$7,682 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 1.08,
+      "target_1pct_mrr": 0
     },
     {
       "instance_id": "34883343237",
@@ -42252,14 +42424,22 @@
         }
       ],
       "dropoff_pct": null,
-      "risk_tier": "red",
-      "risk_score": 35,
+      "risk_tier": "green",
+      "risk_score": 80,
       "is_bid_only": false,
-      "action_tag": "Contraction Risk",
-      "action_reason": "Health tier RED — focus on retention, not expansion",
+      "action_tag": "Stable",
+      "action_reason": "Orders + health both holding",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
-      "quotes": []
+      "quotes": [],
+      "proposed_arr": 4830,
+      "proposed_mrr": 400,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 2.14% vs 3.43% target (orders —). Value supports ~$6,718 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 1958.54,
+      "target_1pct_mrr": 175
     },
     {
       "instance_id": "39506846262",
@@ -43158,7 +43338,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "growth",
       "expansion_rationale": "Orders +4700% YoY; cost ratio 0.18% vs target 1.06%. Value supports ~$29,034 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 27390.8,
+      "target_1pct_mrr": 2275
     },
     {
       "instance_id": "46326012484",
@@ -43653,7 +43835,7 @@
       ],
       "dropoff_pct": null,
       "risk_tier": "green",
-      "risk_score": 45,
+      "risk_score": 80,
       "is_bid_only": false,
       "action_tag": "Stable",
       "action_reason": "Orders + health both holding",
@@ -43692,7 +43874,9 @@
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
       "expansion_rationale": "Underpriced vs peers — cost ratio 99.39% vs 99.4% target (orders —). Value supports ~$5,004 ARR; proposing the full realignment.",
-      "proposed_uplift_pct": 0.01
+      "proposed_uplift_pct": 0.01,
+      "target_1pct_arr": 50.34,
+      "target_1pct_mrr": 0
     },
     {
       "instance_id": "47920025715",
@@ -43872,7 +44056,7 @@
       ],
       "dropoff_pct": null,
       "risk_tier": "green",
-      "risk_score": 33,
+      "risk_score": 80,
       "is_bid_only": false,
       "action_tag": "Stable",
       "action_reason": "Orders + health both holding",

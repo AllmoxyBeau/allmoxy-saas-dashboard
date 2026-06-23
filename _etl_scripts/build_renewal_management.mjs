@@ -529,6 +529,15 @@ for (const r of rows) {
     continue;
   }
   r.proposed_uplift_pct = r.current_arr > 0 ? round2((r.proposed_arr / r.current_arr - 1) * 100) : null;
+  // Reference: the uncapped price at a clean 1.0% cost ratio (subscription ÷
+  // verified orders). Shows the full headroom the rep is phasing toward, since
+  // the proposed price above is capped at +15% per renewal. Only meaningful with
+  // verified-order value.
+  const annualOrders1pct = (r.orders_monthly_avg_current_year || 0) * 12;
+  if (annualOrders1pct > 0) {
+    r.target_1pct_arr = round2((1 / 100) * annualOrders1pct);
+    r.target_1pct_mrr = roundTo(r.target_1pct_arr / 12, 25);
+  }
 }
 
 aggregates.renewals_in_next_90d_arr = round2(aggregates.renewals_in_next_90d_arr);
