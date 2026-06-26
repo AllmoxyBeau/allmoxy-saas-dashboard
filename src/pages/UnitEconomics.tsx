@@ -8,7 +8,7 @@ import Alert from '@mui/material/Alert';
 import Skeleton from '@mui/material/Skeleton';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, ReferenceLine, ComposedChart, Bar } from 'recharts';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, ReferenceLine, ComposedChart, Bar, Legend } from 'recharts';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
@@ -44,6 +44,7 @@ type MonthlyRow = {
   month: string;
   subscription_revenue: number;
   services_revenue: number;
+  connect_revenue: number;
   total_income: number;
   cogs: number;
   gross_profit: number;
@@ -64,6 +65,7 @@ type UnitEconSnapshot = {
     windowEnd: string;
     subscription_revenue: number;
     services_revenue: number;
+    connect_revenue: number;
     affiliate_revenue: number;
     total_income: number;
     cogs: number;
@@ -87,6 +89,14 @@ type UnitEconSnapshot = {
     customers_bought_services: number;
     attach_rate: number | null;
     avg_services_revenue_per_attached_customer: number | null;
+  };
+  connect?: {
+    customers_using_connect: number;
+    active_logos: number | null;
+    attach_rate: number | null;
+    connect_revenue_ttm: number;
+    avg_connect_revenue_per_connect_customer: number | null;
+    avg_monthly_connect_revenue: number;
   };
   notes: string;
 };
@@ -146,6 +156,7 @@ export default function UnitEconomics() {
 
   const [drill, setDrill] = useState<DrillKind | null>(null);
   const [headerWindow, setHeaderWindow] = useState<'3M' | '6M' | '12M'>('12M');
+  const [streamBasis, setStreamBasis] = useState<'annual' | 'monthly'>('annual');
   const ttmTable = useCollapse(true);
   function openDrill(d: DrillKind) {
     setDrill(d);
@@ -173,6 +184,7 @@ export default function UnitEconomics() {
 
     const subscription_revenue = sum('subscription_revenue');
     const services_revenue = sum('services_revenue');
+    const connect_revenue = sum('connect_revenue');
     const total_income = sum('total_income');
     const cogs = sum('cogs');
     const gross_profit = sum('gross_profit');
@@ -226,6 +238,7 @@ export default function UnitEconomics() {
       windowMonths: rows.length,
       subscription_revenue,
       services_revenue,
+      connect_revenue,
       total_income,
       cogs,
       gross_profit,
@@ -251,6 +264,55 @@ export default function UnitEconomics() {
     const now = new Date();
     const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     return snap.monthly.filter((m) => m.month < currentMonth).slice(-24);
+  }, [snap]);
+
+  // Per-stream unit economics: Subscription (MRR) / Services / Stripe Connect.
+  // Revenue + share use the TTM block so all three align to one 12-mo window.
+  // Subscription & Services are QuickBooks-sourced (may lag a month or two);
+  // Connect is platform-fee revenue from connect_by_month and is current — so
+  // the stacked trend only plots months where QB subscription data is present.
+  const streams = useMemo(() => {
+    if (!snap?.ttm) return null;
+    const t = snap.ttm;
+    const total = (t.subscription_revenue || 0) + (t.services_revenue || 0) + (t.connect_revenue || 0);
+    const share = (v: number) => (total > 0 ? v / total : 0);
+    // Each card carries the TTM (annual) figures; the UI divides by 12 for the
+    // Monthly view. `recurring` streams (MRR, Connect) have a meaningful monthly
+    // per-customer rate; Services is project-based so its per-customer figure is
+    // shown as a lifetime average regardless of basis.
+    const cards = [
+      {
+        key: 'mrr', label: 'Subscription (MRR)', color: '#2C73FF',
+        revenue: t.subscription_revenue, share: share(t.subscription_revenue), recurring: true,
+        customers: t.logo_qty_latest, customersLabel: 'active customers',
+        arpu: t.avg_mrr_per_customer != null ? t.avg_mrr_per_customer * 12 : null, arpuNoun: 'customer', lifetimeArpu: false,
+        margin: t.subscription_gross_margin,
+        note: t.logo_qty_latest != null ? 'latest complete month' : null,
+      },
+      {
+        key: 'services', label: 'Services', color: '#F5A623',
+        revenue: t.services_revenue, share: share(t.services_revenue), recurring: false,
+        customers: snap.services?.customers_bought_services ?? null, customersLabel: 'ever bought services',
+        arpu: snap.services?.avg_services_revenue_per_attached_customer ?? null, arpuNoun: 'attached customer', lifetimeArpu: true,
+        margin: null,
+        note: snap.services?.attach_rate != null ? `${(snap.services.attach_rate * 100).toFixed(0)}% of all customers attach` : null,
+      },
+      {
+        key: 'connect', label: 'Stripe Connect', color: '#14B8A6',
+        revenue: t.connect_revenue, share: share(t.connect_revenue), recurring: true,
+        customers: snap.connect?.customers_using_connect ?? null, customersLabel: 'active on Connect',
+        arpu: snap.connect?.avg_connect_revenue_per_connect_customer ?? null, arpuNoun: 'Connect customer', lifetimeArpu: false,
+        margin: null,
+        note: snap.connect?.attach_rate != null ? `${(snap.connect.attach_rate * 100).toFixed(0)}% of active book uses Connect` : null,
+      },
+    ];
+    const now = new Date();
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    const trendRows = snap.monthly
+      .filter((m) => m.month < currentMonth && m.subscription_revenue > 0)
+      .slice(-24)
+      .map((m) => ({ month: m.month, Subscription: m.subscription_revenue, Services: m.services_revenue, Connect: m.connect_revenue }));
+    return { cards, total, trendRows };
   }, [snap]);
 
   // Rolling trailing-12-month unit economics, anchored at each month M (window = M-11..M).
@@ -457,7 +519,7 @@ export default function UnitEconomics() {
           <StatCard
             label={`Revenue · ${headerWindow}`}
             value={windowStats ? USD_COMPACT.format(windowStats.total_income) : null}
-            hint={windowStats ? `Sub ${USD_COMPACT.format(windowStats.subscription_revenue)} · Svc ${USD_COMPACT.format(windowStats.services_revenue)}` : 'loading'}
+            hint={windowStats ? `Sub ${USD_COMPACT.format(windowStats.subscription_revenue)} · Svc ${USD_COMPACT.format(windowStats.services_revenue)} · Connect ${USD_COMPACT.format(windowStats.connect_revenue)}` : 'loading'}
             color="text.primary"
             loading={isLoading}
             info={<><strong>What it is:</strong> Total GAAP-billed revenue over the selected window — all streams.<br /><br /><strong>Data:</strong> "Total Income" line from QuickBooks P&L, summed across the window.</>}
@@ -494,6 +556,79 @@ export default function UnitEconomics() {
           />
         </Grid>
       </Grid>
+
+      {/* Revenue streams — Subscription (MRR) / Services / Stripe Connect unit economics */}
+      {streams && (
+        <Paper sx={{ p: 3, mb: 3 }}>
+          <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" flexWrap="wrap" useFlexGap>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Typography variant="h6">Revenue streams</Typography>
+              <InfoIcon info={<><strong>The three revenue streams and their per-customer economics.</strong><br /><br />Figures are trailing-12-month so all three align to one window; toggle <strong>Monthly</strong> to divide by 12 for an average monthly rate. <strong>Subscription</strong> and <strong>Services</strong> come from the QuickBooks P&L (which can lag the latest month or two); <strong>Stripe Connect</strong> is Allmoxy's platform-fee revenue (from connect_by_month) and is current. The stacked chart plots only months where QuickBooks subscription data is present, so recent QB-lagged months don't read as a cliff.</>} />
+            </Stack>
+            <ToggleButtonGroup
+              size="small"
+              exclusive
+              value={streamBasis}
+              onChange={(_, v) => v && setStreamBasis(v as 'annual' | 'monthly')}
+              sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
+            >
+              <ToggleButton value="annual">Annual (TTM)</ToggleButton>
+              <ToggleButton value="monthly">Monthly avg</ToggleButton>
+            </ToggleButtonGroup>
+          </Stack>
+          <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 2 }}>
+            {streamBasis === 'monthly' ? 'Avg per month over the' : 'Trailing'} 12 months · {monthLabel(ttm?.windowStart ?? '')} – {monthLabel(ttm?.windowEnd ?? '')} · total {USD_COMPACT.format(streamBasis === 'monthly' ? streams.total / 12 : streams.total)}{streamBasis === 'monthly' ? '/mo' : ''}
+          </Typography>
+          <Grid container spacing={2}>
+            {streams.cards.map((c) => {
+              const monthly = streamBasis === 'monthly';
+              const revenue = monthly ? c.revenue / 12 : c.revenue;
+              // ARPU: recurring streams convert to a per-month rate; project-based
+              // Services keeps a lifetime average in both views.
+              const arpuVal = c.arpu == null ? null : (monthly && c.recurring && !c.lifetimeArpu ? c.arpu / 12 : c.arpu);
+              const arpuLabel = c.lifetimeArpu
+                ? `avg lifetime / ${c.arpuNoun}`
+                : `revenue / ${c.arpuNoun} / ${monthly ? 'mo' : 'yr'}`;
+              return (
+                <Grid item xs={12} md={4} key={c.key}>
+                  <Box sx={{ p: 2, height: '100%', borderRadius: 1, border: '1px solid', borderColor: 'divider', borderTop: '3px solid', borderTopColor: c.color }}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5, fontWeight: 700 }}>{c.label}</Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 600, mt: 0.5 }}>{USD_COMPACT.format(revenue)}<Box component="span" sx={{ fontSize: 13, fontWeight: 400, color: 'text.secondary' }}>{monthly ? '/mo' : '/yr'}</Box></Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>{(c.share * 100).toFixed(1)}% of stream revenue</Typography>
+                    <Box sx={{ mt: 1.5, pt: 1.5, borderTop: '1px solid', borderColor: 'divider', display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+                      {[
+                        { l: c.customersLabel, v: c.customers != null ? c.customers.toLocaleString() : '—' },
+                        { l: arpuLabel, v: arpuVal != null ? USD0.format(arpuVal) : '—' },
+                        { l: 'gross margin', v: c.margin != null ? pct(c.margin) : '—' },
+                      ].map((row) => (
+                        <Box key={row.l} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 1 }}>
+                          <Typography variant="caption" sx={{ color: 'text.secondary' }}>{row.l}</Typography>
+                          <Typography variant="caption" sx={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>{row.v}</Typography>
+                        </Box>
+                      ))}
+                      {c.note && <Typography variant="caption" sx={{ color: 'text.disabled' }}>{c.note}</Typography>}
+                    </Box>
+                  </Box>
+                </Grid>
+              );
+            })}
+          </Grid>
+          <Box sx={{ height: 264, mt: 3 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={streams.trendRows} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(139,148,158,0.12)" vertical={false} />
+                <XAxis dataKey="month" stroke="#8B949E" fontSize={10} interval={2} />
+                <YAxis stroke="#8B949E" fontSize={10} width={48} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                <RTooltip formatter={(v: number) => USD0.format(v)} contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }} />
+                <Legend wrapperStyle={{ fontSize: 11 }} />
+                <Bar dataKey="Subscription" stackId="rev" fill="#2C73FF" />
+                <Bar dataKey="Services" stackId="rev" fill="#F5A623" />
+                <Bar dataKey="Connect" stackId="rev" fill="#14B8A6" />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </Box>
+        </Paper>
+      )}
 
       {/* Trend charts */}
       <Grid container spacing={2} sx={{ mb: 3 }}>

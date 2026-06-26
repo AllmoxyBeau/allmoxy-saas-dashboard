@@ -1,0 +1,7 @@
+{
+  "comment": "Per-customer notes explaining why a Connect-lapsed customer stopped processing payments. Keyed by allmoxy_customer_id. Surfaced as expandable notes on the Payments Opportunity attach table (filter = Lapsed). Edit inline in the UI (stored in your browser), then Copy JSON here + rebuild to share with the team.",
+  "updated_at": "2026-06-25",
+  "notes": {
+    "318": "Business-model pivot. After an ownership change/rebrand (formerly Ruck Cabinet Door), Thomas Creek repositioned as a B2B components manufacturer using dropshipping and shifted to using Allmoxy as an internal back-office tool (inventory, scheduling, machine feedback) rather than a customer-facing storefront that collects payments. Connect processing peaked in 2024 (~$5.9K fees) then fell off through 2025 (~$411, sporadic); last activity Oct 2025. Owner (Michael Woods) is price-sensitive and month-to-month. Source: HubSpot notes + Connect usage timing."
+  }
+}

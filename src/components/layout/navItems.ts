@@ -56,6 +56,7 @@ export const NAV_ENTRIES: NavEntry[] = [
       { label: 'Cohort Retention', path: '/cohort-retention' },
       { label: 'Net Revenue Retention', path: '/net-revenue-retention' },
       { label: 'Stripe Connect Revenue', path: '/stripe-connect-revenue' },
+      { label: 'Payments Opportunity', path: '/payments-opportunity' },
       { label: 'Services', path: '/services' },
       { label: 'Renewal Management', path: '/renewal-management' },
       { label: 'Contracts', path: '/contracts' },
@@ -102,6 +103,7 @@ export const NAV_ENTRIES: NavEntry[] = [
     items: [
       { label: 'Data Cleanup', path: '/data-cleanup' },
       { label: 'Postgres Backend Plan', path: '/backend-plan' },
+      { label: 'API Migration Plan', path: '/api-migration-plan' },
     ],
   },
 ];

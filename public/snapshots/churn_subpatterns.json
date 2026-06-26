@@ -1,6 +1,6 @@
 {
   "tab": "churn_subpatterns",
-  "fetchedAt": "2026-06-23T15:57:23.079Z",
+  "fetchedAt": "2026-06-26T14:19:42.308Z",
   "generatedBy": "build_churn_subpatterns.mjs — keyword detection over customer_profiles + churn_inferences + Churn Details.xlsx",
   "notes": "Each customer can have multiple sub-pattern tags within their parent churn-reason cluster. Sub-patterns are not mutually exclusive.",
   "subpattern_definitions": {
@@ -139,12 +139,6 @@
     ],
     "78": [
       "feat_accounting_part_numbers"
-    ],
-    "86": [
-      "fi_feature_gap_blocked",
-      "feat_export_integration",
-      "feat_inventory_erp",
-      "feat_dynamic_attributes_validations"
     ],
     "96": [
       "fi_cs_responsiveness",

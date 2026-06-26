@@ -108,7 +108,12 @@ for (const c of customers.values()) {
   c.active = !!(c.lastPay && c.lastPay.getFullYear() >= today.getFullYear());
 }
 
-const allCustomers = [...customers.values()].filter((c) => c.signup || c.firstPay);
+// Cohort membership requires actually-processed revenue. A signup date alone
+// isn't enough — never-paid signups (e.g. California Door Corporation, $0) are
+// not customers and would inflate logo counts / depress retention. Keep anyone
+// with a payment date or positive lifetime revenue (a fully-refunded customer
+// still "processed revenue", so firstPay alone qualifies them).
+const allCustomers = [...customers.values()].filter((c) => c.revenue > 0 || c.firstPay);
 
 // ---------- cohort summary by signup year ----------
 const byCohort = new Map();

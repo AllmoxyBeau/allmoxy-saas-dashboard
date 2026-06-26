@@ -380,6 +380,10 @@ const primary = readWb(PRIMARY_XLSX);
 
 console.log('\n[1/5] Raw tab pulls');
 writeSnap('allmoxy_core_customer', buildCoreCustomer(primary));
+// Merge duplicate-AID customers in the core roster BEFORE the cohort/health
+// builds consume it (see customer_merge_overrides.json). customer_profiles is
+// merged separately after its enrichment below.
+runScriptArgs('apply_customer_merges.mjs', ['allmoxy_core_customer']);
 writeSnap('classification_master', buildClassificationMaster(primary));
 
 console.log('\n[2/5] Connect union from 6 annual Connect xlsx files');
@@ -409,6 +413,15 @@ function runScript(scriptName, outSnap) {
     const sz = size > 1024 * 1024 ? `${(size / 1024 / 1024).toFixed(2)} MB` : `${(size / 1024).toFixed(0)} KB`;
     console.log(`  wrote ${outSnap}.json (${sz})`);
   }
+}
+
+// Like runScript but passes CLI args and lets the script edit snapshots in place
+// (output is inherited, not captured). Used for apply_* steps that rewrite a
+// named snapshot rather than emitting it on stdout.
+function runScriptArgs(scriptName, scriptArgs) {
+  const scriptPath = path.join(SCRIPTS, scriptName);
+  console.log(`  running ${scriptName} ${scriptArgs.join(' ')}…`);
+  execFileSync('node', [scriptPath, ...scriptArgs], { maxBuffer: 1024 * 1024 * 256, stdio: 'inherit' });
 }
 
 console.log('\n[4/5] Subscription + waterfall + cohort');
@@ -458,6 +471,13 @@ runScript('apply_customer_status_overrides.mjs', null);
 // counts. Runs AFTER status overrides so it doesn't clobber them.
 console.log('  classifying never-paid customers…');
 runScript('apply_never_paid_classification.mjs', null);
+
+// Merge duplicate-AID customers in customer_profiles (folds the absorbed row's
+// financials into the survivor, drops the dupe). Runs after all enrichment so
+// the survivor keeps the full picture, and before every downstream build that
+// reads customer_profiles (roster, churn, renewal, data cleanup, features…).
+console.log('  merging duplicate-AID customers…');
+runScriptArgs('apply_customer_merges.mjs', ['customer_profiles']);
 
 // Reconcile cohort_retention's "active today" with customer_profiles after all
 // upstream adjustments. Must run AFTER apply_annual_amortization so the patch
@@ -604,6 +624,30 @@ console.log('\n[8/5] Features (JIRA DEV board, optional)');
     } catch (e) {
       console.log('  ⚠ features refresh failed (kept previous snapshot):', e.message);
     }
+  }
+}
+
+// Stripe Connect processing volume (optional, SLOW). The application_fees pull
+// with charge expansion can take ~1h, so it's gated behind --stripe (and a key).
+// build_connect_volume is fast and runs whenever the cache exists, so the
+// snapshot stays fresh from the last pull even on a normal refresh.
+console.log('\n[9/5] Stripe Connect volume (optional)');
+{
+  const envLocal = (() => { try { return fs.readFileSync(path.join(SCRIPTS, '..', '.env.local'), 'utf8'); } catch { return ''; } })();
+  const hasKey = process.env.STRIPE_SECRET_KEY || /^STRIPE_SECRET_KEY=\S/m.test(envLocal);
+  if (process.argv.includes('--stripe')) {
+    if (!hasKey) {
+      console.log('  --stripe set but STRIPE_SECRET_KEY missing in .env.local — skipped.');
+    } else {
+      try { runScriptArgs('sync_stripe_connect.mjs', []); } catch (e) { console.log('  ⚠ Stripe sync failed (kept previous cache):', e.message); }
+    }
+  } else {
+    console.log('  Stripe API pull skipped (pass --stripe to refresh it; it is slow). Rebuilding snapshot from cache…');
+  }
+  if (fs.existsSync(path.join(SCRIPTS, 'cache', 'stripe_connect_volume.json'))) {
+    try { runScript('build_connect_volume.mjs', null); } catch (e) { console.log('  ⚠ build_connect_volume failed:', e.message); }
+  } else {
+    console.log('  no Stripe cache yet — run with --stripe once to populate.');
   }
 }
 

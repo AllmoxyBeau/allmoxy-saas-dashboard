@@ -38,7 +38,9 @@ const Implementation = lazy(() => import('./pages/Implementation'));
 const ImplementationSchedule = lazy(() => import('./pages/ImplementationSchedule'));
 const DataCleanup = lazy(() => import('./pages/DataCleanup'));
 const BackendPlan = lazy(() => import('./pages/BackendPlan'));
+const ApiMigrationPlan = lazy(() => import('./pages/ApiMigrationPlan'));
 const Features = lazy(() => import('./pages/Features'));
+const PaymentsOpportunity = lazy(() => import('./pages/PaymentsOpportunity'));
 const StripeQBReconciliation = lazy(() => import('./pages/StripeQBReconciliation'));
 const CustomerDetail = lazy(() => import('./pages/CustomerDetail'));
 const Customers = lazy(() => import('./pages/Customers'));
@@ -87,10 +89,12 @@ export default function App() {
         <Route path="services" element={<L><Services /></L>} />
         <Route path="renewal-management" element={<L><RenewalManagement /></L>} />
         <Route path="contracts" element={<L><Contracts /></L>} />
+        <Route path="payments-opportunity" element={<L><PaymentsOpportunity /></L>} />
         <Route path="implementation" element={<L><Implementation /></L>} />
         <Route path="implementation-schedule" element={<L><ImplementationSchedule /></L>} />
         <Route path="data-cleanup" element={<L><DataCleanup /></L>} />
         <Route path="backend-plan" element={<L><BackendPlan /></L>} />
+        <Route path="api-migration-plan" element={<L><ApiMigrationPlan /></L>} />
         {/* Financial / QoE / diligence routes — registered only when the
             SHOW_FINANCIAL_TABS feature flag is on. In production (Vercel env
             var unset) typing these URLs falls through to the catch-all and

@@ -10,7 +10,6 @@ import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
-import Divider from '@mui/material/Divider';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Button from '@mui/material/Button';
@@ -56,7 +55,7 @@ type CustomerProfile = {
   last_payment_date: string | null;
   years_with_us: number | null;
   cohort_year: number | null;
-  status: 'active' | 'at_risk' | 'churned';
+  status: 'active' | 'at_risk' | 'non_payment' | 'churned' | 'never_paid';
   active_today: boolean;
   lifetime_total: number;
   lifetime_subscription: number;
@@ -79,6 +78,9 @@ type CustomerProfile = {
   churn_reason?: string | null;
   primary_segment?: string | null;
   sub_segment?: string | null;
+  customer_health_cs_pulse?: string | null;
+  notes_last_contacted?: string | null;
+  vip_legacy_customer?: string | null;
   stripe_subscription_id?: string | null;
   custom_domain_stripe_subscription_id?: string | null;
   all_stripe_subscription_ids?: string[];
@@ -271,6 +273,8 @@ const HUBSPOT_CHURN_PLAYBOOK = [
 function statusChipProps(status: CustomerProfile['status']) {
   if (status === 'active') return { label: 'Active', bgcolor: 'rgba(26, 158, 92, 0.18)', color: 'success.main' } as const;
   if (status === 'at_risk') return { label: 'At risk · dunning', bgcolor: 'rgba(245, 158, 11, 0.18)', color: 'warning.main' } as const;
+  if (status === 'non_payment') return { label: 'Non-payment · missed a month', bgcolor: 'rgba(234, 88, 12, 0.20)', color: '#C2410C' } as const;
+  if (status === 'never_paid') return { label: 'Never paid', bgcolor: 'rgba(139, 148, 158, 0.20)', color: 'text.secondary' } as const;
   return { label: 'Churned', bgcolor: 'rgba(218, 54, 51, 0.18)', color: 'error.main' } as const;
 }
 
@@ -469,169 +473,137 @@ export default function CustomerDetail() {
 
           {/* Section tabs — each former section is a tab. */}
           <Tabs value={custTab} onChange={(_, v) => setCustTab(v)} variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile sx={{ mb: 2, borderBottom: 1, borderColor: 'divider' }}>
-            {CUST_TABS.map(([v, l]) => <Tab key={v} value={v} label={l} sx={{ textTransform: 'none', minHeight: 44 }} />)}
+            {CUST_TABS.map(([v, l]) => {
+              // For churned customers the churn tab becomes a full post-mortem summary.
+              const label = v === 'churn' && selected.status === 'churned' ? 'Churn Summary' : l;
+              return <Tab key={v} value={v} label={label} sx={{ textTransform: 'none', minHeight: 44 }} />;
+            })}
           </Tabs>
 
           {/* Information tab — identity + firmographics */}
           {custTab === 'information' && (
-          <Paper sx={{ p: 3, mb: 2 }}>
-            {/* Status */}
+          <Box>
+            {/* Status chip above the section grid */}
             <Box sx={{ mb: 2 }}>
               <Chip label={statusChipProps(selected.status).label} sx={{ bgcolor: statusChipProps(selected.status).bgcolor, color: statusChipProps(selected.status).color, fontWeight: 500 }} />
             </Box>
 
-            <Divider sx={{ my: 2 }} />
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2, alignItems: 'start' }}>
+              <InfoSection title="Identity & connections" info="Where to find this customer in other systems.">
+                <InfoField label="Allmoxy ID" value={selected.allmoxy_customer_id} />
+                {selected.installer_id && <InfoField label="Installer ID" value={selected.installer_id} />}
+                {selected.installer_directory && <ExternalLink label="Allmoxy URL" display={`${selected.installer_directory}.allmoxy.com`} href={`https://${selected.installer_directory}.allmoxy.com`} />}
+                {selected.hubspot_company_id && <ExternalLink label="HubSpot ID" display={selected.hubspot_company_id} href={hubspotCompanyUrl(selected.hubspot_company_id) ?? '#'} />}
+              </InfoSection>
 
-            {/* Identity & connections */}
-            <SectionHeading info="Where to find this customer in other systems.">Identity &amp; connections</SectionHeading>
-            <Box sx={infoRowSx}>
-              <InfoField label="Allmoxy ID" value={selected.allmoxy_customer_id} />
-              {selected.installer_id && <InfoField label="Installer ID" value={selected.installer_id} />}
-              {selected.installer_directory && <ExternalLink label="Allmoxy URL" display={`${selected.installer_directory}.allmoxy.com`} href={`https://${selected.installer_directory}.allmoxy.com`} />}
-              {selected.hubspot_company_id && <ExternalLink label="HubSpot ID" display={selected.hubspot_company_id} href={hubspotCompanyUrl(selected.hubspot_company_id) ?? '#'} />}
-            </Box>
+              <InfoSection title="Lifecycle">
+                <InfoField label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
+                <InfoField label="First payment" value={formatDateMDY(selected.first_payment_date)} />
+                <InfoField label="Last payment" value={formatDateMDY(selected.last_payment_date)} />
+                <InfoField label="Tenure" value={selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)} yrs` : '—'} />
+                <InfoField label="Cohort" value={selected.cohort_year != null ? String(selected.cohort_year) : '—'} />
+              </InfoSection>
 
-            <Divider sx={{ my: 2 }} />
+              <InfoSection title="Account" info="From the HubSpot Instance Sync. Segment lives under Classification below.">
+                <InfoField label="Account rep" value={selected.instance_owner_first_name?.trim() || selected.instance_owner?.trim() || selected.hubspot_owner_name?.trim() || '—'} />
+                <InfoField label="Pay status" value={selected.pay_status || '—'} />
+                <InfoField label="Contract" value={selected.contract_status || '—'} />
+              </InfoSection>
 
-            {/* Lifecycle */}
-            <SectionHeading>Lifecycle</SectionHeading>
-            <Box sx={infoRowSx}>
-              <InfoField label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
-              <InfoField label="First payment" value={formatDateMDY(selected.first_payment_date)} />
-              <InfoField label="Last payment" value={formatDateMDY(selected.last_payment_date)} />
-              <InfoField label="Tenure" value={selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)} yrs` : '—'} />
-              <InfoField label="Cohort" value={selected.cohort_year != null ? String(selected.cohort_year) : '—'} />
-            </Box>
+              {/* Billing — incl. annual-payer toggle + Stripe customer/subscription links */}
+              <InfoSection title="Billing" wide>
+                <InfoField label="Transactions" value={selected.transaction_count.toLocaleString()} />
+                <InfoField label="Stripe fee %" value={selected.stripe_fee_percent != null ? `${selected.stripe_fee_percent.toFixed(2)}%` : '—'} />
+                {selected.failed_3mo_count > 0 && (
+                  <InfoField label="Failed charges · last 3 mo" value={<Box component="span" sx={{ color: 'error.main', fontWeight: 600 }}>⚠ {selected.failed_3mo_count} · {USD0.format(selected.failed_3mo_amount)}</Box>} />
+                )}
+                <Box>
+                  <FieldLabel>Annual payer</FieldLabel>
+                  <Stack direction="row" spacing={0.5} alignItems="center" sx={{ mt: 0.25 }}>
+                    <Switch size="small" sx={{ ml: -0.5 }} checked={selectedIsAnnual} onChange={(_, v) => toggleAnnual(v)} />
+                    {selectedIsAnnual && <Chip label={selectedIsPending ? 'pending' : 'amortized'} size="small" sx={{ height: 18, fontSize: 10, bgcolor: selectedIsPending ? 'rgba(245,158,11,0.18)' : 'rgba(44,115,255,0.18)', color: selectedIsPending ? 'warning.main' : 'primary.main' }} />}
+                    <InfoIcon info={<><strong>What it does:</strong> Flags this customer as paying annually upfront — the snapshot builder amortizes the annual payment as amount/12 across 12 months so monthly MRR doesn't spike.<br /><br /><strong>Pending changes</strong> live in your browser until Claude rebuilds snapshots.</>} />
+                  </Stack>
+                </Box>
+                {selected.stripe_customer_ids[0] && <ExternalLink label="Stripe Customer" display={selected.stripe_customer_ids[0]} href={`https://dashboard.stripe.com/customers/${selected.stripe_customer_ids[0]}`} />}
+                {(() => {
+                  const customDomainSet = new Set(selected.all_custom_domain_stripe_subscription_ids ?? []);
+                  if (selected.custom_domain_stripe_subscription_id) customDomainSet.add(selected.custom_domain_stripe_subscription_id);
+                  const allSubsList = [...new Set([
+                    ...(selected.all_stripe_subscription_ids ?? []),
+                    ...(selected.stripe_subscription_id ? [selected.stripe_subscription_id] : []),
+                    ...customDomainSet,
+                  ])];
+                  return allSubsList.map((subId, i) => {
+                    const isCustomDomain = customDomainSet.has(subId);
+                    const isPrimary = subId === selected.stripe_subscription_id && !isCustomDomain;
+                    const lbl = isCustomDomain
+                      ? `Custom Domain Sub${customDomainSet.size > 1 ? ` ${[...customDomainSet].indexOf(subId) + 1}` : ''}`
+                      : isPrimary ? 'Stripe Subscription' : `Stripe Sub ${i + 1}`;
+                    return <ExternalLink key={subId} label={lbl} display={subId} href={`https://dashboard.stripe.com/subscriptions/${subId}`} emphasize={isCustomDomain} />;
+                  });
+                })()}
+              </InfoSection>
 
-            <Divider sx={{ my: 2 }} />
-
-            {/* Account (HubSpot Sync) */}
-            <SectionHeading info="From the HubSpot Instance Sync. Segment lives under Classification below.">Account</SectionHeading>
-            <Box sx={infoRowSx}>
-              <InfoField label="Account rep" value={selected.instance_owner_first_name?.trim() || selected.instance_owner?.trim() || selected.hubspot_owner_name?.trim() || '—'} />
-              <InfoField label="Pay status" value={selected.pay_status || '—'} />
-              <InfoField label="Contract" value={selected.contract_status || '—'} />
-            </Box>
-
-            <Divider sx={{ my: 2 }} />
-
-            {/* Billing — incl. annual-payer toggle + Stripe customer/subscription links */}
-            <SectionHeading>Billing</SectionHeading>
-            <Box sx={infoRowSx}>
-              <InfoField label="Transactions" value={selected.transaction_count.toLocaleString()} />
-              <InfoField label="Stripe fee %" value={selected.stripe_fee_percent != null ? `${selected.stripe_fee_percent.toFixed(2)}%` : '—'} />
-              {selected.failed_3mo_count > 0 && (
-                <InfoField label="Failed charges · last 3 mo" value={<Box component="span" sx={{ color: 'error.main', fontWeight: 600 }}>⚠ {selected.failed_3mo_count} · {USD0.format(selected.failed_3mo_amount)}</Box>} />
-              )}
-              <Box>
-                <FieldLabel>Annual payer</FieldLabel>
-                <Stack direction="row" spacing={0.5} alignItems="center" sx={{ mt: 0.25 }}>
-                  <Switch size="small" sx={{ ml: -0.5 }} checked={selectedIsAnnual} onChange={(_, v) => toggleAnnual(v)} />
-                  {selectedIsAnnual && <Chip label={selectedIsPending ? 'pending' : 'amortized'} size="small" sx={{ height: 18, fontSize: 10, bgcolor: selectedIsPending ? 'rgba(245,158,11,0.18)' : 'rgba(44,115,255,0.18)', color: selectedIsPending ? 'warning.main' : 'primary.main' }} />}
-                  <InfoIcon info={<><strong>What it does:</strong> Flags this customer as paying annually upfront — the snapshot builder amortizes the annual payment as amount/12 across 12 months so monthly MRR doesn't spike.<br /><br /><strong>Pending changes</strong> live in your browser until Claude rebuilds snapshots.</>} />
-                </Stack>
-              </Box>
-              {selected.stripe_customer_ids[0] && <ExternalLink label="Stripe Customer" display={selected.stripe_customer_ids[0]} href={`https://dashboard.stripe.com/customers/${selected.stripe_customer_ids[0]}`} />}
+              {/* Who they are — firmographics / classification from the HubSpot
+                  Company object. Renders only when HubSpot firmographics are present. */}
               {(() => {
-                const customDomainSet = new Set(selected.all_custom_domain_stripe_subscription_ids ?? []);
-                if (selected.custom_domain_stripe_subscription_id) customDomainSet.add(selected.custom_domain_stripe_subscription_id);
-                const allSubsList = [...new Set([
-                  ...(selected.all_stripe_subscription_ids ?? []),
-                  ...(selected.stripe_subscription_id ? [selected.stripe_subscription_id] : []),
-                  ...customDomainSet,
-                ])];
-                return allSubsList.map((subId, i) => {
-                  const isCustomDomain = customDomainSet.has(subId);
-                  const isPrimary = subId === selected.stripe_subscription_id && !isCustomDomain;
-                  const lbl = isCustomDomain
-                    ? `Custom Domain Sub${customDomainSet.size > 1 ? ` ${[...customDomainSet].indexOf(subId) + 1}` : ''}`
-                    : isPrimary ? 'Stripe Subscription' : `Stripe Sub ${i + 1}`;
-                  return <ExternalLink key={subId} label={lbl} display={subId} href={`https://dashboard.stripe.com/subscriptions/${subId}`} emphasize={isCustomDomain} />;
-                });
+                const f = selected.firmographics;
+                if (!f) return null;
+                const hasAny = f.components_manufactured.length || f.revenue_band || f.annual_revenue != null
+                  || f.employee_band || f.headcount != null || f.geographic_scope || f.city || f.ownership_type
+                  || f.founded_year || f.business_model.length || f.end_customer_type.length || f.end_market.length
+                  || f.software.accounting.length || f.software.cam.length || f.software.design_3d.length || f.software.crm.length || f.software.other.length
+                  || (f.product && (f.product.customization_tier || f.product.construction_methods.length || f.product.assembly_model.length || f.product.installation_model.length || f.product.technology_profile.length));
+                if (!hasAny) return null;
+                const location = [f.city, f.state, f.country].filter(Boolean).join(', ');
+                const sw: Array<[string, string[]]> = [['Accounting', f.software.accounting], ['CAM', f.software.cam], ['3D Design', f.software.design_3d], ['CRM', f.software.crm], ['Other', f.software.other]];
+                return (
+                  <>
+                    <InfoSection title="Classification" info={<><strong>Firmographic + classification</strong> profile from the HubSpot Company object — what they make, their software stack, size, geography, ownership, and who they sell to. Blank fields just aren't filled in HubSpot yet.</>}>
+                      <InfoField label="Primary segment" value={selected.primary_segment || '—'} />
+                      <InfoField label="Sub-segment" value={selected.sub_segment || '—'} />
+                      <Box sx={{ maxWidth: 300 }}><InfoField label="Components manufactured" value={<ChipList items={f.components_manufactured} />} /></Box>
+                    </InfoSection>
+
+                    <InfoSection title="Current software stack" wide>
+                      {sw.map(([name, vals]) => (
+                        <Box sx={{ maxWidth: 220 }} key={name}><InfoField label={name} value={<ChipList items={vals} color="#7C5CFF" />} /></Box>
+                      ))}
+                    </InfoSection>
+
+                    <InfoSection title="Firmographics" wide>
+                      <InfoField label="Revenue band" value={f.revenue_band || '—'} hint={f.annual_revenue != null ? `${USD_COMPACT.format(f.annual_revenue)} annual` : undefined} />
+                      <InfoField label="Employees" value={f.employee_band || '—'} hint={f.headcount != null ? `${f.headcount.toLocaleString()} headcount` : undefined} />
+                      <InfoField label="Geographic scope" value={f.geographic_scope || '—'} hint={location || undefined} />
+                      <InfoField label="Ownership" value={f.ownership_type || '—'} hint={f.founded_year ? `Founded ${f.founded_year}` : undefined} />
+                      <Box sx={{ maxWidth: 240 }}><InfoField label="Business model" value={<ChipList items={f.business_model} color="#1A9E5C" />} /></Box>
+                    </InfoSection>
+
+                    <InfoSection title="Who they serve" wide>
+                      <Box sx={{ maxWidth: 340 }}><InfoField label="End customer type" value={<ChipList items={f.end_customer_type} color="#F5A623" />} /></Box>
+                      <Box sx={{ maxWidth: 340 }}><InfoField label="End markets" value={<ChipList items={f.end_market} color="#F5A623" />} /></Box>
+                    </InfoSection>
+
+                    {f.product && (
+                      <InfoSection title="Product offering" wide info="The product itself — what they make, how it's built, and how it arrives ready for the customer.">
+                        <InfoField label="Customization tier" value={f.product.customization_tier || '—'} />
+                        <Box sx={{ maxWidth: 300 }}><InfoField label="Construction methods" value={<ChipList items={f.product.construction_methods} color="#7C5CFF" />} /></Box>
+                        <Box sx={{ maxWidth: 260 }}><InfoField label="Assembly model" value={<ChipList items={f.product.assembly_model} color="#7C5CFF" />} /></Box>
+                        <Box sx={{ maxWidth: 260 }}><InfoField label="Installation model" value={<ChipList items={f.product.installation_model} color="#7C5CFF" />} /></Box>
+                        <Box sx={{ maxWidth: 340 }}><InfoField label="Technology profile" value={<ChipList items={f.product.technology_profile} color="#2C73FF" />} /></Box>
+                      </InfoSection>
+                    )}
+                  </>
+                );
               })()}
             </Box>
-
-          {/* Who they are — firmographics / classification from the HubSpot
-              Company object. Identity at a glance: where they fit, how they're
-              built, who they serve. Renders only when HubSpot firmographics are
-              present. */}
-          {(() => {
-            const f = selected.firmographics;
-            if (!f) return null;
-            const hasAny = f.components_manufactured.length || f.revenue_band || f.annual_revenue != null
-              || f.employee_band || f.headcount != null || f.geographic_scope || f.city || f.ownership_type
-              || f.founded_year || f.business_model.length || f.end_customer_type.length || f.end_market.length
-              || f.software.accounting.length || f.software.cam.length || f.software.design_3d.length || f.software.crm.length || f.software.other.length
-              || (f.product && (f.product.customization_tier || f.product.construction_methods.length || f.product.assembly_model.length || f.product.installation_model.length || f.product.technology_profile.length));
-            if (!hasAny) return null;
-            const location = [f.city, f.state, f.country].filter(Boolean).join(', ');
-            const sw: Array<[string, string[]]> = [['Accounting', f.software.accounting], ['CAM', f.software.cam], ['3D Design', f.software.design_3d], ['CRM', f.software.crm], ['Other', f.software.other]];
-            return (
-              <>
-                <Divider sx={{ my: 2 }} />
-
-                {/* Classification */}
-                <SectionHeading info={<><strong>Firmographic + classification</strong> profile from the HubSpot Company object — what they make, their software stack, size, geography, ownership, and who they sell to. Blank fields just aren't filled in HubSpot yet.</>}>Classification</SectionHeading>
-                <Box sx={infoRowSx}>
-                  <InfoField label="Primary segment" value={selected.primary_segment || '—'} />
-                  <InfoField label="Sub-segment" value={selected.sub_segment || '—'} />
-                  <Box sx={{ maxWidth: 300 }}><InfoField label="Components manufactured" value={<ChipList items={f.components_manufactured} />} /></Box>
-                </Box>
-
-                <Divider sx={{ my: 2 }} />
-
-                {/* Software stack */}
-                <SectionHeading>Current software stack</SectionHeading>
-                <Box sx={infoRowSx}>
-                  {sw.map(([name, vals]) => (
-                    <Box sx={{ maxWidth: 220 }} key={name}><InfoField label={name} value={<ChipList items={vals} color="#7C5CFF" />} /></Box>
-                  ))}
-                </Box>
-
-                <Divider sx={{ my: 2 }} />
-
-                {/* Firmographics */}
-                <SectionHeading>Firmographics</SectionHeading>
-                <Box sx={infoRowSx}>
-                  <InfoField label="Revenue band" value={f.revenue_band || '—'} hint={f.annual_revenue != null ? `${USD_COMPACT.format(f.annual_revenue)} annual` : undefined} />
-                  <InfoField label="Employees" value={f.employee_band || '—'} hint={f.headcount != null ? `${f.headcount.toLocaleString()} headcount` : undefined} />
-                  <InfoField label="Geographic scope" value={f.geographic_scope || '—'} hint={location || undefined} />
-                  <InfoField label="Ownership" value={f.ownership_type || '—'} hint={f.founded_year ? `Founded ${f.founded_year}` : undefined} />
-                  <Box sx={{ maxWidth: 240 }}><InfoField label="Business model" value={<ChipList items={f.business_model} color="#1A9E5C" />} /></Box>
-                </Box>
-
-                <Divider sx={{ my: 2 }} />
-
-                {/* Who they serve */}
-                <SectionHeading>Who they serve</SectionHeading>
-                <Box sx={infoRowSx}>
-                  <Box sx={{ maxWidth: 340 }}><InfoField label="End customer type" value={<ChipList items={f.end_customer_type} color="#F5A623" />} /></Box>
-                  <Box sx={{ maxWidth: 340 }}><InfoField label="End markets" value={<ChipList items={f.end_market} color="#F5A623" />} /></Box>
-                </Box>
-
-                {f.product && (
-                  <>
-                    <Divider sx={{ my: 2 }} />
-                    {/* Product offering — what they make, how it's built, how it arrives */}
-                    <SectionHeading info="The product itself — what they make, how it's built, and how it arrives ready for the customer.">Product offering</SectionHeading>
-                    <Box sx={infoRowSx}>
-                      <InfoField label="Customization tier" value={f.product.customization_tier || '—'} />
-                      <Box sx={{ maxWidth: 300 }}><InfoField label="Construction methods" value={<ChipList items={f.product.construction_methods} color="#7C5CFF" />} /></Box>
-                      <Box sx={{ maxWidth: 260 }}><InfoField label="Assembly model" value={<ChipList items={f.product.assembly_model} color="#7C5CFF" />} /></Box>
-                      <Box sx={{ maxWidth: 260 }}><InfoField label="Installation model" value={<ChipList items={f.product.installation_model} color="#7C5CFF" />} /></Box>
-                      <Box sx={{ maxWidth: 340 }}><InfoField label="Technology profile" value={<ChipList items={f.product.technology_profile} color="#2C73FF" />} /></Box>
-                    </Box>
-                  </>
-                )}
-              </>
-            );
-          })()}
-          </Paper>
+          </Box>
           )}
 
-          {/* Churn analysis panel — reads from churn_inferences.json (AI-classified reasons)
-              and churn_subpatterns.json (finer-grained tags), plus any local override the user
-              has staged. Only renders for churned customers — non-churned have nothing to analyze. */}
+          {/* Churn Summary — a full post-mortem shown only for churned customers.
+              Composes the existing ChurnAnalysisCard (the "why") with churn-specific
+              stat cards, supporting InfoSection facts, and the revenue-decline chart. */}
           {custTab === 'churn' && selected.status === 'churned' && (() => {
             const customerKey = String(selected.allmoxy_customer_id);
             const inf = inferences?.customers.find((c) => c.allmoxy_customer_id === selected.allmoxy_customer_id) ?? null;
@@ -641,28 +613,103 @@ export default function CustomerDetail() {
             // Effective reason picks: override > HubSpot > AI inference > none.
             const baseReason = (selected.churn_reason ?? '').trim();
             const effectiveReason = override?.reason || baseReason || inf?.suggested_reason || '';
-            const effectiveEvidence = override?.evidence
-              || inf?.evidence_quote
-              || '';
+            const effectiveEvidence = override?.evidence || inf?.evidence_quote || '';
             const reasonSource: 'override' | 'hubspot' | 'ai' | 'none' = override?.reason
-              ? 'override'
-              : baseReason
-                ? 'hubspot'
-                : inf?.suggested_reason
-                  ? 'ai'
-                  : 'none';
+              ? 'override' : baseReason ? 'hubspot' : inf?.suggested_reason ? 'ai' : 'none';
+            // Active tenure = signup → last payment (their real lifespan), not to today.
+            const su = selected.sign_up_date ? new Date(selected.sign_up_date) : null;
+            const lp = selected.last_payment_date ? new Date(selected.last_payment_date) : null;
+            const tenureYrs = su && lp && !isNaN(su.getTime()) && !isNaN(lp.getTime())
+              ? (lp.getTime() - su.getTime()) / (365.25 * 864e5) : selected.years_with_us;
+            const pct = (v: number) => `${((v / Math.max(selected.lifetime_total, 1)) * 100).toFixed(0)}% of lifetime`;
+            const statCards: Array<[string, string | null, string]> = [
+              ['Churned', formatDateMDY(selected.last_payment_date), 'last payment received'],
+              ['Lifetime value', USD0.format(selected.lifetime_total), 'all streams combined'],
+              ['Active tenure', tenureYrs != null ? `${tenureYrs.toFixed(1)} yrs` : '—', 'signup → last payment'],
+              ['Cohort', selected.cohort_year != null ? String(selected.cohort_year) : '—', 'signup year'],
+              ['Peak month', selected.peak_month_total != null ? USD0.format(selected.peak_month_total) : '—', selected.peak_month ? monthLabel(selected.peak_month) : ''],
+            ];
             return (
-              <ChurnAnalysisCard
-                selected={selected}
-                inference={inf}
-                subTags={subTags}
-                subDefs={subDefs}
-                override={override}
-                effectiveReason={effectiveReason}
-                effectiveEvidence={effectiveEvidence}
-                reasonSource={reasonSource}
-                onSave={setChurnOverride}
-              />
+              <Box>
+                {/* Churn-specific headline stats */}
+                <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap" sx={{ mb: 2 }}>
+                  {statCards.map(([label, value, hint]) => (
+                    <Box key={label} sx={{ flex: '1 1 150px' }}><StatCard label={label} value={value} hint={hint} /></Box>
+                  ))}
+                </Stack>
+
+                {/* Why they churned — the existing reason analysis card (source, evidence, sub-patterns, editable) */}
+                <ChurnAnalysisCard
+                  selected={selected}
+                  inference={inf}
+                  subTags={subTags}
+                  subDefs={subDefs}
+                  override={override}
+                  effectiveReason={effectiveReason}
+                  effectiveEvidence={effectiveEvidence}
+                  reasonSource={reasonSource}
+                  onSave={setChurnOverride}
+                />
+
+                {/* Supporting facts */}
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2, alignItems: 'start', mt: 2 }}>
+                  <InfoSection title="Lifecycle">
+                    <InfoField label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
+                    <InfoField label="First payment" value={formatDateMDY(selected.first_payment_date)} />
+                    <InfoField label="Last payment" value={formatDateMDY(selected.last_payment_date)} />
+                    <InfoField label="Active tenure" value={tenureYrs != null ? `${tenureYrs.toFixed(1)} yrs` : '—'} />
+                    <InfoField label="Cohort" value={selected.cohort_year != null ? String(selected.cohort_year) : '—'} />
+                  </InfoSection>
+                  <InfoSection title="Value at churn">
+                    <InfoField label="Lifetime total" value={USD0.format(selected.lifetime_total)} />
+                    <InfoField label="Subscription" value={USD0.format(selected.lifetime_subscription)} hint={pct(selected.lifetime_subscription)} />
+                    <InfoField label="Services" value={USD0.format(selected.lifetime_services)} hint={pct(selected.lifetime_services)} />
+                    <InfoField label="Connect" value={USD0.format(selected.lifetime_connect)} hint={pct(selected.lifetime_connect)} />
+                    <InfoField label="Peak month" value={selected.peak_month_total != null ? USD0.format(selected.peak_month_total) : '—'} hint={selected.peak_month ? monthLabel(selected.peak_month) : undefined} />
+                    <InfoField label="Transactions" value={selected.transaction_count.toLocaleString()} />
+                  </InfoSection>
+                  <InfoSection title="Account context" wide>
+                    <InfoField label="Account rep" value={selected.instance_owner_first_name?.trim() || selected.instance_owner?.trim() || '—'} />
+                    <InfoField label="Segment" value={selected.primary_segment || '—'} />
+                    <InfoField label="Sub-segment" value={selected.sub_segment || '—'} />
+                    <InfoField label="Pay status" value={selected.pay_status || '—'} />
+                    <InfoField label="Contract" value={selected.contract_status || '—'} />
+                    {selected.customer_health_cs_pulse && <InfoField label="CS health pulse" value={selected.customer_health_cs_pulse} />}
+                    {selected.notes_last_contacted && <InfoField label="Last contacted" value={formatDateMDY(selected.notes_last_contacted)} />}
+                    {selected.vip_legacy_customer && <InfoField label="VIP / legacy" value={selected.vip_legacy_customer} />}
+                  </InfoSection>
+                </Box>
+
+                {/* Revenue history — where it wound down */}
+                <Paper sx={{ p: 3, mt: 2 }}>
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+                    <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>Revenue history — where it wound down</Typography>
+                    <InfoIcon info="Monthly revenue by stream across the customer's lifetime. The drop-off shows when and how their spend tapered before churn." />
+                  </Stack>
+                  {chart.length === 0 ? (
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>No monthly revenue history.</Typography>
+                  ) : (
+                    <Box sx={{ height: 240 }}>
+                      <ResponsiveContainer>
+                        <BarChart data={chart}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
+                          <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={11} />
+                          <YAxis stroke="#8B949E" fontSize={11} width={60} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                          <RTooltip labelFormatter={(v) => monthLabelLong(String(v))} formatter={(v: number, name: string) => [USD0.format(v), name]} contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }} cursor={{ fill: 'rgba(44, 115, 255, 0.06)' }} />
+                          <Bar name="Subscription" dataKey="subscription" stackId="rev" fill="#2C73FF" />
+                          <Bar name="Services" dataKey="services" stackId="rev" fill="#1A9E5C" />
+                          <Bar name="Connect" dataKey="connect" stackId="rev" fill="#F59E0B" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </Box>
+                  )}
+                  <Stack direction="row" spacing={2} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
+                    <LegendSwatch color="#2C73FF" label="Subscription" />
+                    <LegendSwatch color="#1A9E5C" label="Services" />
+                    <LegendSwatch color="#F59E0B" label="Connect" />
+                  </Stack>
+                </Paper>
+              </Box>
             );
           })()}
 
@@ -1437,6 +1484,16 @@ function SectionHeading({ children, info }: { children: React.ReactNode; info?: 
       <Typography variant="subtitle2" sx={{ fontWeight: 700, fontSize: 13, color: 'text.primary' }}>{children}</Typography>
       {info && <InfoIcon info={info} />}
     </Stack>
+  );
+}
+// One boxed section card for the Information tab. `wide` makes it span the full
+// grid width (for chip-heavy groups like software stack / firmographics).
+function InfoSection({ title, info, wide, children }: { title: React.ReactNode; info?: React.ReactNode; wide?: boolean; children: React.ReactNode }) {
+  return (
+    <Paper variant="outlined" sx={{ p: 2, alignSelf: 'start', ...(wide && { gridColumn: '1 / -1' }) }}>
+      <SectionHeading info={info}>{title}</SectionHeading>
+      <Box sx={infoRowSx}>{children}</Box>
+    </Paper>
   );
 }
 function InfoField({ label, value, hint }: { label: string; value: React.ReactNode; hint?: React.ReactNode }) {

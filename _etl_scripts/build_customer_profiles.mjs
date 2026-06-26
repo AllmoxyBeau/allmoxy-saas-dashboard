@@ -575,6 +575,13 @@ for (const r of svcSnap.rows) {
 }
 
 // ---------- customer_health → current_mrr + failed_3mo ----------
+// Annual payers — exempt from the "missed a month" non-payment test (they pay
+// once a year, so a monthly gap is normal). Same source apply_annual_amortization uses.
+const ANNUAL_IDS = (() => {
+  try { return new Set(JSON.parse(fs.readFileSync('/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/src/data/annual_payers.json', 'utf8')).annual_payer_ids || []); }
+  catch { return new Set(); }
+})();
+
 const healthSnap = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'customer_health.json'), 'utf8'));
 const healthById = new Map();
 for (const c of healthSnap.all_active_customers ?? []) {
@@ -708,7 +715,7 @@ for (const id of allIds) {
   const failed3mo = recentFailed.length;
   const failed3moAmount = Math.round(recentFailed.reduce((s, t) => s + t.amount, 0) * 100) / 100;
 
-  const status = activeToday ? (failed3mo > 0 ? 'at_risk' : 'active') : 'churned';
+  // status is computed below (hybrid churn model) once HubSpot signals resolve.
 
   // HubSpot Instance Sync Sheet enrichment — joined via any of the customer's stripe ids.
   const hub = hubspotForCustomer(core?.stripe_customer_ids ?? [], id, core?.hubspot_company_id, name);
@@ -784,6 +791,30 @@ for (const id of allIds) {
   const live = hubspotLiveForCustomer(core?.stripe_customer_ids ?? [], hubspotCompanyIdResolved);
   const liveOwnerFirstName = live?.owner_first_name ?? null;
   const liveOwnerFullName = live?.owner_full_name ?? null;
+
+  // ---- Status (hybrid churn model) ----
+  // Official churn requires a HubSpot signal — Cancelled pay status or a filled
+  // churn-playbook reason — OR a long lapse (no successful payment for 12+ months).
+  // A customer who has merely missed a recent month is 'non_payment': a highlighted
+  // warning state, not yet churned. Annual payers are exempt from the monthly-miss test.
+  const resolvedPayStatus = (installerId && instanceStatusByInstaller.get(String(installerId))) || hub?.pay_status || null;
+  const resolvedChurnReason = hub?.churn_reason ?? null;
+  const hubChurnConfirmed = /cancel/i.test(resolvedPayStatus || '') || !!(resolvedChurnReason && String(resolvedChurnReason).trim());
+  const monthsSinceLastPay = lastPay ? (today.getTime() - new Date(lastPay).getTime()) / (30.44 * 864e5) : Infinity;
+  // Missed at least the latest complete month (no payment that month or the current one).
+  const missedAMonth = !!(lastPay && lastPay < `${latestCompleteMonth}-01`);
+  const isAnnualPayer = ANNUAL_IDS.has(id);
+  // Pay statuses where NOT billing is legitimate/expected — an agreed pause, a
+  // pre-sale account, or a free partnership. A missed month here isn't non-payment,
+  // and a long gap isn't churn. (Cancelled is handled above as hubChurnConfirmed.)
+  const legitNonBilling = /pause|pre-?sale|partnership|free/i.test(resolvedPayStatus || '');
+  let status;
+  if (hubChurnConfirmed) status = 'churned';
+  else if (legitNonBilling) status = failed3mo > 0 ? 'at_risk' : 'active';
+  else if (monthsSinceLastPay >= 12) status = 'churned';
+  else if (missedAMonth && !isAnnualPayer) status = 'non_payment';
+  else if (failed3mo > 0) status = 'at_risk';
+  else status = 'active';
 
   profiles.push({
     allmoxy_customer_id: id,

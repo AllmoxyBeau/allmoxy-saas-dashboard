@@ -42,6 +42,7 @@ export const KNOWN_SNAPSHOTS = [
   'renewal_management',
   'implementation',
   'features',
+  'connect_volume',
   'data_cleanup',
 ] as const;
 

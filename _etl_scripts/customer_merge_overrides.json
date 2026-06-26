@@ -1,0 +1,11 @@
+{
+  "comment": "Merge duplicate allmoxy_customer_id rows that are really ONE customer into a single surviving record. Keyed by the AID being absorbed ('from'); 'into' is the surviving AID. apply_customer_merges.mjs folds the absorbed row's financials (lifetime/current totals, transactions, monthly_history, Stripe IDs, dates) into the survivor and removes the absorbed row. refresh_all applies it to allmoxy_core_customer (right after the core roster is built) and to customer_profiles (after enrichment), so the duplicate disappears from every downstream snapshot. Use when one real customer has two AIDs — e.g. re-onboarded under a new core id but same installer_id / HubSpot company / Stripe subscription.",
+  "updated_at": "2026-06-24",
+  "merges": {
+    "2027": {
+      "into": 500,
+      "_note": "Mountain Showcase Group (#2027) is the same customer as #500 Mountain Showcase Group, Inc. — identical installer_id 1952, HubSpot company 16344570990, and Stripe subscription sub_1RcKTnHkM2QhTtxhyv1n5FOR. #2027 is an empty duplicate (never_paid, $0, 0 transactions).",
+      "_set_at": "2026-06-24"
+    }
+  }
+}

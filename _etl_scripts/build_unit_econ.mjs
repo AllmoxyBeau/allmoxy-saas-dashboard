@@ -82,6 +82,12 @@ for (const [key, rowIdx] of Object.entries(ROWS)) {
 const mrr = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'mrr_by_month.json'), 'utf8'));
 const services = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'services_by_month.json'), 'utf8'));
 const core = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'allmoxy_core_customer.json'), 'utf8'));
+// Stripe Connect revenue is a distinct stream — Allmoxy's platform fee on
+// customer payment processing. It lives in connect_by_month (month → mrr_connect),
+// NOT in the QuickBooks P&L's near-zero "4600 Affiliate Referral Income" line.
+const connect = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'connect_by_month.json'), 'utf8'));
+const connectByCust = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'connect_by_customer_month.json'), 'utf8'));
+const connectByMonth = Object.fromEntries(connect.rows.map((r) => [r.month, r.mrr_connect ?? 0]));
 
 const mrrByMonth = Object.fromEntries(mrr.rows.map((r) => [r.month, r]));
 
@@ -126,10 +132,13 @@ const monthly = months.map((m) => {
   const logoQty = row.logo_qty ?? null;
   const avgMRR = row.mrr_subscription && logoQty ? row.mrr_subscription / logoQty : null;
 
+  const connectRev = connectByMonth[m] ?? 0;
+
   return {
     month: m,
     subscription_revenue: Math.round(subRev * 100) / 100,
     services_revenue: Math.round(servicesRev * 100) / 100,
+    connect_revenue: Math.round(connectRev * 100) / 100,
     affiliate_revenue: Math.round(affiliateRev * 100) / 100,
     total_income: Math.round(totalIncome * 100) / 100,
     cogs: Math.round(totalCOGS * 100) / 100,
@@ -156,6 +165,7 @@ function sum(arr, key) { return arr.reduce((s, r) => s + (r[key] ?? 0), 0); }
 
 const ttmSubRev = sum(ttm, 'subscription_revenue');
 const ttmServicesRev = sum(ttm, 'services_revenue');
+const ttmConnectRev = sum(ttm, 'connect_revenue');
 const ttmAffiliateRev = sum(ttm, 'affiliate_revenue');
 const ttmTotalIncome = sum(ttm, 'total_income');
 const ttmCOGS = sum(ttm, 'cogs');
@@ -224,6 +234,23 @@ const avgServicesPerAttachedCustomer =
     ? [...svcCustomerRevenue.values()].reduce((a, b) => a + b, 0) / svcCustomersEver.size
     : null;
 
+// ---------- Stripe Connect attach (from connect_by_customer_month over TTM) ----------
+// A customer "uses Connect" if they earned Allmoxy any Connect revenue in the TTM
+// window. Attach rate is vs the active book (logo qty now), since Connect only
+// applies to live, paying customers — not the all-time roster.
+const ttmConnectMonths = new Set(ttm.map((r) => r.month));
+let connectCustomersTtm = 0;
+let connectRevTtmFromCust = 0;
+for (const r of connectByCust.rows) {
+  let total = 0;
+  for (const [k, val] of Object.entries(r)) {
+    if (ttmConnectMonths.has(k) && typeof val === 'number') total += val;
+  }
+  if (total > 0) { connectCustomersTtm += 1; connectRevTtmFromCust += total; }
+}
+const connectAttachRate = logoQtyNow > 0 ? connectCustomersTtm / logoQtyNow : null;
+const avgConnectPerConnectCustomer = connectCustomersTtm > 0 ? connectRevTtmFromCust / connectCustomersTtm : null;
+
 const now = new Date();
 const out = {
   tab: 'unit_economics',
@@ -238,6 +265,7 @@ const out = {
     windowEnd: ttm[ttm.length - 1]?.month ?? null,
     subscription_revenue: Math.round(ttmSubRev * 100) / 100,
     services_revenue: Math.round(ttmServicesRev * 100) / 100,
+    connect_revenue: Math.round(ttmConnectRev * 100) / 100,
     affiliate_revenue: Math.round(ttmAffiliateRev * 100) / 100,
     total_income: Math.round(ttmTotalIncome * 100) / 100,
     cogs: Math.round(ttmCOGS * 100) / 100,
@@ -262,6 +290,15 @@ const out = {
     attach_rate: attachRate != null ? Math.round(attachRate * 10000) / 10000 : null,
     avg_services_revenue_per_attached_customer:
       avgServicesPerAttachedCustomer != null ? Math.round(avgServicesPerAttachedCustomer * 100) / 100 : null,
+  },
+  connect: {
+    customers_using_connect: connectCustomersTtm,
+    active_logos: logoQtyNow,
+    attach_rate: connectAttachRate != null ? Math.round(connectAttachRate * 10000) / 10000 : null,
+    connect_revenue_ttm: Math.round(ttmConnectRev * 100) / 100,
+    avg_connect_revenue_per_connect_customer:
+      avgConnectPerConnectCustomer != null ? Math.round(avgConnectPerConnectCustomer * 100) / 100 : null,
+    avg_monthly_connect_revenue: Math.round((ttmConnectRev / 12) * 100) / 100,
   },
   notes:
     'Unit economics derived from QuickBooks CAC Info P&L × allmoxy_core_customer signups × mrr_by_month logo counts. ' +

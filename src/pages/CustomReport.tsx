@@ -35,7 +35,7 @@ type Profile = {
   last_payment_date: string | null;
   years_with_us: number | null;
   cohort_year: number | null;
-  status: 'active' | 'at_risk' | 'churned';
+  status: 'active' | 'at_risk' | 'non_payment' | 'churned' | 'never_paid';
   active_today: boolean;
   lifetime_total: number;
   lifetime_subscription: number;
