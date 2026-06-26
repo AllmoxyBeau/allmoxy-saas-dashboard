@@ -459,6 +459,13 @@ runScript('apply_annual_amortization.mjs', null);
 console.log('  applying Stripe Connect attribution…');
 runScript('apply_connect_attribution.mjs', null);
 
+// Revenue seam: history stays from the xlsx; June 2026 forward comes from the
+// live Stripe API (metadata-classified). Runs after Connect attribution (so it
+// preserves monthly connect) and BEFORE status overrides / never-paid (so those
+// still win). No-op if the Stripe charges cache is absent.
+console.log('  applying Stripe revenue seam (June 2026+)…');
+runScript('apply_stripe_seam.mjs', null);
+
 // Apply customer-status overrides (sub-instance-of-parent, comp arrangements).
 // Final say on status — must run AFTER amortization which already adjusts status
 // for annual-coverage customers. These overrides cover the cases amortization
@@ -537,6 +544,13 @@ runScript('build_renewal_management.mjs', null); // writes renewal_management.js
 // missing, ghost HubSpot Company IDs, Connect mapping orphans, pay-status
 // drift). Drives the Maintenance → Data Cleanup page.
 runScript('build_data_cleanup.mjs', null); // writes data_cleanup.json itself
+
+// Phase 2 revenue seam: overlay June 2026+ onto the aggregate monthly snapshots
+// (mrr_by_month / subscription_by_month / services_by_month) from the live Stripe
+// cache, so the MRR trend agrees with the per-customer seam and the invariant
+// reconciles for the seamed months. Runs after all monthly builds, before the tests.
+console.log('  applying Stripe revenue seam to monthly aggregates (June 2026+)…');
+runScript('apply_stripe_seam_monthly.mjs', null);
 
 // QoE-6 Invariant tests — run AFTER all snapshots are built so they can cross-check
 // for consistency. Writes invariant_test_results.json. Exits non-zero on error-severity

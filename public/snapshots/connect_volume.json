@@ -1,6 +1,6 @@
 {
   "tab": "connect_volume",
-  "fetchedAt": "2026-06-26T14:29:07.814Z",
+  "fetchedAt": "2026-06-26T18:33:46.808Z",
   "stripe_fetchedAt": "2026-06-24T19:19:43.953Z",
   "window": {
     "since": "trailing 13mo"
@@ -20,9 +20,9 @@
   },
   "attach": {
     "connected_accounts": 100,
-    "active_customers": 187,
+    "active_customers": 188,
     "active_customers_on_connect": 49,
-    "attach_rate": 0.262
+    "attach_rate": 0.261
   },
   "scenarios": [
     {
@@ -58,12 +58,12 @@
     "unknown": 1
   },
   "penetration": {
-    "active_customers": 187,
+    "active_customers": 188,
     "processing_now": 60,
-    "attach_rate": 0.321,
+    "attach_rate": 0.319,
     "lapsed": 10,
-    "never": 117,
-    "not_processing": 127,
+    "never": 118,
+    "not_processing": 128,
     "attach_target_order_volume": 174956192,
     "attach_target_fee_potential": 487183,
     "attach_capture_assumption": 0.557,
@@ -1627,7 +1627,7 @@
       "name": "Raumplus",
       "status": "active",
       "primary_segment": "Specialty Wood Products",
-      "subscription_mrr": 0,
+      "subscription_mrr": 149.18,
       "is_launched": "Yes",
       "connect_status": "never",
       "ever_processed": false,
@@ -2620,6 +2620,22 @@
       "status": "active",
       "primary_segment": "Cabinetry",
       "subscription_mrr": 250,
+      "is_launched": null,
+      "connect_status": "never",
+      "ever_processed": false,
+      "annual_order_volume": 0,
+      "connect_gmv_annual": 0,
+      "connect_attach_rate": null,
+      "annual_connect_fee": 0,
+      "est_annual_connect_fee": 0,
+      "lapsed_note": null
+    },
+    {
+      "allmoxy_customer_id": 2056,
+      "name": "Five Cabinetry",
+      "status": "active",
+      "primary_segment": "Cabinetry",
+      "subscription_mrr": 270,
       "is_launched": null,
       "connect_status": "never",
       "ever_processed": false,
@@ -3826,7 +3842,7 @@
       "customer_name": "Bella IMC",
       "allmoxy_customer_id": 31,
       "customer_status": "at_risk",
-      "subscription_mrr": 0
+      "subscription_mrr": 658
     },
     {
       "account": "acct_1BTyo7GrqCWIbyfH",

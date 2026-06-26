@@ -34,6 +34,23 @@ function loadEnv() {
 }
 const ENV = loadEnv();
 if (!ENV.STRIPE_SECRET_KEY) throw new Error('Missing STRIPE_SECRET_KEY in .env.local');
+
+// Transaction-type recognizer. Priority:
+//   1. metadata.transaction_type — the source of truth set in Stripe (recent charges).
+//   2. description / statement descriptor patterns ("Services" / "Subscription" / "Custom Domain").
+//   3. presence of a Stripe Billing invoice id → recurring subscription.
+//   4. default subscription (the bulk of revenue).
+// Returns 'subscription' | 'services' | 'connect'. Tracks which signal was used.
+const TYPE_SIGNAL = { metadata: 0, pattern: 0, invoice: 0, default: 0 };
+function classifyType(c) {
+  const mt = String(c.metadata?.transaction_type || '').toLowerCase().trim();
+  if (mt) { TYPE_SIGNAL.metadata++; if (mt.includes('service')) return 'services'; if (mt.includes('connect')) return 'connect'; return 'subscription'; }
+  const blob = (String(c.description || '') + ' ' + String(c.statement_descriptor || c.calculated_statement_descriptor || '')).toLowerCase();
+  if (/\bservices?\b/.test(blob)) { TYPE_SIGNAL.pattern++; return 'services'; }
+  if (/custom\s*dom|subscription/.test(blob)) { TYPE_SIGNAL.pattern++; return 'subscription'; }
+  if (c.invoice) { TYPE_SIGNAL.invoice++; return 'subscription'; }
+  TYPE_SIGNAL.default++; return 'subscription';
+}
 const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base64');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -73,7 +90,6 @@ for (;;) {
     if (c.created > maxCreated) maxCreated = c.created;
     currencies.set((c.currency || 'usd').toUpperCase(), (currencies.get((c.currency || 'usd').toUpperCase()) || 0) + 1);
     const cus = c.customer || null;
-    const type = c.invoice ? 'subscription' : 'services';
     const month = new Date(c.created * 1000).toISOString().slice(0, 7);
 
     // Failed charges (paid=false) — kept for the at-risk/dunning signal.
@@ -88,6 +104,7 @@ for (;;) {
     }
 
     // Successful, captured revenue (GROSS — net of refunds only, NOT Stripe fees).
+    const type = classifyType(c);
     const gross = (c.amount - (c.amount_refunded || 0)) / 100;
     if (!cus) { noCustomer.push({ d: iso(c.created), a: r2(gross), type, desc: (c.description || '').slice(0, 80) }); counted++; continue; }
     const e = byCust.get(cus) || { subscription: 0, services: 0, refunded: 0, count: 0, first_ts: c.created, last_ts: c.created, by_month: {}, transactions: [], failed: [] };
@@ -127,6 +144,7 @@ fs.writeFileSync(OUT, JSON.stringify({
     lifetime_subscription: totSub, lifetime_services: totSvc, distinct_customers: byCust.size,
     failed_charges: failedCount, no_customer_total: noCustTotal, no_customer_count: noCustomer.length,
   },
+  type_signal: TYPE_SIGNAL, // how each charge's type was determined (metadata = source of truth)
   no_customer: noCustomer.sort((a, b) => b.a - a.a),
   by_customer,
 }, null, 2));

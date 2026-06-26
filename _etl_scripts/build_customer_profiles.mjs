@@ -505,6 +505,8 @@ for (let i = 2; i < stripe.length; i++) {
   // actual revenue retained, not gross charges. Stripe's "Net amount" column is
   // amount - amount_refunded; if it's missing we compute it ourselves.
   const amountRefunded = numClean(row[SI.amountRefunded]);
+  // Already GROSS: the sheet's "Net amount" column == Amount − Refunded exactly
+  // (Stripe fees are NOT deducted; they're handled later as a COGS adjustment).
   const netCell = row[SI.netAmount];
   const netAmount = netCell != null && netCell !== '' ? numClean(netCell) : Math.max(amount - amountRefunded, 0);
   rec.txns.push({

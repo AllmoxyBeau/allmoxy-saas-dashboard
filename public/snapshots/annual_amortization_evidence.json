@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-26T14:19:40.924Z",
+  "fetched_at": "2026-06-26T18:23:25.755Z",
   "comment": "Annual-amortization evidence registry (QoE-4). Per annual-payer, captures: source payment trace (Stripe / check / wire), the actual realized amortization on monthly_history, any custom override window, QB deferred-revenue treatment, and sign-off. A QoE reviewer should be able to answer \"show me every annualized dollar in the MRR series and prove it\" from this file alone. Built by _etl_scripts/build_annual_amortization_evidence.mjs.",
   "summary": {
     "annual_payer_count": 2,
