@@ -265,6 +265,20 @@ const out = [...rows.values()].map((r) => {
 });
 out.sort((a, b) => (b.billable_amount - a.billable_amount) || a.name.localeCompare(b.name));
 
+// Implementation Overview is a worklist of CURRENT customers only. Drop churned/
+// cancelled and never-paid accounts — they're no longer being implemented and
+// just clutter the list and skew the aggregates (e.g. a cancelled customer still
+// showing a stale stage). at_risk customers are kept: they're active relationships
+// (payment-risk flag only), often still mid-implementation. This filters rows AND
+// every aggregate below, since both derive from `out`.
+const EXCLUDED_STATUS = new Set(['churned', 'never_paid']);
+const droppedInactive = out.filter((r) => EXCLUDED_STATUS.has(r.customer_status));
+{
+  const kept = out.filter((r) => !EXCLUDED_STATUS.has(r.customer_status));
+  out.length = 0;
+  out.push(...kept);
+}
+
 // --- aggregates -------------------------------------------------------------
 const byStage = {};
 for (const r of out) if (r.has_jira) byStage[r.stage] = (byStage[r.stage] || 0) + 1;
@@ -323,7 +337,7 @@ const payload = {
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(payload, null, 2));
 
-console.log(`✓ implementation.json: ${out.length} customers (${aggregates.active} active)`);
+console.log(`✓ implementation.json: ${out.length} customers (${aggregates.active} active) · dropped ${droppedInactive.length} churned/never-paid`);
 console.log(`  Time-to-first-order: ${aggregates.initial_implementation} initial (pre-order) · ${aggregates.catalog_update} catalog-update (launched) · ${aggregates.unknown_launch} unknown`);
 console.log(`  Initial SLA (90d): ${aggregates.initial_by_sla.on_track} on-track, ${aggregates.initial_at_risk} at-risk, ${aggregates.initial_overdue} overdue · ${aggregates.stalled_gym_members} stalled gym-members · median TTFO ${aggregates.median_months_to_first_order ?? '—'} mo`);
 console.log(`  JIRA: ${aggregates.jira_matched}/${aggregates.jira_epics_total} epics matched, ${unmatched.length} unmatched, ${internalExcluded.length} internal excluded`);
