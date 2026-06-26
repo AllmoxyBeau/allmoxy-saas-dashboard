@@ -21,6 +21,17 @@ const SEAM = '2026-06';
 const CACHE = path.join(ROOT, '_etl_scripts/cache/stripe_charges.json');
 if (!fs.existsSync(CACHE)) { console.error('[seam-monthly] no stripe cache — skipped'); process.exit(0); }
 
+// Net-settled Connect revenue (USD, what hits the bank) by month, from
+// sync_stripe_connect_net.mjs. Used to overlay mrr_connect for seamed months so
+// the current-month Connect figure reflects real USD settlement (Stripe FX
+// applied, net of refunds) instead of the gross/face-value or attribution-lossy
+// per-customer sum. Falls back to the attributed profiles sum if absent.
+const NET_CACHE = path.join(ROOT, '_etl_scripts/cache/stripe_connect_net.json');
+const netConnectByMonth = (() => {
+  try { const j = JSON.parse(fs.readFileSync(NET_CACHE, 'utf8')); const m = {}; for (const r of j.monthly || []) m[r.month] = r.net_usd; return m; }
+  catch { return {}; }
+})();
+
 const r2 = (v) => Math.round(v * 100) / 100;
 const isMonth = (k) => /^\d{4}-\d{2}$/.test(k);
 const read = (f) => JSON.parse(fs.readFileSync(path.join(SNAP, f), 'utf8'));
@@ -51,12 +62,13 @@ for (const row of mrr.rows) {
   if (row.month >= SEAM && t) {
     row.mrr_subscription = r2(t.sub);
     row.mrr_services = r2(t.svc);
-    // Connect for seamed months comes from the (attribution-populated, seam-preserved)
-    // profiles too — keeps mrr_by_month consistent with the live Connect figure
-    // instead of leaving the stale partial xlsx value on the current month.
-    row.mrr_connect = r2(t.connect);
+    // Connect for seamed months: prefer the net-settled USD figure (real revenue
+    // that hits the bank — Stripe FX applied, net of refunds). Fall back to the
+    // attribution-populated profiles sum if the net cache isn't present.
+    const connect = netConnectByMonth[row.month] != null ? netConnectByMonth[row.month] : t.connect;
+    row.mrr_connect = r2(connect);
     row.logo_qty = t.logos;
-    row.mrr_blended = r2(t.sub + t.svc + t.connect);
+    row.mrr_blended = r2(t.sub + t.svc + connect);
     row.avg_mrr_blended = t.logos ? Math.round(row.mrr_blended / t.logos) : row.avg_mrr_blended;
     mrrTouched++;
   }

@@ -729,7 +729,7 @@ export default function CurrentMonth() {
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <KPICard
-            label="Connect fees (MTD)"
+            label="Connect fees (MTD, net USD)"
             value={view.connect.mtd != null ? USD0.format(view.connect.mtd) : '—'}
             sub={
               view.connect.mtd == null
@@ -741,7 +741,7 @@ export default function CurrentMonth() {
             projectionCaveat={view.connect.mtd != null ? elapsedCaveat : undefined}
             delta={pctDelta(view.connect.projected, view.connect.priorTotal)}
             deltaLabel={`projected vs ${monthLabel(view.prior)} full`}
-            info={<><strong>What it is:</strong> Stripe Connect (affiliate) fees earned this month. Sourced from the 6 annual Stripe Connect xlsx files; if the most recent file doesn't yet contain transactions for the current month, this will be empty until you refresh.</>}
+            info={<><strong>What it is:</strong> Stripe Connect (affiliate) fees — <strong>net settled in USD</strong>, i.e. what actually hits the bank. Sourced live from Stripe <em>balance transactions</em> (type <code>application_fee</code>), so foreign-currency (CAD) fees are already FX-converted by Stripe and refunds are netted out. This differs from the gross take on the Payments Opportunity page, which reports each fee in its original charge currency. June 2026+ is live; earlier months come from history.</>}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>

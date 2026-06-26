@@ -11,8 +11,8 @@
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
     "refresh": "node _etl_scripts/refresh_and_commit.mjs",
-    "refresh:all": "node _etl_scripts/sync_stripe.mjs && node _etl_scripts/sync_stripe_connect.mjs && node _etl_scripts/refresh_and_commit.mjs --no-push",
-    "refresh:all:deploy": "node _etl_scripts/sync_stripe.mjs && node _etl_scripts/sync_stripe_connect.mjs && node _etl_scripts/refresh_and_commit.mjs"
+    "refresh:all": "node _etl_scripts/sync_stripe.mjs && node _etl_scripts/sync_stripe_connect.mjs && node _etl_scripts/sync_stripe_connect_net.mjs && node _etl_scripts/refresh_and_commit.mjs --no-push",
+    "refresh:all:deploy": "node _etl_scripts/sync_stripe.mjs && node _etl_scripts/sync_stripe_connect.mjs && node _etl_scripts/sync_stripe_connect_net.mjs && node _etl_scripts/refresh_and_commit.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
