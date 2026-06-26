@@ -43,15 +43,18 @@ const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base6
 // --- args -----------------------------------------------------------------
 const argSince = process.argv.find((a) => a.startsWith('--since='))?.split('=')[1];
 const argMonths = process.argv.find((a) => a.startsWith('--months='))?.split('=')[1];
-let createdGte = null;
+const FULL = process.argv.includes('--full');
+const prev = (() => { try { return JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch { return null; } })();
+let createdGte = null, incremental = false;
 if (argSince) createdGte = Math.floor(new Date(argSince + 'T00:00:00Z').getTime() / 1000);
-// Note: scripts can't use Date.now-relative math reliably elsewhere, but this is
-// a live sync (not replayed), so trailing-N-months is computed from the clock.
 else if (argMonths) {
   const d = new Date();
   d.setMonth(d.getMonth() - Number(argMonths));
   createdGte = Math.floor(d.getTime() / 1000);
 }
+// Incremental: no explicit window + a prior cache → only fetch fees created after
+// the last run. First run / --full does the (slow ~1h) full backfill.
+else if (!FULL && prev?.max_created) { createdGte = prev.max_created + 1; incremental = true; }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -59,14 +62,24 @@ async function getPage(startingAfter) {
   const qs = new URLSearchParams({ limit: '100', 'expand[]': 'data.charge' });
   if (startingAfter) qs.set('starting_after', startingAfter);
   if (createdGte) qs.set('created[gte]', String(createdGte));
-  for (let attempt = 0; attempt < 6; attempt++) {
-    const res = await fetch('https://api.stripe.com/v1/application_fees?' + qs.toString(), { headers: { Authorization: AUTH } });
-    if (res.status === 429 || res.status >= 500) { await sleep(500 * (attempt + 1)); continue; }
-    const body = await res.json();
-    if (res.status !== 200) throw new Error(`Stripe ${res.status}: ${body?.error?.message || JSON.stringify(body).slice(0, 200)}`);
-    return body;
+  let lastErr = null;
+  for (let attempt = 0; attempt < 8; attempt++) {
+    try {
+      const res = await fetch('https://api.stripe.com/v1/application_fees?' + qs.toString(), { headers: { Authorization: AUTH } });
+      if (res.status === 429 || res.status >= 500) { await sleep(1000 * (attempt + 1)); continue; }
+      const body = await res.json();
+      if (res.status !== 200) throw new Error(`Stripe ${res.status}: ${body?.error?.message || JSON.stringify(body).slice(0, 200)}`);
+      return body;
+    } catch (e) {
+      lastErr = e;
+      // Non-retryable API error (4xx other than 429 → auth/bad request): fail fast.
+      if (/^Stripe 4/.test(String(e.message || ''))) throw e;
+      // Network blip / timeout / transient: back off and retry (a single dropped
+      // connection mustn't kill a ~1h, 50k-record backfill).
+      await sleep(1000 * (attempt + 1));
+    }
   }
-  throw new Error('Stripe: retries exhausted');
+  throw new Error(`Stripe: retries exhausted${lastErr ? ` (${lastErr.message})` : ''}`);
 }
 
 // --- aggregate -------------------------------------------------------------
@@ -74,12 +87,23 @@ const monthly = new Map();   // 'YYYY-MM' -> { gross, fee, count, refunded }
 const byAccount = new Map(); // acct_id -> { gross, fee, count, firstTs, lastTs }
 const currencies = new Map();
 let total = { gross: 0, fee: 0, count: 0, refunded: 0 };
+let maxCreated = 0;
+
+// Seed aggregates from the previous cache on an incremental run.
+if (incremental && prev) {
+  for (const r of prev.monthly || []) monthly.set(r.month, { gross: r.gross_volume, fee: r.fee_revenue, count: r.txn_count, refunded: r.fee_refunded || 0 });
+  for (const a of prev.by_account || []) byAccount.set(a.account, { gross: a.gross_volume, fee: a.fee_revenue, count: a.txn_count, firstTs: Math.floor(Date.parse(a.first_seen) / 1000) || 0, lastTs: Math.floor(Date.parse(a.last_seen) / 1000) || 0 });
+  for (const [c, n] of Object.entries(prev.currencies || {})) currencies.set(c, n);
+  total = { gross: prev.totals.gross_volume, fee: prev.totals.fee_revenue, count: prev.totals.txn_count, refunded: prev.totals.fee_refunded || 0 };
+  maxCreated = prev.max_created || 0;
+}
 
 let cursor = null, pages = 0;
 const t0 = Date.now();
 for (;;) {
   const page = await getPage(cursor);
   for (const f of page.data) {
+    if (f.created > maxCreated) maxCreated = f.created;
     const cur = (f.currency || 'usd').toUpperCase();
     currencies.set(cur, (currencies.get(cur) || 0) + 1);
     const feeAmt = (f.amount || 0) / 100;            // our take, dollars
@@ -127,7 +151,8 @@ const accountRows = [...byAccount.entries()].map(([account, v]) => ({
 const out = {
   source: 'stripe_api:application_fees',
   fetchedAt: new Date().toISOString(),
-  window: { since: argSince || (argMonths ? `trailing ${argMonths}mo` : 'all-time') },
+  max_created: maxCreated,
+  window: { since: argSince || (argMonths ? `trailing ${argMonths}mo` : incremental ? 'incremental' : 'all-time') },
   currencies: Object.fromEntries(currencies),
   totals: {
     gross_volume: r2(total.gross),

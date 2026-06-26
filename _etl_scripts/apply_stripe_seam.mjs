@@ -76,12 +76,23 @@ for (const p of snap.rows) {
   p.lifetime_services = r2((p.lifetime_services || 0) - xlsxSvcGE + apiSvcGE);
   p.lifetime_total = r2((p.lifetime_subscription || 0) + (p.lifetime_services || 0) + (p.lifetime_connect || 0) + (p.lifetime_other || 0));
 
-  // --- monthly_history: drop xlsx >= SEAM, overlay API (connect kept as-is) ---
+  // --- monthly_history: drop xlsx >= SEAM, overlay API sub/svc, PRESERVE connect ---
+  // Connect comes from apply_connect_attribution (which ran before this step) and is
+  // NOT in the Stripe charges cache. It must be captured BEFORE deleting the month —
+  // otherwise `mh[m]?.connect` reads the just-deleted entry as undefined and zeroes
+  // every seamed month's connect for customers who also have June+ Stripe charges.
   const mh = p.monthly_history || {};
+  const connectByMonth = {};
+  for (const m of Object.keys(mh)) if (m >= SEAM) connectByMonth[m] = mh[m]?.connect ?? 0;
   for (const m of Object.keys(mh)) if (m >= SEAM) delete mh[m];
   for (const [m, v] of Object.entries(apiMonths)) {
-    const connect = mh[m]?.connect ?? 0;
+    const connect = connectByMonth[m] ?? 0;
     mh[m] = { subscription: r2(v.subscription), services: r2(v.services), connect: r2(connect), total: r2(v.subscription + v.services + connect) };
+  }
+  // Restore seamed months that had connect but no Stripe sub/svc charges (so the
+  // apiMonths overlay above didn't recreate them).
+  for (const [m, connect] of Object.entries(connectByMonth)) {
+    if (connect > 0 && !mh[m]) mh[m] = { subscription: 0, services: 0, connect: r2(connect), total: r2(connect) };
   }
   p.monthly_history = mh;
 

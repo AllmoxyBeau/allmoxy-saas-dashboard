@@ -22,6 +22,12 @@ import CsvExportButton from '../components/common/CsvExportButton';
 import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
 import CustomerLink from '../components/common/CustomerLink';
 import { useSheetTab } from '../hooks/useSheetTab';
+import annualPayerIds from '../data/annual_payer_ids.json';
+
+// Annual payers bill once a year (amortized to monthly MRR). Their last charge is
+// a yearly lump, so the monthly clustering would wrongly treat them as "due again"
+// the following month — exclude them from the upcoming-expected list.
+const ANNUAL_PAYER_IDS = new Set<number>(annualPayerIds.annual_payer_ids);
 
 type MrrRow = {
   month: string;
@@ -94,6 +100,7 @@ type ProfileRow = {
   name: string;
   stripe_customer_ids: string[];
   pay_status?: string | null;
+  status?: string | null;
   monthly_history: Record<string, { subscription: number; services: number; connect: number; total: number }>;
   transactions: Transaction[];
 };
@@ -244,6 +251,24 @@ export default function CurrentMonth() {
     let overduePriors = 0;
     let overdueSubs = 0;
     const detail: DetailRow[] = [];
+
+    // Upcoming expected subscriptions: clusters that billed last month, haven't
+    // billed yet this month, and whose billing day hasn't arrived — i.e. still
+    // genuinely expected to come in. These (not the paused/cancelled-not-yet-due
+    // edge cases that also briefly increment pendingSubs) are what the headline
+    // "expected from N" figure and the audit table below are built from.
+    type UpcomingRow = {
+      rowKey: string;
+      customerId: number;
+      customerName: string;
+      stripeIds: string[];
+      amount: number;        // prior-month billed amount = what we expect again
+      expectedDay: number;   // day of month it typically bills
+      payStatus: string;
+      attempting: boolean;   // Stripe has already attempted (early/failed) this month
+      lastBilledMonth: string;
+    };
+    const upcoming: UpcomingRow[] = [];
 
     // Subscription identity — three-tier resolution:
     //   1) Real Stripe Subscription ID from HubSpot (`s:<sub_id>`) — authoritative.
@@ -536,6 +561,24 @@ export default function CurrentMonth() {
               expectedByDay: c.expectedDay,
               daysOverdue: elapsedDay - c.expectedDay,
             });
+          } else if (!skipForStatus && p.status === 'active' && !ANNUAL_PAYER_IDS.has(p.allmoxy_customer_id)) {
+            // On-time: billing day hasn't arrived yet → still expected to bill
+            // this month. Restricted to active-status accounts only (at-risk,
+            // non-payment, churned, etc. don't count as expected revenue) AND
+            // excludes annual payers, whose last charge is a yearly lump that
+            // would otherwise look like a monthly bill due again this month.
+            // This set makes up the headline "expected from N".
+            upcoming.push({
+              rowKey: rowBase.rowKey,
+              customerId: rowBase.customerId,
+              customerName: rowBase.customerName,
+              stripeIds: rowBase.stripeIds,
+              amount: round2(priorAmount),
+              expectedDay: c.expectedDay,
+              payStatus: p.pay_status ?? '',
+              attempting: c.currentAttempted,
+              lastBilledMonth,
+            });
           }
         }
       }
@@ -559,9 +602,28 @@ export default function CurrentMonth() {
       return a.customerName.localeCompare(b.customerName);
     });
 
-    const priorFull = postedPriors + pendingPriors;
+    // "Expected" = the genuinely on-time upcoming list (excludes paused /
+    // cancelled-not-yet-due clusters that briefly inflate pendingSubs). The
+    // headline figure, the projection, and the audit table all derive from this
+    // one list so they reconcile exactly.
+    upcoming.sort((a, b) => a.expectedDay - b.expectedDay || b.amount - a.amount);
+    const expectedDollars = round2(upcoming.reduce((s, u) => s + u.amount, 0));
+    const expectedSubs = upcoming.length;
+
+    // Variance baseline must cover the SAME population the projection does, or the
+    // delta is nonsense. projected = postedCur + expectedDollars (active monthly
+    // accounts only), so the prior-month baseline is those same accounts' prior
+    // amounts: posted accounts' prior (postedPriors) + expected accounts' prior
+    // (== expectedDollars, since we expect the prior amount again) + overdue
+    // accounts' prior (overduePriors, a real loss this month). Paused / annual /
+    // non-active accounts are excluded from BOTH sides so they create no phantom
+    // variance (e.g. B&B Door's $32k annual lump was distorting the total).
+    // With this baseline, varianceAbs collapses to postedDelta − overduePriors,
+    // which equals the sum of the New/Expansion/Contraction/Overdue/Cancelled
+    // category cards below — so the headline and the breakdown reconcile exactly.
+    const priorFull = postedPriors + expectedDollars + overduePriors;
     const postedDelta = postedCur - postedPriors;
-    const projected = postedCur + (pendingPriors - overduePriors);
+    const projected = postedCur + expectedDollars;
     const varianceAbs = projected - priorFull;
     const variancePct = priorFull > 0 ? varianceAbs / priorFull : null;
 
@@ -595,6 +657,9 @@ export default function CurrentMonth() {
       pendingSubs,
       overduePriors: round2(overduePriors),
       overdueSubs,
+      expectedDollars,
+      expectedSubs,
+      upcoming,
       detail,
       counts,
       sums,
@@ -634,17 +699,17 @@ export default function CurrentMonth() {
           <KPICard
             label="Subscription MRR"
             value={subscriptionView ? USD0.format(subscriptionView.projected) : USD0.format(view.subscription.mtd ?? 0)}
-            valueHint={subscriptionView ? 'projected month-end (excludes overdue)' : undefined}
+            valueHint={subscriptionView ? 'projected month-end (excludes overdue & paused)' : undefined}
             sub={
               subscriptionView
-                ? `${USD0.format(subscriptionView.postedCur)} posted from ${subscriptionView.postedSubs} subscriptions · ${USD0.format(subscriptionView.pendingPriors - subscriptionView.overduePriors)} expected from ${subscriptionView.pendingSubs - subscriptionView.overdueSubs}`
+                ? `${USD0.format(subscriptionView.postedCur)} posted from ${subscriptionView.postedSubs} subscriptions · ${USD0.format(subscriptionView.expectedDollars)} expected from ${subscriptionView.expectedSubs}`
                 : `${view.subscription.currentLogos ?? 0} of ${view.subscription.priorLogos ?? '—'} expected billings posted`
             }
             delta={subscriptionView?.variancePct ?? null}
             deltaLabel={`vs ${monthLabel(view.prior)} apples-to-apples`}
             info={
               <>
-                <strong>Headline value:</strong> projected end-of-month subscription MRR. Posted (already billed) + expected (still-on-time pending, will bill at prior amount). <em>Excludes overdue customers</em> — they're counted as zero in the projection until they actually bill.
+                <strong>Headline value:</strong> projected end-of-month subscription MRR. Posted (already billed) + expected (active accounts, still-on-time pending, will bill at prior amount). <em>Expected counts active-status accounts only</em> — overdue, paused, at-risk, non-payment, and cancelled customers are counted as zero in the projection until they actually bill. The <strong>Upcoming expected subscription payments</strong> table at the bottom of the page lists every subscription in the "expected" figure.
                 <br /><br />
                 <strong>Variance vs {monthLabel(view.prior)}</strong> is the apples-to-apples customer-level comparison: posted-customer changes (contraction/expansion/new logos) <em>plus</em> overdue customers' lost revenue. The Overdue panel below breaks the variance into its two components so the math reconciles.
               </>
@@ -927,6 +992,68 @@ export default function CurrentMonth() {
             </Collapse>
           </Paper>
         </Grid>
+
+        {subscriptionView && subscriptionView.upcoming.length > 0 && (
+          <Grid item xs={12}>
+            <Paper sx={{ p: 2.5 }}>
+              <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 0.5 }} flexWrap="wrap" gap={1}>
+                <Typography variant="h6">Upcoming expected subscription payments</Typography>
+                <Typography variant="subtitle1" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
+                  {USD0.format(subscriptionView.expectedDollars)} from {subscriptionView.expectedSubs}
+                </Typography>
+              </Stack>
+              <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
+                The subscriptions that billed in {monthLabel(view.prior)} but haven't billed yet this month and whose billing day hasn't arrived — the
+                line items behind the <em>"{USD0.format(subscriptionView.expectedDollars)} expected from {subscriptionView.expectedSubs}"</em> in Subscription MRR above.
+                Active accounts only — paused, at-risk, non-payment, and cancelled subscriptions are excluded (they don't count toward the projection).
+              </Typography>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Customer</TableCell>
+                    <TableCell align="right">Expected amount</TableCell>
+                    <TableCell align="center">Bills on</TableCell>
+                    <TableCell align="right">Last billed</TableCell>
+                    <TableCell>Notes</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {subscriptionView.upcoming.map((u) => {
+                    const inDays = u.expectedDay - view.elapsed;
+                    return (
+                      <TableRow key={u.rowKey} hover>
+                        <TableCell>
+                          <CustomerLink id={u.customerId} name={u.customerName} />
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums' }}>{USD0.format(u.amount)}</TableCell>
+                        <TableCell align="center" sx={{ fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
+                          day {u.expectedDay}
+                          <Typography component="span" variant="caption" sx={{ color: 'text.secondary', ml: 0.75 }}>
+                            {inDays > 0 ? `(in ${inDays}d)` : '(due)'}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: 'text.secondary' }}>{u.lastBilledMonth}</TableCell>
+                        <TableCell>
+                          <Stack direction="row" spacing={0.75} flexWrap="wrap" useFlexGap>
+                            {u.attempting && <Chip size="small" color="warning" variant="outlined" label="Stripe attempting" />}
+                            {u.payStatus && u.payStatus !== 'Active' && <Chip size="small" variant="outlined" label={u.payStatus} />}
+                          </Stack>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  <TableRow sx={{ '& > td': { borderBottom: 'none', fontWeight: 700, pt: 1.5 } }}>
+                    <TableCell>Total expected</TableCell>
+                    <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums' }}>{USD0.format(subscriptionView.expectedDollars)}</TableCell>
+                    <TableCell colSpan={3} sx={{ color: 'text.secondary', fontWeight: 500 }}>
+                      {subscriptionView.expectedSubs} subscription{subscriptionView.expectedSubs === 1 ? '' : 's'} still expected this month
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Paper>
+          </Grid>
+        )}
 
       </Grid>
     </Box>

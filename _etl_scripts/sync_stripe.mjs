@@ -54,14 +54,19 @@ function classifyType(c) {
 const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base64');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Always a full pull for now (we capture nested per-transaction detail, so
-// incremental array-merge isn't worth it yet). ~12 min for ~22k charges.
-const createdGte = null;
+// Incremental by default: seed from the previous cache and only fetch charges
+// created AFTER the last run's high-water mark (seconds for a daily run). First
+// run (no cache) or --full does the ~12-min full backfill. NOTE: incremental
+// fetches by created date, so a refund applied today to an OLDER charge won't be
+// re-pulled — run --full weekly to true-up refunds.
+const FULL = process.argv.includes('--full');
+const prev = (() => { try { return JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch { return null; } })();
+const createdGt = (!FULL && prev?.max_created) ? prev.max_created : null;
 
 async function getPage(startingAfter) {
   const qs = new URLSearchParams({ limit: '100' });
   if (startingAfter) qs.set('starting_after', startingAfter);
-  if (createdGte) qs.set('created[gte]', String(createdGte));
+  if (createdGt) qs.set('created[gt]', String(createdGt));
   for (let a = 0; a < 6; a++) {
     const res = await fetch('https://api.stripe.com/v1/charges?' + qs, { headers: { Authorization: AUTH } });
     if (res.status === 429 || res.status >= 500) { await sleep(500 * (a + 1)); continue; }
@@ -72,12 +77,14 @@ async function getPage(startingAfter) {
   throw new Error('Stripe: retries exhausted');
 }
 
-// Full re-pull each time here (we capture per-transaction detail, so incremental
-// merge of nested arrays isn't worth the complexity yet — the pull is ~12 min).
+// Seed aggregates from the previous cache so incremental runs append to history.
 const byCust = new Map();
-const currencies = new Map();
-const noCustomer = []; // paid charges with no Stripe customer — to attribute (the $187K legacy bucket)
-let maxCreated = 0;
+if (createdGt && prev?.by_customer) for (const [cus, v] of Object.entries(prev.by_customer)) {
+  byCust.set(cus, { ...v, by_month: { ...(v.by_month || {}) }, transactions: [...(v.transactions || [])], failed: [...(v.failed || [])] });
+}
+const currencies = new Map(createdGt ? Object.entries(prev?.currencies || {}) : []);
+const noCustomer = createdGt ? [...(prev?.no_customer || [])] : []; // paid charges with no Stripe customer
+let maxCreated = createdGt ? (prev?.max_created || 0) : 0;
 
 const r2 = (v) => Math.round(v * 100) / 100;
 const iso = (ts) => new Date(ts * 1000).toISOString().slice(0, 10);

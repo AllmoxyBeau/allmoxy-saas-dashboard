@@ -459,6 +459,19 @@ runScript('apply_annual_amortization.mjs', null);
 console.log('  applying Stripe Connect attribution…');
 runScript('apply_connect_attribution.mjs', null);
 
+// Merge duplicate-AID customers in customer_profiles (folds the absorbed row's
+// financials into the survivor, drops the dupe). MUST run BEFORE the Stripe seam:
+// when two merged AIDs share a Stripe customer/subscription (the usual reason
+// they're a merge), the seam would otherwise write the same June+ revenue to BOTH
+// rows and the merge would then SUM them — double-counting the seamed months
+// (e.g. Mountain Showcase #2027→#500: June $1,720 counted twice = $3,440). Folding
+// first means the survivor carries the union of Stripe IDs and the seam counts
+// each Stripe customer's June+ revenue exactly once. Runs after enrichment
+// (overrides/amortization/connect) so the survivor keeps the full picture, and
+// before every downstream build that reads customer_profiles.
+console.log('  merging duplicate-AID customers…');
+runScriptArgs('apply_customer_merges.mjs', ['customer_profiles']);
+
 // Revenue seam: history stays from the xlsx; June 2026 forward comes from the
 // live Stripe API (metadata-classified). Runs after Connect attribution (so it
 // preserves monthly connect) and BEFORE status overrides / never-paid (so those
@@ -478,13 +491,6 @@ runScript('apply_customer_status_overrides.mjs', null);
 // counts. Runs AFTER status overrides so it doesn't clobber them.
 console.log('  classifying never-paid customers…');
 runScript('apply_never_paid_classification.mjs', null);
-
-// Merge duplicate-AID customers in customer_profiles (folds the absorbed row's
-// financials into the survivor, drops the dupe). Runs after all enrichment so
-// the survivor keeps the full picture, and before every downstream build that
-// reads customer_profiles (roster, churn, renewal, data cleanup, features…).
-console.log('  merging duplicate-AID customers…');
-runScriptArgs('apply_customer_merges.mjs', ['customer_profiles']);
 
 // Reconcile cohort_retention's "active today" with customer_profiles after all
 // upstream adjustments. Must run AFTER apply_annual_amortization so the patch

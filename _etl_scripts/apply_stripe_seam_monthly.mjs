@@ -30,13 +30,13 @@ const profiles = read('customer_profiles.json').rows;
 // already seamed (June+ from Stripe) AND amortized/override-adjusted — so the
 // totals reconcile EXACTLY with the per-customer profiles (and the invariant).
 // (Sourcing from the raw Stripe cache would miss annual amortization and break it.)
-const monthTot = {};            // m -> { sub, svc, logos }
+const monthTot = {};            // m -> { sub, svc, connect, logos }
 const nameMonth = new Map();     // name -> { m -> { sub, svc } }
 for (const p of profiles) {
   for (const [m, v] of Object.entries(p.monthly_history || {})) {
     if (m < SEAM) continue;
-    const t = monthTot[m] || { sub: 0, svc: 0, logos: 0 };
-    t.sub += v.subscription || 0; t.svc += v.services || 0;
+    const t = monthTot[m] || { sub: 0, svc: 0, connect: 0, logos: 0 };
+    t.sub += v.subscription || 0; t.svc += v.services || 0; t.connect += v.connect || 0;
     if ((v.subscription || 0) > 0) t.logos += 1;
     monthTot[m] = t;
     const nm = nameMonth.get(p.name) || {}; nm[m] = { sub: v.subscription || 0, svc: v.services || 0 }; nameMonth.set(p.name, nm);
@@ -51,8 +51,12 @@ for (const row of mrr.rows) {
   if (row.month >= SEAM && t) {
     row.mrr_subscription = r2(t.sub);
     row.mrr_services = r2(t.svc);
+    // Connect for seamed months comes from the (attribution-populated, seam-preserved)
+    // profiles too — keeps mrr_by_month consistent with the live Connect figure
+    // instead of leaving the stale partial xlsx value on the current month.
+    row.mrr_connect = r2(t.connect);
     row.logo_qty = t.logos;
-    row.mrr_blended = r2(t.sub + t.svc + (row.mrr_connect || 0));
+    row.mrr_blended = r2(t.sub + t.svc + t.connect);
     row.avg_mrr_blended = t.logos ? Math.round(row.mrr_blended / t.logos) : row.avg_mrr_blended;
     mrrTouched++;
   }
