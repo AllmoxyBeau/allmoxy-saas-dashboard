@@ -1,7 +1,7 @@
 {
-  "fetchedAt": "2026-06-26T18:33:22.299Z",
-  "jira_fetchedAt": "2026-06-26T18:32:50.219Z",
-  "harvest_fetchedAt": "2026-06-26T18:33:22.198Z",
+  "fetchedAt": "2026-06-26T20:43:35.995Z",
+  "jira_fetchedAt": "2026-06-26T20:43:03.999Z",
+  "harvest_fetchedAt": "2026-06-26T20:43:35.890Z",
   "note": "Implementation projects = services revenue. JIRA (IPA epics) supplies stage; Harvest supplies hours + billable $. Join: harvest_id==client_id (exact); JIRA by epic-summary name-match (+ overrides).",
   "aggregates": {
     "total_customers": 150,
@@ -22,7 +22,7 @@
     "with_jira": 57,
     "with_harvest": 125,
     "with_both": 32,
-    "total_hours": 8540.9,
+    "total_hours": 8541.7,
     "total_billable_amount": 1194983,
     "by_stage": {
       "Waiting on Customer": 8,
@@ -6492,7 +6492,7 @@
       "harvest_project_count": 2,
       "billing_method": "Hourly",
       "hourly_rate": 150,
-      "hours": 320.25,
+      "hours": 321.07,
       "billable_hours": 49.23,
       "billable_amount": 0,
       "entry_count": 204,
