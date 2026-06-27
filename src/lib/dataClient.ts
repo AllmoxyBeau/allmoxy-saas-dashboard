@@ -44,6 +44,7 @@ export const KNOWN_SNAPSHOTS = [
   'features',
   'connect_volume',
   'data_cleanup',
+  'aurora_orders',
 ] as const;
 
 export type SnapshotName = (typeof KNOWN_SNAPSHOTS)[number];

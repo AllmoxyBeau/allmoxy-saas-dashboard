@@ -1,0 +1,3345 @@
+{
+  "source": "aurora:allmoxy_core",
+  "fetchedAt": "2026-06-26T22:37:59.317Z",
+  "note": "Verified-order $ (monthly) + cumulative order counts per customer, from the Aurora warehouse. installation_id mapped to allmoxy_customer_id via customers.installer_id. Order counts are a running cumulative snapshot; monthly deltas accrue as more daily snapshots land.",
+  "verified_order_months": [
+    "2026-05"
+  ],
+  "total_orders_asof": "2026-06-26",
+  "totals": {
+    "customers": 250,
+    "unmapped_instances": 103,
+    "total_orders_sum": 2139960,
+    "verified_latest_month": 30925287.49,
+    "verified_months": 1,
+    "total_orders_asof": "2026-06-26"
+  },
+  "by_customer": [
+    {
+      "allmoxy_customer_id": 1,
+      "name": "Lewis Cabinet Specialties Group LLC",
+      "installer_id": 1,
+      "verified_by_month": {
+        "2026-05": 2067360.08
+      },
+      "total_orders": 278184,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 10,
+      "name": "Fryburg Door - Mullwood",
+      "installer_id": 138,
+      "verified_by_month": {
+        "2026-05": 1498257.96
+      },
+      "total_orders": 271115,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 9,
+      "name": "Soelbergi",
+      "installer_id": 87,
+      "verified_by_month": {
+        "2026-05": 1663987.32
+      },
+      "total_orders": 141154,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 38,
+      "name": "Panhandle Door Inc.",
+      "installer_id": 403,
+      "verified_by_month": {
+        "2026-05": 906422.9
+      },
+      "total_orders": 95722,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 12,
+      "name": "Canary Closets",
+      "installer_id": 126,
+      "verified_by_month": {
+        "2026-05": 534735.31
+      },
+      "total_orders": 82947,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2,
+      "name": "CCF Industries",
+      "installer_id": 123,
+      "verified_by_month": {
+        "2026-05": 494635.36
+      },
+      "total_orders": 81078,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 3,
+      "name": "Drawer Connection - DC Drawers",
+      "installer_id": 61,
+      "verified_by_month": {
+        "2026-05": 207729.29
+      },
+      "total_orders": 71885,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 161,
+      "name": "Premier EuroCase",
+      "installer_id": 1094,
+      "verified_by_month": {
+        "2026-05": 373376.99
+      },
+      "total_orders": 64496,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 13,
+      "name": "Timberline Doors",
+      "installer_id": 144,
+      "verified_by_month": {
+        "2026-05": 758814.21
+      },
+      "total_orders": 63968,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 75,
+      "name": "J&B Woodcrafts",
+      "installer_id": 209,
+      "verified_by_month": {
+        "2026-05": 554728.45
+      },
+      "total_orders": 53832,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 43,
+      "name": "Westwind",
+      "installer_id": 37,
+      "verified_by_month": {
+        "2026-05": 437790.08
+      },
+      "total_orders": 51528,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 72,
+      "name": "Brushy Creek Custom Doors, LLC",
+      "installer_id": 755,
+      "verified_by_month": {
+        "2026-05": 616477.14
+      },
+      "total_orders": 47083,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 176,
+      "name": "Primary Kitchen",
+      "installer_id": 1124,
+      "verified_by_month": {
+        "2026-05": 974952.16
+      },
+      "total_orders": 34582,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 26,
+      "name": "Rehau Inc.",
+      "installer_id": 494,
+      "verified_by_month": {
+        "2026-05": 232924.97
+      },
+      "total_orders": 34320,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 256,
+      "name": "BTJ Cabinet Door Company",
+      "installer_id": 1345,
+      "verified_by_month": {
+        "2026-05": 568831.34
+      },
+      "total_orders": 32043,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 20,
+      "name": "Eldorado Plywood",
+      "installer_id": 197,
+      "verified_by_month": {
+        "2026-05": 242501.27
+      },
+      "total_orders": 31061,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 363,
+      "name": "Cutting Edge Doors & Woodworking",
+      "installer_id": 1641,
+      "verified_by_month": {
+        "2026-05": 605157.69
+      },
+      "total_orders": 30529,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 130,
+      "name": "Roy's Wood Products, Inc.",
+      "installer_id": 1011,
+      "verified_by_month": {
+        "2026-05": 1312604.21
+      },
+      "total_orders": 24289,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 42,
+      "name": "My Door Factory",
+      "installer_id": 750,
+      "verified_by_month": {
+        "2026-05": 85595.31
+      },
+      "total_orders": 23826,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 108,
+      "name": "Arizona Cabinet Door Store / Cutting Edge Foil Fin",
+      "installer_id": 980,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 22016,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 22,
+      "name": "Bywater Products",
+      "installer_id": 205,
+      "verified_by_month": {
+        "2026-05": 190566.14
+      },
+      "total_orders": 18600,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 30,
+      "name": "Classic Kitchen Doors",
+      "installer_id": 592,
+      "verified_by_month": {
+        "2026-05": 149628.82
+      },
+      "total_orders": 18570,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 159,
+      "name": "NJ Drawers",
+      "installer_id": 1089,
+      "verified_by_month": {
+        "2026-05": 243728.23
+      },
+      "total_orders": 18358,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 463,
+      "name": "D3Customcabinets",
+      "installer_id": 433,
+      "verified_by_month": {
+        "2026-05": 277692.01
+      },
+      "total_orders": 17198,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 293,
+      "name": "B&B Door Co.",
+      "installer_id": 1473,
+      "verified_by_month": {
+        "2026-05": 301190.1
+      },
+      "total_orders": 17109,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 449,
+      "name": "Stanisci Design & Manufacturing",
+      "installer_id": 1957,
+      "verified_by_month": {
+        "2026-05": 1008092
+      },
+      "total_orders": 16960,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 15,
+      "name": "Mid Michigan Wood",
+      "installer_id": 132,
+      "verified_by_month": {
+        "2026-05": 146646.56
+      },
+      "total_orders": 16661,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 79,
+      "name": "Brandenberger Door MFG",
+      "installer_id": 837,
+      "verified_by_month": {
+        "2026-05": 221969.95
+      },
+      "total_orders": 15818,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 136,
+      "name": "Greyloch, LLC.",
+      "installer_id": 1032,
+      "verified_by_month": {
+        "2026-05": 2287627.81
+      },
+      "total_orders": 15441,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 479,
+      "name": "Cabinet Restylers, Inc",
+      "installer_id": 1900,
+      "verified_by_month": {
+        "2026-05": 1936360.48
+      },
+      "total_orders": 15202,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 23,
+      "name": "Amco Distributors Inc.",
+      "installer_id": 212,
+      "verified_by_month": {
+        "2026-05": 180440.37
+      },
+      "total_orders": 15157,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 11,
+      "name": "Self Woodworks",
+      "installer_id": 127,
+      "verified_by_month": {
+        "2026-05": 57652.64
+      },
+      "total_orders": 15123,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 82,
+      "name": "Drawers by Design",
+      "installer_id": 883,
+      "verified_by_month": {
+        "2026-05": 262955.97
+      },
+      "total_orders": 14905,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 131,
+      "name": "Advanced Cabinet Doors",
+      "installer_id": 1028,
+      "verified_by_month": {
+        "2026-05": 250736.94
+      },
+      "total_orders": 14059,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 491,
+      "name": "Cimino's Cabinet Doors Inc.",
+      "installer_id": 1923,
+      "verified_by_month": {
+        "2026-05": 446551.69
+      },
+      "total_orders": 13903,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 300,
+      "name": "Corona Millworks",
+      "installer_id": 1487,
+      "verified_by_month": {
+        "2026-05": 506516.9
+      },
+      "total_orders": 13733,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 198,
+      "name": "New York Door & Drawer",
+      "installer_id": 1197,
+      "verified_by_month": {
+        "2026-05": 380117.52
+      },
+      "total_orders": 13427,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 211,
+      "name": "Midwest Floor Coverings",
+      "installer_id": 1235,
+      "verified_by_month": {
+        "2026-05": 222979.97
+      },
+      "total_orders": 12919,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 319,
+      "name": "SouthernStone Cabinets",
+      "installer_id": 1522,
+      "verified_by_month": {
+        "2026-05": 639497.29
+      },
+      "total_orders": 12295,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 343,
+      "name": "B & B Outdoor Furniture",
+      "installer_id": 1579,
+      "verified_by_month": {
+        "2026-05": 19641.09
+      },
+      "total_orders": 11872,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 382,
+      "name": "Ideal Drawer Box Inc",
+      "installer_id": 1697,
+      "verified_by_month": {
+        "2026-05": 218446.76
+      },
+      "total_orders": 11820,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 37,
+      "name": "Vision Kitchen & Bath",
+      "installer_id": 441,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 11452,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 18,
+      "name": "Craftsman Specialty",
+      "installer_id": 178,
+      "verified_by_month": {
+        "2026-05": 96491.37
+      },
+      "total_orders": 11116,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 262,
+      "name": "Bww Closets",
+      "installer_id": 1355,
+      "verified_by_month": {
+        "2026-05": 223180.08
+      },
+      "total_orders": 11040,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 19,
+      "name": "Trimart",
+      "installer_id": 189,
+      "verified_by_month": {
+        "2026-05": 232702.47
+      },
+      "total_orders": 9990,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 168,
+      "name": "Diamond CNC",
+      "installer_id": 1118,
+      "verified_by_month": {
+        "2026-05": 136784.99
+      },
+      "total_orders": 9883,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 278,
+      "name": "Munns Door and Mill",
+      "installer_id": 1430,
+      "verified_by_month": {
+        "2026-05": 170078.79
+      },
+      "total_orders": 9105,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 73,
+      "name": "Kitch Components Inc.",
+      "installer_id": 758,
+      "verified_by_month": {
+        "2026-05": 333374.71
+      },
+      "total_orders": 8449,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 8,
+      "name": "Advantage Cabinet Doors, LLC",
+      "installer_id": 88,
+      "verified_by_month": {
+        "2026-05": 7069.5
+      },
+      "total_orders": 8183,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 84,
+      "name": "Quadro Cabinets",
+      "installer_id": 901,
+      "verified_by_month": {
+        "2026-05": 112923.63
+      },
+      "total_orders": 8128,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 162,
+      "name": "Cullman Cabinet Supply",
+      "installer_id": 1100,
+      "verified_by_month": {
+        "2026-05": 37921.85
+      },
+      "total_orders": 7285,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 117,
+      "name": "Salt City Mill - WC Doors",
+      "installer_id": 986,
+      "verified_by_month": {
+        "2026-05": 34469.18
+      },
+      "total_orders": 7207,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 206,
+      "name": "Terzano Cabinetry Inc",
+      "installer_id": 1041,
+      "verified_by_month": {
+        "2026-05": 28031.93
+      },
+      "total_orders": 7152,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 400,
+      "name": "Hartley Group Coatings",
+      "installer_id": 1735,
+      "verified_by_month": {
+        "2026-05": 113352.8
+      },
+      "total_orders": 6864,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 76,
+      "name": "Country Lazer",
+      "installer_id": 772,
+      "verified_by_month": {
+        "2026-05": 20821.99
+      },
+      "total_orders": 6835,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 21,
+      "name": "Crest Cabinets",
+      "installer_id": 198,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 6768,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 405,
+      "name": "KC Doors",
+      "installer_id": 1741,
+      "verified_by_month": {
+        "2026-05": 270219.92
+      },
+      "total_orders": 6725,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 246,
+      "name": "Melbourne Architectural Millwork",
+      "installer_id": 1319,
+      "verified_by_month": {
+        "2026-05": 350530.96
+      },
+      "total_orders": 6511,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 14,
+      "name": "Mullet Door",
+      "installer_id": 153,
+      "verified_by_month": {
+        "2026-05": 50063.76
+      },
+      "total_orders": 6077,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 164,
+      "name": "Cabredo LLC",
+      "installer_id": 1114,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 6049,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 388,
+      "name": "Sherwood Shelving",
+      "installer_id": 1714,
+      "verified_by_month": {
+        "2026-05": 87133.19
+      },
+      "total_orders": 5810,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 423,
+      "name": "Tntdoor",
+      "installer_id": 1785,
+      "verified_by_month": {
+        "2026-05": 411384.27
+      },
+      "total_orders": 5474,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 7,
+      "name": "Raumplus",
+      "installer_id": 65,
+      "verified_by_month": {
+        "2026-05": 14794.43
+      },
+      "total_orders": 5243,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 304,
+      "name": "Nexis3",
+      "installer_id": 1495,
+      "verified_by_month": {
+        "2026-05": 35515.69
+      },
+      "total_orders": 5064,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 107,
+      "name": "Webster Door Company",
+      "installer_id": 975,
+      "verified_by_month": {
+        "2026-05": 17067.41
+      },
+      "total_orders": 5011,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 29,
+      "name": "Quality Craft Woodworks",
+      "installer_id": 588,
+      "verified_by_month": {
+        "2026-05": 125318.54
+      },
+      "total_orders": 4429,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 217,
+      "name": "Metro Drawer Boxes",
+      "installer_id": 1252,
+      "verified_by_month": {
+        "2026-05": 54950.72
+      },
+      "total_orders": 4344,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 113,
+      "name": "Wurth LAC",
+      "installer_id": 982,
+      "verified_by_month": {
+        "2026-05": 72270.78
+      },
+      "total_orders": 4228,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 31,
+      "name": "Bella Imc",
+      "installer_id": 598,
+      "verified_by_month": {
+        "2026-05": 107767.98
+      },
+      "total_orders": 4111,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 301,
+      "name": "Everwood Inc.",
+      "installer_id": 1488,
+      "verified_by_month": {
+        "2026-05": 159354.49
+      },
+      "total_orders": 4003,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 443,
+      "name": "Door Masters of Houston",
+      "installer_id": 1828,
+      "verified_by_month": {
+        "2026-05": 114121.63
+      },
+      "total_orders": 3967,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 27,
+      "name": "Arkansas Wood Doors",
+      "installer_id": 541,
+      "verified_by_month": {
+        "2026-05": 117988.21
+      },
+      "total_orders": 3792,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 355,
+      "name": "Island Custom Cabinetry Ltd",
+      "installer_id": 1617,
+      "verified_by_month": {
+        "2026-05": 72627.14
+      },
+      "total_orders": 3731,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 119,
+      "name": "Big Valley Wood Products",
+      "installer_id": 1982,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3650,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 440,
+      "name": "NuDoors DBA - Spayce Integrated LLC",
+      "installer_id": 1821,
+      "verified_by_month": {
+        "2026-05": 50174.38
+      },
+      "total_orders": 3289,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 320,
+      "name": "Dominion Dovetail",
+      "installer_id": 1523,
+      "verified_by_month": {
+        "2026-05": 174459.7
+      },
+      "total_orders": 3208,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 279,
+      "name": "Lifespan Cabinets & Closets",
+      "installer_id": 1432,
+      "verified_by_month": {
+        "2026-05": 88812.92
+      },
+      "total_orders": 3088,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 396,
+      "name": "Red Rock Milling LLC",
+      "installer_id": 1729,
+      "verified_by_month": {
+        "2026-05": 107620.88
+      },
+      "total_orders": 2915,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 545,
+      "name": "Cabinet Doors USA",
+      "installer_id": 2069,
+      "verified_by_month": {
+        "2026-05": 238690.04
+      },
+      "total_orders": 2889,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 391,
+      "name": "LV SERVICE SOLUTIONS",
+      "installer_id": 1716,
+      "verified_by_month": {
+        "2026-05": 34067.33
+      },
+      "total_orders": 2620,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 36,
+      "name": "Drawer Box Specialties",
+      "installer_id": 712,
+      "verified_by_month": {
+        "2026-05": 219559.99
+      },
+      "total_orders": 2333,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 99,
+      "name": "Cut 2 Size Parts",
+      "installer_id": 957,
+      "verified_by_month": {
+        "2026-05": 57566.35
+      },
+      "total_orders": 2324,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 502,
+      "name": "LINDSEY DOORS",
+      "installer_id": 1960,
+      "verified_by_month": {
+        "2026-05": 99886.41
+      },
+      "total_orders": 2224,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 432,
+      "name": "Netley Millwork",
+      "installer_id": 1801,
+      "verified_by_month": {
+        "2026-05": 85531.3
+      },
+      "total_orders": 1988,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 427,
+      "name": "Drawer Box Solutions",
+      "installer_id": 1794,
+      "verified_by_month": {
+        "2026-05": 46926.43
+      },
+      "total_orders": 1973,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 387,
+      "name": "Cascade Distribution Group",
+      "installer_id": 1543,
+      "verified_by_month": {
+        "2026-05": 14475.68
+      },
+      "total_orders": 1969,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 455,
+      "name": "Cabsource - Innovative Cabinet",
+      "installer_id": 1492,
+      "verified_by_month": {
+        "2026-05": 45163.85
+      },
+      "total_orders": 1968,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 16,
+      "name": "The Door Company",
+      "installer_id": 155,
+      "verified_by_month": {
+        "2026-05": 32884.18
+      },
+      "total_orders": 1931,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 186,
+      "name": "IFCC Inc - Imminik Finishing",
+      "installer_id": 279,
+      "verified_by_month": {
+        "2026-05": 256596.68
+      },
+      "total_orders": 1882,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 237,
+      "name": "Nashville Plywood",
+      "installer_id": 1302,
+      "verified_by_month": {
+        "2026-05": 11328.48
+      },
+      "total_orders": 1813,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 275,
+      "name": "Global Cabinet Supply",
+      "installer_id": 1388,
+      "verified_by_month": {
+        "2026-05": 29897.33
+      },
+      "total_orders": 1793,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 39,
+      "name": "Signature Cabinetry",
+      "installer_id": 720,
+      "verified_by_month": {
+        "2026-05": 28565.92
+      },
+      "total_orders": 1434,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 386,
+      "name": "Cabinwood NY",
+      "installer_id": 1711,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1414,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 284,
+      "name": "Cabinartny",
+      "installer_id": 1457,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1201,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 488,
+      "name": "Lga Cabinet Solutions",
+      "installer_id": 1911,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1187,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 77,
+      "name": "White Oak Custom Woodworking",
+      "installer_id": 823,
+      "verified_by_month": {
+        "2026-05": 9850.31
+      },
+      "total_orders": 1103,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 528,
+      "name": "Elite Cabinet Components",
+      "installer_id": 2035,
+      "verified_by_month": {
+        "2026-05": 41050.78
+      },
+      "total_orders": 1099,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 257,
+      "name": "Wrightcraft Closets",
+      "installer_id": 1349,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1098,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 344,
+      "name": "Salerno's Custom Cab",
+      "installer_id": 1581,
+      "verified_by_month": {
+        "2026-05": 62771.87
+      },
+      "total_orders": 1092,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 172,
+      "name": "Kiwi Closets - ProComm Closets LLC",
+      "installer_id": 1127,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1031,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 468,
+      "name": "Massachusetts Design Corp.",
+      "installer_id": 1875,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 932,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 537,
+      "name": "Ideal Wood Designs",
+      "installer_id": 2055,
+      "verified_by_month": {
+        "2026-05": 35257.64
+      },
+      "total_orders": 827,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 34,
+      "name": "Superior Woodworking",
+      "installer_id": 681,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 811,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 223,
+      "name": "Bw Modern",
+      "installer_id": 1277,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 764,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 80,
+      "name": "Intermountain Wood Products",
+      "installer_id": 848,
+      "verified_by_month": {
+        "2026-05": 8537.03
+      },
+      "total_orders": 742,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 354,
+      "name": "Royal Plywood Co.",
+      "installer_id": 1610,
+      "verified_by_month": {
+        "2026-05": 11236.31
+      },
+      "total_orders": 707,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 25,
+      "name": "UC Cabinet Components",
+      "installer_id": 231,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 692,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 505,
+      "name": "Drawer Works",
+      "installer_id": 1965,
+      "verified_by_month": {
+        "2026-05": 44700.62
+      },
+      "total_orders": 684,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 322,
+      "name": "Ultrashelf",
+      "installer_id": 1530,
+      "verified_by_month": {
+        "2026-05": 2337.37
+      },
+      "total_orders": 681,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 224,
+      "name": "National Wood Products, Inc",
+      "installer_id": 1281,
+      "verified_by_month": {
+        "2026-05": 4890.84
+      },
+      "total_orders": 633,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 289,
+      "name": "Jim Chambers Architectural Products",
+      "installer_id": 1463,
+      "verified_by_month": {
+        "2026-05": 4695.23
+      },
+      "total_orders": 591,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 33,
+      "name": "Ashby's Cabinetry, Inc",
+      "installer_id": 633,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 547,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 323,
+      "name": "Architectural Woods Inc",
+      "installer_id": 1531,
+      "verified_by_month": {
+        "2026-05": 8517.68
+      },
+      "total_orders": 539,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 180,
+      "name": "Burton Cabinet Company",
+      "installer_id": 1137,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 536,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 332,
+      "name": "Cober Cabinets",
+      "installer_id": 1545,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 530,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 361,
+      "name": "Karhu Fine Cabinetry",
+      "installer_id": 1632,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 510,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 525,
+      "name": "Advanced Hardware Supply",
+      "installer_id": 2030,
+      "verified_by_month": {
+        "2026-05": 53565.08
+      },
+      "total_orders": 452,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 160,
+      "name": "Rta Cabinetry Inc",
+      "installer_id": 1806,
+      "verified_by_month": {
+        "2026-05": 15975.79
+      },
+      "total_orders": 450,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 329,
+      "name": "Peterman Lumber",
+      "installer_id": 1541,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 395,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 548,
+      "name": "Aluminum X Design",
+      "installer_id": 2071,
+      "verified_by_month": {
+        "2026-05": 86794.82
+      },
+      "total_orders": 264,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 78,
+      "name": "Stair Fittings, Inc.",
+      "installer_id": 833,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 216,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2028,
+      "name": "Crown Door & Drawer",
+      "installer_id": 2095,
+      "verified_by_month": {
+        "2026-05": 52921.89
+      },
+      "total_orders": 206,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 93,
+      "name": "Woodland Furniture",
+      "installer_id": 1722,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 201,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 437,
+      "name": "Staley Custom Cabinets",
+      "installer_id": 1810,
+      "verified_by_month": {
+        "2026-05": 20442.86
+      },
+      "total_orders": 197,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 499,
+      "name": "Brave Custom Woodworking",
+      "installer_id": 1950,
+      "verified_by_month": {
+        "2026-05": 213684.07
+      },
+      "total_orders": 196,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 196,
+      "name": "Whitson Brothers LLC",
+      "installer_id": 1189,
+      "verified_by_month": {
+        "2026-05": 29696.15
+      },
+      "total_orders": 178,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 516,
+      "name": "Rigel Cabinetry",
+      "installer_id": 2003,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 165,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 483,
+      "name": "Fl Drawers",
+      "installer_id": 1904,
+      "verified_by_month": {
+        "2026-05": 12168.29
+      },
+      "total_orders": 152,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 462,
+      "name": "Imab Living",
+      "installer_id": 1861,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 149,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 480,
+      "name": "Smart Custom Closets",
+      "installer_id": 1901,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 140,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 459,
+      "name": "EuroContempo",
+      "installer_id": 1858,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 133,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 457,
+      "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
+      "installer_id": 1674,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 132,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 446,
+      "name": "Mountain States Kitchen and Bath",
+      "installer_id": 1840,
+      "verified_by_month": {
+        "2026-05": 728.35
+      },
+      "total_orders": 119,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 523,
+      "name": "Keystone Wood Specialties",
+      "installer_id": 2015,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 115,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 524,
+      "name": "Got Drawers",
+      "installer_id": 2027,
+      "verified_by_month": {
+        "2026-05": 8425.93
+      },
+      "total_orders": 115,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 441,
+      "name": "Cabinet Company",
+      "installer_id": 1823,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 111,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 197,
+      "name": "The Cabinet Face",
+      "installer_id": 1196,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 105,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 384,
+      "name": "Specialty Forest Products",
+      "installer_id": 1704,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 97,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 500,
+      "name": "Mountain Showcase Group, Inc. ",
+      "installer_id": 1952,
+      "verified_by_month": {
+        "2026-05": 58392.21
+      },
+      "total_orders": 92,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 350,
+      "name": "Dellusso Cabinet",
+      "installer_id": 1601,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 90,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 474,
+      "name": "Pinnacle Cabinets & Millwork",
+      "installer_id": 1891,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 90,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2018,
+      "name": "Stolbek",
+      "installer_id": 2064,
+      "verified_by_month": {
+        "2026-05": 813089.5
+      },
+      "total_orders": 89,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 238,
+      "name": "Organizetosize",
+      "installer_id": 1304,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 70,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 17,
+      "name": "Closet City",
+      "installer_id": 1520,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 68,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 521,
+      "name": "Cabinet Doors NJ Llc",
+      "installer_id": 2017,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 60,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 472,
+      "name": "J3 Products Group, Inc.",
+      "installer_id": 1886,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 52,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 489,
+      "name": "Rehau Pty Ltd",
+      "installer_id": 1915,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 51,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 514,
+      "name": "Cabinet Parts to Go",
+      "installer_id": 2001,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 46,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 508,
+      "name": "WF Cabinetry",
+      "installer_id": 1981,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 44,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 64,
+      "name": "Perez Enterprises",
+      "installer_id": 2050,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 44,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 536,
+      "name": "Cabinet Doors Unlimited",
+      "installer_id": 2040,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 42,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 268,
+      "name": "Futrus",
+      "installer_id": 1375,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 41,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 471,
+      "name": "KSC Sales Inc.",
+      "installer_id": 1884,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 40,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 515,
+      "name": "Tahoma Closetmakers",
+      "installer_id": 2000,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 38,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 529,
+      "name": "NXT Cabinets",
+      "installer_id": 2036,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 37,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 420,
+      "name": "Di Bosco Cabinets & Millwork Ltd.",
+      "installer_id": 1776,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 30,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 426,
+      "name": "Jesse Williams Inc",
+      "installer_id": 1787,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 28,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 533,
+      "name": "Cornish Custom Cabinets",
+      "installer_id": 2048,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 28,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2057,
+      "name": "Quick Kitchens",
+      "installer_id": 2121,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 28,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 539,
+      "name": "Conquest Cabinetry",
+      "installer_id": 2058,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 27,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 475,
+      "name": "Phoenix-LLC",
+      "installer_id": 1894,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 26,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 543,
+      "name": "Vlux",
+      "installer_id": 2062,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 23,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 496,
+      "name": "Canyon Creek Cabinets",
+      "installer_id": 1942,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 22,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 485,
+      "name": "Phoenix Direct",
+      "installer_id": 1908,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 21,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 385,
+      "name": "Dot Custom Cabinets LLC",
+      "installer_id": 1992,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 19,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 540,
+      "name": "Brazen Fox Fabrication Inc",
+      "installer_id": 2052,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 19,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 106,
+      "name": "GW Eurocase",
+      "installer_id": 2004,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 17,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 310,
+      "name": "Empyre Designs",
+      "installer_id": 1826,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 16,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 522,
+      "name": "VHC Wood Products",
+      "installer_id": 2019,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 16,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 338,
+      "name": "Hogan's Cabinetry & Millwork",
+      "installer_id": 1568,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 15,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 550,
+      "name": "Capital Millwork",
+      "installer_id": 2073,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 15,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 513,
+      "name": "Precision Millwork Utah",
+      "installer_id": 1998,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 14,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2051,
+      "name": "Harbour City Kitchens",
+      "installer_id": 2115,
+      "verified_by_month": {
+        "2026-05": 2097.69
+      },
+      "total_orders": 14,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 442,
+      "name": "Soliton Crossing",
+      "installer_id": 1825,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 12,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 353,
+      "name": "Northland Woodworks",
+      "installer_id": 1966,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 12,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 339,
+      "name": "RJM Cabinets",
+      "installer_id": 1567,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 11,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 377,
+      "name": "Reid MFG LLC",
+      "installer_id": 1688,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 11,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 532,
+      "name": "SCP Cabinets",
+      "installer_id": 2045,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 10,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2027,
+      "name": "Mountain Showcase Group",
+      "installer_id": 2094,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 10,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2056,
+      "name": "Five Cabinetry",
+      "installer_id": 2120,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 10,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 297,
+      "name": "Remarkable Cabinets",
+      "installer_id": 1478,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 9,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 534,
+      "name": "North American Components",
+      "installer_id": 2049,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 9,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 538,
+      "name": "Palmetto Cabinet Doors",
+      "installer_id": 2057,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 9,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 546,
+      "name": "KOA Komponents",
+      "installer_id": 2068,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 9,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 416,
+      "name": "Wilson Cabinetry",
+      "installer_id": 2044,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 8,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2058,
+      "name": "Fleetwoods",
+      "installer_id": 2122,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 7,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 245,
+      "name": "Create More Space",
+      "installer_id": 1315,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 6,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 298,
+      "name": "S&S Signature Millworks, Inc.",
+      "installer_id": 1481,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 6,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 527,
+      "name": "Big Timber Millworks",
+      "installer_id": 2032,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 5,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 551,
+      "name": "Hingeworks",
+      "installer_id": 2076,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 5,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 555,
+      "name": "Kci Storage Manufacturing",
+      "installer_id": 2080,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 5,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2031,
+      "name": "Albritton Custom Cabinetry",
+      "installer_id": 2098,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 5,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2041,
+      "name": "Crystal Cabinets",
+      "installer_id": 2106,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 5,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2044,
+      "name": "Ecodomo",
+      "installer_id": 2108,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 5,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 83,
+      "name": "CP&W",
+      "installer_id": 1855,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 4,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 218,
+      "name": "Cabinetry Concepts",
+      "installer_id": 2031,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 4,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 530,
+      "name": "Heritage Wood Mills",
+      "installer_id": 2039,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 4,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2059,
+      "name": "Top Design Closets",
+      "installer_id": 2123,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 4,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 309,
+      "name": "Elite Woodworking",
+      "installer_id": 1507,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 531,
+      "name": "Subtle Cabinets",
+      "installer_id": 2043,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 535,
+      "name": "Next Gen Cabinet Doors",
+      "installer_id": 2054,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 541,
+      "name": "Dovetail Wood Traditions",
+      "installer_id": 2060,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2019,
+      "name": "Rise Up Labels",
+      "installer_id": 2085,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2026,
+      "name": "Santas Cabinets",
+      "installer_id": 2093,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2043,
+      "name": "Cadcode",
+      "installer_id": 2107,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2052,
+      "name": "Batesville Cabinet Company",
+      "installer_id": 2116,
+      "verified_by_month": {
+        "2026-05": 6975.89
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 439,
+      "name": "Neu-Bau LLC",
+      "installer_id": 1818,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 497,
+      "name": "Wedgewood Cabinetry",
+      "installer_id": 1943,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 510,
+      "name": "Xinja Llc",
+      "installer_id": 1989,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 542,
+      "name": "Larkul",
+      "installer_id": 2061,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 418,
+      "name": "Evolve Elements",
+      "installer_id": 2063,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 544,
+      "name": "The Job Shop",
+      "installer_id": 2067,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2025,
+      "name": "B & L Cabinets",
+      "installer_id": 2092,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2036,
+      "name": "Slide A Shelf",
+      "installer_id": 2101,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2037,
+      "name": "Lane Industries",
+      "installer_id": 2102,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2045,
+      "name": "Dimitrios & Company",
+      "installer_id": 2109,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2063,
+      "name": "Prestige Art Millwork",
+      "installer_id": 2127,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2064,
+      "name": "Windsor Place",
+      "installer_id": 2128,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 495,
+      "name": "Lane 17 Cabinet Co.",
+      "installer_id": 1937,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 511,
+      "name": "Countryside Cabinets",
+      "installer_id": 1991,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 547,
+      "name": "Closet Masters Design",
+      "installer_id": 2070,
+      "verified_by_month": {
+        "2026-05": 5
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2016,
+      "name": "Dewils",
+      "installer_id": 2083,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2048,
+      "name": "Graber Cabinets",
+      "installer_id": 2112,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2049,
+      "name": "Montouro Woodwork",
+      "installer_id": 2113,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2053,
+      "name": "California Door Corporation",
+      "installer_id": 2117,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2060,
+      "name": "Formations",
+      "installer_id": 2124,
+      "verified_by_month": {
+        "2026-05": 36.75
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2062,
+      "name": "Elliot Woodworking",
+      "installer_id": 2126,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2078,
+      "name": "Idaho Custom Closets",
+      "installer_id": 2137,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2079,
+      "name": "Mekotech Canada",
+      "installer_id": 2138,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 371,
+      "name": "Precision Elements",
+      "installer_id": 1660,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 399,
+      "name": "Jerome J. Brezniski & Assoc., Ltd.",
+      "installer_id": 1733,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 506,
+      "name": "The Cabinet Warehouse",
+      "installer_id": 1976,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 512,
+      "name": "Burger's Cabinet Shop",
+      "installer_id": 1995,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 517,
+      "name": "Ameridor, Inc",
+      "installer_id": 2007,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 519,
+      "name": "Rigel EMC",
+      "installer_id": 2014,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 520,
+      "name": "True Custom Kitchens And Millwork",
+      "installer_id": 2016,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 549,
+      "name": "Crafted Cabinetry & Millwork",
+      "installer_id": 2072,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 552,
+      "name": "Premier Woodworking",
+      "installer_id": 2077,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 553,
+      "name": "Carson's Custom Cabinets",
+      "installer_id": 2078,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 554,
+      "name": "Closet Pro",
+      "installer_id": 2079,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2015,
+      "name": "Urbania Cabinets",
+      "installer_id": 2082,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2023,
+      "name": "Multiwood",
+      "installer_id": 2090,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2029,
+      "name": "Fletcher Design Co",
+      "installer_id": 2096,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2032,
+      "name": "Adentra",
+      "installer_id": 2099,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2046,
+      "name": "Hempston Home",
+      "installer_id": 2110,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2047,
+      "name": "Western Cabinet Doors - The Door Stop",
+      "installer_id": 2111,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2050,
+      "name": "Paquette Cabinetry",
+      "installer_id": 2114,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2065,
+      "name": "Innovate Media Canada",
+      "installer_id": 2129,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2077,
+      "name": "Milestone Millwork",
+      "installer_id": 2136,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "allmoxy_customer_id": 2080,
+      "name": "Allmoxy",
+      "installer_id": 2139,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    }
+  ],
+  "unmapped_instances": [
+    {
+      "installation_id": 2,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 775,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 168,
+      "verified_by_month": {
+        "2026-05": 291367.92
+      },
+      "total_orders": 30270,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 357,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 385,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 409,
+      "verified_by_month": {
+        "2026-05": 12128.85
+      },
+      "total_orders": 993,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 740,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 74,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 891,
+      "verified_by_month": {
+        "2026-05": 56476.52
+      },
+      "total_orders": 7714,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 921,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 42,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 941,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 946,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3151,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 955,
+      "verified_by_month": {
+        "2026-05": 85325.49
+      },
+      "total_orders": 6540,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1000,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1074,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1135,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1139,
+      "verified_by_month": {
+        "2026-05": 23116.64
+      },
+      "total_orders": 697,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1142,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 21,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1215,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 58,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1216,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 73,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1221,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 108,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1222,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 51,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1323,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 4756,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1344,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 126,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1373,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1458,
+      "verified_by_month": {
+        "2026-05": 2848.6
+      },
+      "total_orders": 415,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1470,
+      "verified_by_month": {
+        "2026-05": 3027.74
+      },
+      "total_orders": 447,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1471,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 288,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1494,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 36,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1510,
+      "verified_by_month": {
+        "2026-05": 24531.12
+      },
+      "total_orders": 1829,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1515,
+      "verified_by_month": {
+        "2026-05": 462403.61
+      },
+      "total_orders": 44223,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1524,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 14,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1544,
+      "verified_by_month": {
+        "2026-05": 243264.68
+      },
+      "total_orders": 5849,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1564,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 84,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1575,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1653,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1663,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 14,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1670,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 6,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1673,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 10,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1691,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1694,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 14,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1695,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1708,
+      "verified_by_month": {
+        "2026-05": 191093.41
+      },
+      "total_orders": 6905,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1718,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 163,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1721,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1775,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1730,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 164,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1752,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1753,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 74,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1763,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1766,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3195,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1790,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1809,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1820,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1827,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 446,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1837,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1838,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 11,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1847,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 557,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1850,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 6,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1852,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 27,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1854,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1865,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1868,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1870,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1881,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1916,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 10,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1917,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 13,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1921,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 163,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1949,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 4,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1968,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1979,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1993,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 1994,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2009,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 163,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2010,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2012,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 163,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2020,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 75,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2028,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2029,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 5,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2034,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 44,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2037,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2038,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2046,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2047,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2051,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 4,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2053,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2059,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2065,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 2,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2066,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2074,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2075,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2084,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2088,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2089,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 30,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2091,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2097,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 17,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2100,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 3,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2103,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2104,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2105,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2125,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 1860,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2131,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 5,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2132,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2133,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2134,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    },
+    {
+      "installation_id": 2135,
+      "verified_by_month": {
+        "2026-05": 0
+      },
+      "total_orders": 0,
+      "total_orders_asof": "2026-06-26"
+    }
+  ]
+}
