@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-26T21:16:43.517Z",
+  "fetched_at": "2026-06-27T20:12:58.861Z",
   "comment": "Stripe ↔ QuickBooks per-month reconciliation. Stripe side is sum of customer_profiles.transactions (status=succeeded) by type; QB side is the corresponding pnl_by_month line items. Variance = Stripe minus QB-recognized. Tie-out status: tight (≤1% variance), acceptable (≤5%), investigate (>5%). See `reconciling_items` for canonical reasons for residual variance.",
   "rows": [
     {
