@@ -9,6 +9,8 @@ import Alert from '@mui/material/Alert';
 import Chip from '@mui/material/Chip';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
@@ -32,6 +34,7 @@ type Row = {
   allmoxy_customer_id: number;
   name: string;
   customer_status: string | null;
+  account_rep: string | null;
   sign_up_date: string | null;
   first_payment_date: string | null;
   // launch / time-to-first-order
@@ -137,6 +140,13 @@ export default function Implementation() {
   const [view, setView] = useState<View>('initial');
   const [stageFilter, setStageFilter] = useState<string | null>(null);
   const [slaFilter, setSlaFilter] = useState<Sla | null>(null);
+  const [repFilter, setRepFilter] = useState<string | null>(null);
+  // Distinct account reps (owners) for the quick filter, sorted by load.
+  const repOptions = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const r of rows) if (r.account_rep) counts.set(r.account_rep, (counts.get(r.account_rep) ?? 0) + 1);
+    return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([rep, n]) => ({ rep, n }));
+  }, [rows]);
   const [sortKey, setSortKey] = useState<SortKey>('age');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
 
@@ -169,8 +179,9 @@ export default function Implementation() {
     if (view === 'catalog' && r.launch_status !== 'launched') return false;
     if (stageFilter && r.stage !== stageFilter) return false;
     if (slaFilter && slaOf(daysSince(r.sign_up_date)) !== slaFilter) return false;
+    if (repFilter && r.account_rep !== repFilter) return false;
     return true;
-  }), [rows, view, stageFilter, slaFilter]);
+  }), [rows, view, stageFilter, slaFilter, repFilter]);
 
   const sorted = useMemo(() => {
     const out = [...filtered];
@@ -203,7 +214,8 @@ export default function Implementation() {
     { key: 'first_order_year', label: 'First Order Year', getValue: (r: Row) => r.first_order_year ?? '' },
     { key: 'ttfo_months', label: 'Time to First Order (mo, approx)', getValue: (r: Row) => r.time_to_first_order_months ?? '' },
     { key: 'stage', label: 'Stage', getValue: (r: Row) => r.stage ?? '' },
-    { key: 'assignee', label: 'Owner', getValue: (r: Row) => r.assignee ?? '' },
+    { key: 'account_rep', label: 'Account rep', getValue: (r: Row) => r.account_rep ?? '' },
+    { key: 'assignee', label: 'Assignee (JIRA)', getValue: (r: Row) => r.assignee ?? '' },
     { key: 'hours', label: 'Hours', getValue: (r: Row) => r.hours },
     { key: 'billable_amount', label: 'Billable $', getValue: (r: Row) => r.billable_amount },
     { key: 'last_entry', label: 'Last Time Entry', getValue: (r: Row) => r.last_entry ?? '' },
@@ -250,6 +262,20 @@ export default function Implementation() {
             : 'Count of customers at each JIRA implementation stage. Click a bar to filter the table.'} />
           {stageFilter && <Chip label={`Stage: ${stageFilter}`} size="small" onDelete={() => setStageFilter(null)} sx={{ height: 22, fontSize: 11 }} />}
           {slaFilter && <Chip label={`SLA: ${slaFilter}`} size="small" onDelete={() => setSlaFilter(null)} sx={{ height: 22, fontSize: 11 }} />}
+          <Box sx={{ flexGrow: 1 }} />
+          <TextField
+            select
+            size="small"
+            label="Account rep"
+            value={repFilter ?? ''}
+            onChange={(e) => setRepFilter(e.target.value || null)}
+            sx={{ minWidth: 190 }}
+          >
+            <MenuItem value="">All reps ({rows.length})</MenuItem>
+            {repOptions.map(({ rep, n }) => (
+              <MenuItem key={rep} value={rep}>{rep} ({n})</MenuItem>
+            ))}
+          </TextField>
         </Stack>
         {isLoading ? <Skeleton variant="rectangular" height={240} /> : view === 'initial' ? (
           slaChart.every((s) => s.count === 0) ? <Empty text="No initial-implementation customers." /> : (
@@ -294,10 +320,11 @@ export default function Implementation() {
             <TableHead>
               <TableRow>
                 <SortTh label="Customer" k="name" {...{ sortKey, sortDir, onSort: toggleSort }} />
+                <TableCell>Account rep</TableCell>
                 <TableCell>Type</TableCell>
                 <SortTh label="Stage" k="stage" {...{ sortKey, sortDir, onSort: toggleSort }} />
                 <SortTh label={view === 'catalog' ? 'First order' : 'Time to first order'} k={view === 'catalog' ? 'first_order' : 'age'} {...{ sortKey, sortDir, onSort: toggleSort }} />
-                <TableCell>Owner</TableCell>
+                <TableCell>Assignee</TableCell>
                 <SortTh label="Hours" k="hours" align="right" {...{ sortKey, sortDir, onSort: toggleSort }} />
                 <SortTh label="Billable $" k="billable" align="right" {...{ sortKey, sortDir, onSort: toggleSort }} />
                 <TableCell>JIRA</TableCell>
@@ -305,9 +332,9 @@ export default function Implementation() {
             </TableHead>
             <TableBody>
               {isLoading ? (
-                Array.from({ length: 10 }).map((_, i) => <TableRow key={i}><TableCell colSpan={8}><Skeleton variant="text" /></TableCell></TableRow>)
+                Array.from({ length: 10 }).map((_, i) => <TableRow key={i}><TableCell colSpan={9}><Skeleton variant="text" /></TableCell></TableRow>)
               ) : sorted.length === 0 ? (
-                <TableRow><TableCell colSpan={8}><Empty text="No customers match the current view." /></TableCell></TableRow>
+                <TableRow><TableCell colSpan={9}><Empty text="No customers match the current view." /></TableCell></TableRow>
               ) : sorted.map((r) => {
                 const days = daysSince(r.sign_up_date);
                 const sla = slaOf(days);
@@ -317,6 +344,7 @@ export default function Implementation() {
                       <CustomerLink id={r.allmoxy_customer_id} name={r.name} />
                       {r.ttv_category === 'gym_member' && <Chip label="stalled" size="small" sx={{ ml: 0.75, height: 16, fontSize: 9, bgcolor: 'rgba(245,166,35,0.18)', color: '#B07206' }} />}
                     </TableCell>
+                    <TableCell sx={{ fontSize: 13 }}>{r.account_rep || <Typography variant="caption" sx={{ color: 'text.disabled' }}>—</Typography>}</TableCell>
                     <TableCell>
                       <Chip label={r.implementation_type === 'Initial implementation' ? 'Initial' : r.implementation_type === 'Catalog update' ? 'Catalog' : 'Unknown'} size="small" sx={{ height: 20, fontSize: 10.5, fontWeight: 600, bgcolor: TYPE_COLOR[r.implementation_type] + '22', color: TYPE_COLOR[r.implementation_type] }} />
                     </TableCell>

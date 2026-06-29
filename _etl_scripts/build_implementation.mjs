@@ -95,6 +95,9 @@ function rowFor(c) {
       allmoxy_customer_id: c.allmoxy_customer_id,
       name: c.name,
       customer_status: c.status ?? null,
+      // Account owner / CS rep (from the customer profile / HubSpot owner) — who
+      // owns the relationship. Distinct from the JIRA `assignee` (the implementer).
+      account_rep: (c.instance_owner && c.instance_owner.trim()) || (c.instance_owner_first_name && c.instance_owner_first_name.trim()) || (c.hubspot_owner_name && c.hubspot_owner_name.trim()) || null,
       harvest_id: c.harvest_id ?? null,
       // Time-to-first-order context (filled in the enrichment pass below).
       sign_up_date: c.sign_up_date ?? null,
