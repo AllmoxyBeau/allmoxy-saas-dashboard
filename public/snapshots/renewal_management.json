@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-06-29T16:49:58.967Z",
-  "cachedUntil": "2026-06-29T16:54:58.967Z",
+  "fetchedAt": "2026-06-29T17:00:14.312Z",
+  "cachedUntil": "2026-06-29T17:05:14.312Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 206,
