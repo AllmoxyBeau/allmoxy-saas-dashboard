@@ -324,9 +324,9 @@ export default function CustomerDetail() {
   const [churnOverrides, setChurnOverrides] = useState<ChurnOverrideMap>(() => readChurnOverrides());
   const [txnExpanded, setTxnExpanded] = useState(true);
   const [custTab, setCustTab] = useState('information');
-  // Firmographics / classification is a heavy chip-wall — collapsed by default so
-  // the Information tab leads with account, lifecycle, billing & identity.
-  const [firmoOpen, setFirmoOpen] = useState(false);
+  // Firmographics / classification — expanded by default (per Beau). The toggle
+  // remains so it can be folded away, but the Information tab shows it open.
+  const [firmoOpen, setFirmoOpen] = useState(true);
   // Renewal panel — expanded by default. Reuses the same expansion content
   // from the Renewal Management page, surfaced inline on Customer Detail so
   // the renewal context is visible immediately on any customer view.
