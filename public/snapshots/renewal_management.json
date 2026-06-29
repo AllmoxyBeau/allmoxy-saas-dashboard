@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-06-29T17:00:14.312Z",
-  "cachedUntil": "2026-06-29T17:05:14.312Z",
+  "fetchedAt": "2026-06-29T19:20:49.719Z",
+  "cachedUntil": "2026-06-29T19:25:49.719Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 206,
@@ -21367,8 +21367,8 @@
         }
       ],
       "dropoff_pct": -0.27190000000000003,
-      "risk_tier": "yellow",
-      "risk_score": 55,
+      "risk_tier": "green",
+      "risk_score": 105,
       "is_bid_only": false,
       "action_tag": "Expansion Opportunity",
       "action_reason": "Orders monthly avg +28% YoY",
