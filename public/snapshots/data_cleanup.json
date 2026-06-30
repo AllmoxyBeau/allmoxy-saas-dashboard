@@ -1,15 +1,24 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-06-29T19:20:49.841Z",
-  "cachedUntil": "2026-06-29T19:25:49.841Z",
+  "fetchedAt": "2026-06-30T18:11:48.407Z",
+  "cachedUntil": "2026-06-30T18:16:48.407Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
-    "total_issues": 9,
+    "total_issues": 10,
     "resolved_count": 0,
     "by_category": {
       "hubspot_instance_missing_aid": {
-        "count": 2,
+        "count": 1,
         "label": "HubSpot Instance missing Allmoxy Customer ID",
+        "severity_counts": {
+          "low": 0,
+          "medium": 1,
+          "high": 0
+        }
+      },
+      "hubspot_company_id_ghost": {
+        "count": 2,
+        "label": "Customer profile points at a non-existent HubSpot Company ID",
         "severity_counts": {
           "low": 0,
           "medium": 2,
@@ -28,7 +37,7 @@
     },
     "by_severity": {
       "high": 0,
-      "medium": 2,
+      "medium": 3,
       "low": 7
     }
   },
@@ -46,16 +55,24 @@
       "action": "Open HubSpot Instance \"Elite Cabinets\" — no installer_id match, requires manual lookup"
     },
     {
-      "category": "hubspot_instance_missing_aid",
-      "category_label": "HubSpot Instance missing Allmoxy Customer ID",
+      "category": "hubspot_company_id_ghost",
+      "category_label": "Customer profile points at a non-existent HubSpot Company ID",
       "severity": "medium",
-      "instance_id": "56690843232",
-      "account_name": "Mekotek Canada",
-      "installer_id": "2138",
-      "pay_status": "Active",
-      "suggested_aid": null,
-      "suggested_customer_name": null,
-      "action": "Open HubSpot Instance \"Mekotek Canada\" — no installer_id match, requires manual lookup"
+      "allmoxy_customer_id": 428,
+      "customer_name": "Ultra Craftsmanship",
+      "hubspot_company_id": "34874177351",
+      "pay_status": null,
+      "action": "In the xlsx Sync Sheet, find the row for \"Ultra Craftsmanship\" and update Column B (Company ID) — it currently references a HubSpot Company that doesn't exist"
+    },
+    {
+      "category": "hubspot_company_id_ghost",
+      "category_label": "Customer profile points at a non-existent HubSpot Company ID",
+      "severity": "medium",
+      "allmoxy_customer_id": 315,
+      "customer_name": "Ruck Cabinet Doors",
+      "hubspot_company_id": "34881330490",
+      "pay_status": null,
+      "action": "In the xlsx Sync Sheet, find the row for \"Ruck Cabinet Doors\" and update Column B (Company ID) — it currently references a HubSpot Company that doesn't exist"
     },
     {
       "category": "connect_mapping_orphan",

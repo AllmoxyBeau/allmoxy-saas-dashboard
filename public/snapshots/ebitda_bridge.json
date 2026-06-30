@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-29T19:20:48.931Z",
+  "fetched_at": "2026-06-30T18:11:47.457Z",
   "comment": "Adjusted EBITDA bridge (QoE-5). GAAP Net Income → standard EBITDA add-backs (interest, tax, D&A) → GAAP EBITDA → QoE adjustments (owner-comp normalization, one-time costs, discretionary perks) → Adjusted EBITDA. Three time windows: YTD, latest month, TTM. QoE add-backs are user-maintained in _etl_scripts/ebitda_adjustments.json. Built by _etl_scripts/build_ebitda_bridge.mjs.",
   "source": {
     "pnl_months": 5,
