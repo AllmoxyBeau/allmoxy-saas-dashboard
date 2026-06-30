@@ -85,6 +85,7 @@ async function getPage(startingAfter) {
 // --- aggregate -------------------------------------------------------------
 const monthly = new Map();   // 'YYYY-MM' -> { gross, fee, count, refunded }
 const byAccount = new Map(); // acct_id -> { gross, fee, count, firstTs, lastTs }
+const acctMonth = new Map(); // `${acct}|${month}` -> { gross, fee, count } — per-account-per-month, for MoM movers + current-month columns
 const currencies = new Map();
 let total = { gross: 0, fee: 0, count: 0, refunded: 0 };
 let maxCreated = 0;
@@ -93,6 +94,7 @@ let maxCreated = 0;
 if (incremental && prev) {
   for (const r of prev.monthly || []) monthly.set(r.month, { gross: r.gross_volume, fee: r.fee_revenue, count: r.txn_count, refunded: r.fee_refunded || 0 });
   for (const a of prev.by_account || []) byAccount.set(a.account, { gross: a.gross_volume, fee: a.fee_revenue, count: a.txn_count, firstTs: Math.floor(Date.parse(a.first_seen) / 1000) || 0, lastTs: Math.floor(Date.parse(a.last_seen) / 1000) || 0 });
+  for (const r of prev.by_account_month || []) acctMonth.set(`${r.account}|${r.month}`, { gross: r.gross_volume, fee: r.fee_revenue, count: r.txn_count });
   for (const [c, n] of Object.entries(prev.currencies || {})) currencies.set(c, n);
   total = { gross: prev.totals.gross_volume, fee: prev.totals.fee_revenue, count: prev.totals.txn_count, refunded: prev.totals.fee_refunded || 0 };
   maxCreated = prev.max_created || 0;
@@ -121,6 +123,11 @@ for (;;) {
     aa.firstTs = Math.min(aa.firstTs, f.created); aa.lastTs = Math.max(aa.lastTs, f.created);
     byAccount.set(acct, aa);
 
+    const amk = `${acct}|${month}`;
+    const am = acctMonth.get(amk) || { gross: 0, fee: 0, count: 0 };
+    am.gross += gross; am.fee += feeAmt; am.count += 1;
+    acctMonth.set(amk, am);
+
     total.gross += gross; total.fee += feeAmt; total.count += 1; total.refunded += feeRefund;
   }
   pages += 1;
@@ -148,6 +155,13 @@ const accountRows = [...byAccount.entries()].map(([account, v]) => ({
   last_seen: new Date(v.lastTs * 1000).toISOString().slice(0, 10),
 })).sort((a, b) => b.gross_volume - a.gross_volume);
 
+// Per-account-per-month — drives the current-month column + MoM movers (mapped
+// account→customer downstream in build_connect_volume).
+const accountMonthRows = [...acctMonth.entries()].map(([k, v]) => {
+  const i = k.indexOf('|');
+  return { account: k.slice(0, i), month: k.slice(i + 1), gross_volume: r2(v.gross), fee_revenue: r2(v.fee), txn_count: v.count };
+}).sort((a, b) => a.month.localeCompare(b.month) || b.gross_volume - a.gross_volume);
+
 const out = {
   source: 'stripe_api:application_fees',
   fetchedAt: new Date().toISOString(),
@@ -164,6 +178,7 @@ const out = {
   },
   monthly: monthlyRows,
   by_account: accountRows,
+  by_account_month: accountMonthRows,
 };
 fs.writeFileSync(OUT, JSON.stringify(out, null, 2));
 process.stderr.write(`✓ stripe_connect_volume.json: ${total.count.toLocaleString()} fees · $${Math.round(total.gross).toLocaleString()} GMV · ${(out.totals.take_rate * 100).toFixed(2)}% blended take · ${byAccount.size} accounts · ${((Date.now() - t0) / 1000).toFixed(0)}s\n`);

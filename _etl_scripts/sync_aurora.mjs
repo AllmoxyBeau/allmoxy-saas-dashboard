@@ -28,6 +28,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT_CACHE = path.join(ROOT, '_etl_scripts/cache/aurora_orders.json');
 const OUT_SNAP = path.join(ROOT, 'public/snapshots/aurora_orders.json');
+const OUT_ROSTER = path.join(ROOT, '_etl_scripts/cache/aurora_customers.json'); // roster spine (replaces xlsx allmoxy_core_customer)
 fs.mkdirSync(path.dirname(OUT_CACHE), { recursive: true });
 
 const ENV = { ...process.env };
@@ -49,9 +50,29 @@ const conn = await mysql.createConnection({
 });
 
 // installer_id -> { aid, name }
-const [custRows] = await conn.query('SELECT allmoxy_customer_id AS aid, name, installer_id FROM customers WHERE installer_id IS NOT NULL');
+// Full customer roster — the source-of-truth spine, replacing the xlsx
+// allmoxy_core_customer tab. Same column shape so build_customer_profiles +
+// refresh_all consume it unchanged. Excludes internal/own accounts.
+const INTERNAL_AIDS = new Set([2080]); // "Allmoxy" — internal account, not a customer
+const [custRows] = await conn.query(`SELECT allmoxy_customer_id, name, sign_up_date, hubspot_company_id,
+  installer_id, installer_directory, stripe_customer_id_fromhubspot, stripe_customer_id_1,
+  stripe_customer_id_2, stripe_customer_id_3, harvest_id, csm_user_id, website, jira_custom_label
+  FROM customers WHERE allmoxy_customer_id IS NOT NULL`);
+const toIsoDate = (d) => (d == null ? null : (d instanceof Date ? d.toISOString().slice(0, 10) : String(d).slice(0, 10)));
+const rosterRows = custRows
+  .filter((r) => !INTERNAL_AIDS.has(Number(r.allmoxy_customer_id)))
+  .map((r) => ({ ...r, allmoxy_customer_id: Number(r.allmoxy_customer_id), sign_up_date: toIsoDate(r.sign_up_date) }))
+  .sort((a, b) => a.allmoxy_customer_id - b.allmoxy_customer_id);
+fs.writeFileSync(OUT_ROSTER, JSON.stringify({
+  source: 'aurora:allmoxy_core.customers',
+  fetchedAt: new Date().toISOString(),
+  excluded_internal: [...INTERNAL_AIDS],
+  rowCount: rosterRows.length,
+  rows: rosterRows,
+}, null, 2));
+console.error(`✓ aurora_customers.json: ${rosterRows.length} roster customers (excl ${INTERNAL_AIDS.size} internal)`);
 const instToCust = new Map();
-for (const r of custRows) instToCust.set(Number(r.installer_id), { aid: Number(r.aid), name: r.name });
+for (const r of rosterRows) if (r.installer_id != null) instToCust.set(Number(r.installer_id), { aid: r.allmoxy_customer_id, name: r.name });
 
 // Verified-order $ by month, per instance.
 const [verRows] = await conn.query('SELECT installation_id, period_year, period_month, invoice_total FROM instance_verified_orders');

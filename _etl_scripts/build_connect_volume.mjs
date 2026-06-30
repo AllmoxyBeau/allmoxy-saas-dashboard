@@ -67,6 +67,62 @@ const byAccount = cache.by_account.map((a) => {
   };
 });
 
+// --- per-account current vs prior month + per-customer MoM movers ---------
+// From the live API's per-account-per-month aggregation (sync_stripe_connect).
+// "Current" = the latest month present (today is month-end, so it's complete;
+// mid-month it would be partial — the UI flags that). Drives the current-month
+// column on the accounts table and the "what's driving the MoM trend" movers.
+const round2 = (v) => Math.round(v * 100) / 100;
+const acctMo = new Map(); // account -> { month -> { gross, fee } }
+for (const r of cache.by_account_month || []) {
+  if (!acctMo.has(r.account)) acctMo.set(r.account, {});
+  acctMo.get(r.account)[r.month] = { gross: r.gross_volume, fee: r.fee_revenue };
+}
+const moMonths = [...new Set((cache.by_account_month || []).map((r) => r.month))].sort();
+const curMonth = moMonths[moMonths.length - 1] || null;
+const prevMonth = moMonths[moMonths.length - 2] || null;
+for (const a of byAccount) {
+  const m = acctMo.get(a.account) || {};
+  a.this_month_fee = curMonth && m[curMonth] ? round2(m[curMonth].fee) : 0;
+  a.this_month_gross = curMonth && m[curMonth] ? round2(m[curMonth].gross) : 0;
+  a.last_month_fee = prevMonth && m[prevMonth] ? round2(m[prevMonth].fee) : 0;
+  a.last_month_gross = prevMonth && m[prevMonth] ? round2(m[prevMonth].gross) : 0;
+}
+// Group accounts → customers and compute current vs prior month fee + gross.
+const custMo = new Map();
+for (const a of byAccount) {
+  const key = a.allmoxy_customer_id != null ? `aid:${a.allmoxy_customer_id}` : `acct:${a.account}`;
+  const e = custMo.get(key) || { customer_name: a.customer_name || a.account, allmoxy_customer_id: a.allmoxy_customer_id ?? null, curFee: 0, prevFee: 0, curGross: 0, prevGross: 0 };
+  if (a.customer_name) e.customer_name = a.customer_name;
+  e.curFee += a.this_month_fee; e.prevFee += a.last_month_fee;
+  e.curGross += a.this_month_gross; e.prevGross += a.last_month_gross;
+  custMo.set(key, e);
+}
+const momMovers = [...custMo.values()]
+  .filter((e) => e.curFee > 0 || e.prevFee > 0)
+  .map((e) => ({
+    customer_name: e.customer_name,
+    allmoxy_customer_id: e.allmoxy_customer_id,
+    current_fee: round2(e.curFee),
+    prior_fee: round2(e.prevFee),
+    delta_fee: round2(e.curFee - e.prevFee),
+    pct: e.prevFee > 0 ? Math.round(((e.curFee - e.prevFee) / e.prevFee) * 1000) / 10 : null,
+    current_gross: round2(e.curGross),
+    prior_gross: round2(e.prevGross),
+  }))
+  .sort((a, b) => b.delta_fee - a.delta_fee);
+const momTotalCur = round2(momMovers.reduce((s, m) => s + m.current_fee, 0));
+const momTotalPrev = round2(momMovers.reduce((s, m) => s + m.prior_fee, 0));
+const mom = {
+  current_month: curMonth,
+  prior_month: prevMonth,
+  total_current_fee: momTotalCur,
+  total_prior_fee: momTotalPrev,
+  total_delta_fee: round2(momTotalCur - momTotalPrev),
+  pct: momTotalPrev > 0 ? Math.round(((momTotalCur - momTotalPrev) / momTotalPrev) * 1000) / 10 : null,
+  movers: momMovers,
+};
+
 // --- annualized run-rate from the last 12 complete months ----------------
 const now = new Date();
 const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
@@ -203,6 +259,7 @@ const out = {
     attach_rate: activeProfiles.length > 0 ? Math.round((activeOnConnect / activeProfiles.length) * 1000) / 1000 : null,
   },
   scenarios,
+  mom,
   take_rate_distribution: dist,
   // Customer penetration of the active book + the attach opportunity list.
   penetration: {

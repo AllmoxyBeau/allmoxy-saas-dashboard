@@ -64,7 +64,12 @@ function writeSnap(name, obj) {
 // ========= Batch 1: raw tab pulls =========
 
 function buildCoreCustomer(wb) {
-  const raw = XLSX.utils.sheet_to_json(wb.Sheets['allmoxy_core_customer'], { range: 1, defval: null, raw: false });
+  // Roster spine migrated to Aurora `customers` (cache/aurora_customers.json from
+  // sync_aurora.mjs); xlsx allmoxy_core_customer tab is the fallback.
+  const AURORA_ROSTER_CACHE = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/aurora_customers.json';
+  const raw = fs.existsSync(AURORA_ROSTER_CACHE)
+    ? JSON.parse(fs.readFileSync(AURORA_ROSTER_CACHE, 'utf8')).rows
+    : XLSX.utils.sheet_to_json(wb.Sheets['allmoxy_core_customer'], { range: 1, defval: null, raw: false });
   const rows = raw
     .filter((r) => r.allmoxy_customer_id != null && String(r.allmoxy_customer_id).trim() !== '')
     .map((r) => {

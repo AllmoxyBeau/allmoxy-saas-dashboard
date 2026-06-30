@@ -29,6 +29,17 @@ type AccountRow = {
   customer_status: string | null; subscription_mrr: number | null;
   gross_volume: number; fee_revenue: number; txn_count: number; take_rate: number | null;
   first_seen: string; last_seen: string;
+  this_month_fee?: number; this_month_gross?: number; last_month_fee?: number; last_month_gross?: number;
+};
+type MomMover = {
+  customer_name: string | null; allmoxy_customer_id: number | null;
+  current_fee: number; prior_fee: number; delta_fee: number; pct: number | null;
+  current_gross: number; prior_gross: number;
+};
+type Mom = {
+  current_month: string | null; prior_month: string | null;
+  total_current_fee: number; total_prior_fee: number; total_delta_fee: number; pct: number | null;
+  movers: MomMover[];
 };
 type Scenario = { take_rate: number; annual_fee_revenue: number; delta_vs_current: number; multiple_vs_current: number | null };
 type ConnectStatus = 'processing' | 'lapsed' | 'never';
@@ -49,6 +60,7 @@ type Snapshot = {
   annualized: { basis: string; gross_volume: number; fee_revenue: number; txn_count: number; blended_take_rate: number | null };
   attach: { connected_accounts: number; active_customers: number; active_customers_on_connect: number; attach_rate: number | null };
   scenarios: Scenario[];
+  mom?: Mom;
   take_rate_distribution: Record<string, number>;
   penetration?: {
     active_customers: number; processing_now: number; attach_rate: number | null; lapsed: number; never: number;
@@ -130,6 +142,8 @@ export default function PaymentsOpportunity() {
     { key: 'account', label: 'Stripe account', getValue: (r: AccountRow) => r.account },
     { key: 'gross_volume', label: 'GMV (TTM-window)', getValue: (r: AccountRow) => r.gross_volume },
     { key: 'fee_revenue', label: 'Fee revenue', getValue: (r: AccountRow) => r.fee_revenue },
+    { key: 'this_month_fee', label: 'This month fee', getValue: (r: AccountRow) => r.this_month_fee ?? '' },
+    { key: 'last_month_fee', label: 'Last month fee', getValue: (r: AccountRow) => r.last_month_fee ?? '' },
     { key: 'take_rate', label: 'Take rate', getValue: (r: AccountRow) => r.take_rate != null ? (r.take_rate * 100).toFixed(2) + '%' : '' },
     { key: 'txn_count', label: 'Transactions', getValue: (r: AccountRow) => r.txn_count },
     { key: 'status', label: 'Customer status', getValue: (r: AccountRow) => r.customer_status ?? '' },
@@ -330,6 +344,64 @@ export default function PaymentsOpportunity() {
         </Paper>
       )}
 
+      {/* Month-over-month movers — what's driving the Connect trend */}
+      {snap?.mom && snap.mom.movers.length > 0 && (() => {
+        const mom = snap.mom;
+        const monthLbl = (m: string | null) => (m ? new Date(m + '-01T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '—');
+        const up = mom.total_delta_fee >= 0;
+        const gainers = mom.movers.filter((m) => m.delta_fee > 0.5).slice(0, 12);
+        const decliners = mom.movers.filter((m) => m.delta_fee < -0.5).sort((a, b) => a.delta_fee - b.delta_fee).slice(0, 12);
+        const Side = ({ title, color, list, sign }: { title: string; color: string; list: MomMover[]; sign: '+' | '−' }) => (
+          <Box sx={{ flex: '1 1 320px' }}>
+            <Typography variant="caption" sx={{ color, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 11 }}>{title}</Typography>
+            <Table size="small" sx={{ mt: 0.5 }}>
+              <TableBody>
+                {list.length === 0 ? (
+                  <TableRow><TableCell sx={{ color: 'text.disabled', border: 0, py: 1 }}>None</TableCell></TableRow>
+                ) : list.map((m) => (
+                  <TableRow key={(m.allmoxy_customer_id ?? m.customer_name ?? '') + title} hover>
+                    <TableCell sx={{ border: 0, py: 0.5 }}>
+                      {m.allmoxy_customer_id != null ? <CustomerLink id={m.allmoxy_customer_id}>{m.customer_name}</CustomerLink> : <span>{m.customer_name}</span>}
+                    </TableCell>
+                    <TableCell align="right" sx={{ border: 0, py: 0.5, fontVariantNumeric: 'tabular-nums', fontWeight: 600, color, whiteSpace: 'nowrap' }}>
+                      {sign}{USD0.format(Math.abs(m.delta_fee))}
+                      {m.pct != null && <Typography component="span" variant="caption" sx={{ ml: 0.5, color: 'text.secondary', fontWeight: 400 }}>{m.pct > 0 ? '+' : ''}{m.pct}%</Typography>}
+                    </TableCell>
+                    <TableCell align="right" sx={{ border: 0, py: 0.5, fontVariantNumeric: 'tabular-nums', color: 'text.secondary', fontSize: 11, whiteSpace: 'nowrap' }}>
+                      {USD0.format(m.prior_fee)} → {USD0.format(m.current_fee)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+        );
+        return (
+          <Paper sx={{ p: 2.5 }}>
+            <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap" gap={1} sx={{ mb: 0.5 }}>
+              <Stack direction="row" spacing={0.75} alignItems="center">
+                <Typography variant="h6">Month-over-month movers</Typography>
+                <InfoIcon info={<><strong>What's driving the Connect fee trend</strong> — each active customer's Connect fee this month vs last, from the live per-account API data, mapped to customers. Gainers (up) and decliners (down) are ranked by dollar change; the net reconciles to the total below. Gross fee in USD (CAD at face). The current month may be partial if viewed mid-month.</>} />
+              </Stack>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>{monthLbl(mom.current_month)} vs {monthLbl(mom.prior_month)}</Typography>
+            </Stack>
+            <Stack direction="row" spacing={1.5} alignItems="baseline" sx={{ mb: 2 }} flexWrap="wrap">
+              <Typography variant="h5" sx={{ fontWeight: 600, color: up ? 'success.main' : 'error.main', fontVariantNumeric: 'tabular-nums' }}>
+                {up ? '+' : '−'}{USD0.format(Math.abs(mom.total_delta_fee))}
+              </Typography>
+              {mom.pct != null && <Typography variant="h6" sx={{ fontWeight: 500, color: 'text.secondary' }}>{mom.pct > 0 ? '+' : ''}{mom.pct}%</Typography>}
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                {USD0.format(mom.total_prior_fee)} → {USD0.format(mom.total_current_fee)} in Connect fees
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing={3} flexWrap="wrap" useFlexGap>
+              <Side title="▲ Gainers" color="#1A9E5C" list={gainers} sign="+" />
+              <Side title="▼ Decliners" color="#E53E3E" list={decliners} sign="−" />
+            </Stack>
+          </Paper>
+        );
+      })()}
+
       {/* Top accounts by GMV */}
       <Paper sx={{ p: 0 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ px: 2, py: 1.5 }}>
@@ -344,12 +416,13 @@ export default function PaymentsOpportunity() {
                 <TableCell align="right">GMV (window)</TableCell>
                 <TableCell align="right">Take rate</TableCell>
                 <TableCell align="right">Fee revenue</TableCell>
+                <TableCell align="right">This month (fee)</TableCell>
                 <TableCell align="right">Transactions</TableCell>
                 <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {isLoading ? Array.from({ length: 12 }).map((_, i) => <TableRow key={i}><TableCell colSpan={6}><Skeleton variant="text" /></TableCell></TableRow>)
+              {isLoading ? Array.from({ length: 12 }).map((_, i) => <TableRow key={i}><TableCell colSpan={7}><Skeleton variant="text" /></TableCell></TableRow>)
                 : (snap?.by_account ?? []).slice(0, 40).map((r) => (
                   <TableRow key={r.account} hover>
                     <TableCell>
@@ -360,6 +433,14 @@ export default function PaymentsOpportunity() {
                     <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', fontWeight: 600 }}>{USD0.format(r.gross_volume)}</TableCell>
                     <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: r.take_rate != null && r.take_rate >= 0.0099 ? 'success.main' : r.take_rate != null && r.take_rate < 0.0049 ? 'warning.main' : 'text.secondary' }}>{r.take_rate != null ? (r.take_rate * 100).toFixed(2) + '%' : '—'}</TableCell>
                     <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: 'text.secondary' }}>{USD0.format(r.fee_revenue)}</TableCell>
+                    <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums' }}>
+                      {r.this_month_fee != null ? (
+                        <>
+                          {USD0.format(r.this_month_fee)}
+                          {(() => { const d = (r.this_month_fee ?? 0) - (r.last_month_fee ?? 0); if (Math.abs(d) < 1) return null; return <Typography component="span" variant="caption" sx={{ ml: 0.5, color: d > 0 ? 'success.main' : 'error.main' }}>{d > 0 ? '▲' : '▼'}{USD0.format(Math.abs(d))}</Typography>; })()}
+                        </>
+                      ) : <Typography component="span" variant="caption" sx={{ color: 'text.disabled' }}>—</Typography>}
+                    </TableCell>
                     <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: 'text.secondary' }}>{r.txn_count.toLocaleString()}</TableCell>
                     <TableCell><Typography variant="caption" sx={{ color: r.customer_status === 'active' ? 'success.main' : r.customer_status == null ? 'text.disabled' : 'text.secondary' }}>{r.customer_status ?? 'unmatched'}</Typography></TableCell>
                   </TableRow>

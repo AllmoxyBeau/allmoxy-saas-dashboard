@@ -148,6 +148,14 @@ export default function UnitEconomics() {
   const { data, isLoading, error } = useSheetTab('unit_economics');
   const { data: wfData } = useSheetTab('mrr_waterfall');
   const { data: svcData } = useSheetTab('services_by_month');
+  // Connect economics — live GMV / take / fee + attach + expansion levers.
+  const { data: connectData } = useSheetTab('connect_volume');
+  const cv = connectData as unknown as {
+    annualized?: { gross_volume: number; fee_revenue: number; txn_count: number; blended_take_rate: number | null; basis: string };
+    attach?: { active_customers: number; active_customers_on_connect: number; attach_rate: number | null; connected_accounts: number };
+    penetration?: { processing_now: number; attach_target_fee_potential: number };
+    scenarios?: Array<{ take_rate: number; annual_fee_revenue: number; delta_vs_current: number; multiple_vs_current: number | null }>;
+  } | undefined;
   const snap = data as unknown as UnitEconSnapshot | undefined;
   const wf = wfData as unknown as WaterfallSnap | undefined;
   const svcSheet = svcData as unknown as ServicesSnap | undefined;
@@ -629,6 +637,67 @@ export default function UnitEconomics() {
           </Box>
         </Paper>
       )}
+
+      {/* Connect economics — the platform-take business as its own unit */}
+      {cv?.annualized && (() => {
+        const an = cv.annualized!;
+        const at = cv.attach;
+        const pen = cv.penetration;
+        const processing = pen?.processing_now || at?.active_customers_on_connect || 0;
+        const feePerCustomer = processing > 0 ? an.fee_revenue / processing : null;
+        const feePerTxn = an.txn_count > 0 ? an.fee_revenue / an.txn_count : null;
+        const avgTxnSize = an.txn_count > 0 ? an.gross_volume / an.txn_count : null;
+        const s1 = (cv.scenarios || []).find((s) => Math.abs(s.take_rate - 0.01) < 1e-6);
+        const attachPotential = pen?.attach_target_fee_potential ?? null;
+        const metrics = [
+          { l: 'Processing volume (GMV)', v: USD_COMPACT.format(an.gross_volume), s: 'annualized / TTM', color: '#14B8A6' },
+          { l: 'Blended take rate', v: an.blended_take_rate != null ? (an.blended_take_rate * 100).toFixed(2) + '%' : '—', s: 'fee ÷ GMV' },
+          { l: 'Connect fee revenue', v: USD0.format(an.fee_revenue), s: `${an.txn_count.toLocaleString()} transactions`, color: '#1A9E5C' },
+          { l: 'Attach rate', v: at?.attach_rate != null ? (at.attach_rate * 100).toFixed(0) + '%' : '—', s: `${at?.active_customers_on_connect ?? '—'} of ${at?.active_customers ?? '—'} active customers` },
+          { l: 'Fee / processing customer', v: feePerCustomer != null ? USD0.format(feePerCustomer) + '/yr' : '—', s: `${processing} processing now` },
+          { l: 'Fee / transaction', v: feePerTxn != null ? '$' + feePerTxn.toFixed(2) : '—', s: avgTxnSize != null ? `on ${USD0.format(avgTxnSize)} avg charge` : '' },
+        ];
+        return (
+          <Paper sx={{ p: 3, mb: 3 }}>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
+              <Typography variant="h6">Connect economics</Typography>
+              <InfoIcon info={<><strong>The embedded-payments business as its own unit.</strong> Allmoxy takes a platform fee (~0.5%) on GMV processed through Stripe Connect. Live from the application_fees API ({an.basis}). Because it's a take on payments with negligible incremental cost, fee revenue is <strong>near-100% contribution margin</strong> — and it's underpenetrated, so the two levers below are pure upside.</>} />
+            </Stack>
+            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 2 }}>
+              Platform-fee revenue on payments processed through Connect · near-100% contribution margin (no incremental COGS).
+            </Typography>
+            <Grid container spacing={2}>
+              {metrics.map((m) => (
+                <Grid item xs={6} md={2} key={m.l}>
+                  <Box sx={{ p: 2, height: '100%', borderRadius: 1, border: '1px solid', borderColor: 'divider', ...(m.color && { borderTop: '3px solid', borderTopColor: m.color }) }}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10, fontWeight: 700, display: 'block' }}>{m.l}</Typography>
+                    <Typography variant="h6" sx={{ fontWeight: 600, mt: 0.5, fontVariantNumeric: 'tabular-nums' }}>{m.v}</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.disabled' }}>{m.s}</Typography>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+            <Grid container spacing={2} sx={{ mt: 0.5 }}>
+              <Grid item xs={12} md={6}>
+                <Box sx={{ p: 2, borderRadius: 1, bgcolor: 'rgba(26,158,92,0.08)', border: '1px solid', borderColor: 'rgba(26,158,92,0.25)' }}>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lever 1 · Take-rate standardization</Typography>
+                  <Typography variant="body2" sx={{ mt: 0.5 }}>
+                    The book is priced at ~0.5%. Standardizing to the <strong>1.0%</strong> some accounts already pay would lift Connect fee revenue to <strong style={{ color: '#1A9E5C' }}>{s1 ? USD0.format(s1.annual_fee_revenue) + '/yr' : '—'}</strong>{s1 ? <> ({s1.multiple_vs_current}× today, <strong>+{USD0.format(s1.delta_vs_current)}/yr</strong>)</> : ''} at zero acquisition cost.
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Box sx={{ p: 2, borderRadius: 1, bgcolor: 'rgba(44,115,255,0.08)', border: '1px solid', borderColor: 'rgba(44,115,255,0.25)' }}>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lever 2 · Attach growth</Typography>
+                  <Typography variant="body2" sx={{ mt: 0.5 }}>
+                    Only {at?.attach_rate != null ? (at.attach_rate * 100).toFixed(0) + '%' : '—'} of active customers process on Connect. Attaching the non-processing book (capture-adjusted) is an estimated <strong style={{ color: '#2C73FF' }}>{attachPotential != null ? '+' + USD0.format(attachPotential) + '/yr' : '—'}</strong> in fee revenue — see the Payments Opportunity page for the per-customer targets.
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
+        );
+      })()}
 
       {/* Trend charts */}
       <Grid container spacing={2} sx={{ mb: 3 }}>

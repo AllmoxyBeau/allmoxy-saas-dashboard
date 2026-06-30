@@ -26,3 +26,17 @@ export function hubspotCompanyUrl(companyId: string | number | null | undefined)
   const eschref = `/search/${HUBSPOT_PORTAL_ID}/search?query=${id}`;
   return `https://app.hubspot.com/contacts/${HUBSPOT_PORTAL_ID}/record/0-2/${id}?eschref=${encodeURIComponent(eschref)}`;
 }
+
+// HubSpot "Instance" custom object (the per-installation record). Its object-type
+// id is 2-39181518; the record id is stored on profiles as hubspot_record_id.
+export const HUBSPOT_INSTANCE_OBJECT_TYPE = '2-39181518';
+
+/**
+ * Build the URL to a HubSpot Instance record (custom object 2-39181518).
+ * Returns `null` when no id is supplied so callers can guard rendering.
+ */
+export function hubspotInstanceUrl(recordId: string | number | null | undefined): string | null {
+  if (recordId == null || recordId === '') return null;
+  const id = String(recordId);
+  return `https://app.hubspot.com/contacts/${HUBSPOT_PORTAL_ID}/record/${HUBSPOT_INSTANCE_OBJECT_TYPE}/${id}`;
+}

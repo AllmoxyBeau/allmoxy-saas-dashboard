@@ -210,8 +210,17 @@ try {
   // No overrides file — that's fine, just skip.
 }
 
-// ---------- allmoxy_core_customer → roster ----------
-const coreRaw = XLSX.utils.sheet_to_json(wb.Sheets['allmoxy_core_customer'], { range: 1, defval: null, raw: false });
+// ---------- roster spine: Aurora customers (source of truth) ----------
+// Migrated off the xlsx allmoxy_core_customer tab → live Aurora `customers`
+// (cache/aurora_customers.json, from sync_aurora.mjs). Same column shape so the
+// coreById mapping below is unchanged. Falls back to the xlsx tab if the Aurora
+// cache is absent (transition / offline safety).
+const AURORA_ROSTER_CACHE = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/aurora_customers.json';
+const useAuroraRoster = fs.existsSync(AURORA_ROSTER_CACHE);
+const coreRaw = useAuroraRoster
+  ? JSON.parse(fs.readFileSync(AURORA_ROSTER_CACHE, 'utf8')).rows
+  : XLSX.utils.sheet_to_json(wb.Sheets['allmoxy_core_customer'], { range: 1, defval: null, raw: false });
+console.error(`[roster] source: ${useAuroraRoster ? 'Aurora customers' : 'xlsx allmoxy_core_customer (FALLBACK)'} · ${coreRaw.length} rows`);
 const coreById = new Map();
 for (const r of coreRaw) {
   const id = Number(r.allmoxy_customer_id);

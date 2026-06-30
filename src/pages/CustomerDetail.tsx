@@ -28,7 +28,7 @@ import InfoIcon from '../components/common/InfoIcon';
 import HealthScoreInfo from '../components/common/HealthScoreInfo';
 import RenewalPanelContent, { type RenewalPanelRow, type RenewalQuote } from '../components/common/RenewalPanelContent';
 import { useSheetTab } from '../hooks/useSheetTab';
-import { hubspotCompanyUrl } from '../lib/hubspot';
+import { hubspotCompanyUrl, hubspotInstanceUrl } from '../lib/hubspot';
 import annualPayersConfig from '../data/annual_payer_ids.json';
 
 type Transaction = {
@@ -544,6 +544,7 @@ export default function CustomerDetail() {
                 {selected.installer_id && <InfoField label="Installer ID" value={selected.installer_id} />}
                 {selected.installer_directory && <ExternalLink label="Allmoxy URL" display={`${selected.installer_directory}.allmoxy.com`} href={`https://${selected.installer_directory}.allmoxy.com`} />}
                 {selected.hubspot_company_id && <ExternalLink label="HubSpot ID" display={selected.hubspot_company_id} href={hubspotCompanyUrl(selected.hubspot_company_id) ?? '#'} />}
+                {selected.hubspot_record_id && <ExternalLink label="HubSpot Instance" display={selected.hubspot_instance_name || String(selected.hubspot_record_id)} href={hubspotInstanceUrl(selected.hubspot_record_id) ?? '#'} />}
                 {selected.stripe_customer_ids[0] && <ExternalLink label="Stripe Customer" display={selected.stripe_customer_ids[0]} href={`https://dashboard.stripe.com/customers/${selected.stripe_customer_ids[0]}`} />}
                 {(() => {
                   const customDomainSet = new Set(selected.all_custom_domain_stripe_subscription_ids ?? []);
