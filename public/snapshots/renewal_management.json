@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-06-30T18:11:48.264Z",
-  "cachedUntil": "2026-06-30T18:16:48.264Z",
+  "fetchedAt": "2026-06-30T19:23:55.465Z",
+  "cachedUntil": "2026-06-30T19:28:55.465Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 207,
@@ -29765,12 +29765,12 @@
       "owner_name": "Connor",
       "current_mrr": 1990,
       "current_arr": 23880,
-      "lifetime_subscription": 64590,
+      "lifetime_subscription": 64610,
       "lifetime_orders_dollars": 206274.66,
       "orders_monthly_avg_current_year": 15249.3,
       "orders_monthly_avg_prior_year": 10835.68,
       "orders_yoy_pct": 0.41,
-      "cost_ratio_lifetime_pct": 31.31,
+      "cost_ratio_lifetime_pct": 31.32,
       "cost_ratio_annualized_pct": 13.05,
       "monthly_trend": [
         {
@@ -29982,7 +29982,7 @@
       "proposed_mrr": 2300,
       "expansion_confidence": "high",
       "proposed_basis": "growth",
-      "expansion_rationale": "Orders +41% YoY; cost ratio 13.05% vs target 31.31%. Value supports ~$57,295 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "expansion_rationale": "Orders +41% YoY; cost ratio 13.05% vs target 31.32%. Value supports ~$57,313 ARR; capped at +15% this renewal — phase remaining over future renewals.",
       "proposed_uplift_pct": 15,
       "target_1pct_arr": 1829.92,
       "target_1pct_mrr": 150

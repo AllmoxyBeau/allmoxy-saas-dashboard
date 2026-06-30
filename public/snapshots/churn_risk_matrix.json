@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-30T18:19:37.673Z",
+  "fetched_at": "2026-06-30T19:31:20.478Z",
   "comment": "5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to all active paying customers. Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.",
   "scoring_mode": "full",
   "totals": {
@@ -1806,7 +1806,7 @@
       "owner_name": "Jon",
       "current_subscription_mrr": 580,
       "lifetime_subscription": 1160,
-      "years_with_us": 0.1,
+      "years_with_us": 0.2,
       "primary_segment": "Cabinetry",
       "sub_segment": "Custom Cabinet Shop",
       "sign_up_date": "2026-05-08",
@@ -6395,7 +6395,7 @@
       "owner_id": null,
       "owner_name": "Connor",
       "current_subscription_mrr": 1990,
-      "lifetime_subscription": 64590,
+      "lifetime_subscription": 64610,
       "years_with_us": 2.1,
       "primary_segment": "Cabinetry",
       "sub_segment": "Custom Cabinet Shop",

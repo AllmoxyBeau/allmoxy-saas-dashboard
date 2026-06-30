@@ -1,8 +1,8 @@
 {
   "tab": "allmoxy_core_customer",
   "sheetId": "18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30",
-  "fetchedAt": "2026-06-30T18:11:16.601Z",
-  "cachedUntil": "2026-06-30T18:16:16.601Z",
+  "fetchedAt": "2026-06-30T19:23:21.630Z",
+  "cachedUntil": "2026-06-30T19:28:21.630Z",
   "columns": [
     "allmoxy_customer_id",
     "name",
@@ -1809,10 +1809,12 @@
       "name": "Multiwood",
       "sign_up_date": "2018-10-01",
       "hubspot_company_id": "",
-      "installer_id": null,
-      "installer_directory": null,
-      "stripe_customer_ids": [],
-      "harvest_id": null
+      "installer_id": "2090",
+      "installer_directory": "multiwood",
+      "stripe_customer_ids": [
+        "cus_DrLqJJ7K4XfvPJ"
+      ],
+      "harvest_id": "7349321"
     },
     {
       "allmoxy_customer_id": 141,
@@ -7112,19 +7114,6 @@
       "harvest_id": null
     },
     {
-      "allmoxy_customer_id": 2023,
-      "name": "Multiwood",
-      "sign_up_date": "2025-10-21",
-      "hubspot_company_id": "1128346616",
-      "installer_id": "2090",
-      "installer_directory": "multiwood",
-      "stripe_customer_ids": [
-        "cus_DrLqJJ7K4XfvPJ",
-        "cus_DrLqJJ7K4XfvPJ"
-      ],
-      "harvest_id": "7349321"
-    },
-    {
       "allmoxy_customer_id": 2025,
       "name": "B & L Cabinets",
       "sign_up_date": "2025-10-23",
@@ -7533,6 +7522,6 @@
       "harvest_id": null
     }
   ],
-  "rowCount": 593,
+  "rowCount": 592,
   "notes": "Full customer roster from the allmoxy_core_customer tab of the local xlsx."
 }
