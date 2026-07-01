@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-30T19:23:54.676Z",
+  "fetched_at": "2026-07-01T14:59:16.090Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "by_category": {
@@ -45,9 +45,9 @@
       "period": null,
       "txn_date": null,
       "before": null,
-      "after": 24170.67,
+      "after": 22374,
       "delta": null,
-      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $24,170.67 across 23 months.",
+      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $22,374 across 22 months.",
       "evidence": null,
       "source_file": "src/data/annual_payers.json",
       "added_by": "updated_at 2026-06-12"

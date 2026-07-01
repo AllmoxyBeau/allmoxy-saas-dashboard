@@ -1,7 +1,7 @@
 {
   "tab": "unit_economics",
-  "fetchedAt": "2026-06-30T19:23:54.427Z",
-  "cachedUntil": "2026-06-30T19:28:54.427Z",
+  "fetchedAt": "2026-07-01T14:59:15.713Z",
+  "cachedUntil": "2026-07-01T15:04:15.713Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -1699,28 +1699,28 @@
     }
   ],
   "ttm": {
-    "windowStart": "2025-06",
-    "windowEnd": "2026-05",
-    "subscription_revenue": 2046355.16,
-    "services_revenue": 229775.22,
-    "connect_revenue": 457582.44,
+    "windowStart": "2025-07",
+    "windowEnd": "2026-06",
+    "subscription_revenue": 1822796.39,
+    "services_revenue": 219224.72,
+    "connect_revenue": 448724.08,
     "affiliate_revenue": 0,
-    "total_income": 2711835.55,
-    "cogs": 96095.11,
-    "gross_profit": 2615740.44,
-    "gross_margin": 0.965,
-    "subscription_gross_margin": 0.965,
-    "snm_expense": 382643.98,
-    "new_logos": 59,
-    "cac": 6485.49,
-    "net_op_income": 18925.02,
-    "monthly_churn_rate": 0.0163,
-    "annual_churn_rate": 0.1792,
-    "avg_mrr_per_customer": 1185.71,
-    "logo_qty_latest": 198,
-    "ltv": 70068.07,
-    "cac_payback_months": 5.7,
-    "ltv_cac_ratio": 10.8
+    "total_income": 2440858.56,
+    "cogs": 80067.02,
+    "gross_profit": 2360791.54,
+    "gross_margin": 0.967,
+    "subscription_gross_margin": 0.967,
+    "snm_expense": 340441.22,
+    "new_logos": 53,
+    "cac": 6423.42,
+    "net_op_income": 28568.72,
+    "monthly_churn_rate": 0.0238,
+    "annual_churn_rate": 0.2507,
+    "avg_mrr_per_customer": 1200.81,
+    "logo_qty_latest": 183,
+    "ltv": 48872.56,
+    "cac_payback_months": 5.5,
+    "ltv_cac_ratio": 7.61
   },
   "services": {
     "total_customers_ever": 592,
@@ -1729,12 +1729,12 @@
     "avg_services_revenue_per_attached_customer": 6916.03
   },
   "connect": {
-    "customers_using_connect": 81,
-    "active_logos": 198,
-    "attach_rate": 0.4091,
-    "connect_revenue_ttm": 457582.44,
-    "avg_connect_revenue_per_connect_customer": 5649.17,
-    "avg_monthly_connect_revenue": 38131.87
+    "customers_using_connect": 80,
+    "active_logos": 183,
+    "attach_rate": 0.4372,
+    "connect_revenue_ttm": 448724.08,
+    "avg_connect_revenue_per_connect_customer": 5609.05,
+    "avg_monthly_connect_revenue": 37393.67
   },
   "notes": "Unit economics derived from QuickBooks CAC Info P&L × allmoxy_core_customer signups × mrr_by_month logo counts. CAC = (Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission) / new logos. LTV = Avg MRR × Subscription Gross Margin / Monthly Logo Churn Rate. Churn rate derived from Logo Qty deltas and gross signups (aggregate, not per-cohort). All metrics are subscription-only unless stated; services revenue is tracked separately."
 }
