@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-01T14:59:16.090Z",
+  "fetched_at": "2026-07-01T16:19:03.251Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "by_category": {
@@ -495,7 +495,7 @@
       "before": null,
       "after": null,
       "delta": null,
-      "reason": "88 customer record(s) auto-classified status='never_paid' and excluded_from_logo_count=true (lifetime ≤ $0). Split: 60 pure never-paid (0 transactions) + 28 zero-net-revenue-with-activity (had transactions but they netted to $0 — refunds, chargebacks, reversed billing). Rationale: net economic contribution to Allmoxy was zero either way, so they should not appear in churn or logo counts. Sample: #333 Quality Kitchens Inc., #285 Mitchell Wood Worx, #44 Archer Mills, ….",
+      "reason": "89 customer record(s) auto-classified status='never_paid' and excluded_from_logo_count=true (lifetime ≤ $0). Split: 61 pure never-paid (0 transactions) + 28 zero-net-revenue-with-activity (had transactions but they netted to $0 — refunds, chargebacks, reversed billing). Rationale: net economic contribution to Allmoxy was zero either way, so they should not appear in churn or logo counts. Sample: #333 Quality Kitchens Inc., #285 Mitchell Wood Worx, #44 Archer Mills, ….",
       "evidence": null,
       "source_file": "_etl_scripts/apply_never_paid_classification.mjs",
       "added_by": "Auto-classifier (deterministic rule, not user-maintained)"

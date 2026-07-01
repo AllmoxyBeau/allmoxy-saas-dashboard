@@ -1,8 +1,8 @@
 {
   "tab": "allmoxy_core_customer",
   "sheetId": "18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30",
-  "fetchedAt": "2026-07-01T14:58:13.523Z",
-  "cachedUntil": "2026-07-01T15:03:13.523Z",
+  "fetchedAt": "2026-07-01T16:18:31.197Z",
+  "cachedUntil": "2026-07-01T16:23:31.197Z",
   "columns": [
     "allmoxy_customer_id",
     "name",
@@ -7520,8 +7520,18 @@
       "installer_directory": "mekotechcanada",
       "stripe_customer_ids": [],
       "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2081,
+      "name": "Custom Cabinet Shop",
+      "sign_up_date": "2026-07-01",
+      "hubspot_company_id": null,
+      "installer_id": "2140",
+      "installer_directory": "customcabinetshop",
+      "stripe_customer_ids": [],
+      "harvest_id": null
     }
   ],
-  "rowCount": 592,
+  "rowCount": 593,
   "notes": "Full customer roster from the allmoxy_core_customer tab of the local xlsx."
 }

@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-07-01T14:59:17.308Z",
-  "cachedUntil": "2026-07-01T15:04:17.308Z",
+  "fetchedAt": "2026-07-01T16:19:04.016Z",
+  "cachedUntil": "2026-07-01T16:24:04.016Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 207,
@@ -25280,11 +25280,11 @@
           "id": "40605385854",
           "title": "Brandenberger Door MFG - Renewal",
           "status": "APPROVAL_NOT_NEEDED",
-          "amount": 950,
+          "amount": 900,
           "currency": "USD",
           "created_date": "2026-06-23T20:55:07.138Z",
           "expiration_date": "2026-09-22T05:59:59.999Z",
-          "last_modified_date": "2026-06-23T20:58:10.081Z",
+          "last_modified_date": "2026-07-01T15:11:46.184Z",
           "quote_number": "20260623-145506696",
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/40605385854"

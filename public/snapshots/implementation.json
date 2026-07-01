@@ -1,7 +1,7 @@
 {
-  "fetchedAt": "2026-07-01T15:11:02.684Z",
-  "jira_fetchedAt": "2026-07-01T15:10:27.066Z",
-  "harvest_fetchedAt": "2026-07-01T15:11:02.586Z",
+  "fetchedAt": "2026-07-01T16:27:57.875Z",
+  "jira_fetchedAt": "2026-07-01T16:27:26.575Z",
+  "harvest_fetchedAt": "2026-07-01T16:27:57.778Z",
   "note": "Implementation projects = services revenue. JIRA (IPA epics) supplies stage; Harvest supplies hours + billable $. Join: harvest_id==client_id (exact); JIRA by epic-summary name-match (+ overrides).",
   "aggregates": {
     "total_customers": 115,
@@ -5615,11 +5615,11 @@
         {
           "key": "IPA-540",
           "summary": "Dimitrios - CV ORD File",
-          "status": "In-Progress",
+          "status": "Waiting on Customer",
           "stage_category": "In Progress",
           "assignee": "Ray Cantu",
           "created": "2026-06-22",
-          "updated": "2026-06-30",
+          "updated": "2026-07-01",
           "due": "2026-06-26",
           "url": "https://allmoxy.atlassian.net/browse/IPA-540",
           "start": "2026-06-22",
