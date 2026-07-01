@@ -656,7 +656,17 @@ export default function CurrentMonth() {
       reconnected: round2(sumDelta('reconnected')),
     };
 
+    // Annual prepay recognized this month — the amortized monthly slice of
+    // annual-payer payments. They pay a lump upfront (no monthly charge), so
+    // they're outside the transaction clustering above; add them back so blended
+    // revenue reconciles to the MRR-by-Month basis.
+    let annualAmort = 0;
+    for (const p of profiles.rows) {
+      if (ANNUAL_PAYER_IDS.has(p.allmoxy_customer_id)) annualAmort += p.monthly_history?.[cm]?.subscription ?? 0;
+    }
+
     return {
+      annualAmort: round2(annualAmort),
       postedCur: round2(postedCur),
       postedPriors: round2(postedPriors),
       postedSubs,
@@ -753,24 +763,34 @@ export default function CurrentMonth() {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
+          <KPICard
+            label="Annual payments (amortized)"
+            value={USD0.format(subscriptionView?.annualAmort ?? 0)}
+            valueHint="annual prepay recognized this month"
+            sub={(subscriptionView?.annualAmort ?? 0) > 0 ? 'Spread from lump annual payments' : 'No annual payers this month'}
+            info={<><strong>What it is:</strong> The amortized monthly slice of customers who pay <strong>annually upfront</strong> (e.g. B&amp;B Door, Mid Michigan Wood). They have no monthly Stripe charge, so they're excluded from the Subscription MRR card above (which counts actual charges) — this card adds their recognized monthly revenue so Blended reconciles to the MRR-by-Month basis.<br /><br /><strong>Data:</strong> Sum of <code>monthly_history</code> subscription for annual-payer IDs in the reference month.</>}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
           {(() => {
             const subProj = subscriptionView?.projected ?? view.subscription.mtd ?? 0;
             const svcProj = view.services.projected ?? view.services.mtd ?? 0;
             const connProj = view.connect.projected ?? view.connect.mtd ?? 0;
-            const blendedProjected = subProj + svcProj + connProj;
-            const blendedMtd = view.blended.mtd ?? 0;
+            const annualProj = subscriptionView?.annualAmort ?? 0;
+            const blendedProjected = subProj + svcProj + connProj + annualProj;
+            const blendedMtd = (view.blended.mtd ?? 0) + annualProj;
             const stillExpected = Math.max(blendedProjected - blendedMtd, 0);
             return (
               <KPICard
                 label="Blended revenue"
                 value={USD0.format(blendedProjected)}
-                valueHint="projected month-end (all 3 streams)"
+                valueHint="projected month-end (all streams + annual)"
                 sub={`${USD0.format(blendedMtd)} posted · ${USD0.format(stillExpected)} still expected`}
                 delta={pctDelta(blendedProjected, view.blended.priorTotal)}
                 deltaLabel={`projected vs ${monthLabel(view.prior)} full`}
                 info={
                   <>
-                    <strong>Headline value:</strong> projected end-of-month total revenue across all three streams (Subscription + Services + Connect). Combines the per-stream projections from the cards above.
+                    <strong>Headline value:</strong> projected end-of-month total revenue across all streams (Subscription + Services + Connect + amortized annual prepay). Combines the per-stream projections from the cards above, so it reconciles to the MRR-by-Month blended figure.
                     <br /><br />
                     <strong>Subscription</strong> contribution = posted + non-overdue pending (billing-cycle aware). <strong>Services</strong> + <strong>Connect</strong> contributions = linear MTD run-rate × days-in-month / days-elapsed.
                     <br /><br />
