@@ -310,6 +310,14 @@ export default function CurrentMonth() {
       const lookbackTxns = txns.filter(
         (t) => t.created && t.type === 'subscription' && t.status === 'succeeded' && isNetPositive(t) && lookbackMonths.has(t.created.slice(0, 7))
       );
+      // A subscription payment that CLEARED in a later calendar month than the one
+      // being viewed (e.g. a 30th-biller whose June cycle cleared July 1) means they
+      // have already paid for the cycle on a cash basis — so they're not "expected
+      // to still bill." Prevents end-of-month billers from showing as expected when
+      // the completed month is viewed at the start of the next one.
+      const billedAfterCm = txns.some(
+        (t) => t.created && t.type === 'subscription' && t.status === 'succeeded' && isNetPositive(t) && t.created.slice(0, 7) > cm
+      );
       const lookbackAttempts = txns.filter(
         (t) => t.created && t.type === 'subscription' && (t.status === 'failed' || (t.status === 'succeeded' && isNetPositive(t))) && lookbackMonths.has(t.created.slice(0, 7))
       );
@@ -561,7 +569,7 @@ export default function CurrentMonth() {
               expectedByDay: c.expectedDay,
               daysOverdue: elapsedDay - c.expectedDay,
             });
-          } else if (!skipForStatus && p.status === 'active' && !ANNUAL_PAYER_IDS.has(p.allmoxy_customer_id)) {
+          } else if (!skipForStatus && p.status === 'active' && !ANNUAL_PAYER_IDS.has(p.allmoxy_customer_id) && !billedAfterCm) {
             // On-time: billing day hasn't arrived yet → still expected to bill
             // this month. Restricted to active-status accounts only (at-risk,
             // non-payment, churned, etc. don't count as expected revenue) AND
