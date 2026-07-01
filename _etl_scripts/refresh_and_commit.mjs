@@ -73,7 +73,14 @@ if (NO_HUBSPOT) {
   step(s, totalSteps, 'HubSpot sync — SKIPPED (HUBSPOT_TOKEN not in .env.local)');
 } else {
   step(s, totalSteps, 'Syncing HubSpot Companies + Owners (~3 min)');
-  run('node _etl_scripts/sync_hubspot.mjs');
+  // Non-fatal: a transient HubSpot outage must not abort the whole rebuild +
+  // deploy (the daily 7am job auto-deploys). On failure we log and continue on
+  // the existing HubSpot cache — snapshots still refresh with fresh Stripe/Aurora.
+  try {
+    run('node _etl_scripts/sync_hubspot.mjs');
+  } catch (e) {
+    console.log(`  ⚠ HubSpot sync failed — continuing with the existing HubSpot cache. (${e.message})`);
+  }
 }
 
 // ============================================================================

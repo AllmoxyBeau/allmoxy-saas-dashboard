@@ -71,22 +71,32 @@ async function hub(path, init = {}) {
     'Content-Type': 'application/json',
     ...(init.headers || {}),
   };
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    const res = await fetch(`${HUB_BASE}${path}`, { ...init, headers });
-    if (res.status === 429) {
-      // Rate-limited: HubSpot says wait Retry-After seconds
-      const retryAfter = Number(res.headers.get('Retry-After') || 10);
-      if (VERBOSE) process.stderr.write(`  rate-limited, sleeping ${retryAfter}s...\n`);
-      await new Promise((r) => setTimeout(r, retryAfter * 1000));
-      continue;
+  let lastErr = null;
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    try {
+      const res = await fetch(`${HUB_BASE}${path}`, { ...init, headers });
+      if (res.status === 429) {
+        // Rate-limited: HubSpot says wait Retry-After seconds
+        const retryAfter = Number(res.headers.get('Retry-After') || 10);
+        if (VERBOSE) process.stderr.write(`  rate-limited, sleeping ${retryAfter}s...\n`);
+        await new Promise((r) => setTimeout(r, retryAfter * 1000));
+        continue;
+      }
+      if (res.status >= 500) { await new Promise((r) => setTimeout(r, 1000 * attempt)); continue; } // transient server error → retry
+      if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        throw new Error(`HubSpot ${res.status} ${res.statusText}: ${body.slice(0, 300)}`);
+      }
+      return await res.json();
+    } catch (e) {
+      lastErr = e;
+      // Real API error (4xx) — don't retry. Network blip ("fetch failed") / timeout — back off + retry.
+      if (/^HubSpot 4\d\d/.test(String(e.message || ''))) throw e;
+      if (VERBOSE) process.stderr.write(`  fetch error (attempt ${attempt}): ${e.message} — retrying...\n`);
+      await new Promise((r) => setTimeout(r, 1000 * attempt));
     }
-    if (!res.ok) {
-      const body = await res.text().catch(() => '');
-      throw new Error(`HubSpot ${res.status} ${res.statusText}: ${body.slice(0, 300)}`);
-    }
-    return await res.json();
   }
-  throw new Error(`HubSpot request failed after retries: ${path}`);
+  throw new Error(`HubSpot request failed after retries: ${path}${lastErr ? ` (${lastErr.message})` : ''}`);
 }
 
 // --- The fields we want from each Company ----------------------------------
