@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-07-06T14:05:58.072Z",
-  "cachedUntil": "2026-07-06T14:10:58.072Z",
+  "fetchedAt": "2026-07-06T15:07:00.147Z",
+  "cachedUntil": "2026-07-06T15:12:00.147Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 207,
@@ -20,8 +20,8 @@
     "stable": 83,
     "paused": 6,
     "median_cost_ratio_lifetime_pct": 1.09,
-    "median_cost_ratio_annualized_pct": 0.96,
-    "dropoff_count": 82,
+    "median_cost_ratio_annualized_pct": 0.99,
+    "dropoff_count": 80,
     "customers_with_quote": 155,
     "upcoming_renewals_with_quote": 61,
     "upcoming_renewals_without_quote": 34,
@@ -8553,17 +8553,17 @@
         },
         {
           "month": "2025-06",
-          "subscription": 0,
-          "orders_dollars": 52736.18,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 0
-        },
-        {
-          "month": "2025-07",
           "subscription": 415,
           "orders_dollars": 52736.18,
           "orders_source": "yearly_avg",
           "cost_ratio_pct": 0.79
+        },
+        {
+          "month": "2025-07",
+          "subscription": 0,
+          "orders_dollars": 52736.18,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0
         },
         {
           "month": "2025-08",
@@ -8643,7 +8643,7 @@
           "cost_ratio_pct": 0.74
         }
       ],
-      "dropoff_pct": -0.3527,
+      "dropoff_pct": -0.2515,
       "risk_tier": "green",
       "risk_score": 105,
       "is_bid_only": false,
@@ -12853,7 +12853,7 @@
           "cost_ratio_pct": null
         },
         {
-          "month": "2024-10",
+          "month": "2024-09",
           "subscription": 849,
           "orders_dollars": 0,
           "orders_source": "yearly_avg",
@@ -15688,11 +15688,18 @@
           "cost_ratio_pct": 448.25
         },
         {
-          "month": "2024-12",
-          "subscription": 2198,
+          "month": "2024-11",
+          "subscription": 1099,
           "orders_dollars": 245.18,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": 896.49
+          "cost_ratio_pct": 448.25
+        },
+        {
+          "month": "2024-12",
+          "subscription": 1099,
+          "orders_dollars": 245.18,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 448.25
         },
         {
           "month": "2025-01",
@@ -16906,13 +16913,6 @@
       "cost_ratio_annualized_pct": 0,
       "monthly_trend": [
         {
-          "month": "2024-05",
-          "subscription": 815.51,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
           "month": "2024-06",
           "subscription": 815.51,
           "orders_dollars": 0,
@@ -16969,11 +16969,18 @@
           "cost_ratio_pct": 19.58
         },
         {
-          "month": "2025-03",
-          "subscription": 1631.02,
+          "month": "2025-02",
+          "subscription": 815.51,
           "orders_dollars": 4165.48,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": 39.16
+          "cost_ratio_pct": 19.58
+        },
+        {
+          "month": "2025-03",
+          "subscription": 815.51,
+          "orders_dollars": 4165.48,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 19.58
         },
         {
           "month": "2025-04",
@@ -17040,17 +17047,17 @@
         },
         {
           "month": "2026-01",
-          "subscription": 0,
+          "subscription": 815.47,
           "orders_dollars": 8039.75,
           "orders_source": "supplement",
-          "cost_ratio_pct": 0
+          "cost_ratio_pct": 10.14
         },
         {
           "month": "2026-02",
-          "subscription": 1630.94,
+          "subscription": 815.47,
           "orders_dollars": 1936.8,
           "orders_source": "supplement",
-          "cost_ratio_pct": 84.21
+          "cost_ratio_pct": 42.1
         },
         {
           "month": "2026-03",
@@ -17074,7 +17081,7 @@
           "cost_ratio_pct": null
         }
       ],
-      "dropoff_pct": 0.5792,
+      "dropoff_pct": 0.0349,
       "risk_tier": "green",
       "risk_score": 80,
       "is_bid_only": false,
@@ -20201,7 +20208,7 @@
       "payment_pause_date": null,
       "instance_creation": "2019-02-07",
       "merchant_connect_date": "2019-03-27",
-      "last_payment_date_hubspot": "2026-05-06",
+      "last_payment_date_hubspot": "2026-07-06",
       "goal_launch_date": null,
       "is_launched": "Yes",
       "pay_status": "Active",
@@ -20478,7 +20485,7 @@
           "cost_ratio_pct": 0.94
         },
         {
-          "month": "2024-12",
+          "month": "2024-11",
           "subscription": 399,
           "orders_dollars": 42256.45,
           "orders_source": "yearly_avg",
@@ -23079,23 +23086,16 @@
       "implementation_status": "Not Active",
       "hubspot_owner_id": "90679002",
       "owner_name": "Connor",
-      "current_mrr": 0,
-      "current_arr": 0,
+      "current_mrr": 271.13,
+      "current_arr": 3253.56,
       "lifetime_subscription": 23302.36,
       "lifetime_orders_dollars": 723763.74,
       "orders_monthly_avg_current_year": 5160.19,
       "orders_monthly_avg_prior_year": 5089.93,
       "orders_yoy_pct": 0.01,
       "cost_ratio_lifetime_pct": 3.22,
-      "cost_ratio_annualized_pct": 0,
+      "cost_ratio_annualized_pct": 5.25,
       "monthly_trend": [
-        {
-          "month": "2024-06",
-          "subscription": 268.13,
-          "orders_dollars": 8497.32,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 3.16
-        },
         {
           "month": "2024-07",
           "subscription": 268.13,
@@ -23256,9 +23256,16 @@
           "orders_dollars": 8537.03,
           "orders_source": "supplement",
           "cost_ratio_pct": 3.18
+        },
+        {
+          "month": "2026-06",
+          "subscription": 271.13,
+          "orders_dollars": 2150.08,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 12.61
         }
       ],
-      "dropoff_pct": 1.7352,
+      "dropoff_pct": -0.1583,
       "risk_tier": "green",
       "risk_score": 105,
       "is_bid_only": false,
@@ -23313,8 +23320,8 @@
       "implementation_status": "Build Complete",
       "hubspot_owner_id": "90679002",
       "owner_name": "Connor",
-      "current_mrr": 0,
-      "current_arr": 0,
+      "current_mrr": 799,
+      "current_arr": 9588,
       "lifetime_subscription": 14632,
       "lifetime_orders_dollars": 514.81,
       "orders_monthly_avg_current_year": 0,
@@ -23429,8 +23436,15 @@
           "cost_ratio_pct": null
         },
         {
+          "month": "2026-02",
+          "subscription": 799,
+          "orders_dollars": 0,
+          "orders_source": "supplement",
+          "cost_ratio_pct": null
+        },
+        {
           "month": "2026-03",
-          "subscription": 1598,
+          "subscription": 799,
           "orders_dollars": 0,
           "orders_source": "supplement",
           "cost_ratio_pct": null
@@ -23447,6 +23461,13 @@
           "subscription": 799,
           "orders_dollars": 0,
           "orders_source": "supplement",
+          "cost_ratio_pct": null
+        },
+        {
+          "month": "2026-06",
+          "subscription": 799,
+          "orders_dollars": 0,
+          "orders_source": "yearly_avg",
           "cost_ratio_pct": null
         }
       ],
@@ -26771,15 +26792,15 @@
       "implementation_status": "Build Complete",
       "hubspot_owner_id": "90679002",
       "owner_name": "Connor",
-      "current_mrr": 0,
-      "current_arr": 0,
+      "current_mrr": 1099,
+      "current_arr": 13188,
       "lifetime_subscription": 25576,
       "lifetime_orders_dollars": 665176.53,
       "orders_monthly_avg_current_year": 68135,
       "orders_monthly_avg_prior_year": 27023.93,
       "orders_yoy_pct": 1.52,
       "cost_ratio_lifetime_pct": 3.84,
-      "cost_ratio_annualized_pct": 0,
+      "cost_ratio_annualized_pct": 1.61,
       "monthly_trend": [
         {
           "month": "2024-07",
@@ -26927,9 +26948,16 @@
           "orders_dollars": 44700.62,
           "orders_source": "supplement",
           "cost_ratio_pct": 2.46
+        },
+        {
+          "month": "2026-06",
+          "subscription": 1099,
+          "orders_dollars": 28389.58,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 3.87
         }
       ],
-      "dropoff_pct": -0.5948,
+      "dropoff_pct": -0.3532,
       "risk_tier": "green",
       "risk_score": 105,
       "is_bid_only": false,
@@ -26965,12 +26993,12 @@
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/145228829"
         }
       ],
-      "proposed_arr": 0,
-      "proposed_mrr": 0,
+      "proposed_arr": 15166.2,
+      "proposed_mrr": 1275,
       "expansion_confidence": "high",
       "proposed_basis": "growth",
-      "expansion_rationale": "Orders +152% YoY; cost ratio 0% vs target 3.84%. Value supports ~$31,397 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": null,
+      "expansion_rationale": "Orders +152% YoY; cost ratio 1.61% vs target 3.84%. Value supports ~$31,397 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15,
       "target_1pct_arr": 8176.2,
       "target_1pct_mrr": 675
     },
@@ -37076,7 +37104,7 @@
       "payment_pause_date": null,
       "instance_creation": "2025-01-08",
       "merchant_connect_date": "2025-01-14",
-      "last_payment_date_hubspot": "2026-05-06",
+      "last_payment_date_hubspot": "2026-07-06",
       "goal_launch_date": null,
       "is_launched": "No",
       "pay_status": "Active",
@@ -38174,7 +38202,7 @@
       "last_payment_date_hubspot": "2026-06-05",
       "goal_launch_date": null,
       "is_launched": "No",
-      "pay_status": "Active",
+      "pay_status": "Active - Card Failure",
       "cs_pulse": "Yellow(this customer is in fair/neutral standing - they would likely renew)",
       "health_score_status": "At-Risk",
       "health_score": 7,
@@ -43929,7 +43957,7 @@
       "payment_pause_date": null,
       "instance_creation": "2026-02-05",
       "merchant_connect_date": null,
-      "last_payment_date_hubspot": "2026-05-05",
+      "last_payment_date_hubspot": "2026-07-05",
       "goal_launch_date": "2026-03-26",
       "is_launched": null,
       "pay_status": "Active",
