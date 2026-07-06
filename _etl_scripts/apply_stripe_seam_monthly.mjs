@@ -54,25 +54,42 @@ for (const p of profiles) {
   }
 }
 
-// 1) mrr_by_month — overlay totals for seamed months.
+// 1) mrr_by_month — overlay totals for seamed months, AND append any seamed month
+// present in the live data but missing from the (xlsx-sourced) rows. Without the
+// append, a new month only shows once the meta xlsx is re-uploaded — so the
+// Current Month page stays stuck on the last xlsx month (e.g. June) even after
+// July Stripe data lands. Connect for seamed months prefers the net-settled USD
+// figure (real revenue to the bank), falling back to the attributed profiles sum.
 const mrr = read('mrr_by_month.json');
-let mrrTouched = 0;
+const existingMrrMonths = new Set(mrr.rows.map((r) => r.month));
+let mrrTouched = 0, mrrAdded = 0;
+const buildMrrRow = (m, t) => {
+  const connect = netConnectByMonth[m] != null ? netConnectByMonth[m] : t.connect;
+  const blended = r2(t.sub + t.svc + connect);
+  return {
+    month: m,
+    logo_qty: t.logos,
+    mrr_subscription: r2(t.sub),
+    mrr_services: r2(t.svc),
+    mrr_connect: r2(connect),
+    mrr_blended: blended,
+    avg_mrr_blended: t.logos ? Math.round(blended / t.logos) : 0,
+  };
+};
 for (const row of mrr.rows) {
   const t = monthTot[row.month];
-  if (row.month >= SEAM && t) {
-    row.mrr_subscription = r2(t.sub);
-    row.mrr_services = r2(t.svc);
-    // Connect for seamed months: prefer the net-settled USD figure (real revenue
-    // that hits the bank — Stripe FX applied, net of refunds). Fall back to the
-    // attribution-populated profiles sum if the net cache isn't present.
-    const connect = netConnectByMonth[row.month] != null ? netConnectByMonth[row.month] : t.connect;
-    row.mrr_connect = r2(connect);
-    row.logo_qty = t.logos;
-    row.mrr_blended = r2(t.sub + t.svc + connect);
-    row.avg_mrr_blended = t.logos ? Math.round(row.mrr_blended / t.logos) : row.avg_mrr_blended;
-    mrrTouched++;
-  }
+  if (row.month >= SEAM && t) { Object.assign(row, buildMrrRow(row.month, t)); mrrTouched++; }
 }
+// Cap appends at the current calendar month — annual-payer amortization populates
+// monthly_history into FUTURE months (e.g. B&B Door's spread runs to 2027-05); we
+// must not add those as real MRR rows or the "current month" would jump forward.
+const NOW_MONTH = new Date().toISOString().slice(0, 7);
+for (const m of Object.keys(monthTot).sort()) {
+  if (m < SEAM || m > NOW_MONTH || existingMrrMonths.has(m)) continue;
+  mrr.rows.push(buildMrrRow(m, monthTot[m]));
+  mrrAdded++;
+}
+mrr.rows.sort((a, b) => String(a.month).localeCompare(String(b.month)));
 fs.writeFileSync(path.join(SNAP, 'mrr_by_month.json'), JSON.stringify(mrr, null, 2));
 
 // 2) + 3) per-customer monthly snapshots — overlay seamed month columns.
@@ -92,4 +109,4 @@ function seamPerCustomer(file, field) {
 seamPerCustomer('subscription_by_month.json', 'sub');
 seamPerCustomer('services_by_month.json', 'svc');
 
-console.error(`[seam-monthly] overlaid Stripe (>=${SEAM}) on mrr_by_month (${mrrTouched} mo) + subscription_by_month + services_by_month`);
+console.error(`[seam-monthly] overlaid Stripe (>=${SEAM}) on mrr_by_month (${mrrTouched} mo overlaid, ${mrrAdded} appended) + subscription_by_month + services_by_month`);
