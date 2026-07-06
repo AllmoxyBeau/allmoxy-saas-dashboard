@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-07-06T15:07:00.147Z",
-  "cachedUntil": "2026-07-06T15:12:00.147Z",
+  "fetchedAt": "2026-07-06T17:06:29.148Z",
+  "cachedUntil": "2026-07-06T17:11:29.148Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 207,
@@ -20,8 +20,8 @@
     "stable": 83,
     "paused": 6,
     "median_cost_ratio_lifetime_pct": 1.09,
-    "median_cost_ratio_annualized_pct": 0.99,
-    "dropoff_count": 80,
+    "median_cost_ratio_annualized_pct": 0.98,
+    "dropoff_count": 79,
     "customers_with_quote": 155,
     "upcoming_renewals_with_quote": 61,
     "upcoming_renewals_without_quote": 34,
@@ -3200,15 +3200,15 @@
       "implementation_status": null,
       "hubspot_owner_id": "90679002",
       "owner_name": "Connor",
-      "current_mrr": 2446.75,
-      "current_arr": 29361,
-      "lifetime_subscription": 80970.75,
+      "current_mrr": 2196.75,
+      "current_arr": 26361,
+      "lifetime_subscription": 80720.75,
       "lifetime_orders_dollars": 8814591.41,
       "orders_monthly_avg_current_year": 358940.33,
       "orders_monthly_avg_prior_year": 275931.24,
       "orders_yoy_pct": 0.3,
       "cost_ratio_lifetime_pct": 0.92,
-      "cost_ratio_annualized_pct": 0.68,
+      "cost_ratio_annualized_pct": 0.61,
       "monthly_trend": [
         {
           "month": "2024-07",
@@ -3373,13 +3373,13 @@
         },
         {
           "month": "2026-06",
-          "subscription": 2446.75,
+          "subscription": 2196.75,
           "orders_dollars": 149558.47,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.64
+          "cost_ratio_pct": 1.47
         }
       ],
-      "dropoff_pct": 0.2482,
+      "dropoff_pct": 0.17629999999999998,
       "risk_tier": "green",
       "risk_score": 105,
       "is_bid_only": false,
@@ -3415,11 +3415,11 @@
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/49283900"
         }
       ],
-      "proposed_arr": 33765.15,
-      "proposed_mrr": 2825,
+      "proposed_arr": 30315.15,
+      "proposed_mrr": 2525,
       "expansion_confidence": "high",
       "proposed_basis": "growth",
-      "expansion_rationale": "Orders +30% YoY; cost ratio 0.68% vs target 1.09%. Value supports ~$46,949 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "expansion_rationale": "Orders +30% YoY; cost ratio 0.61% vs target 1.09%. Value supports ~$46,949 ARR; capped at +15% this renewal — phase remaining over future renewals.",
       "proposed_uplift_pct": 15,
       "target_1pct_arr": 43072.84,
       "target_1pct_mrr": 3600
@@ -29811,15 +29811,15 @@
       "implementation_status": "Active Training / Work",
       "hubspot_owner_id": "90679002",
       "owner_name": "Connor",
-      "current_mrr": 1990,
-      "current_arr": 23880,
-      "lifetime_subscription": 64610,
+      "current_mrr": 1740,
+      "current_arr": 20880,
+      "lifetime_subscription": 64360,
       "lifetime_orders_dollars": 206274.66,
       "orders_monthly_avg_current_year": 15249.3,
       "orders_monthly_avg_prior_year": 10835.68,
       "orders_yoy_pct": 0.41,
-      "cost_ratio_lifetime_pct": 31.32,
-      "cost_ratio_annualized_pct": 13.05,
+      "cost_ratio_lifetime_pct": 31.2,
+      "cost_ratio_annualized_pct": 11.41,
       "monthly_trend": [
         {
           "month": "2024-07",
@@ -29984,13 +29984,13 @@
         },
         {
           "month": "2026-06",
-          "subscription": 1990,
+          "subscription": 1740,
           "orders_dollars": 6353.87,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": 31.32
+          "cost_ratio_pct": 27.38
         }
       ],
-      "dropoff_pct": -0.6959000000000001,
+      "dropoff_pct": -0.7218000000000001,
       "risk_tier": "green",
       "risk_score": 80,
       "is_bid_only": false,
@@ -30026,11 +30026,11 @@
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/133170192"
         }
       ],
-      "proposed_arr": 27462,
-      "proposed_mrr": 2300,
+      "proposed_arr": 24012,
+      "proposed_mrr": 2000,
       "expansion_confidence": "high",
       "proposed_basis": "growth",
-      "expansion_rationale": "Orders +41% YoY; cost ratio 13.05% vs target 31.32%. Value supports ~$57,313 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "expansion_rationale": "Orders +41% YoY; cost ratio 11.41% vs target 31.2%. Value supports ~$57,093 ARR; capped at +15% this renewal — phase remaining over future renewals.",
       "proposed_uplift_pct": 15,
       "target_1pct_arr": 1829.92,
       "target_1pct_mrr": 150
@@ -38766,12 +38766,12 @@
       "owner_name": "Connor",
       "current_mrr": 250,
       "current_arr": 3000,
-      "lifetime_subscription": 3271.88,
+      "lifetime_subscription": 3534.38,
       "lifetime_orders_dollars": 60,
       "orders_monthly_avg_current_year": 0,
       "orders_monthly_avg_prior_year": 0,
       "orders_yoy_pct": -1,
-      "cost_ratio_lifetime_pct": 5453.13,
+      "cost_ratio_lifetime_pct": 5890.63,
       "cost_ratio_annualized_pct": null,
       "monthly_trend": [
         {
@@ -39179,15 +39179,15 @@
       "implementation_status": null,
       "hubspot_owner_id": "535437584",
       "owner_name": "Carson",
-      "current_mrr": 2780.35,
-      "current_arr": 33364.2,
-      "lifetime_subscription": 155502.73,
+      "current_mrr": 0,
+      "current_arr": 0,
+      "lifetime_subscription": 152722.38,
       "lifetime_orders_dollars": 11347252.19,
       "orders_monthly_avg_current_year": 237097.21,
       "orders_monthly_avg_prior_year": 202385.66,
       "orders_yoy_pct": 0.17,
-      "cost_ratio_lifetime_pct": 1.37,
-      "cost_ratio_annualized_pct": 1.17,
+      "cost_ratio_lifetime_pct": 1.35,
+      "cost_ratio_annualized_pct": 0,
       "monthly_trend": [
         {
           "month": "2024-07",
@@ -39352,13 +39352,13 @@
         },
         {
           "month": "2026-06",
-          "subscription": 2780.35,
+          "subscription": 0,
           "orders_dollars": 98790.5,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.81
+          "cost_ratio_pct": 0
         }
       ],
-      "dropoff_pct": 0.6995,
+      "dropoff_pct": -0.2672,
       "risk_tier": "green",
       "risk_score": 105,
       "is_bid_only": false,
@@ -40302,14 +40302,14 @@
       "implementation_status": null,
       "hubspot_owner_id": "535437584",
       "owner_name": "Carson",
-      "current_mrr": 0,
-      "current_arr": 0,
-      "lifetime_subscription": 2750,
+      "current_mrr": 250,
+      "current_arr": 3000,
+      "lifetime_subscription": 3000,
       "lifetime_orders_dollars": 65.76,
       "orders_monthly_avg_current_year": 0,
       "orders_monthly_avg_prior_year": 0,
       "orders_yoy_pct": -1,
-      "cost_ratio_lifetime_pct": 4181.87,
+      "cost_ratio_lifetime_pct": 4562.04,
       "cost_ratio_annualized_pct": null,
       "monthly_trend": [
         {
@@ -40388,6 +40388,13 @@
           "orders_dollars": 0,
           "orders_source": "supplement",
           "cost_ratio_pct": null
+        },
+        {
+          "month": "2026-06",
+          "subscription": 250,
+          "orders_dollars": 0,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": null
         }
       ],
       "dropoff_pct": 0,
@@ -40445,15 +40452,15 @@
       "implementation_status": null,
       "hubspot_owner_id": "535437584",
       "owner_name": "Sarah",
-      "current_mrr": 250,
-      "current_arr": 3000,
-      "lifetime_subscription": 10528,
+      "current_mrr": 932,
+      "current_arr": 11184,
+      "lifetime_subscription": 12043,
       "lifetime_orders_dollars": 1420740.26,
       "orders_monthly_avg_current_year": 202907.39,
       "orders_monthly_avg_prior_year": 33850.28,
       "orders_yoy_pct": 4.99,
-      "cost_ratio_lifetime_pct": 0.74,
-      "cost_ratio_annualized_pct": 0.12,
+      "cost_ratio_lifetime_pct": 0.85,
+      "cost_ratio_annualized_pct": 0.46,
       "monthly_trend": [
         {
           "month": "2025-08",
@@ -40527,13 +40534,13 @@
         },
         {
           "month": "2026-06",
-          "subscription": 250,
+          "subscription": 932,
           "orders_dollars": 84544.75,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": 0.3
+          "cost_ratio_pct": 1.1
         }
       ],
-      "dropoff_pct": -0.7809999999999999,
+      "dropoff_pct": -0.6452,
       "risk_tier": "yellow",
       "risk_score": 55,
       "is_bid_only": false,
@@ -40542,11 +40549,11 @@
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
       "quotes": [],
-      "proposed_arr": 3450,
-      "proposed_mrr": 300,
+      "proposed_arr": 12861.6,
+      "proposed_mrr": 1075,
       "expansion_confidence": "high",
       "proposed_basis": "growth",
-      "expansion_rationale": "Orders +499% YoY; cost ratio 0.12% vs target 1.09%. Value supports ~$26,540 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "expansion_rationale": "Orders +499% YoY; cost ratio 0.46% vs target 1.09%. Value supports ~$26,540 ARR; capped at +15% this renewal — phase remaining over future renewals.",
       "proposed_uplift_pct": 15,
       "target_1pct_arr": 24348.89,
       "target_1pct_mrr": 2025
@@ -42292,15 +42299,15 @@
       "implementation_status": null,
       "hubspot_owner_id": "535437584",
       "owner_name": "Carson",
-      "current_mrr": 299,
-      "current_arr": 3588,
-      "lifetime_subscription": 29773,
+      "current_mrr": 250,
+      "current_arr": 3000,
+      "lifetime_subscription": 29675,
       "lifetime_orders_dollars": 964478.98,
       "orders_monthly_avg_current_year": 24839.27,
       "orders_monthly_avg_prior_year": 26702.48,
       "orders_yoy_pct": -0.07,
-      "cost_ratio_lifetime_pct": 3.09,
-      "cost_ratio_annualized_pct": 1.2,
+      "cost_ratio_lifetime_pct": 3.08,
+      "cost_ratio_annualized_pct": 1.01,
       "monthly_trend": [
         {
           "month": "2024-07",
@@ -42465,13 +42472,13 @@
         },
         {
           "month": "2026-06",
-          "subscription": 299,
+          "subscription": 250,
           "orders_dollars": 10349.7,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.89
+          "cost_ratio_pct": 2.42
         }
       ],
-      "dropoff_pct": 3.6197000000000004,
+      "dropoff_pct": 3.4736000000000002,
       "risk_tier": "green",
       "risk_score": 105,
       "is_bid_only": false,
@@ -43883,7 +43890,7 @@
       "owner_name": "Connor",
       "current_mrr": 200,
       "current_arr": 2400,
-      "lifetime_subscription": 1000,
+      "lifetime_subscription": 1200,
       "lifetime_orders_dollars": 0,
       "orders_monthly_avg_current_year": 0,
       "orders_monthly_avg_prior_year": 0,
@@ -43970,7 +43977,7 @@
       "owner_name": "Carson",
       "current_mrr": 580,
       "current_arr": 6960,
-      "lifetime_subscription": 2900,
+      "lifetime_subscription": 3480,
       "lifetime_orders_dollars": 0,
       "orders_monthly_avg_current_year": 0,
       "orders_monthly_avg_prior_year": 0,
@@ -44831,11 +44838,11 @@
         }
       ],
       "dropoff_pct": null,
-      "risk_tier": "red",
+      "risk_tier": "green",
       "risk_score": 20,
       "is_bid_only": false,
       "action_tag": "Contraction Risk",
-      "action_reason": "Health tier RED — focus on retention, not expansion",
+      "action_reason": "Orders monthly avg -100% YoY",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
       "quotes": []
