@@ -1,7 +1,7 @@
 {
-  "fetchedAt": "2026-07-06T17:13:32.203Z",
-  "jira_fetchedAt": "2026-07-06T17:13:03.247Z",
-  "harvest_fetchedAt": "2026-07-06T17:13:32.079Z",
+  "fetchedAt": "2026-07-06T17:47:20.205Z",
+  "jira_fetchedAt": "2026-07-06T17:46:44.198Z",
+  "harvest_fetchedAt": "2026-07-06T17:47:20.093Z",
   "note": "Implementation projects = services revenue. JIRA (IPA epics) supplies stage; Harvest supplies hours + billable $. Join: harvest_id==client_id (exact); JIRA by epic-summary name-match (+ overrides).",
   "aggregates": {
     "total_customers": 115,
@@ -1957,7 +1957,7 @@
     {
       "allmoxy_customer_id": 514,
       "name": "Cabinet Parts to Go",
-      "customer_status": "active",
+      "customer_status": "at_risk",
       "account_rep": "Connor Wright",
       "harvest_id": "15550122",
       "sign_up_date": "2024-10-31",
@@ -3443,7 +3443,7 @@
     {
       "allmoxy_customer_id": 176,
       "name": "Primary Kitchen",
-      "customer_status": "active",
+      "customer_status": "at_risk",
       "account_rep": "Carson Ward",
       "harvest_id": "10351344",
       "sign_up_date": "2019-04-11",
@@ -5287,7 +5287,7 @@
     {
       "allmoxy_customer_id": 211,
       "name": "Midwest Floor Coverings",
-      "customer_status": "non_payment",
+      "customer_status": "active",
       "account_rep": "Carson Ward",
       "harvest_id": "8787213",
       "sign_up_date": "2019-10-28",
@@ -6420,7 +6420,7 @@
     {
       "allmoxy_customer_id": 555,
       "name": "Kci Storage Manufacturing",
-      "customer_status": "active",
+      "customer_status": "at_risk",
       "account_rep": "Connor Wright",
       "harvest_id": null,
       "sign_up_date": "2025-09-18",
@@ -7303,7 +7303,7 @@
     {
       "allmoxy_customer_id": 2059,
       "name": "Top Design Closets",
-      "customer_status": "active",
+      "customer_status": "at_risk",
       "account_rep": "Carson Ward",
       "harvest_id": null,
       "sign_up_date": "2026-03-24",

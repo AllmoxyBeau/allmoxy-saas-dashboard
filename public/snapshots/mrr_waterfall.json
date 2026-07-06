@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-07-06T17:06:25.372Z",
-  "cachedUntil": "2026-07-06T17:11:25.372Z",
+  "fetchedAt": "2026-07-06T17:40:18.816Z",
+  "cachedUntil": "2026-07-06T17:45:18.816Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -18518,7 +18518,7 @@
             "name": "Cabinet Parts to Go",
             "id": 514,
             "mrr": 799,
-            "status": "active",
+            "status": "at_risk",
             "pay_status": "Active"
           }
         ]
@@ -21268,22 +21268,22 @@
       "starting_mrr": 233071.66,
       "new_mrr": 0,
       "reactivated_mrr": 466.63,
-      "expansion_mrr": 564.06,
-      "contraction_mrr": 3897.35,
+      "expansion_mrr": 872.4,
+      "contraction_mrr": 3098.35,
       "churn_mrr": 250,
-      "delinquent_mrr": 3537.48,
-      "ending_mrr": 226417.52,
-      "net_new_mrr": -6654.14,
+      "delinquent_mrr": 1065.47,
+      "ending_mrr": 229996.87,
+      "net_new_mrr": -3074.79,
       "new_logos": 0,
       "reactivated_logos": 2,
       "churned_logos": 1,
-      "delinquent_logos": 3,
+      "delinquent_logos": 2,
       "gross_churn_rate_monthly": 0.0011,
-      "net_churn_rate_monthly": 0.0154,
-      "expansion_rate_monthly": 0.0024,
-      "grr_monthly": 0.9822,
-      "nrr_monthly": 0.9846,
-      "quick_ratio": 0.14,
+      "net_churn_rate_monthly": 0.0106,
+      "expansion_rate_monthly": 0.0037,
+      "grr_monthly": 0.9856,
+      "nrr_monthly": 0.9894,
+      "quick_ratio": 0.26,
       "details": {
         "new": [],
         "reactivated": [
@@ -21305,6 +21305,13 @@
             "prev_mrr": 536.25,
             "new_mrr": 1072.5,
             "delta": 536.25
+          },
+          {
+            "name": "Midwest Floor Coverings",
+            "id": 211,
+            "prev_mrr": 2472.01,
+            "new_mrr": 2780.35,
+            "delta": 308.34
           },
           {
             "name": "Raumplus",
@@ -21351,31 +21358,10 @@
             "delta": 300
           },
           {
-            "name": "New York Door & Drawer",
-            "id": 198,
-            "prev_mrr": 2446.75,
-            "new_mrr": 2196.75,
-            "delta": 250
-          },
-          {
-            "name": "Mountain Showcase Group, Inc.",
-            "id": 500,
-            "prev_mrr": 1990,
-            "new_mrr": 1740,
-            "delta": 250
-          },
-          {
             "name": "Salerno's Custom Cab",
             "id": 344,
             "prev_mrr": 500,
             "new_mrr": 250,
-            "delta": 250
-          },
-          {
-            "name": "Cabinet Doors USA",
-            "id": 545,
-            "prev_mrr": 1182,
-            "new_mrr": 932,
             "delta": 250
           },
           {
@@ -21384,13 +21370,6 @@
             "prev_mrr": 750,
             "new_mrr": 600,
             "delta": 150
-          },
-          {
-            "name": "GW Eurocase",
-            "id": 106,
-            "prev_mrr": 299,
-            "new_mrr": 250,
-            "delta": 49
           },
           {
             "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
@@ -21408,13 +21387,6 @@
           }
         ],
         "delinquent": [
-          {
-            "name": "Midwest Floor Coverings",
-            "id": 211,
-            "mrr": 2472.01,
-            "status": "non_payment",
-            "pay_status": "Active"
-          },
           {
             "name": "Smart Custom Closets",
             "id": 480,
@@ -21437,19 +21409,19 @@
     "windowStart": "2025-07",
     "windowEnd": "2026-06",
     "starting_mrr": 226957.69,
-    "ending_mrr": 226417.52,
+    "ending_mrr": 229996.87,
     "new_mrr": 22084,
     "reactivated_mrr": 38085.12,
-    "expansion_mrr": 21586.14,
-    "contraction_mrr": 42019.65,
+    "expansion_mrr": 21894.48,
+    "contraction_mrr": 41220.65,
     "churn_mrr": 16554.57,
-    "delinquent_mrr": 23721.21,
-    "net_new_mrr": -540.17,
+    "delinquent_mrr": 21249.2,
+    "net_new_mrr": 3039.18,
     "gross_mrr_churn_ttm": 0.0729,
     "annual_gross_churn_rate": 0.0692,
-    "annual_grr": 0.7757,
-    "annual_nrr": 0.8531,
-    "quick_ratio": 0.75
+    "annual_grr": 0.7784,
+    "annual_nrr": 0.8573,
+    "quick_ratio": 0.76
   },
   "notes": "MRR waterfall derived from per-customer × per-month subscription MRR in customer_profiles.monthly_history (live Stripe, boundary-slip corrected). New = customer first appears with MRR > 0. Churn = confirmed-churned customer (status churned) who had MRR > 0 last month and 0 this month. Delinquent = dropped to $0 but NOT confirmed churned (card failure / non-payment / at-risk) — a missed cycle they may still pay; reported separately from churn but also reduces ending MRR. Expansion / Contraction are intra-customer month-over-month MRR changes. Services and Connect revenue are NOT included — subscription only."
 }
