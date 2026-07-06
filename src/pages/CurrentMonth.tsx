@@ -449,9 +449,21 @@ export default function CurrentMonth() {
         return best;
       }
       // Successful current-month charges → drive currentTotal.
+      // Month-boundary slip: a charge in the first few days of the current month
+      // that is really LAST month's cycle (a ~end-of-month biller whose invoice
+      // cleared on the 1st). If the cluster has no prior-month charge but did bill
+      // the month before that, treat this as the prior-month payment (perMonth[pm])
+      // instead of a current-month charge — so it's a normal continuing sub, not a
+      // false "Reconnected"/"New" this month. (e.g. Drawer Works, Intermountain,
+      // Cabinet Parts to Go billing on the 30th, clearing the 1st.)
+      const pmPrev = shiftMonth(pm, -1);
       for (const t of currTxns) {
         const best = matchClusterByIdentity(t);
-        if (best) best.currentTotal += netAmount(t);
+        if (!best) continue;
+        const day = Number((t.created ?? '').slice(8, 10));
+        const isBoundarySlip = day <= 3 && !((best.perMonth[pm] ?? 0) > 0) && (best.perMonth[pmPrev] ?? 0) > 0;
+        if (isBoundarySlip) best.perMonth[pm] = (best.perMonth[pm] ?? 0) + netAmount(t);
+        else best.currentTotal += netAmount(t);
       }
       // ALL current-month attempts (success OR failure) → mark cluster as "still
       // being attempted by Stripe". Used in the overdue branch to distinguish
