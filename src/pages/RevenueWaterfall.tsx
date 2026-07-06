@@ -23,11 +23,12 @@ import DrillDownPanel, { DrillColumn } from '../components/common/DrillDownPanel
 import InfoIcon from '../components/common/InfoIcon';
 import CsvExportButton from '../components/common/CsvExportButton';
 import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
+import CustomerLink from '../components/common/CustomerLink';
 import { useSheetTab } from '../hooks/useSheetTab';
 
-type NewDetail = { name: string; mrr: number };
-type ChurnDetail = { name: string; mrr: number };
-type ChangeDetail = { name: string; prev_mrr: number; new_mrr: number; delta: number };
+type NewDetail = { name: string; id?: number | null; mrr: number };
+type ChurnDetail = { name: string; id?: number | null; mrr: number };
+type ChangeDetail = { name: string; id?: number | null; prev_mrr: number; new_mrr: number; delta: number };
 type MonthlyDetails = {
   new: NewDetail[];
   reactivated?: NewDetail[];
@@ -572,7 +573,7 @@ export default function RevenueWaterfall() {
             : category === 'reactivated' ? (row.details.reactivated ?? [])
             : row.details.churn;
           const columns: DrillColumn<NewDetail | ChurnDetail>[] = [
-            { key: 'name', label: 'Customer' },
+            { key: 'name', label: 'Customer', render: (r) => <CustomerLink id={r.id} name={r.name} /> },
             { key: 'mrr', label: category === 'churn' ? 'MRR lost' : 'MRR added', align: 'right', render: (r) => USD0.format(r.mrr) },
             {
               key: 'pct',
@@ -597,7 +598,7 @@ export default function RevenueWaterfall() {
 
         const rows = category === 'expansion' ? row.details.expansion : row.details.contraction;
         const columns: DrillColumn<ChangeDetail>[] = [
-          { key: 'name', label: 'Customer' },
+          { key: 'name', label: 'Customer', render: (r) => <CustomerLink id={r.id} name={r.name} /> },
           { key: 'prev_mrr', label: 'Prior month MRR', align: 'right', render: (r) => USD0.format(r.prev_mrr) },
           { key: 'new_mrr', label: `${monthLabel(month)} MRR`, align: 'right', render: (r) => USD0.format(r.new_mrr) },
           { key: 'delta', label: category === 'expansion' ? 'Increase' : 'Decrease', align: 'right', render: (r) => `${category === 'contraction' ? '−' : '+'}${USD0.format(r.delta)}` },

@@ -46,7 +46,7 @@ for (const p of profiles) {
       if (mrrByMonth[M] <= 0.5) delete mrrByMonth[M];
     }
   }
-  if (Object.keys(mrrByMonth).length) customers.push({ name: p.name, mrrByMonth });
+  if (Object.keys(mrrByMonth).length) customers.push({ name: p.name, id: p.allmoxy_customer_id ?? null, mrrByMonth });
 }
 
 // Month columns = every month present across customers, ascending.
@@ -95,20 +95,21 @@ for (let i = 1; i < monthCols.length; i++) {
       if (firstMrrMonthByCustomer.get(c.name) === cur) {
         newMrr += n;
         newLogos += 1;
-        details.new.push({ name: c.name, mrr: Math.round(n * 100) / 100 });
+        details.new.push({ name: c.name, id: c.id, mrr: Math.round(n * 100) / 100 });
       } else {
         reactivatedMrr += n;
         reactivatedLogos += 1;
-        details.reactivated.push({ name: c.name, mrr: Math.round(n * 100) / 100 });
+        details.reactivated.push({ name: c.name, id: c.id, mrr: Math.round(n * 100) / 100 });
       }
     } else if (p > 0 && n === 0) {
       churn += p;
       churnedLogos += 1;
-      details.churn.push({ name: c.name, mrr: Math.round(p * 100) / 100 });
+      details.churn.push({ name: c.name, id: c.id, mrr: Math.round(p * 100) / 100 });
     } else if (n > p) {
       expansion += n - p;
       details.expansion.push({
         name: c.name,
+        id: c.id,
         prev_mrr: Math.round(p * 100) / 100,
         new_mrr: Math.round(n * 100) / 100,
         delta: Math.round((n - p) * 100) / 100,
@@ -117,6 +118,7 @@ for (let i = 1; i < monthCols.length; i++) {
       contraction += p - n;
       details.contraction.push({
         name: c.name,
+        id: c.id,
         prev_mrr: Math.round(p * 100) / 100,
         new_mrr: Math.round(n * 100) / 100,
         delta: Math.round((p - n) * 100) / 100,
