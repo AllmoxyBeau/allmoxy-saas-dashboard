@@ -1,18 +1,34 @@
 #!/usr/bin/env node
 /**
- * Pull platform charges (subscription + services revenue) directly from the
+ * Pull platform payments (subscription + services revenue) directly from the
  * Stripe API — the API-direct replacement for the xlsx "Stripe Sync" tab.
  *
- * The platform's /v1/charges are its own charges (subscription invoices + one-off
+ * Enumerates TWO endpoints and merges them (deduped by charge id) because
+ * neither is complete on its own:
+ *
+ *   • /v1/charges           — returns card + legacy charges (`ch_`), but the LIST
+ *                             endpoint silently OMITS Stripe Link / bank charges
+ *                             (`py_`). Those are real revenue (e.g. KOA Komponents
+ *                             pays $250/mo via Link).
+ *   • /v1/payment_intents   — returns every PI-based payment (card, Link, bank),
+ *                             but MISSES legacy subscriptions that charge a card
+ *                             Source directly with no PaymentIntent (e.g. Midwest
+ *                             Floor's $2,780/mo, a customer since 2019).
+ *
+ * Pulling only one drops a whole class of customers into false churn the moment
+ * the live seam takes over from the xlsx. The union of both, deduped by charge
+ * id, is the complete set.
+ *
+ * The platform's payments are its own charges (subscription invoices + one-off
  * services); Connect charges live on connected accounts and are handled by
  * sync_stripe_connect.mjs. Classification: a charge with an `invoice` is
  * subscription; otherwise services (mirrors the sheet's transaction_type split).
  *
- * Aggregates per Stripe customer (and per month) so we never persist the 22k-row
+ * Aggregates per Stripe customer (and per month) so we never persist the full
  * firehose. Incremental: stores the max `created` seen and only pulls newer
- * charges on subsequent runs (pass --full to force a full backfill).
+ * charges/intents on subsequent runs (pass --full to force a full backfill).
  *
- * Output: _etl_scripts/cache/stripe_charges.json
+ * Output: _etl_scripts/cache/stripe_charges.json (schema unchanged).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -54,21 +70,22 @@ function classifyType(c) {
 const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base64');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Incremental by default: seed from the previous cache and only fetch charges
-// created AFTER the last run's high-water mark (seconds for a daily run). First
-// run (no cache) or --full does the ~12-min full backfill. NOTE: incremental
-// fetches by created date, so a refund applied today to an OLDER charge won't be
-// re-pulled — run --full weekly to true-up refunds.
+// Incremental by default: seed from the previous cache and only fetch items
+// created AFTER the last run's high-water mark. First run (no cache) or --full
+// does the full backfill. NOTE: incremental fetches by created date, so a refund
+// applied today to an OLDER charge won't be re-pulled — run --full weekly.
 const FULL = process.argv.includes('--full');
 const prev = (() => { try { return JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch { return null; } })();
 const createdGt = (!FULL && prev?.max_created) ? prev.max_created : null;
 
-async function getPage(startingAfter) {
-  const qs = new URLSearchParams({ limit: '100' });
-  if (startingAfter) qs.set('starting_after', startingAfter);
+// Generic pager with hardened retry (429 / 5xx / transient network errors).
+async function getPage(url, params) {
+  const qs = new URLSearchParams({ limit: '100', ...params });
   if (createdGt) qs.set('created[gt]', String(createdGt));
   for (let a = 0; a < 6; a++) {
-    const res = await fetch('https://api.stripe.com/v1/charges?' + qs, { headers: { Authorization: AUTH } });
+    let res;
+    try { res = await fetch(`${url}?${qs}`, { headers: { Authorization: AUTH } }); }
+    catch { await sleep(500 * (a + 1)); continue; }
     if (res.status === 429 || res.status >= 500) { await sleep(500 * (a + 1)); continue; }
     const body = await res.json();
     if (res.status !== 200) throw new Error(`Stripe ${res.status}: ${body?.error?.message || ''}`);
@@ -88,45 +105,74 @@ let maxCreated = createdGt ? (prev?.max_created || 0) : 0;
 
 const r2 = (v) => Math.round(v * 100) / 100;
 const iso = (ts) => new Date(ts * 1000).toISOString().slice(0, 10);
-let cursor = null, pages = 0, scanned = 0, counted = 0, failedCount = 0;
-const t0 = Date.now();
-for (;;) {
-  const page = await getPage(cursor);
-  for (const c of page.data) {
-    scanned++;
-    if (c.created > maxCreated) maxCreated = c.created;
-    currencies.set((c.currency || 'usd').toUpperCase(), (currencies.get((c.currency || 'usd').toUpperCase()) || 0) + 1);
-    const cus = c.customer || null;
-    const month = new Date(c.created * 1000).toISOString().slice(0, 7);
+const newEntry = (ts) => ({ subscription: 0, services: 0, refunded: 0, count: 0, first_ts: ts, last_ts: ts, by_month: {}, transactions: [], failed: [] });
 
-    // Failed charges (paid=false) — kept for the at-risk/dunning signal.
-    if (!c.paid || !c.captured) {
-      if (c.status === 'failed' && cus) {
-        const e = byCust.get(cus) || { subscription: 0, services: 0, refunded: 0, count: 0, first_ts: c.created, last_ts: c.created, by_month: {}, transactions: [], failed: [] };
-        e.failed.push({ d: iso(c.created), a: r2(c.amount / 100) });
-        byCust.set(cus, e);
-        failedCount++;
-      }
-      continue;
+// Record a single charge object into the aggregates. Deduped by charge id across
+// both endpoints (a `ch_` charge with a PI appears in both passes → count once).
+const seen = new Set();
+let scanned = 0, counted = 0, failedCount = 0;
+function record(c) {
+  if (!c || !c.id || seen.has(c.id)) return;
+  seen.add(c.id);
+  scanned++;
+  if (c.created > maxCreated) maxCreated = c.created;
+  const cus = c.customer || null;
+  const currency = (c.currency || 'usd').toUpperCase();
+  currencies.set(currency, (currencies.get(currency) || 0) + 1);
+  const month = new Date(c.created * 1000).toISOString().slice(0, 7);
+
+  // Failed charges (paid=false) — kept for the at-risk/dunning signal.
+  if (!c.paid || !c.captured) {
+    if (c.status === 'failed' && cus) {
+      const e = byCust.get(cus) || newEntry(c.created);
+      e.failed.push({ d: iso(c.created), a: r2(c.amount / 100) });
+      byCust.set(cus, e);
+      failedCount++;
     }
-
-    // Successful, captured revenue (GROSS — net of refunds only, NOT Stripe fees).
-    const type = classifyType(c);
-    const gross = (c.amount - (c.amount_refunded || 0)) / 100;
-    if (!cus) { noCustomer.push({ d: iso(c.created), a: r2(gross), type, desc: (c.description || '').slice(0, 80) }); counted++; continue; }
-    const e = byCust.get(cus) || { subscription: 0, services: 0, refunded: 0, count: 0, first_ts: c.created, last_ts: c.created, by_month: {}, transactions: [], failed: [] };
-    e[type] = r2((e[type] || 0) + gross);
-    e.refunded = r2(e.refunded + (c.amount_refunded || 0) / 100);
-    e.count += 1;
-    e.first_ts = Math.min(e.first_ts, c.created); e.last_ts = Math.max(e.last_ts, c.created);
-    const mm = e.by_month[month] || { subscription: 0, services: 0 };
-    mm[type] = r2(mm[type] + gross); e.by_month[month] = mm;
-    e.transactions.push({ d: iso(c.created), a: r2(gross), t: type, r: r2((c.amount_refunded || 0) / 100) });
-    byCust.set(cus, e);
-    counted++;
+    return;
   }
-  pages++;
-  if (pages % 10 === 0) process.stderr.write(`  …${pages} pages, ${scanned} scanned\n`);
+
+  // Successful, captured revenue (GROSS — net of refunds only, NOT Stripe fees).
+  const type = classifyType(c);
+  const gross = (c.amount - (c.amount_refunded || 0)) / 100;
+  if (!cus) { noCustomer.push({ d: iso(c.created), a: r2(gross), type, desc: (c.description || '').slice(0, 80) }); counted++; return; }
+  const e = byCust.get(cus) || newEntry(c.created);
+  e[type] = r2((e[type] || 0) + gross);
+  e.refunded = r2(e.refunded + (c.amount_refunded || 0) / 100);
+  e.count += 1;
+  e.first_ts = Math.min(e.first_ts, c.created); e.last_ts = Math.max(e.last_ts, c.created);
+  const mm = e.by_month[month] || { subscription: 0, services: 0 };
+  mm[type] = r2(mm[type] + gross); e.by_month[month] = mm;
+  e.transactions.push({ d: iso(c.created), a: r2(gross), t: type, r: r2((c.amount_refunded || 0) / 100) });
+  byCust.set(cus, e);
+  counted++;
+}
+
+const t0 = Date.now();
+
+// Pass A — /v1/charges: card + legacy (`ch_`) charges.
+let cursor = null, pagesA = 0;
+for (;;) {
+  const page = await getPage('https://api.stripe.com/v1/charges', cursor ? { starting_after: cursor } : {});
+  for (const c of page.data) record(c);
+  pagesA++;
+  if (pagesA % 10 === 0) process.stderr.write(`  [charges] …${pagesA} pages, ${scanned} scanned\n`);
+  if (!page.has_more || page.data.length === 0) break;
+  cursor = page.data[page.data.length - 1].id;
+}
+
+// Pass B — /v1/payment_intents (expand latest_charge): adds Link / bank (`py_`)
+// charges the /v1/charges list omits. Already-seen `ch_` charges are deduped.
+cursor = null;
+let pagesB = 0;
+for (;;) {
+  const page = await getPage('https://api.stripe.com/v1/payment_intents', { 'expand[]': 'data.latest_charge', ...(cursor ? { starting_after: cursor } : {}) });
+  for (const pi of page.data) {
+    const c = pi.latest_charge && typeof pi.latest_charge === 'object' ? pi.latest_charge : null;
+    if (c) { if (!c.customer && pi.customer) c.customer = pi.customer; record(c); }
+  }
+  pagesB++;
+  if (pagesB % 10 === 0) process.stderr.write(`  [intents] …${pagesB} pages, ${scanned} scanned\n`);
   if (!page.has_more || page.data.length === 0) break;
   cursor = page.data[page.data.length - 1].id;
 }
@@ -142,7 +188,7 @@ const totSvc = r2([...byCust.values()].reduce((s, v) => s + (v.services || 0), 0
 
 const noCustTotal = r2(noCustomer.reduce((s, x) => s + x.a, 0));
 fs.writeFileSync(OUT, JSON.stringify({
-  source: 'stripe_api:charges',
+  source: 'stripe_api:charges+payment_intents',
   fetchedAt: new Date().toISOString(),
   basis: 'gross (amount − refunds; Stripe processing fees NOT deducted)',
   max_created: maxCreated,
@@ -155,5 +201,5 @@ fs.writeFileSync(OUT, JSON.stringify({
   no_customer: noCustomer.sort((a, b) => b.a - a.a),
   by_customer,
 }, null, 2));
-process.stderr.write(`✓ stripe_charges.json: ${scanned} charges, ${counted} counted · ${byCust.size} customers · sub $${Math.round(totSub).toLocaleString()} + svc $${Math.round(totSvc).toLocaleString()} GROSS · ${failedCount} failed · no-customer $${Math.round(noCustTotal).toLocaleString()} (${noCustomer.length}) · ${((Date.now() - t0) / 1000).toFixed(0)}s\n`);
+process.stderr.write(`✓ stripe_charges.json: ${scanned} charges (A:${pagesA}p + B:${pagesB}p), ${counted} counted · ${byCust.size} customers · sub $${Math.round(totSub).toLocaleString()} + svc $${Math.round(totSvc).toLocaleString()} GROSS · ${failedCount} failed · no-customer $${Math.round(noCustTotal).toLocaleString()} (${noCustomer.length}) · ${((Date.now() - t0) / 1000).toFixed(0)}s\n`);
 if (currencies.size > 1) process.stderr.write(`⚠ currencies: ${[...currencies.keys()].join(', ')} (sums assume USD)\n`);

@@ -46,7 +46,7 @@ for (const p of profiles) {
       if (mrrByMonth[M] <= 0.5) delete mrrByMonth[M];
     }
   }
-  if (Object.keys(mrrByMonth).length) customers.push({ name: p.name, id: p.allmoxy_customer_id ?? null, mrrByMonth });
+  if (Object.keys(mrrByMonth).length) customers.push({ name: p.name, id: p.allmoxy_customer_id ?? null, status: p.status ?? null, pay_status: p.pay_status ?? null, mrrByMonth });
 }
 
 // Month columns = every month present across customers, ascending.
@@ -77,12 +77,14 @@ for (let i = 1; i < monthCols.length; i++) {
   let expansion = 0;
   let contraction = 0;
   let churn = 0;
+  let delinquent = 0; // dropped to $0 but NOT confirmed-churned — card failure / non-payment / at-risk (may recover)
   let startingMrr = 0;
   let endingMrr = 0;
   let churnedLogos = 0;
+  let delinquentLogos = 0;
   let newLogos = 0;
   let reactivatedLogos = 0;
-  const details = { new: [], reactivated: [], expansion: [], contraction: [], churn: [] };
+  const details = { new: [], reactivated: [], expansion: [], contraction: [], churn: [], delinquent: [] };
 
   for (const c of customers) {
     const p = c.mrrByMonth[prev] ?? 0;
@@ -102,9 +104,21 @@ for (let i = 1; i < monthCols.length; i++) {
         details.reactivated.push({ name: c.name, id: c.id, mrr: Math.round(n * 100) / 100 });
       }
     } else if (p > 0 && n === 0) {
-      churn += p;
-      churnedLogos += 1;
-      details.churn.push({ name: c.name, id: c.id, mrr: Math.round(p * 100) / 100 });
+      // Dropped to $0. Only a CONFIRMED-churned customer (status 'churned' =
+      // HubSpot-confirmed cancellation or 12-month lapse) counts as real churn.
+      // Anyone still in a recoverable state — card failure, non-payment, at-risk —
+      // is DELINQUENT, not churned: a missed cycle they may still pay. Both reduce
+      // ending MRR (they didn't pay this month), but they're reported separately so
+      // the churn number reflects true losses, not dunning.
+      if (c.status === 'churned') {
+        churn += p;
+        churnedLogos += 1;
+        details.churn.push({ name: c.name, id: c.id, mrr: Math.round(p * 100) / 100 });
+      } else {
+        delinquent += p;
+        delinquentLogos += 1;
+        details.delinquent.push({ name: c.name, id: c.id, mrr: Math.round(p * 100) / 100, status: c.status, pay_status: c.pay_status });
+      }
     } else if (n > p) {
       expansion += n - p;
       details.expansion.push({
@@ -130,10 +144,13 @@ for (let i = 1; i < monthCols.length; i++) {
   details.new.sort((a, b) => b.mrr - a.mrr);
   details.reactivated.sort((a, b) => b.mrr - a.mrr);
   details.churn.sort((a, b) => b.mrr - a.mrr);
+  details.delinquent.sort((a, b) => b.mrr - a.mrr);
   details.expansion.sort((a, b) => b.delta - a.delta);
   details.contraction.sort((a, b) => b.delta - a.delta);
 
-  const netNew = newMrr + reactivatedMrr + expansion - contraction - churn;
+  // Net new subtracts BOTH churn and delinquent so the bridge still reconciles to
+  // ending − starting (a delinquent customer is at $0 this month either way).
+  const netNew = newMrr + reactivatedMrr + expansion - contraction - churn - delinquent;
   const grossChurnRate = startingMrr > 0 ? churn / startingMrr : null;
   const netChurnRate = startingMrr > 0 ? (churn + contraction - expansion) / startingMrr : null;
   const expansionRate = startingMrr > 0 ? expansion / startingMrr : null;
@@ -149,11 +166,13 @@ for (let i = 1; i < monthCols.length; i++) {
     expansion_mrr: Math.round(expansion * 100) / 100,
     contraction_mrr: Math.round(contraction * 100) / 100,
     churn_mrr: Math.round(churn * 100) / 100,
+    delinquent_mrr: Math.round(delinquent * 100) / 100,
     ending_mrr: Math.round(endingMrr * 100) / 100,
     net_new_mrr: Math.round(netNew * 100) / 100,
     new_logos: newLogos,
     reactivated_logos: reactivatedLogos,
     churned_logos: churnedLogos,
+    delinquent_logos: delinquentLogos,
     gross_churn_rate_monthly: grossChurnRate != null ? Math.round(grossChurnRate * 10000) / 10000 : null,
     net_churn_rate_monthly: netChurnRate != null ? Math.round(netChurnRate * 10000) / 10000 : null,
     expansion_rate_monthly: expansionRate != null ? Math.round(expansionRate * 10000) / 10000 : null,
@@ -179,7 +198,8 @@ const ttmReactivated = sum(ttm, 'reactivated_mrr');
 const ttmExpansion = sum(ttm, 'expansion_mrr');
 const ttmContraction = sum(ttm, 'contraction_mrr');
 const ttmChurn = sum(ttm, 'churn_mrr');
-const ttmNetNew = ttmNew + ttmReactivated + ttmExpansion - ttmContraction - ttmChurn;
+const ttmDelinquent = sum(ttm, 'delinquent_mrr');
+const ttmNetNew = ttmNew + ttmReactivated + ttmExpansion - ttmContraction - ttmChurn - ttmDelinquent;
 const ttmStartingMrr = ttm[0]?.starting_mrr ?? 0;
 const ttmEndingMrr = ttm[ttm.length - 1]?.ending_mrr ?? 0;
 const ttmGrossChurn = ttmStartingMrr > 0 ? ttmChurn / ttmStartingMrr : null;
@@ -212,6 +232,7 @@ const out = {
     expansion_mrr: Math.round(ttmExpansion * 100) / 100,
     contraction_mrr: Math.round(ttmContraction * 100) / 100,
     churn_mrr: Math.round(ttmChurn * 100) / 100,
+    delinquent_mrr: Math.round(ttmDelinquent * 100) / 100,
     net_new_mrr: Math.round(ttmNetNew * 100) / 100,
     gross_mrr_churn_ttm: ttmGrossChurn != null ? Math.round(ttmGrossChurn * 10000) / 10000 : null,
     annual_gross_churn_rate: ttmAnnualGrossChurnRate != null ? Math.round(ttmAnnualGrossChurnRate * 10000) / 10000 : null,
@@ -220,8 +241,9 @@ const out = {
     quick_ratio: ttmQuickRatio != null ? Math.round(ttmQuickRatio * 100) / 100 : null,
   },
   notes:
-    'MRR waterfall derived from per-customer × per-month subscription MRR in the MRR by Month tab. ' +
-    'New = customer first appears with MRR > 0; Churn = customer had MRR > 0 last month and 0 this month. ' +
+    'MRR waterfall derived from per-customer × per-month subscription MRR in customer_profiles.monthly_history (live Stripe, boundary-slip corrected). ' +
+    'New = customer first appears with MRR > 0. Churn = confirmed-churned customer (status churned) who had MRR > 0 last month and 0 this month. ' +
+    'Delinquent = dropped to $0 but NOT confirmed churned (card failure / non-payment / at-risk) — a missed cycle they may still pay; reported separately from churn but also reduces ending MRR. ' +
     'Expansion / Contraction are intra-customer month-over-month MRR changes. ' +
     'Services and Connect revenue are NOT included — subscription only.',
 };

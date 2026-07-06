@@ -29,12 +29,14 @@ import { useSheetTab } from '../hooks/useSheetTab';
 type NewDetail = { name: string; id?: number | null; mrr: number };
 type ChurnDetail = { name: string; id?: number | null; mrr: number };
 type ChangeDetail = { name: string; id?: number | null; prev_mrr: number; new_mrr: number; delta: number };
+type DelinquentDetail = { name: string; id?: number | null; mrr: number; status?: string | null; pay_status?: string | null };
 type MonthlyDetails = {
   new: NewDetail[];
   reactivated?: NewDetail[];
   expansion: ChangeDetail[];
   contraction: ChangeDetail[];
   churn: ChurnDetail[];
+  delinquent?: DelinquentDetail[];
 };
 
 type MonthlyRow = {
@@ -45,11 +47,13 @@ type MonthlyRow = {
   expansion_mrr: number;
   contraction_mrr: number;
   churn_mrr: number;
+  delinquent_mrr?: number;
   ending_mrr: number;
   net_new_mrr: number;
   new_logos: number;
   reactivated_logos?: number;
   churned_logos: number;
+  delinquent_logos?: number;
   gross_churn_rate_monthly: number | null;
   net_churn_rate_monthly: number | null;
   expansion_rate_monthly: number | null;
@@ -59,7 +63,7 @@ type MonthlyRow = {
   details: MonthlyDetails;
 };
 
-type DrillCategory = 'new' | 'reactivated' | 'expansion' | 'contraction' | 'churn';
+type DrillCategory = 'new' | 'reactivated' | 'expansion' | 'contraction' | 'churn' | 'delinquent';
 
 type WaterfallSnapshot = {
   monthly: MonthlyRow[];
@@ -73,6 +77,7 @@ type WaterfallSnapshot = {
     expansion_mrr: number;
     contraction_mrr: number;
     churn_mrr: number;
+    delinquent_mrr?: number;
     net_new_mrr: number;
     gross_mrr_churn_ttm: number | null;
     annual_gross_churn_rate: number | null;
@@ -177,6 +182,7 @@ export default function RevenueWaterfall() {
         ...r,
         neg_contraction: -r.contraction_mrr,
         neg_churn: -r.churn_mrr,
+        neg_delinquent: -(r.delinquent_mrr ?? 0),
       }));
   }, [monthly, fromMonth, toMonth]);
 
@@ -189,14 +195,15 @@ export default function RevenueWaterfall() {
     if (rows.length === 0) return null;
     const starting = rows[0].starting_mrr;
     const ending = rows[rows.length - 1].ending_mrr;
-    const sum = (k: 'new_mrr' | 'reactivated_mrr' | 'expansion_mrr' | 'contraction_mrr' | 'churn_mrr') =>
+    const sum = (k: 'new_mrr' | 'reactivated_mrr' | 'expansion_mrr' | 'contraction_mrr' | 'churn_mrr' | 'delinquent_mrr') =>
       rows.reduce((a, r) => a + ((r as MonthlyRow)[k] ?? 0), 0);
     const new_mrr = sum('new_mrr');
     const reactivated = sum('reactivated_mrr');
     const expansion = sum('expansion_mrr');
     const contraction = sum('contraction_mrr');
     const churn = sum('churn_mrr');
-    const net_new = new_mrr + reactivated + expansion - contraction - churn;
+    const delinquent = sum('delinquent_mrr');
+    const net_new = new_mrr + reactivated + expansion - contraction - churn - delinquent;
     const windowGrr = starting > 0 ? (starting - churn - contraction) / starting : null;
     const windowNrr = starting > 0 ? (starting - churn - contraction + expansion) / starting : null;
     const windowGrossChurn = starting > 0 ? churn / starting : null;
@@ -218,6 +225,7 @@ export default function RevenueWaterfall() {
       expansion_mrr: expansion,
       contraction_mrr: contraction,
       churn_mrr: churn,
+      delinquent_mrr: delinquent,
       net_new_mrr: net_new,
       annual_grr,
       annual_nrr,
@@ -275,7 +283,7 @@ export default function RevenueWaterfall() {
 
       {/* Header cards — annualized for whichever window is selected */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid item xs={12} sm={6} md={2}>
           <StatCard
             label={`Net new MRR · ${headerWindow}`}
             value={headerStats ? USD0.format(headerStats.net_new_mrr) : null}
@@ -285,7 +293,7 @@ export default function RevenueWaterfall() {
             info={<><strong>What it is:</strong> Net change in MRR over the selected trailing window.<br /><br /><strong>Data:</strong> Sum of monthly New + Expansion − Contraction − Churn across the last {headerWindow === '3M' ? 3 : headerWindow === '6M' ? 6 : 12} months.</>}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid item xs={12} sm={6} md={2}>
           <StatCard
             label={`Annualized NRR · ${headerWindow}`}
             value={pct(headerStats?.annual_nrr ?? null)}
@@ -295,7 +303,7 @@ export default function RevenueWaterfall() {
             info={<><strong>What it is:</strong> Net Revenue Retention — of every $1 of MRR existing customers were paying at the start of the window, how many cents they're paying now (expansion in, contraction/churn out). Does NOT include new logos.<br /><br /><strong>Data:</strong> Window NRR = (Starting − Churn − Contraction + Expansion) ÷ Starting, then annualized by raising to 12/N.<br /><br /><strong>Why toggle:</strong> 3M vs 12M reveals trajectory — if 3M &lt; 12M, recent retention is softening.</>}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid item xs={12} sm={6} md={2}>
           <StatCard
             label={`Annualized GRR · ${headerWindow}`}
             value={pct(headerStats?.annual_grr ?? null)}
@@ -305,7 +313,7 @@ export default function RevenueWaterfall() {
             info={<><strong>What it is:</strong> Gross Revenue Retention — what % of starting MRR survives (no expansion credit).<br /><br /><strong>Data:</strong> Window GRR = (Starting − Churn − Contraction) ÷ Starting, annualized.<br /><br /><strong>Target:</strong> ≥ 90% top-quartile · ≥ 80% acceptable</>}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid item xs={12} sm={6} md={2}>
           <StatCard
             label={`Quick ratio · ${headerWindow}`}
             value={headerStats?.quick_ratio != null ? `${headerStats.quick_ratio.toFixed(2)}x` : '—'}
@@ -315,14 +323,24 @@ export default function RevenueWaterfall() {
             info={<><strong>What it is:</strong> Growth-durability ratio over the selected window — dollars of MRR added per dollar lost.<br /><br /><strong>Data:</strong> (Window New + Expansion) ÷ (Window Contraction + Churn). Not annualized (it's a ratio).<br /><br /><strong>Target:</strong> ≥ 4x strong · 2–4x acceptable · &lt; 2x warning</>}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid item xs={12} sm={6} md={2}>
           <StatCard
             label={`Annual MRR churn · ${headerWindow}`}
             value={pct(headerStats?.annual_gross_churn_rate ?? null)}
             hint={headerStats ? `${USD0.format(headerStats.churn_mrr)} lost in window` : 'loading'}
             color={grrColor(headerStats?.annual_grr ?? null)}
             loading={isLoading}
-            info={<><strong>What it is:</strong> Annualized gross MRR lost to full customer churn (contraction excluded).<br /><br /><strong>Data:</strong> Window churn rate = Churn ÷ Starting, annualized as 1 − (1 − rate)^(12/N).<br /><br /><strong>Target:</strong> ≤ 10% good · ≤ 20% acceptable</>}
+            info={<><strong>What it is:</strong> Annualized gross MRR lost to full customer churn (contraction excluded). <em>Confirmed churn only</em> — customers who failed a payment but aren't yet cancelled are counted under Delinquent, not here.<br /><br /><strong>Data:</strong> Window churn rate = Churn ÷ Starting, annualized as 1 − (1 − rate)^(12/N).<br /><br /><strong>Target:</strong> ≤ 10% good · ≤ 20% acceptable</>}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={2}>
+          <StatCard
+            label={`Delinquent MRR · ${headerWindow}`}
+            value={headerStats ? USD0.format(headerStats.delinquent_mrr) : null}
+            hint="Failed/missed — not yet churned"
+            color="#F97316"
+            loading={isLoading}
+            info={<><strong>What it is:</strong> MRR from customers who dropped to $0 this window but are NOT confirmed churned — card failures, non-payment, at-risk accounts still in dunning. Separated from churn because they may recover (a recovered one shows up as Reactivated).<br /><br /><strong>Data:</strong> Sum of monthly delinquent MRR = customers with prior-month MRR &gt; 0, this-month $0, and lifecycle status ≠ churned.<br /><br /><strong>Why it matters:</strong> This is your recoverable pipeline — chase these before they become real churn.</>}
           />
         </Grid>
       </Grid>
@@ -406,6 +424,7 @@ export default function RevenueWaterfall() {
                       expansion_mrr: 'Expansion',
                       neg_contraction: 'Contraction',
                       neg_churn: 'Churn',
+                      neg_delinquent: 'Delinquent (at risk)',
                       net_new_mrr: 'Net new',
                     };
                     return [USD0.format(absVal), labels[name] ?? name];
@@ -416,6 +435,7 @@ export default function RevenueWaterfall() {
                 <Bar dataKey="expansion_mrr" stackId="movement" fill="#2C73FF" name="expansion_mrr" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'expansion')} />
                 <Bar dataKey="neg_contraction" stackId="movement" fill="#F59E0B" name="neg_contraction" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'contraction')} />
                 <Bar dataKey="neg_churn" stackId="movement" fill="#DA3633" name="neg_churn" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'churn')} />
+                <Bar dataKey="neg_delinquent" stackId="movement" fill="#F97316" name="neg_delinquent" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'delinquent')} />
                 <Line type="monotone" dataKey="net_new_mrr" stroke="#E6EDF3" strokeWidth={2} dot={{ r: 2.5, fill: '#E6EDF3' }} name="net_new_mrr" />
               </ComposedChart>
             </ResponsiveContainer>
@@ -453,11 +473,13 @@ export default function RevenueWaterfall() {
                 { key: 'expansion_mrr', label: 'Expansion MRR' },
                 { key: 'contraction_mrr', label: 'Contraction MRR' },
                 { key: 'churn_mrr', label: 'Churn MRR' },
+                { key: 'delinquent_mrr', label: 'Delinquent MRR', getValue: (r) => r.delinquent_mrr ?? 0 },
                 { key: 'net_new_mrr', label: 'Net new MRR' },
                 { key: 'ending_mrr', label: 'Ending MRR' },
                 { key: 'new_logos', label: 'New logos' },
                 { key: 'reactivated_logos', label: 'Reactivated logos', getValue: (r) => r.reactivated_logos ?? 0 },
                 { key: 'churned_logos', label: 'Churned logos' },
+                { key: 'delinquent_logos', label: 'Delinquent logos', getValue: (r) => r.delinquent_logos ?? 0 },
                 { key: 'gross_churn_rate_monthly', label: 'Gross churn (mo)' },
                 { key: 'nrr_monthly', label: 'NRR (mo)' },
                 { key: 'grr_monthly', label: 'GRR (mo)' },
@@ -481,6 +503,7 @@ export default function RevenueWaterfall() {
                 <TableCell align="right">+ Exp.</TableCell>
                 <TableCell align="right">− Contr.</TableCell>
                 <TableCell align="right">− Churn</TableCell>
+                <TableCell align="right">− Delinq.</TableCell>
                 <TableCell align="right">Net new</TableCell>
                 <TableCell align="right">Ending</TableCell>
                 <TableCell align="right">NRR</TableCell>
@@ -515,6 +538,9 @@ export default function RevenueWaterfall() {
                     <TableCell align="right" sx={{ color: 'error.main', ...hoverCell }} onClick={() => openDrill(r.month, 'churn')}>
                       −{USD0.format(r.churn_mrr)}
                     </TableCell>
+                    <TableCell align="right" sx={{ color: '#F97316', ...hoverCell }} onClick={() => openDrill(r.month, 'delinquent')}>
+                      {(r.delinquent_mrr ?? 0) > 0 ? `−${USD0.format(r.delinquent_mrr ?? 0)}` : '—'}
+                    </TableCell>
                     <TableCell align="right" sx={{ color: r.net_new_mrr >= 0 ? 'success.main' : 'error.main', fontWeight: 500 }}>
                       {r.net_new_mrr >= 0 ? '+' : '−'}{USD0.format(Math.abs(r.net_new_mrr))}
                     </TableCell>
@@ -532,7 +558,7 @@ export default function RevenueWaterfall() {
           </Table>
         )}
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1, fontStyle: 'italic' }}>
-          Click any New / Expansion / Contraction / Churn value (in the table or chart) to see the contributing customers.
+          Click any New / Expansion / Contraction / Churn / Delinquent value (in the table or chart) to see the contributing customers. Delinquent = missed a payment but not yet churned (card failure / non-payment) — separated from real churn.
         </Typography>
         </Collapse>
       </Paper>
@@ -546,26 +572,57 @@ export default function RevenueWaterfall() {
           : category === 'reactivated' ? 'Reactivated MRR'
           : category === 'expansion' ? 'Expansion MRR'
           : category === 'contraction' ? 'Contraction MRR'
+          : category === 'delinquent' ? 'Delinquent (at risk)'
           : 'Churn MRR';
         const total =
           category === 'new' ? row.new_mrr
           : category === 'reactivated' ? (row.reactivated_mrr ?? 0)
           : category === 'expansion' ? row.expansion_mrr
           : category === 'contraction' ? row.contraction_mrr
+          : category === 'delinquent' ? (row.delinquent_mrr ?? 0)
           : row.churn_mrr;
         const accent =
           category === 'new' ? 'rgba(26, 158, 92, 0.5)'
           : category === 'reactivated' ? 'rgba(159, 122, 234, 0.5)'
           : category === 'expansion' ? 'rgba(44, 115, 255, 0.5)'
           : category === 'contraction' ? 'rgba(245, 158, 11, 0.5)'
+          : category === 'delinquent' ? 'rgba(249, 115, 22, 0.5)'
           : 'rgba(218, 54, 51, 0.5)';
         const count =
           category === 'new' ? row.details.new.length
           : category === 'reactivated' ? (row.details.reactivated?.length ?? 0)
           : category === 'expansion' ? row.details.expansion.length
           : category === 'contraction' ? row.details.contraction.length
+          : category === 'delinquent' ? (row.details.delinquent?.length ?? 0)
           : row.details.churn.length;
-        const subtitle = `${category === 'contraction' || category === 'churn' ? '−' : '+'}${USD0.format(total)} across ${count} customer${count === 1 ? '' : 's'} · click to reconcile against the sheet`;
+        const subtitle = `${category === 'contraction' || category === 'churn' || category === 'delinquent' ? '−' : '+'}${USD0.format(total)} across ${count} customer${count === 1 ? '' : 's'}${category === 'delinquent' ? ' · missed a payment but not yet churned — may recover' : ' · click to reconcile against the sheet'}`;
+
+        if (category === 'delinquent') {
+          const rows = row.details.delinquent ?? [];
+          const columns: DrillColumn<DelinquentDetail>[] = [
+            { key: 'name', label: 'Customer', render: (r) => <CustomerLink id={r.id} name={r.name} /> },
+            { key: 'pay_status', label: 'Billing state', render: (r) => r.pay_status || r.status || '—' },
+            { key: 'mrr', label: 'MRR at risk', align: 'right', render: (r) => USD0.format(r.mrr) },
+            {
+              key: 'pct',
+              label: `% of ${title}`,
+              align: 'right',
+              render: (r) => (total > 0 ? `${((r.mrr / total) * 100).toFixed(1)}%` : '—'),
+              exportValue: (r) => (total > 0 ? r.mrr / total : 0),
+            },
+          ];
+          return (
+            <DrillDownPanel
+              title={`${title} · ${monthLabelLong(month)}`}
+              subtitle={subtitle}
+              accent={accent}
+              rows={rows as unknown as Array<Record<string, unknown>>}
+              columns={columns as unknown as DrillColumn<Record<string, unknown>>[]}
+              filename={`mrr_delinquent_${month}`}
+              onClose={() => setDrill(null)}
+            />
+          );
+        }
 
         if (category === 'new' || category === 'reactivated' || category === 'churn') {
           const rows =
