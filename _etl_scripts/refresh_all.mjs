@@ -429,9 +429,11 @@ function runScriptArgs(scriptName, scriptArgs) {
   execFileSync('node', [scriptPath, ...scriptArgs], { maxBuffer: 1024 * 1024 * 256, stdio: 'inherit' });
 }
 
-console.log('\n[4/5] Subscription + waterfall + cohort');
+console.log('\n[4/5] Subscription + cohort');
 runScript('build_subscription_by_month.mjs', 'subscription_by_month');
-runScript('build_waterfall.mjs', 'mrr_waterfall');
+// build_waterfall moved BELOW: it now derives from customer_profiles.monthly_history
+// (live Stripe, not the stale xlsx "MRR by Month" tab), so it must run after every
+// profile enrichment (seam, amortization, connect, merges, boundary-slip shift).
 runScript('build_full_cohort.mjs', 'cohort_retention');
 
 console.log('\n[5/5] Customer aggregates + unit economics');
@@ -502,9 +504,21 @@ runScript('apply_never_paid_classification.mjs', null);
 // reads the final canonical MRR values.
 runScript('patch_cohort_active.mjs', null);
 
-// Parallel transaction-driven waterfall for spot-checking against the QB-driven
-// mrr_waterfall.json. Same schema, different data path: built from
-// customer_profiles.transactions (post-override) instead of subscription_by_month.
+// Boundary-slip correction: re-attribute end-of-month subscription charges that
+// cleared on the 1st–3rd of the next month back to the cycle they cover, in
+// customer_profiles.monthly_history. Fixes false churn / false reactivation across
+// every monthly surface. Must run AFTER all monthly_history enrichment and BEFORE
+// build_waterfall + apply_stripe_seam_monthly (both derive from monthly_history).
+console.log('  applying billing-period (boundary-slip) shift…');
+runScript('apply_billing_period_shift.mjs', null);
+
+// MRR waterfall — now derived from the (enriched + boundary-corrected)
+// customer_profiles.monthly_history rather than the stale xlsx "MRR by Month" tab.
+runScript('build_waterfall.mjs', 'mrr_waterfall');
+
+// Parallel transaction-driven waterfall for spot-checking against mrr_waterfall.json.
+// Same schema, different data path: built from customer_profiles.transactions
+// (post-override, cash-dated) instead of monthly_history.
 runScript('build_waterfall_from_txns.mjs', null);
 
 runScript('build_roster.mjs', null); // writes its own output file

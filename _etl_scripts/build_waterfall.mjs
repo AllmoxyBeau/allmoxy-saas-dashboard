@@ -11,45 +11,48 @@
 // Ending MRR = Starting + New + Expansion - Contraction - Churned.
 
 import fs from 'node:fs';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import path from 'node:path';
 
-const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
-const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
+// Per-customer monthly subscription MRR now comes from the LIVE customer profiles
+// (customer_profiles.monthly_history) instead of the xlsx "MRR by Month" tab — so
+// the waterfall reflects real Stripe data, not a stale spreadsheet.
+const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const profiles = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8')).rows;
 
-// Header at row index 5 (L6): [null, '2018-Jun', '2018-Jul', ...].
-// Data rows start index 7 (L8).
-const aoa = XLSX.utils.sheet_to_json(wb.Sheets['MRR by Month'], { header: 1, defval: null, raw: false });
-const MONTHS = { Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06', Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12' };
-const monthHeader = aoa[5];
-const monthCols = [];
-for (let i = 1; i < monthHeader.length; i++) {
-  const label = monthHeader[i];
-  if (!label) continue;
-  const m = String(label).match(/^(\d{4})-(\w{3})$/);
-  if (!m) continue;
-  monthCols.push({ colIdx: i, month: `${m[1]}-${MONTHS[m[2]]}` });
-}
+const shift = (m, d) => { const [y, mo] = m.split('-').map(Number); const dt = new Date(y, mo - 1 + d, 1); return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}`; };
 
-function parseNum(raw) {
-  if (raw == null || raw === '') return 0;
-  const n = Number(String(raw).replace(/[$,\s]/g, ''));
-  return Number.isFinite(n) ? n : 0;
-}
-
-// customer → month → mrr (only non-zero stored).
+// Boundary-slip correction: a subscription charge that clears in the first 3 days
+// of month M but covers the PRIOR cycle (M-1 empty, M-2 present — an end-of-month
+// biller whose payment cleared on the 1st) is attributed to M-1. Without this, the
+// month it slipped out of shows false churn and the month it slipped into shows
+// false reactivation. transactions[] keep their real dates (cash) — only this
+// in-memory monthly series is period-adjusted.
 const customers = [];
-for (let i = 7; i < aoa.length; i++) {
-  const row = aoa[i];
-  const name = row?.[0];
-  if (!name || !String(name).trim()) continue;
-  if (String(name).match(/Total|Logo Qty|Average|NO_HEADER|^\d+$/)) continue;
+for (const p of profiles) {
   const mrrByMonth = {};
-  for (const { colIdx, month } of monthCols) {
-    const v = parseNum(row[colIdx]);
-    if (v > 0) mrrByMonth[month] = v;
+  for (const [m, v] of Object.entries(p.monthly_history || {})) {
+    const s = v.subscription || 0;
+    if (s > 0) mrrByMonth[m] = s;
   }
-  customers.push({ name: String(name).trim(), mrrByMonth });
+  for (const t of (p.transactions || [])) {
+    if (t.type !== 'subscription' || t.status !== 'succeeded') continue;
+    const d = String(t.created || ''); const day = Number(d.slice(8, 10)); const M = d.slice(0, 7);
+    if (!(day <= 3) || !M) continue;
+    const pm = shift(M, -1), pm2 = shift(M, -2);
+    if ((mrrByMonth[pm] || 0) === 0 && (mrrByMonth[pm2] || 0) > 0) {
+      const amt = (t.net_amount ?? t.amount) || 0;
+      mrrByMonth[pm] = Math.round(((mrrByMonth[pm] || 0) + amt) * 100) / 100;
+      mrrByMonth[M] = Math.round(Math.max(0, (mrrByMonth[M] || 0) - amt) * 100) / 100;
+      if (mrrByMonth[M] <= 0.5) delete mrrByMonth[M];
+    }
+  }
+  if (Object.keys(mrrByMonth).length) customers.push({ name: p.name, mrrByMonth });
 }
+
+// Month columns = every month present across customers, ascending.
+const monthCols = [...new Set(customers.flatMap((c) => Object.keys(c.mrrByMonth)))]
+  .sort()
+  .map((month) => ({ month }));
 
 // Walk months; compute deltas vs prior month.
 const today = new Date();
