@@ -1,0 +1,174 @@
+{
+  "generatedAt": "2026-07-06T19:13:30.815Z",
+  "basis": "invoice service-period accrual (recurring lines); AR = open/uncollectible",
+  "invoice_mrr_by_month": {
+    "2026-01": 223378.25,
+    "2026-02": 210342.5,
+    "2026-03": 228770.4,
+    "2026-04": 218026.45,
+    "2026-05": 223234.65,
+    "2026-06": 216926.65,
+    "2026-07": 131030.1
+  },
+  "ar_total": 84684.49,
+  "ar_by_month": {
+    "2026-02": 3925.13,
+    "2026-03": 4478.36,
+    "2026-04": 6994.05,
+    "2026-05": 4136,
+    "2026-07": 4147.1,
+    "2026-06": 1527,
+    "2026-01": 5785.96,
+    "2025-12": 3773.86,
+    "2020-10": 225,
+    "2025-09": 2439,
+    "2025-11": 2085.18,
+    "2025-08": 1500,
+    "2025-10": 1169,
+    "2025-06": 899,
+    "2025-07": 899,
+    "2023-10": 7642.8,
+    "2024-03": 6998,
+    "2024-05": 10497,
+    "2025-03": 20,
+    "2024-09": 1198.5,
+    "2024-04": 2259.75,
+    "2023-12": 2066.8,
+    "2021-11": 399,
+    "2021-12": 419,
+    "2022-01": 399,
+    "2022-02": 399,
+    "2022-03": 399,
+    "2022-04": 399,
+    "2022-05": 399,
+    "2022-06": 399,
+    "2022-07": 399,
+    "2022-08": 399,
+    "2022-09": 419,
+    "2022-10": 399,
+    "2022-11": 399,
+    "2022-12": 399,
+    "2023-01": 399,
+    "2023-02": 399,
+    "2023-03": 399,
+    "2023-04": 399,
+    "2023-05": 399,
+    "2023-06": 399,
+    "2023-07": 399,
+    "2023-08": 399,
+    "2023-09": 399,
+    "2021-10": 20,
+    "2020-01": 260,
+    "2020-04": 95,
+    "2020-06": 110,
+    "2019-11": 315,
+    "2016-08": 1
+  },
+  "charge_only_customers": [
+    {
+      "aid": 211,
+      "name": "Midwest Floor Coverings",
+      "mrr": 2780.35
+    },
+    {
+      "aid": 293,
+      "name": "B&B Door Co.",
+      "mrr": 2133.5
+    },
+    {
+      "aid": 455,
+      "name": "Cabsource - Innovative Cabinet",
+      "mrr": 1077.86
+    },
+    {
+      "aid": 113,
+      "name": "Wurth LAC",
+      "mrr": 1072.5
+    },
+    {
+      "aid": 15,
+      "name": "Mid Michigan Wood",
+      "mrr": 1039.5
+    },
+    {
+      "aid": 217,
+      "name": "Metro Drawer Boxes",
+      "mrr": 500
+    },
+    {
+      "aid": 2064,
+      "name": "Windsor Place",
+      "mrr": 272.19
+    },
+    {
+      "aid": 93,
+      "name": "Woodland Furniture",
+      "mrr": 250
+    },
+    {
+      "aid": 344,
+      "name": "Salerno's Custom Cab",
+      "mrr": 250
+    },
+    {
+      "aid": 2020,
+      "name": "Prorustics",
+      "mrr": 250
+    },
+    {
+      "aid": 323,
+      "name": "Architectural Woods Inc",
+      "mrr": 199
+    },
+    {
+      "aid": 7,
+      "name": "Raumplus",
+      "mrr": 163.24
+    }
+  ],
+  "charge_only_total": 9988.14,
+  "phantom_june": [
+    {
+      "name": "Dot Custom Cabinets LLC",
+      "aid": 385,
+      "inv": 929,
+      "chg": 49,
+      "status": "Active - Card Failure"
+    },
+    {
+      "name": "Rehau Pty Ltd",
+      "aid": 489,
+      "inv": 849,
+      "chg": 0,
+      "status": "Active - Pause Granted"
+    },
+    {
+      "name": "Smart Custom Closets",
+      "aid": 480,
+      "inv": 749,
+      "chg": 0,
+      "status": "Active - Card Failure"
+    },
+    {
+      "name": "Slide A Shelf",
+      "aid": 2036,
+      "inv": 1200,
+      "chg": 900,
+      "status": "Active"
+    },
+    {
+      "name": "Urbania Cabinets",
+      "aid": 2015,
+      "inv": 250,
+      "chg": 0,
+      "status": "Active - Card Failure"
+    },
+    {
+      "name": "Hempston Home",
+      "aid": 2046,
+      "inv": 250,
+      "chg": 0,
+      "status": "Active"
+    }
+  ]
+}
