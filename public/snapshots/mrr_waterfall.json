@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-07-07T15:09:26.342Z",
-  "cachedUntil": "2026-07-07T15:14:26.342Z",
+  "fetchedAt": "2026-07-07T17:01:46.377Z",
+  "cachedUntil": "2026-07-07T17:06:46.377Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -21281,15 +21281,15 @@
     {
       "month": "2026-06",
       "starting_mrr": 233071.66,
-      "new_mrr": 0,
+      "new_mrr": 3160.69,
       "reactivated_mrr": 466.63,
       "expansion_mrr": 872.4,
       "contraction_mrr": 3098.35,
       "churn_mrr": 250,
       "delinquent_mrr": 1065.47,
-      "ending_mrr": 229996.87,
-      "net_new_mrr": -3074.79,
-      "new_logos": 0,
+      "ending_mrr": 233157.56,
+      "net_new_mrr": 85.9,
+      "new_logos": 2,
       "reactivated_logos": 2,
       "churned_logos": 1,
       "delinquent_logos": 2,
@@ -21298,9 +21298,20 @@
       "expansion_rate_monthly": 0.0037,
       "grr_monthly": 0.9856,
       "nrr_monthly": 0.9894,
-      "quick_ratio": 0.26,
+      "quick_ratio": 1.2,
       "details": {
-        "new": [],
+        "new": [
+          {
+            "name": "Quality Kitchens Inc.",
+            "id": 333,
+            "mrr": 2871.94
+          },
+          {
+            "name": "Mitchell Wood Worx",
+            "id": 285,
+            "mrr": 288.75
+          }
+        ],
         "reactivated": [
           {
             "name": "Next Gen Cabinet Doors",
@@ -21424,19 +21435,19 @@
     "windowStart": "2025-07",
     "windowEnd": "2026-06",
     "starting_mrr": 226957.69,
-    "ending_mrr": 229996.87,
-    "new_mrr": 22084,
+    "ending_mrr": 233157.56,
+    "new_mrr": 25244.69,
     "reactivated_mrr": 38085.12,
     "expansion_mrr": 21894.48,
     "contraction_mrr": 41220.65,
     "churn_mrr": 16554.57,
     "delinquent_mrr": 21249.2,
-    "net_new_mrr": 3039.18,
+    "net_new_mrr": 6199.87,
     "gross_mrr_churn_ttm": 0.0729,
     "annual_gross_churn_rate": 0.0692,
     "annual_grr": 0.7784,
     "annual_nrr": 0.8573,
-    "quick_ratio": 0.76
+    "quick_ratio": 0.82
   },
   "notes": "MRR waterfall derived from per-customer × per-month subscription MRR in customer_profiles.monthly_history (live Stripe, boundary-slip corrected). New = customer first appears with MRR > 0. Churn = confirmed-churned customer (status churned) who had MRR > 0 last month and 0 this month. Delinquent = dropped to $0 but NOT confirmed churned (card failure / non-payment / at-risk) — a missed cycle they may still pay; reported separately from churn but also reduces ending MRR. Expansion / Contraction are intra-customer month-over-month MRR changes. Services and Connect revenue are NOT included — subscription only."
 }
