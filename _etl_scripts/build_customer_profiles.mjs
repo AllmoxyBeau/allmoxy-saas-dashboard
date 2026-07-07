@@ -62,6 +62,30 @@ if (fs.existsSync(HUBSPOT_INSTANCES_CACHE_PATH)) {
   } catch { /* ignore */ }
 }
 
+// Stripe subscription → customer/status map (sync_stripe_subscriptions.mjs). A
+// company keeps ALL its Stripe Customer IDs, but the MAIN/CURRENT one is whichever
+// customer owns the live subscription (active > trialing > past_due > unpaid — a
+// failing card is still the current account; only cancelled drops out).
+const STRIPE_SUBS_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/stripe_subscriptions.json';
+let subsBySub = {}, subsByCust = {};
+if (fs.existsSync(STRIPE_SUBS_CACHE_PATH)) {
+  try { const j = JSON.parse(fs.readFileSync(STRIPE_SUBS_CACHE_PATH, 'utf8')); subsBySub = j.by_subscription || {}; subsByCust = j.by_customer || {}; } catch { /* ignore */ }
+}
+const SUB_STATUS_RANK = { active: 6, trialing: 5, past_due: 4, unpaid: 3, paused: 2, incomplete: 1, canceled: 0, incomplete_expired: 0 };
+function pickPrimaryStripeCustomer(custIds, subIds) {
+  const distinct = [...new Set((custIds || []).filter(Boolean))];
+  const cmp = (sa, sb) => (SUB_STATUS_RANK[sb.status] ?? 0) - (SUB_STATUS_RANK[sa.status] ?? 0)
+    || String(sb.current_period_end).localeCompare(String(sa.current_period_end));
+  // 1) Authoritative: the customer owning this profile's highest-ranked subscription.
+  const recs = (subIds || []).map((s) => subsBySub[s]).filter(Boolean).sort(cmp);
+  if (recs.length) return recs[0].customer;
+  // 2) Else the profile's Stripe customer that has the best sub in the cache.
+  const ranked = distinct.map((c) => ({ c, s: subsByCust[c] })).filter((x) => x.s).sort((a, b) => cmp(a.s, b.s));
+  if (ranked.length) return ranked[0].c;
+  // 3) No subscription info (e.g. invoice-billed): single id, else first.
+  return distinct[0] ?? null;
+}
+
 const hubspotLiveByStripeId = new Map();
 const hubspotLiveByCompanyId = new Map();
 // Merge redirect: stale HubSpot Company ID → current surviving Company ID.
@@ -1064,6 +1088,21 @@ if (syntheticInjected > 0) process.stderr.write(`injected ${syntheticInjected} s
 // Sort by lifetime total desc for default ordering.
 profiles.sort((a, b) => b.lifetime_total - a.lifetime_total);
 if (mergedCount > 0) process.stderr.write(`merged ${mergedCount} duplicate Allmoxy Customer ID rows\n`);
+
+// Stripe Customer ID model (Beau): keep ALL of a company's Stripe Customer IDs,
+// but flag the MAIN/CURRENT one = the customer that owns the live subscription.
+// Also dedupe the array (source columns often repeat the same id). Runs after all
+// merges so a folded company's full id set is considered.
+let primaryResolved = 0;
+for (const p of profiles) {
+  const primary = pickPrimaryStripeCustomer(p.stripe_customer_ids, p.all_stripe_subscription_ids);
+  const set = new Set((p.stripe_customer_ids || []).filter(Boolean));
+  if (primary) set.add(primary); // ensure the current-subscription account is in the list
+  p.stripe_customer_ids = [...set];
+  p.primary_stripe_customer_id = primary ?? (p.stripe_customer_ids[0] ?? null);
+  if (p.primary_stripe_customer_id) primaryResolved++;
+}
+process.stderr.write(`primary_stripe_customer_id set for ${primaryResolved}/${profiles.length} profiles\n`);
 
 const now = new Date();
 const out = {
