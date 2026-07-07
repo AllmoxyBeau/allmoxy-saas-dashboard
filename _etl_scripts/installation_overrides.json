@@ -1,0 +1,204 @@
+{
+  "note": "installation_id → allmoxy_customer_id overrides for Aurora order attribution. A company has MANY installer_ids (installations); Aurora customers.installer_id only holds ONE, so extra/legacy/migrated installations are mapped here. Seeded 2026-07-07 from Orders Verified Data.xlsx Raw Data (installation_id→subdomain) matched to roster installer_directory + HubSpot installer_url. Add rows for any future unmapped installation (see aurora_orders.unmapped_instances).",
+  "generated": "2026-07-07",
+  "overrides": {
+    "168": {
+      "aid": 17,
+      "name": "Closet City",
+      "subdomain": "closetcity",
+      "via": "subdomain"
+    },
+    "891": {
+      "aid": 83,
+      "name": "CP&W",
+      "subdomain": "cpw",
+      "via": "hubspot_installer"
+    },
+    "921": {
+      "aid": 86,
+      "name": "CPM DBA - Christopher Peacock",
+      "subdomain": "peacockmanufacturing",
+      "via": "subdomain"
+    },
+    "946": {
+      "aid": 95,
+      "name": "REHAU Colombia",
+      "subdomain": "rehaucolombia",
+      "via": "subdomain"
+    },
+    "955": {
+      "aid": 97,
+      "name": "M2M components",
+      "subdomain": "m2m",
+      "via": "hubspot_installer"
+    },
+    "1139": {
+      "aid": 106,
+      "name": "GW Eurocase",
+      "subdomain": "gweurocase",
+      "via": "hubspot_installer"
+    },
+    "1323": {
+      "aid": 351,
+      "name": "Artisan Custom Interiors",
+      "subdomain": "artisanmillwork",
+      "via": "subdomain"
+    },
+    "1373": {
+      "aid": 12,
+      "name": "Canary Closets",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "1458": {
+      "aid": 285,
+      "name": "Mitchell Wood Worx",
+      "subdomain": "mitchellwoodworx",
+      "via": "subdomain"
+    },
+    "1470": {
+      "aid": 292,
+      "name": "Ironwood Cabinet And Millworks",
+      "subdomain": "ironwood",
+      "via": "subdomain"
+    },
+    "1471": {
+      "aid": 176,
+      "name": "Primary Kitchen",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "1510": {
+      "aid": 310,
+      "name": "Empyre Designs",
+      "subdomain": "empyredesigns",
+      "via": "subdomain"
+    },
+    "1515": {
+      "aid": 318,
+      "name": "Thomas Creek",
+      "subdomain": "thomascreekwoodworking",
+      "via": "subdomain"
+    },
+    "1544": {
+      "aid": 333,
+      "name": "Quality Kitchens Inc.",
+      "subdomain": "qualitykitchensinc",
+      "via": "subdomain"
+    },
+    "1564": {
+      "aid": 337,
+      "name": "Cabinets Quick",
+      "subdomain": "cabinetsquick",
+      "via": "subdomain"
+    },
+    "1663": {
+      "aid": 38,
+      "name": "Panhandle Door Inc.",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "1708": {
+      "aid": 385,
+      "name": "Dot Custom Cabinets LLC",
+      "subdomain": "dotcabinetsusa",
+      "via": "subdomain"
+    },
+    "1721": {
+      "aid": 393,
+      "name": "Maxx Distributors",
+      "subdomain": "maxxdistributors",
+      "via": "subdomain"
+    },
+    "1753": {
+      "aid": 412,
+      "name": "Patton Cabinet Doors",
+      "subdomain": "pattoncabinetdoors",
+      "via": "subdomain"
+    },
+    "1766": {
+      "aid": 136,
+      "name": "Greyloch, LLC.",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "1837": {
+      "aid": 463,
+      "name": "D3Customcabinets",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "1847": {
+      "aid": 211,
+      "name": "Midwest Floor Coverings",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "1850": {
+      "aid": 388,
+      "name": "Sherwood Shelving",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "1852": {
+      "aid": 453,
+      "name": "Ptx Partners (christopher CPM)",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "1949": {
+      "aid": 50,
+      "name": "Crown Cabinetry",
+      "subdomain": "crowncabinetry",
+      "via": "subdomain"
+    },
+    "2020": {
+      "aid": 300,
+      "name": "Corona Millworks",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "2029": {
+      "aid": 516,
+      "name": "Rigel Cabinetry",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "2034": {
+      "aid": 2,
+      "name": "CCF Industries",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "2051": {
+      "aid": 504,
+      "name": "Door Works",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "2053": {
+      "aid": 161,
+      "name": "Premier EuroCase",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "2059": {
+      "aid": 523,
+      "name": "Keystone Wood Specialties",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "2065": {
+      "aid": 3,
+      "name": "Drawer Connection - DC Drawers",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    },
+    "2088": {
+      "aid": 2020,
+      "name": "Prorustics",
+      "subdomain": null,
+      "via": "hubspot_installer"
+    }
+  }
+}

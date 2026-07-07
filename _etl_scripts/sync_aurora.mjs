@@ -71,8 +71,28 @@ fs.writeFileSync(OUT_ROSTER, JSON.stringify({
   rows: rosterRows,
 }, null, 2));
 console.error(`✓ aurora_customers.json: ${rosterRows.length} roster customers (excl ${INTERNAL_AIDS.size} internal)`);
+// installation_id -> customer. Base map = customers.installer_id (1:1). But a
+// company has MANY installations; the roster only carries one installer_id each,
+// so extra/legacy/migrated installations (e.g. Closet City's original inst 168,
+// 30k orders) are unmapped. installation_overrides.json supplies those
+// installation_id -> allmoxy_customer_id mappings so every installation rolls up
+// to its one Allmoxy ID. Overrides win over the roster.
 const instToCust = new Map();
+const nameByAid = new Map(rosterRows.map((r) => [r.allmoxy_customer_id, r.name]));
 for (const r of rosterRows) if (r.installer_id != null) instToCust.set(Number(r.installer_id), { aid: r.allmoxy_customer_id, name: r.name });
+const OVERRIDES_PATH = path.join(__dirname, 'installation_overrides.json');
+let overrideCount = 0;
+if (fs.existsSync(OVERRIDES_PATH)) {
+  try {
+    const ov = JSON.parse(fs.readFileSync(OVERRIDES_PATH, 'utf8')).overrides || {};
+    for (const [instId, o] of Object.entries(ov)) {
+      if (o?.aid == null) continue;
+      instToCust.set(Number(instId), { aid: Number(o.aid), name: nameByAid.get(Number(o.aid)) || o.name || null });
+      overrideCount++;
+    }
+  } catch (e) { console.error(`[aurora] installation_overrides.json parse failed: ${e.message}`); }
+}
+console.error(`[aurora] installation map: ${instToCust.size} installations (${overrideCount} via overrides)`);
 
 // Verified-order $ by month, per instance.
 const [verRows] = await conn.query('SELECT installation_id, period_year, period_month, invoice_total FROM instance_verified_orders');
@@ -99,18 +119,21 @@ function bucket(instId) {
   return unmapped.get(Number(instId));
 }
 
+// SUM across installations (a customer can have many): verified $ per month and
+// cumulative order counts accumulate, not overwrite. (Overwriting silently
+// dropped a customer's secondary installations, e.g. Closet City's inst 168.)
 for (const v of verRows) {
   const m = `${v.period_year}-${String(v.period_month).padStart(2, '0')}`;
   monthsSeen.add(m);
   const e = bucket(v.installation_id);
-  e.verified_by_month[m] = r2(v.invoice_total);
+  e.verified_by_month[m] = r2((e.verified_by_month[m] || 0) + Number(v.invoice_total || 0));
 }
 let countAsOf = null;
 for (const c of cntRows) {
   const e = bucket(c.installation_id);
-  e.total_orders = Number(c.value);
+  e.total_orders = (e.total_orders || 0) + Number(c.value || 0);
   const d = c.snapshot_date instanceof Date ? c.snapshot_date.toISOString().slice(0, 10) : String(c.snapshot_date).slice(0, 10);
-  e.total_orders_asof = d;
+  if (!e.total_orders_asof || d > e.total_orders_asof) e.total_orders_asof = d;
   if (!countAsOf || d > countAsOf) countAsOf = d;
 }
 
