@@ -1260,6 +1260,64 @@ export default function CustomerDetail() {
             );
           })()}
 
+          {/* Orders verified · current year by month. Zoom-in beneath the by-year
+              chart: verified invoice $ per month for the current year. Jan–May come
+              from orders_verified.monthly_supplement (Verified Orders 20xx xlsx);
+              later months (June+) overlay from aurora_orders.verified_by_month —
+              the two agree on the overlap month. Dollars only: 2026 order counts
+              aren't available (see memory: 2026-order-counts-unavailable). */}
+          {custTab === 'usage' && (() => {
+            const ovByCustomer = (ordersVerifiedData as unknown as { by_customer?: Record<string, OrdersVerifiedRecord & { monthly_supplement?: Record<string, number> }> } | undefined)?.by_customer;
+            const ov = ovByCustomer?.[String(selected.allmoxy_customer_id)];
+            const auroraVer = (auroraData as unknown as { by_customer?: Array<{ allmoxy_customer_id: number; verified_by_month?: Record<string, number> }> } | undefined)
+              ?.by_customer?.find((c) => c.allmoxy_customer_id === selected.allmoxy_customer_id)?.verified_by_month || {};
+            const currentYear = String(new Date().getFullYear());
+            const map: Record<string, number> = {};
+            for (const [m, v] of Object.entries(ov?.monthly_supplement || {})) if (m.startsWith(currentYear)) map[m] = Number(v) || 0;
+            for (const [m, v] of Object.entries(auroraVer)) if (m.startsWith(currentYear)) map[m] = Number(v) || 0; // Aurora extends/confirms recent months
+            const monthRows = Object.keys(map).sort().map((m) => ({ month: monthLabel(m), verified: Math.round(map[m]) }));
+            if (monthRows.length === 0) return null;
+            const ytd = monthRows.reduce((s, r) => s + r.verified, 0);
+            const avg = Math.round(ytd / monthRows.length);
+            return (
+              <Paper sx={{ p: 3, mb: 3 }}>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    Orders verified · {currentYear} by month
+                  </Typography>
+                  <InfoIcon info={
+                    <>
+                      <strong>What it is:</strong> Verified order invoice $ for each month of {currentYear} — a month-by-month view beneath the by-year trend.<br /><br />
+                      <strong>Data:</strong> Jan–May from <code>Verified Orders {currentYear}</code> (orders_verified monthly supplement); June onward overlaid from the Aurora warehouse (<code>instance_verified_orders</code>), which agree on the overlap month. <strong>Dollars only</strong> — {currentYear} order counts aren't available in the monthly source.
+                    </>
+                  } />
+                </Stack>
+                <Stack direction="row" spacing={3} sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
+                  <MetaBit label={`${currentYear} YTD verified $`} value={USD0.format(ytd)} />
+                  <MetaBit label="Monthly average" value={`${USD0.format(avg)}/mo`} />
+                  <MetaBit label="Months loaded" value={`${monthRows.length}`} />
+                </Stack>
+                <Box sx={{ height: 260 }}>
+                  <ResponsiveContainer>
+                    <BarChart data={monthRows}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
+                      <XAxis dataKey="month" stroke="#8B949E" fontSize={11} />
+                      <YAxis stroke="#8B949E" fontSize={11} width={60} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                      <RTooltip
+                        formatter={(v: number) => [USD0.format(v), 'Verified $']}
+                        contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }}
+                        labelStyle={{ color: '#FFFFFF' }}
+                        itemStyle={{ color: '#FFFFFF' }}
+                        cursor={{ fill: 'rgba(26, 158, 92, 0.06)' }}
+                      />
+                      <Bar name="Verified $" dataKey="verified" fill="#1A9E5C" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </Box>
+              </Paper>
+            );
+          })()}
+
           {/* Renewal — collapsible panel that mirrors what the Renewal
               Management page shows in its row expansion. One row per HubSpot
               Instance keyed by allmoxy_customer_id; if a customer has multiple
