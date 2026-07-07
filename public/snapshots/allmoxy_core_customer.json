@@ -1,8 +1,8 @@
 {
   "tab": "allmoxy_core_customer",
   "sheetId": "18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30",
-  "fetchedAt": "2026-07-06T17:39:49.743Z",
-  "cachedUntil": "2026-07-06T17:44:49.743Z",
+  "fetchedAt": "2026-07-07T15:08:44.714Z",
+  "cachedUntil": "2026-07-07T15:13:44.714Z",
   "columns": [
     "allmoxy_customer_id",
     "name",
@@ -7530,8 +7530,28 @@
       "installer_directory": "customcabinetshop",
       "stripe_customer_ids": [],
       "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2082,
+      "name": "Allmoxy Project",
+      "sign_up_date": "2026-07-06",
+      "hubspot_company_id": null,
+      "installer_id": "2141",
+      "installer_directory": null,
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2083,
+      "name": "Allmoxy",
+      "sign_up_date": "2026-07-06",
+      "hubspot_company_id": null,
+      "installer_id": "2142",
+      "installer_directory": "rayclient2",
+      "stripe_customer_ids": [],
+      "harvest_id": null
     }
   ],
-  "rowCount": 593,
+  "rowCount": 595,
   "notes": "Full customer roster from the allmoxy_core_customer tab of the local xlsx."
 }

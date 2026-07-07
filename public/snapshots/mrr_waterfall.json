@@ -1,31 +1,31 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-07-06T17:40:18.816Z",
-  "cachedUntil": "2026-07-06T17:45:18.816Z",
+  "fetchedAt": "2026-07-07T15:09:26.342Z",
+  "cachedUntil": "2026-07-07T15:14:26.342Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
   "monthly": [
     {
       "month": "2019-03",
-      "starting_mrr": 19810.27,
+      "starting_mrr": 19812.27,
       "new_mrr": 1689.68,
       "reactivated_mrr": 0,
       "expansion_mrr": 8961.03,
       "contraction_mrr": 3325.74,
-      "churn_mrr": 163.25,
+      "churn_mrr": 165.25,
       "delinquent_mrr": 1265,
       "ending_mrr": 25706.99,
-      "net_new_mrr": 5896.72,
+      "net_new_mrr": 5894.72,
       "new_logos": 15,
       "reactivated_logos": 0,
-      "churned_logos": 4,
+      "churned_logos": 5,
       "delinquent_logos": 2,
-      "gross_churn_rate_monthly": 0.0082,
-      "net_churn_rate_monthly": -0.2762,
+      "gross_churn_rate_monthly": 0.0083,
+      "net_churn_rate_monthly": -0.2761,
       "expansion_rate_monthly": 0.4523,
-      "grr_monthly": 0.8239,
-      "nrr_monthly": 1.2762,
+      "grr_monthly": 0.8238,
+      "nrr_monthly": 1.2761,
       "quick_ratio": 3.05,
       "details": {
         "new": [
@@ -304,6 +304,11 @@
           {
             "name": "Allmoxy",
             "id": 4,
+            "mrr": 2
+          },
+          {
+            "name": "Allmoxy",
+            "id": 2083,
             "mrr": 2
           }
         ],
@@ -3445,15 +3450,15 @@
       "month": "2019-12",
       "starting_mrr": 58951.29,
       "new_mrr": 500,
-      "reactivated_mrr": 4500,
+      "reactivated_mrr": 4750,
       "expansion_mrr": 17790.38,
       "contraction_mrr": 6354.4,
       "churn_mrr": 750,
       "delinquent_mrr": 140,
-      "ending_mrr": 74497.27,
-      "net_new_mrr": 15545.98,
+      "ending_mrr": 74747.27,
+      "net_new_mrr": 15795.98,
       "new_logos": 2,
-      "reactivated_logos": 3,
+      "reactivated_logos": 4,
       "churned_logos": 3,
       "delinquent_logos": 1,
       "gross_churn_rate_monthly": 0.0127,
@@ -3489,6 +3494,11 @@
           {
             "name": "Allmoxy",
             "id": 4,
+            "mrr": 250
+          },
+          {
+            "name": "Allmoxy",
+            "id": 2083,
             "mrr": 250
           }
         ],
@@ -3743,25 +3753,25 @@
     },
     {
       "month": "2020-01",
-      "starting_mrr": 74497.27,
+      "starting_mrr": 74747.27,
       "new_mrr": 1425,
       "reactivated_mrr": 315,
       "expansion_mrr": 8895.52,
       "contraction_mrr": 12790.81,
-      "churn_mrr": 1500,
+      "churn_mrr": 1750,
       "delinquent_mrr": 4000,
       "ending_mrr": 66841.98,
-      "net_new_mrr": -7655.29,
+      "net_new_mrr": -7905.29,
       "new_logos": 3,
       "reactivated_logos": 2,
-      "churned_logos": 6,
+      "churned_logos": 7,
       "delinquent_logos": 1,
-      "gross_churn_rate_monthly": 0.0201,
-      "net_churn_rate_monthly": 0.0724,
-      "expansion_rate_monthly": 0.1194,
-      "grr_monthly": 0.8082,
-      "nrr_monthly": 0.9276,
-      "quick_ratio": 0.72,
+      "gross_churn_rate_monthly": 0.0234,
+      "net_churn_rate_monthly": 0.0755,
+      "expansion_rate_monthly": 0.119,
+      "grr_monthly": 0.8055,
+      "nrr_monthly": 0.9245,
+      "quick_ratio": 0.71,
       "details": {
         "new": [
           {
@@ -4042,6 +4052,11 @@
           {
             "name": "Strong Cabinetry",
             "id": 213,
+            "mrr": 250
+          },
+          {
+            "name": "Allmoxy",
+            "id": 2083,
             "mrr": 250
           }
         ],
@@ -12430,7 +12445,7 @@
             "id": 391,
             "mrr": 699,
             "status": "at_risk",
-            "pay_status": "Active"
+            "pay_status": "Active - Card Failure"
           }
         ]
       }
@@ -20809,7 +20824,7 @@
             "id": 391,
             "mrr": 699,
             "status": "at_risk",
-            "pay_status": "Active"
+            "pay_status": "Active - Card Failure"
           },
           {
             "name": "Evolve Elements",
