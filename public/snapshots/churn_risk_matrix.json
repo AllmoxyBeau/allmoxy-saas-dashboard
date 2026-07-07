@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-07T17:12:09.207Z",
+  "fetched_at": "2026-07-07T21:19:03.642Z",
   "comment": "5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to all active paying customers. Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.",
   "scoring_mode": "full",
   "totals": {
@@ -369,7 +369,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "2d since contact"
+      "narrative": "2d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2062,
@@ -420,7 +425,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "64d since contact"
+      "narrative": "64d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 36,
@@ -471,7 +481,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$102,416/mo avg in 2026 (+303% vs 2025) · 0d since contact · CS Pulse: yellow"
+      "narrative": "$102,416/mo avg in 2026 (+303% vs 2025) · 0d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 511,
@@ -522,7 +537,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 279d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 279d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 300,
@@ -573,7 +593,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$489,803/mo avg in 2026 (+10% vs 2025) · 6d since contact · CS Pulse: yellow"
+      "narrative": "$489,803/mo avg in 2026 (+10% vs 2025) · 6d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 530,
@@ -624,7 +649,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 230d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 230d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 329,
@@ -675,7 +705,18 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "7d since contact"
+      "narrative": "7d since contact",
+      "primary_risk_driver": {
+        "key": "Disengaged — lost momentum",
+        "summary": "Went quiet and stopped running orders. CS flagged Peterman as an inactive account needing re-engagement (Apr), and by late June the account was noted internally as “confirmed done” — i.e. they drifted off rather than actively using Allmoxy. Confirm whether ‘done’ means wrapped or written off before it churns outright.",
+        "source": "fireflies",
+        "reviewed_at": "2026-07-07",
+        "evidence": [
+          "Fireflies ‘CX Team Sync’ 2026-04-27 — action: follow up persistently with inactive customers like Peterman and Santos to push engagement and revive interest",
+          "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — several accounts like Peterman are confirmed done"
+        ],
+        "signal_baseline": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere."
+      }
     },
     {
       "allmoxy_customer_id": 338,
@@ -726,7 +767,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 7d since contact · CS Pulse: red"
+      "narrative": "Never ran a verified order (gym member pattern) · 7d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 513,
@@ -777,7 +823,17 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "0d since contact · CS Pulse: red"
+      "narrative": "0d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "Still ramping — catalog build in progress",
+        "summary": "Not a churn-intent account: they’re mid-implementation. As of late June the team had Precision Millwork’s catalog expansion underway with exports in testing. From the customer’s seat they’re still building toward full value rather than getting it yet — the CS-pulse red likely reflects implementation friction / slow ramp, not dissatisfaction with the product.",
+        "source": "fireflies",
+        "reviewed_at": "2026-07-07",
+        "evidence": [
+          "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — progress on Precision Millwork highlighted, catalog expansion underway, exports/testing phases"
+        ],
+        "signal_baseline": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep"
+      }
     },
     {
       "allmoxy_customer_id": 72,
@@ -828,7 +884,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$655,771/mo avg in 2026 (+1% vs 2025) · 49d since contact (autonomous — orders running) · 7 failed charges (3mo) · CS Pulse: yellow"
+      "narrative": "$655,771/mo avg in 2026 (+1% vs 2025) · 49d since contact (autonomous — orders running) · 7 failed charges (3mo) · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "7 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 514,
@@ -879,7 +940,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "1d since contact · 1 failed charges (3mo) · CS Pulse: red"
+      "narrative": "1d since contact · 1 failed charges (3mo) · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 309,
@@ -930,7 +996,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "455d since contact · CS Pulse: red"
+      "narrative": "455d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 416,
@@ -981,7 +1052,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact · CS Pulse: red"
+      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2044,
@@ -1032,7 +1108,17 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact · CS Pulse: yellow"
+      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Still ramping — catalog build in progress",
+        "summary": "Mid catalog expansion as of late June (grouped with Precision Millwork in the implementation sync). They’re actively building out their catalog, not yet at steady production usage — the declining-usage signal likely reflects a not-yet-launched ramp rather than a customer pulling back.",
+        "source": "fireflies",
+        "reviewed_at": "2026-07-07",
+        "evidence": [
+          "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — progress on Precision Millwork and Ecodomo highlighted, with catalog expansion underway"
+        ],
+        "signal_baseline": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere."
+      }
     },
     {
       "allmoxy_customer_id": 2036,
@@ -1083,7 +1169,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "hubspot_only",
       "is_bid_only": false,
-      "narrative": "0d since contact"
+      "narrative": "0d since contact",
+      "primary_risk_driver": {
+        "key": "Never fully launched",
+        "summary": "Stalled in implementation — they have not reached first production orders, so they are paying without yet getting the core value.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 520,
@@ -1134,7 +1225,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 162d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 162d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 541,
@@ -1185,7 +1281,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 92d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 92d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 386,
@@ -1236,7 +1337,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "259d since contact · 5 failed charges (3mo) · CS Pulse: green"
+      "narrative": "259d since contact · 5 failed charges (3mo) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 545,
@@ -1287,7 +1393,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$202,907/mo avg in 2026 (+499% vs 2025) · 22d since contact · CS Pulse: red"
+      "narrative": "$202,907/mo avg in 2026 (+499% vs 2025) · 22d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 284,
@@ -1338,7 +1449,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "121d since contact"
+      "narrative": "121d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 399,
@@ -1389,7 +1505,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 638d since contact · CS Pulse: red"
+      "narrative": "Never ran a verified order (gym member pattern) · 638d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 298,
@@ -1440,7 +1561,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "639d since contact · CS Pulse: yellow"
+      "narrative": "639d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 218,
@@ -1491,7 +1617,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "70d since contact"
+      "narrative": "70d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2048,
@@ -1542,7 +1673,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 1d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 1d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 426,
@@ -1593,7 +1729,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "56d since contact · CS Pulse: yellow"
+      "narrative": "56d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 462,
@@ -1644,7 +1785,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$3,108/mo avg in 2026 (+51708% vs 2025) · 132d since contact (autonomous — orders running) · CS Pulse: red"
+      "narrative": "$3,108/mo avg in 2026 (+51708% vs 2025) · 132d since contact (autonomous — orders running) · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 488,
@@ -1695,7 +1841,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$2,798/mo avg in 2026 vs $84,890/mo avg in 2025 (-97%) · 231d since contact"
+      "narrative": "$2,798/mo avg in 2026 vs $84,890/mo avg in 2025 (-97%) · 231d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -97% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 423,
@@ -1746,7 +1897,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$533,384/mo avg in 2026 (+76% vs 2025) · 12d since contact · CS Pulse: yellow"
+      "narrative": "$533,384/mo avg in 2026 (+76% vs 2025) · 12d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2077,
@@ -1797,7 +1953,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "0d since contact"
+      "narrative": "0d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 361,
@@ -1848,7 +2009,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$68/mo avg in 2026 vs $5,869/mo avg in 2025 (-99%) · 140d since contact"
+      "narrative": "$68/mo avg in 2026 vs $5,869/mo avg in 2025 (-99%) · 140d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -99% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 543,
@@ -1899,7 +2065,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$809/mo avg in 2026 (new this year) · 27d since contact · 2 failed charges (3mo) · CS Pulse: yellow"
+      "narrative": "$809/mo avg in 2026 (new this year) · 27d since contact · 2 failed charges (3mo) · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "2 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 354,
@@ -1950,7 +2121,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$10,090/mo avg in 2026 vs $24,744/mo avg in 2025 (-59%) · 47d since contact"
+      "narrative": "$10,090/mo avg in 2026 vs $24,744/mo avg in 2025 (-59%) · 47d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -59% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 73,
@@ -2001,7 +2177,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$242,433/mo avg in 2026 (+6% vs 2025) · 1d since contact · CS Pulse: yellow"
+      "narrative": "$242,433/mo avg in 2026 (+6% vs 2025) · 1d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 475,
@@ -2052,7 +2233,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "6d since contact · CS Pulse: green"
+      "narrative": "6d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 168,
@@ -2103,7 +2289,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$156,487/mo avg in 2026 (-19% vs 2025) · 22d since contact · CS Pulse: yellow"
+      "narrative": "$156,487/mo avg in 2026 (-19% vs 2025) · 22d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2060,
@@ -2154,7 +2345,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "2d since contact"
+      "narrative": "2d since contact",
+      "primary_risk_driver": {
+        "key": "Never fully launched",
+        "summary": "Stalled in implementation — they have not reached first production orders, so they are paying without yet getting the core value.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 474,
@@ -2205,7 +2401,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "145d since contact · CS Pulse: yellow"
+      "narrative": "145d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2019,
@@ -2256,7 +2457,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 1d since contact · CS Pulse: red"
+      "narrative": "Never ran a verified order (gym member pattern) · 1d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 33,
@@ -2307,7 +2513,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "695d since contact · CS Pulse: red"
+      "narrative": "695d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 551,
@@ -2358,7 +2569,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 535,
@@ -2409,7 +2625,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 42,
@@ -2460,7 +2681,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$105,850/mo avg in 2026 (-6% vs 2025) · 15d since contact · CS Pulse: yellow"
+      "narrative": "$105,850/mo avg in 2026 (-6% vs 2025) · 15d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 432,
@@ -2511,7 +2737,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$70,464/mo avg in 2026 (+1274% vs 2025) · 0d since contact · 4 failed charges (3mo) · CS Pulse: yellow"
+      "narrative": "$70,464/mo avg in 2026 (+1274% vs 2025) · 0d since contact · 4 failed charges (3mo) · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "4 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 457,
@@ -2562,7 +2793,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "22d since contact · 5 failed charges (3mo)"
+      "narrative": "22d since contact · 5 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2031,
@@ -2613,7 +2849,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 13d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 13d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2029,
@@ -2664,7 +2905,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "hubspot_only",
       "is_bid_only": false,
-      "narrative": "57d since contact"
+      "narrative": "57d since contact",
+      "primary_risk_driver": {
+        "key": "Never fully launched",
+        "summary": "Stalled in implementation — they have not reached first production orders, so they are paying without yet getting the core value.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2049,
@@ -2715,7 +2961,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 7d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 7d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2045,
@@ -2766,7 +3017,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 6d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 6d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2050,
@@ -2817,7 +3073,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 5d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 5d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 21,
@@ -2868,7 +3129,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "141d since contact"
+      "narrative": "141d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2047,
@@ -2919,7 +3185,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 43d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 43d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2064,
@@ -2970,7 +3241,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "13d since contact"
+      "narrative": "13d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2032,
@@ -3021,7 +3297,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 27d since contact · CS Pulse: yellow"
+      "narrative": "Never ran a verified order (gym member pattern) · 27d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2020,
@@ -3072,7 +3353,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "hubspot_only",
       "is_bid_only": false,
-      "narrative": "22d since contact"
+      "narrative": "22d since contact",
+      "primary_risk_driver": {
+        "key": "Never fully launched",
+        "summary": "Stalled in implementation — they have not reached first production orders, so they are paying without yet getting the core value.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2037,
@@ -3123,7 +3409,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "hubspot_only",
       "is_bid_only": false,
-      "narrative": "16d since contact · 2 failed charges (3mo)"
+      "narrative": "16d since contact · 2 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "2 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 108,
@@ -3174,7 +3465,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "589d since contact"
+      "narrative": "589d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 23,
@@ -3225,7 +3521,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$201,698/mo avg in 2026 (+2% vs 2025) · 22d since contact · CS Pulse: yellow"
+      "narrative": "$201,698/mo avg in 2026 (+2% vs 2025) · 22d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2063,
@@ -3276,7 +3577,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "1d since contact"
+      "narrative": "1d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2059,
@@ -3327,7 +3633,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "1d since contact · 1 failed charges (3mo)"
+      "narrative": "1d since contact · 1 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2078,
@@ -3378,7 +3689,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "2d since contact"
+      "narrative": "2d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2056,
@@ -3429,7 +3745,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "hubspot_only",
       "is_bid_only": false,
-      "narrative": "16d since contact · 1 failed charges (3mo)"
+      "narrative": "16d since contact · 1 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "1 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2057,
@@ -3480,7 +3801,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "37d since contact · 1 failed charges (3mo)"
+      "narrative": "37d since contact · 1 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 534,
@@ -3531,7 +3857,12 @@
       "has_hubspot_data": false,
       "scoring_data_status": "orders_only",
       "is_bid_only": false,
-      "narrative": "CS Pulse: yellow"
+      "narrative": "CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 19,
@@ -3582,7 +3913,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$252,064/mo avg in 2026 vs $686,572/mo avg in 2025 (-63%) · 1d since contact"
+      "narrative": "$252,064/mo avg in 2026 vs $686,572/mo avg in 2025 (-63%) · 1d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -63% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 547,
@@ -3633,7 +3969,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "278d since contact"
+      "narrative": "278d since contact",
+      "primary_risk_driver": {
+        "key": "Never fully launched",
+        "summary": "Stalled in implementation — they have not reached first production orders, so they are paying without yet getting the core value.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 555,
@@ -3684,7 +4025,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "21d since contact · 2 failed charges (3mo)"
+      "narrative": "21d since contact · 2 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "2 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 532,
@@ -3735,7 +4081,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "30d since contact · 7 failed charges (3mo)"
+      "narrative": "30d since contact · 7 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 471,
@@ -3786,7 +4137,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "279d since contact"
+      "narrative": "279d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 527,
@@ -3837,7 +4193,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "0d since contact · 2 failed charges (3mo)"
+      "narrative": "0d since contact · 2 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 540,
@@ -3888,7 +4249,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "0d since contact"
+      "narrative": "0d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 546,
@@ -3939,7 +4305,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "1d since contact"
+      "narrative": "1d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 550,
@@ -3990,7 +4361,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "6d since contact"
+      "narrative": "6d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 521,
@@ -4041,7 +4417,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$424/mo avg in 2026 vs $2,491/mo avg in 2025 (-83%) · 124d since contact"
+      "narrative": "$424/mo avg in 2026 vs $2,491/mo avg in 2025 (-83%) · 124d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -83% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 548,
@@ -4092,7 +4473,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$70,140/mo avg in 2026 (+468% vs 2025) · 6d since contact · CS Pulse: red"
+      "narrative": "$70,140/mo avg in 2026 (+468% vs 2025) · 6d since contact · CS Pulse: red",
+      "primary_risk_driver": {
+        "key": "CS flagged unhealthy",
+        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 339,
@@ -4143,7 +4529,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$106/mo avg in 2026 (new this year) · 89d since contact (autonomous — orders running) · CS Pulse: yellow"
+      "narrative": "$106/mo avg in 2026 (new this year) · 89d since contact (autonomous — orders running) · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 196,
@@ -4194,7 +4585,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$20,131/mo avg in 2026 (+134110% vs 2025) · 55d since contact (autonomous — orders running) · CS Pulse: yellow"
+      "narrative": "$20,131/mo avg in 2026 (+134110% vs 2025) · 55d since contact (autonomous — orders running) · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 39,
@@ -4245,7 +4641,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$28,123/mo avg in 2026 (+53% vs 2025) · 518d since contact (autonomous — orders running) · CS Pulse: yellow"
+      "narrative": "$28,123/mo avg in 2026 (+53% vs 2025) · 518d since contact (autonomous — orders running) · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 525,
@@ -4296,7 +4697,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$45,454/mo avg in 2026 (+344% vs 2025) · 6d since contact · CS Pulse: yellow"
+      "narrative": "$45,454/mo avg in 2026 (+344% vs 2025) · 6d since contact · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 25,
@@ -4347,7 +4753,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "574d since contact · CS Pulse: green"
+      "narrative": "574d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 441,
@@ -4398,7 +4809,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,086/mo avg in 2026 (+36116% vs 2025) · 127d since contact (autonomous — orders running) · CS Pulse: yellow"
+      "narrative": "$1,086/mo avg in 2026 (+36116% vs 2025) · 127d since contact (autonomous — orders running) · CS Pulse: yellow",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 180,
@@ -4449,7 +4865,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$3,481/mo avg in 2026 (+115922% vs 2025) · 37d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$3,481/mo avg in 2026 (+115922% vs 2025) · 37d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 1,
@@ -4500,7 +4921,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$2,108,429/mo avg in 2026 (+12% vs 2025) · 2d since contact · CS Pulse: green"
+      "narrative": "$2,108,429/mo avg in 2026 (+12% vs 2025) · 2d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 176,
@@ -4551,7 +4977,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$955,992/mo avg in 2026 (-1% vs 2025) · 1d since contact · 4 failed charges (3mo)"
+      "narrative": "$955,992/mo avg in 2026 (-1% vs 2025) · 1d since contact · 4 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "4 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 10,
@@ -4602,7 +5033,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,482,624/mo avg in 2026 (+4% vs 2025) · 28d since contact"
+      "narrative": "$1,482,624/mo avg in 2026 (+4% vs 2025) · 28d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 161,
@@ -4653,7 +5089,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$492,649/mo avg in 2026 (-3% vs 2025) · 0d since contact"
+      "narrative": "$492,649/mo avg in 2026 (-3% vs 2025) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 38,
@@ -4704,7 +5145,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$929,522/mo avg in 2026 (+16% vs 2025) · 0d since contact"
+      "narrative": "$929,522/mo avg in 2026 (+16% vs 2025) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2,
@@ -4755,7 +5201,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$485,643/mo avg in 2026 (+1% vs 2025) · 15d since contact · CS Pulse: green"
+      "narrative": "$485,643/mo avg in 2026 (+1% vs 2025) · 15d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 256,
@@ -4806,7 +5257,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$577,327/mo avg in 2026 (+1% vs 2025) · 48d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$577,327/mo avg in 2026 (+1% vs 2025) · 48d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 13,
@@ -4857,7 +5313,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$709,953/mo avg in 2026 (-12% vs 2025) · 98d since contact (autonomous — orders running)"
+      "narrative": "$709,953/mo avg in 2026 (-12% vs 2025) · 98d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 319,
@@ -4908,7 +5369,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$438,889/mo avg in 2026 (+13% vs 2025) · 1d since contact"
+      "narrative": "$438,889/mo avg in 2026 (+13% vs 2025) · 1d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 3,
@@ -4959,7 +5425,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$246,395/mo avg in 2026 (-9% vs 2025) · 2d since contact · CS Pulse: green"
+      "narrative": "$246,395/mo avg in 2026 (-9% vs 2025) · 2d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 164,
@@ -5010,7 +5481,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": true,
-      "narrative": "Marked as bid-only customer — uses Allmoxy primarily for quotes/bids; order-volume signal not applicable · 0d since contact"
+      "narrative": "Marked as bid-only customer — uses Allmoxy primarily for quotes/bids; order-volume signal not applicable · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 363,
@@ -5061,7 +5537,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$736,912/mo avg in 2026 (+15% vs 2025) · 0d since contact"
+      "narrative": "$736,912/mo avg in 2026 (+15% vs 2025) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 43,
@@ -5112,7 +5593,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$527,496/mo avg in 2026 (+9090% vs 2025) · 13d since contact"
+      "narrative": "$527,496/mo avg in 2026 (+9090% vs 2025) · 13d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 136,
@@ -5163,7 +5649,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$2,353,172/mo avg in 2026 (+47% vs 2025) · 6d since contact · 1 failed charges (3mo) · CS Pulse: green"
+      "narrative": "$2,353,172/mo avg in 2026 (+47% vs 2025) · 6d since contact · 1 failed charges (3mo) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "1 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 26,
@@ -5214,7 +5705,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$217,564/mo avg in 2026 (-22% vs 2025) · 1d since contact"
+      "narrative": "$217,564/mo avg in 2026 (-22% vs 2025) · 1d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 17,
@@ -5265,7 +5761,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$344,396/mo avg in 2026 (+27% vs 2025) · 0d since contact · CS Pulse: green"
+      "narrative": "$344,396/mo avg in 2026 (+27% vs 2025) · 0d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 30,
@@ -5316,7 +5817,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$150,729/mo avg in 2026 (+11% vs 2025) · 251d since contact (autonomous — orders running)"
+      "narrative": "$150,729/mo avg in 2026 (+11% vs 2025) · 251d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 211,
@@ -5367,7 +5873,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$237,097/mo avg in 2026 (+17% vs 2025) · 5d since contact · CS Pulse: green"
+      "narrative": "$237,097/mo avg in 2026 (+17% vs 2025) · 5d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 82,
@@ -5418,7 +5929,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$248,467/mo avg in 2026 (+15% vs 2025) · 28d since contact"
+      "narrative": "$248,467/mo avg in 2026 (+15% vs 2025) · 28d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 262,
@@ -5469,7 +5985,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$162,628/mo avg in 2026 (+28% vs 2025) · 19d since contact"
+      "narrative": "$162,628/mo avg in 2026 (+28% vs 2025) · 19d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 318,
@@ -5520,7 +6041,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$479,262/mo avg in 2026 (+28% vs 2025) · 27d since contact · CS Pulse: green"
+      "narrative": "$479,262/mo avg in 2026 (+28% vs 2025) · 27d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 130,
@@ -5571,7 +6097,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,360,153/mo avg in 2026 (+9% vs 2025) · 29d since contact · CS Pulse: green"
+      "narrative": "$1,360,153/mo avg in 2026 (+9% vs 2025) · 29d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 449,
@@ -5622,7 +6153,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,058,936/mo avg in 2026 (+73% vs 2025) · 0d since contact"
+      "narrative": "$1,058,936/mo avg in 2026 (+73% vs 2025) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 159,
@@ -5673,7 +6209,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$228,539/mo avg in 2026 (+3% vs 2025) · 21d since contact · CS Pulse: green"
+      "narrative": "$228,539/mo avg in 2026 (+3% vs 2025) · 21d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 293,
@@ -5724,7 +6265,12 @@
       "has_hubspot_data": false,
       "scoring_data_status": "orders_only",
       "is_bid_only": false,
-      "narrative": "$331,320/mo avg in 2026 (+7% vs 2025) · CS Pulse: green"
+      "narrative": "$331,320/mo avg in 2026 (+7% vs 2025) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 22,
@@ -5775,7 +6321,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$212,255/mo avg in 2026 (+15% vs 2025) · 20d since contact"
+      "narrative": "$212,255/mo avg in 2026 (+15% vs 2025) · 20d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 75,
@@ -5826,7 +6377,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$643,138/mo avg in 2026 (+13% vs 2025) · 13d since contact · CS Pulse: green"
+      "narrative": "$643,138/mo avg in 2026 (+13% vs 2025) · 13d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 20,
@@ -5877,7 +6433,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$222,835/mo avg in 2026 (+2% vs 2025) · 8d since contact"
+      "narrative": "$222,835/mo avg in 2026 (+2% vs 2025) · 8d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 9,
@@ -5928,7 +6489,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,841,710/mo avg in 2026 (+24% vs 2025) · 244d since contact (autonomous — orders running)"
+      "narrative": "$1,841,710/mo avg in 2026 (+24% vs 2025) · 244d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 84,
@@ -5979,7 +6545,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$98,311/mo avg in 2026 (-42% vs 2025) · 183d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$98,311/mo avg in 2026 (-42% vs 2025) · 183d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -42% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 405,
@@ -6030,7 +6601,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$363,713/mo avg in 2026 (+11% vs 2025) · 19d since contact · CS Pulse: green"
+      "narrative": "$363,713/mo avg in 2026 (+11% vs 2025) · 19d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 396,
@@ -6081,7 +6657,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$128,082/mo avg in 2026 (+10% vs 2025) · 2d since contact"
+      "narrative": "$128,082/mo avg in 2026 (+10% vs 2025) · 2d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 117,
@@ -6132,7 +6713,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$49,136/mo avg in 2026 (+57% vs 2025) · 230d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$49,136/mo avg in 2026 (+57% vs 2025) · 230d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 97,
@@ -6183,7 +6769,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$66,645/mo avg in 2026 (-2% vs 2025) · 1d since contact"
+      "narrative": "$66,645/mo avg in 2026 (-2% vs 2025) · 1d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 18,
@@ -6234,7 +6825,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$135,116/mo avg in 2026 (-10% vs 2025) · 40d since contact (autonomous — orders running)"
+      "narrative": "$135,116/mo avg in 2026 (-10% vs 2025) · 40d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 198,
@@ -6285,7 +6881,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$358,940/mo avg in 2026 (+30% vs 2025) · 29d since contact · CS Pulse: green"
+      "narrative": "$358,940/mo avg in 2026 (+30% vs 2025) · 29d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 15,
@@ -6336,7 +6937,12 @@
       "has_hubspot_data": false,
       "scoring_data_status": "orders_only",
       "is_bid_only": false,
-      "narrative": "$142,769/mo avg in 2026 (+8% vs 2025) · CS Pulse: green"
+      "narrative": "$142,769/mo avg in 2026 (+8% vs 2025) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 382,
@@ -6387,7 +6993,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$215,556/mo avg in 2026 (+2% vs 2025) · 19d since contact · CS Pulse: green"
+      "narrative": "$215,556/mo avg in 2026 (+2% vs 2025) · 19d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 491,
@@ -6438,7 +7049,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$465,213/mo avg in 2026 (+1% vs 2025) · 2d since contact"
+      "narrative": "$465,213/mo avg in 2026 (+1% vs 2025) · 2d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 500,
@@ -6489,7 +7105,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$15,249/mo avg in 2026 (+41% vs 2025) · 45d since contact (autonomous — orders running)"
+      "narrative": "$15,249/mo avg in 2026 (+41% vs 2025) · 45d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 463,
@@ -6540,7 +7161,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$378,501/mo avg in 2026 (+9% vs 2025) · 19d since contact"
+      "narrative": "$378,501/mo avg in 2026 (+9% vs 2025) · 19d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 246,
@@ -6591,7 +7217,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$347,361/mo avg in 2026 (+40% vs 2025) · 62d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$347,361/mo avg in 2026 (+40% vs 2025) · 62d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 388,
@@ -6642,7 +7273,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$133,515/mo avg in 2026 (-12% vs 2025) · 117d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$133,515/mo avg in 2026 (-12% vs 2025) · 117d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 99,
@@ -6693,7 +7329,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$49,690/mo avg in 2026 (-36% vs 2025) · 7d since contact"
+      "narrative": "$49,690/mo avg in 2026 (-36% vs 2025) · 7d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -36% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 304,
@@ -6744,7 +7385,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$78,639/mo avg in 2026 (-14% vs 2025) · 0d since contact"
+      "narrative": "$78,639/mo avg in 2026 (-14% vs 2025) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 502,
@@ -6795,7 +7441,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$133,191/mo avg in 2026 (-8% vs 2025) · 0d since contact"
+      "narrative": "$133,191/mo avg in 2026 (-8% vs 2025) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 479,
@@ -6846,7 +7497,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,767,474/mo avg in 2026 (+61% vs 2025) · 0d since contact"
+      "narrative": "$1,767,474/mo avg in 2026 (+61% vs 2025) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 343,
@@ -6897,7 +7553,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$89,179/mo avg in 2026 (-40% vs 2025) · 22d since contact · CS Pulse: green"
+      "narrative": "$89,179/mo avg in 2026 (-40% vs 2025) · 22d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -40% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 446,
@@ -6948,7 +7609,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$2,238/mo avg in 2026 (+3% vs 2025) · 125d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$2,238/mo avg in 2026 (+3% vs 2025) · 125d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 27,
@@ -6999,7 +7665,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$97,568/mo avg in 2026 (+10% vs 2025) · 252d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$97,568/mo avg in 2026 (+10% vs 2025) · 252d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 31,
@@ -7050,7 +7721,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$54,015/mo avg in 2026 (-15% vs 2025) · 0d since contact · 10 failed charges (3mo)"
+      "narrative": "$54,015/mo avg in 2026 (-15% vs 2025) · 0d since contact · 10 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "10 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 400,
@@ -7101,7 +7777,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$106,705/mo avg in 2026 (+7% vs 2025) · 203d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$106,705/mo avg in 2026 (+7% vs 2025) · 203d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 443,
@@ -7152,7 +7833,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$94,843/mo avg in 2026 (+0% vs 2025) · 1d since contact · CS Pulse: green"
+      "narrative": "$94,843/mo avg in 2026 (+0% vs 2025) · 1d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 523,
@@ -7203,7 +7889,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$26,114/mo avg in 2026 (+1081% vs 2025) · 50d since contact (autonomous — orders running)"
+      "narrative": "$26,114/mo avg in 2026 (+1081% vs 2025) · 50d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 301,
@@ -7254,7 +7945,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$149,792/mo avg in 2026 (+9% vs 2025) · 71d since contact (autonomous — orders running)"
+      "narrative": "$149,792/mo avg in 2026 (+9% vs 2025) · 71d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 278,
@@ -7305,7 +8001,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$192,061/mo avg in 2026 (+27% vs 2025) · 267d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$192,061/mo avg in 2026 (+27% vs 2025) · 267d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 131,
@@ -7356,7 +8057,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$232,425/mo avg in 2026 (-2% vs 2025) · 276d since contact (autonomous — orders running)"
+      "narrative": "$232,425/mo avg in 2026 (-2% vs 2025) · 276d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 160,
@@ -7407,7 +8113,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$27,670/mo avg in 2026 (+14% vs 2025) · 27d since contact · 7 failed charges (3mo) · CS Pulse: green"
+      "narrative": "$27,670/mo avg in 2026 (+14% vs 2025) · 27d since contact · 7 failed charges (3mo) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "7 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 440,
@@ -7458,7 +8169,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$45,038/mo avg in 2026 (-14% vs 2025) · 22d since contact · CS Pulse: green"
+      "narrative": "$45,038/mo avg in 2026 (-14% vs 2025) · 22d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 455,
@@ -7509,7 +8225,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$64,186/mo avg in 2026 (-24% vs 2025) · 180d since contact (autonomous — orders running)"
+      "narrative": "$64,186/mo avg in 2026 (-24% vs 2025) · 180d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 391,
@@ -7560,7 +8281,12 @@
       "has_hubspot_data": false,
       "scoring_data_status": "orders_only",
       "is_bid_only": false,
-      "narrative": "$41,917/mo avg in 2026 (+64% vs 2025) · 25 failed charges (3mo)"
+      "narrative": "$41,917/mo avg in 2026 (+64% vs 2025) · 25 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "25 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 292,
@@ -7611,7 +8337,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$5,503/mo avg in 2026 (-28% vs 2025) · 57d since contact (autonomous — orders running)"
+      "narrative": "$5,503/mo avg in 2026 (-28% vs 2025) · 57d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -28% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 79,
@@ -7662,7 +8393,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$251,999/mo avg in 2026 (+0% vs 2025) · 13d since contact"
+      "narrative": "$251,999/mo avg in 2026 (+0% vs 2025) · 13d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 11,
@@ -7713,7 +8449,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$57,968/mo avg in 2026 (+8% vs 2025) · 526d since contact (autonomous — orders running)"
+      "narrative": "$57,968/mo avg in 2026 (+8% vs 2025) · 526d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 186,
@@ -7764,7 +8505,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$284,376/mo avg in 2026 (+16% vs 2025) · 19d since contact"
+      "narrative": "$284,376/mo avg in 2026 (+16% vs 2025) · 19d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 385,
@@ -7815,7 +8561,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$169,772/mo avg in 2026 (+15% vs 2025) · 16d since contact · 6 failed charges (3mo) · CS Pulse: green"
+      "narrative": "$169,772/mo avg in 2026 (+15% vs 2025) · 16d since contact · 6 failed charges (3mo) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "6 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 499,
@@ -7866,7 +8617,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$119,001/mo avg in 2026 (+4% vs 2025) · 309d since contact (autonomous — orders running)"
+      "narrative": "$119,001/mo avg in 2026 (+4% vs 2025) · 309d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 206,
@@ -7917,7 +8673,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$27,446/mo avg in 2026 (-17% vs 2025) · 280d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$27,446/mo avg in 2026 (-17% vs 2025) · 280d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 113,
@@ -7968,7 +8729,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$84,356/mo avg in 2026 (+9010% vs 2025) · 77d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$84,356/mo avg in 2026 (+9010% vs 2025) · 77d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 279,
@@ -8019,7 +8785,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$99,303/mo avg in 2026 (+41% vs 2025) · 70d since contact (autonomous — orders running)"
+      "narrative": "$99,303/mo avg in 2026 (+41% vs 2025) · 70d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 355,
@@ -8070,7 +8841,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$106,421/mo avg in 2026 (+28% vs 2025) · 76d since contact (autonomous — orders running)"
+      "narrative": "$106,421/mo avg in 2026 (+28% vs 2025) · 76d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 217,
@@ -8121,7 +8897,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$60,248/mo avg in 2026 (-18% vs 2025) · 344d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$60,248/mo avg in 2026 (-18% vs 2025) · 344d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 427,
@@ -8172,7 +8953,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$49,275/mo avg in 2026 (-8% vs 2025) · 548d since contact (autonomous — orders running)"
+      "narrative": "$49,275/mo avg in 2026 (-8% vs 2025) · 548d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 77,
@@ -8223,7 +9009,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$18,133/mo avg in 2026 (+18988% vs 2025) · 699d since contact (autonomous — orders running)"
+      "narrative": "$18,133/mo avg in 2026 (+18988% vs 2025) · 699d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 505,
@@ -8274,7 +9065,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$68,135/mo avg in 2026 (+152% vs 2025) · 8d since contact · CS Pulse: green"
+      "narrative": "$68,135/mo avg in 2026 (+152% vs 2025) · 8d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 310,
@@ -8325,7 +9121,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$50,173/mo avg in 2026 (-16% vs 2025) · 55d since contact (autonomous — orders running) · 2 failed charges (3mo)"
+      "narrative": "$50,173/mo avg in 2026 (-16% vs 2025) · 55d since contact (autonomous — orders running) · 2 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "2 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 83,
@@ -8376,7 +9177,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$58,144/mo avg in 2026 (-22% vs 2025) · 213d since contact (autonomous — orders running)"
+      "narrative": "$58,144/mo avg in 2026 (-22% vs 2025) · 213d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 162,
@@ -8427,7 +9233,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$49,982/mo avg in 2026 (-2% vs 2025) · 12d since contact"
+      "narrative": "$49,982/mo avg in 2026 (-2% vs 2025) · 12d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 37,
@@ -8478,7 +9289,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,185/mo avg in 2026 (+420% vs 2025) · 149d since contact (autonomous — orders running)"
+      "narrative": "$1,185/mo avg in 2026 (+420% vs 2025) · 149d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 7,
@@ -8529,7 +9345,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$32,965/mo avg in 2026 (+96% vs 2025) · 43d since contact (autonomous — orders running)"
+      "narrative": "$32,965/mo avg in 2026 (+96% vs 2025) · 43d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 106,
@@ -8580,7 +9401,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$24,839/mo avg in 2026 (-7% vs 2025) · 6d since contact · CS Pulse: green"
+      "narrative": "$24,839/mo avg in 2026 (-7% vs 2025) · 6d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 387,
@@ -8631,7 +9457,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$23,903/mo avg in 2026 (-44% vs 2025) · 314d since contact (autonomous — orders running)"
+      "narrative": "$23,903/mo avg in 2026 (-44% vs 2025) · 314d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -44% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 437,
@@ -8682,7 +9513,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$6,364/mo avg in 2026 (-32% vs 2025) · 118d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$6,364/mo avg in 2026 (-32% vs 2025) · 118d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -32% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 14,
@@ -8733,7 +9569,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$49,836/mo avg in 2026 (+13% vs 2025) · 55d since contact (autonomous — orders running)"
+      "narrative": "$49,836/mo avg in 2026 (+13% vs 2025) · 55d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 480,
@@ -8784,7 +9625,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$3,904/mo avg in 2026 (-6% vs 2025) · 280d since contact (autonomous — orders running) · 1 failed charges (3mo)"
+      "narrative": "$3,904/mo avg in 2026 (-6% vs 2025) · 280d since contact (autonomous — orders running) · 1 failed charges (3mo)",
+      "primary_risk_driver": {
+        "key": "Billing friction",
+        "summary": "1 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 350,
@@ -8835,7 +9681,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$3,131/mo avg in 2026 (+12% vs 2025) · 189d since contact (autonomous — orders running)"
+      "narrative": "$3,131/mo avg in 2026 (+12% vs 2025) · 189d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 29,
@@ -8886,7 +9737,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$95,887/mo avg in 2026 (+8% vs 2025) · 251d since contact (autonomous — orders running)"
+      "narrative": "$95,887/mo avg in 2026 (+8% vs 2025) · 251d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 107,
@@ -8937,7 +9793,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$18,930/mo avg in 2026 (+4632% vs 2025) · 602d since contact (autonomous — orders running)"
+      "narrative": "$18,930/mo avg in 2026 (+4632% vs 2025) · 602d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 16,
@@ -8988,7 +9849,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$17,105/mo avg in 2026 (+6% vs 2025) · 119d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$17,105/mo avg in 2026 (+6% vs 2025) · 119d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 275,
@@ -9039,7 +9905,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$20,965/mo avg in 2026 (-37% vs 2025) · 28d since contact"
+      "narrative": "$20,965/mo avg in 2026 (-37% vs 2025) · 28d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -37% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 320,
@@ -9090,7 +9961,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$134,553/mo avg in 2026 (+155% vs 2025) · 0d since contact · CS Pulse: green"
+      "narrative": "$134,553/mo avg in 2026 (+155% vs 2025) · 0d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 80,
@@ -9141,7 +10017,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$5,160/mo avg in 2026 (+1% vs 2025) · 180d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$5,160/mo avg in 2026 (+1% vs 2025) · 180d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 8,
@@ -9192,7 +10073,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$6,434/mo avg in 2026 (+49% vs 2025) · 28d since contact"
+      "narrative": "$6,434/mo avg in 2026 (+49% vs 2025) · 28d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 528,
@@ -9243,7 +10129,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$47,152/mo avg in 2026 (-4% vs 2025) · 33d since contact (autonomous — orders running)"
+      "narrative": "$47,152/mo avg in 2026 (-4% vs 2025) · 33d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 529,
@@ -9294,7 +10185,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": true,
-      "narrative": "Marked as bid-only customer — uses Allmoxy primarily for quotes/bids; order-volume signal not applicable · 58d since contact (autonomous — orders running)"
+      "narrative": "Marked as bid-only customer — uses Allmoxy primarily for quotes/bids; order-volume signal not applicable · 58d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 289,
@@ -9345,7 +10241,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$6,041/mo avg in 2026 (+8% vs 2025) · 47d since contact (autonomous — orders running)"
+      "narrative": "$6,041/mo avg in 2026 (+8% vs 2025) · 47d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 237,
@@ -9396,7 +10297,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$17,216/mo avg in 2026 (-22% vs 2025) · 100d since contact (autonomous — orders running)"
+      "narrative": "$17,216/mo avg in 2026 (-22% vs 2025) · 100d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 64,
@@ -9447,7 +10353,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$2,336/mo avg in 2026 (+233496% vs 2025) · 15d since contact"
+      "narrative": "$2,336/mo avg in 2026 (+233496% vs 2025) · 15d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 344,
@@ -9498,7 +10409,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$51,738/mo avg in 2026 (+68% vs 2025) · 215d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$51,738/mo avg in 2026 (+68% vs 2025) · 215d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 360,
@@ -9549,7 +10465,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$2,059/mo avg in 2026 (-15% vs 2025) · 0d since contact · CS Pulse: green"
+      "narrative": "$2,059/mo avg in 2026 (-15% vs 2025) · 0d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2028,
@@ -9600,7 +10521,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$16,321/mo avg in 2026 (new this year) · 0d since contact"
+      "narrative": "$16,321/mo avg in 2026 (new this year) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 539,
@@ -9651,7 +10577,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$2,391/mo avg in 2026 (+119454% vs 2025) · 92d since contact (autonomous — orders running)"
+      "narrative": "$2,391/mo avg in 2026 (+119454% vs 2025) · 92d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 323,
@@ -9702,7 +10633,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$13,850/mo avg in 2026 (-44% vs 2025) · 56d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$13,850/mo avg in 2026 (-44% vs 2025) · 56d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -44% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 34,
@@ -9753,7 +10689,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$3,902/mo avg in 2026 (+165% vs 2025) · 6d since contact · CS Pulse: green"
+      "narrative": "$3,902/mo avg in 2026 (+165% vs 2025) · 6d since contact · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 384,
@@ -9804,7 +10745,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,431/mo avg in 2026 (-40% vs 2025) · 267d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$1,431/mo avg in 2026 (-40% vs 2025) · 267d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -40% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 224,
@@ -9855,7 +10801,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$8,032/mo avg in 2026 (-20% vs 2025) · 83d since contact (autonomous — orders running)"
+      "narrative": "$8,032/mo avg in 2026 (-20% vs 2025) · 83d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 418,
@@ -9906,7 +10857,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 0d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 76,
@@ -9957,7 +10913,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$20,008/mo avg in 2026 (+11% vs 2025) · 55d since contact (autonomous — orders running) · CS Pulse: green"
+      "narrative": "$20,008/mo avg in 2026 (+11% vs 2025) · 55d since contact (autonomous — orders running) · CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 483,
@@ -10008,7 +10969,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$6,440/mo avg in 2026 (+518% vs 2025) · 854d since contact (autonomous — orders running)"
+      "narrative": "$6,440/mo avg in 2026 (+518% vs 2025) · 854d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2051,
@@ -10059,7 +11025,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$420/mo avg in 2026 (new this year) · 1d since contact"
+      "narrative": "$420/mo avg in 2026 (new this year) · 1d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 524,
@@ -10110,7 +11081,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$10,981/mo avg in 2026 (+23% vs 2025) · 90d since contact (autonomous — orders running)"
+      "narrative": "$10,981/mo avg in 2026 (+23% vs 2025) · 90d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 537,
@@ -10161,7 +11137,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$39,250/mo avg in 2026 (+87% vs 2025) · 13d since contact"
+      "narrative": "$39,250/mo avg in 2026 (+87% vs 2025) · 13d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2018,
@@ -10212,7 +11193,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$228,257/mo avg in 2026 (+4700% vs 2025) · 16d since contact"
+      "narrative": "$228,257/mo avg in 2026 (+4700% vs 2025) · 16d since contact",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2052,
@@ -10263,7 +11249,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$1,395/mo avg in 2026 (new this year) · 55d since contact (autonomous — orders running)"
+      "narrative": "$1,395/mo avg in 2026 (new this year) · 55d since contact (autonomous — orders running)",
+      "primary_risk_driver": {
+        "key": "Healthy",
+        "summary": "No dominant risk signal — engaged and running normally.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 2046,
@@ -10314,7 +11305,12 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "Never ran a verified order (gym member pattern) · 20d since contact"
+      "narrative": "Never ran a verified order (gym member pattern) · 20d since contact",
+      "primary_risk_driver": {
+        "key": "Declining usage",
+        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
+        "source": "signals"
+      }
     },
     {
       "allmoxy_customer_id": 285,
@@ -10365,7 +11361,12 @@
       "has_hubspot_data": false,
       "scoring_data_status": "no_data",
       "is_bid_only": false,
-      "narrative": "CS Pulse: green"
+      "narrative": "CS Pulse: green",
+      "primary_risk_driver": {
+        "key": "Never fully launched",
+        "summary": "Stalled in implementation — they have not reached first production orders, so they are paying without yet getting the core value.",
+        "source": "signals"
+      }
     }
   ]
 }

@@ -314,7 +314,7 @@ export default function CustomerDetail() {
   const snap = data as unknown as { rows: CustomerProfile[] } | undefined;
   const inferences = inferencesData as unknown as ChurnInferencesSnap | undefined;
   const subpatterns = subpatternsData as unknown as ChurnSubpatternsSnap | undefined;
-  const risk = riskData as unknown as { customers: Array<{ allmoxy_customer_id: number; tier: string; total_score: number; signal_1_orders: number; signal_2_launch: number; signal_3_recency: number; signal_4_risk: number; signal_5_tenure: number; signal_6_pulse?: number; pulse_color?: 'green' | 'yellow' | 'red' | null; pulse_label?: string; pulse_detail?: string | null; orders_detail: string; signal_2_detail?: string; days_since_last_contact: number | null; launch_status: string; is_launched: boolean; live_date: string | null; orders_monthly_avg_current: number; orders_monthly_avg_prior: number; orders_yoy_pct: number | null; arr_at_risk: number; narrative: string; is_bid_only?: boolean }> } | undefined;
+  const risk = riskData as unknown as { customers: Array<{ allmoxy_customer_id: number; tier: string; total_score: number; signal_1_orders: number; signal_2_launch: number; signal_3_recency: number; signal_4_risk: number; signal_5_tenure: number; signal_6_pulse?: number; pulse_color?: 'green' | 'yellow' | 'red' | null; pulse_label?: string; pulse_detail?: string | null; orders_detail: string; signal_2_detail?: string; days_since_last_contact: number | null; launch_status: string; is_launched: boolean; live_date: string | null; orders_monthly_avg_current: number; orders_monthly_avg_prior: number; orders_yoy_pct: number | null; arr_at_risk: number; narrative: string; primary_risk_driver?: { key: string; summary: string; source: string; signal_baseline?: string | null; evidence?: string[] | null; reviewed_at?: string | null }; is_bid_only?: boolean }> } | undefined;
 
   const [pending, setPending] = useState<PendingMap>(() => readPending());
   const [bidOnlyMap, setBidOnlyMap] = useState<BidOnlyMap>(() => readBidOnly());
@@ -1036,6 +1036,37 @@ export default function CustomerDetail() {
                     </Box>
                   </Grid>
                 </Grid>
+                {/* Primary risk driver — the single dominant reason, phrased as what
+                    the customer perceives is wrong. Signal-derived baseline, overlaid
+                    with a Fireflies/HubSpot summary for reviewed red/critical accounts. */}
+                {riskEntry.primary_risk_driver && (
+                  <Box sx={{ mt: 2, p: 1.5, borderRadius: 1, bgcolor: `${tierColor}0F`, borderLeft: `3px solid ${tierColor}` }}>
+                    <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap sx={{ mb: 0.5 }}>
+                      <Typography variant="caption" sx={{ textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10, color: 'text.secondary', fontWeight: 600 }}>
+                        Primary risk driver
+                      </Typography>
+                      <Typography variant="caption" sx={{ fontWeight: 700, color: tierColor }}>{riskEntry.primary_risk_driver.key}</Typography>
+                      <Box component="span" sx={{ px: 0.75, py: 0.125, borderRadius: 0.75, fontSize: 9.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', bgcolor: riskEntry.primary_risk_driver.source === 'signals' ? 'rgba(139,148,158,0.18)' : 'rgba(159,122,234,0.22)', color: riskEntry.primary_risk_driver.source === 'signals' ? 'text.secondary' : '#9F7AEA' }}>
+                        {riskEntry.primary_risk_driver.source === 'signals' ? 'from signals' : 'from calls / notes'}
+                      </Box>
+                    </Stack>
+                    <Typography variant="body2" sx={{ color: 'text.primary', lineHeight: 1.5 }}>
+                      {riskEntry.primary_risk_driver.summary}
+                    </Typography>
+                    {riskEntry.primary_risk_driver.evidence && riskEntry.primary_risk_driver.evidence.length > 0 && (
+                      <Box sx={{ mt: 1 }}>
+                        {riskEntry.primary_risk_driver.evidence.map((e, i) => (
+                          <Typography key={i} variant="caption" sx={{ display: 'block', color: 'text.secondary', fontSize: 10.5, fontStyle: 'italic' }}>· {e}</Typography>
+                        ))}
+                      </Box>
+                    )}
+                    {riskEntry.primary_risk_driver.source !== 'signals' && riskEntry.primary_risk_driver.signal_baseline && (
+                      <Typography variant="caption" sx={{ display: 'block', mt: 0.75, color: 'text.secondary', fontSize: 10 }}>
+                        Signal read: {riskEntry.primary_risk_driver.signal_baseline}
+                      </Typography>
+                    )}
+                  </Box>
+                )}
                 <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1.5, fontSize: 11 }}>
                   See the full attack list at <a href="/churn-risk-matrix" style={{ color: '#2C73FF' }}>/churn-risk-matrix</a>.
                 </Typography>

@@ -1,0 +1,34 @@
+{
+  "note": "Fireflies/HubSpot-sourced primary risk drivers for red/critical customers — what the customer perceives is wrong, from call transcripts + CS notes. Overlaid on the signal-derived baseline by build_churn_risk_matrix.mjs. Keyed by allmoxy_customer_id. Maintained in-session (MCP connectors can't run headless); regenerate periodically.",
+  "generated": "2026-07-07",
+  "overrides": {
+    "329": {
+      "key": "Disengaged — lost momentum",
+      "summary": "Went quiet and stopped running orders. CS flagged Peterman as an inactive account needing re-engagement (Apr), and by late June the account was noted internally as “confirmed done” — i.e. they drifted off rather than actively using Allmoxy. Confirm whether ‘done’ means wrapped or written off before it churns outright.",
+      "source": "fireflies",
+      "reviewed_at": "2026-07-07",
+      "evidence": [
+        "Fireflies ‘CX Team Sync’ 2026-04-27 — action: follow up persistently with inactive customers like Peterman and Santos to push engagement and revive interest",
+        "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — several accounts like Peterman are confirmed done"
+      ]
+    },
+    "513": {
+      "key": "Still ramping — catalog build in progress",
+      "summary": "Not a churn-intent account: they’re mid-implementation. As of late June the team had Precision Millwork’s catalog expansion underway with exports in testing. From the customer’s seat they’re still building toward full value rather than getting it yet — the CS-pulse red likely reflects implementation friction / slow ramp, not dissatisfaction with the product.",
+      "source": "fireflies",
+      "reviewed_at": "2026-07-07",
+      "evidence": [
+        "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — progress on Precision Millwork highlighted, catalog expansion underway, exports/testing phases"
+      ]
+    },
+    "2044": {
+      "key": "Still ramping — catalog build in progress",
+      "summary": "Mid catalog expansion as of late June (grouped with Precision Millwork in the implementation sync). They’re actively building out their catalog, not yet at steady production usage — the declining-usage signal likely reflects a not-yet-launched ramp rather than a customer pulling back.",
+      "source": "fireflies",
+      "reviewed_at": "2026-07-07",
+      "evidence": [
+        "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — progress on Precision Millwork and Ecodomo highlighted, with catalog expansion underway"
+      ]
+    }
+  }
+}

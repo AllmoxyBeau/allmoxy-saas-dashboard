@@ -71,6 +71,7 @@ type ScoredCustomer = {
   scoring_data_status: 'full' | 'orders_only' | 'hubspot_only' | 'no_data';
   is_bid_only: boolean;
   narrative: string;
+  primary_risk_driver?: { key: string; summary: string; source: string; signal_baseline?: string | null; evidence?: string[] | null; reviewed_at?: string | null };
 };
 
 type MatrixCell = {
@@ -828,6 +829,24 @@ export default function ChurnRiskMatrix() {
                                 )}
                               </Stack>
                             </Box>
+                            {/* Primary risk driver — the dominant reason, phrased as
+                                what the customer perceives is wrong. Signal-derived,
+                                overlaid with a Fireflies/HubSpot summary when reviewed. */}
+                            {c.primary_risk_driver && (
+                              <Box sx={{ p: 1.25, borderRadius: 1, bgcolor: `${tierColor}0F`, borderLeft: `3px solid ${tierColor}` }}>
+                                <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap sx={{ mb: 0.5 }}>
+                                  <Typography variant="caption" sx={{ textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10, color: 'text.secondary', fontWeight: 600 }}>Primary risk driver</Typography>
+                                  <Typography variant="caption" sx={{ fontWeight: 700, color: tierColor }}>{c.primary_risk_driver.key}</Typography>
+                                  <Box component="span" sx={{ px: 0.75, py: 0.125, borderRadius: 0.75, fontSize: 9.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', bgcolor: c.primary_risk_driver.source === 'signals' ? 'rgba(139,148,158,0.18)' : 'rgba(159,122,234,0.22)', color: c.primary_risk_driver.source === 'signals' ? 'text.secondary' : '#9F7AEA' }}>
+                                    {c.primary_risk_driver.source === 'signals' ? 'from signals' : 'from calls / notes'}
+                                  </Box>
+                                </Stack>
+                                <Typography variant="caption" sx={{ display: 'block', color: 'text.primary', fontSize: 11.5, lineHeight: 1.5 }}>{c.primary_risk_driver.summary}</Typography>
+                                {c.primary_risk_driver.evidence?.map((e, i) => (
+                                  <Typography key={i} variant="caption" sx={{ display: 'block', color: 'text.secondary', fontSize: 10, fontStyle: 'italic', mt: 0.25 }}>· {e}</Typography>
+                                ))}
+                              </Box>
+                            )}
                           </Stack>
                         </TableCell>
                       </TableRow>

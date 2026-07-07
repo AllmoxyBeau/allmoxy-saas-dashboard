@@ -418,6 +418,35 @@ function scoreCustomer(c) {
   if ((s2to5?.risk_signals || []).length) narrative.push(`${s2to5.risk_signals.length} risk signal(s)`);
   if (s6.color) narrative.push(`CS Pulse: ${s6.color}`);
 
+  // Primary risk driver — the single dominant reason this account is at risk,
+  // phrased as what the CUSTOMER would likely perceive is wrong (their lived
+  // experience), not our scoring mechanics. Auto-derived from the signals; the UI
+  // overlays a Fireflies/HubSpot-sourced summary for red/critical accounts when
+  // one exists (risk_driver_overrides.json). Candidates are ranked by churn
+  // severity; the top active one wins.
+  const yoyPctVal = ordersByCustomer.get(c.allmoxy_customer_id)?.monthly_avg_yoy_pct ?? null;
+  const daysContact = s2to5?.days_since_last_contact ?? null;
+  const riskSigCount = (s2to5?.risk_signals || []).length;
+  const failedCount = c.failed_3mo_count || 0;
+  const launchState = s2FromOrders.label !== 'unknown' ? s2FromOrders.label : (s2to5?.launch_status ?? 'unknown');
+  const driverCandidates = [];
+  if (launchState === 'cancelled') driverCandidates.push([100, 'Cancellation in motion', 'HubSpot shows this account as cancelled/closing — they are actively on their way out.']);
+  if (riskSigCount > 0 || signal_4_risk < 0) driverCandidates.push([90, 'Explicit dissatisfaction', `${riskSigCount || 'Risk'} risk signal(s) in HubSpot notes — churn language or dissatisfaction has surfaced in conversations.`]);
+  if (signal_6_pulse < 0) driverCandidates.push([85, 'CS flagged unhealthy', s6.detail ? `CS Health Pulse is RED — ${s6.detail}` : 'The CS rep set this account’s Health Pulse to RED.']);
+  if (s1.label === 'stopped') driverCandidates.push([80, 'Orders stopped', 'Verified orders have stopped — they are no longer running production volume through Allmoxy, so they may not see ongoing value.']);
+  else if (s1.label === 'declining' || (yoyPctVal != null && yoyPctVal <= -0.25)) driverCandidates.push([70, 'Declining usage', `Order volume is down${yoyPctVal != null ? ` ${Math.round(yoyPctVal * 100)}% YoY` : ''} — likely getting less value from Allmoxy or shifting work elsewhere.`]);
+  if (failedCount > 0) driverCandidates.push([65, 'Billing friction', `${failedCount} failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.`]);
+  if (launchState !== 'launched' && !isBidOnly && s1.label !== 'running' && s1.label !== 'grace_period') driverCandidates.push([60, 'Never fully launched', 'Stalled in implementation — they have not reached first production orders, so they are paying without yet getting the core value.']);
+  if (!signal_3_override_applied && daysContact != null && daysContact > 90) driverCandidates.push([50, 'Relationship going cold', `${daysContact} days since last contact — the account is disengaging and may feel neglected.`]);
+  if (signal_5_tenure < 0 && !isBidOnly) driverCandidates.push([40, 'Low perceived ROI', 'Long tenure with little usage — paying without clear value, which invites them to question the spend.']);
+  driverCandidates.sort((a, b) => b[0] - a[0]);
+  const topDriver = driverCandidates[0];
+  const primary_risk_driver = topDriver
+    ? { key: topDriver[1], summary: topDriver[2], source: 'signals' }
+    : (tier === 'green'
+      ? { key: 'Healthy', summary: 'No dominant risk signal — engaged and running normally.', source: 'signals' }
+      : { key: 'Insufficient signal', summary: 'Not enough data to pinpoint a driver — review calls/notes manually.', source: 'signals' });
+
   const owner = lookupOwner(c);
   return {
     allmoxy_customer_id: c.allmoxy_customer_id,
@@ -474,6 +503,7 @@ function scoreCustomer(c) {
     scoring_data_status,
     is_bid_only: isBidOnly,
     narrative: narrative.join(' · '),
+    primary_risk_driver,
   };
 }
 
@@ -481,6 +511,32 @@ function scoreCustomer(c) {
 // Score the cohort + assemble the matrix
 // ============================================================================
 const scored = cohort.map(scoreCustomer);
+
+// Overlay Fireflies/HubSpot-sourced risk drivers (risk_driver_overrides.json) on
+// top of the signal-derived baseline. These are hand-reviewed / AI-synthesized
+// summaries of what a red/critical customer actually perceives is wrong (from
+// call transcripts + CS notes). Keyed by allmoxy_customer_id. Can't run headless
+// (MCP connectors are session-only), so this file is maintained out-of-band.
+try {
+  const OV_PATH = new URL('./risk_driver_overrides.json', import.meta.url);
+  const ov = JSON.parse(fs.readFileSync(OV_PATH, 'utf8')).overrides || {};
+  let overlaid = 0;
+  for (const c of scored) {
+    const o = ov[String(c.allmoxy_customer_id)];
+    if (o && o.summary) {
+      c.primary_risk_driver = {
+        key: o.key || c.primary_risk_driver?.key || 'Reviewed',
+        summary: o.summary,
+        source: o.source || 'fireflies+hubspot',
+        reviewed_at: o.reviewed_at || null,
+        evidence: o.evidence || null,
+        signal_baseline: c.primary_risk_driver?.summary || null, // keep the auto driver for reference
+      };
+      overlaid++;
+    }
+  }
+  console.log(`Risk-driver overrides overlaid on ${overlaid} customers`);
+} catch { /* no overrides file yet — signal baseline stands */ }
 
 // Sort by ARR at risk descending (attack list default order)
 scored.sort((a, b) => b.arr_at_risk - a.arr_at_risk);
