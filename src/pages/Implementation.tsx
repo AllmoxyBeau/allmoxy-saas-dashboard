@@ -141,11 +141,29 @@ export default function Implementation() {
   const [stageFilter, setStageFilter] = useState<string | null>(null);
   const [slaFilter, setSlaFilter] = useState<Sla | null>(null);
   const [repFilter, setRepFilter] = useState<string | null>(null);
+  const [assigneeFilter, setAssigneeFilter] = useState<string | null>(null);
   // Distinct account reps (owners) for the quick filter, sorted by load.
   const repOptions = useMemo(() => {
     const counts = new Map<string, number>();
     for (const r of rows) if (r.account_rep) counts.set(r.account_rep, (counts.get(r.account_rep) ?? 0) + 1);
     return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([rep, n]) => ({ rep, n }));
+  }, [rows]);
+  // Distinct JIRA implementation reps (assignees on the IMP epics), sorted by load.
+  const assigneeOptions = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const r of rows) if (r.assignee) counts.set(r.assignee, (counts.get(r.assignee) ?? 0) + 1);
+    return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([rep, n]) => ({ rep, n }));
+  }, [rows]);
+  // Distinct implementation stages, ordered by the funnel then alphabetically.
+  const stageOptions = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const r of rows) if (r.stage) counts.set(r.stage, (counts.get(r.stage) ?? 0) + 1);
+    return [...counts.entries()]
+      .sort((a, b) => {
+        const ia = STAGE_ORDER.indexOf(a[0]); const ib = STAGE_ORDER.indexOf(b[0]);
+        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib) || a[0].localeCompare(b[0]);
+      })
+      .map(([stage, n]) => ({ stage, n }));
   }, [rows]);
   const [sortKey, setSortKey] = useState<SortKey>('age');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
@@ -180,8 +198,9 @@ export default function Implementation() {
     if (stageFilter && r.stage !== stageFilter) return false;
     if (slaFilter && slaOf(daysSince(r.sign_up_date)) !== slaFilter) return false;
     if (repFilter && r.account_rep !== repFilter) return false;
+    if (assigneeFilter && r.assignee !== assigneeFilter) return false;
     return true;
-  }), [rows, view, stageFilter, slaFilter, repFilter]);
+  }), [rows, view, stageFilter, slaFilter, repFilter, assigneeFilter]);
 
   const sorted = useMemo(() => {
     const out = [...filtered];
@@ -263,6 +282,32 @@ export default function Implementation() {
           {stageFilter && <Chip label={`Stage: ${stageFilter}`} size="small" onDelete={() => setStageFilter(null)} sx={{ height: 22, fontSize: 11 }} />}
           {slaFilter && <Chip label={`SLA: ${slaFilter}`} size="small" onDelete={() => setSlaFilter(null)} sx={{ height: 22, fontSize: 11 }} />}
           <Box sx={{ flexGrow: 1 }} />
+          <TextField
+            select
+            size="small"
+            label="Stage"
+            value={stageFilter ?? ''}
+            onChange={(e) => setStageFilter(e.target.value || null)}
+            sx={{ minWidth: 170 }}
+          >
+            <MenuItem value="">All stages</MenuItem>
+            {stageOptions.map(({ stage, n }) => (
+              <MenuItem key={stage} value={stage}>{stage} ({n})</MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            select
+            size="small"
+            label="Implementation rep"
+            value={assigneeFilter ?? ''}
+            onChange={(e) => setAssigneeFilter(e.target.value || null)}
+            sx={{ minWidth: 190 }}
+          >
+            <MenuItem value="">All implementers</MenuItem>
+            {assigneeOptions.map(({ rep, n }) => (
+              <MenuItem key={rep} value={rep}>{rep} ({n})</MenuItem>
+            ))}
+          </TextField>
           <TextField
             select
             size="small"
