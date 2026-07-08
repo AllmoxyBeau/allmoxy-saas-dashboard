@@ -101,6 +101,9 @@ function rowFor(c) {
       harvest_id: c.harvest_id ?? null,
       // Time-to-first-order context (filled in the enrichment pass below).
       sign_up_date: c.sign_up_date ?? null,
+      // restart_date (paused-then-reactivated) overrides sign-up for SLA aging.
+      restart_date: c.restart_date ?? null,
+      effective_start_date: c.effective_start_date ?? c.sign_up_date ?? null,
       first_payment_date: c.first_payment_date ?? null,
       // JIRA
       has_jira: false, jira_key: null, jira_url: null, jira_summary: null,
@@ -238,8 +241,10 @@ const out = [...rows.values()].map((r) => {
   // member" (paying, never launched) vs already-launched buckets.
   r.ttv_category = ttvCatById.get(r.allmoxy_customer_id) ?? null;
   // Build-time signup age + SLA (UI recomputes live; this is for static aggregates).
-  if (r.sign_up_date) {
-    r.days_since_signup = Math.round((now - new Date(r.sign_up_date)) / 86400000);
+  // Age from effective start (restart_date when the account paused then reactivated).
+  const ageAnchor = r.effective_start_date || r.sign_up_date;
+  if (ageAnchor) {
+    r.days_since_signup = Math.round((now - new Date(ageAnchor)) / 86400000);
   } else {
     r.days_since_signup = null;
   }

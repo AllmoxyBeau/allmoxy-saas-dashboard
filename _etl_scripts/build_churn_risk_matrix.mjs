@@ -115,11 +115,16 @@ function scoreSignal1(c) {
   // orders yet. Launch typically takes a few months; flagging a 2-month-old
   // customer as "gym member" is a false positive. The penalty kicks in when
   // they cross into month 5 since sign-up.
-  const signUpDate = c.sign_up_date ? new Date(c.sign_up_date) : null;
-  const monthsSinceSignup = signUpDate && !isNaN(signUpDate.getTime())
-    ? (today.getFullYear() - signUpDate.getFullYear()) * 12 + (today.getMonth() - signUpDate.getMonth())
+  // Effective start = restart_date when the customer paused then reactivated,
+  // else sign-up. A returning customer gets a fresh 5-month grace window so a
+  // paused-then-restarting account (e.g. Next Gen — no factory power for months)
+  // isn't scored red for the order gap while they're ramping back up.
+  const startDate = c.effective_start_date ? new Date(c.effective_start_date) : (c.sign_up_date ? new Date(c.sign_up_date) : null);
+  const monthsSinceStart = startDate && !isNaN(startDate.getTime())
+    ? (today.getFullYear() - startDate.getFullYear()) * 12 + (today.getMonth() - startDate.getMonth())
     : Infinity;
-  const inGracePeriod = monthsSinceSignup < 5;
+  const inGracePeriod = monthsSinceStart < 5;
+  const isRestart = !!c.restart_date;
 
   // Prefer Monthly Average (apples-to-apples partial-year normalization). When
   // missing (some customers are only in the Raw Data sheet), fall back to
@@ -166,11 +171,16 @@ function scoreSignal1(c) {
   // false-flagged as "gym member" and dragged to red. See orders-counts caveat.
   const hasOrderDollars = curMA > 0 || prevMA > 0 || (o.total_lifetime_usd || 0) > 0;
   const neverRanOrder = totalLifetime === 0 && !hasOrderDollars;
-  if (neverRanOrder && inGracePeriod) {
+  // Grace applies to brand-new customers (never ran an order yet) AND to
+  // recently-restarted customers (paused then reactivated) — the latter may have
+  // prior-year orders but a fresh restart means the current gap is expected ramp-up.
+  if (inGracePeriod && (neverRanOrder || isRestart)) {
     return {
       score: 0,
       label: 'grace_period',
-      detail: `Signed up ${signUpDate.toISOString().slice(0, 10)} · ${monthsSinceSignup} mo since signup (within 5-mo grace — no penalty)`,
+      detail: isRestart
+        ? `Restarted ${c.restart_date} · ${monthsSinceStart} mo since restart (within grace — ramping back up, not penalized)`
+        : `Signed up ${startDate.toISOString().slice(0, 10)} · ${monthsSinceStart} mo since signup (within 5-mo grace — no penalty)`,
     };
   }
   if (neverRanOrder) {

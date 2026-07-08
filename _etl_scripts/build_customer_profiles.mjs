@@ -86,6 +86,20 @@ function pickPrimaryStripeCustomer(custIds, subIds) {
   return distinct[0] ?? null;
 }
 
+// Restart dates (restart_date_overrides.json): customers who paused for an
+// external reason then reactivated. When present, tenure / launch-aging /
+// grace-period are measured from the restart date, not the original sign-up —
+// a returning customer shouldn't be scored as a long-tenured churn risk while
+// they're effectively starting over. Cohort/acquisition year stays original.
+const RESTART_OVERRIDES_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/restart_date_overrides.json';
+const restartByAid = new Map();
+if (fs.existsSync(RESTART_OVERRIDES_PATH)) {
+  try {
+    const ov = JSON.parse(fs.readFileSync(RESTART_OVERRIDES_PATH, 'utf8')).overrides || {};
+    for (const [aid, v] of Object.entries(ov)) { const d = typeof v === 'string' ? v : v?.restart_date; if (d) restartByAid.set(Number(aid), d); }
+  } catch { /* ignore */ }
+}
+
 const hubspotLiveByStripeId = new Map();
 const hubspotLiveByCompanyId = new Map();
 // Merge redirect: stale HubSpot Company ID → current surviving Company ID.
@@ -736,8 +750,14 @@ for (const id of allIds) {
 
   const cohortYear = firstPay ? Number(firstPay.slice(0, 4)) : (signup ? Number(signup.slice(0, 4)) : null);
 
-  const yearsWithUs = firstPay
-    ? Math.round(((today.getTime() - new Date(firstPay).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) * 10) / 10
+  // Restart-aware effective start. restart_date (if set) overrides sign-up for
+  // tenure + all "how long actively engaged / ramping to launch" calculations.
+  const restartDate = restartByAid.get(id) || null;
+  const effectiveStart = restartDate || signup;
+  // Tenure is measured from the restart date when present, else first payment.
+  const tenureAnchor = restartDate || firstPay;
+  const yearsWithUs = tenureAnchor
+    ? Math.round(((today.getTime() - new Date(tenureAnchor).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) * 10) / 10
     : null;
 
   // Failed charges in trailing 3 months
@@ -861,6 +881,8 @@ for (const id of allIds) {
     harvest_id: core?.harvest_id ?? null,
     master_classification_name: sync?.meta_master_name ?? null,
     sign_up_date: signup,
+    restart_date: restartDate,
+    effective_start_date: effectiveStart,
     first_payment_date: firstPay,
     last_payment_date: lastPay,
     years_with_us: yearsWithUs,

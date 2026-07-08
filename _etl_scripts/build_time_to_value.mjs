@@ -120,7 +120,10 @@ for (const p of cohort) {
   // yet, so don't flag them as gym_member / wasted. Mirrors the churn matrix
   // grace logic. See memory: 2026-order-counts-unavailable (related: same
   // pattern of "we don't have evidence yet" for brand-new signups).
-  const signUpDate = p.sign_up_date ? new Date(p.sign_up_date) : null;
+  // Use restart_date when set (paused-then-reactivated) so a returning account
+  // gets a fresh grace window rather than being aged from the original sign-up.
+  const effStart = p.effective_start_date || p.sign_up_date;
+  const signUpDate = effStart ? new Date(effStart) : null;
   const monthsSinceSignup = signUpDate && !isNaN(signUpDate.getTime())
     ? (today.getFullYear() - signUpDate.getFullYear()) * 12 + (today.getMonth() - signUpDate.getMonth())
     : Infinity;

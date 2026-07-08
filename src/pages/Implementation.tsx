@@ -36,6 +36,8 @@ type Row = {
   customer_status: string | null;
   account_rep: string | null;
   sign_up_date: string | null;
+  restart_date: string | null;
+  effective_start_date: string | null;
   first_payment_date: string | null;
   // launch / time-to-first-order
   launch_status: 'pre_launch' | 'launched' | 'unknown';
@@ -114,6 +116,11 @@ function daysSince(date: string | null): number | null {
   if (!date) return null;
   return Math.floor((Date.now() - new Date(date).getTime()) / 86400000);
 }
+// SLA / age anchor: restart_date when the customer paused then reactivated, else
+// sign-up. A returning account's clock starts at the restart, not the original.
+function ageAnchor(r: { effective_start_date: string | null; sign_up_date: string | null }): string | null {
+  return r.effective_start_date || r.sign_up_date;
+}
 function slaOf(days: number | null): Sla {
   if (days == null) return 'unknown';
   if (days > 90) return 'overdue';
@@ -183,7 +190,7 @@ export default function Implementation() {
   const initialRows = useMemo(() => rows.filter((r) => r.launch_status === 'pre_launch'), [rows]);
   const slaChart = useMemo(() => {
     const b: Record<Sla, number> = { on_track: 0, at_risk: 0, overdue: 0, unknown: 0 };
-    for (const r of initialRows) b[slaOf(daysSince(r.sign_up_date))] += 1;
+    for (const r of initialRows) b[slaOf(daysSince(ageAnchor(r)))] += 1;
     return ([
       { key: 'on_track' as Sla, label: 'On track (<60d)', count: b.on_track },
       { key: 'at_risk' as Sla, label: 'At risk (60–90d)', count: b.at_risk },
@@ -196,7 +203,7 @@ export default function Implementation() {
     if (view === 'initial' && r.launch_status !== 'pre_launch') return false;
     if (view === 'catalog' && r.launch_status !== 'launched') return false;
     if (stageFilter && r.stage !== stageFilter) return false;
-    if (slaFilter && slaOf(daysSince(r.sign_up_date)) !== slaFilter) return false;
+    if (slaFilter && slaOf(daysSince(ageAnchor(r))) !== slaFilter) return false;
     if (repFilter && r.account_rep !== repFilter) return false;
     if (assigneeFilter && r.assignee !== assigneeFilter) return false;
     return true;
@@ -208,7 +215,7 @@ export default function Implementation() {
     out.sort((a, b) => {
       let av: number | string, bv: number | string;
       switch (sortKey) {
-        case 'age': av = daysSince(a.sign_up_date) ?? -1; bv = daysSince(b.sign_up_date) ?? -1; break;
+        case 'age': av = daysSince(ageAnchor(a)) ?? -1; bv = daysSince(ageAnchor(b)) ?? -1; break;
         case 'name': av = a.name.toLowerCase(); bv = b.name.toLowerCase(); break;
         case 'stage': av = stageRank(a); bv = stageRank(b); break;
         case 'hours': av = a.hours; bv = b.hours; break;
@@ -381,13 +388,14 @@ export default function Implementation() {
               ) : sorted.length === 0 ? (
                 <TableRow><TableCell colSpan={9}><Empty text="No customers match the current view." /></TableCell></TableRow>
               ) : sorted.map((r) => {
-                const days = daysSince(r.sign_up_date);
+                const days = daysSince(ageAnchor(r));
                 const sla = slaOf(days);
                 return (
                   <TableRow key={r.allmoxy_customer_id} hover>
                     <TableCell sx={{ fontWeight: 500 }}>
                       <CustomerLink id={r.allmoxy_customer_id} name={r.name} />
                       {r.ttv_category === 'gym_member' && <Chip label="stalled" size="small" sx={{ ml: 0.75, height: 16, fontSize: 9, bgcolor: 'rgba(245,166,35,0.18)', color: '#B07206' }} />}
+                      {r.restart_date && <Chip label={`restarted ${r.restart_date.slice(0, 10)}`} size="small" sx={{ ml: 0.75, height: 16, fontSize: 9, bgcolor: 'rgba(44,115,255,0.18)', color: '#2C73FF' }} />}
                     </TableCell>
                     <TableCell sx={{ fontSize: 13 }}>{r.account_rep || <Typography variant="caption" sx={{ color: 'text.disabled' }}>—</Typography>}</TableCell>
                     <TableCell>
@@ -406,7 +414,7 @@ export default function Implementation() {
                       ) : r.launch_status === 'pre_launch' ? (
                         <Stack direction="row" spacing={0.75} alignItems="baseline">
                           <Typography variant="body2" sx={{ color: SLA_COLOR[sla], fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>{days != null ? `${days}d` : '—'}</Typography>
-                          <Typography variant="caption" sx={{ color: 'text.secondary' }}>since sign-up · no order yet</Typography>
+                          <Typography variant="caption" sx={{ color: 'text.secondary' }}>{r.restart_date ? 'since restart · no order yet' : 'since sign-up · no order yet'}</Typography>
                         </Stack>
                       ) : <Typography variant="caption" sx={{ color: 'text.disabled' }}>unknown</Typography>}
                       {r.sign_up_date && <Typography variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>signed up {r.sign_up_date.slice(0, 10)}</Typography>}

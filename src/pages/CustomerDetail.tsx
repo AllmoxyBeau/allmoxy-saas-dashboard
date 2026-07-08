@@ -51,6 +51,8 @@ type CustomerProfile = {
   harvest_id: string | null;
   master_classification_name: string | null;
   sign_up_date: string | null;
+  restart_date: string | null;
+  effective_start_date: string | null;
   first_payment_date: string | null;
   last_payment_date: string | null;
   years_with_us: number | null;
@@ -515,9 +517,10 @@ export default function CustomerDetail() {
 
               <InfoSection title="Lifecycle">
                 <InfoField label="Signed up" value={formatDateMDY(selected.sign_up_date)} />
+                {selected.restart_date && <InfoField label="Restarted" value={formatDateMDY(selected.restart_date)} />}
                 <InfoField label="First payment" value={formatDateMDY(selected.first_payment_date)} />
                 <InfoField label="Last payment" value={formatDateMDY(selected.last_payment_date)} />
-                <InfoField label="Tenure" value={selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)} yrs` : '—'} />
+                <InfoField label={selected.restart_date ? 'Tenure (from restart)' : 'Tenure'} value={selected.years_with_us != null ? `${selected.years_with_us.toFixed(1)} yrs` : '—'} />
               </InfoSection>
 
               {/* Billing & health — money, order volume, payment risk, annual toggle */}

@@ -1,0 +1,6 @@
+{
+  "note": "Restart dates for customers who paused (for external reasons) then reactivated. When set, tenure / time-to-launch / SLA-aging / grace-period are measured from the restart date instead of the original sign-up — so a returning customer isn't scored as a long-tenured churn risk while they're effectively starting over. Keyed by allmoxy_customer_id → ISO date. Cohort/acquisition year stays on the original sign-up. Add a row when a paused customer comes back.",
+  "overrides": {
+    "535": { "restart_date": "2026-06-25", "reason": "Couldn't get power to their new factory; paused Nov 2025–May 2026, resumed paying 2026-06-25." }
+  }
+}
