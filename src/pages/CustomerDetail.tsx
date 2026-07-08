@@ -314,7 +314,7 @@ export default function CustomerDetail() {
   const snap = data as unknown as { rows: CustomerProfile[] } | undefined;
   const inferences = inferencesData as unknown as ChurnInferencesSnap | undefined;
   const subpatterns = subpatternsData as unknown as ChurnSubpatternsSnap | undefined;
-  const risk = riskData as unknown as { customers: Array<{ allmoxy_customer_id: number; tier: string; total_score: number; signal_1_orders: number; signal_2_launch: number; signal_3_recency: number; signal_4_risk: number; signal_5_tenure: number; signal_6_pulse?: number; pulse_color?: 'green' | 'yellow' | 'red' | null; pulse_label?: string; pulse_detail?: string | null; orders_detail: string; signal_2_detail?: string; days_since_last_contact: number | null; launch_status: string; is_launched: boolean; live_date: string | null; orders_monthly_avg_current: number; orders_monthly_avg_prior: number; orders_yoy_pct: number | null; arr_at_risk: number; narrative: string; primary_risk_driver?: { key: string; summary: string; source: string; signal_baseline?: string | null; evidence?: string[] | null; reviewed_at?: string | null }; is_bid_only?: boolean }> } | undefined;
+  const risk = riskData as unknown as { customers: Array<{ allmoxy_customer_id: number; tier: string; total_score: number; signal_1_orders: number; signal_2_launch: number; signal_3_recency: number; signal_4_risk: number; signal_5_tenure: number; signal_6_pulse?: number; pulse_color?: 'green' | 'yellow' | 'red' | null; pulse_label?: string; pulse_detail?: string | null; orders_detail: string; signal_2_detail?: string; days_since_last_contact: number | null; launch_status: string; is_launched: boolean; live_date: string | null; orders_monthly_avg_current: number; orders_monthly_avg_prior: number; orders_yoy_pct: number | null; arr_at_risk: number; narrative: string; primary_risk_driver?: { key: string; summary?: string | null; expected_value?: string | null; current_state?: string | null; roadblocks?: string | null; source: string; signal_baseline?: string | null; evidence?: string[] | null; reviewed_at?: string | null }; is_bid_only?: boolean }> } | undefined;
 
   const [pending, setPending] = useState<PendingMap>(() => readPending());
   const [bidOnlyMap, setBidOnlyMap] = useState<BidOnlyMap>(() => readBidOnly());
@@ -1050,9 +1050,23 @@ export default function CustomerDetail() {
                         {riskEntry.primary_risk_driver.source === 'signals' ? 'from signals' : 'from calls / notes'}
                       </Box>
                     </Stack>
-                    <Typography variant="body2" sx={{ color: 'text.primary', lineHeight: 1.5 }}>
-                      {riskEntry.primary_risk_driver.summary}
-                    </Typography>
+                    {(riskEntry.primary_risk_driver.expected_value || riskEntry.primary_risk_driver.current_state || riskEntry.primary_risk_driver.roadblocks) ? (
+                      <Stack spacing={0.75}>
+                        {riskEntry.primary_risk_driver.expected_value && (
+                          <Box><Typography component="span" variant="caption" sx={{ fontWeight: 700, color: 'text.secondary' }}>Sold on / expected: </Typography><Typography component="span" variant="body2">{riskEntry.primary_risk_driver.expected_value}</Typography></Box>
+                        )}
+                        {riskEntry.primary_risk_driver.current_state && (
+                          <Box><Typography component="span" variant="caption" sx={{ fontWeight: 700, color: 'text.secondary' }}>Where they are today: </Typography><Typography component="span" variant="body2">{riskEntry.primary_risk_driver.current_state}</Typography></Box>
+                        )}
+                        {riskEntry.primary_risk_driver.roadblocks && (
+                          <Box><Typography component="span" variant="caption" sx={{ fontWeight: 700, color: tierColor }}>Roadblocks to value: </Typography><Typography component="span" variant="body2">{riskEntry.primary_risk_driver.roadblocks}</Typography></Box>
+                        )}
+                      </Stack>
+                    ) : (
+                      <Typography variant="body2" sx={{ color: 'text.primary', lineHeight: 1.5 }}>
+                        {riskEntry.primary_risk_driver.summary}
+                      </Typography>
+                    )}
                     {riskEntry.primary_risk_driver.evidence && riskEntry.primary_risk_driver.evidence.length > 0 && (
                       <Box sx={{ mt: 1 }}>
                         {riskEntry.primary_risk_driver.evidence.map((e, i) => (

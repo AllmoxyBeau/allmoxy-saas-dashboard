@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-08T14:24:27.930Z",
+  "fetched_at": "2026-07-08T17:02:53.009Z",
   "comment": "5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to all active paying customers. Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.",
   "scoring_mode": "full",
   "totals": {
@@ -539,9 +539,18 @@
       "is_bid_only": false,
       "narrative": "Never ran a verified order (gym member pattern) · 279d since contact",
       "primary_risk_driver": {
-        "key": "Declining usage",
-        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
-        "source": "signals"
+        "key": "Never moved past marketing materials",
+        "expected_value": "Run their production/order workflow through Allmoxy (the core value, not just collateral).",
+        "current_state": "Only using Allmoxy for marketing materials so far; ~279 days with no engagement as of the June dashboard review.",
+        "roadblocks": "Adoption is gated on the success of their Nova South initiative — they haven't committed to moving the core workflow onto the platform.",
+        "summary": null,
+        "source": "hubspot+fireflies",
+        "reviewed_at": "2026-07-08",
+        "evidence": [
+          "HubSpot churn-assessment: Dependent on success of Nova South. Only focused on marketing materials so far",
+          "Fireflies Executive meeting 2026-06-24: Countryside flagged — 279 days no engagement, urgent outreach"
+        ],
+        "signal_baseline": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere."
       }
     },
     {
@@ -708,12 +717,15 @@
       "narrative": "7d since contact",
       "primary_risk_driver": {
         "key": "Disengaged — lost momentum",
-        "summary": "Went quiet and stopped running orders. CS flagged Peterman as an inactive account needing re-engagement (Apr), and by late June the account was noted internally as “confirmed done” — i.e. they drifted off rather than actively using Allmoxy. Confirm whether ‘done’ means wrapped or written off before it churns outright.",
+        "expected_value": "Sales expectation not captured in notes — review the original sales call.",
+        "current_state": "Went quiet and stopped running orders; CS flagged Peterman inactive (Apr), and by late June the account was noted internally as 'confirmed done'.",
+        "roadblocks": "They drifted off rather than actively using Allmoxy; confirm whether 'done' means wrapped or written off before it churns outright.",
+        "summary": null,
         "source": "fireflies",
-        "reviewed_at": "2026-07-07",
+        "reviewed_at": "2026-07-08",
         "evidence": [
-          "Fireflies ‘CX Team Sync’ 2026-04-27 — action: follow up persistently with inactive customers like Peterman and Santos to push engagement and revive interest",
-          "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — several accounts like Peterman are confirmed done"
+          "Fireflies CX Team Sync 2026-04-27: follow up persistently with inactive customers like Peterman to revive interest",
+          "Fireflies CS/IMP Project Sync 2026-06-29: Peterman confirmed done"
         ],
         "signal_baseline": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere."
       }
@@ -769,9 +781,17 @@
       "is_bid_only": false,
       "narrative": "Never ran a verified order (gym member pattern) · 7d since contact · CS Pulse: red",
       "primary_risk_driver": {
-        "key": "CS flagged unhealthy",
-        "summary": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep",
-        "source": "signals"
+        "key": "Internal misalignment — needs re-selling",
+        "expected_value": "Sales expectation not captured in notes — review the original sales call.",
+        "current_state": "Not realizing value; a messy family business with internal misalignment on who owns/uses Allmoxy.",
+        "roadblocks": "Decision-making is fragmented internally; the value has to be re-sold to the right stakeholder — would need exec (Bobby) re-engagement to revive.",
+        "summary": null,
+        "source": "hubspot",
+        "reviewed_at": "2026-07-08",
+        "evidence": [
+          "HubSpot churn-assessment: Messy family business, internal misalignment, needs to be resold. Could use Bobby's engagement if we reengage"
+        ],
+        "signal_baseline": "CS Health Pulse is RED — CS Pulse: Red — at risk per CS rep"
       }
     },
     {
@@ -1050,11 +1070,15 @@
       "narrative": "Never ran a verified order (gym member pattern) · 0d since contact · CS Pulse: yellow",
       "primary_risk_driver": {
         "key": "Still ramping — catalog build in progress",
-        "summary": "Mid catalog expansion as of late June (grouped with Precision Millwork in the implementation sync). They’re actively building out their catalog, not yet at steady production usage — the declining-usage signal likely reflects a not-yet-launched ramp rather than a customer pulling back.",
-        "source": "fireflies",
-        "reviewed_at": "2026-07-07",
+        "expected_value": "Growth of their existing business through Allmoxy (per HubSpot purpose-of-adoption).",
+        "current_state": "Mid catalog expansion as of late June (grouped with Precision Millwork in the implementation sync).",
+        "roadblocks": "Still building out the catalog — not yet at steady production usage, so the declining-usage signal reflects a not-yet-launched ramp.",
+        "summary": null,
+        "source": "hubspot+fireflies",
+        "reviewed_at": "2026-07-08",
         "evidence": [
-          "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — progress on Precision Millwork and Ecodomo highlighted, with catalog expansion underway"
+          "HubSpot purpose-of-adoption: Growth of existing business",
+          "Fireflies CS/IMP Project Sync 2026-06-29: Precision Millwork and Ecodomo — catalog expansion underway"
         ],
         "signal_baseline": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere."
       }
@@ -1166,9 +1190,17 @@
       "is_bid_only": false,
       "narrative": "Never ran a verified order (gym member pattern) · 162d since contact",
       "primary_risk_driver": {
-        "key": "Declining usage",
-        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
-        "source": "signals"
+        "key": "Catalog build was the blocker — now clearing",
+        "expected_value": "A launched, working catalog/configurator they could run orders through.",
+        "current_state": "Engaged; the customer-side catalog build is now underway and the account is tracking for success (recovering).",
+        "roadblocks": "The blocker was getting the customer-side catalog build started — now in motion, so risk is mitigating.",
+        "summary": null,
+        "source": "hubspot",
+        "reviewed_at": "2026-07-08",
+        "evidence": [
+          "HubSpot churn-assessment: pain point was beginning catalog build on the customer side; now that we've started building, tracking for success"
+        ],
+        "signal_baseline": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere."
       }
     },
     {
@@ -1502,9 +1534,17 @@
       "is_bid_only": false,
       "narrative": "639d since contact · CS Pulse: yellow",
       "primary_risk_driver": {
-        "key": "Declining usage",
-        "summary": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere.",
-        "source": "signals"
+        "key": "Custom shop forced into a standardized model",
+        "expected_value": "Planned to run a standardized product line through Allmoxy to speed up quoting/ordering.",
+        "current_state": "Frustrated and stalled — working the TEK catalog through an outside consultant (their main point of contact), standardization hasn't taken hold.",
+        "roadblocks": "Their end work is highly custom and resists the standardized line they signed up for; TEK catalog complexity plus reliance on a consultant and multiple stakeholders is slowing everything down.",
+        "summary": null,
+        "source": "hubspot+fireflies",
+        "reviewed_at": "2026-07-08",
+        "evidence": [
+          "HubSpot churn-assessment: TEK catalog, main POC is a consultant, end customer very custom but planned standardized line; expressed frustration working with TEK and stakeholders"
+        ],
+        "signal_baseline": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere."
       }
     },
     {
@@ -2287,11 +2327,14 @@
       "narrative": "0d since contact · CS Pulse: green",
       "primary_risk_driver": {
         "key": "Still ramping — catalog build in progress",
-        "summary": "Not a churn-intent account: they’re mid-implementation. As of late June the team had Precision Millwork’s catalog expansion underway with exports in testing. From the customer’s seat they’re still building toward full value rather than getting it yet — the CS-pulse red likely reflects implementation friction / slow ramp, not dissatisfaction with the product.",
+        "expected_value": "A built-out catalog with working exports they could launch on.",
+        "current_state": "Mid-implementation as of late June — catalog expansion underway, exports in testing.",
+        "roadblocks": "Value not yet realized because the catalog build + export testing aren't finished; the CS-pulse red reflects ramp friction, not dissatisfaction.",
+        "summary": null,
         "source": "fireflies",
-        "reviewed_at": "2026-07-07",
+        "reviewed_at": "2026-07-08",
         "evidence": [
-          "Fireflies ‘CS/IMP Project Sync’ 2026-06-29 — progress on Precision Millwork highlighted, catalog expansion underway, exports/testing phases"
+          "Fireflies CS/IMP Project Sync 2026-06-29: progress on Precision Millwork highlighted, catalog expansion underway, exports/testing phases"
         ],
         "signal_baseline": "Order volume is down -100% YoY — likely getting less value from Allmoxy or shifting work elsewhere."
       }

@@ -523,10 +523,14 @@ try {
   let overlaid = 0;
   for (const c of scored) {
     const o = ov[String(c.allmoxy_customer_id)];
-    if (o && o.summary) {
+    if (o && (o.summary || o.expected_value || o.current_state || o.roadblocks)) {
       c.primary_risk_driver = {
         key: o.key || c.primary_risk_driver?.key || 'Reviewed',
-        summary: o.summary,
+        // Value-gap narrative: what they were sold on vs where they are vs blockers.
+        expected_value: o.expected_value || null,
+        current_state: o.current_state || null,
+        roadblocks: o.roadblocks || null,
+        summary: o.summary || null, // optional single-line overall
         source: o.source || 'fireflies+hubspot',
         reviewed_at: o.reviewed_at || null,
         evidence: o.evidence || null,

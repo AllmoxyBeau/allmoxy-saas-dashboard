@@ -71,7 +71,7 @@ type ScoredCustomer = {
   scoring_data_status: 'full' | 'orders_only' | 'hubspot_only' | 'no_data';
   is_bid_only: boolean;
   narrative: string;
-  primary_risk_driver?: { key: string; summary: string; source: string; signal_baseline?: string | null; evidence?: string[] | null; reviewed_at?: string | null };
+  primary_risk_driver?: { key: string; summary?: string | null; expected_value?: string | null; current_state?: string | null; roadblocks?: string | null; source: string; signal_baseline?: string | null; evidence?: string[] | null; reviewed_at?: string | null };
 };
 
 type MatrixCell = {
@@ -841,7 +841,15 @@ export default function ChurnRiskMatrix() {
                                     {c.primary_risk_driver.source === 'signals' ? 'from signals' : 'from calls / notes'}
                                   </Box>
                                 </Stack>
-                                <Typography variant="caption" sx={{ display: 'block', color: 'text.primary', fontSize: 11.5, lineHeight: 1.5 }}>{c.primary_risk_driver.summary}</Typography>
+                                {(c.primary_risk_driver.expected_value || c.primary_risk_driver.current_state || c.primary_risk_driver.roadblocks) ? (
+                                  <Stack spacing={0.5}>
+                                    {c.primary_risk_driver.expected_value && <Typography variant="caption" sx={{ display: 'block', fontSize: 11.5, lineHeight: 1.5 }}><Box component="span" sx={{ fontWeight: 700, color: 'text.secondary' }}>Sold on / expected: </Box>{c.primary_risk_driver.expected_value}</Typography>}
+                                    {c.primary_risk_driver.current_state && <Typography variant="caption" sx={{ display: 'block', fontSize: 11.5, lineHeight: 1.5 }}><Box component="span" sx={{ fontWeight: 700, color: 'text.secondary' }}>Where they are today: </Box>{c.primary_risk_driver.current_state}</Typography>}
+                                    {c.primary_risk_driver.roadblocks && <Typography variant="caption" sx={{ display: 'block', fontSize: 11.5, lineHeight: 1.5 }}><Box component="span" sx={{ fontWeight: 700, color: tierColor }}>Roadblocks to value: </Box>{c.primary_risk_driver.roadblocks}</Typography>}
+                                  </Stack>
+                                ) : (
+                                  <Typography variant="caption" sx={{ display: 'block', color: 'text.primary', fontSize: 11.5, lineHeight: 1.5 }}>{c.primary_risk_driver.summary}</Typography>
+                                )}
                                 {c.primary_risk_driver.evidence?.map((e, i) => (
                                   <Typography key={i} variant="caption" sx={{ display: 'block', color: 'text.secondary', fontSize: 10, fontStyle: 'italic', mt: 0.25 }}>· {e}</Typography>
                                 ))}
