@@ -1,11 +1,11 @@
 {
-  "fetchedAt": "2026-07-09T13:11:39.683Z",
-  "jira_fetchedAt": "2026-07-09T13:11:04.567Z",
-  "harvest_fetchedAt": "2026-07-09T13:11:39.539Z",
+  "fetchedAt": "2026-07-09T20:08:29.884Z",
+  "jira_fetchedAt": "2026-07-09T20:07:46.341Z",
+  "harvest_fetchedAt": "2026-07-09T20:08:29.763Z",
   "note": "Implementation projects = services revenue. JIRA (IPA epics) supplies stage; Harvest supplies hours + billable $. Join: harvest_id==client_id (exact); JIRA by epic-summary name-match (+ overrides).",
   "aggregates": {
     "total_customers": 115,
-    "active": 44,
+    "active": 46,
     "initial_implementation": 20,
     "catalog_update": 92,
     "unknown_launch": 3,
@@ -22,8 +22,8 @@
     "with_jira": 54,
     "with_harvest": 92,
     "with_both": 31,
-    "total_hours": 6872.6,
-    "total_billable_amount": 1005177,
+    "total_hours": 6873.4,
+    "total_billable_amount": 1005310,
     "by_stage": {
       "Waiting on Customer": 13,
       "Stage 4: Testing & Iteration": 3,
@@ -36,9 +36,9 @@
     "by_billing_method": {
       "Hourly": 92
     },
-    "jira_epics_total": 61,
+    "jira_epics_total": 62,
     "jira_matched": 58,
-    "jira_unmatched_count": 3
+    "jira_unmatched_count": 4
   },
   "rows": [
     {
@@ -4406,13 +4406,13 @@
       "harvest_project_count": 1,
       "billing_method": "Hourly",
       "hourly_rate": 150,
-      "hours": 10.37,
-      "billable_hours": 10.37,
-      "billable_amount": 1555.5,
-      "entry_count": 8,
+      "hours": 10.87,
+      "billable_hours": 10.87,
+      "billable_amount": 1630.5,
+      "entry_count": 9,
       "first_entry": "2025-05-08",
-      "last_entry": "2025-11-13",
-      "harvest_active": false,
+      "last_entry": "2026-07-09",
+      "harvest_active": true,
       "match_method": "harvest_id",
       "tasks": [
         {
@@ -4434,7 +4434,7 @@
       "tasks_done": 0,
       "task_start": "2025-05-08",
       "task_end": "2026-05-22",
-      "is_active": false,
+      "is_active": true,
       "is_launched": false,
       "launch_status": "pre_launch",
       "first_order_year": null,
@@ -4472,15 +4472,15 @@
       "harvest_project_count": 1,
       "billing_method": "Hourly",
       "hourly_rate": 150,
-      "hours": 9.8,
-      "billable_hours": 9.8,
-      "billable_amount": 1470,
-      "entry_count": 5,
+      "hours": 10.19,
+      "billable_hours": 10.19,
+      "billable_amount": 1528.5,
+      "entry_count": 6,
       "first_entry": "2025-11-21",
-      "last_entry": "2026-03-30",
-      "harvest_active": false,
+      "last_entry": "2026-07-09",
+      "harvest_active": true,
       "match_method": "harvest_id",
-      "is_active": false,
+      "is_active": true,
       "is_launched": true,
       "launch_status": "launched",
       "first_order_year": 2019,
@@ -7758,6 +7758,11 @@
     }
   ],
   "unmatched_jira_epics": [
+    {
+      "key": "IPA-561",
+      "summary": "Cullman Cabinets",
+      "stage": "Stage 1: Discovery"
+    },
     {
       "key": "IPA-463",
       "summary": "Stanta's Kitchen & Home",
