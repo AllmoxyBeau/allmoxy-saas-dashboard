@@ -876,7 +876,7 @@ export default function UnitEconomics() {
                     <TableCell align="right">{pct(r.subscription_gross_margin)}</TableCell>
                     <TableCell align="right">{r.avg_mrr_per_customer != null ? USD0.format(r.avg_mrr_per_customer) : '—'}</TableCell>
                     <TableCell align="right">{r.new_logos}</TableCell>
-                    <TableCell align="right">{USD_COMPACT.format(r.snm_expense)}</TableCell>
+                    <TableCell align="right">{r.snm_expense != null ? USD_COMPACT.format(r.snm_expense) : '—'}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

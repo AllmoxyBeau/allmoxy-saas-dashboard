@@ -107,51 +107,64 @@ const months = qbMonths.filter((m) => mrrMonths.includes(m));
 // Helper: val or 0
 function v(obj, m) { return obj?.[m] ?? 0; }
 
+const r2 = (x) => Math.round(x * 100) / 100;
+const r3 = (x) => Math.round(x * 1000) / 1000;
 const monthly = months.map((m) => {
   const row = mrrByMonth[m] ?? {};
-  const subRev = v(pnl.subRev, m);
-  const servicesRev = v(pnl.servicesRev, m);
+  // --- QuickBooks P&L (may be empty for recent months) — profitability layer ---
+  const qbSubRev = v(pnl.subRev, m);
+  const qbServicesRev = v(pnl.servicesRev, m);
+  const qbTotalIncome = v(pnl.totalIncome, m);
   const affiliateRev = v(pnl.affiliateRev, m);
-  const totalIncome = v(pnl.totalIncome, m);
   const ccFees = v(pnl.ccFees, m);
   const salesCommission = v(pnl.salesCommission, m);
   const servicesCommission = v(pnl.servicesCommission, m);
   const totalCOGS = v(pnl.totalCOGS, m);
   const grossProfit = v(pnl.grossProfit, m);
-  const mktPayroll = v(pnl.marketingPayroll, m);
-  const mktAdvertising = v(pnl.marketingAdvertising, m);
-  const salesExpenses = v(pnl.salesExpenses, m);
   const netOp = v(pnl.netOp, m);
+  const snm = v(pnl.marketingPayroll, m) + v(pnl.marketingAdvertising, m) + v(pnl.salesExpenses, m) + salesCommission;
+  // Is the P&L populated for this month? (recent months are blank until QB refresh)
+  const pnlAvailable = qbTotalIncome !== 0 || grossProfit !== 0 || totalCOGS !== 0;
 
-  const snm = mktPayroll + mktAdvertising + salesExpenses + salesCommission;
+  // --- Revenue from the LIVE MRR basis (Stripe) — always current, so recent
+  // months show real dollars instead of $0 from the stale P&L. ---
+  const subRev = row.mrr_subscription ?? 0;
+  const servicesRev = row.mrr_services ?? 0;
+  const connectRev = connectByMonth[m] ?? 0;
+  const totalIncome = subRev + servicesRev + connectRev + affiliateRev;
+
   const newLogos = newSignupsByMonth[m] ?? 0;
-  const cac = newLogos > 0 ? snm / newLogos : null;
-  const subGM = subRev > 0 ? (subRev - ccFees * (subRev / (totalIncome || 1))) / subRev : null;
-  const overallGM = totalIncome > 0 ? grossProfit / totalIncome : null;
-  const servicesGM = servicesRev > 0 ? (servicesRev - servicesCommission) / servicesRev : null;
+  // Profitability metrics are QuickBooks-derived — only meaningful when the P&L
+  // has that month; otherwise null (UI shows "—") rather than a misleading 0/100%.
+  const cac = pnlAvailable && newLogos > 0 ? snm / newLogos : null;
+  const subGM = pnlAvailable && qbSubRev > 0 ? (qbSubRev - ccFees * (qbSubRev / (qbTotalIncome || 1))) / qbSubRev : null;
+  const overallGM = pnlAvailable && qbTotalIncome > 0 ? grossProfit / qbTotalIncome : null;
+  const servicesGM = pnlAvailable && qbServicesRev > 0 ? (qbServicesRev - servicesCommission) / qbServicesRev : null;
   const logoQty = row.logo_qty ?? null;
   const avgMRR = row.mrr_subscription && logoQty ? row.mrr_subscription / logoQty : null;
 
-  const connectRev = connectByMonth[m] ?? 0;
-
   return {
     month: m,
-    subscription_revenue: Math.round(subRev * 100) / 100,
-    services_revenue: Math.round(servicesRev * 100) / 100,
-    connect_revenue: Math.round(connectRev * 100) / 100,
-    affiliate_revenue: Math.round(affiliateRev * 100) / 100,
-    total_income: Math.round(totalIncome * 100) / 100,
-    cogs: Math.round(totalCOGS * 100) / 100,
-    gross_profit: Math.round(grossProfit * 100) / 100,
-    gross_margin: overallGM != null ? Math.round(overallGM * 1000) / 1000 : null,
-    subscription_gross_margin: subGM != null ? Math.round(subGM * 1000) / 1000 : null,
-    services_gross_margin: servicesGM != null ? Math.round(servicesGM * 1000) / 1000 : null,
-    snm_expense: Math.round(snm * 100) / 100,
+    // revenue = live MRR (complete)
+    subscription_revenue: r2(subRev),
+    services_revenue: r2(servicesRev),
+    connect_revenue: r2(connectRev),
+    affiliate_revenue: r2(affiliateRev),
+    total_income: r2(totalIncome),
+    revenue_source: 'live_mrr',
+    // profitability = QuickBooks P&L (null when the month isn't in the P&L yet)
+    pnl_available: pnlAvailable,
+    cogs: pnlAvailable ? r2(totalCOGS) : null,
+    gross_profit: pnlAvailable ? r2(grossProfit) : null,
+    gross_margin: overallGM != null ? r3(overallGM) : null,
+    subscription_gross_margin: subGM != null ? r3(subGM) : null,
+    services_gross_margin: servicesGM != null ? r3(servicesGM) : null,
+    snm_expense: pnlAvailable ? r2(snm) : null,
     new_logos: newLogos,
-    cac: cac != null ? Math.round(cac * 100) / 100 : null,
+    cac: cac != null ? r2(cac) : null,
     logo_qty: logoQty,
-    avg_mrr_per_customer: avgMRR != null ? Math.round(avgMRR * 100) / 100 : null,
-    net_op_income: Math.round(netOp * 100) / 100,
+    avg_mrr_per_customer: avgMRR != null ? r2(avgMRR) : null,
+    net_op_income: pnlAvailable ? r2(netOp) : null,
   };
 });
 
@@ -163,18 +176,25 @@ const ttm = completeMonths.slice(-12);
 
 function sum(arr, key) { return arr.reduce((s, r) => s + (r[key] ?? 0), 0); }
 
+// Revenue: full 12-month window (live MRR — complete).
 const ttmSubRev = sum(ttm, 'subscription_revenue');
 const ttmServicesRev = sum(ttm, 'services_revenue');
 const ttmConnectRev = sum(ttm, 'connect_revenue');
 const ttmAffiliateRev = sum(ttm, 'affiliate_revenue');
 const ttmTotalIncome = sum(ttm, 'total_income');
-const ttmCOGS = sum(ttm, 'cogs');
-const ttmGrossProfit = sum(ttm, 'gross_profit');
-const ttmSNM = sum(ttm, 'snm_expense');
-const ttmNewLogos = sum(ttm, 'new_logos');
-const ttmNetOp = sum(ttm, 'net_op_income');
-const ttmGM = ttmTotalIncome > 0 ? ttmGrossProfit / ttmTotalIncome : null;
-const ttmSubGM = ttmSubRev > 0 ? (ttmSubRev - sum(ttm, 'cogs') * (ttmSubRev / (ttmTotalIncome || 1))) / ttmSubRev : null;
+// Profitability: ONLY the months the P&L actually covers — mixing complete revenue
+// with a partial-P&L COGS would inflate margins. Scope + label the coverage.
+const ttmPnl = ttm.filter((r) => r.pnl_available);
+const pnlMonths = ttmPnl.map((r) => r.month);
+const ttmCOGS = sum(ttmPnl, 'cogs');
+const ttmGrossProfit = sum(ttmPnl, 'gross_profit');
+const ttmSNM = sum(ttmPnl, 'snm_expense');
+const ttmNewLogos = sum(ttmPnl, 'new_logos'); // logos over the P&L-covered months (matches S&M spend)
+const ttmNetOp = sum(ttmPnl, 'net_op_income');
+const ttmPnlTotalIncome = sum(ttmPnl, 'total_income');
+const ttmPnlSubRev = sum(ttmPnl, 'subscription_revenue');
+const ttmGM = ttmPnlTotalIncome > 0 ? ttmGrossProfit / ttmPnlTotalIncome : null;
+const ttmSubGM = ttmPnlSubRev > 0 ? (ttmPnlSubRev - ttmCOGS * (ttmPnlSubRev / (ttmPnlTotalIncome || 1))) / ttmPnlSubRev : null;
 
 const ttmCAC = ttmNewLogos > 0 ? ttmSNM / ttmNewLogos : null;
 
@@ -263,6 +283,11 @@ const out = {
   ttm: {
     windowStart: ttm[0]?.month ?? null,
     windowEnd: ttm[ttm.length - 1]?.month ?? null,
+    // Revenue spans the full 12-month window (live MRR). Profitability (COGS,
+    // margins, CAC, LTV) is scoped to the months the QuickBooks P&L actually
+    // covers — the UI should caveat margins with this window.
+    revenue_basis: 'live_mrr',
+    pnl_coverage: { months: pnlMonths.length, start: pnlMonths[0] ?? null, end: pnlMonths[pnlMonths.length - 1] ?? null },
     subscription_revenue: Math.round(ttmSubRev * 100) / 100,
     services_revenue: Math.round(ttmServicesRev * 100) / 100,
     connect_revenue: Math.round(ttmConnectRev * 100) / 100,
@@ -301,6 +326,7 @@ const out = {
     avg_monthly_connect_revenue: Math.round((ttmConnectRev / 12) * 100) / 100,
   },
   notes:
+    'Revenue (subscription/services/connect) sourced from the LIVE MRR snapshots so every month is current; QuickBooks P&L drives profitability (COGS, margins, CAC, LTV) only for the months it covers (see ttm.pnl_coverage) — recent months show revenue with margins pending the P&L refresh. ' +
     'Unit economics derived from QuickBooks CAC Info P&L × allmoxy_core_customer signups × mrr_by_month logo counts. ' +
     'CAC = (Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission) / new logos. ' +
     'LTV = Avg MRR × Subscription Gross Margin / Monthly Logo Churn Rate. ' +
