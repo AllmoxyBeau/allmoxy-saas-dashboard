@@ -45,7 +45,6 @@ const monthTot = {};            // m -> { sub, svc, connect, logos }
 const nameMonth = new Map();     // name -> { m -> { sub, svc } }
 for (const p of profiles) {
   for (const [m, v] of Object.entries(p.monthly_history || {})) {
-    if (m < SEAM) continue;
     const t = monthTot[m] || { sub: 0, svc: 0, connect: 0, logos: 0 };
     t.sub += v.subscription || 0; t.svc += v.services || 0; t.connect += v.connect || 0;
     if ((v.subscription || 0) > 0) t.logos += 1;
@@ -78,7 +77,23 @@ const buildMrrRow = (m, t) => {
 };
 for (const row of mrr.rows) {
   const t = monthTot[row.month];
-  if (row.month >= SEAM && t) { Object.assign(row, buildMrrRow(row.month, t)); mrrTouched++; }
+  if (!t) continue;
+  if (row.month >= SEAM) {
+    // Seamed months: full overlay incl. net-USD Connect.
+    Object.assign(row, buildMrrRow(row.month, t)); mrrTouched++;
+  } else {
+    // Historical (pre-seam) months: tie subscription + services + logos to the
+    // auditable per-customer detail (was the xlsx "MRR by Month Total row", which
+    // drifted ~0.5% from the summed Stripe-Sync detail). KEEP the existing curated
+    // Connect figure — the detail's connect is attribution-lossy. Recompute blended.
+    const connect = row.mrr_connect || 0;
+    row.mrr_subscription = r2(t.sub);
+    row.mrr_services = r2(t.svc);
+    row.logo_qty = t.logos;
+    row.mrr_blended = r2(t.sub + t.svc + connect);
+    row.avg_mrr_blended = t.logos ? Math.round(row.mrr_blended / t.logos) : 0;
+    mrrTouched++;
+  }
 }
 // Cap appends at the current calendar month — annual-payer amortization populates
 // monthly_history into FUTURE months (e.g. B&B Door's spread runs to 2027-05); we
