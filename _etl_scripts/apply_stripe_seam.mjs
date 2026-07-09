@@ -102,9 +102,16 @@ for (const p of snap.rows) {
 
   // --- transactions: xlsx < SEAM + API >= SEAM ---
   const kept = (p.transactions || []).filter((t) => String(t.created || '').slice(0, 10) < SEAM_DAY);
-  const apiRows = apiTxns.map((t) => ({ created: t.d, amount: r2(t.a + (t.r || 0)), amount_refunded: r2(t.r || 0), net_amount: r2(t.a), type: t.t, status: 'succeeded', description: 'Stripe API' }))
-    .sort((a, b) => String(b.created).localeCompare(String(a.created)));
-  p.transactions = [...apiRows, ...kept];
+  const apiRows = apiTxns.map((t) => ({ created: t.d, amount: r2(t.a + (t.r || 0)), amount_refunded: r2(t.r || 0), net_amount: r2(t.a), type: t.t, status: 'succeeded', description: 'Stripe API' }));
+  // Carry FAILED attempts (>= SEAM) into transactions as status:'failed' rows so the
+  // Current Month clustering sees active dunning (card failures) this month —
+  // otherwise a customer whose card failed shows no attempt and is silently
+  // dropped from the variance instead of surfacing as Overdue. amount = attempted
+  // charge (nets to $0) so it clusters onto the same subscription by amount.
+  const apiFailedRows = apiFailed
+    .filter((t) => String(t.d || '') >= SEAM_DAY)
+    .map((t) => ({ created: t.d, amount: r2(t.a || 0), amount_refunded: 0, net_amount: 0, type: 'subscription', status: 'failed', description: 'Stripe API (failed attempt)' }));
+  p.transactions = [...apiRows, ...apiFailedRows, ...kept].sort((a, b) => String(b.created).localeCompare(String(a.created)));
   p.transaction_count = p.transactions.length;
 
   // --- current MRR, last payment, failed, status ---
