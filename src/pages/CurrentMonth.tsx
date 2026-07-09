@@ -725,7 +725,7 @@ export default function CurrentMonth() {
       )}
 
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2.4}>
           <KPICard
             label="Subscription MRR"
             value={subscriptionView ? USD0.format(subscriptionView.projected) : USD0.format(view.subscription.mtd ?? 0)}
@@ -746,7 +746,7 @@ export default function CurrentMonth() {
             }
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2.4}>
           <KPICard
             label="Services revenue (MTD)"
             value={USD0.format(view.services.mtd ?? 0)}
@@ -757,7 +757,7 @@ export default function CurrentMonth() {
             info={<><strong>What it is:</strong> Services revenue (one-off project work). MTD value is sum of services charges so far this month; the projection assumes the same daily run-rate continues.</>}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2.4}>
           <KPICard
             label="Connect fees (MTD, net USD)"
             value={view.connect.mtd != null ? USD0.format(view.connect.mtd) : '—'}
@@ -774,7 +774,7 @@ export default function CurrentMonth() {
             info={<><strong>What it is:</strong> Stripe Connect (affiliate) fees — <strong>net settled in USD</strong>, i.e. what actually hits the bank. Sourced live from Stripe <em>balance transactions</em> (type <code>application_fee</code>), so foreign-currency (CAD) fees are already FX-converted by Stripe and refunds are netted out. This differs from the gross take on the Payments Opportunity page, which reports each fee in its original charge currency. June 2026+ is live; earlier months come from history.</>}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2.4}>
           <KPICard
             label="Annual payments (amortized)"
             value={USD0.format(subscriptionView?.annualAmort ?? 0)}
@@ -783,7 +783,7 @@ export default function CurrentMonth() {
             info={<><strong>What it is:</strong> The amortized monthly slice of customers who pay <strong>annually upfront</strong> (e.g. B&amp;B Door, Mid Michigan Wood). They have no monthly Stripe charge, so they're excluded from the Subscription MRR card above (which counts actual charges) — this card adds their recognized monthly revenue so Blended reconciles to the MRR-by-Month basis.<br /><br /><strong>Data:</strong> Sum of <code>monthly_history</code> subscription for annual-payer IDs in the reference month.</>}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2.4}>
           {(() => {
             const subProj = subscriptionView?.projected ?? view.subscription.mtd ?? 0;
             const svcProj = view.services.projected ?? view.services.mtd ?? 0;
