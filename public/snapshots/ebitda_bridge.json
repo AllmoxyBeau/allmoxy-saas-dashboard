@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-07-09T19:59:00.337Z",
+  "fetched_at": "2026-07-10T16:17:37.336Z",
   "comment": "Adjusted EBITDA bridge (QoE-5). GAAP Net Income → standard EBITDA add-backs (interest, tax, D&A) → GAAP EBITDA → QoE adjustments (owner-comp normalization, one-time costs, discretionary perks) → Adjusted EBITDA. Three time windows: YTD, latest month, TTM. QoE add-backs are user-maintained in _etl_scripts/ebitda_adjustments.json. Built by _etl_scripts/build_ebitda_bridge.mjs.",
   "source": {
-    "pnl_months": 5,
-    "pnl_window": "2026-01 – 2026-05",
+    "pnl_months": 6,
+    "pnl_window": "2026-01 – 2026-06",
     "qoe_adjustment_count": 3,
     "qoe_adjustments_placeholder_count": 3
   },
@@ -11,15 +11,15 @@
     "ytd_current": {
       "window": "ytd_current",
       "start": "2026-01",
-      "end": "2026-05",
-      "months_in_window": 5,
-      "total_revenue": 1481570.66,
-      "net_income": 136251.83,
+      "end": "2026-06",
+      "months_in_window": 6,
+      "total_revenue": 1773090.7,
+      "net_income": 159716.92,
       "add_backs_to_ebitda": [
         {
           "key": "interest",
           "label": "Interest expense (7011 Loan Interest)",
-          "amount": 14583.55
+          "amount": 17083.55
         },
         {
           "key": "tax",
@@ -37,7 +37,7 @@
           "amount": 0
         }
       ],
-      "gaap_ebitda": 150835.38,
+      "gaap_ebitda": 176800.47,
       "gaap_ebitda_margin": 0.1,
       "qoe_adjustments": [
         {
@@ -75,23 +75,23 @@
         }
       ],
       "qoe_adjustment_total": 0,
-      "adjusted_ebitda": 150835.38,
+      "adjusted_ebitda": 176800.47,
       "adjusted_ebitda_margin": 0.1,
       "placeholder_adjustment_count": 3,
       "label": "YTD 2026"
     },
     "latest_month": {
       "window": "latest_month",
-      "start": "2026-05",
-      "end": "2026-05",
+      "start": "2026-06",
+      "end": "2026-06",
       "months_in_window": 1,
-      "total_revenue": 291727.62,
-      "net_income": 31837.58,
+      "total_revenue": 291612.55,
+      "net_income": 23557.6,
       "add_backs_to_ebitda": [
         {
           "key": "interest",
           "label": "Interest expense (7011 Loan Interest)",
-          "amount": 2916.71
+          "amount": 2500
         },
         {
           "key": "tax",
@@ -109,8 +109,8 @@
           "amount": 0
         }
       ],
-      "gaap_ebitda": 34754.29,
-      "gaap_ebitda_margin": 0.12,
+      "gaap_ebitda": 26057.6,
+      "gaap_ebitda_margin": 0.09,
       "qoe_adjustments": [
         {
           "id": "owner-comp-normalization-placeholder",
@@ -136,16 +136,16 @@
         }
       ],
       "qoe_adjustment_total": 0,
-      "adjusted_ebitda": 34754.29,
-      "adjusted_ebitda_margin": 0.12,
+      "adjusted_ebitda": 26057.6,
+      "adjusted_ebitda_margin": 0.09,
       "placeholder_adjustment_count": 2,
-      "label": "Latest month (2026-05)"
+      "label": "Latest month (2026-06)"
     },
     "ttm": {
       "window": "ttm",
       "label": "TTM (unavailable)",
       "unavailable": true,
-      "reason": "Only 5 month(s) of P&L data available (2026-01 – 2026-05). TTM bridge will activate automatically once the QB P&L export covers 12+ months. Upload an extended Profit and Loss xlsx to /Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy+LLC_Profit+and+Loss.xlsx and re-run refresh_all."
+      "reason": "Only 6 month(s) of P&L data available (2026-01 – 2026-06). TTM bridge will activate automatically once the QB P&L export covers 12+ months. Upload an extended Profit and Loss xlsx to /Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy+LLC_Profit+and+Loss.xlsx and re-run refresh_all."
     }
   }
 }
