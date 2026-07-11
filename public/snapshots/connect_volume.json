@@ -1,13 +1,13 @@
 {
   "tab": "connect_volume",
-  "fetchedAt": "2026-07-10T16:27:48.561Z",
-  "stripe_fetchedAt": "2026-07-10T13:04:09.908Z",
+  "fetchedAt": "2026-07-11T19:39:20.426Z",
+  "stripe_fetchedAt": "2026-07-11T15:05:13.404Z",
   "window": {
     "since": "incremental"
   },
   "currencies": {
-    "USD": 51924,
-    "CAD": 6407,
+    "USD": 52079,
+    "CAD": 6423,
     "AUD": 1
   },
   "currency_caveat": "GMV mixes USD with non-USD (CAD/AUD) summed as USD — GMV is modestly overstated; the take-rate ratio is exact (fee and gross are same-currency per transaction).",
@@ -53,10 +53,10 @@
   "mom": {
     "current_month": "2026-07",
     "prior_month": "2026-06",
-    "total_current_fee": 12491.41,
+    "total_current_fee": 14379.93,
     "total_prior_fee": 47076.33,
-    "total_delta_fee": -34584.92,
-    "pct": -73.5,
+    "total_delta_fee": -32696.4,
+    "pct": -69.5,
     "movers": [
       {
         "customer_name": "D3 Custom Cabinets",
@@ -91,11 +91,11 @@
       {
         "customer_name": "#N/A",
         "allmoxy_customer_id": null,
-        "current_fee": 10.17,
+        "current_fee": 18.87,
         "prior_fee": 0,
-        "delta_fee": 10.17,
+        "delta_fee": 18.87,
         "pct": null,
-        "current_gross": 2034.53,
+        "current_gross": 3774.28,
         "prior_gross": 0
       },
       {
@@ -107,6 +107,16 @@
         "pct": 90.7,
         "current_gross": 1647.98,
         "prior_gross": 864.09
+      },
+      {
+        "customer_name": "Ideal Wood Design",
+        "allmoxy_customer_id": null,
+        "current_fee": 48.51,
+        "prior_fee": 45.51,
+        "delta_fee": 3,
+        "pct": 6.6,
+        "current_gross": 9704.07,
+        "prior_gross": 9103.66
       },
       {
         "customer_name": "Dellusso Cabinet Company",
@@ -159,6 +169,16 @@
         "prior_gross": 200
       },
       {
+        "customer_name": "Ironwood Cabinet And Millworks",
+        "allmoxy_customer_id": 292,
+        "current_fee": 21.6,
+        "prior_fee": 23.05,
+        "delta_fee": -1.45,
+        "pct": -6.3,
+        "current_gross": 4321.4,
+        "prior_gross": 4609.75
+      },
+      {
         "customer_name": "DOT Cabinets USA",
         "allmoxy_customer_id": null,
         "current_fee": 0,
@@ -197,16 +217,6 @@
         "pct": -75.4,
         "current_gross": 270.95,
         "prior_gross": 1094.32
-      },
-      {
-        "customer_name": "Ironwood Cabinet And Millworks",
-        "allmoxy_customer_id": 292,
-        "current_fee": 14.1,
-        "prior_fee": 23.05,
-        "delta_fee": -8.95,
-        "pct": -38.8,
-        "current_gross": 2821.4,
-        "prior_gross": 4609.75
       },
       {
         "customer_name": "White Oak Custom Woodworking Ltd.",
@@ -249,16 +259,6 @@
         "prior_gross": 3744.54
       },
       {
-        "customer_name": "Ideal Wood Design",
-        "allmoxy_customer_id": null,
-        "current_fee": 25.92,
-        "prior_fee": 45.51,
-        "delta_fee": -19.59,
-        "pct": -43,
-        "current_gross": 5184.85,
-        "prior_gross": 9103.66
-      },
-      {
         "customer_name": "#N/A",
         "allmoxy_customer_id": null,
         "current_fee": 0,
@@ -269,6 +269,16 @@
         "prior_gross": 5304.65
       },
       {
+        "customer_name": "Greyloch",
+        "allmoxy_customer_id": 136,
+        "current_fee": 160.75,
+        "prior_fee": 191.72,
+        "delta_fee": -30.97,
+        "pct": -16.2,
+        "current_gross": 32148.69,
+        "prior_gross": 38343.52
+      },
+      {
         "customer_name": "Staley Custom Cabinets",
         "allmoxy_customer_id": 437,
         "current_fee": 20.78,
@@ -277,16 +287,6 @@
         "pct": -66,
         "current_gross": 4156.98,
         "prior_gross": 12234.23
-      },
-      {
-        "customer_name": "Greyloch",
-        "allmoxy_customer_id": 136,
-        "current_fee": 148.41,
-        "prior_fee": 191.72,
-        "delta_fee": -43.31,
-        "pct": -22.6,
-        "current_gross": 29681.57,
-        "prior_gross": 38343.52
       },
       {
         "customer_name": "Rasmussen Custom Cabinetry LLC",
@@ -321,12 +321,22 @@
       {
         "customer_name": "#N/A",
         "allmoxy_customer_id": null,
-        "current_fee": 9.75,
+        "current_fee": 19.2,
         "prior_fee": 84.33,
-        "delta_fee": -74.58,
-        "pct": -88.4,
-        "current_gross": 1950.48,
+        "delta_fee": -65.13,
+        "pct": -77.2,
+        "current_gross": 3839.69,
         "prior_gross": 16865.67
+      },
+      {
+        "customer_name": "M2M Panel Processing",
+        "allmoxy_customer_id": null,
+        "current_fee": 44.75,
+        "prior_fee": 119.34,
+        "delta_fee": -74.59,
+        "pct": -62.5,
+        "current_gross": 8945.03,
+        "prior_gross": 23867.92
       },
       {
         "customer_name": "Nudoors",
@@ -349,14 +359,14 @@
         "prior_gross": 22743.3
       },
       {
-        "customer_name": "M2M Panel Processing",
-        "allmoxy_customer_id": null,
-        "current_fee": 20.06,
-        "prior_fee": 119.34,
-        "delta_fee": -99.28,
-        "pct": -83.2,
-        "current_gross": 4008.89,
-        "prior_gross": 23867.92
+        "customer_name": "My Door Factory",
+        "allmoxy_customer_id": 42,
+        "current_fee": 57.08,
+        "prior_fee": 156.67,
+        "delta_fee": -99.59,
+        "pct": -63.6,
+        "current_gross": 11412.78,
+        "prior_gross": 31336.84
       },
       {
         "customer_name": "Empyre Designs",
@@ -367,16 +377,6 @@
         "pct": -86.1,
         "current_gross": 3319.32,
         "prior_gross": 23832.57
-      },
-      {
-        "customer_name": "My Door Factory",
-        "allmoxy_customer_id": 42,
-        "current_fee": 44.29,
-        "prior_fee": 156.67,
-        "delta_fee": -112.38,
-        "pct": -71.7,
-        "current_gross": 8855.38,
-        "prior_gross": 31336.84
       },
       {
         "customer_name": "Advanced Cabinet Doors",
@@ -431,12 +431,32 @@
       {
         "customer_name": "Eldorado Plywood",
         "allmoxy_customer_id": 20,
-        "current_fee": 22.82,
+        "current_fee": 24.02,
         "prior_fee": 167.86,
-        "delta_fee": -145.04,
-        "pct": -86.4,
-        "current_gross": 4564.28,
+        "delta_fee": -143.84,
+        "pct": -85.7,
+        "current_gross": 4803.84,
         "prior_gross": 33570.52
+      },
+      {
+        "customer_name": "Door Masters Of Houston",
+        "allmoxy_customer_id": 443,
+        "current_fee": 202.72,
+        "prior_fee": 377.23,
+        "delta_fee": -174.51,
+        "pct": -46.3,
+        "current_gross": 40544.54,
+        "prior_gross": 75436.96
+      },
+      {
+        "customer_name": "Premier Eurocase",
+        "allmoxy_customer_id": 161,
+        "current_fee": 272.53,
+        "prior_fee": 454.67,
+        "delta_fee": -182.14,
+        "pct": -40.1,
+        "current_gross": 54623.72,
+        "prior_gross": 100032.91
       },
       {
         "customer_name": "Rta Cabinetry Inc",
@@ -449,34 +469,34 @@
         "prior_gross": 40859.74
       },
       {
-        "customer_name": "Premier Eurocase",
-        "allmoxy_customer_id": 161,
-        "current_fee": 243.46,
-        "prior_fee": 454.67,
-        "delta_fee": -211.21,
-        "pct": -46.5,
-        "current_gross": 48810.49,
-        "prior_gross": 100032.91
-      },
-      {
         "customer_name": "Red Rock Milling LLC",
         "allmoxy_customer_id": 396,
-        "current_fee": 138.08,
+        "current_fee": 139.26,
         "prior_fee": 355.56,
-        "delta_fee": -217.48,
-        "pct": -61.2,
-        "current_gross": 27614.63,
+        "delta_fee": -216.3,
+        "pct": -60.8,
+        "current_gross": 27850.55,
         "prior_gross": 71106.2
       },
       {
-        "customer_name": "Door Masters Of Houston",
-        "allmoxy_customer_id": 443,
-        "current_fee": 151.29,
-        "prior_fee": 377.23,
-        "delta_fee": -225.94,
-        "pct": -59.9,
-        "current_gross": 30258.04,
-        "prior_gross": 75436.96
+        "customer_name": "Metro Drawer Boxes",
+        "allmoxy_customer_id": 217,
+        "current_fee": 98.24,
+        "prior_fee": 339.15,
+        "delta_fee": -240.91,
+        "pct": -71,
+        "current_gross": 19647.11,
+        "prior_gross": 67831.3
+      },
+      {
+        "customer_name": "Ideal Drawer Box, Inc",
+        "allmoxy_customer_id": 382,
+        "current_fee": 72.21,
+        "prior_fee": 322.84,
+        "delta_fee": -250.63,
+        "pct": -77.6,
+        "current_gross": 14447.75,
+        "prior_gross": 64567.41
       },
       {
         "customer_name": "GWEUROCASE.COM",
@@ -489,34 +509,34 @@
         "prior_gross": 50628.15
       },
       {
-        "customer_name": "Ideal Drawer Box, Inc",
-        "allmoxy_customer_id": 382,
-        "current_fee": 51.21,
-        "prior_fee": 322.84,
-        "delta_fee": -271.63,
-        "pct": -84.1,
-        "current_gross": 10246.21,
-        "prior_gross": 64567.41
-      },
-      {
-        "customer_name": "Metro Drawer Boxes",
-        "allmoxy_customer_id": 217,
-        "current_fee": 67.5,
-        "prior_fee": 339.15,
-        "delta_fee": -271.65,
-        "pct": -80.1,
-        "current_gross": 13500.11,
-        "prior_gross": 67831.3
-      },
-      {
         "customer_name": "Dominion Dovetails",
         "allmoxy_customer_id": null,
-        "current_fee": 78.95,
+        "current_fee": 80.93,
         "prior_fee": 355.14,
-        "delta_fee": -276.19,
-        "pct": -77.8,
-        "current_gross": 15793,
+        "delta_fee": -274.21,
+        "pct": -77.2,
+        "current_gross": 16187.48,
         "prior_gross": 71025.22
+      },
+      {
+        "customer_name": "B&B Door",
+        "allmoxy_customer_id": 293,
+        "current_fee": 196.2,
+        "prior_fee": 473.06,
+        "delta_fee": -276.86,
+        "pct": -58.5,
+        "current_gross": 39236.96,
+        "prior_gross": 94610.24
+      },
+      {
+        "customer_name": "ClosetParts",
+        "allmoxy_customer_id": 312,
+        "current_fee": 324.78,
+        "prior_fee": 602.12,
+        "delta_fee": -277.34,
+        "pct": -46.1,
+        "current_gross": 64953.08,
+        "prior_gross": 120425.76
       },
       {
         "customer_name": "WC Doors",
@@ -551,22 +571,22 @@
       {
         "customer_name": "Kitch Components Inc.",
         "allmoxy_customer_id": 73,
-        "current_fee": 51.63,
+        "current_fee": 70.63,
         "prior_fee": 428.8,
-        "delta_fee": -377.17,
-        "pct": -88,
-        "current_gross": 25815.08,
+        "delta_fee": -358.17,
+        "pct": -83.5,
+        "current_gross": 35315.08,
         "prior_gross": 214414.25
       },
       {
-        "customer_name": "B&B Door",
-        "allmoxy_customer_id": 293,
-        "current_fee": 91.6,
-        "prior_fee": 473.06,
-        "delta_fee": -381.46,
-        "pct": -80.6,
-        "current_gross": 18316.7,
-        "prior_gross": 94610.24
+        "customer_name": "Hartley Group Coatings",
+        "allmoxy_customer_id": 400,
+        "current_fee": 170.84,
+        "prior_fee": 555.74,
+        "delta_fee": -384.9,
+        "pct": -69.3,
+        "current_gross": 34173.09,
+        "prior_gross": 111153.17
       },
       {
         "customer_name": "Midwest Floor Coverings",
@@ -589,64 +609,54 @@
         "prior_gross": 106972.75
       },
       {
-        "customer_name": "Hartley Group Coatings",
-        "allmoxy_customer_id": 400,
-        "current_fee": 161.4,
-        "prior_fee": 555.74,
-        "delta_fee": -394.34,
-        "pct": -71,
-        "current_gross": 32284.19,
-        "prior_gross": 111153.17
-      },
-      {
-        "customer_name": "ClosetParts",
-        "allmoxy_customer_id": 312,
-        "current_fee": 200.37,
-        "prior_fee": 602.12,
-        "delta_fee": -401.75,
-        "pct": -66.7,
-        "current_gross": 40073.18,
-        "prior_gross": 120425.76
-      },
-      {
         "customer_name": "Classic Kitchen Doors",
         "allmoxy_customer_id": 30,
-        "current_fee": 267.74,
+        "current_fee": 285.6,
         "prior_fee": 706.91,
-        "delta_fee": -439.17,
-        "pct": -62.1,
-        "current_gross": 53547.01,
+        "delta_fee": -421.31,
+        "pct": -59.6,
+        "current_gross": 57119.36,
         "prior_gross": 141387.45
       },
       {
         "customer_name": "Sherwood Shelving",
         "allmoxy_customer_id": 388,
-        "current_fee": 257.2,
+        "current_fee": 269.96,
         "prior_fee": 710.66,
-        "delta_fee": -453.46,
-        "pct": -63.8,
-        "current_gross": 51436.45,
+        "delta_fee": -440.7,
+        "pct": -62,
+        "current_gross": 53989.25,
         "prior_gross": 142132.29
       },
       {
         "customer_name": "Drawers By Design",
         "allmoxy_customer_id": 82,
-        "current_fee": 229.24,
+        "current_fee": 265.43,
         "prior_fee": 750.75,
-        "delta_fee": -521.51,
-        "pct": -69.5,
-        "current_gross": 45848.87,
+        "delta_fee": -485.32,
+        "pct": -64.6,
+        "current_gross": 53087.25,
         "prior_gross": 150143.69
       },
       {
         "customer_name": "Brushy Creek Custom Doors",
         "allmoxy_customer_id": 72,
-        "current_fee": 449.24,
+        "current_fee": 545.71,
         "prior_fee": 1080.5,
-        "delta_fee": -631.26,
-        "pct": -58.4,
-        "current_gross": 89850.53,
+        "delta_fee": -534.79,
+        "pct": -49.5,
+        "current_gross": 109145.08,
         "prior_gross": 216109.04
+      },
+      {
+        "customer_name": "Timberline Cabinet Doors, Inc.",
+        "allmoxy_customer_id": null,
+        "current_fee": 303.51,
+        "prior_fee": 918.5,
+        "delta_fee": -614.99,
+        "pct": -67,
+        "current_gross": 60700.92,
+        "prior_gross": 183697.6
       },
       {
         "customer_name": "Bywater Products",
@@ -659,63 +669,63 @@
         "prior_gross": 155767.6
       },
       {
-        "customer_name": "Timberline Cabinet Doors, Inc.",
-        "allmoxy_customer_id": null,
-        "current_fee": 241.11,
-        "prior_fee": 918.5,
-        "delta_fee": -677.39,
-        "pct": -73.7,
-        "current_gross": 48221.57,
-        "prior_gross": 183697.6
-      },
-      {
         "customer_name": "Amco Distributors Inc.",
         "allmoxy_customer_id": 23,
-        "current_fee": 206.23,
+        "current_fee": 228.56,
         "prior_fee": 893.52,
-        "delta_fee": -687.29,
-        "pct": -76.9,
-        "current_gross": 41246.21,
+        "delta_fee": -664.96,
+        "pct": -74.4,
+        "current_gross": 45711.42,
         "prior_gross": 178703.77
-      },
-      {
-        "customer_name": "Cutting Edge Doors & Woodworking",
-        "allmoxy_customer_id": 363,
-        "current_fee": 495.65,
-        "prior_fee": 1215.07,
-        "delta_fee": -719.42,
-        "pct": -59.2,
-        "current_gross": 99133.07,
-        "prior_gross": 243014.35
       },
       {
         "customer_name": "Melbourne Architectural Millwork Company",
         "allmoxy_customer_id": 246,
-        "current_fee": 187.16,
+        "current_fee": 238.51,
         "prior_fee": 920.06,
-        "delta_fee": -732.9,
-        "pct": -79.7,
-        "current_gross": 37431.19,
+        "delta_fee": -681.55,
+        "pct": -74.1,
+        "current_gross": 47701.21,
         "prior_gross": 184002.51
+      },
+      {
+        "customer_name": "Cutting Edge Doors & Woodworking",
+        "allmoxy_customer_id": 363,
+        "current_fee": 515.56,
+        "prior_fee": 1215.07,
+        "delta_fee": -699.51,
+        "pct": -57.6,
+        "current_gross": 103112.43,
+        "prior_gross": 243014.35
       },
       {
         "customer_name": "CCF Industries",
         "allmoxy_customer_id": 2,
-        "current_fee": 454.31,
+        "current_fee": 533.55,
         "prior_fee": 1234.2,
-        "delta_fee": -779.89,
-        "pct": -63.2,
-        "current_gross": 151428.43,
+        "delta_fee": -700.65,
+        "pct": -56.8,
+        "current_gross": 177840.23,
         "prior_gross": 411379.89
+      },
+      {
+        "customer_name": "Bww Closets",
+        "allmoxy_customer_id": 262,
+        "current_fee": 230.9,
+        "prior_fee": 1083.53,
+        "delta_fee": -852.63,
+        "pct": -78.7,
+        "current_gross": 46180.27,
+        "prior_gross": 216701.64
       },
       {
         "customer_name": "NJ Drawers",
         "allmoxy_customer_id": 159,
-        "current_fee": 292.48,
+        "current_fee": 299.57,
         "prior_fee": 1159.04,
-        "delta_fee": -866.56,
-        "pct": -74.8,
-        "current_gross": 58493.66,
+        "delta_fee": -859.47,
+        "pct": -74.2,
+        "current_gross": 59913.15,
         "prior_gross": 231804.89
       },
       {
@@ -729,103 +739,93 @@
         "prior_gross": 240305.92
       },
       {
-        "customer_name": "Bww Closets",
-        "allmoxy_customer_id": 262,
-        "current_fee": 149.78,
-        "prior_fee": 1083.53,
-        "delta_fee": -933.75,
-        "pct": -86.2,
-        "current_gross": 29954.95,
-        "prior_gross": 216701.64
-      },
-      {
         "customer_name": "New York Door and Drawer",
         "allmoxy_customer_id": 198,
-        "current_fee": 477.98,
+        "current_fee": 506.45,
         "prior_fee": 1472.58,
-        "delta_fee": -994.6,
-        "pct": -67.5,
-        "current_gross": 95600.49,
+        "delta_fee": -966.13,
+        "pct": -65.6,
+        "current_gross": 101295.73,
         "prior_gross": 294501.53
       },
       {
         "customer_name": "Westwind Wood Specialties, Inc",
         "allmoxy_customer_id": null,
-        "current_fee": 705.45,
+        "current_fee": 877.9,
         "prior_fee": 1965.17,
-        "delta_fee": -1259.72,
-        "pct": -64.1,
-        "current_gross": 141093.51,
+        "delta_fee": -1087.27,
+        "pct": -55.3,
+        "current_gross": 175581.37,
         "prior_gross": 393034.67
       },
       {
         "customer_name": "J & B WOODCRAFTS LLC",
         "allmoxy_customer_id": 75,
-        "current_fee": 390.89,
+        "current_fee": 425.37,
         "prior_fee": 1675.68,
-        "delta_fee": -1284.79,
-        "pct": -76.7,
-        "current_gross": 78178.87,
+        "delta_fee": -1250.31,
+        "pct": -74.6,
+        "current_gross": 85074.85,
         "prior_gross": 335143.06
       },
       {
         "customer_name": "Cimino's Cabinet Doors Inc",
         "allmoxy_customer_id": 491,
-        "current_fee": 539.61,
+        "current_fee": 594.05,
         "prior_fee": 2423.51,
-        "delta_fee": -1883.9,
-        "pct": -77.7,
-        "current_gross": 107917.81,
+        "delta_fee": -1829.46,
+        "pct": -75.5,
+        "current_gross": 118804.55,
         "prior_gross": 484655.3
       },
       {
         "customer_name": "Primary Kitchen",
         "allmoxy_customer_id": 176,
-        "current_fee": 1111.22,
+        "current_fee": 1231.38,
         "prior_fee": 3178.62,
-        "delta_fee": -2067.4,
-        "pct": -65,
-        "current_gross": 254879.48,
+        "delta_fee": -1947.24,
+        "pct": -61.3,
+        "current_gross": 278932.09,
         "prior_gross": 677210.1
       },
       {
         "customer_name": "BTJ Cabinet Door Company",
         "allmoxy_customer_id": 256,
-        "current_fee": 759.26,
+        "current_fee": 842.94,
         "prior_fee": 2935.77,
-        "delta_fee": -2176.51,
-        "pct": -74.1,
-        "current_gross": 151859.65,
+        "delta_fee": -2092.83,
+        "pct": -71.3,
+        "current_gross": 168595.73,
         "prior_gross": 587162.85
       },
       {
         "customer_name": "Panhandle Door Inc",
         "allmoxy_customer_id": 38,
-        "current_fee": 709.12,
+        "current_fee": 805.19,
         "prior_fee": 3479.25,
-        "delta_fee": -2770.13,
-        "pct": -79.6,
-        "current_gross": 141822.16,
+        "delta_fee": -2674.06,
+        "pct": -76.9,
+        "current_gross": 161036.48,
         "prior_gross": 695837.84
       },
       {
         "customer_name": "Fryburg Door, Inc.",
         "allmoxy_customer_id": null,
-        "current_fee": 892.64,
+        "current_fee": 1206.9,
         "prior_fee": 3981.4,
-        "delta_fee": -3088.76,
-        "pct": -77.6,
-        "current_gross": 178528.63,
+        "delta_fee": -2774.5,
+        "pct": -69.7,
+        "current_gross": 241381.69,
         "prior_gross": 796266.83
       },
       {
         "customer_name": "Canary Closets & Cabinetry",
         "allmoxy_customer_id": null,
-        "current_fee": 710.3,
+        "current_fee": 715.98,
         "prior_fee": 3938.2,
-        "delta_fee": -3227.9,
-        "pct": -82,
-        "current_gross": 71028.37,
+        "delta_fee": -3222.22,
+        "pct": -81.8,
+        "current_gross": 71595.15,
         "prior_gross": 393820.57
       }
     ]
@@ -845,8 +845,8 @@
     "never": 117,
     "not_processing": 129,
     "attach_target_order_volume": 175026985,
-    "attach_target_fee_potential": 480672,
-    "attach_capture_assumption": 0.549,
+    "attach_target_fee_potential": 479657,
+    "attach_capture_assumption": 0.548,
     "attach_potential_basis": "Annualized verified-order volume of active customers not processing on Connect × 55% capture (median share of order volume that current processors actually run through Connect) × 0.5% standard take. The capture factor avoids the naive assumption that 100% of order volume card-processes."
   },
   "customers": [
@@ -1823,7 +1823,7 @@
       "connect_gmv_annual": 7652,
       "connect_attach_rate": 0.01,
       "annual_connect_fee": 38,
-      "est_annual_connect_fee": 2115,
+      "est_annual_connect_fee": 2111,
       "lapsed_note": null
     },
     {
@@ -1855,7 +1855,7 @@
       "connect_gmv_annual": 790,
       "connect_attach_rate": 0,
       "annual_connect_fee": 4,
-      "est_annual_connect_fee": 15794,
+      "est_annual_connect_fee": 15761,
       "lapsed_note": "Business-model pivot. After an ownership change/rebrand (formerly Ruck Cabinet Door), Thomas Creek repositioned as a B2B components manufacturer using dropshipping and shifted to using Allmoxy as an internal back-office tool (inventory, scheduling, machine feedback) rather than a customer-facing storefront that collects payments. Connect processing peaked in 2024 (~$5.9K fees) then fell off through 2025 (~$411, sporadic); last activity Oct 2025. Owner (Michael Woods) is price-sensitive and month-to-month. Source: HubSpot notes + Connect usage timing."
     },
     {
@@ -1871,7 +1871,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 69484,
+      "est_annual_connect_fee": 69337,
       "lapsed_note": null
     },
     {
@@ -1887,7 +1887,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 60694,
+      "est_annual_connect_fee": 60565,
       "lapsed_note": null
     },
     {
@@ -1903,7 +1903,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 58248,
+      "est_annual_connect_fee": 58124,
       "lapsed_note": null
     },
     {
@@ -1919,7 +1919,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 44824,
+      "est_annual_connect_fee": 44729,
       "lapsed_note": null
     },
     {
@@ -1935,7 +1935,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 34898,
+      "est_annual_connect_fee": 34824,
       "lapsed_note": null
     },
     {
@@ -1951,7 +1951,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 23397,
+      "est_annual_connect_fee": 23347,
       "lapsed_note": null
     },
     {
@@ -1967,7 +1967,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 17578,
+      "est_annual_connect_fee": 17541,
       "lapsed_note": null
     },
     {
@@ -1983,7 +1983,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 16142,
+      "est_annual_connect_fee": 16107,
       "lapsed_note": null
     },
     {
@@ -1999,7 +1999,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 14464,
+      "est_annual_connect_fee": 14433,
       "lapsed_note": null
     },
     {
@@ -2015,7 +2015,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 11350,
+      "est_annual_connect_fee": 11326,
       "lapsed_note": null
     },
     {
@@ -2031,7 +2031,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 9372,
+      "est_annual_connect_fee": 9352,
       "lapsed_note": null
     },
     {
@@ -2047,7 +2047,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 8307,
+      "est_annual_connect_fee": 8289,
       "lapsed_note": null
     },
     {
@@ -2063,7 +2063,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 8120,
+      "est_annual_connect_fee": 8103,
       "lapsed_note": null
     },
     {
@@ -2079,7 +2079,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 7522,
+      "est_annual_connect_fee": 7506,
       "lapsed_note": null
     },
     {
@@ -2095,7 +2095,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 7170,
+      "est_annual_connect_fee": 7155,
       "lapsed_note": null
     },
     {
@@ -2111,7 +2111,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 6687,
+      "est_annual_connect_fee": 6673,
       "lapsed_note": null
     },
     {
@@ -2127,7 +2127,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 6329,
+      "est_annual_connect_fee": 6316,
       "lapsed_note": null
     },
     {
@@ -2143,7 +2143,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 5157,
+      "est_annual_connect_fee": 5146,
       "lapsed_note": null
     },
     {
@@ -2159,7 +2159,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 4389,
+      "est_annual_connect_fee": 4380,
       "lapsed_note": null
     },
     {
@@ -2175,7 +2175,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 4221,
+      "est_annual_connect_fee": 4212,
       "lapsed_note": null
     },
     {
@@ -2191,7 +2191,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 3922,
+      "est_annual_connect_fee": 3913,
       "lapsed_note": null
     },
     {
@@ -2207,7 +2207,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 3507,
+      "est_annual_connect_fee": 3500,
       "lapsed_note": null
     },
     {
@@ -2223,7 +2223,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 3375,
+      "est_annual_connect_fee": 3368,
       "lapsed_note": null
     },
     {
@@ -2239,7 +2239,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 3215,
+      "est_annual_connect_fee": 3209,
       "lapsed_note": null
     },
     {
@@ -2255,7 +2255,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 2939,
+      "est_annual_connect_fee": 2933,
       "lapsed_note": null
     },
     {
@@ -2271,7 +2271,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 2780,
+      "est_annual_connect_fee": 2774,
       "lapsed_note": null
     },
     {
@@ -2287,7 +2287,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 2311,
+      "est_annual_connect_fee": 2307,
       "lapsed_note": null
     },
     {
@@ -2303,7 +2303,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 2245,
+      "est_annual_connect_fee": 2241,
       "lapsed_note": null
     },
     {
@@ -2319,7 +2319,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 1916,
+      "est_annual_connect_fee": 1912,
       "lapsed_note": null
     },
     {
@@ -2335,7 +2335,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 1705,
+      "est_annual_connect_fee": 1701,
       "lapsed_note": null
     },
     {
@@ -2351,7 +2351,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 1647,
+      "est_annual_connect_fee": 1644,
       "lapsed_note": null
     },
     {
@@ -2367,7 +2367,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 1642,
+      "est_annual_connect_fee": 1639,
       "lapsed_note": null
     },
     {
@@ -2383,7 +2383,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 1554,
+      "est_annual_connect_fee": 1551,
       "lapsed_note": null
     },
     {
@@ -2399,7 +2399,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 1498,
+      "est_annual_connect_fee": 1495,
       "lapsed_note": null
     },
     {
@@ -2415,7 +2415,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 1086,
+      "est_annual_connect_fee": 1084,
       "lapsed_note": null
     },
     {
@@ -2431,7 +2431,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 927,
+      "est_annual_connect_fee": 925,
       "lapsed_note": null
     },
     {
@@ -2447,7 +2447,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 861,
+      "est_annual_connect_fee": 859,
       "lapsed_note": null
     },
     {
@@ -2463,7 +2463,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 788,
+      "est_annual_connect_fee": 786,
       "lapsed_note": null
     },
     {
@@ -2479,7 +2479,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 691,
+      "est_annual_connect_fee": 689,
       "lapsed_note": null
     },
     {
@@ -2495,7 +2495,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 659,
+      "est_annual_connect_fee": 658,
       "lapsed_note": null
     },
     {
@@ -2511,7 +2511,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 624,
+      "est_annual_connect_fee": 623,
       "lapsed_note": null
     },
     {
@@ -2527,7 +2527,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 567,
+      "est_annual_connect_fee": 566,
       "lapsed_note": null
     },
     {
@@ -2543,7 +2543,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 564,
+      "est_annual_connect_fee": 563,
       "lapsed_note": null
     },
     {
@@ -2559,7 +2559,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 538,
+      "est_annual_connect_fee": 537,
       "lapsed_note": null
     },
     {
@@ -2575,7 +2575,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 503,
+      "est_annual_connect_fee": 501,
       "lapsed_note": null
     },
     {
@@ -2591,7 +2591,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 456,
+      "est_annual_connect_fee": 455,
       "lapsed_note": null
     },
     {
@@ -2607,7 +2607,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 362,
+      "est_annual_connect_fee": 361,
       "lapsed_note": null
     },
     {
@@ -2623,7 +2623,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 333,
+      "est_annual_connect_fee": 332,
       "lapsed_note": null
     },
     {
@@ -2639,7 +2639,7 @@
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
       "annual_connect_fee": 0,
-      "est_annual_connect_fee": 265,
+      "est_annual_connect_fee": 264,
       "lapsed_note": null
     },
     {
@@ -3990,70 +3990,70 @@
     },
     {
       "month": "2026-07",
-      "gross_volume": 2536076.08,
-      "fee_revenue": 12491.41,
+      "gross_volume": 2929489.51,
+      "fee_revenue": 14379.93,
       "fee_refunded": 0,
-      "txn_count": 1376,
-      "take_rate": 0.00493
+      "txn_count": 1547,
+      "take_rate": 0.00491
     }
   ],
   "by_account": [
     {
       "account": "acct_18oE65HMMxXWFqEJ",
-      "gross_volume": 8430842.1,
-      "fee_revenue": 42154.51,
-      "txn_count": 2988,
+      "gross_volume": 8450056.42,
+      "fee_revenue": 42250.58,
+      "txn_count": 2995,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Panhandle Door Inc",
       "allmoxy_customer_id": 38,
       "customer_status": "active",
       "subscription_mrr": 6024,
-      "this_month_fee": 709.12,
-      "this_month_gross": 141822.16,
+      "this_month_fee": 805.19,
+      "this_month_gross": 161036.48,
       "last_month_fee": 3479.25,
       "last_month_gross": 695837.84
     },
     {
       "account": "acct_1FmkiAIvqzE0uMTo",
-      "gross_volume": 7441225.73,
-      "fee_revenue": 37206.34,
-      "txn_count": 3774,
+      "gross_volume": 7457961.81,
+      "fee_revenue": 37290.02,
+      "txn_count": 3780,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-10",
+      "last_seen": "2026-07-11",
       "customer_name": "BTJ Cabinet Door Company",
       "allmoxy_customer_id": 256,
       "customer_status": "active",
       "subscription_mrr": 3520,
-      "this_month_fee": 759.26,
-      "this_month_gross": 151859.65,
+      "this_month_fee": 842.94,
+      "this_month_gross": 168595.73,
       "last_month_fee": 2935.77,
       "last_month_gross": 587162.85
     },
     {
       "account": "acct_1GTqRkI9DSDUPRJA",
-      "gross_volume": 7264385,
-      "fee_revenue": 34251.35,
-      "txn_count": 1512,
-      "take_rate": 0.00471,
+      "gross_volume": 7288437.61,
+      "fee_revenue": 34371.51,
+      "txn_count": 1521,
+      "take_rate": 0.00472,
       "first_seen": "2025-06-01",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Primary Kitchen",
       "allmoxy_customer_id": 176,
       "customer_status": "at_risk",
       "subscription_mrr": 5240.5,
-      "this_month_fee": 1111.22,
-      "this_month_gross": 254879.48,
+      "this_month_fee": 1231.38,
+      "this_month_gross": 278932.09,
       "last_month_fee": 3178.62,
       "last_month_gross": 677210.1
     },
     {
       "account": "acct_1Az81oEFGEA1WRFU",
-      "gross_volume": 7063748.37,
-      "fee_revenue": 35318.79,
-      "txn_count": 3045,
+      "gross_volume": 7126601.43,
+      "fee_revenue": 35633.05,
+      "txn_count": 3067,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
       "last_seen": "2026-07-10",
@@ -4061,50 +4061,50 @@
       "allmoxy_customer_id": null,
       "customer_status": null,
       "subscription_mrr": null,
-      "this_month_fee": 892.64,
-      "this_month_gross": 178528.63,
+      "this_month_fee": 1206.9,
+      "this_month_gross": 241381.69,
       "last_month_fee": 3981.4,
       "last_month_gross": 796266.83
     },
     {
       "account": "acct_1Pgpj0HiLXinzGgQ",
-      "gross_volume": 5065568.05,
-      "fee_revenue": 25329.68,
-      "txn_count": 4630,
+      "gross_volume": 5076454.79,
+      "fee_revenue": 25384.12,
+      "txn_count": 4643,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Cimino's Cabinet Doors Inc",
       "allmoxy_customer_id": 491,
       "customer_status": "active",
       "subscription_mrr": 2599,
-      "this_month_fee": 539.61,
-      "this_month_gross": 107917.81,
+      "this_month_fee": 594.05,
+      "this_month_gross": 118804.55,
       "last_month_fee": 2423.51,
       "last_month_gross": 484655.3
     },
     {
       "account": "acct_1AKrAVJW5rNLsaLW",
-      "gross_volume": 4865471.9,
-      "fee_revenue": 14597.46,
-      "txn_count": 3651,
+      "gross_volume": 4891883.7,
+      "fee_revenue": 14676.7,
+      "txn_count": 3658,
       "take_rate": 0.003,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "CCF Industries",
       "allmoxy_customer_id": 2,
       "customer_status": "active",
       "subscription_mrr": 2699,
-      "this_month_fee": 454.31,
-      "this_month_gross": 151428.43,
+      "this_month_fee": 533.55,
+      "this_month_gross": 177840.23,
       "last_month_fee": 1234.2,
       "last_month_gross": 411379.89
     },
     {
       "account": "acct_1Ie4AlAA7XAvgG9e",
-      "gross_volume": 4673168.72,
-      "fee_revenue": 23365.85,
-      "txn_count": 1921,
+      "gross_volume": 4707656.58,
+      "fee_revenue": 23538.3,
+      "txn_count": 1937,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
       "last_seen": "2026-07-10",
@@ -4112,16 +4112,16 @@
       "allmoxy_customer_id": null,
       "customer_status": null,
       "subscription_mrr": null,
-      "this_month_fee": 705.45,
-      "this_month_gross": 141093.51,
+      "this_month_fee": 877.9,
+      "this_month_gross": 175581.37,
       "last_month_fee": 1965.17,
       "last_month_gross": 393034.67
     },
     {
       "account": "acct_17GymmJck9adSKI3",
-      "gross_volume": 4536538.3,
-      "fee_revenue": 45365.59,
-      "txn_count": 2851,
+      "gross_volume": 4537105.08,
+      "fee_revenue": 45371.27,
+      "txn_count": 2856,
       "take_rate": 0.01,
       "first_seen": "2025-05-30",
       "last_seen": "2026-07-10",
@@ -4129,101 +4129,101 @@
       "allmoxy_customer_id": null,
       "customer_status": null,
       "subscription_mrr": null,
-      "this_month_fee": 710.3,
-      "this_month_gross": 71028.37,
+      "this_month_fee": 715.98,
+      "this_month_gross": 71595.15,
       "last_month_fee": 3938.2,
       "last_month_gross": 393820.57
     },
     {
       "account": "acct_1823FxHbxUXgoRNj",
-      "gross_volume": 4178534.27,
-      "fee_revenue": 20892.51,
-      "txn_count": 1552,
+      "gross_volume": 4185430.25,
+      "fee_revenue": 20926.99,
+      "txn_count": 1556,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "J & B WOODCRAFTS LLC",
       "allmoxy_customer_id": 75,
       "customer_status": "active",
       "subscription_mrr": 2875,
-      "this_month_fee": 390.89,
-      "this_month_gross": 78178.87,
+      "this_month_fee": 425.37,
+      "this_month_gross": 85074.85,
       "last_month_fee": 1675.68,
       "last_month_gross": 335143.06
     },
     {
       "account": "acct_1KFLQyDM0UMDl7TC",
-      "gross_volume": 4004514.76,
-      "fee_revenue": 20022.74,
-      "txn_count": 1816,
+      "gross_volume": 4008494.12,
+      "fee_revenue": 20042.65,
+      "txn_count": 1820,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Cutting Edge Doors & Woodworking",
       "allmoxy_customer_id": 363,
       "customer_status": "active",
       "subscription_mrr": 3748,
-      "this_month_fee": 495.65,
-      "this_month_gross": 99133.07,
+      "this_month_fee": 515.56,
+      "this_month_gross": 103112.43,
       "last_month_fee": 1215.07,
       "last_month_gross": 243014.35
     },
     {
       "account": "acct_1GaksWCKMmFCKR5X",
-      "gross_volume": 3058522.76,
-      "fee_revenue": 15292.82,
-      "txn_count": 4115,
+      "gross_volume": 3064218,
+      "fee_revenue": 15321.29,
+      "txn_count": 4126,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-10",
+      "last_seen": "2026-07-11",
       "customer_name": "New York Door and Drawer",
       "allmoxy_customer_id": 198,
       "customer_status": "active",
       "subscription_mrr": 2446.75,
-      "this_month_fee": 477.98,
-      "this_month_gross": 95600.49,
+      "this_month_fee": 506.45,
+      "this_month_gross": 101295.73,
       "last_month_fee": 1472.58,
       "last_month_gross": 294501.53
     },
     {
       "account": "acct_19nuK8K3cACW0EYH",
-      "gross_volume": 2830423.79,
-      "fee_revenue": 5673.42,
-      "txn_count": 701,
+      "gross_volume": 2839923.79,
+      "fee_revenue": 5692.42,
+      "txn_count": 702,
       "take_rate": 0.002,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-03",
+      "last_seen": "2026-07-10",
       "customer_name": "Kitch Components Inc.",
       "allmoxy_customer_id": 73,
       "customer_status": "active",
       "subscription_mrr": 1599,
-      "this_month_fee": 51.63,
-      "this_month_gross": 25815.08,
+      "this_month_fee": 70.63,
+      "this_month_gross": 35315.08,
       "last_month_fee": 428.8,
       "last_month_gross": 214414.25
     },
     {
       "account": "acct_18F33LAGyC97NEhH",
-      "gross_volume": 2553490.48,
-      "fee_revenue": 12767.43,
-      "txn_count": 593,
+      "gross_volume": 2565969.83,
+      "fee_revenue": 12829.83,
+      "txn_count": 597,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-11",
       "customer_name": "Timberline Cabinet Doors, Inc.",
       "allmoxy_customer_id": null,
       "customer_status": null,
       "subscription_mrr": null,
-      "this_month_fee": 241.11,
-      "this_month_gross": 48221.57,
+      "this_month_fee": 303.51,
+      "this_month_gross": 60700.92,
       "last_month_fee": 918.5,
       "last_month_gross": 183697.6
     },
     {
       "account": "acct_1KdKOPFvFDbiIaRb",
-      "gross_volume": 2415143.79,
-      "fee_revenue": 12075.67,
-      "txn_count": 955,
+      "gross_volume": 2434438.34,
+      "fee_revenue": 12172.14,
+      "txn_count": 960,
       "take_rate": 0.005,
       "first_seen": "2025-06-01",
       "last_seen": "2026-07-10",
@@ -4231,8 +4231,8 @@
       "allmoxy_customer_id": 72,
       "customer_status": "at_risk",
       "subscription_mrr": 3099,
-      "this_month_fee": 449.24,
-      "this_month_gross": 89850.53,
+      "this_month_fee": 545.71,
+      "this_month_gross": 109145.08,
       "last_month_fee": 1080.5,
       "last_month_gross": 216109.04
     },
@@ -4255,26 +4255,26 @@
     },
     {
       "account": "acct_1H2KrKKNrPHncelD",
-      "gross_volume": 2267377.49,
-      "fee_revenue": 11336.97,
-      "txn_count": 595,
+      "gross_volume": 2277647.51,
+      "fee_revenue": 11388.32,
+      "txn_count": 597,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Melbourne Architectural Millwork Company",
       "allmoxy_customer_id": 246,
       "customer_status": "active",
       "subscription_mrr": 1600,
-      "this_month_fee": 187.16,
-      "this_month_gross": 37431.19,
+      "this_month_fee": 238.51,
+      "this_month_gross": 47701.21,
       "last_month_fee": 920.06,
       "last_month_gross": 184002.51
     },
     {
       "account": "acct_1E1eb4F67GanQmAh",
-      "gross_volume": 2170031.58,
-      "fee_revenue": 10850.45,
-      "txn_count": 2393,
+      "gross_volume": 2171451.07,
+      "fee_revenue": 10857.54,
+      "txn_count": 2396,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
       "last_seen": "2026-07-10",
@@ -4282,25 +4282,25 @@
       "allmoxy_customer_id": 159,
       "customer_status": "active",
       "subscription_mrr": 2006.25,
-      "this_month_fee": 292.48,
-      "this_month_gross": 58493.66,
+      "this_month_fee": 299.57,
+      "this_month_gross": 59913.15,
       "last_month_fee": 1159.04,
       "last_month_gross": 231804.89
     },
     {
       "account": "acct_1Iv0hFH19rcaHTPx",
-      "gross_volume": 2008961.14,
-      "fee_revenue": 10044.89,
-      "txn_count": 1477,
+      "gross_volume": 2033841.04,
+      "fee_revenue": 10169.3,
+      "txn_count": 1481,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
-      "last_seen": "2026-07-10",
+      "last_seen": "2026-07-11",
       "customer_name": "ClosetParts",
       "allmoxy_customer_id": 312,
       "customer_status": "churned",
       "subscription_mrr": 0,
-      "this_month_fee": 200.37,
-      "this_month_gross": 40073.18,
+      "this_month_fee": 324.78,
+      "this_month_gross": 64953.08,
       "last_month_fee": 602.12,
       "last_month_gross": 120425.76
     },
@@ -4323,9 +4323,9 @@
     },
     {
       "account": "acct_1LKTyuGlu7nN0cGo",
-      "gross_volume": 1886391.59,
-      "fee_revenue": 9432.05,
-      "txn_count": 1152,
+      "gross_volume": 1888944.39,
+      "fee_revenue": 9444.81,
+      "txn_count": 1155,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
       "last_seen": "2026-07-10",
@@ -4333,33 +4333,33 @@
       "allmoxy_customer_id": 388,
       "customer_status": "active",
       "subscription_mrr": 1025,
-      "this_month_fee": 257.2,
-      "this_month_gross": 51436.45,
+      "this_month_fee": 269.96,
+      "this_month_gross": 53989.25,
       "last_month_fee": 710.66,
       "last_month_gross": 142132.29
     },
     {
       "account": "acct_1BQesTIsY8SBTpsU",
-      "gross_volume": 1863032.08,
-      "fee_revenue": 9315.14,
-      "txn_count": 1020,
+      "gross_volume": 1870270.46,
+      "fee_revenue": 9351.33,
+      "txn_count": 1021,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Drawers By Design",
       "allmoxy_customer_id": 82,
       "customer_status": "active",
       "subscription_mrr": 2142.5,
-      "this_month_fee": 229.24,
-      "this_month_gross": 45848.87,
+      "this_month_fee": 265.43,
+      "this_month_gross": 53087.25,
       "last_month_fee": 750.75,
       "last_month_gross": 150143.69
     },
     {
       "account": "acct_1HCuVGHqOLjdW3yb",
-      "gross_volume": 1830603.13,
-      "fee_revenue": 9152.93,
-      "txn_count": 1366,
+      "gross_volume": 1846828.45,
+      "fee_revenue": 9234.05,
+      "txn_count": 1369,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
       "last_seen": "2026-07-10",
@@ -4367,16 +4367,16 @@
       "allmoxy_customer_id": 262,
       "customer_status": "active",
       "subscription_mrr": 1486.72,
-      "this_month_fee": 149.78,
-      "this_month_gross": 29954.95,
+      "this_month_fee": 230.9,
+      "this_month_gross": 46180.27,
       "last_month_fee": 1083.53,
       "last_month_gross": 216701.64
     },
     {
       "account": "acct_19q2SJFu1DZ9HDU0",
-      "gross_volume": 1594529.33,
-      "fee_revenue": 7972.82,
-      "txn_count": 1138,
+      "gross_volume": 1598101.68,
+      "fee_revenue": 7990.68,
+      "txn_count": 1143,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
       "last_seen": "2026-07-10",
@@ -4384,76 +4384,76 @@
       "allmoxy_customer_id": 30,
       "customer_status": "active",
       "subscription_mrr": 1250,
-      "this_month_fee": 267.74,
-      "this_month_gross": 53547.01,
+      "this_month_fee": 285.6,
+      "this_month_gross": 57119.36,
       "last_month_fee": 706.91,
       "last_month_gross": 141387.45
     },
     {
-      "account": "acct_1DepAAIYrYkLnrzo",
-      "gross_volume": 1470038.91,
-      "fee_revenue": 7350.26,
-      "txn_count": 746,
-      "take_rate": 0.005,
-      "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
-      "customer_name": "Amco Distributors Inc.",
-      "allmoxy_customer_id": 23,
-      "customer_status": "active",
-      "subscription_mrr": 799,
-      "this_month_fee": 206.23,
-      "this_month_gross": 41246.21,
-      "last_month_fee": 893.52,
-      "last_month_gross": 178703.77
-    },
-    {
       "account": "acct_1Igs38DdtBM0vgBC",
-      "gross_volume": 1459434.48,
-      "fee_revenue": 7297.26,
-      "txn_count": 671,
+      "gross_volume": 1480354.74,
+      "fee_revenue": 7401.86,
+      "txn_count": 672,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "B&B Door",
       "allmoxy_customer_id": 293,
       "customer_status": "active",
       "subscription_mrr": 2133.5,
-      "this_month_fee": 91.6,
-      "this_month_gross": 18316.7,
+      "this_month_fee": 196.2,
+      "this_month_gross": 39236.96,
       "last_month_fee": 473.06,
       "last_month_gross": 94610.24
     },
     {
-      "account": "acct_1LmdDuLlYQUw6Khw",
-      "gross_volume": 1353788.68,
-      "fee_revenue": 6768.26,
-      "txn_count": 1993,
+      "account": "acct_1DepAAIYrYkLnrzo",
+      "gross_volume": 1474504.12,
+      "fee_revenue": 7372.59,
+      "txn_count": 750,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
+      "customer_name": "Amco Distributors Inc.",
+      "allmoxy_customer_id": 23,
+      "customer_status": "active",
+      "subscription_mrr": 799,
+      "this_month_fee": 228.56,
+      "this_month_gross": 45711.42,
+      "last_month_fee": 893.52,
+      "last_month_gross": 178703.77
+    },
+    {
+      "account": "acct_1LmdDuLlYQUw6Khw",
+      "gross_volume": 1355677.58,
+      "fee_revenue": 6777.7,
+      "txn_count": 1996,
+      "take_rate": 0.005,
+      "first_seen": "2025-05-30",
+      "last_seen": "2026-07-10",
       "customer_name": "Hartley Group Coatings",
       "allmoxy_customer_id": 400,
       "customer_status": "active",
       "subscription_mrr": 749,
-      "this_month_fee": 161.4,
-      "this_month_gross": 32284.19,
+      "this_month_fee": 170.84,
+      "this_month_gross": 34173.09,
       "last_month_fee": 555.74,
       "last_month_gross": 111153.17
     },
     {
       "account": "acct_1EIej8Dew8pdbexK",
-      "gross_volume": 1271720,
-      "fee_revenue": 6080.75,
-      "txn_count": 963,
+      "gross_volume": 1277533.23,
+      "fee_revenue": 6109.82,
+      "txn_count": 965,
       "take_rate": 0.00478,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Premier Eurocase",
       "allmoxy_customer_id": 161,
       "customer_status": "active",
       "subscription_mrr": 5240.5,
-      "this_month_fee": 243.46,
-      "this_month_gross": 48810.49,
+      "this_month_fee": 272.53,
+      "this_month_gross": 54623.72,
       "last_month_fee": 454.67,
       "last_month_gross": 100032.91
     },
@@ -4476,52 +4476,52 @@
     },
     {
       "account": "acct_1LZbxYK1wSmHR8Vq",
-      "gross_volume": 999803.08,
-      "fee_revenue": 4999.06,
-      "txn_count": 375,
+      "gross_volume": 1000039,
+      "fee_revenue": 5000.24,
+      "txn_count": 376,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-08",
+      "last_seen": "2026-07-10",
       "customer_name": "Red Rock Milling LLC",
       "allmoxy_customer_id": 396,
       "customer_status": "active",
       "subscription_mrr": 1786.99,
-      "this_month_fee": 138.08,
-      "this_month_gross": 27614.63,
+      "this_month_fee": 139.26,
+      "this_month_gross": 27850.55,
       "last_month_fee": 355.56,
       "last_month_gross": 71106.2
     },
     {
       "account": "acct_1MwVDRDU4Tj8GcnG",
-      "gross_volume": 844106.8,
-      "fee_revenue": 4220.58,
-      "txn_count": 973,
+      "gross_volume": 854393.3,
+      "fee_revenue": 4272.01,
+      "txn_count": 978,
       "take_rate": 0.005,
       "first_seen": "2025-06-02",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Door Masters Of Houston",
       "allmoxy_customer_id": 443,
       "customer_status": "active",
       "subscription_mrr": 1499,
-      "this_month_fee": 151.29,
-      "this_month_gross": 30258.04,
+      "this_month_fee": 202.72,
+      "this_month_gross": 40544.54,
       "last_month_fee": 377.23,
       "last_month_gross": 75436.96
     },
     {
       "account": "acct_1L0e9YJYmJJqxOmW",
-      "gross_volume": 758064.18,
-      "fee_revenue": 3790.08,
-      "txn_count": 924,
+      "gross_volume": 762265.72,
+      "fee_revenue": 3811.08,
+      "txn_count": 927,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Ideal Drawer Box, Inc",
       "allmoxy_customer_id": 382,
       "customer_status": "active",
       "subscription_mrr": 1699,
-      "this_month_fee": 51.21,
-      "this_month_gross": 10246.21,
+      "this_month_fee": 72.21,
+      "this_month_gross": 14447.75,
       "last_month_fee": 322.84,
       "last_month_gross": 64567.41
     },
@@ -4561,18 +4561,18 @@
     },
     {
       "account": "acct_1JmMdMEwwL0Xwbfc",
-      "gross_volume": 631316.52,
-      "fee_revenue": 3156.59,
-      "txn_count": 323,
+      "gross_volume": 637463.52,
+      "fee_revenue": 3187.33,
+      "txn_count": 324,
       "take_rate": 0.005,
       "first_seen": "2025-05-30",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Metro Drawer Boxes",
       "allmoxy_customer_id": 217,
       "customer_status": "active",
       "subscription_mrr": 500,
-      "this_month_fee": 67.5,
-      "this_month_gross": 13500.11,
+      "this_month_fee": 98.24,
+      "this_month_gross": 19647.11,
       "last_month_fee": 339.15,
       "last_month_gross": 67831.3
     },
@@ -4595,18 +4595,18 @@
     },
     {
       "account": "acct_1J9uYuGWLE1jvvHN",
-      "gross_volume": 580443.32,
-      "fee_revenue": 2902.24,
-      "txn_count": 390,
+      "gross_volume": 580837.8,
+      "fee_revenue": 2904.22,
+      "txn_count": 392,
       "take_rate": 0.005,
       "first_seen": "2025-06-03",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Dominion Dovetails",
       "allmoxy_customer_id": null,
       "customer_status": null,
       "subscription_mrr": null,
-      "this_month_fee": 78.95,
-      "this_month_gross": 15793,
+      "this_month_fee": 80.93,
+      "this_month_gross": 16187.48,
       "last_month_fee": 355.14,
       "last_month_gross": 71025.22
     },
@@ -4713,6 +4713,23 @@
       "last_month_gross": 23863.53
     },
     {
+      "account": "acct_1IK8v5IFD73dD2ay",
+      "gross_volume": 345577.06,
+      "fee_revenue": 1727.99,
+      "txn_count": 380,
+      "take_rate": 0.005,
+      "first_seen": "2025-06-02",
+      "last_seen": "2026-07-10",
+      "customer_name": "M2M Panel Processing",
+      "allmoxy_customer_id": null,
+      "customer_status": null,
+      "subscription_mrr": null,
+      "this_month_fee": 44.75,
+      "this_month_gross": 8945.03,
+      "last_month_fee": 119.34,
+      "last_month_gross": 23867.92
+    },
+    {
       "account": "acct_1DDCiqBM8LSYmuGx",
       "gross_volume": 344728.01,
       "fee_revenue": 1723.65,
@@ -4730,36 +4747,19 @@
       "last_month_gross": 31200.47
     },
     {
-      "account": "acct_1IK8v5IFD73dD2ay",
-      "gross_volume": 340640.92,
-      "fee_revenue": 1703.3,
-      "txn_count": 377,
-      "take_rate": 0.005,
-      "first_seen": "2025-06-02",
-      "last_seen": "2026-07-08",
-      "customer_name": "M2M Panel Processing",
-      "allmoxy_customer_id": null,
-      "customer_status": null,
-      "subscription_mrr": null,
-      "this_month_fee": 20.06,
-      "this_month_gross": 4008.89,
-      "last_month_fee": 119.34,
-      "last_month_gross": 23867.92
-    },
-    {
       "account": "acct_19QK9HCc7bTWdfJU",
-      "gross_volume": 337610.39,
-      "fee_revenue": 1688.07,
-      "txn_count": 388,
+      "gross_volume": 340167.79,
+      "fee_revenue": 1700.86,
+      "txn_count": 390,
       "take_rate": 0.005,
       "first_seen": "2025-06-03",
-      "last_seen": "2026-07-08",
+      "last_seen": "2026-07-10",
       "customer_name": "My Door Factory",
       "allmoxy_customer_id": 42,
       "customer_status": "active",
       "subscription_mrr": 1000,
-      "this_month_fee": 44.29,
-      "this_month_gross": 8855.38,
+      "this_month_fee": 57.08,
+      "this_month_gross": 11412.78,
       "last_month_fee": 156.67,
       "last_month_gross": 31336.84
     },
@@ -4850,35 +4850,35 @@
     },
     {
       "account": "acct_1HX8xTAzRInuvlVN",
-      "gross_volume": 238666.55,
-      "fee_revenue": 1193.34,
-      "txn_count": 106,
+      "gross_volume": 241133.67,
+      "fee_revenue": 1205.68,
+      "txn_count": 108,
       "take_rate": 0.005,
       "first_seen": "2025-06-10",
-      "last_seen": "2026-07-02",
+      "last_seen": "2026-07-10",
       "customer_name": "Greyloch",
       "allmoxy_customer_id": 136,
       "customer_status": "at_risk",
       "subscription_mrr": 4687,
-      "this_month_fee": 148.41,
-      "this_month_gross": 29681.57,
+      "this_month_fee": 160.75,
+      "this_month_gross": 32148.69,
       "last_month_fee": 191.72,
       "last_month_gross": 38343.52
     },
     {
       "account": "acct_1BTyo7GrqCWIbyfH",
-      "gross_volume": 229316.18,
-      "fee_revenue": 1146.64,
-      "txn_count": 247,
+      "gross_volume": 229555.74,
+      "fee_revenue": 1147.84,
+      "txn_count": 248,
       "take_rate": 0.005,
       "first_seen": "2025-06-01",
-      "last_seen": "2026-07-07",
+      "last_seen": "2026-07-11",
       "customer_name": "Eldorado Plywood",
       "allmoxy_customer_id": 20,
       "customer_status": "active",
       "subscription_mrr": 1575,
-      "this_month_fee": 22.82,
-      "this_month_gross": 4564.28,
+      "this_month_fee": 24.02,
+      "this_month_gross": 4803.84,
       "last_month_fee": 167.86,
       "last_month_gross": 33570.52
     },
@@ -4901,18 +4901,18 @@
     },
     {
       "account": "acct_1RboSEJwCrbj4kix",
-      "gross_volume": 169316.47,
-      "fee_revenue": 846.6,
-      "txn_count": 256,
+      "gross_volume": 173835.69,
+      "fee_revenue": 869.19,
+      "txn_count": 258,
       "take_rate": 0.005,
       "first_seen": "2025-07-07",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-10",
       "customer_name": "Ideal Wood Design",
       "allmoxy_customer_id": null,
       "customer_status": null,
       "subscription_mrr": null,
-      "this_month_fee": 25.92,
-      "this_month_gross": 5184.85,
+      "this_month_fee": 48.51,
+      "this_month_gross": 9704.07,
       "last_month_fee": 45.51,
       "last_month_gross": 9103.66
     },
@@ -5070,6 +5070,23 @@
       "last_month_gross": 12234.23
     },
     {
+      "account": "acct_1IiS01KVTP5sIWUO",
+      "gross_volume": 82086.61,
+      "fee_revenue": 410.42,
+      "txn_count": 67,
+      "take_rate": 0.005,
+      "first_seen": "2025-06-02",
+      "last_seen": "2026-07-10",
+      "customer_name": "Ironwood Cabinet And Millworks",
+      "allmoxy_customer_id": 292,
+      "customer_status": "active",
+      "subscription_mrr": 675,
+      "this_month_fee": 21.6,
+      "this_month_gross": 4321.4,
+      "last_month_fee": 23.05,
+      "last_month_gross": 4609.75
+    },
+    {
       "account": "acct_1I8YfSI1zMqPUp17",
       "gross_volume": 81410.13,
       "fee_revenue": 407.08,
@@ -5085,23 +5102,6 @@
       "this_month_gross": 1274.8,
       "last_month_fee": 56.21,
       "last_month_gross": 11243.16
-    },
-    {
-      "account": "acct_1IiS01KVTP5sIWUO",
-      "gross_volume": 80586.61,
-      "fee_revenue": 402.92,
-      "txn_count": 66,
-      "take_rate": 0.005,
-      "first_seen": "2025-06-02",
-      "last_seen": "2026-07-06",
-      "customer_name": "Ironwood Cabinet And Millworks",
-      "allmoxy_customer_id": 292,
-      "customer_status": "active",
-      "subscription_mrr": 675,
-      "this_month_fee": 14.1,
-      "this_month_gross": 2821.4,
-      "last_month_fee": 23.05,
-      "last_month_gross": 4609.75
     },
     {
       "account": "acct_1AsL5cBVUB05nZVf",
@@ -5122,18 +5122,18 @@
     },
     {
       "account": "acct_1Oyep502jLCP905W",
-      "gross_volume": 50099.88,
-      "fee_revenue": 250.52,
-      "txn_count": 76,
+      "gross_volume": 51989.09,
+      "fee_revenue": 259.97,
+      "txn_count": 77,
       "take_rate": 0.005,
       "first_seen": "2026-02-03",
-      "last_seen": "2026-07-03",
+      "last_seen": "2026-07-10",
       "customer_name": "#N/A",
       "allmoxy_customer_id": null,
       "customer_status": null,
       "subscription_mrr": null,
-      "this_month_fee": 9.75,
-      "this_month_gross": 1950.48,
+      "this_month_fee": 19.2,
+      "this_month_gross": 3839.69,
       "last_month_fee": 84.33,
       "last_month_gross": 16865.67
     },
@@ -5428,18 +5428,18 @@
     },
     {
       "account": "acct_1S7g8rAUw7HQHPTj",
-      "gross_volume": 2045.36,
-      "fee_revenue": 10.22,
-      "txn_count": 2,
+      "gross_volume": 3785.11,
+      "fee_revenue": 18.92,
+      "txn_count": 4,
       "take_rate": 0.005,
       "first_seen": "2025-09-19",
-      "last_seen": "2026-07-01",
+      "last_seen": "2026-07-10",
       "customer_name": "#N/A",
       "allmoxy_customer_id": null,
       "customer_status": null,
       "subscription_mrr": null,
-      "this_month_fee": 10.17,
-      "this_month_gross": 2034.53,
+      "this_month_fee": 18.87,
+      "this_month_gross": 3774.28,
       "last_month_fee": 0,
       "last_month_gross": 0
     },

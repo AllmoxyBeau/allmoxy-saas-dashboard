@@ -1,8 +1,8 @@
 {
   "tab": "allmoxy_core_customer",
   "sheetId": "18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30",
-  "fetchedAt": "2026-07-10T16:16:59.321Z",
-  "cachedUntil": "2026-07-10T16:21:59.321Z",
+  "fetchedAt": "2026-07-11T19:29:45.641Z",
+  "cachedUntil": "2026-07-11T19:34:45.641Z",
   "columns": [
     "allmoxy_customer_id",
     "name",
@@ -7552,8 +7552,58 @@
       "installer_directory": "rayclient2",
       "stripe_customer_ids": [],
       "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2084,
+      "name": "Component Manufacturers Master",
+      "sign_up_date": "2026-07-09",
+      "hubspot_company_id": null,
+      "installer_id": "2143",
+      "installer_directory": "componentmanufacturersdemomaster",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2085,
+      "name": "Component Manufacturers Demo",
+      "sign_up_date": "2026-07-09",
+      "hubspot_company_id": null,
+      "installer_id": "2144",
+      "installer_directory": "componentmanufacturersdemo",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2086,
+      "name": "Production Cabinet Shops Master",
+      "sign_up_date": "2026-07-10",
+      "hubspot_company_id": null,
+      "installer_id": "2145",
+      "installer_directory": "productioncabinetshopsmaster",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2087,
+      "name": "Production Cabinet Shops",
+      "sign_up_date": "2026-07-10",
+      "hubspot_company_id": null,
+      "installer_id": "2146",
+      "installer_directory": "productioncabinetshops",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2088,
+      "name": "Custom Cabinet Shop Master",
+      "sign_up_date": "2026-07-10",
+      "hubspot_company_id": null,
+      "installer_id": "2147",
+      "installer_directory": "customcabinetshopmaster",
+      "stripe_customer_ids": [],
+      "harvest_id": null
     }
   ],
-  "rowCount": 595,
+  "rowCount": 600,
   "notes": "Full customer roster from the allmoxy_core_customer tab of the local xlsx."
 }
