@@ -1,7 +1,343 @@
 {
-  "fetched_at": "2026-07-13T13:54:30.693Z",
+  "fetched_at": "2026-07-16T15:05:40.817Z",
   "comment": "Stripe ↔ QuickBooks per-month reconciliation. Stripe side is sum of customer_profiles.transactions (status=succeeded) by type; QB side is the corresponding pnl_by_month line items. Variance = Stripe minus QB-recognized. Tie-out status: tight (≤1% variance), acceptable (≤5%), investigate (>5%). See `reconciling_items` for canonical reasons for residual variance.",
   "rows": [
+    {
+      "month": "2025-01",
+      "stripe": {
+        "subscription": 224784.03,
+        "services": 34104.5,
+        "connect": 0,
+        "other": 0,
+        "refunds": 20,
+        "total": 258888.53
+      },
+      "qb": {
+        "subscription_revenue": 224804.03,
+        "annual_deferred": 1006.66,
+        "subscription_recognized": 225810.69,
+        "services_revenue": 35370.5,
+        "affiliate_revenue": 0,
+        "subscription_tax": -4081.12,
+        "stripe_fee_income": 32441.16,
+        "total_income": 289543.76
+      },
+      "variance": {
+        "subscription_dollars": -1026.66,
+        "subscription_pct": -0.004546551804079667,
+        "services_dollars": -1266,
+        "services_pct": -0.03579253898022363
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2025-02",
+      "stripe": {
+        "subscription": 252415.22,
+        "services": 24072.25,
+        "connect": 0,
+        "other": 0,
+        "refunds": 1270,
+        "total": 276487.47
+      },
+      "qb": {
+        "subscription_revenue": 223010.22,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 226010.79,
+        "services_revenue": 31477.75,
+        "affiliate_revenue": 0,
+        "subscription_tax": -4280.26,
+        "stripe_fee_income": 31997.46,
+        "total_income": 285208.07
+      },
+      "variance": {
+        "subscription_dollars": 26404.43,
+        "subscription_pct": 0.11682818329160312,
+        "services_dollars": -7405.5,
+        "services_pct": -0.23526141480887294
+      },
+      "tie_out_status": "investigate"
+    },
+    {
+      "month": "2025-03",
+      "stripe": {
+        "subscription": 224289.06,
+        "services": 20578.5,
+        "connect": 0,
+        "other": 0,
+        "refunds": 8431.18,
+        "total": 244867.56
+      },
+      "qb": {
+        "subscription_revenue": 223335.17,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 226335.74,
+        "services_revenue": 24547,
+        "affiliate_revenue": 0,
+        "subscription_tax": -7545.11,
+        "stripe_fee_income": 37396.43,
+        "total_income": 280736.37
+      },
+      "variance": {
+        "subscription_dollars": -2046.68,
+        "subscription_pct": -0.00904267262430579,
+        "services_dollars": -3968.5,
+        "services_pct": -0.1616694504420092
+      },
+      "tie_out_status": "investigate"
+    },
+    {
+      "month": "2025-04",
+      "stripe": {
+        "subscription": 225877.08,
+        "services": 30312,
+        "connect": 0,
+        "other": 0,
+        "refunds": 481,
+        "total": 256189.08
+      },
+      "qb": {
+        "subscription_revenue": 222941.08,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 225941.65,
+        "services_revenue": 31438.5,
+        "affiliate_revenue": 0,
+        "subscription_tax": -4070.55,
+        "stripe_fee_income": 37923.06,
+        "total_income": 291234.88
+      },
+      "variance": {
+        "subscription_dollars": -64.57,
+        "subscription_pct": -0.0002857817494029006,
+        "services_dollars": -1126.5,
+        "services_pct": -0.03583186220716637
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2025-05",
+      "stripe": {
+        "subscription": 224314.69,
+        "services": 19938,
+        "connect": 0,
+        "other": 0,
+        "refunds": 550,
+        "total": 244252.69
+      },
+      "qb": {
+        "subscription_revenue": 223515.69,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 226516.26,
+        "services_revenue": 20848,
+        "affiliate_revenue": 0,
+        "subscription_tax": -4159.24,
+        "stripe_fee_income": 36424.2,
+        "total_income": 279631.44
+      },
+      "variance": {
+        "subscription_dollars": -2201.57,
+        "subscription_pct": -0.009719258123015129,
+        "services_dollars": -910,
+        "services_pct": -0.043649270913277055
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2025-06",
+      "stripe": {
+        "subscription": 223558.77,
+        "services": 9860.5,
+        "connect": 0,
+        "other": 0,
+        "refunds": 5099,
+        "total": 233419.27
+      },
+      "qb": {
+        "subscription_revenue": 223558.77,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 226559.34,
+        "services_revenue": 10550.5,
+        "affiliate_revenue": 0,
+        "subscription_tax": -4338.5,
+        "stripe_fee_income": 38203.35,
+        "total_income": 270976.99
+      },
+      "variance": {
+        "subscription_dollars": -3000.57,
+        "subscription_pct": -0.013244079895360025,
+        "services_dollars": -690,
+        "services_pct": -0.06539974408795791
+      },
+      "tie_out_status": "investigate"
+    },
+    {
+      "month": "2025-07",
+      "stripe": {
+        "subscription": 233118.36,
+        "services": 23887.1,
+        "connect": 0,
+        "other": 0,
+        "refunds": 5741.33,
+        "total": 257005.46
+      },
+      "qb": {
+        "subscription_revenue": 234191.69,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 237192.26,
+        "services_revenue": 23887.1,
+        "affiliate_revenue": 0,
+        "subscription_tax": -2914.05,
+        "stripe_fee_income": 39210.38,
+        "total_income": 297377.99
+      },
+      "variance": {
+        "subscription_dollars": -4073.9,
+        "subscription_pct": -0.01717551829052129,
+        "services_dollars": 0,
+        "services_pct": 0
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2025-08",
+      "stripe": {
+        "subscription": 229522.24,
+        "services": 14209.5,
+        "connect": 0,
+        "other": 0,
+        "refunds": 1320.83,
+        "total": 243731.74
+      },
+      "qb": {
+        "subscription_revenue": 228830.57,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 231831.14,
+        "services_revenue": 18470,
+        "affiliate_revenue": 0,
+        "subscription_tax": -4060.81,
+        "stripe_fee_income": 37147.13,
+        "total_income": 283389.61
+      },
+      "variance": {
+        "subscription_dollars": -2308.9,
+        "subscription_pct": -0.00995940407315463,
+        "services_dollars": -4260.5,
+        "services_pct": -0.23067135896047644
+      },
+      "tie_out_status": "investigate"
+    },
+    {
+      "month": "2025-09",
+      "stripe": {
+        "subscription": 228085.44,
+        "services": 39572.15,
+        "connect": 0,
+        "other": 0,
+        "refunds": 2296.83,
+        "total": 267657.59
+      },
+      "qb": {
+        "subscription_revenue": 226327.77,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 229328.34,
+        "services_revenue": 41372.15,
+        "affiliate_revenue": 0,
+        "subscription_tax": -2992.73,
+        "stripe_fee_income": 39519.55,
+        "total_income": 307229.39
+      },
+      "variance": {
+        "subscription_dollars": -1242.9,
+        "subscription_pct": -0.005419740098410839,
+        "services_dollars": -1800,
+        "services_pct": -0.04350752861526413
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2025-10",
+      "stripe": {
+        "subscription": 230650.71,
+        "services": 30558.65,
+        "connect": 0,
+        "other": 0,
+        "refunds": 836.5,
+        "total": 261209.36
+      },
+      "qb": {
+        "subscription_revenue": 229044.8,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 232045.37,
+        "services_revenue": 31145.15,
+        "affiliate_revenue": 0,
+        "subscription_tax": -2899.11,
+        "stripe_fee_income": 38489.59,
+        "total_income": 298782.52
+      },
+      "variance": {
+        "subscription_dollars": -1394.66,
+        "subscription_pct": -0.006010290142828549,
+        "services_dollars": -586.5,
+        "services_pct": -0.018831182383131882
+      },
+      "tie_out_status": "acceptable"
+    },
+    {
+      "month": "2025-11",
+      "stripe": {
+        "subscription": 229474.25,
+        "services": 21627.2,
+        "connect": 0,
+        "other": 0,
+        "refunds": 2149,
+        "total": 251101.45
+      },
+      "qb": {
+        "subscription_revenue": 228659.38,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 231659.95,
+        "services_revenue": 21627.2,
+        "affiliate_revenue": 0,
+        "subscription_tax": -2919.36,
+        "stripe_fee_income": 34766.63,
+        "total_income": 285135.46
+      },
+      "variance": {
+        "subscription_dollars": -2185.7,
+        "subscription_pct": -0.009434949804659854,
+        "services_dollars": 0,
+        "services_pct": 0
+      },
+      "tie_out_status": "tight"
+    },
+    {
+      "month": "2025-12",
+      "stripe": {
+        "subscription": 238061.62,
+        "services": 25224.5,
+        "connect": 0,
+        "other": 0,
+        "refunds": 2739,
+        "total": 263286.12
+      },
+      "qb": {
+        "subscription_revenue": 224010.31,
+        "annual_deferred": 3000.57,
+        "subscription_recognized": 227010.88,
+        "services_revenue": 25914.5,
+        "affiliate_revenue": 0,
+        "subscription_tax": -2846.81,
+        "stripe_fee_income": 33623.99,
+        "total_income": 283703.57
+      },
+      "variance": {
+        "subscription_dollars": 11050.74,
+        "subscription_pct": 0.048679340831593455,
+        "services_dollars": -690,
+        "services_pct": -0.02662602018175153
+      },
+      "tie_out_status": "acceptable"
+    },
     {
       "month": "2026-01",
       "stripe": {
@@ -199,9 +535,9 @@
     }
   ],
   "summary": {
-    "n_months": 6,
-    "n_tight": 1,
-    "n_acceptable": 4,
-    "n_investigate": 1
+    "n_months": 18,
+    "n_tight": 2,
+    "n_acceptable": 11,
+    "n_investigate": 5
   }
 }

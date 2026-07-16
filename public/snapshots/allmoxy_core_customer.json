@@ -1,8 +1,8 @@
 {
   "tab": "allmoxy_core_customer",
   "sheetId": "18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30",
-  "fetchedAt": "2026-07-13T13:52:18.323Z",
-  "cachedUntil": "2026-07-13T13:57:18.323Z",
+  "fetchedAt": "2026-07-16T15:05:08.260Z",
+  "cachedUntil": "2026-07-16T15:10:08.260Z",
   "columns": [
     "allmoxy_customer_id",
     "name",
@@ -7602,8 +7602,18 @@
       "installer_directory": "customcabinetshopmaster",
       "stripe_customer_ids": [],
       "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2089,
+      "name": "Yukon Group",
+      "sign_up_date": "2026-07-13",
+      "hubspot_company_id": null,
+      "installer_id": "2148",
+      "installer_directory": "yukongroup",
+      "stripe_customer_ids": [],
+      "harvest_id": null
     }
   ],
-  "rowCount": 600,
+  "rowCount": 601,
   "notes": "Full customer roster from the allmoxy_core_customer tab of the local xlsx."
 }

@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-07-13T13:54:29.535Z",
+  "fetched_at": "2026-07-16T15:05:39.678Z",
   "comment": "Adjusted EBITDA bridge (QoE-5). GAAP Net Income → standard EBITDA add-backs (interest, tax, D&A) → GAAP EBITDA → QoE adjustments (owner-comp normalization, one-time costs, discretionary perks) → Adjusted EBITDA. Three time windows: YTD, latest month, TTM. QoE add-backs are user-maintained in _etl_scripts/ebitda_adjustments.json. Built by _etl_scripts/build_ebitda_bridge.mjs.",
   "source": {
-    "pnl_months": 6,
-    "pnl_window": "2026-01 – 2026-06",
+    "pnl_months": 102,
+    "pnl_window": "2018-01 – 2026-06",
     "qoe_adjustment_count": 3,
     "qoe_adjustments_placeholder_count": 3
   },
@@ -143,9 +143,75 @@
     },
     "ttm": {
       "window": "ttm",
-      "label": "TTM (unavailable)",
-      "unavailable": true,
-      "reason": "Only 6 month(s) of P&L data available (2026-01 – 2026-06). TTM bridge will activate automatically once the QB P&L export covers 12+ months. Upload an extended Profit and Loss xlsx to /Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy+LLC_Profit+and+Loss.xlsx and re-run refresh_all."
+      "start": "2025-07",
+      "end": "2026-06",
+      "months_in_window": 12,
+      "total_revenue": 3528709.24,
+      "net_income": 140802.9,
+      "add_backs_to_ebitda": [
+        {
+          "key": "interest",
+          "label": "Interest expense (7011 Loan Interest)",
+          "amount": 34583.81
+        },
+        {
+          "key": "tax",
+          "label": "Taxes (7300 Tax & Penalties)",
+          "amount": 0
+        },
+        {
+          "key": "depreciation",
+          "label": "Depreciation (7400)",
+          "amount": 8114.86
+        },
+        {
+          "key": "amortization",
+          "label": "Amortization (7405)",
+          "amount": 1146.67
+        }
+      ],
+      "gaap_ebitda": 184648.24,
+      "gaap_ebitda_margin": 0.05,
+      "qoe_adjustments": [
+        {
+          "id": "owner-comp-normalization-placeholder",
+          "label": "Owner compensation normalization",
+          "category": "owner_compensation",
+          "amount": 0,
+          "reason": "PLACEHOLDER — fill in the difference between Beau's current Allmoxy compensation (W2 + benefits) and the market rate a buyer would pay for a CEO replacement. If currently UNDER-market, this is a negative adjustment (subtract from EBITDA). If OVER-market, positive (add back). Pull Beau's 2026 W2 + Gusto medical/dental from src/data/payroll or HubSpot, and use the market benchmark referenced in the CIM Packet.",
+          "evidence": null,
+          "verified_by": null,
+          "verified_at": null,
+          "is_placeholder": true
+        },
+        {
+          "id": "transaction-legal-fees-placeholder",
+          "label": "One-time legal/advisory fees for sale process",
+          "category": "one_time",
+          "amount": 0,
+          "reason": "PLACEHOLDER — any legal, M&A advisory, or QoE prep fees that hit the P&L specifically for the sale process. These won't recur post-close. Pull from 6810 Accounting and 6800 Professional Services line items.",
+          "evidence": null,
+          "verified_by": null,
+          "verified_at": null,
+          "is_placeholder": true
+        },
+        {
+          "id": "discretionary-owner-perks-placeholder",
+          "label": "Discretionary owner perks / personal expenses",
+          "category": "discretionary",
+          "amount": 0,
+          "reason": "PLACEHOLDER — personal expenses, travel, meals, or other benefits run through the P&L that a new owner would not continue. Common buckets: meals (6900), travel (6400), culture/morale (7200/7260). Be conservative — only add back what's clearly personal vs. business.",
+          "evidence": null,
+          "verified_by": null,
+          "verified_at": null,
+          "is_placeholder": true
+        }
+      ],
+      "qoe_adjustment_total": 0,
+      "adjusted_ebitda": 184648.24,
+      "adjusted_ebitda_margin": 0.05,
+      "placeholder_adjustment_count": 3,
+      "label": "TTM (2025-07 – 2026-06)"
     }
   }
 }
