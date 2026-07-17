@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-07-17T14:12:19.555Z",
-  "cachedUntil": "2026-07-17T14:17:19.555Z",
+  "fetchedAt": "2026-07-17T16:26:58.083Z",
+  "cachedUntil": "2026-07-17T16:31:58.083Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 207,
@@ -828,7 +828,7 @@
       "vip_legacy": null,
       "implementation_status": null,
       "hubspot_owner_id": "90679002",
-      "owner_name": "Connor",
+      "owner_name": "Sarah",
       "current_mrr": 525,
       "current_arr": 6300,
       "lifetime_subscription": 30846,
@@ -41649,7 +41649,7 @@
       "payment_pause_date": null,
       "instance_creation": "2025-09-18",
       "merchant_connect_date": null,
-      "last_payment_date_hubspot": "2026-06-17",
+      "last_payment_date_hubspot": "2026-07-17",
       "goal_launch_date": null,
       "is_launched": null,
       "pay_status": "Active",

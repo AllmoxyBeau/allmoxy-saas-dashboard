@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-17T14:22:53.056Z",
+  "fetched_at": "2026-07-17T16:35:33.732Z",
   "comment": "5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to all active paying customers. Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.",
   "scoring_mode": "full",
   "totals": {
@@ -9694,7 +9694,7 @@
       "name": "CP&W",
       "hubspot_company_id": "1745976030",
       "owner_id": null,
-      "owner_name": "Connor",
+      "owner_name": "Sarah",
       "current_subscription_mrr": 525,
       "lifetime_subscription": 30846,
       "years_with_us": 7.4,

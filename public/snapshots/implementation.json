@@ -1,7 +1,7 @@
 {
-  "fetchedAt": "2026-07-17T14:22:24.983Z",
-  "jira_fetchedAt": "2026-07-17T14:21:52.921Z",
-  "harvest_fetchedAt": "2026-07-17T14:22:24.886Z",
+  "fetchedAt": "2026-07-17T16:35:06.569Z",
+  "jira_fetchedAt": "2026-07-17T16:34:36.745Z",
+  "harvest_fetchedAt": "2026-07-17T16:35:06.465Z",
   "note": "Implementation projects = services revenue. JIRA (IPA epics) supplies stage; Harvest supplies hours + billable $. Join: harvest_id==client_id (exact); JIRA by epic-summary name-match (+ overrides).",
   "aggregates": {
     "total_customers": 115,
@@ -5151,7 +5151,7 @@
       "allmoxy_customer_id": 83,
       "name": "CP&W",
       "customer_status": "active",
-      "account_rep": "90679002",
+      "account_rep": "Sarah Pierce",
       "harvest_id": "6240405",
       "sign_up_date": "2017-11-25",
       "restart_date": null,
