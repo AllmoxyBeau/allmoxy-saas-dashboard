@@ -281,15 +281,76 @@ for (const li of LINE_ITEMS) {
   discoverChildrenOf(li, row, indent, 0);
 }
 
+// ---------- history overlay from the "QuickBooks CAC Info" tab ----------
+// The standalone export only covers the months QBO was asked for (currently
+// 2026-01..06). Every downstream "TTM" (ProfitLoss, CIM §17, EBITDA bridge)
+// needs 12+ months or it silently understates by summing a short window. The
+// Meta Data Reconcile Tool's "QuickBooks CAC Info" tab carries the full monthly
+// history (2018→) for the same canonical accounts, so we prepend the months the
+// standalone lacks. The standalone stays AUTHORITATIVE for its own range (it
+// supersedes CAC Info, which can be stale/partial for recent months — same
+// basis as build_unit_econ's overlay).
+const CAC_XLSX = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
+let historyMonths = [];
+try {
+  const cwb = XLSX.read(fs.readFileSync(CAC_XLSX), { type: 'buffer' });
+  const cq = XLSX.utils.sheet_to_json(cwb.Sheets['QuickBooks CAC Info'], { header: 1, defval: null, raw: false });
+  const chdr = cq[1] || [];
+  const cCols = [];
+  for (let i = 1; i < chdr.length; i++) {
+    const mm = String(chdr[i] ?? '').trim().match(/^(\w{3})\s+(\d{4})$/);
+    if (mm && MONTHS[mm[1]]) cCols.push({ i, month: `${mm[2]}-${MONTHS[mm[1]]}` });
+  }
+  const cRowByLabel = {};
+  for (let r = 2; r < cq.length; r++) {
+    const a = String(cq[r]?.[0] ?? '').trim();
+    if (a && !(a in cRowByLabel)) cRowByLabel[a] = r;
+  }
+  const cNum = (raw) => { if (raw == null || raw === '') return 0; const n = Number(String(raw).replace(/[$,\s]/g, '')); return Number.isFinite(n) ? n : 0; };
+  const firstStandalone = months[0] ?? '9999-99';
+  // History = CAC Info months strictly before the standalone range that carry
+  // real data (skip the empty future columns the tab pads out to 2026-12).
+  const tiRow = cRowByLabel['Total Income'];
+  historyMonths = cCols
+    .filter((c) => c.month < firstStandalone && tiRow != null && cNum(cq[tiRow][c.i]) !== 0)
+    .map((c) => c.month);
+  for (const item of allItems) {
+    const ri = cRowByLabel[item.account];
+    for (const c of cCols) {
+      if (!(c.month < firstStandalone) || !historyMonths.includes(c.month)) continue;
+      data[item.key] = data[item.key] || {};
+      data[item.key][c.month] = ri == null ? 0 : Math.round(cNum(cq[ri][c.i]) * 100) / 100;
+    }
+  }
+  // Re-derive subtract-based line items (e.g. Other Payroll) for history months too.
+  for (const item of LINE_ITEMS) {
+    if (!item.subtractKeys) continue;
+    for (const m of historyMonths) {
+      let v = data[item.key][m] ?? 0;
+      for (const sk of item.subtractKeys) v -= data[sk]?.[m] ?? 0;
+      data[item.key][m] = Math.round(v * 100) / 100;
+    }
+  }
+} catch (e) {
+  console.error(`  [pnl] history overlay skipped (${e.message}) — standalone months only`);
+}
+
+// Combined chronological month list; ensure every key has every month (0-fill).
+const allMonths = [...new Set([...historyMonths, ...months])].sort();
+for (const item of allItems) {
+  data[item.key] = data[item.key] || {};
+  for (const m of allMonths) if (data[item.key][m] == null) data[item.key][m] = 0;
+}
+
 const now = new Date();
 const out = {
   tab: 'pnl_by_month',
   fetchedAt: now.toISOString(),
   cachedUntil: new Date(now.getTime() + 5 * 60 * 1000).toISOString(),
-  columns: ['key', 'label', 'section', ...months],
+  columns: ['key', 'label', 'section', ...allMonths],
   rows: [],
   rowCount: allItems.length,
-  months,
+  months: allMonths,
   lineItems: allItems.map(({ key, label, section, isTotal, parentKey, depth }) => ({
     key,
     label,
@@ -299,11 +360,11 @@ const out = {
     ...(depth ? { depth } : {}),
   })),
   data,
-  notes: `Full P&L per month sourced from Allmoxy+LLC_Profit+and+Loss.xlsx (Profit and Loss tab). ${allItems.length} line items (${LINE_ITEMS.length} canonical + ${allItems.length - LINE_ITEMS.length} auto-discovered children) × ${months.length} months. ` +
+  notes: `Full P&L per month. Recent months (${months[0] ?? '—'}–${months[months.length - 1] ?? '—'}) from Allmoxy+LLC_Profit+and+Loss.xlsx (authoritative); earlier months (${historyMonths[0] ?? 'none'}–${historyMonths[historyMonths.length - 1] ?? ''}) from the QuickBooks CAC Info history tab. ${allItems.length} line items × ${allMonths.length} months. ` +
     (missing.length > 0 ? `WARNING: ${missing.length} accounts not found in QB tab: ${missing.join(' | ')}` : 'All canonical accounts resolved.'),
 };
 
 const target = path.join(SNAPSHOTS, 'pnl_by_month.json');
 fs.writeFileSync(target, JSON.stringify(out));
 const sizeKb = Math.round(fs.statSync(target).size / 1024);
-console.log(`  wrote pnl_by_month.json (${sizeKb} KB) — ${allItems.length} line items (${LINE_ITEMS.length} canonical + ${allItems.length - LINE_ITEMS.length} discovered) × ${months.length} months${missing.length > 0 ? ` (${missing.length} missing accounts: see notes)` : ''}`);
+console.log(`  wrote pnl_by_month.json (${sizeKb} KB) — ${allItems.length} line items × ${allMonths.length} months (${historyMonths.length} history + ${months.length} standalone)${missing.length > 0 ? ` (${missing.length} missing accounts: see notes)` : ''}`);

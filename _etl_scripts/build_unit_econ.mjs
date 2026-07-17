@@ -78,6 +78,87 @@ for (const [key, rowIdx] of Object.entries(ROWS)) {
   pnl[key] = series;
 }
 
+// ---------- standalone QuickBooks P&L export overlay ----------
+// The "QuickBooks CAC Info" tab (above) is manually maintained and lags. When a
+// fresh QBO "Profit and Loss" export is dropped in the repo root, overlay its
+// months on top of the tab so recent months get real profitability numbers
+// without waiting for the tab to be updated.
+//
+// QUIRK: QBO writes every amount cell as a *formula* (a numeric literal, or a
+// SUM of other cells) with a CACHED VALUE OF 0. Excel recomputes on open, so the
+// file looks populated — but SheetJS reads the zero cache. So we evaluate the
+// formulas ourselves. Same account labels as findAccountRow() above, so the
+// overlay keys map 1:1 onto pnl[].
+const PNL_EXPORT = path.join(path.dirname(XLSX_PATH), 'Allmoxy+LLC_Profit+and+Loss.xlsx');
+if (fs.existsSync(PNL_EXPORT)) {
+  const ewb = XLSX.read(fs.readFileSync(PNL_EXPORT), { cellFormula: true });
+  const esh = ewb.Sheets[ewb.SheetNames[0]];
+  const erows = XLSX.utils.sheet_to_json(esh, { header: 1, defval: null, raw: true });
+  const memo = {};
+  const evalCell = (addr) => {
+    if (addr in memo) return memo[addr];
+    memo[addr] = 0; // cycle guard
+    const c = esh[addr];
+    if (!c) return (memo[addr] = 0);
+    if (c.f == null) return (memo[addr] = typeof c.v === 'number' ? c.v : 0);
+    const raw = String(c.f).trim();
+    const noCommas = raw.replace(/,/g, '');
+    if (/^-?\d+(\.\d+)?$/.test(noCommas)) return (memo[addr] = parseFloat(noCommas));
+    const sub = raw.replace(/[A-Z]+[0-9]+/g, (m) => '(' + evalCell(m) + ')');
+    if (/^[-+*/(). 0-9]+$/.test(sub)) {
+      try { return (memo[addr] = Function('return ' + sub)()); } catch { /* fall through */ }
+    }
+    return (memo[addr] = 0);
+  };
+  // Locate the month header row ("Jan 2026" ... "Jun 2026") and its columns.
+  const MONTHS = { Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06', Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12' };
+  let hdrIdx = -1;
+  for (let i = 0; i < Math.min(erows.length, 12); i++) {
+    if ((erows[i] || []).some((c) => /^\w{3}\s+\d{4}$/.test(String(c ?? '').trim()))) { hdrIdx = i; break; }
+  }
+  const overlayCols = [];
+  if (hdrIdx >= 0) {
+    const hdr = erows[hdrIdx];
+    for (let ci = 1; ci < hdr.length; ci++) {
+      const mm = String(hdr[ci] ?? '').trim().match(/^(\w{3})\s+(\d{4})$/);
+      if (mm && MONTHS[mm[1]]) overlayCols.push({ colLetter: XLSX.utils.encode_col(ci), month: `${mm[2]}-${MONTHS[mm[1]]}` });
+    }
+  }
+  // Map pnl[] keys → the export's exact account labels (same needles as ROWS).
+  const OVERLAY_LABELS = {
+    subRev: '4000 Monthly Subscription', servicesRev: '4300 Services Income',
+    totalIncome: 'Total Income', ccFees: '5000 Credit Card Acceptance Fees',
+    salesCommission: '5200 Sales Commission', servicesCommission: '5300 Services Commissions',
+    affiliateCommission: '5400 Affilliate Commissions', affiliateRev: '4600 Affiliate Referral Income',
+    totalCOGS: 'Total Cost of Goods Sold', grossProfit: 'Gross Profit',
+    marketingPayroll: 'Total 6050 Marketing Payroll Expenses',
+    marketingAdvertising: 'Total 6300 Marketing and Advertising',
+    salesExpenses: 'Total 6500 Sales Expenses', totalExpenses: 'Total Expenses',
+    netOp: 'Net Operating Income',
+  };
+  const rowByLabel = {};
+  erows.forEach((r, i) => { const l = String(r?.[0] ?? '').trim(); if (l && !(l in rowByLabel)) rowByLabel[l] = i; });
+  let overlaid = 0;
+  for (const key of Object.keys(OVERLAY_LABELS)) {
+    if (!pnl[key]) pnl[key] = {};
+    const ri = rowByLabel[OVERLAY_LABELS[key]];
+    for (const { colLetter, month } of overlayCols) {
+      // Absent account (e.g. Services/Affiliate commissions no longer on the P&L)
+      // → 0 for the overlaid month, which is the accurate current value.
+      pnl[key][month] = ri == null ? 0 : Math.round(evalCell(colLetter + (ri + 1)) * 100) / 100;
+    }
+  }
+  // Make sure the overlaid months are in qbMonthCols so they survive the
+  // qbMonths ∩ mrrMonths intersection below even if the tab lacked the column.
+  for (const { month } of overlayCols) {
+    if (!qbMonthCols.some((x) => x.month === month)) qbMonthCols.push({ colIdx: -1, month });
+    overlaid++;
+  }
+  console.error(`[unit_econ] overlaid QuickBooks P&L export: ${overlayCols.map((c) => c.month).join(', ')} (${overlaid} months) from ${path.basename(PNL_EXPORT)}`);
+} else {
+  console.error(`[unit_econ] no standalone P&L export at ${path.basename(PNL_EXPORT)} — using CAC Info tab only`);
+}
+
 // ---------- monthly unit economics time series ----------
 const mrr = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'mrr_by_month.json'), 'utf8'));
 const services = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'services_by_month.json'), 'utf8'));
@@ -88,6 +169,18 @@ const core = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'allmoxy_core_custo
 const connect = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'connect_by_month.json'), 'utf8'));
 const connectByCust = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'connect_by_customer_month.json'), 'utf8'));
 const connectByMonth = Object.fromEntries(connect.rows.map((r) => [r.month, r.mrr_connect ?? 0]));
+
+// MRR waterfall — the authoritative churn source (built before this script). It
+// distinguishes CONFIRMED churn from delinquency/pause/annual gaps, which the
+// old logo-count-delta method here could not. We use its per-month
+// churned_logos for logo churn + LTV so the Scorecard/UE page agree.
+const waterfall = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'mrr_waterfall.json'), 'utf8')); }
+  catch { return null; }
+})();
+const churnedLogosByMonth = waterfall
+  ? Object.fromEntries((waterfall.monthly || []).map((m) => [m.month, m.churned_logos ?? 0]))
+  : {};
 
 const mrrByMonth = Object.fromEntries(mrr.rows.map((r) => [r.month, r]));
 
@@ -203,24 +296,26 @@ const latest = completeMonths[completeMonths.length - 1];
 const avgMRR = latest?.avg_mrr_per_customer ?? null;
 const logoQtyNow = latest?.logo_qty ?? null;
 
-// Derive monthly churn rate from Logo Qty deltas in trailing 12 months vs gross adds.
-// monthly_net_change = logo_qty[m] - logo_qty[m-1]
-// gross_adds = newSignupsByMonth[m]
-// churn_logos = gross_adds - monthly_net_change
-// Use trailing 12 months for a stable rate.
+// Logo churn from the waterfall's CONFIRMED churned_logos (status=churned), not
+// from Logo Qty count-deltas. The old delta method (gross adds − net change)
+// mislabeled delinquency, pauses, and annual-payer gaps as churn, overstating
+// it (~25% vs the true ~17%). monthly rate = churned logos ÷ starting active
+// logos, summed over the window; annualized by compounding. Feeds LTV so the
+// customer-lifetime math matches the Scorecard's logo-churn figure.
 let totalChurn = 0;
 let totalStartingLogos = 0;
 for (let i = 1; i < ttm.length; i++) {
   const prev = ttm[i - 1];
   const cur = ttm[i];
-  const netDelta = (cur.logo_qty ?? 0) - (prev.logo_qty ?? 0);
-  const gross = cur.new_logos ?? 0;
-  const churn = Math.max(gross - netDelta, 0);
+  const churn = churnedLogosByMonth[cur.month] ?? 0;
   totalChurn += churn;
   totalStartingLogos += prev.logo_qty ?? 0;
 }
 const monthlyChurnRate = totalStartingLogos > 0 ? totalChurn / totalStartingLogos : null; // per-month
 const annualChurnRate = monthlyChurnRate != null ? 1 - Math.pow(1 - monthlyChurnRate, 12) : null;
+// Also carry the waterfall's REVENUE (MRR-dollar) gross churn so the snapshot
+// exposes both lenses (small logos churn, big ones stay → revenue churn ≪ logo churn).
+const annualRevenueChurnRate = waterfall?.ttm?.annual_gross_churn_rate ?? null;
 
 // LTV = (avg MRR * gross margin) / monthly churn rate  (subscription only)
 const ltv = avgMRR != null && ttmSubGM != null && monthlyChurnRate && monthlyChurnRate > 0
@@ -303,6 +398,8 @@ const out = {
     net_op_income: Math.round(ttmNetOp * 100) / 100,
     monthly_churn_rate: monthlyChurnRate != null ? Math.round(monthlyChurnRate * 10000) / 10000 : null,
     annual_churn_rate: annualChurnRate != null ? Math.round(annualChurnRate * 10000) / 10000 : null,
+    annual_logo_churn_rate: annualChurnRate != null ? Math.round(annualChurnRate * 10000) / 10000 : null,
+    annual_revenue_churn_rate: annualRevenueChurnRate != null ? Math.round(annualRevenueChurnRate * 10000) / 10000 : null,
     avg_mrr_per_customer: avgMRR != null ? Math.round(avgMRR * 100) / 100 : null,
     logo_qty_latest: logoQtyNow,
     ltv: ltv != null ? Math.round(ltv * 100) / 100 : null,

@@ -75,13 +75,9 @@ export default function App() {
         <Route path="logo-waterfall" element={<L><LogoWaterfall /></L>} />
         <Route path="cohort-retention" element={<L><CohortRetention /></L>} />
         <Route path="net-revenue-retention" element={<L><NetRevenueRetention /></L>} />
-        <Route path="unit-economics" element={<L><UnitEconomics /></L>} />
         <Route path="customer-health" element={<L><CustomerHealth /></L>} />
-        <Route path="efficiency" element={<L><Efficiency /></L>} />
         <Route path="churn-patterns" element={<L><ChurnPatterns /></L>} />
         <Route path="churn-investigator" element={<L><ChurnInvestigator /></L>} />
-        <Route path="segments" element={<L><Segments /></L>} />
-        <Route path="sub-segment-backfill" element={<L><SubSegmentBackfill /></L>} />
         <Route path="churn-risk-matrix" element={<L><ChurnRiskMatrix /></L>} />
         <Route path="time-to-value" element={<L><TimeToValue /></L>} />
         <Route path="orders-verified" element={<L><OrdersVerified /></L>} />
@@ -101,6 +97,11 @@ export default function App() {
             redirects to /overview. */}
         {showFinancialTabs && (
           <>
+            {/* Unit Economics group — financial analytics, hidden from CS Rep / prod */}
+            <Route path="unit-economics" element={<L><UnitEconomics /></L>} />
+            <Route path="efficiency" element={<L><Efficiency /></L>} />
+            <Route path="segments" element={<L><Segments /></L>} />
+            <Route path="sub-segment-backfill" element={<L><SubSegmentBackfill /></L>} />
             <Route path="profit-loss" element={<L><ProfitLoss /></L>} />
             <Route path="ebitda-bridge" element={<L><EbitdaBridge /></L>} />
             <Route path="scorecard" element={<L><MAReadiness /></L>} />

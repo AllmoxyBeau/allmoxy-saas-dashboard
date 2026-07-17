@@ -38,6 +38,8 @@ type UnitEconSnap = {
     net_op_income: number;
     monthly_churn_rate: number | null;
     annual_churn_rate: number | null;
+    annual_logo_churn_rate: number | null;
+    annual_revenue_churn_rate: number | null;
     avg_mrr_per_customer: number | null;
     ltv: number | null;
     cac_payback_months: number | null;
@@ -157,7 +159,7 @@ export default function MAReadiness() {
         { label: 'ARR growth ≥ 15%', pass: (computed.arrGrowth ?? 0) >= 0.15 },
         { label: 'NRR ≥ 100%', pass: (wf.ttm.annual_nrr ?? 0) >= 1 },
         { label: 'GRR ≥ 80%', pass: (wf.ttm.annual_grr ?? 0) >= 0.8 },
-        { label: 'Annual churn ≤ 20%', pass: (wf.ttm.annual_gross_churn_rate ?? 1) <= 0.2 },
+        { label: 'Annual revenue churn ≤ 10%', pass: (wf.ttm.annual_gross_churn_rate ?? 1) <= 0.1 },
         { label: 'Top-10 concentration ≤ 30%', pass: (health.concentration.top10.pct ?? 1) <= 0.3 },
       ],
       efficient: [
@@ -173,7 +175,7 @@ export default function MAReadiness() {
         { label: 'LTV:CAC ≥ 3', pass: (ue.ttm.ltv_cac_ratio ?? 0) >= 3 },
         { label: 'Rule of 40 ≥ 40', pass: (computed.rule40 ?? 0) >= 40 },
         { label: 'Top-10 concentration ≤ 30%', pass: (health.concentration.top10.pct ?? 1) <= 0.3 },
-        { label: 'Annual churn ≤ 20%', pass: (wf.ttm.annual_gross_churn_rate ?? 1) <= 0.2 },
+        { label: 'Annual revenue churn ≤ 10%', pass: (wf.ttm.annual_gross_churn_rate ?? 1) <= 0.1 },
       ],
     };
     const score = (arr: Array<{ pass: boolean }>) => arr.filter((x) => x.pass).length;
@@ -287,7 +289,10 @@ export default function MAReadiness() {
             <Metric label="Gross margin" value={pct(ue?.ttm.gross_margin)} hint="Target ≥ 70%" color={gmColor(ue?.ttm.gross_margin)} loading={ueLoading} info={<><strong>What it is:</strong> TTM blended gross margin.<br /><br /><strong>Data:</strong> (Total Income − Total COGS) ÷ Total Income from QuickBooks, summed across TTM.<br /><br /><strong>Target:</strong> ≥ 70% · ≥ 75% top-quartile SaaS</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="Annual logo churn" value={pct(ue?.ttm.annual_churn_rate)} hint="Good ≤ 10%, caution ≤ 20%" color={churnColor(ue?.ttm.annual_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of customers who stopped paying in the trailing 12 months.<br /><br /><strong>Data:</strong> Churned logos TTM ÷ starting-period logo count.<br /><br /><strong>Target:</strong> ≤ 10% excellent · ≤ 20% acceptable</>} />
+            <Metric label="Annual logo churn" value={pct(ue?.ttm.annual_logo_churn_rate ?? ue?.ttm.annual_churn_rate)} hint="Confirmed churns only" color={churnColor(ue?.ttm.annual_logo_churn_rate ?? ue?.ttm.annual_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of customers who <em>confirmed-churned</em> in the trailing 12 months (excludes delinquency, pauses, and annual-payer gaps — those are tracked separately).<br /><br /><strong>Data:</strong> Confirmed churned logos (status=churned) from the MRR waterfall ÷ starting active logos, annualized.<br /><br /><strong>Target:</strong> ≤ 10% excellent · ≤ 20% acceptable. Compare with revenue churn → small accounts leave, large ones stay.</>} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={2.4}>
+            <Metric label="Annual revenue churn" value={pct(ue?.ttm.annual_revenue_churn_rate ?? wf?.ttm.annual_gross_churn_rate)} hint="MRR-dollar gross churn" color={churnColor(ue?.ttm.annual_revenue_churn_rate ?? wf?.ttm.annual_gross_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of MRR lost to churn in the trailing 12 months (gross, before expansion). The dollar-weighted retention signal a buyer weighs most.<br /><br /><strong>Data:</strong> Churned MRR ÷ starting MRR from the waterfall, annualized.<br /><br /><strong>Why it's far below logo churn:</strong> the accounts that leave are small — the revenue base is stickier than the customer count.</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <Metric label="Top 10 concentration" value={pct(health?.concentration.top10.pct)} hint="Target ≤ 25%" color={concColor(health?.concentration.top10.pct)} loading={ueLoading} info={<><strong>What it is:</strong> % of subscription MRR from the top 10 customers — the concentration-risk number a buyer will ask about first.<br /><br /><strong>Data:</strong> Sum of top-10 current MRR ÷ total subscription MRR from the Customer Health snapshot.<br /><br /><strong>Target:</strong> ≤ 25% low risk · &gt; 40% concerning</>} />

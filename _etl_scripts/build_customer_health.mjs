@@ -157,6 +157,54 @@ for (const c of customers) {
   c.failed_3mo_amount ??= 0;
 }
 
+// ---------- LIVE current-MRR override ----------
+// The "MRR by Month" xlsx tab lags (its latest complete month was ~2026-03,
+// giving a stale 181 customers / $216.6K). The authoritative current MRR is in
+// customer_profiles (current_subscription_mrr, live through the seam) — the same
+// basis the MRR waterfall's ending MRR uses (199 / $233,557.56 for 2026-06).
+// Override each customer's current_mrr from profiles by allmoxy_customer_id, and
+// add live payers the stale tab missed, so concentration % are computed on the
+// real book. Match: profiles is the source of truth for "who is paying now."
+const profiles = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'customer_profiles.json'), 'utf8'));
+const profById = new Map();
+for (const p of profiles.rows) if (p.allmoxy_customer_id != null) profById.set(p.allmoxy_customer_id, p);
+// Live latest complete month (from mrr_by_month), for display.
+let liveLatestMonth = latestComplete?.month ?? null;
+try {
+  const mbm = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'mrr_by_month.json'), 'utf8'));
+  const complete = mbm.rows.map((r) => r.month).filter((m) => m < currentMonth);
+  if (complete.length) liveLatestMonth = complete[complete.length - 1];
+} catch { /* keep xlsx month */ }
+const seenIds = new Set();
+for (const c of customers) {
+  c.last_month = liveLatestMonth;
+  const p = c.allmoxy_customer_id != null ? profById.get(c.allmoxy_customer_id) : null;
+  // Profiles is authoritative: a customer counts as paying now iff profiles says so.
+  c.current_mrr = p ? Math.round((p.current_subscription_mrr || 0) * 100) / 100 : 0;
+  if (c.allmoxy_customer_id != null) seenIds.add(c.allmoxy_customer_id);
+}
+// Add live payers the stale xlsx list didn't include.
+for (const p of profiles.rows) {
+  const id = p.allmoxy_customer_id;
+  if (id == null || seenIds.has(id)) continue;
+  const mrr = Math.round((p.current_subscription_mrr || 0) * 100) / 100;
+  if (mrr <= 0) continue;
+  const l = lifetimeByCustomer.get(id);
+  customers.push({
+    name: p.customer_name || `Customer ${id}`,
+    allmoxy_customer_id: id,
+    sign_up_date: p.sign_up_date ?? null,
+    current_mrr: mrr,
+    last_month: liveLatestMonth,
+    months_paying: Object.keys(p.monthly_history || {}).length,
+    ever_paid: true,
+    lifetime_revenue: Math.round((p.lifetime_total ?? l?.lifetime_revenue ?? 0) * 100) / 100,
+    failed_3mo: p.failed_3mo_count ?? l?.failed_3mo ?? 0,
+    failed_3mo_amount: Math.round((p.failed_3mo_amount ?? l?.failed_3mo_amount ?? 0) * 100) / 100,
+  });
+  seenIds.add(id);
+}
+
 // Years as customer
 for (const c of customers) {
   if (c.sign_up_date) {

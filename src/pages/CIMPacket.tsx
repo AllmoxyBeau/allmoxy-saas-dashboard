@@ -91,6 +91,7 @@ type UnitEconTtm = {
   windowEnd: string;
   subscription_revenue: number;
   services_revenue: number;
+  connect_revenue: number;
   affiliate_revenue: number;
   total_income: number;
   cogs: number;
@@ -653,7 +654,7 @@ export default function CIMPacket() {
                     <TableBody>
                       <TableRow><TableCell sx={{ borderBottom: 'none' }}>Subscription revenue</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>{USD0.format(ue!.ttm.subscription_revenue)}</TableCell></TableRow>
                       <TableRow><TableCell sx={{ borderBottom: 'none' }}>Services revenue</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{USD0.format(ue!.ttm.services_revenue)}</TableCell></TableRow>
-                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>Affiliate (Connect) revenue</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{USD0.format(ue!.ttm.affiliate_revenue)}</TableCell></TableRow>
+                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>Connect (platform-fee) revenue</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{USD0.format(ue!.ttm.connect_revenue)}</TableCell></TableRow>
                       <TableRow><TableCell sx={{ fontWeight: 600 }}>Total income</TableCell><TableCell align="right" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{USD0.format(ue!.ttm.total_income)}</TableCell></TableRow>
                     </TableBody>
                   </Table>

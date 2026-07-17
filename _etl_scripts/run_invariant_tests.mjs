@@ -404,12 +404,24 @@ test('every annual_payer has a contract_link', 'warn', () => {
   };
 });
 
-test('stripe_qb_reconciliation: no month flagged status=investigate', 'warn', () => {
-  const investigate = (reconciliation?.months || []).filter((m) => m.status === 'investigate');
+test('stripe_qb_reconciliation: flagged months are documented reconciling items', 'warn', () => {
+  // NOTE: the snapshot stores rows under `rows` with a `tie_out_status` field
+  // (not `months`/`status`) — the old accessor silently matched nothing and
+  // always "passed." Flagged months are expected (annual-lump cash-vs-recognized
+  // timing, services timing); this warns if any exist so they stay explained in
+  // reconciling_items rather than asserting a clean tie-out that isn't real.
+  const investigate = (reconciliation?.rows || []).filter((m) => m.tie_out_status === 'investigate');
+  const documented = (reconciliation?.reconciling_items || []).length;
   return {
     passed: investigate.length === 0,
-    detail: investigate.length === 0 ? 'all months tight or acceptable' : `${investigate.length} months need investigation`,
-    examples: investigate.map((m) => `${m.month}: variance ${m.variance_pct != null ? (m.variance_pct * 100).toFixed(1) + '%' : '—'}`),
+    detail: investigate.length === 0
+      ? `all ${reconciliation?.rows?.length || 0} reconciled months tight/acceptable`
+      : `${investigate.length} month(s) flagged (timing variances) · ${documented} documented reconciling items`,
+    examples: investigate.map((m) => {
+      const v = m.variance || {};
+      const pct = v.subscription_pct ?? v.total_pct ?? null;
+      return `${m.month}: sub variance ${pct != null ? (pct * 100).toFixed(1) + '%' : '—'}`;
+    }),
   };
 });
 

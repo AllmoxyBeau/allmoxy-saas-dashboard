@@ -83,12 +83,15 @@ export const NAV_ENTRIES: NavEntry[] = [
     ],
   },
   {
+    // Financial/PE-oriented analytics — hidden from the CS Rep view (and
+    // production) via the same `financial` gate as the P&L / QoE groups.
     label: 'Unit Economics',
+    financial: true,
     items: [
-      { label: 'Unit Economics', path: '/unit-economics' },
-      { label: 'Efficiency', path: '/efficiency' },
-      { label: 'Segments', path: '/segments' },
-      { label: 'Sub-Segment Backfill', path: '/sub-segment-backfill' },
+      { label: 'Unit Economics', path: '/unit-economics', financial: true },
+      { label: 'Efficiency', path: '/efficiency', financial: true },
+      { label: 'Segments', path: '/segments', financial: true },
+      { label: 'Sub-Segment Backfill', path: '/sub-segment-backfill', financial: true },
     ],
   },
   // Build-time gate: when VITE_SHOW_FINANCIAL_TABS isn't 'true', these entries

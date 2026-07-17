@@ -281,6 +281,25 @@ function statusChipProps(status: CustomerProfile['status']) {
 }
 
 // Customer Detail is organized into tabs; each former section is a tab.
+// A HubSpot service-ticket row from hubspot_tickets.json — one per ticket, with
+// the associated HubSpot company ids and a HubSpot record URL.
+type TicketRow = {
+  id: string;
+  subject: string | null;
+  content: string | null;
+  priority: string | null;
+  category: string | null;
+  stage_label: string | null;
+  is_closed: boolean;
+  source_type: string | null;
+  created: string | null;
+  updated: string | null;
+  closed_date: string | null;
+  owner_full_name: string | null;
+  associated_company_ids?: string[];
+  hubspot_url: string;
+};
+
 const CUST_TABS: Array<[string, string]> = [
   ['information', 'Information'],
   ['milestones', 'Milestones'],
@@ -290,6 +309,7 @@ const CUST_TABS: Array<[string, string]> = [
   ['renewal', 'Renewal'],
   ['implementation', 'Implementation'],
   ['contracts', 'Contracts'],
+  ['tickets', 'Service Tickets'],
   ['transactions', 'Transactions'],
 ];
 
@@ -313,6 +333,9 @@ export default function CustomerDetail() {
   // Implementation — JIRA stage (IPA epic) + Harvest hours/billable $ for this
   // customer's services-revenue implementation project. One row per customer.
   const { data: implementationData } = useSheetTab('implementation');
+  // HubSpot service tickets, associated to this customer via HubSpot company id.
+  // One row per ticket with a HubSpot record URL.
+  const { data: hubspotTicketsData } = useSheetTab('hubspot_tickets');
   const snap = data as unknown as { rows: CustomerProfile[] } | undefined;
   const inferences = inferencesData as unknown as ChurnInferencesSnap | undefined;
   const subpatterns = subpatternsData as unknown as ChurnSubpatternsSnap | undefined;
@@ -1579,6 +1602,94 @@ export default function CustomerDetail() {
             </Collapse>
           </Box>
           )}
+
+          {/* Tickets tab — every HubSpot service ticket associated to this customer, each linked to HubSpot. */}
+          {custTab === 'tickets' && (() => {
+            const tixSnap = hubspotTicketsData as unknown as { tickets?: TicketRow[]; fetched_at?: string } | undefined;
+            const companyId = selected.hubspot_company_id;
+            const synced = !!(tixSnap && Array.isArray(tixSnap.tickets));
+            const tickets = (tixSnap?.tickets ?? [])
+              .filter((t) => companyId != null && (t.associated_company_ids ?? []).includes(String(companyId)))
+              .slice()
+              // Open tickets first, then most-recently-updated.
+              .sort((a, b) => {
+                if (a.is_closed !== b.is_closed) return a.is_closed ? 1 : -1;
+                return String(b.updated ?? '').localeCompare(String(a.updated ?? ''));
+              });
+            const openCount = tickets.filter((t) => !t.is_closed).length;
+            const stageColor = (t: TicketRow): string => (t.is_closed ? 'text.disabled' : 'warning.main');
+            return (
+              <Box sx={{ mt: 3 }}>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 500 }}>Service Tickets · {selected.name}</Typography>
+                  <InfoIcon info={<><strong>What it is:</strong> Every HubSpot service ticket associated to this customer's HubSpot company. Click a subject to open the ticket in HubSpot.<br /><br /><strong>Data:</strong> hubspot_tickets snapshot{tixSnap?.fetched_at ? ` · synced ${formatDateMDY(String(tixSnap.fetched_at).slice(0, 10))}` : ''}, matched by HubSpot company id.</>} />
+                </Stack>
+                {!synced ? (
+                  <Paper sx={{ p: 3 }}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      HubSpot service tickets aren't synced yet. Grant the <code>crm.objects.tickets.read</code> scope to the HubSpot private app, then run the HubSpot sync.
+                    </Typography>
+                  </Paper>
+                ) : companyId == null ? (
+                  <Paper sx={{ p: 3 }}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>This customer has no linked HubSpot company, so tickets can't be matched.</Typography>
+                  </Paper>
+                ) : tickets.length === 0 ? (
+                  <Paper sx={{ p: 3 }}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>No HubSpot service tickets are associated to this customer.</Typography>
+                  </Paper>
+                ) : (
+                  <>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1 }}>
+                      {tickets.length} ticket{tickets.length === 1 ? '' : 's'} · {openCount} open · sorted open-first, newest first · CSV-exportable
+                    </Typography>
+                    <DrillDownPanel<Record<string, unknown>>
+                      title=""
+                      rows={tickets as unknown as Array<Record<string, unknown>>}
+                      columns={[
+                        {
+                          key: 'subject',
+                          label: 'Subject',
+                          render: (r: Record<string, unknown>) => {
+                            const t = r as unknown as TicketRow;
+                            return <Link href={t.hubspot_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} sx={{ fontWeight: 500 }}>{t.subject || `Ticket ${t.id}`}</Link>;
+                          },
+                          exportValue: (r: Record<string, unknown>) => (r as unknown as TicketRow).subject ?? '',
+                          sortValue: (r: Record<string, unknown>) => (r as unknown as TicketRow).subject ?? '',
+                        },
+                        {
+                          key: 'stage_label',
+                          label: 'Stage',
+                          render: (r: Record<string, unknown>) => {
+                            const t = r as unknown as TicketRow;
+                            return <Chip size="small" label={t.stage_label || (t.is_closed ? 'Closed' : 'Open')} sx={{ bgcolor: 'transparent', color: stageColor(t), border: '1px solid', borderColor: stageColor(t), height: 20, fontSize: 11 }} />;
+                          },
+                          exportValue: (r: Record<string, unknown>) => (r as unknown as TicketRow).stage_label ?? '',
+                          sortValue: (r: Record<string, unknown>) => (r as unknown as TicketRow).stage_label ?? '',
+                        },
+                        { key: 'priority', label: 'Priority', render: (r: Record<string, unknown>) => (r as unknown as TicketRow).priority || '—' },
+                        { key: 'category', label: 'Category', render: (r: Record<string, unknown>) => (r as unknown as TicketRow).category || '—' },
+                        { key: 'owner_full_name', label: 'Owner', render: (r: Record<string, unknown>) => (r as unknown as TicketRow).owner_full_name || '—' },
+                        {
+                          key: 'created',
+                          label: 'Created',
+                          render: (r: Record<string, unknown>) => { const u = (r as unknown as TicketRow).created; return u ? formatDateMDY(String(u).slice(0, 10)) : '—'; },
+                          sortValue: (r: Record<string, unknown>) => (r as unknown as TicketRow).created ?? '',
+                        },
+                        {
+                          key: 'updated',
+                          label: 'Updated',
+                          render: (r: Record<string, unknown>) => { const u = (r as unknown as TicketRow).updated; return u ? formatDateMDY(String(u).slice(0, 10)) : '—'; },
+                          sortValue: (r: Record<string, unknown>) => (r as unknown as TicketRow).updated ?? '',
+                        },
+                      ]}
+                      filename={`customer_${selected.allmoxy_customer_id}_hubspot_tickets`}
+                    />
+                  </>
+                )}
+              </Box>
+            );
+          })()}
         </>
       )}
     </Box>

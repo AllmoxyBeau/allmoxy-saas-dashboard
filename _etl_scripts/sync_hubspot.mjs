@@ -35,6 +35,10 @@ const COMPANIES_OUT = path.join(CACHE_DIR, 'hubspot_companies.json');
 const OWNERS_OUT = path.join(CACHE_DIR, 'hubspot_owners.json');
 const INSTANCES_OUT = path.join(CACHE_DIR, 'hubspot_instances.json');
 const QUOTES_OUT = path.join(CACHE_DIR, 'hubspot_quotes.json');
+const TICKETS_OUT = path.join(CACHE_DIR, 'hubspot_tickets.json');
+// The tickets snapshot the dashboard reads (company-keyed for the Customer
+// Detail Tickets tab).
+const TICKETS_SNAPSHOT = path.join(ROOT, 'public/snapshots/hubspot_tickets.json');
 
 // Allmoxy Instance custom object type (per the HubSpot URL we discovered in
 // the property settings page). Internal HubSpot name is `accounts` (plural
@@ -286,6 +290,23 @@ const QUOTE_PROPS = [
   'hs_payment_status',
 ];
 
+// Service ticket properties — subject + pipeline/stage + priority + timestamps +
+// owner. hs_pipeline_stage is an internal id; we resolve it to a label/state via
+// the tickets pipelines API (pullTicketStages).
+const TICKET_PROPS = [
+  'subject',
+  'content',
+  'hs_pipeline',
+  'hs_pipeline_stage',
+  'hs_ticket_priority',
+  'hs_ticket_category',
+  'createdate',
+  'hs_lastmodifieddate',
+  'closed_date',
+  'hubspot_owner_id',
+  'source_type',
+];
+
 // Pull all quotes paginated. Includes the `associations=companies` query so
 // the response also carries each quote's company association IDs — that's
 // how we tie a quote back to a customer (Company → allmoxy_customer_id).
@@ -316,20 +337,94 @@ async function pullQuotes() {
   return quotes;
 }
 
-// --- Pull all owners --------------------------------------------------------
-async function pullOwners() {
-  const owners = [];
+// Resolve ticket pipeline-stage ids → { label, isClosed }. Stage ids are opaque
+// internal strings on each ticket; the pipelines API gives the human label and
+// whether the stage counts as closed (metadata.ticketState).
+async function pullTicketStages() {
+  const map = {};
+  try {
+    const data = await hub('/crm/v3/pipelines/tickets');
+    for (const p of data.results || []) {
+      for (const s of p.stages || []) {
+        map[String(s.id)] = {
+          label: s.label || String(s.id),
+          isClosed: String(s.metadata?.ticketState || '').toUpperCase() === 'CLOSED',
+        };
+      }
+    }
+  } catch (e) {
+    process.stderr.write(`  ⚠ could not read ticket pipelines (${e.message}) — stage labels will fall back to ids\n`);
+  }
+  return map;
+}
+
+// Pull all service tickets paginated, with company associations so each ticket
+// ties back to a customer (Company → allmoxy_customer_id downstream).
+async function pullTickets(stageMap) {
+  const tickets = [];
   let after = undefined;
   let page = 0;
+  const limit = 100;
+  const propsParam = TICKET_PROPS.join(',');
   while (true) {
     page++;
-    const url = `/crm/v3/owners?limit=100${after ? `&after=${after}` : ''}`;
+    const url = `/crm/v3/objects/tickets?limit=${limit}&properties=${encodeURIComponent(propsParam)}&associations=companies${after ? `&after=${after}` : ''}`;
     const data = await hub(url);
     const batch = data.results || [];
-    for (const o of batch) owners.push(o);
-    if (VERBOSE) process.stderr.write(`  owners page ${page}: ${batch.length}\n`);
+    for (const t of batch) {
+      const companyIds = (t.associations?.companies?.results ?? []).map((r) => String(r.id));
+      const p = t.properties || {};
+      const stage = stageMap[String(p.hs_pipeline_stage)] || null;
+      tickets.push({
+        id: String(t.id),
+        subject: p.subject || null,
+        content: p.content ? String(p.content).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 500) : null,
+        priority: p.hs_ticket_priority || null,
+        category: p.hs_ticket_category || null,
+        pipeline_stage_id: p.hs_pipeline_stage || null,
+        stage_label: stage?.label || p.hs_pipeline_stage || null,
+        is_closed: stage ? stage.isClosed : !!p.closed_date,
+        source_type: p.source_type || null,
+        created: p.createdate || null,
+        updated: p.hs_lastmodifieddate || null,
+        closed_date: p.closed_date || null,
+        hubspot_owner_id: p.hubspot_owner_id ? String(p.hubspot_owner_id) : null,
+        associated_company_ids: companyIds,
+        hubspot_url: `https://app.hubspot.com/contacts/4910812/record/0-5/${t.id}`,
+      });
+    }
+    process.stderr.write(`  page ${page}: ${batch.length} tickets (total so far: ${tickets.length})\n`);
     after = data.paging?.next?.after;
     if (!after) break;
+  }
+  return tickets;
+}
+
+// --- Pull all owners --------------------------------------------------------
+// Fetches BOTH active and archived owners. /crm/v3/owners returns only active
+// owners by default, but deactivated employees (former reps) still own accounts
+// in HubSpot — without the archived pass their owner_id can't resolve to a name,
+// so those customers show a blank/raw-id owner in the app.
+async function pullOwners() {
+  const owners = [];
+  const seen = new Set();
+  for (const archived of [false, true]) {
+    let after = undefined;
+    let page = 0;
+    while (true) {
+      page++;
+      const url = `/crm/v3/owners?limit=100&archived=${archived}${after ? `&after=${after}` : ''}`;
+      const data = await hub(url);
+      const batch = data.results || [];
+      for (const o of batch) {
+        if (seen.has(String(o.id))) continue;
+        seen.add(String(o.id));
+        owners.push({ ...o, archived });
+      }
+      if (VERBOSE) process.stderr.write(`  owners page ${page} (archived=${archived}): ${batch.length}\n`);
+      after = data.paging?.next?.after;
+      if (!after) break;
+    }
   }
   return owners;
 }
@@ -497,6 +592,54 @@ async function main() {
   process.stderr.write('  Status distribution:\n');
   for (const [k, v] of Object.entries(byStatus).sort((a, b) => b[1] - a[1])) {
     process.stderr.write(`    ${String(v).padStart(4)} ${k}\n`);
+  }
+
+  // ─── Service tickets sync ────────────────────────────────────────────────
+  // Powers the Customer Detail "Tickets" tab — every HubSpot service ticket,
+  // linked to the customer via company association. Wrapped so a missing
+  // tickets scope on the token doesn't abort the (already-written) rest.
+  try {
+    process.stderr.write('\nPulling HubSpot Service Tickets (paginated)...\n');
+    const stageMap = await pullTicketStages();
+    const tickets = await pullTickets(stageMap);
+    // Resolve owner names.
+    for (const t of tickets) {
+      const o = t.hubspot_owner_id ? ownersById[t.hubspot_owner_id] : null;
+      t.owner_full_name = o?.full_name || null;
+      t.owner_email = o?.email || null;
+    }
+    // Company-keyed index for the UI (a ticket can touch multiple companies).
+    const byCompany = {};
+    let withCompany = 0, openCount = 0;
+    for (const t of tickets) {
+      if (!t.is_closed) openCount++;
+      if (t.associated_company_ids.length > 0) withCompany++;
+      for (const cid of t.associated_company_ids) {
+        (byCompany[cid] = byCompany[cid] || []).push(t.id);
+      }
+    }
+    fs.writeFileSync(TICKETS_OUT, JSON.stringify({
+      fetched_at: new Date().toISOString(),
+      source: 'HubSpot CRM API /crm/v3/objects/tickets?associations=companies',
+      portal_id: '4910812',
+      ticket_count: tickets.length,
+      properties_fetched: TICKET_PROPS,
+      stats: { with_company_assoc: withCompany, open: openCount, closed: tickets.length - openCount },
+      tickets,
+    }, null, 2));
+    // Public snapshot the dashboard reads directly (company-keyed).
+    fs.writeFileSync(TICKETS_SNAPSHOT, JSON.stringify({
+      tab: 'hubspot_tickets',
+      fetched_at: new Date().toISOString(),
+      portal_id: '4910812',
+      ticket_count: tickets.length,
+      open_count: openCount,
+      by_company: byCompany,
+      tickets,
+    }));
+    process.stderr.write(`  → ${tickets.length} tickets (${openCount} open, ${withCompany} with a company) → ${path.relative(ROOT, TICKETS_SNAPSHOT)}\n`);
+  } catch (e) {
+    process.stderr.write(`  ⚠ tickets sync skipped: ${e.message}\n    (ensure the private-app token has the crm.objects.tickets.read scope)\n`);
   }
 
   process.stderr.write('\nDone.\n');

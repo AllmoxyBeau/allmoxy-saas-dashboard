@@ -52,7 +52,14 @@ for (const p of (profiles.rows || [])) {
 // ============================================================================
 // QuickBooks-side rollup — per-month line items
 // ============================================================================
-const months = (pnl.months || []).slice();
+// Scope the tie-out to the trailing 18 complete months. pnl_by_month now carries
+// full history (2018→) for TTM math, but reconciling Stripe cash vs QB recognized
+// only makes sense for the recent, same-basis window — older months mix an xlsx
+// revenue basis with sparse historical Stripe data and would flag false variances.
+const RECON_WINDOW = 18;
+const months = (pnl.months || []).slice(-RECON_WINDOW).filter(
+  (m) => (stripeByMonth[m]?.total || 0) !== 0 && (pnl.data?.total_income?.[m] || 0) !== 0,
+);
 const qbByMonth = {};
 const get = (key, m) => (pnl.data?.[key]?.[m] ?? 0);
 for (const m of months) {

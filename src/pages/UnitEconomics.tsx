@@ -8,7 +8,7 @@ import Alert from '@mui/material/Alert';
 import Skeleton from '@mui/material/Skeleton';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, ReferenceLine, ComposedChart, Bar, Legend } from 'recharts';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, ReferenceLine, ComposedChart, Bar, Area, Legend } from 'recharts';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
@@ -28,6 +28,8 @@ import { useSheetTab } from '../hooks/useSheetTab';
 type WaterfallMonthlyRow = {
   month: string;
   gross_churn_rate_monthly?: number | null;
+  nrr_monthly?: number | null;
+  grr_monthly?: number | null;
   details: {
     new: Array<{ name: string; mrr: number }>;
     churn: Array<{ name: string; mrr: number }>;
@@ -163,7 +165,6 @@ export default function UnitEconomics() {
   const svc = snap?.services;
 
   const [drill, setDrill] = useState<DrillKind | null>(null);
-  const [headerWindow, setHeaderWindow] = useState<'3M' | '6M' | '12M'>('12M');
   const [streamBasis, setStreamBasis] = useState<'annual' | 'monthly'>('annual');
   const ttmTable = useCollapse(true);
   function openDrill(d: DrillKind) {
@@ -172,107 +173,6 @@ export default function UnitEconomics() {
       document.getElementById('drill-down-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 50);
   }
-
-  // Header stats computed for the selected trailing window.
-  // Dollar fields (revenue, spend, net income) are summed over the window.
-  // Rates are annualized so 3M / 6M / 12M stay apples-to-apples.
-  // LTV assumes avg MRR in the last month × sub GM over window ÷ monthly churn rate.
-  const windowStats = useMemo(() => {
-    if (!snap || snap.monthly.length === 0) return null;
-    // Anchor to the latest complete month (the builder already excludes partial).
-    // Filter monthly rows up through the TTM windowEnd (which is the latest complete month).
-    const endMonth = snap.ttm?.windowEnd ?? snap.monthly[snap.monthly.length - 1].month;
-    const completeRows = snap.monthly.filter((r) => r.month <= endMonth);
-    const N = headerWindow === '3M' ? 3 : headerWindow === '6M' ? 6 : 12;
-    const rows = completeRows.slice(-N);
-    if (rows.length === 0) return null;
-
-    const sum = (k: keyof MonthlyRow) =>
-      rows.reduce((a, r) => a + (typeof r[k] === 'number' ? (r[k] as number) : 0), 0);
-
-    const subscription_revenue = sum('subscription_revenue');
-    const services_revenue = sum('services_revenue');
-    const connect_revenue = sum('connect_revenue');
-    const total_income = sum('total_income');
-    const cogs = sum('cogs');
-    const gross_profit = sum('gross_profit');
-    const snm_expense = sum('snm_expense');
-    const new_logos = sum('new_logos');
-    const net_op_income = sum('net_op_income');
-
-    const gross_margin = total_income > 0 ? gross_profit / total_income : null;
-    // Sub GM: weighted by each month's subscription revenue (when present).
-    let subGmWeightedNum = 0;
-    let subGmWeightedDen = 0;
-    for (const r of rows) {
-      if (r.subscription_gross_margin != null && r.subscription_revenue > 0) {
-        subGmWeightedNum += r.subscription_gross_margin * r.subscription_revenue;
-        subGmWeightedDen += r.subscription_revenue;
-      }
-    }
-    const subscription_gross_margin = subGmWeightedDen > 0 ? subGmWeightedNum / subGmWeightedDen : null;
-
-    const cac = new_logos > 0 ? snm_expense / new_logos : null;
-
-    // Latest complete month values for snapshot metrics.
-    const last = rows[rows.length - 1];
-    const avg_mrr_per_customer = last.avg_mrr_per_customer;
-    const logo_qty_latest = last.logo_qty;
-
-    // Churn rate pulled from the waterfall's monthly gross_churn_rate for the matching months.
-    const wfRows = (wf?.monthly ?? []).filter((r) => r.month >= rows[0].month && r.month <= last.month);
-    let monthlyChurnAvg: number | null = null;
-    if (wfRows.length > 0) {
-      const vals = wfRows.map((r) => r.gross_churn_rate_monthly ?? 0);
-      monthlyChurnAvg = vals.reduce((s, v) => s + v, 0) / vals.length;
-    }
-    const annual_churn_rate =
-      monthlyChurnAvg == null ? null : 1 - Math.pow(Math.max(1 - monthlyChurnAvg, 0), 12);
-
-    // LTV and CAC payback use per-month economics.
-    const ltv =
-      avg_mrr_per_customer != null && subscription_gross_margin != null && monthlyChurnAvg != null && monthlyChurnAvg > 0
-        ? (avg_mrr_per_customer * subscription_gross_margin) / monthlyChurnAvg
-        : null;
-    const cac_payback_months =
-      cac != null && avg_mrr_per_customer != null && subscription_gross_margin != null && avg_mrr_per_customer * subscription_gross_margin > 0
-        ? cac / (avg_mrr_per_customer * subscription_gross_margin)
-        : null;
-    const ltv_cac_ratio = ltv != null && cac != null && cac > 0 ? ltv / cac : null;
-
-    return {
-      windowStart: rows[0].month,
-      windowEnd: last.month,
-      windowMonths: rows.length,
-      subscription_revenue,
-      services_revenue,
-      connect_revenue,
-      total_income,
-      cogs,
-      gross_profit,
-      snm_expense,
-      new_logos,
-      net_op_income,
-      gross_margin,
-      subscription_gross_margin,
-      cac,
-      avg_mrr_per_customer,
-      logo_qty_latest,
-      monthly_churn_rate: monthlyChurnAvg,
-      annual_churn_rate,
-      ltv,
-      cac_payback_months,
-      ltv_cac_ratio,
-    };
-  }, [snap, wf, headerWindow]);
-
-  // Last 24 complete months for the trend charts (exclude current partial month).
-  const trend = useMemo(() => {
-    if (!snap) return [];
-    const now = new Date();
-    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    return snap.monthly.filter((m) => m.month < currentMonth).slice(-24);
-  }, [snap]);
 
   // Per-stream unit economics: Subscription (MRR) / Services / Stripe Connect.
   // Revenue + share use the TTM block so all three align to one 12-mo window.
@@ -346,6 +246,16 @@ export default function UnitEconomics() {
       avg_mrr_per_customer: number | null;
       new_logos: number;
       snm_expense: number;
+      // Trend-first additions:
+      subscription_revenue: number;
+      services_revenue: number;
+      connect_revenue: number;
+      total_revenue: number;
+      net_op_income: number | null;
+      nrr: number | null;
+      grr: number | null;
+      logos: number | null;
+      pnl_complete: boolean;
     }> = [];
 
     for (let i = 11; i < completeRows.length; i++) {
@@ -360,7 +270,27 @@ export default function UnitEconomics() {
       const snm_expense = sum('snm_expense');
       const new_logos = sum('new_logos');
 
-      const gross_margin = total_income > 0 ? gross_profit / total_income : null;
+      // Revenue streams (live MRR — available every month, so these plot the full range).
+      const subscription_revenue = sum('subscription_revenue');
+      const services_revenue = sum('services_revenue');
+      const connect_revenue = sum('connect_revenue');
+      const total_revenue = subscription_revenue + services_revenue + connect_revenue;
+
+      // Profitability metrics hard-stop where the P&L coverage ends: a trailing
+      // window that mixes live-revenue months with missing COGS would drag the
+      // margin down artificially. Valid only when EVERY month in the window has
+      // P&L (cogs present) — matches the "hard-stop the lines" decision.
+      const pnl_complete = rows.every((r) => r.cogs != null);
+      const net_op_income = pnl_complete ? sum('net_op_income') : null;
+
+      // Trailing-12M retention: compound the monthly NRR/GRR ratios from the
+      // waterfall (annualized retention — the figure a buyer scrutinizes).
+      const retRows = wfMonthly.filter((r) => r.month >= rows[0].month && r.month <= last.month);
+      const nrr = retRows.length === 12 ? retRows.reduce((a, r) => a * (r.nrr_monthly ?? 1), 1) : null;
+      const grr = retRows.length === 12 ? retRows.reduce((a, r) => a * (r.grr_monthly ?? 1), 1) : null;
+      const logos = last.logo_qty;
+
+      const gross_margin = pnl_complete && total_income > 0 ? gross_profit / total_income : null;
 
       let subGmNum = 0;
       let subGmDen = 0;
@@ -372,7 +302,9 @@ export default function UnitEconomics() {
       }
       const subscription_gross_margin = subGmDen > 0 ? subGmNum / subGmDen : null;
 
-      const cac = new_logos > 0 ? snm_expense / new_logos : null;
+      // CAC (and everything downstream — LTV, payback, ratio) is S&M-driven, so
+      // it hard-stops with the P&L too.
+      const cac = pnl_complete && new_logos > 0 ? snm_expense / new_logos : null;
       const avg_mrr_per_customer = last.avg_mrr_per_customer;
 
       const wfRows = wfMonthly.filter((r) => r.month >= rows[0].month && r.month <= last.month);
@@ -406,10 +338,64 @@ export default function UnitEconomics() {
         avg_mrr_per_customer,
         new_logos,
         snm_expense,
+        subscription_revenue,
+        services_revenue,
+        connect_revenue,
+        total_revenue,
+        net_op_income,
+        nrr,
+        grr,
+        logos,
+        pnl_complete,
       });
     }
     return out;
   }, [snap, wf]);
+
+  // Latest complete trailing-12M anchor — the "current" values the KPI strip shows.
+  const latest = useMemo(() => (monthlyTtm.length ? monthlyTtm[monthlyTtm.length - 1] : null), [monthlyTtm]);
+
+  // Flat series for the recharts trend panels. Cap at the most recent 60 anchor
+  // months (5 years) so the x-axis stays legible; the full series is in the
+  // table + CSV below. Profitability fields carry `null` past the P&L coverage
+  // so their lines hard-stop instead of drawing a misleading blended tail.
+  const chartData = useMemo(
+    () =>
+      monthlyTtm.slice(-60).map((r) => ({
+        month: r.month,
+        Subscription: r.subscription_revenue,
+        Services: r.services_revenue,
+        Connect: r.connect_revenue,
+        nrr: r.nrr,
+        grr: r.grr,
+        gross_margin: r.gross_margin,
+        net_op_income: r.net_op_income,
+        cac_payback_months: r.cac_payback_months,
+        ltv_cac_ratio: r.ltv_cac_ratio,
+      })),
+    [monthlyTtm],
+  );
+  // Where the profitability lines stop (last anchor with a complete P&L window).
+  const lastPnlMonth = useMemo(() => {
+    for (let i = monthlyTtm.length - 1; i >= 0; i--) if (monthlyTtm[i].pnl_complete) return monthlyTtm[i].month;
+    return null;
+  }, [monthlyTtm]);
+
+  // For a KPI headline: the last anchor with a value (profitability metrics
+  // hard-stop before the latest anchor), and the value 6 anchors earlier for
+  // the Δ. Reads straight off monthlyTtm so churn (not in chartData) works too.
+  const kpiVal = (key: string): { cur: number | null; prev: number | null } => {
+    let ci = -1;
+    for (let i = monthlyTtm.length - 1; i >= 0; i--) {
+      const v = (monthlyTtm[i] as unknown as Record<string, number | null>)[key];
+      if (v != null) { ci = i; break; }
+    }
+    if (ci < 0) return { cur: null, prev: null };
+    const cur = (monthlyTtm[ci] as unknown as Record<string, number | null>)[key];
+    const pi = ci - 6;
+    const prev = pi >= 0 ? (monthlyTtm[pi] as unknown as Record<string, number | null>)[key] : null;
+    return { cur, prev };
+  };
 
   // Show the most recent 24 anchor months in the table — keeps the scroll manageable while
   // still showing two years of trajectory. Reversed so the latest month sits at the top.
@@ -444,126 +430,126 @@ export default function UnitEconomics() {
         </Alert>
       )}
 
-      <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={1} sx={{ mb: 2 }}>
-        {windowStats ? (
-          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            {headerWindow} window: {monthLabel(windowStats.windowStart)} – {monthLabel(windowStats.windowEnd)} · rates annualized for comparability
-          </Typography>
-        ) : (
-          <span />
-        )}
-        <ToggleButtonGroup
-          size="small"
-          exclusive
-          value={headerWindow}
-          onChange={(_, v) => v && setHeaderWindow(v as '3M' | '6M' | '12M')}
-          sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
-        >
-          <ToggleButton value="3M">Trailing 3M</ToggleButton>
-          <ToggleButton value="6M">Trailing 6M</ToggleButton>
-          <ToggleButton value="12M">Trailing 12M</ToggleButton>
-        </ToggleButtonGroup>
+      {/* Coverage caveats — every metric is a trailing-12M trend; the window IS the
+          graph (no 3/6/12M toggle). Retention/revenue are live; profitability
+          lines hard-stop where the P&L coverage ends. */}
+      <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
+        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+          Every metric below is a trailing-12-month trend — the window is the graph.
+        </Typography>
+        <Box sx={{ px: 1, py: 0.25, borderRadius: 5, border: '1px solid', borderColor: 'rgba(26,158,92,0.4)', color: 'success.light', fontSize: 11 }}>
+          Retention &amp; revenue · live through {latest ? monthLabel(latest.month) : '—'}
+        </Box>
+        <Box sx={{ px: 1, py: 0.25, borderRadius: 5, border: '1px solid', borderColor: 'rgba(245,166,35,0.4)', color: 'warning.light', fontSize: 11 }}>
+          Margin / LTV / CAC · P&amp;L through {lastPnlMonth ? monthLabel(lastPnlMonth) : '—'}
+        </Box>
       </Stack>
 
-      {/* Headline row: the five unit-economics numbers management runs against */}
+      {/* Headline KPI strip — current trailing-12M value + benchmark + Δ vs 6mo + sparkline */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <StatCard
-            label={`CAC · ${headerWindow}`}
-            value={windowStats ? USD0.format(windowStats.cac ?? 0) : null}
-            hint={windowStats ? `${windowStats.new_logos} new logos · ${USD_COMPACT.format(windowStats.snm_expense)} S&M · click` : 'loading'}
-            color="text.primary"
-            loading={isLoading}
-            onClick={() => openDrill('ttm_new')}
-            info={<><strong>What it is:</strong> Customer Acquisition Cost — average sales & marketing dollars spent to win one new customer over the selected window.<br /><br /><strong>Data:</strong> Window S&M spend (QuickBooks: Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission) ÷ window new logos.<br /><br /><strong>Click</strong> to see the new-customer list.</>}
-          />
+        {([
+          { label: 'Net revenue retention', fmt: (v: number) => pct(v), bench: 'Target ≥ 100%', good: 'up' as const, color: '#1A9E5C', dataKey: 'nrr', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt` },
+          { label: 'Gross revenue retention', fmt: (v: number) => pct(v), bench: 'Target ≥ 90%', good: 'up' as const, color: '#9F7AEA', dataKey: 'grr', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt` },
+          { label: 'LTV : CAC', fmt: (v: number) => ratio(v), bench: 'Target ≥ 3×', good: 'up' as const, color: '#2C73FF', dataKey: 'ltv_cac_ratio', deltaFmt: (d: number) => `${d.toFixed(1)}×` },
+          { label: 'CAC payback', fmt: (v: number) => months(v), bench: 'Good ≤ 12 mo', good: 'down' as const, color: '#F5A623', dataKey: 'cac_payback_months', deltaFmt: (d: number) => `${Math.abs(d).toFixed(1)} mo` },
+          { label: 'Gross margin', fmt: (v: number) => pct(v), bench: 'Target ≥ 75%', good: 'up' as const, color: '#1A9E5C', dataKey: 'gross_margin', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt` },
+          { label: 'Annual logo churn', fmt: (v: number) => pct(v), bench: 'Lower is better', good: 'down' as const, color: '#DA3633', dataKey: 'annual_churn_rate', deltaFmt: (d: number) => `${(Math.abs(d) * 100).toFixed(1)}pt` },
+        ]).map((k) => {
+          const { cur, prev } = kpiVal(k.dataKey);
+          return (
+            <Grid item xs={6} sm={4} md={2} key={k.label}>
+              <KpiTile
+                label={k.label}
+                value={cur != null ? k.fmt(cur) : '—'}
+                bench={k.bench}
+                cur={cur}
+                prev={prev}
+                good={k.good}
+                color={k.color}
+                deltaFmt={k.deltaFmt}
+                spark={monthlyTtm.slice(-24).map((r) => ({ v: (r as unknown as Record<string, number | null>)[k.dataKey] }))}
+                loading={isLoading}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
+
+      {/* Trend panels — Growth · Retention · Margins & Profitability · Efficiency */}
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid item xs={12} md={6}>
+          <TrendPanel group="Growth" title="Revenue by stream" ctx="Trailing-12M revenue, stacked — subscription is the durable base; Connect is the fastest-growing lever." loading={isLoading}
+            info={<><strong>What it is:</strong> Trailing-12-month revenue split by stream, stacked. Live MRR (subscription / services) plus Connect platform-fee revenue.<br /><br /><strong>Read:</strong> A widening Connect band with a stable subscription base is the expansion story a buyer wants.</>}>
+            <ResponsiveContainer>
+              <ComposedChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(139,148,158,0.12)" vertical={false} />
+                <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={10} interval={Math.max(0, Math.floor(chartData.length / 8))} />
+                <YAxis stroke="#8B949E" fontSize={10} width={48} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                <RTooltip labelFormatter={(v) => monthLabel(String(v))} formatter={(v: number, n: string) => [USD0.format(v), n]} contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }} />
+                <Legend wrapperStyle={{ fontSize: 11 }} />
+                <Area type="monotone" dataKey="Subscription" stackId="rev" stroke="#2C73FF" fill="#2C73FF" fillOpacity={0.75} />
+                <Area type="monotone" dataKey="Services" stackId="rev" stroke="#F5A623" fill="#F5A623" fillOpacity={0.75} />
+                <Area type="monotone" dataKey="Connect" stackId="rev" stroke="#14B8A6" fill="#14B8A6" fillOpacity={0.75} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </TrendPanel>
         </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <StatCard
-            label={`LTV · ${headerWindow}`}
-            value={windowStats?.ltv != null ? USD0.format(windowStats.ltv) : null}
-            hint={windowStats ? `${USD0.format(windowStats.avg_mrr_per_customer ?? 0)}/mo · ${pct(windowStats.subscription_gross_margin)} GM` : 'loading'}
-            color="text.primary"
-            loading={isLoading}
-            info={<><strong>What it is:</strong> Customer Lifetime Value — gross profit a subscription customer generates before they churn.<br /><br /><strong>Data:</strong> Avg MRR per customer (last month of window) × window subscription gross margin ÷ window avg monthly gross churn rate. Services excluded (tracked separately below).<br /><br /><strong>Target:</strong> Should be materially higher than CAC.</>}
-          />
+        <Grid item xs={12} md={6}>
+          <TrendPanel group="Retention" title="Net & gross revenue retention" ctx="Annualized NRR / GRR, trailing 12 months. The single most scrutinized quality signal — trajectory matters more than the point." loading={isLoading}
+            info={<><strong>What it is:</strong> Trailing-12M retention, computed by compounding the waterfall's monthly NRR/GRR ratios.<br /><br /><strong>NRR</strong> includes expansion; <strong>GRR</strong> is retention before upsell. Dashed line = 100% (no net change).</>}>
+            <ResponsiveContainer>
+              <LineChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(139,148,158,0.12)" vertical={false} />
+                <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={10} interval={Math.max(0, Math.floor(chartData.length / 8))} />
+                <YAxis stroke="#8B949E" fontSize={10} width={44} tickFormatter={(v) => `${Math.round(v * 100)}%`} domain={[0.4, 1.3]} />
+                <ReferenceLine y={1} stroke="#8B949E" strokeDasharray="4 4" />
+                <RTooltip labelFormatter={(v) => monthLabel(String(v))} formatter={(v: number, n: string) => [pct(v), n === 'nrr' ? 'NRR' : 'GRR']} contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }} />
+                <Line type="monotone" dataKey="nrr" name="NRR" stroke="#1A9E5C" strokeWidth={2.2} dot={false} connectNulls />
+                <Line type="monotone" dataKey="grr" name="GRR" stroke="#9F7AEA" strokeWidth={2} dot={false} connectNulls />
+              </LineChart>
+            </ResponsiveContainer>
+          </TrendPanel>
         </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <StatCard
-            label={`LTV : CAC · ${headerWindow}`}
-            value={ratio(windowStats?.ltv_cac_ratio ?? null)}
-            hint="Target ≥ 3x · best-in-class ≥ 5x"
-            color={ltvCacColor(windowStats?.ltv_cac_ratio ?? null)}
-            loading={isLoading}
-            info={<><strong>What it is:</strong> The ratio of lifetime customer value to acquisition cost — the single most scrutinized SaaS unit-economics ratio.<br /><br /><strong>Data:</strong> LTV ÷ CAC for the selected window.<br /><br /><strong>Target:</strong> ≥ 3x justifies sales spend · ≥ 5x top-quartile · &lt; 1x means you're losing money per customer.</>}
-          />
+        <Grid item xs={12} md={6}>
+          <TrendPanel group="Margins & profitability" title="Gross margin & net operating income" ctx={`Gross-margin line + monthly net operating income (bars). Lines hard-stop at ${lastPnlMonth ? monthLabel(lastPnlMonth) : 'the last P&L month'} where P&L coverage ends.`} loading={isLoading}
+            info={<><strong>What it is:</strong> Trailing-12M blended gross margin (line) and net operating income (bars, EBITDA proxy).<br /><br /><strong>Hard-stop:</strong> Both derive from the QuickBooks P&L, so they end at the last month with a complete trailing window rather than drawing a misleading blended tail against live revenue.</>}>
+            <ResponsiveContainer>
+              <ComposedChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(139,148,158,0.12)" vertical={false} />
+                <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={10} interval={Math.max(0, Math.floor(chartData.length / 8))} />
+                <YAxis yAxisId="gm" stroke="#8B949E" fontSize={10} width={40} tickFormatter={(v) => `${Math.round(v * 100)}%`} domain={[0.5, 1]} />
+                <YAxis yAxisId="op" orientation="right" stroke="#8B949E" fontSize={10} width={48} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                <ReferenceLine yAxisId="gm" y={0.75} stroke="#8B949E" strokeDasharray="4 4" />
+                <ReferenceLine yAxisId="op" y={0} stroke="rgba(139,148,158,0.4)" />
+                <RTooltip labelFormatter={(v) => monthLabel(String(v))} formatter={(v: number, n: string) => (n === 'Gross margin' ? [pct(v), n] : [USD0.format(v), n])} contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }} />
+                <Legend wrapperStyle={{ fontSize: 11 }} />
+                <Bar yAxisId="op" dataKey="net_op_income" name="Net op income" fill="rgba(44,115,255,0.45)" />
+                <Line yAxisId="gm" type="monotone" dataKey="gross_margin" name="Gross margin" stroke="#1A9E5C" strokeWidth={2.2} dot={false} connectNulls={false} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </TrendPanel>
         </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <StatCard
-            label={`CAC payback · ${headerWindow}`}
-            value={months(windowStats?.cac_payback_months ?? null)}
-            hint="Good ≤ 12 mo · caution 12–18 · red > 18"
-            color={paybackColor(windowStats?.cac_payback_months ?? null)}
-            loading={isLoading}
-            info={<><strong>What it is:</strong> Months of gross profit needed to recover CAC.<br /><br /><strong>Data:</strong> Window CAC ÷ (Avg MRR × Subscription gross margin).<br /><br /><strong>Target:</strong> ≤ 12 mo good · 12–18 caution · &gt; 18 inefficient.</>}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <StatCard
-            label={`Annual logo churn · ${headerWindow}`}
-            value={pct(windowStats?.annual_churn_rate ?? null, 1)}
-            hint={windowStats ? `Monthly avg: ${pct(windowStats.monthly_churn_rate, 2)} · click for list` : 'loading'}
-            color={churnColor(windowStats?.annual_churn_rate ?? null)}
-            loading={isLoading}
-            onClick={() => openDrill('ttm_churn')}
-            info={<><strong>What it is:</strong> Annualized customer churn rate over the selected window.<br /><br /><strong>Data:</strong> Monthly churn averaged across window, then compounded: 1 − (1 − avg_monthly_churn)^12.<br /><br /><strong>Why toggle:</strong> 3M vs 12M reveals trajectory — if 3M &gt; 12M, churn is accelerating.</>}
-          />
+        <Grid item xs={12} md={6}>
+          <TrendPanel group="Efficiency" title="CAC payback & LTV : CAC" ctx="Payback in months (target ≤ 12) + LTV:CAC (target ≥ 3×). Improving = acquisition compounding. Hard-stops with the P&L." loading={isLoading}
+            info={<><strong>What it is:</strong> Trailing-12M CAC payback (months of gross profit to recover CAC) and the LTV:CAC ratio.<br /><br /><strong>Benchmarks:</strong> payback ≤ 12 mo is healthy; LTV:CAC ≥ 3× justifies sales spend. Both are S&M-driven, so they hard-stop with the P&L.</>}>
+            <ResponsiveContainer>
+              <ComposedChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(139,148,158,0.12)" vertical={false} />
+                <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={10} interval={Math.max(0, Math.floor(chartData.length / 8))} />
+                <YAxis yAxisId="pb" stroke="#8B949E" fontSize={10} width={34} tickFormatter={(v) => `${v}`} />
+                <YAxis yAxisId="lc" orientation="right" stroke="#8B949E" fontSize={10} width={34} tickFormatter={(v) => `${v}×`} />
+                <ReferenceLine yAxisId="pb" y={12} stroke="#F5A623" strokeDasharray="4 4" />
+                <ReferenceLine yAxisId="lc" y={3} stroke="rgba(44,115,255,0.4)" strokeDasharray="4 4" />
+                <RTooltip labelFormatter={(v) => monthLabel(String(v))} formatter={(v: number, n: string) => (n === 'CAC payback (mo)' ? [months(v), n] : [ratio(v), n])} contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }} />
+                <Legend wrapperStyle={{ fontSize: 11 }} />
+                <Line yAxisId="pb" type="monotone" dataKey="cac_payback_months" name="CAC payback (mo)" stroke="#F5A623" strokeWidth={2.2} dot={false} connectNulls={false} />
+                <Line yAxisId="lc" type="monotone" dataKey="ltv_cac_ratio" name="LTV:CAC" stroke="#2C73FF" strokeWidth={2} dot={false} connectNulls={false} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </TrendPanel>
         </Grid>
       </Grid>
 
-      {/* Second row: revenue / margin mix */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            label={`Revenue · ${headerWindow}`}
-            value={windowStats ? USD_COMPACT.format(windowStats.total_income) : null}
-            hint={windowStats ? `Sub ${USD_COMPACT.format(windowStats.subscription_revenue)} · Svc ${USD_COMPACT.format(windowStats.services_revenue)} · Connect ${USD_COMPACT.format(windowStats.connect_revenue)}` : 'loading'}
-            color="text.primary"
-            loading={isLoading}
-            info={<><strong>What it is:</strong> Total GAAP-billed revenue over the selected window — all streams.<br /><br /><strong>Data:</strong> "Total Income" line from QuickBooks P&L, summed across the window.</>}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            label={`Gross margin (blended) · ${headerWindow}`}
-            value={pct(windowStats?.gross_margin ?? null)}
-            hint={windowStats ? `${USD_COMPACT.format(windowStats.gross_profit)} / ${USD_COMPACT.format(windowStats.total_income)}` : 'loading'}
-            color={gmColor(windowStats?.gross_margin ?? null)}
-            loading={isLoading}
-            info={<><strong>What it is:</strong> Gross profit as a % of revenue, blended across all streams.<br /><br /><strong>Data:</strong> (Total Income − Total COGS) ÷ Total Income over window. COGS includes Credit Card fees, Sales Commission, Services Commissions, Affiliate Commissions.<br /><br /><strong>Target:</strong> ≥ 70% baseline · ≥ 75% top-quartile.</>}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            label={`Net Operating Income · ${headerWindow}`}
-            value={windowStats ? USD_COMPACT.format(windowStats.net_op_income) : null}
-            hint={windowStats && windowStats.net_op_income < 0 ? 'At breakeven · reinvesting' : 'Positive operating income'}
-            color={windowStats && windowStats.net_op_income >= 0 ? 'success.main' : 'warning.main'}
-            loading={isLoading}
-            info={<><strong>What it is:</strong> Revenue minus all operating expenses over the window — proxy for EBITDA.<br /><br /><strong>Data:</strong> "Net Operating Income" from QuickBooks P&L summed. Negative = reinvesting; positive = cash-generating.</>}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            label="Avg MRR per customer"
-            value={windowStats ? USD0.format(windowStats.avg_mrr_per_customer ?? 0) : null}
-            hint={windowStats ? `${windowStats.logo_qty_latest} active logos · last complete month` : 'loading'}
-            color="text.primary"
-            loading={isLoading}
-            info={<><strong>What it is:</strong> Average subscription MRR per currently-active customer — feeds LTV and CAC payback. Uses the latest complete month regardless of window since it's a point-in-time snapshot.<br /><br /><strong>Data:</strong> Total subscription MRR ÷ Logo Qty for the latest complete month, from MRR by Month.</>}
-          />
-        </Grid>
-      </Grid>
 
       {/* Revenue streams — Subscription (MRR) / Services / Stripe Connect unit economics */}
       {streams && (
@@ -699,127 +685,6 @@ export default function UnitEconomics() {
         );
       })()}
 
-      {/* Trend charts */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3 }}>
-            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                CAC trend · trailing 24 months
-              </Typography>
-              <InfoIcon info={<><strong>What it is:</strong> How CAC has moved month by month. Spikes indicate a slow month or a heavy S&M push; downward trends show improving acquisition efficiency.<br /><br /><strong>Data:</strong> For each month M, monthly S&M expense ÷ new logos that month. S&M from QuickBooks; new logos from allmoxy_core_customer signups.</>} />
-            </Stack>
-            {isLoading ? (
-              <Skeleton variant="rectangular" height={220} />
-            ) : (
-              <Box sx={{ height: 220 }}>
-                <ResponsiveContainer>
-                  <LineChart data={trend}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
-                    <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={11} />
-                    <YAxis stroke="#8B949E" fontSize={11} width={55} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
-                    <RTooltip
-                      labelFormatter={(v) => monthLabel(String(v))}
-                      formatter={(v: number) => [USD0.format(v), 'CAC']}
-                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
-                    />
-                    <Line type="monotone" dataKey="cac" stroke="#2C73FF" strokeWidth={2} dot={{ r: 2.5, fill: '#2C73FF' }} connectNulls />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            )}
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3 }}>
-            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                New logos vs S&M spend · trailing 24 months
-              </Typography>
-              <InfoIcon info={<><strong>What it is:</strong> Side-by-side view of S&M dollars (bars, left axis) and new logos acquired (line, right axis). Lets you see whether additional sales spend translates into proportional logo growth.<br /><br /><strong>Data:</strong> Bars — monthly S&M from QuickBooks. Line — count of customers whose first payment date falls in that month from the master customer roster.</>} />
-            </Stack>
-            {isLoading ? (
-              <Skeleton variant="rectangular" height={220} />
-            ) : (
-              <Box sx={{ height: 220 }}>
-                <ResponsiveContainer>
-                  <ComposedChart data={trend}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
-                    <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={11} />
-                    <YAxis yAxisId="left" stroke="#8B949E" fontSize={11} width={55} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
-                    <YAxis yAxisId="right" orientation="right" stroke="#8B949E" fontSize={11} width={30} />
-                    <RTooltip
-                      labelFormatter={(v) => monthLabel(String(v))}
-                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
-                    />
-                    <Bar yAxisId="left" dataKey="snm_expense" fill="rgba(44, 115, 255, 0.4)" name="S&M $" />
-                    <Line yAxisId="right" type="monotone" dataKey="new_logos" stroke="#1A9E5C" strokeWidth={2} dot={{ r: 2.5, fill: '#1A9E5C' }} name="New logos" />
-                  </ComposedChart>
-                </ResponsiveContainer>
-              </Box>
-            )}
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3 }}>
-            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                Gross margin trend · dashed line = 75%
-              </Typography>
-              <InfoIcon info={<><strong>What it is:</strong> Monthly gross margin. Should stay high and stable for a mature SaaS.<br /><br /><strong>Data:</strong> (Total Income − Total COGS) ÷ Total Income per month, from QuickBooks P&L. Top-quartile SaaS operates above the 75% dashed line.</>} />
-            </Stack>
-            {isLoading ? (
-              <Skeleton variant="rectangular" height={220} />
-            ) : (
-              <Box sx={{ height: 220 }}>
-                <ResponsiveContainer>
-                  <LineChart data={trend}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
-                    <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={11} />
-                    <YAxis stroke="#8B949E" fontSize={11} width={45} tickFormatter={(v) => `${Math.round(v * 100)}%`} domain={[0.5, 1]} />
-                    <ReferenceLine y={0.75} stroke="#8B949E" strokeDasharray="4 4" />
-                    <RTooltip
-                      labelFormatter={(v) => monthLabel(String(v))}
-                      formatter={(v: number) => [`${(v * 100).toFixed(1)}%`, 'GM']}
-                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
-                    />
-                    <Line type="monotone" dataKey="gross_margin" stroke="#1A9E5C" strokeWidth={2} dot={{ r: 2.5, fill: '#1A9E5C' }} connectNulls />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            )}
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3 }}>
-            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                Avg MRR per customer · trailing 24 months
-              </Typography>
-              <InfoIcon info={<><strong>What it is:</strong> Evolution of average MRR per customer — is pricing power improving, and are new logos landing at higher ACVs?<br /><br /><strong>Data:</strong> For each month, total subscription MRR ÷ Logo Qty, both from the MRR by Month tab.</>} />
-            </Stack>
-            {isLoading ? (
-              <Skeleton variant="rectangular" height={220} />
-            ) : (
-              <Box sx={{ height: 220 }}>
-                <ResponsiveContainer>
-                  <LineChart data={trend}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
-                    <XAxis dataKey="month" tickFormatter={monthLabel} stroke="#8B949E" fontSize={11} />
-                    <YAxis stroke="#8B949E" fontSize={11} width={55} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
-                    <RTooltip
-                      labelFormatter={(v) => monthLabel(String(v))}
-                      formatter={(v: number) => [USD0.format(v), 'Avg MRR']}
-                      contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }} labelStyle={{ color: '#FFFFFF' }} itemStyle={{ color: '#FFFFFF' }}
-                    />
-                    <Line type="monotone" dataKey="avg_mrr_per_customer" stroke="#2C73FF" strokeWidth={2} dot={{ r: 2.5, fill: '#2C73FF' }} connectNulls />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            )}
-          </Paper>
-        </Grid>
-      </Grid>
 
       {/* Rolling trailing-12 UE by anchor month — full month-over-month trajectory */}
       <Paper sx={{ p: 3, mb: 3 }}>
@@ -1067,6 +932,80 @@ export default function UnitEconomics() {
         return null;
       })()}
     </Box>
+  );
+}
+
+// Headline KPI tile: current trailing-12M value + benchmark + Δ vs 6mo + sparkline.
+function KpiTile({
+  label, value, bench, cur, prev, good, color, deltaFmt, spark, loading,
+}: {
+  label: string;
+  value: string;
+  bench: string;
+  cur: number | null;
+  prev: number | null;
+  good: 'up' | 'down';
+  color: string;
+  deltaFmt: (d: number) => string;
+  spark: Array<{ v: number | null }>;
+  loading?: boolean;
+}) {
+  const delta = cur != null && prev != null ? cur - prev : null;
+  // "Better" = moved in the good direction. Green when better, red when worse.
+  const better = delta == null ? null : good === 'up' ? delta > 0 : delta < 0;
+  const arrow = delta == null || delta === 0 ? '·' : delta > 0 ? '▲' : '▼';
+  const deltaColor = better == null ? 'text.disabled' : better ? 'success.main' : 'error.main';
+  return (
+    <Paper sx={{ p: 1.5, height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 10, fontWeight: 700, lineHeight: 1.2 }}>
+        {label}
+      </Typography>
+      {loading ? (
+        <Skeleton variant="text" width="60%" sx={{ fontSize: 26 }} />
+      ) : (
+        <Stack direction="row" alignItems="baseline" justifyContent="space-between" spacing={0.5}>
+          <Typography sx={{ fontWeight: 650, fontSize: 24, fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em' }}>{value}</Typography>
+          {delta != null && (
+            <Typography variant="caption" sx={{ color: deltaColor, fontWeight: 700, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
+              {arrow} {deltaFmt(delta)}
+            </Typography>
+          )}
+        </Stack>
+      )}
+      <Typography variant="caption" sx={{ color: 'text.disabled', fontSize: 10, display: 'block' }}>{bench}</Typography>
+      <Box sx={{ height: 34, mt: 0.5, mx: -0.5 }}>
+        <ResponsiveContainer>
+          <LineChart data={spark} margin={{ top: 4, right: 2, left: 2, bottom: 0 }}>
+            <Line type="monotone" dataKey="v" stroke={color} strokeWidth={1.6} dot={false} connectNulls isAnimationActive={false} />
+          </LineChart>
+        </ResponsiveContainer>
+      </Box>
+    </Paper>
+  );
+}
+
+// Trend panel wrapper — section label, title, context line, InfoIcon, and a
+// fixed-height chart area. Keeps the four trend sections visually consistent.
+function TrendPanel({
+  group, title, ctx, info, loading, children,
+}: {
+  group: string;
+  title: string;
+  ctx: string;
+  info: React.ReactNode;
+  loading?: boolean;
+  children: React.ReactElement;
+}) {
+  return (
+    <Paper sx={{ p: 3, height: '100%' }}>
+      <Typography variant="caption" sx={{ color: 'text.disabled', textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: 10, fontWeight: 700 }}>{group}</Typography>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography variant="h6" sx={{ fontSize: 15 }}>{title}</Typography>
+        <InfoIcon info={info} />
+      </Stack>
+      <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>{ctx}</Typography>
+      {loading ? <Skeleton variant="rectangular" height={200} /> : <Box sx={{ height: 200 }}>{children}</Box>}
+    </Paper>
   );
 }
 
