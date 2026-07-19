@@ -1,31 +1,31 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-07-17T16:26:52.770Z",
-  "cachedUntil": "2026-07-17T16:31:52.770Z",
+  "fetchedAt": "2026-07-19T02:38:49.581Z",
+  "cachedUntil": "2026-07-19T02:43:49.581Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
   "monthly": [
     {
       "month": "2019-03",
-      "starting_mrr": 19812.27,
+      "starting_mrr": 19814.27,
       "new_mrr": 1689.68,
       "reactivated_mrr": 0,
       "expansion_mrr": 8961.03,
       "contraction_mrr": 3325.74,
-      "churn_mrr": 165.25,
+      "churn_mrr": 167.25,
       "delinquent_mrr": 1265,
       "ending_mrr": 25706.99,
-      "net_new_mrr": 5894.72,
+      "net_new_mrr": 5892.72,
       "new_logos": 15,
       "reactivated_logos": 0,
-      "churned_logos": 5,
+      "churned_logos": 6,
       "delinquent_logos": 2,
-      "gross_churn_rate_monthly": 0.0083,
-      "net_churn_rate_monthly": -0.2761,
+      "gross_churn_rate_monthly": 0.0084,
+      "net_churn_rate_monthly": -0.276,
       "expansion_rate_monthly": 0.4523,
-      "grr_monthly": 0.8238,
-      "nrr_monthly": 1.2761,
+      "grr_monthly": 0.8237,
+      "nrr_monthly": 1.276,
       "quick_ratio": 3.05,
       "details": {
         "new": [
@@ -309,6 +309,11 @@
           {
             "name": "Allmoxy",
             "id": 2083,
+            "mrr": 2
+          },
+          {
+            "name": "Allmoxy",
+            "id": 2091,
             "mrr": 2
           }
         ],
@@ -3450,15 +3455,15 @@
       "month": "2019-12",
       "starting_mrr": 58951.29,
       "new_mrr": 500,
-      "reactivated_mrr": 4750,
+      "reactivated_mrr": 5000,
       "expansion_mrr": 17790.38,
       "contraction_mrr": 6354.4,
       "churn_mrr": 750,
       "delinquent_mrr": 140,
-      "ending_mrr": 74747.27,
-      "net_new_mrr": 15795.98,
+      "ending_mrr": 74997.27,
+      "net_new_mrr": 16045.98,
       "new_logos": 2,
-      "reactivated_logos": 4,
+      "reactivated_logos": 5,
       "churned_logos": 3,
       "delinquent_logos": 1,
       "gross_churn_rate_monthly": 0.0127,
@@ -3499,6 +3504,11 @@
           {
             "name": "Allmoxy",
             "id": 2083,
+            "mrr": 250
+          },
+          {
+            "name": "Allmoxy",
+            "id": 2091,
             "mrr": 250
           }
         ],
@@ -3753,25 +3763,25 @@
     },
     {
       "month": "2020-01",
-      "starting_mrr": 74747.27,
+      "starting_mrr": 74997.27,
       "new_mrr": 1425,
       "reactivated_mrr": 315,
       "expansion_mrr": 8895.52,
       "contraction_mrr": 12790.81,
-      "churn_mrr": 1750,
+      "churn_mrr": 2000,
       "delinquent_mrr": 4000,
       "ending_mrr": 66841.98,
-      "net_new_mrr": -7905.29,
+      "net_new_mrr": -8155.29,
       "new_logos": 3,
       "reactivated_logos": 2,
-      "churned_logos": 7,
+      "churned_logos": 8,
       "delinquent_logos": 1,
-      "gross_churn_rate_monthly": 0.0234,
-      "net_churn_rate_monthly": 0.0755,
-      "expansion_rate_monthly": 0.119,
-      "grr_monthly": 0.8055,
-      "nrr_monthly": 0.9245,
-      "quick_ratio": 0.71,
+      "gross_churn_rate_monthly": 0.0267,
+      "net_churn_rate_monthly": 0.0786,
+      "expansion_rate_monthly": 0.1186,
+      "grr_monthly": 0.8028,
+      "nrr_monthly": 0.9214,
+      "quick_ratio": 0.7,
       "details": {
         "new": [
           {
@@ -4057,6 +4067,11 @@
           {
             "name": "Allmoxy",
             "id": 2083,
+            "mrr": 250
+          },
+          {
+            "name": "Allmoxy",
+            "id": 2091,
             "mrr": 250
           }
         ],

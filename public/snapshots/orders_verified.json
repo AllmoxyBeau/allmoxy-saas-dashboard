@@ -1,10 +1,10 @@
 {
-  "fetched_at": "2026-07-17T16:35:33.589Z",
+  "fetched_at": "2026-07-19T19:19:19.415Z",
   "source": "Orders Verified Data.xlsx · Raw Data + Monthly Average + Month to Month Veified Raw Data",
   "comment": "Per-customer verified order data. Three signals captured: (1) per-year order counts + USD totals (from Raw Data), (2) MONTHLY AVERAGE revenue by year (from Monthly Average sheet — used for apples-to-apples YoY trend since 2026 is partial), (3) Live Date (year customer went live) + Months to Launch (from Month to Month Veified Raw Data sheet — answers Launch Status without HubSpot note scanning).",
   "current_year": "2026",
   "prior_year": "2025",
-  "customer_count": 264,
+  "customer_count": 265,
   "raw_data_rows_skipped": 1,
   "monthly_average_rows_joined": 190,
   "live_date_rows_joined": 190,
@@ -16473,6 +16473,44 @@
       "orders_xlsx_name": null,
       "installer_id": "2137",
       "subdomain": "smarterparts",
+      "years": {
+        "2026": {
+          "order_count": null,
+          "total_usd": 0,
+          "subtotal_usd": 0,
+          "b2b_subtotal_usd": 0
+        }
+      },
+      "monthly_avg": {
+        "2026": 0
+      },
+      "live_date": null,
+      "live_date_xlsx": null,
+      "live_date_inferred": null,
+      "live_date_source": null,
+      "months_to_launch": null,
+      "is_launched": false,
+      "total_lifetime_orders": 0,
+      "total_lifetime_usd": 0,
+      "monthly_supplement": {
+        "2026-01": 0,
+        "2026-02": 0,
+        "2026-03": 0,
+        "2026-04": 0,
+        "2026-05": 0
+      },
+      "monthly_avg_source_current_year": "verified_orders_2026_monthly",
+      "latest_year_with_orders": null,
+      "monthly_avg_yoy_pct": -1,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0
+    },
+    "2091": {
+      "allmoxy_customer_id": 2091,
+      "name": "Allmoxy",
+      "orders_xlsx_name": null,
+      "installer_id": "2150",
+      "subdomain": "closets",
       "years": {
         "2026": {
           "order_count": null,

@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-17T16:35:33.892Z",
+  "fetched_at": "2026-07-19T19:19:19.690Z",
   "total": 22,
   "passed": 19,
   "errors": 0,
@@ -32,7 +32,7 @@
       "name": "unattributed count (profiles, excluding duplicates) = churn_inferences count",
       "severity": "error",
       "passed": true,
-      "detail": "unattributed=170 · inferences=170",
+      "detail": "unattributed=171 · inferences=171",
       "examples": []
     },
     {
@@ -88,7 +88,7 @@
       "name": "customer_profiles lifetime_subscription ≈ sum of monthly_history.subscription (±1%)",
       "severity": "warn",
       "passed": true,
-      "detail": "601 customers reconciled within 1%",
+      "detail": "603 customers reconciled within 1%",
       "examples": []
     },
     {
