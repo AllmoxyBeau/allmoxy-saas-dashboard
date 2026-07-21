@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-20T14:02:47.980Z",
+  "fetched_at": "2026-07-21T15:02:57.580Z",
   "source": "Orders Verified Data.xlsx · Raw Data + Monthly Average + Month to Month Veified Raw Data",
   "comment": "Per-customer verified order data. Three signals captured: (1) per-year order counts + USD totals (from Raw Data), (2) MONTHLY AVERAGE revenue by year (from Monthly Average sheet — used for apples-to-apples YoY trend since 2026 is partial), (3) Live Date (year customer went live) + Months to Launch (from Month to Month Veified Raw Data sheet — answers Launch Status without HubSpot note scanning).",
   "current_year": "2026",
@@ -2629,7 +2629,7 @@
         },
         "2018": {
           "order_count": 2115,
-          "total_usd": 102884442,
+          "total_usd": 3490908.65,
           "subtotal_usd": 3116882.72,
           "b2b_subtotal_usd": 0
         },
@@ -2702,7 +2702,7 @@
       "months_to_launch": null,
       "is_launched": true,
       "total_lifetime_orders": 21029,
-      "total_lifetime_usd": 132913557.03,
+      "total_lifetime_usd": 33520023.68,
       "monthly_supplement": {
         "2026-01": 164447.11,
         "2026-02": 310386.34,

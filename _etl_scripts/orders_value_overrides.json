@@ -1,0 +1,9 @@
+{
+  "_comment": "Corrects known-corrupt per-(customer, year) order dollar figures from the Orders Verified source xlsx. Keyed allmoxy_customer_id -> year -> { total_usd }. Applied in build_orders_verified.mjs; total_lifetime_usd is adjusted by the delta so lifetime stays consistent.",
+  "26": {
+    "2018": {
+      "total_usd": 3490908.65,
+      "reason": "Source total_usd was $102,884,442 (33x the intact subtotal $3,116,882.72; ~$48,645/order vs ~$1,200/order every other year). subtotal_usd was correct, so total was corrupted alone. Corrected = subtotal $3,116,882.72 x 1.12 (Rehau's normal total/subtotal ratio, avg of 2017 1.112 & 2019 1.133). Restores monotonic YoY (2017 $1.62M -> 2018 $3.49M -> 2019 $3.17M) and un-inflates the 2018 aggregate ($178M -> ~$79M, below 2019 $99M)."
+    }
+  }
+}
