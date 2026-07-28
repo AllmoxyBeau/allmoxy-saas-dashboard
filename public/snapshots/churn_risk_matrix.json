@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-27T14:06:08.471Z",
+  "fetched_at": "2026-07-28T15:01:39.755Z",
   "comment": "5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to all active paying customers. Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.",
   "scoring_mode": "full",
   "totals": {
@@ -833,8 +833,8 @@
       "primary_segment": "Cabinetry",
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2017-01-12",
-      "failed_3mo_count": 4,
-      "failed_3mo_amount": 12396,
+      "failed_3mo_count": 2,
+      "failed_3mo_amount": 6198,
       "signal_1_orders": 35,
       "orders_label": "running",
       "orders_detail": "$655,771/mo avg in 2026 (+1% vs 2025)",
@@ -870,10 +870,10 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$655,771/mo avg in 2026 (+1% vs 2025) · 49d since contact (autonomous — orders running) · 4 failed charges (3mo) · CS Pulse: yellow",
+      "narrative": "$655,771/mo avg in 2026 (+1% vs 2025) · 49d since contact (autonomous — orders running) · 2 failed charges (3mo) · CS Pulse: yellow",
       "primary_risk_driver": {
         "key": "Billing friction",
-        "summary": "4 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "summary": "2 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
         "source": "signals"
       }
     },
@@ -3766,8 +3766,8 @@
       "primary_segment": "Retail Fixtures & Store Fixtures",
       "sub_segment": "Point-of-Purchase Displays",
       "sign_up_date": "2025-11-27",
-      "failed_3mo_count": 3,
-      "failed_3mo_amount": 750,
+      "failed_3mo_count": 2,
+      "failed_3mo_amount": 500,
       "signal_1_orders": 0,
       "orders_label": "no_order_data",
       "orders_detail": "No verified order data on file",
@@ -3803,7 +3803,7 @@
       "has_hubspot_data": true,
       "scoring_data_status": "hubspot_only",
       "is_bid_only": false,
-      "narrative": "16d since contact · 3 failed charges (3mo)",
+      "narrative": "16d since contact · 2 failed charges (3mo)",
       "primary_risk_driver": {
         "key": "Stalled catalog-build implementation",
         "expected_value": "Lane Industries (an Australian retail-joinery shop building OTR point-of-sale counters for supermarkets/shopping centers) bought Allmoxy to automate order entry and drafting for their ~40-50 standardized cabinet units, with real-time pricing and direct export into Cabinet Vision for CNC nesting, replacing their Jobman ERP + Excel workflow. They expected a portal (with role-based access for internal PMs, resellers, and shopfitters) that would speed up ordering and support growth of new business, built via a hybrid model where Allmoxy's engineer stands up the catalog and hands it off.",
@@ -3820,7 +3820,7 @@
           "HubSpot call: 'Lane Industries & Allmoxy' (2026-02-02) — last titled meeting, no notes captured",
           "HubSpot calls: two inbound calls from +61405125026 (2026-05-04) — only recent activity"
         ],
-        "signal_baseline": "3 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend."
+        "signal_baseline": "2 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend."
       }
     },
     {
@@ -4730,7 +4730,7 @@
       "owner_name": "Connor",
       "current_subscription_mrr": 250,
       "lifetime_subscription": 3534.38,
-      "years_with_us": 1.1,
+      "years_with_us": 1.2,
       "primary_segment": "Cabinetry",
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2025-06-30",
@@ -5441,7 +5441,7 @@
       "owner_name": "Beau",
       "current_subscription_mrr": 7955.24,
       "lifetime_subscription": 544350.88,
-      "years_with_us": 7,
+      "years_with_us": 7.1,
       "primary_segment": "Cabinetry",
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2009-09-15",
@@ -5777,7 +5777,7 @@
       "owner_name": "Connor",
       "current_subscription_mrr": 3520,
       "lifetime_subscription": 202842,
-      "years_with_us": 6,
+      "years_with_us": 6.1,
       "primary_segment": "Cabinetry",
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2020-07-09",
@@ -6393,7 +6393,7 @@
       "owner_name": "Carson",
       "current_subscription_mrr": 2780.35,
       "lifetime_subscription": 159323.52,
-      "years_with_us": 6.7,
+      "years_with_us": 6.8,
       "primary_segment": "Cabinetry",
       "sub_segment": "Custom Cabinet Shop",
       "sign_up_date": "2019-10-28",
@@ -8805,8 +8805,8 @@
       "primary_segment": "Cabinetry",
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2022-07-05",
-      "failed_3mo_count": 23,
-      "failed_3mo_amount": 30756,
+      "failed_3mo_count": 22,
+      "failed_3mo_amount": 30057,
       "signal_1_orders": 35,
       "orders_label": "running",
       "orders_detail": "$41,917/mo avg in 2026 (+64% vs 2025)",
@@ -8842,10 +8842,10 @@
       "has_hubspot_data": false,
       "scoring_data_status": "orders_only",
       "is_bid_only": false,
-      "narrative": "$41,917/mo avg in 2026 (+64% vs 2025) · 23 failed charges (3mo)",
+      "narrative": "$41,917/mo avg in 2026 (+64% vs 2025) · 22 failed charges (3mo)",
       "primary_risk_driver": {
         "key": "Billing friction",
-        "summary": "23 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "summary": "22 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
         "source": "signals"
       }
     },
@@ -9529,7 +9529,7 @@
       "owner_name": "Connor",
       "current_subscription_mrr": 375,
       "lifetime_subscription": 38885,
-      "years_with_us": 7.4,
+      "years_with_us": 7.5,
       "primary_segment": "Cabinetry",
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2017-07-22",
@@ -10761,7 +10761,7 @@
       "owner_name": "Connor",
       "current_subscription_mrr": 300,
       "lifetime_subscription": 17900,
-      "years_with_us": 5.5,
+      "years_with_us": 5.6,
       "primary_segment": "Cabinetry",
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2021-01-08",

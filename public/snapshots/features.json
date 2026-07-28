@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-07-27T14:06:02.681Z",
-  "jira_fetchedAt": "2026-07-27T14:06:02.564Z",
+  "fetchedAt": "2026-07-28T15:01:34.647Z",
+  "jira_fetchedAt": "2026-07-28T15:01:34.524Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4166,
+    "total_tickets": 4170,
     "open_tickets": 926,
-    "done_tickets": 3240,
-    "tickets_with_matched_customer": 2011,
-    "open_mrr_at_stake": 2854277.29,
+    "done_tickets": 3244,
+    "tickets_with_matched_customer": 2015,
+    "open_mrr_at_stake": 2847288.08,
     "distinct_customers_tagged": 146,
     "unmatched_labels": [
       "2020",
@@ -14982,8 +14982,8 @@
     {
       "key": "DEV-12473",
       "summary": "Cannot change order status on remake example product order unless moved to Bid and back",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
+      "status": "In Beta",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 664,
@@ -15004,7 +15004,7 @@
         }
       ],
       "created": "2026-07-23",
-      "updated": "2026-07-24",
+      "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12473",
       "tag_count": 3,
@@ -16907,11 +16907,40 @@
       ]
     },
     {
-      "key": "DEV-12371",
-      "summary": "Investigate: Edge banding drops off on Print All — Lewis Cabinet Specialties (Matt Garrett)",
-      "status": "Backlog",
+      "key": "DEV-12563",
+      "summary": "Lewis Cabinets: Resource allocation not reconciling supply needs from product orders — incorrect qty/timing on the Inventory Processing page",
+      "status": "Ready for Dev",
       "stage_category": "To Do",
-      "issue_type": "Investigate",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 664,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 574809.18,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-27",
+      "updated": "2026-07-27",
+      "resolved": "2026-07-27",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12563",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 574809.18,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12466",
+      "summary": "Lewis - Work Schedule Report & Status History Report",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Bug",
       "priority": "Medium",
       "issue_score": 178,
       "customers": [
@@ -16923,8 +16952,37 @@
           "status": "active"
         }
       ],
+      "created": "2026-07-23",
+      "updated": "2026-07-27",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12466",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 574809.18,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12371",
+      "summary": "Investigate: Edge banding drops off on Print All — Lewis Cabinet Specialties (Matt Garrett)",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 574809.18,
+          "status": "active"
+        }
+      ],
       "created": "2026-07-09",
-      "updated": "2026-07-24",
+      "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12371",
       "tag_count": 1,
@@ -17014,35 +17072,6 @@
       "updated": "2026-07-23",
       "resolved": "2026-07-23",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12476",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7955.24,
-      "total_arr": 95462.88,
-      "total_lifetime": 574809.18,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12466",
-      "summary": "Lewis - Work Schedule Report & Status History Report",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 574809.18,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-23",
-      "updated": "2026-07-23",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12466",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -41655,6 +41684,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12483",
+      "summary": "Supply Item Association Missing",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 218169.81,
+          "status": "at_risk"
+        }
+      ],
+      "created": "2026-07-24",
+      "updated": "2026-07-27",
+      "resolved": "2026-07-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12483",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 4687,
+      "total_arr": 56244,
+      "total_lifetime": 218169.81,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12558",
       "summary": "Greyloch - Sandbox",
       "status": "New",
@@ -41704,35 +41762,6 @@
       "updated": "2026-07-24",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12482",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 4687,
-      "total_arr": 56244,
-      "total_lifetime": 218169.81,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12483",
-      "summary": "Supply Item Association Missing",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 136,
-          "name": "Greyloch, LLC.",
-          "mrr": 4687,
-          "lifetime": 218169.81,
-          "status": "at_risk"
-        }
-      ],
-      "created": "2026-07-24",
-      "updated": "2026-07-24",
-      "resolved": "2026-07-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12483",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -46422,7 +46451,7 @@
         }
       ],
       "created": "2026-07-21",
-      "updated": "2026-07-24",
+      "updated": "2026-07-27",
       "resolved": "2026-07-21",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12442",
       "tag_count": 1,
@@ -52634,7 +52663,7 @@
     {
       "key": "DEV-12470",
       "summary": "Order import skips supply formula calculation — Resource Allocation under-counts sheet materials until order is manually re-saved",
-      "status": "In Progress",
+      "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "High",
@@ -52649,7 +52678,7 @@
         }
       ],
       "created": "2026-07-23",
-      "updated": "2026-07-24",
+      "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12470",
       "tag_count": 1,
@@ -54802,10 +54831,39 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12509",
+      "summary": "D3 - Slowness Report (Post Beta Release)",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 463,
+          "name": "D3Customcabinets",
+          "mrr": 1391,
+          "lifetime": 81011.16,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-24",
+      "updated": "2026-07-28",
+      "resolved": "2026-07-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12509",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1391,
+      "total_arr": 16692,
+      "total_lifetime": 81011.16,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12511",
       "summary": "D3 - Category Names in Dark Mode Are Hard to Read",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
+      "status": "In Beta",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 719,
@@ -54819,8 +54877,8 @@
         }
       ],
       "created": "2026-07-24",
-      "updated": "2026-07-25",
-      "resolved": "2026-07-24",
+      "updated": "2026-07-27",
+      "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12511",
       "tag_count": 1,
       "customer_count": 1,
@@ -54851,35 +54909,6 @@
       "updated": "2026-07-24",
       "resolved": "2026-07-22",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12454",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 1391,
-      "total_arr": 16692,
-      "total_lifetime": 81011.16,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12509",
-      "summary": "D3 - Slowness Report (Post Beta Release)",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 463,
-          "name": "D3Customcabinets",
-          "mrr": 1391,
-          "lifetime": 81011.16,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-24",
-      "updated": "2026-07-24",
-      "resolved": "2026-07-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12509",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -57213,6 +57242,35 @@
         "netley",
         "peacock"
       ]
+    },
+    {
+      "key": "DEV-12561",
+      "summary": "Attribute Company Availability Settings - Not applying to order level settings",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 479,
+          "name": "Cabinet Restylers, Inc",
+          "mrr": 1099,
+          "lifetime": 68439.5,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-27",
+      "updated": "2026-07-28",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12561",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1099,
+      "total_arr": 13188,
+      "total_lifetime": 68439.5,
+      "unmatched_labels": []
     },
     {
       "key": "DEV-12464",
@@ -62721,6 +62779,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12564",
+      "summary": "Stolbek: Contact export missing phone Country Code — blocking Stolbek integrations",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 2018,
+          "name": "Stolbek",
+          "mrr": 400,
+          "lifetime": 4475.5,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-27",
+      "updated": "2026-07-27",
+      "resolved": "2026-07-27",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12564",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 400,
+      "total_arr": 4800,
+      "total_lifetime": 4475.5,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12118",
       "summary": "Resource Allocation not using when it should be",
       "status": "Ready for Dev",
@@ -62738,7 +62825,7 @@
         }
       ],
       "created": "2026-05-27",
-      "updated": "2026-07-17",
+      "updated": "2026-07-27",
       "resolved": "2026-05-27",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12118",
       "tag_count": 1,
@@ -65882,8 +65969,66 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12184",
-      "summary": "Operator BE 10: Company KB interview [BLOCKED - Q2]",
+      "key": "DEV-12176",
+      "summary": "Operator BE 2: LLM gateway, secrets & cost telemetry",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-28",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12176",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12186",
+      "summary": "Operator BE 12: Permissions & Operator admin [BLOCKED - Q1]",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-27",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12186",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12183",
+      "summary": "Operator BE 9: Personal profile interview",
       "status": "Ready For QA",
       "stage_category": "In Progress",
       "issue_type": "New Feature",
@@ -65901,7 +66046,123 @@
       "created": "2026-06-10",
       "updated": "2026-07-27",
       "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12184",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12183",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12185",
+      "summary": "Operator BE 11: Token metering & billing-tier enforcement [BLOCKED - Q3]",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 309,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-27",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12185",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12178",
+      "summary": "Operator BE 4: v2 API inventory & tool layer",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-27",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12178",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12179",
+      "summary": "Operator BE 5: Agent loop, guardrails & gap logging for operator",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 254,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-27",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12179",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12180",
+      "summary": "Operator BE 6: Chat sessions, history & search",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-27",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12180",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -65940,35 +66201,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12176",
-      "summary": "Operator BE 2: LLM gateway, secrets & cost telemetry",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-25",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12176",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-12182",
       "summary": "Operator BE 8: Write confirmation gating & audit attribution",
       "status": "Ready For QA",
@@ -65986,7 +66218,7 @@
         }
       ],
       "created": "2026-06-10",
-      "updated": "2026-07-25",
+      "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12182",
       "tag_count": 1,
@@ -65998,13 +66230,13 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12179",
-      "summary": "Operator BE 5: Agent loop, guardrails & gap logging for operator",
+      "key": "DEV-12184",
+      "summary": "Operator BE 10: Company KB interview [BLOCKED - Q2]",
       "status": "Ready For QA",
       "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "High",
-      "issue_score": 254,
+      "issue_score": 288,
       "customers": [
         {
           "allmoxy_customer_id": 4,
@@ -66015,9 +66247,9 @@
         }
       ],
       "created": "2026-06-10",
-      "updated": "2026-07-25",
+      "updated": "2026-07-27",
       "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12179",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12184",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66044,7 +66276,7 @@
         }
       ],
       "created": "2026-06-10",
-      "updated": "2026-07-25",
+      "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12177",
       "tag_count": 1,
@@ -66056,10 +66288,10 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12180",
-      "summary": "Operator BE 6: Chat sessions, history & search",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
+      "key": "DEV-12175",
+      "summary": "Operator BE 1: Service foundation (repo, CI/CD, runtime, networking)",
+      "status": "Passed QA",
+      "stage_category": "Done",
       "issue_type": "New Feature",
       "priority": "High",
       "issue_score": 275,
@@ -66073,9 +66305,9 @@
         }
       ],
       "created": "2026-06-10",
-      "updated": "2026-07-25",
+      "updated": "2026-07-27",
       "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12180",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12175",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66085,42 +66317,13 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12186",
-      "summary": "Operator BE 12: Permissions & Operator admin [BLOCKED - Q1]",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-24",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12186",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12185",
-      "summary": "Operator BE 11: Token metering & billing-tier enforcement [BLOCKED - Q3]",
-      "status": "Ready for Dev",
+      "key": "DEV-12560",
+      "summary": "Project statuses on Batch Ordering page",
+      "status": "New",
       "stage_category": "To Do",
       "issue_type": "New Feature",
       "priority": "High",
-      "issue_score": 309,
+      "issue_score": 322,
       "customers": [
         {
           "allmoxy_customer_id": 4,
@@ -66130,10 +66333,10 @@
           "status": "churned"
         }
       ],
-      "created": "2026-06-10",
-      "updated": "2026-07-24",
+      "created": "2026-07-27",
+      "updated": "2026-07-27",
       "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12185",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12560",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66221,35 +66424,6 @@
       "updated": "2026-07-24",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12353",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12183",
-      "summary": "Operator BE 9: Personal profile interview",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 288,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-24",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12183",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66781,35 +66955,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12175",
-      "summary": "Operator BE 1: Service foundation (repo, CI/CD, runtime, networking)",
-      "status": "Passed QA",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-10",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12175",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-12341",
       "summary": "Staging - attribute availability by tag table issues",
       "status": "Resolved",
@@ -66830,35 +66975,6 @@
       "updated": "2026-07-10",
       "resolved": "2026-07-07",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12341",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12178",
-      "summary": "Operator BE 4: v2 API inventory & tool layer",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-10",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12178",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -71648,13 +71764,36 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-7651",
+      "summary": "Move user authentication to AWS Cognito",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 287,
+      "customers": [],
+      "created": "2024-01-24",
+      "updated": "2026-07-28",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-7651",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-12267",
       "summary": "CA Sales Tax Question",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": 178,
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
       "customers": [],
       "created": "2026-07-02",
       "updated": "2026-07-27",
@@ -71668,6 +71807,98 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-12268",
+      "summary": "Unable to deselect Australia Sales Tax Presence",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-07-02",
+      "updated": "2026-07-27",
+      "resolved": "2026-07-02",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12268",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-6916",
+      "summary": "Phone input fields with country code and number formatting",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 432,
+      "customers": [],
+      "created": "2023-09-13",
+      "updated": "2026-07-27",
+      "resolved": "2026-02-17",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6916",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-11606",
+      "summary": "API - add is_taxable to order_other_costs calls",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Sub new feature",
+      "priority": "High",
+      "issue_score": 343,
+      "customers": [],
+      "created": "2026-02-17",
+      "updated": "2026-07-27",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11606",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-12399",
+      "summary": "Dominion Dovetail - Unable to delete bid",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-07-15",
+      "updated": "2026-07-27",
+      "resolved": "2026-07-15",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12399",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "dominiondovetails"
       ]
     },
     {
@@ -71691,29 +71922,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12399",
-      "summary": "Dominion Dovetail - Unable to delete bid",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-07-15",
-      "updated": "2026-07-25",
-      "resolved": "2026-07-15",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12399",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "dominiondovetails"
       ]
     },
     {
@@ -73768,29 +73976,6 @@
       ]
     },
     {
-      "key": "DEV-7651",
-      "summary": "Move user authentication to AWS Cognito",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 287,
-      "customers": [],
-      "created": "2024-01-24",
-      "updated": "2026-07-22",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-7651",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
       "key": "DEV-12212",
       "summary": "Allmoxy Project - Deployment Work",
       "status": "Resolved",
@@ -74272,29 +74457,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "carolinaartisan"
-      ]
-    },
-    {
-      "key": "DEV-12268",
-      "summary": "Unable to deselect Australia Sales Tax Presence",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-07-02",
-      "updated": "2026-07-12",
-      "resolved": "2026-07-02",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12268",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "mykitch"
       ]
     },
     {
@@ -75324,29 +75486,6 @@
       "updated": "2026-06-24",
       "resolved": "2026-04-06",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11876",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-11606",
-      "summary": "API - add is_taxable to order_other_costs calls",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Sub new feature",
-      "priority": "High",
-      "issue_score": 343,
-      "customers": [],
-      "created": "2026-02-17",
-      "updated": "2026-06-24",
-      "resolved": "2026-02-17",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11606",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -88481,29 +88620,6 @@
       "updated": "2026-05-26",
       "resolved": "2025-09-11",
       "url": "https://allmoxy.atlassian.net/browse/DEV-10686",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-6916",
-      "summary": "Phone input fields with country code and number formatting",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 432,
-      "customers": [],
-      "created": "2023-09-13",
-      "updated": "2026-05-26",
-      "resolved": "2026-02-17",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6916",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
