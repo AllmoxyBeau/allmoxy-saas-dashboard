@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-07-29T14:28:02.445Z",
-  "jira_fetchedAt": "2026-07-29T14:28:02.318Z",
+  "fetchedAt": "2026-07-30T13:13:13.723Z",
+  "jira_fetchedAt": "2026-07-30T13:13:13.620Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4179,
-    "open_tickets": 929,
-    "done_tickets": 3250,
-    "tickets_with_matched_customer": 2022,
-    "open_mrr_at_stake": 2849640.5,
+    "total_tickets": 4185,
+    "open_tickets": 934,
+    "done_tickets": 3251,
+    "tickets_with_matched_customer": 2025,
+    "open_mrr_at_stake": 2857845.74,
     "distinct_customers_tagged": 146,
     "unmatched_labels": [
       "2020",
@@ -169,7 +169,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -183,7 +183,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -364,7 +364,7 @@
       "active_customer_count": 25,
       "total_mrr": 65860.64,
       "total_arr": 790327.68,
-      "total_lifetime": 5034315.26,
+      "total_lifetime": 5035441.76,
       "unmatched_labels": [
         "DCDrawers",
         "DotCabinets",
@@ -405,7 +405,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -426,7 +426,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -544,7 +544,7 @@
       "active_customer_count": 19,
       "total_mrr": 55770.99,
       "total_arr": 669251.88,
-      "total_lifetime": 4292068.5,
+      "total_lifetime": 4293195,
       "unmatched_labels": [
         "CabinetParts",
         "Fryburg",
@@ -583,7 +583,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -722,7 +722,7 @@
       "active_customer_count": 18,
       "total_mrr": 53236.39,
       "total_arr": 638836.68,
-      "total_lifetime": 4663726.49,
+      "total_lifetime": 4663825.49,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -761,7 +761,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -782,7 +782,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -865,7 +865,7 @@
       "active_customer_count": 15,
       "total_mrr": 49621.42,
       "total_arr": 595457.04,
-      "total_lifetime": 4022444.43,
+      "total_lifetime": 4023570.93,
       "unmatched_labels": [
         "DCDrawers",
         "brandenbergercustom",
@@ -896,7 +896,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -910,7 +910,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -979,7 +979,7 @@
       "active_customer_count": 10,
       "total_mrr": 41049.94,
       "total_arr": 492599.28,
-      "total_lifetime": 3448295.09,
+      "total_lifetime": 3449421.59,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -1020,7 +1020,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -1083,7 +1083,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         },
         {
@@ -1124,7 +1124,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2867098.42,
+      "total_lifetime": 2868271.42,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1163,7 +1163,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -1226,7 +1226,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         },
         {
@@ -1267,7 +1267,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2867098.42,
+      "total_lifetime": 2868271.42,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1306,7 +1306,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -1369,7 +1369,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         },
         {
@@ -1410,7 +1410,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2867098.42,
+      "total_lifetime": 2868271.42,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1449,7 +1449,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -1512,7 +1512,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         },
         {
@@ -1553,7 +1553,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2867098.42,
+      "total_lifetime": 2868271.42,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1592,7 +1592,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -1655,7 +1655,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         },
         {
@@ -1696,7 +1696,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2867098.42,
+      "total_lifetime": 2868271.42,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1728,7 +1728,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -1749,7 +1749,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -1797,7 +1797,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -1829,7 +1829,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -1850,7 +1850,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -1898,7 +1898,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -1930,7 +1930,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -1951,7 +1951,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -1999,7 +1999,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2031,7 +2031,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2052,7 +2052,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2100,7 +2100,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2132,7 +2132,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2153,7 +2153,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2201,7 +2201,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2233,7 +2233,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2254,7 +2254,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2302,7 +2302,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2334,7 +2334,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2355,7 +2355,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2403,7 +2403,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2435,7 +2435,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2456,7 +2456,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2504,7 +2504,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2536,7 +2536,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2557,7 +2557,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2605,7 +2605,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2637,7 +2637,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2658,7 +2658,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2706,7 +2706,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2738,7 +2738,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2759,7 +2759,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2807,7 +2807,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2839,7 +2839,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2860,7 +2860,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -2908,7 +2908,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -2940,7 +2940,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -2961,7 +2961,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3009,7 +3009,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -3041,7 +3041,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -3062,7 +3062,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3110,7 +3110,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -3142,7 +3142,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -3163,7 +3163,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3211,7 +3211,7 @@
       "active_customer_count": 8,
       "total_mrr": 36945.57,
       "total_arr": 443346.84,
-      "total_lifetime": 3030432.43,
+      "total_lifetime": 3031558.93,
       "unmatched_labels": [
         "PilotCt",
         "SouthernStone",
@@ -3257,7 +3257,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3340,7 +3340,7 @@
       "active_customer_count": 12,
       "total_mrr": 36171.99,
       "total_arr": 434063.88,
-      "total_lifetime": 2794618.6,
+      "total_lifetime": 2795646.1,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -3386,7 +3386,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3462,7 +3462,7 @@
       "active_customer_count": 11,
       "total_mrr": 35132.49,
       "total_arr": 421589.88,
-      "total_lifetime": 2690963,
+      "total_lifetime": 2691990.5,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -3508,7 +3508,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3584,7 +3584,7 @@
       "active_customer_count": 11,
       "total_mrr": 35132.49,
       "total_arr": 421589.88,
-      "total_lifetime": 2690963,
+      "total_lifetime": 2691990.5,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -3630,7 +3630,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3706,7 +3706,7 @@
       "active_customer_count": 11,
       "total_mrr": 35132.49,
       "total_arr": 421589.88,
-      "total_lifetime": 2690963,
+      "total_lifetime": 2691990.5,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -3752,7 +3752,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3828,7 +3828,7 @@
       "active_customer_count": 11,
       "total_mrr": 35132.49,
       "total_arr": 421589.88,
-      "total_lifetime": 2690963,
+      "total_lifetime": 2691990.5,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -3874,7 +3874,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -3950,7 +3950,7 @@
       "active_customer_count": 11,
       "total_mrr": 35132.49,
       "total_arr": 421589.88,
-      "total_lifetime": 2690963,
+      "total_lifetime": 2691990.5,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -3960,6 +3960,136 @@
         "dbs",
         "netley",
         "peacock"
+      ]
+    },
+    {
+      "key": "DEV-12447",
+      "summary": "[MRP][STAGING] payment gateway error when trying to pay for an order as a customer",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 574809.18,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 465726.16,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 333,
+          "name": "Quality Kitchens Inc.",
+          "mrr": 2871.94,
+          "lifetime": 8661.48,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 123211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 147245.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 58433.75,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 51817.2,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 780,
+          "lifetime": 20499,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 40857.44,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 250,
+          "lifetime": 58638.94,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-21",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-22",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12447",
+      "tag_count": 29,
+      "customer_count": 13,
+      "active_customer_count": 12,
+      "total_mrr": 35083.23,
+      "total_arr": 420998.76,
+      "total_lifetime": 2497280.87,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
       ]
     },
     {
@@ -4587,136 +4717,6 @@
       "updated": "2026-07-23",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-11249",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 35083.23,
-      "total_arr": 420998.76,
-      "total_lifetime": 2497280.87,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-12447",
-      "summary": "[MRP][STAGING] payment gateway error when trying to pay for an order as a customer",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 574809.18,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 465726.16,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 8661.48,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 123211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 147245.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 58433.75,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 51817.2,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 780,
-          "lifetime": 20499,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 40857.44,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 250,
-          "lifetime": 58638.94,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-21",
-      "updated": "2026-07-22",
-      "resolved": "2026-07-22",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12447",
       "tag_count": 29,
       "customer_count": 13,
       "active_customer_count": 12,
@@ -5412,7 +5412,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -5426,7 +5426,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -5488,7 +5488,7 @@
       "active_customer_count": 9,
       "total_mrr": 34535.02,
       "total_arr": 414420.24,
-      "total_lifetime": 2665386.98,
+      "total_lifetime": 2666513.48,
       "unmatched_labels": [
         "Fryburg",
         "NYDoorandDrawer",
@@ -5512,7 +5512,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -5526,7 +5526,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -5595,7 +5595,7 @@
       "active_customer_count": 11,
       "total_mrr": 29897.96,
       "total_arr": 358775.52,
-      "total_lifetime": 2331912.78,
+      "total_lifetime": 2333039.28,
       "unmatched_labels": [
         "DCDrawers",
         "brandenbergercustom",
@@ -5616,7 +5616,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -5692,7 +5692,7 @@
       "active_customer_count": 9,
       "total_mrr": 29052.14,
       "total_arr": 348625.68,
-      "total_lifetime": 2167323.26,
+      "total_lifetime": 2167422.26,
       "unmatched_labels": [
         "DotCabinets",
         "m2m",
@@ -5720,7 +5720,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -5803,7 +5803,7 @@
       "active_customer_count": 9,
       "total_mrr": 28447.73,
       "total_arr": 341372.76,
-      "total_lifetime": 2111744.55,
+      "total_lifetime": 2112772.05,
       "unmatched_labels": [
         "IslandCustomCabinets",
         "Paragon",
@@ -5932,7 +5932,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -5966,7 +5966,7 @@
       "active_customer_count": 6,
       "total_mrr": 27407.69,
       "total_arr": 328892.28,
-      "total_lifetime": 1907555.75,
+      "total_lifetime": 1908583.25,
       "unmatched_labels": [
         "DotCabinets",
         "DukeCustomKitchens",
@@ -6368,7 +6368,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -6409,7 +6409,7 @@
       "active_customer_count": 7,
       "total_mrr": 27011.46,
       "total_arr": 324137.52,
-      "total_lifetime": 2113451.95,
+      "total_lifetime": 2114479.45,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "StanisciDesign",
@@ -6505,7 +6505,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -6539,7 +6539,7 @@
       "active_customer_count": 5,
       "total_mrr": 24374.94,
       "total_arr": 292499.28,
-      "total_lifetime": 2144278.03,
+      "total_lifetime": 2144377.03,
       "unmatched_labels": [
         "Fryburg",
         "netley"
@@ -6558,7 +6558,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -6627,7 +6627,7 @@
       "active_customer_count": 7,
       "total_mrr": 24366.97,
       "total_arr": 292403.64,
-      "total_lifetime": 2336446.64,
+      "total_lifetime": 2336545.64,
       "unmatched_labels": [
         "Fryburg",
         "LifeSpanClosets",
@@ -6652,7 +6652,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -6721,7 +6721,7 @@
       "active_customer_count": 7,
       "total_mrr": 24366.97,
       "total_arr": 292403.64,
-      "total_lifetime": 2336446.64,
+      "total_lifetime": 2336545.64,
       "unmatched_labels": [
         "Fryburg",
         "LifeSpanClosets",
@@ -6751,7 +6751,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -6785,7 +6785,7 @@
       "active_customer_count": 4,
       "total_mrr": 24097.93,
       "total_arr": 289175.16,
-      "total_lifetime": 1944628.21,
+      "total_lifetime": 1944727.21,
       "unmatched_labels": [
         "netley"
       ]
@@ -6803,7 +6803,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -6851,7 +6851,7 @@
       "active_customer_count": 5,
       "total_mrr": 24082.19,
       "total_arr": 288986.28,
-      "total_lifetime": 2195643.22,
+      "total_lifetime": 2195742.22,
       "unmatched_labels": [
         "mykitch",
         "netley"
@@ -6877,7 +6877,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -6932,7 +6932,7 @@
       "active_customer_count": 7,
       "total_mrr": 23620.17,
       "total_arr": 283442.04,
-      "total_lifetime": 2236061.78,
+      "total_lifetime": 2236160.78,
       "unmatched_labels": [
         "Midwest",
         "amco",
@@ -6962,7 +6962,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -7010,7 +7010,7 @@
       "active_customer_count": 6,
       "total_mrr": 23413.91,
       "total_arr": 280966.92,
-      "total_lifetime": 2331134.53,
+      "total_lifetime": 2331233.53,
       "unmatched_labels": [
         "amco"
       ]
@@ -7035,7 +7035,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -7069,7 +7069,7 @@
       "active_customer_count": 5,
       "total_mrr": 22724.99,
       "total_arr": 272699.88,
-      "total_lifetime": 2054767.63,
+      "total_lifetime": 2054866.63,
       "unmatched_labels": [
         "DCDrawers",
         "ModernFronts",
@@ -7097,7 +7097,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -7159,7 +7159,7 @@
       "active_customer_count": 9,
       "total_mrr": 22663.72,
       "total_arr": 271964.64,
-      "total_lifetime": 1400803.06,
+      "total_lifetime": 1401830.56,
       "unmatched_labels": [
         "SouthernStone",
         "brandenbergercustom",
@@ -7188,7 +7188,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -7250,7 +7250,7 @@
       "active_customer_count": 7,
       "total_mrr": 22552.22,
       "total_arr": 270626.64,
-      "total_lifetime": 1667115.89,
+      "total_lifetime": 1668143.39,
       "unmatched_labels": [
         "IdealDrawers",
         "SouthernStone",
@@ -7346,7 +7346,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -7381,7 +7381,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -7394,7 +7394,7 @@
       "active_customer_count": 6,
       "total_mrr": 22009.75,
       "total_arr": 264117,
-      "total_lifetime": 1890663.28,
+      "total_lifetime": 1891762.28,
       "unmatched_labels": [
         "Makellos",
         "m2m",
@@ -7700,7 +7700,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -7734,7 +7734,7 @@
       "active_customer_count": 5,
       "total_mrr": 21424.99,
       "total_arr": 257099.88,
-      "total_lifetime": 1942931.73,
+      "total_lifetime": 1943030.73,
       "unmatched_labels": [
         "ciminos",
         "mykitch",
@@ -7761,7 +7761,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -7789,7 +7789,7 @@
           "allmoxy_customer_id": 310,
           "name": "Empyre Designs",
           "mrr": 563.06,
-          "lifetime": 38797.57,
+          "lifetime": 38937.07,
           "status": "at_risk"
         },
         {
@@ -7844,7 +7844,7 @@
       "active_customer_count": 9,
       "total_mrr": 21386.44,
       "total_arr": 256637.28,
-      "total_lifetime": 1972814.92,
+      "total_lifetime": 1973053.42,
       "unmatched_labels": [
         "HogansCabinetry",
         "Midwest",
@@ -7951,7 +7951,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -7985,7 +7985,7 @@
       "active_customer_count": 4,
       "total_mrr": 21225.99,
       "total_arr": 254711.88,
-      "total_lifetime": 1967987.83,
+      "total_lifetime": 1968086.83,
       "unmatched_labels": [
         "SouthernStone",
         "netley"
@@ -8011,7 +8011,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -8038,7 +8038,7 @@
       "active_customer_count": 4,
       "total_mrr": 21225.99,
       "total_arr": 254711.88,
-      "total_lifetime": 1935966.73,
+      "total_lifetime": 1936065.73,
       "unmatched_labels": [
         "StanisciDesign",
         "ciminos",
@@ -8066,7 +8066,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -8093,7 +8093,7 @@
       "active_customer_count": 4,
       "total_mrr": 21225.99,
       "total_arr": 254711.88,
-      "total_lifetime": 1935966.73,
+      "total_lifetime": 1936065.73,
       "unmatched_labels": [
         "StanisciDesign",
         "cuttingedge",
@@ -8120,7 +8120,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -8147,7 +8147,7 @@
       "active_customer_count": 4,
       "total_mrr": 21225.99,
       "total_arr": 254711.88,
-      "total_lifetime": 1935966.73,
+      "total_lifetime": 1936065.73,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "netley"
@@ -8173,7 +8173,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -8214,7 +8214,7 @@
       "active_customer_count": 6,
       "total_mrr": 21189.42,
       "total_arr": 254273.04,
-      "total_lifetime": 1521107.23,
+      "total_lifetime": 1522134.73,
       "unmatched_labels": [
         "Midwest",
         "netley"
@@ -8377,7 +8377,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -8418,7 +8418,7 @@
       "active_customer_count": 6,
       "total_mrr": 19870.24,
       "total_arr": 238442.88,
-      "total_lifetime": 1699855.02,
+      "total_lifetime": 1699954.02,
       "unmatched_labels": [
         "btjdoors",
         "ciminos"
@@ -8444,7 +8444,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -8485,7 +8485,7 @@
       "active_customer_count": 5,
       "total_mrr": 19434.45,
       "total_arr": 233213.4,
-      "total_lifetime": 1728718.54,
+      "total_lifetime": 1728817.54,
       "unmatched_labels": [
         "Midwest",
         "artisiancabinet",
@@ -8590,7 +8590,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -8624,7 +8624,7 @@
       "active_customer_count": 4,
       "total_mrr": 18511.25,
       "total_arr": 222135,
-      "total_lifetime": 1826883.71,
+      "total_lifetime": 1826982.71,
       "unmatched_labels": [
         "netley"
       ]
@@ -8835,7 +8835,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -8855,7 +8855,7 @@
       "active_customer_count": 3,
       "total_mrr": 16678.24,
       "total_arr": 200138.88,
-      "total_lifetime": 1639089.25,
+      "total_lifetime": 1639188.25,
       "unmatched_labels": []
     },
     {
@@ -8878,7 +8878,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -8905,7 +8905,7 @@
       "active_customer_count": 4,
       "total_mrr": 16553.75,
       "total_arr": 198645,
-      "total_lifetime": 1165550.72,
+      "total_lifetime": 1166578.22,
       "unmatched_labels": [
         "ciminos",
         "ifccinc",
@@ -9029,7 +9029,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -9084,7 +9084,7 @@
       "active_customer_count": 7,
       "total_mrr": 16075,
       "total_arr": 192900,
-      "total_lifetime": 895692,
+      "total_lifetime": 896719.5,
       "unmatched_labels": [
         "DoorMastersHouston",
         "IdealDrawers",
@@ -9174,7 +9174,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -9194,7 +9194,7 @@
       "active_customer_count": 3,
       "total_mrr": 15761.24,
       "total_arr": 189134.88,
-      "total_lifetime": 932635.32,
+      "total_lifetime": 933662.82,
       "unmatched_labels": [
         "Midwest",
         "Prospective",
@@ -9335,7 +9335,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -9356,7 +9356,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         },
         {
@@ -9376,7 +9376,7 @@
       "active_customer_count": 4,
       "total_mrr": 15413.45,
       "total_arr": 184961.4,
-      "total_lifetime": 1488163.5,
+      "total_lifetime": 1489262.5,
       "unmatched_labels": [
         "CabinetParts",
         "bccdoors",
@@ -9486,7 +9486,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -9506,7 +9506,7 @@
       "active_customer_count": 3,
       "total_mrr": 15290.45,
       "total_arr": 183485.4,
-      "total_lifetime": 1402086.16,
+      "total_lifetime": 1402185.16,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -9531,14 +9531,14 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         },
         {
@@ -9558,7 +9558,7 @@
       "active_customer_count": 4,
       "total_mrr": 15229.24,
       "total_arr": 182750.88,
-      "total_lifetime": 1437074.16,
+      "total_lifetime": 1438173.16,
       "unmatched_labels": [
         "Makellos",
         "ciminos",
@@ -9867,7 +9867,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -9887,7 +9887,7 @@
       "active_customer_count": 3,
       "total_mrr": 15004.24,
       "total_arr": 180050.88,
-      "total_lifetime": 1351646.62,
+      "total_lifetime": 1351745.62,
       "unmatched_labels": []
     },
     {
@@ -9910,7 +9910,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -9944,7 +9944,7 @@
       "active_customer_count": 4,
       "total_mrr": 14839.61,
       "total_arr": 178075.32,
-      "total_lifetime": 1498133.27,
+      "total_lifetime": 1498232.27,
       "unmatched_labels": [
         "thomascreekwoodworking"
       ]
@@ -10036,7 +10036,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -10049,7 +10049,7 @@
       "active_customer_count": 5,
       "total_mrr": 14512.25,
       "total_arr": 174147,
-      "total_lifetime": 1294801.07,
+      "total_lifetime": 1295801.07,
       "unmatched_labels": [
         "netley"
       ]
@@ -10209,7 +10209,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -10257,7 +10257,7 @@
       "active_customer_count": 6,
       "total_mrr": 14435.95,
       "total_arr": 173231.4,
-      "total_lifetime": 794453.09,
+      "total_lifetime": 795480.59,
       "unmatched_labels": [
         "DoorMastersHouston"
       ]
@@ -10335,7 +10335,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -10348,7 +10348,7 @@
       "active_customer_count": 2,
       "total_mrr": 13979.24,
       "total_arr": 167750.88,
-      "total_lifetime": 1278991.22,
+      "total_lifetime": 1279090.22,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -10373,7 +10373,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -10386,7 +10386,7 @@
       "active_customer_count": 2,
       "total_mrr": 13979.24,
       "total_arr": 167750.88,
-      "total_lifetime": 1278991.22,
+      "total_lifetime": 1279090.22,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "ciminos"
@@ -10412,7 +10412,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -10425,7 +10425,7 @@
       "active_customer_count": 2,
       "total_mrr": 13979.24,
       "total_arr": 167750.88,
-      "total_lifetime": 1278991.22,
+      "total_lifetime": 1279090.22,
       "unmatched_labels": []
     },
     {
@@ -10448,7 +10448,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -10461,7 +10461,7 @@
       "active_customer_count": 2,
       "total_mrr": 13979.24,
       "total_arr": 167750.88,
-      "total_lifetime": 1278991.22,
+      "total_lifetime": 1279090.22,
       "unmatched_labels": []
     },
     {
@@ -10484,7 +10484,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -10497,7 +10497,7 @@
       "active_customer_count": 2,
       "total_mrr": 13979.24,
       "total_arr": 167750.88,
-      "total_lifetime": 1278991.22,
+      "total_lifetime": 1279090.22,
       "unmatched_labels": [
         "Fryburg"
       ]
@@ -10522,7 +10522,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -10535,7 +10535,7 @@
       "active_customer_count": 2,
       "total_mrr": 13979.24,
       "total_arr": 167750.88,
-      "total_lifetime": 1278991.22,
+      "total_lifetime": 1279090.22,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -10785,7 +10785,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -10812,7 +10812,7 @@
       "active_customer_count": 4,
       "total_mrr": 13508.75,
       "total_arr": 162105,
-      "total_lifetime": 988701,
+      "total_lifetime": 989728.5,
       "unmatched_labels": [
         "cuttingedge",
         "mykitch",
@@ -10902,7 +10902,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -10929,7 +10929,7 @@
       "active_customer_count": 3,
       "total_mrr": 13270.75,
       "total_arr": 159249,
-      "total_lifetime": 1361157.55,
+      "total_lifetime": 1361256.55,
       "unmatched_labels": [
         "m2m",
         "mykitch",
@@ -10949,7 +10949,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -10976,7 +10976,7 @@
       "active_customer_count": 3,
       "total_mrr": 13270.75,
       "total_arr": 159249,
-      "total_lifetime": 1361157.55,
+      "total_lifetime": 1361256.55,
       "unmatched_labels": [
         "cuttingedge",
         "netley"
@@ -11144,7 +11144,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -11179,7 +11179,7 @@
           "allmoxy_customer_id": 310,
           "name": "Empyre Designs",
           "mrr": 563.06,
-          "lifetime": 38797.57,
+          "lifetime": 38937.07,
           "status": "at_risk"
         },
         {
@@ -11199,7 +11199,7 @@
       "active_customer_count": 6,
       "total_mrr": 13192.85,
       "total_arr": 158314.2,
-      "total_lifetime": 1077852.56,
+      "total_lifetime": 1078091.06,
       "unmatched_labels": [
         "Midwest",
         "Services"
@@ -11281,7 +11281,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -11294,7 +11294,7 @@
       "active_customer_count": 2,
       "total_mrr": 12642.24,
       "total_arr": 151706.88,
-      "total_lifetime": 792978.99,
+      "total_lifetime": 794006.49,
       "unmatched_labels": []
     },
     {
@@ -11317,7 +11317,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -11330,7 +11330,7 @@
       "active_customer_count": 2,
       "total_mrr": 12642.24,
       "total_arr": 151706.88,
-      "total_lifetime": 792978.99,
+      "total_lifetime": 794006.49,
       "unmatched_labels": []
     },
     {
@@ -11353,7 +11353,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -11366,7 +11366,7 @@
       "active_customer_count": 2,
       "total_mrr": 12642.24,
       "total_arr": 151706.88,
-      "total_lifetime": 792978.99,
+      "total_lifetime": 794006.49,
       "unmatched_labels": [
         "DCDrawers",
         "Soelberg"
@@ -12856,7 +12856,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -12883,7 +12883,7 @@
       "active_customer_count": 3,
       "total_mrr": 11933.75,
       "total_arr": 143205,
-      "total_lifetime": 898491.82,
+      "total_lifetime": 899519.32,
       "unmatched_labels": [
         "netley",
         "rcc"
@@ -12909,7 +12909,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -12929,7 +12929,7 @@
       "active_customer_count": 3,
       "total_mrr": 11933.75,
       "total_arr": 143205,
-      "total_lifetime": 875145.32,
+      "total_lifetime": 876172.82,
       "unmatched_labels": [
         "IMAB",
         "ciminos",
@@ -13362,7 +13362,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -13410,7 +13410,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 642379.72,
+      "total_lifetime": 643407.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13429,7 +13429,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -13477,7 +13477,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 642379.72,
+      "total_lifetime": 643407.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13496,7 +13496,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -13544,7 +13544,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 642379.72,
+      "total_lifetime": 643407.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13563,7 +13563,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -13611,7 +13611,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 642379.72,
+      "total_lifetime": 643407.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13630,7 +13630,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -13678,7 +13678,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 642379.72,
+      "total_lifetime": 643407.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13697,7 +13697,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -13745,7 +13745,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 642379.72,
+      "total_lifetime": 643407.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13902,7 +13902,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -13922,7 +13922,7 @@
       "active_customer_count": 2,
       "total_mrr": 10644,
       "total_arr": 127728,
-      "total_lifetime": 994587.44,
+      "total_lifetime": 994686.44,
       "unmatched_labels": [
         "Fryburg"
       ]
@@ -14190,7 +14190,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -14231,7 +14231,7 @@
       "active_customer_count": 5,
       "total_mrr": 10172.21,
       "total_arr": 122066.52,
-      "total_lifetime": 492012.48,
+      "total_lifetime": 493039.98,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -14563,7 +14563,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -14576,7 +14576,7 @@
       "active_customer_count": 4,
       "total_mrr": 9733.47,
       "total_arr": 116801.64,
-      "total_lifetime": 903664.72,
+      "total_lifetime": 904664.72,
       "unmatched_labels": [
         "canary",
         "mykitch",
@@ -14868,7 +14868,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -14888,7 +14888,7 @@
       "active_customer_count": 2,
       "total_mrr": 9307,
       "total_arr": 111684,
-      "total_lifetime": 508575.21,
+      "total_lifetime": 509602.71,
       "unmatched_labels": []
     },
     {
@@ -15185,7 +15185,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -15205,7 +15205,7 @@
       "active_customer_count": 2,
       "total_mrr": 9143,
       "total_arr": 109716,
-      "total_lifetime": 843838.37,
+      "total_lifetime": 843937.37,
       "unmatched_labels": []
     },
     {
@@ -15741,7 +15741,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -15755,7 +15755,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -15768,7 +15768,7 @@
       "active_customer_count": 3,
       "total_mrr": 8335.21,
       "total_arr": 100022.52,
-      "total_lifetime": 926720.98,
+      "total_lifetime": 927819.98,
       "unmatched_labels": [
         "bbcustomdoors"
       ]
@@ -15936,7 +15936,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         }
       ],
@@ -15949,7 +15949,7 @@
       "active_customer_count": 2,
       "total_mrr": 8225.24,
       "total_arr": 98702.88,
-      "total_lifetime": 587818.18,
+      "total_lifetime": 587963.68,
       "unmatched_labels": [
         "DCDrawers",
         "StanisciDesign"
@@ -16152,7 +16152,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -16186,7 +16186,7 @@
       "active_customer_count": 4,
       "total_mrr": 8095,
       "total_arr": 97140,
-      "total_lifetime": 461257.06,
+      "total_lifetime": 462284.56,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -16906,6 +16906,35 @@
         "NationalWood",
         "organize2size"
       ]
+    },
+    {
+      "key": "DEV-12587",
+      "summary": "Investigate: Dark Mode — Projection Report job details popup renders off-white background — Lewis Cabinet Specialties (Matt Garrett)",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Low",
+      "issue_score": null,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 574809.18,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-29",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12587",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 574809.18,
+      "unmatched_labels": []
     },
     {
       "key": "DEV-11858",
@@ -29676,7 +29705,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -29696,7 +29725,7 @@
       "active_customer_count": 2,
       "total_mrr": 7806,
       "total_arr": 93672,
-      "total_lifetime": 357826.14,
+      "total_lifetime": 358853.64,
       "unmatched_labels": [
         "StanisciDesign"
       ]
@@ -29934,7 +29963,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -29961,7 +29990,7 @@
       "active_customer_count": 3,
       "total_mrr": 7436.65,
       "total_arr": 89239.8,
-      "total_lifetime": 402797.29,
+      "total_lifetime": 403824.79,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -30026,7 +30055,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -30053,7 +30082,7 @@
       "active_customer_count": 2,
       "total_mrr": 7274,
       "total_arr": 87288,
-      "total_lifetime": 887241.67,
+      "total_lifetime": 887340.67,
       "unmatched_labels": []
     },
     {
@@ -30352,6 +30381,45 @@
       ]
     },
     {
+      "key": "DEV-9320",
+      "summary": "Lock Orders at Certain Status to Preserve Product Information",
+      "status": "Feature Scope",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 393,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        }
+      ],
+      "created": "2024-12-11",
+      "updated": "2026-07-29",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9320",
+      "tag_count": 4,
+      "customer_count": 2,
+      "active_customer_count": 2,
+      "total_mrr": 7246.75,
+      "total_arr": 86961,
+      "total_lifetime": 656975.51,
+      "unmatched_labels": [
+        "StanisciDesign",
+        "netley"
+      ]
+    },
+    {
       "key": "DEV-8525",
       "summary": "Allow the IO to pick their tax service",
       "status": "Backlog",
@@ -30464,45 +30532,6 @@
       "unmatched_labels": [
         "netley",
         "nudoors"
-      ]
-    },
-    {
-      "key": "DEV-9320",
-      "summary": "Lock Orders at Certain Status to Preserve Product Information",
-      "status": "Feature Scope",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 393,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        }
-      ],
-      "created": "2024-12-11",
-      "updated": "2026-06-23",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9320",
-      "tag_count": 4,
-      "customer_count": 2,
-      "active_customer_count": 2,
-      "total_mrr": 7246.75,
-      "total_arr": 86961,
-      "total_lifetime": 656975.51,
-      "unmatched_labels": [
-        "StanisciDesign",
-        "netley"
       ]
     },
     {
@@ -37583,7 +37612,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -37596,7 +37625,7 @@
       "active_customer_count": 4,
       "total_mrr": 6748.95,
       "total_arr": 80987.4,
-      "total_lifetime": 493966.38,
+      "total_lifetime": 494966.38,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "mykitch"
@@ -37866,7 +37895,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         },
         {
@@ -37886,7 +37915,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 736203.14,
+      "total_lifetime": 736302.14,
       "unmatched_labels": [
         "Fryburg",
         "artisiancabinet"
@@ -37905,7 +37934,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -37918,7 +37947,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -37934,7 +37963,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -37947,7 +37976,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -37963,7 +37992,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -37976,7 +38005,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -37992,7 +38021,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38005,7 +38034,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": [
         "bbcustomdoors"
       ]
@@ -38023,7 +38052,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38036,7 +38065,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -38054,7 +38083,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38067,7 +38096,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -38085,7 +38114,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38098,7 +38127,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38114,7 +38143,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38127,7 +38156,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38143,7 +38172,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38156,7 +38185,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38172,7 +38201,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38185,7 +38214,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38201,7 +38230,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38214,7 +38243,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38230,7 +38259,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38243,7 +38272,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38259,7 +38288,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38272,7 +38301,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38288,7 +38317,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38301,7 +38330,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38317,7 +38346,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38330,7 +38359,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38346,7 +38375,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38359,7 +38388,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38375,7 +38404,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38388,7 +38417,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38404,7 +38433,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38417,7 +38446,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -38435,7 +38464,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38448,7 +38477,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -38466,7 +38495,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38479,7 +38508,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38495,7 +38524,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38508,7 +38537,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38524,7 +38553,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38537,7 +38566,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38553,7 +38582,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38566,7 +38595,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38582,7 +38611,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38595,7 +38624,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38611,7 +38640,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38624,7 +38653,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38640,7 +38669,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38653,7 +38682,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38669,7 +38698,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38682,7 +38711,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38698,7 +38727,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38711,7 +38740,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38727,7 +38756,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38740,7 +38769,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38756,7 +38785,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38769,7 +38798,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38785,7 +38814,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38798,7 +38827,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38814,7 +38843,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38827,7 +38856,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38843,7 +38872,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38856,7 +38885,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38872,7 +38901,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38885,7 +38914,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38901,7 +38930,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38914,7 +38943,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38930,7 +38959,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38943,7 +38972,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38959,7 +38988,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -38972,7 +39001,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -38988,7 +39017,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39001,7 +39030,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39017,7 +39046,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39030,7 +39059,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39046,7 +39075,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39059,7 +39088,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39075,7 +39104,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39088,7 +39117,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39104,7 +39133,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39117,7 +39146,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39133,7 +39162,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39146,7 +39175,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39162,7 +39191,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39175,7 +39204,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39191,7 +39220,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39204,7 +39233,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39220,7 +39249,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39233,7 +39262,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39249,7 +39278,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39262,7 +39291,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39278,7 +39307,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39291,7 +39320,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39307,7 +39336,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39320,7 +39349,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": [
         "Fryburg",
         "Makellos"
@@ -39339,7 +39368,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39352,7 +39381,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39368,7 +39397,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39381,7 +39410,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39397,7 +39426,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39410,7 +39439,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39426,7 +39455,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39439,7 +39468,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39455,7 +39484,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39468,7 +39497,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39484,7 +39513,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39497,7 +39526,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39513,7 +39542,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39526,7 +39555,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": [
         "DCDrawers"
       ]
@@ -39544,7 +39573,7 @@
           "allmoxy_customer_id": 38,
           "name": "Panhandle Door Inc.",
           "mrr": 6024,
-          "lifetime": 704182.04,
+          "lifetime": 704281.04,
           "status": "active"
         }
       ],
@@ -39557,7 +39586,7 @@
       "active_customer_count": 1,
       "total_mrr": 6024,
       "total_arr": 72288,
-      "total_lifetime": 704182.04,
+      "total_lifetime": 704281.04,
       "unmatched_labels": []
     },
     {
@@ -39781,7 +39810,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -39801,7 +39830,7 @@
       "active_customer_count": 2,
       "total_mrr": 5821,
       "total_arr": 69852,
-      "total_lifetime": 289341.33,
+      "total_lifetime": 290368.83,
       "unmatched_labels": [
         "mykitch"
       ]
@@ -39826,7 +39855,7 @@
           "allmoxy_customer_id": 2048,
           "name": "Graber Cabinets",
           "mrr": 580,
-          "lifetime": 8757,
+          "lifetime": 8919,
           "status": "active"
         }
       ],
@@ -39839,7 +39868,7 @@
       "active_customer_count": 2,
       "total_mrr": 5820.5,
       "total_arr": 69846,
-      "total_lifetime": 536334.15,
+      "total_lifetime": 536496.15,
       "unmatched_labels": []
     },
     {
@@ -40007,7 +40036,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         },
         {
@@ -40034,7 +40063,7 @@
       "active_customer_count": 2,
       "total_mrr": 5384.13,
       "total_arr": 64609.56,
-      "total_lifetime": 317922.87,
+      "total_lifetime": 318950.37,
       "unmatched_labels": []
     },
     {
@@ -41697,7 +41726,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41710,7 +41739,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41726,7 +41755,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41739,7 +41768,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41755,7 +41784,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41768,7 +41797,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41784,7 +41813,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41797,7 +41826,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41813,7 +41842,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41826,7 +41855,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41842,7 +41871,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41855,7 +41884,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41871,7 +41900,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41884,7 +41913,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": [
         "mykitch"
       ]
@@ -41902,7 +41931,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41915,7 +41944,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41931,7 +41960,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41944,7 +41973,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41960,7 +41989,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -41973,7 +42002,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -41989,7 +42018,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42002,7 +42031,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42018,7 +42047,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42031,7 +42060,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42047,7 +42076,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42060,7 +42089,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42076,7 +42105,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42089,7 +42118,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42105,7 +42134,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42118,7 +42147,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42134,7 +42163,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42147,7 +42176,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42163,7 +42192,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42176,7 +42205,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42192,7 +42221,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42205,7 +42234,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42221,7 +42250,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42234,7 +42263,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42250,7 +42279,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42263,7 +42292,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42279,7 +42308,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42292,7 +42321,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42308,7 +42337,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42321,7 +42350,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42337,7 +42366,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42350,7 +42379,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42366,7 +42395,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42379,7 +42408,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42395,7 +42424,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42408,7 +42437,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42424,7 +42453,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42437,7 +42466,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42453,7 +42482,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42466,7 +42495,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42482,7 +42511,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42495,7 +42524,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42511,7 +42540,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42524,7 +42553,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42540,7 +42569,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42553,7 +42582,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42569,7 +42598,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42582,7 +42611,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42598,7 +42627,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42611,7 +42640,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42627,7 +42656,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42640,7 +42669,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42656,7 +42685,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42669,7 +42698,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42685,7 +42714,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42698,7 +42727,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42714,7 +42743,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42727,7 +42756,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42743,7 +42772,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42756,7 +42785,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42772,7 +42801,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42785,7 +42814,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42801,7 +42830,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42814,7 +42843,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42830,7 +42859,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42843,7 +42872,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42859,7 +42888,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42872,7 +42901,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42888,7 +42917,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42901,7 +42930,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42917,7 +42946,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42930,7 +42959,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -42946,7 +42975,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42959,7 +42988,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": [
         "drawerworksusa"
       ]
@@ -42977,7 +43006,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -42990,7 +43019,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -43006,7 +43035,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -43019,7 +43048,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -43035,7 +43064,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -43048,7 +43077,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -43064,7 +43093,7 @@
           "allmoxy_customer_id": 136,
           "name": "Greyloch, LLC.",
           "mrr": 4687,
-          "lifetime": 218169.81,
+          "lifetime": 219197.31,
           "status": "at_risk"
         }
       ],
@@ -43077,7 +43106,7 @@
       "active_customer_count": 1,
       "total_mrr": 4687,
       "total_arr": 56244,
-      "total_lifetime": 218169.81,
+      "total_lifetime": 219197.31,
       "unmatched_labels": []
     },
     {
@@ -46452,7 +46481,7 @@
         }
       ],
       "created": "2026-07-21",
-      "updated": "2026-07-27",
+      "updated": "2026-07-29",
       "resolved": "2026-07-21",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12442",
       "tag_count": 1,
@@ -48218,7 +48247,7 @@
           "allmoxy_customer_id": 2044,
           "name": "Ecodomo",
           "mrr": 667,
-          "lifetime": 9959.2,
+          "lifetime": 10442.2,
           "status": "active"
         }
       ],
@@ -48231,7 +48260,7 @@
       "active_customer_count": 2,
       "total_mrr": 2967,
       "total_arr": 35604,
-      "total_lifetime": 118508.69,
+      "total_lifetime": 118991.69,
       "unmatched_labels": []
     },
     {
@@ -49943,7 +49972,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -49956,7 +49985,7 @@
       "active_customer_count": 2,
       "total_mrr": 2499,
       "total_arr": 29988,
-      "total_lifetime": 218244.9,
+      "total_lifetime": 219244.9,
       "unmatched_labels": []
     },
     {
@@ -50698,7 +50727,7 @@
           "allmoxy_customer_id": 546,
           "name": "KOA Komponents",
           "mrr": 250,
-          "lifetime": 5230.5,
+          "lifetime": 5480.5,
           "status": "active"
         }
       ],
@@ -50711,7 +50740,7 @@
       "active_customer_count": 3,
       "total_mrr": 2129,
       "total_arr": 25548,
-      "total_lifetime": 94169,
+      "total_lifetime": 94419,
       "unmatched_labels": []
     },
     {
@@ -50946,7 +50975,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         },
         {
@@ -50966,7 +50995,7 @@
       "active_customer_count": 2,
       "total_mrr": 2025,
       "total_arr": 24300,
-      "total_lifetime": 184440.4,
+      "total_lifetime": 185440.4,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "IslandCustomCabinets",
@@ -50995,7 +51024,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         },
         {
@@ -51015,7 +51044,7 @@
       "active_customer_count": 2,
       "total_mrr": 2025,
       "total_arr": 24300,
-      "total_lifetime": 184440.4,
+      "total_lifetime": 185440.4,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "IslandCustomCabinets",
@@ -54849,7 +54878,7 @@
         }
       ],
       "created": "2026-07-24",
-      "updated": "2026-07-28",
+      "updated": "2026-07-29",
       "resolved": "2026-07-24",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12509",
       "tag_count": 1,
@@ -55434,7 +55463,7 @@
         }
       ],
       "created": "2026-07-28",
-      "updated": "2026-07-28",
+      "updated": "2026-07-29",
       "resolved": "2026-07-28",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12574",
       "tag_count": 1,
@@ -55463,7 +55492,7 @@
         }
       ],
       "created": "2026-07-28",
-      "updated": "2026-07-28",
+      "updated": "2026-07-29",
       "resolved": "2026-07-28",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12576",
       "tag_count": 1,
@@ -56299,8 +56328,8 @@
     {
       "key": "DEV-12577",
       "summary": "Quadro Cabinets: Company Contacts edit: Human-readable permission label missing on Permissions section",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
+      "status": "In Progress",
+      "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 719,
@@ -56314,8 +56343,8 @@
         }
       ],
       "created": "2026-07-28",
-      "updated": "2026-07-28",
-      "resolved": "2026-07-28",
+      "updated": "2026-07-29",
+      "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12577",
       "tag_count": 1,
       "customer_count": 1,
@@ -60773,7 +60802,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -60786,7 +60815,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -60804,7 +60833,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -60817,7 +60846,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -60833,7 +60862,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -60846,7 +60875,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": [
         "cuttingedge",
         "mykitch"
@@ -60865,7 +60894,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -60878,7 +60907,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -60894,7 +60923,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -60907,7 +60936,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -60923,7 +60952,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -60936,7 +60965,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -60952,7 +60981,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -60965,7 +60994,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -60981,7 +61010,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -60994,7 +61023,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -61010,7 +61039,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -61023,7 +61052,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": [
         "DCDrawers"
       ]
@@ -61041,7 +61070,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -61054,7 +61083,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -61070,7 +61099,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -61083,7 +61112,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -61099,7 +61128,7 @@
           "allmoxy_customer_id": 42,
           "name": "My Door Factory",
           "mrr": 1000,
-          "lifetime": 99444,
+          "lifetime": 100444,
           "status": "active"
         }
       ],
@@ -61112,7 +61141,7 @@
       "active_customer_count": 1,
       "total_mrr": 1000,
       "total_arr": 12000,
-      "total_lifetime": 99444,
+      "total_lifetime": 100444,
       "unmatched_labels": []
     },
     {
@@ -61482,7 +61511,7 @@
           "allmoxy_customer_id": 2060,
           "name": "Formations",
           "mrr": 750,
-          "lifetime": 5452.5,
+          "lifetime": 6417,
           "status": "active"
         }
       ],
@@ -61495,7 +61524,7 @@
       "active_customer_count": 1,
       "total_mrr": 750,
       "total_arr": 9000,
-      "total_lifetime": 5452.5,
+      "total_lifetime": 6417,
       "unmatched_labels": [
         "dbs"
       ]
@@ -62116,7 +62145,7 @@
           "allmoxy_customer_id": 2044,
           "name": "Ecodomo",
           "mrr": 667,
-          "lifetime": 9959.2,
+          "lifetime": 10442.2,
           "status": "active"
         }
       ],
@@ -62129,7 +62158,7 @@
       "active_customer_count": 1,
       "total_mrr": 667,
       "total_arr": 8004,
-      "total_lifetime": 9959.2,
+      "total_lifetime": 10442.2,
       "unmatched_labels": []
     },
     {
@@ -62145,7 +62174,7 @@
           "allmoxy_customer_id": 2044,
           "name": "Ecodomo",
           "mrr": 667,
-          "lifetime": 9959.2,
+          "lifetime": 10442.2,
           "status": "active"
         }
       ],
@@ -62158,7 +62187,7 @@
       "active_customer_count": 1,
       "total_mrr": 667,
       "total_arr": 8004,
-      "total_lifetime": 9959.2,
+      "total_lifetime": 10442.2,
       "unmatched_labels": []
     },
     {
@@ -62174,7 +62203,7 @@
           "allmoxy_customer_id": 2044,
           "name": "Ecodomo",
           "mrr": 667,
-          "lifetime": 9959.2,
+          "lifetime": 10442.2,
           "status": "active"
         }
       ],
@@ -62187,7 +62216,7 @@
       "active_customer_count": 1,
       "total_mrr": 667,
       "total_arr": 8004,
-      "total_lifetime": 9959.2,
+      "total_lifetime": 10442.2,
       "unmatched_labels": []
     },
     {
@@ -62203,7 +62232,7 @@
           "allmoxy_customer_id": 2044,
           "name": "Ecodomo",
           "mrr": 667,
-          "lifetime": 9959.2,
+          "lifetime": 10442.2,
           "status": "active"
         }
       ],
@@ -62216,7 +62245,7 @@
       "active_customer_count": 1,
       "total_mrr": 667,
       "total_arr": 8004,
-      "total_lifetime": 9959.2,
+      "total_lifetime": 10442.2,
       "unmatched_labels": []
     },
     {
@@ -62438,7 +62467,7 @@
           "allmoxy_customer_id": 310,
           "name": "Empyre Designs",
           "mrr": 563.06,
-          "lifetime": 38797.57,
+          "lifetime": 38937.07,
           "status": "at_risk"
         }
       ],
@@ -62451,7 +62480,7 @@
       "active_customer_count": 1,
       "total_mrr": 563.06,
       "total_arr": 6756.72,
-      "total_lifetime": 38797.57,
+      "total_lifetime": 38937.07,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -62469,7 +62498,7 @@
           "allmoxy_customer_id": 310,
           "name": "Empyre Designs",
           "mrr": 563.06,
-          "lifetime": 38797.57,
+          "lifetime": 38937.07,
           "status": "at_risk"
         }
       ],
@@ -62482,7 +62511,7 @@
       "active_customer_count": 1,
       "total_mrr": 563.06,
       "total_arr": 6756.72,
-      "total_lifetime": 38797.57,
+      "total_lifetime": 38937.07,
       "unmatched_labels": []
     },
     {
@@ -62498,7 +62527,7 @@
           "allmoxy_customer_id": 310,
           "name": "Empyre Designs",
           "mrr": 563.06,
-          "lifetime": 38797.57,
+          "lifetime": 38937.07,
           "status": "at_risk"
         }
       ],
@@ -62511,7 +62540,7 @@
       "active_customer_count": 1,
       "total_mrr": 563.06,
       "total_arr": 6756.72,
-      "total_lifetime": 38797.57,
+      "total_lifetime": 38937.07,
       "unmatched_labels": []
     },
     {
@@ -62527,7 +62556,7 @@
           "allmoxy_customer_id": 310,
           "name": "Empyre Designs",
           "mrr": 563.06,
-          "lifetime": 38797.57,
+          "lifetime": 38937.07,
           "status": "at_risk"
         }
       ],
@@ -62540,7 +62569,7 @@
       "active_customer_count": 1,
       "total_mrr": 563.06,
       "total_arr": 6756.72,
-      "total_lifetime": 38797.57,
+      "total_lifetime": 38937.07,
       "unmatched_labels": []
     },
     {
@@ -62556,7 +62585,7 @@
           "allmoxy_customer_id": 310,
           "name": "Empyre Designs",
           "mrr": 563.06,
-          "lifetime": 38797.57,
+          "lifetime": 38937.07,
           "status": "at_risk"
         }
       ],
@@ -62569,7 +62598,7 @@
       "active_customer_count": 1,
       "total_mrr": 563.06,
       "total_arr": 6756.72,
-      "total_lifetime": 38797.57,
+      "total_lifetime": 38937.07,
       "unmatched_labels": []
     },
     {
@@ -62884,7 +62913,7 @@
         }
       ],
       "created": "2026-07-27",
-      "updated": "2026-07-28",
+      "updated": "2026-07-29",
       "resolved": "2026-07-27",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12564",
       "tag_count": 1,
@@ -63523,7 +63552,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         }
       ],
@@ -63536,7 +63565,7 @@
       "active_customer_count": 1,
       "total_mrr": 270,
       "total_arr": 3240,
-      "total_lifetime": 13009,
+      "total_lifetime": 13154.5,
       "unmatched_labels": []
     },
     {
@@ -63581,7 +63610,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         }
       ],
@@ -63594,7 +63623,7 @@
       "active_customer_count": 1,
       "total_mrr": 270,
       "total_arr": 3240,
-      "total_lifetime": 13009,
+      "total_lifetime": 13154.5,
       "unmatched_labels": []
     },
     {
@@ -63639,7 +63668,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         }
       ],
@@ -63652,7 +63681,7 @@
       "active_customer_count": 1,
       "total_mrr": 270,
       "total_arr": 3240,
-      "total_lifetime": 13009,
+      "total_lifetime": 13154.5,
       "unmatched_labels": []
     },
     {
@@ -63668,7 +63697,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 270,
-          "lifetime": 13009,
+          "lifetime": 13154.5,
           "status": "active"
         }
       ],
@@ -63681,7 +63710,7 @@
       "active_customer_count": 1,
       "total_mrr": 270,
       "total_arr": 3240,
-      "total_lifetime": 13009,
+      "total_lifetime": 13154.5,
       "unmatched_labels": []
     },
     {
@@ -64307,6 +64336,35 @@
       "total_mrr": 250,
       "total_arr": 3000,
       "total_lifetime": 75685.94,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12580",
+      "summary": "Output Page Visibility - Unable to select Employee visibility",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 686,
+      "customers": [
+        {
+          "allmoxy_customer_id": 2059,
+          "name": "Top Design Closets",
+          "mrr": 250,
+          "lifetime": 2783,
+          "status": "at_risk"
+        }
+      ],
+      "created": "2026-07-29",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12580",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 250,
+      "total_arr": 3000,
+      "total_lifetime": 2783,
       "unmatched_labels": []
     },
     {
@@ -66057,6 +66115,209 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12578",
+      "summary": "Master instance CSS issue?",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 651,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-07-28",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12578",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12446",
+      "summary": "Staging - Wrong Order Statuses Showing",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "High",
+      "issue_score": 322,
+      "customers": [
+        {
+          "allmoxy_customer_id": 2082,
+          "name": "Allmoxy Project",
+          "mrr": 0,
+          "lifetime": 0,
+          "status": "never_paid"
+        }
+      ],
+      "created": "2026-07-21",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12446",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12186",
+      "summary": "Operator BE 12: Permissions & Operator admin [BLOCKED - Q1]",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-29",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12186",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12183",
+      "summary": "Operator BE 9: Personal profile interview",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 288,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-29",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12183",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12175",
+      "summary": "Operator BE 1: Service foundation (repo, CI/CD, runtime, networking)",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-29",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12175",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12583",
+      "summary": "Payment Terms Export Names",
+      "status": "Approve",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-07-29",
+      "updated": "2026-07-29",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12583",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12180",
+      "summary": "Operator BE 6: Chat sessions, history & search",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-07-29",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12180",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12179",
       "summary": "Operator BE 5: Agent loop, guardrails & gap logging for operator",
       "status": "In QA",
@@ -66077,35 +66338,6 @@
       "updated": "2026-07-29",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12179",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12578",
-      "summary": "Master instance CSS issue?",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 651,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-07-28",
-      "updated": "2026-07-28",
-      "resolved": "2026-07-28",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12578",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66289,64 +66521,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12186",
-      "summary": "Operator BE 12: Permissions & Operator admin [BLOCKED - Q1]",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-27",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12186",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12183",
-      "summary": "Operator BE 9: Personal profile interview",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 288,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-27",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12183",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-12185",
       "summary": "Operator BE 11: Token metering & billing-tier enforcement [BLOCKED - Q3]",
       "status": "Ready for Dev",
@@ -66396,35 +66570,6 @@
       "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12178",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12180",
-      "summary": "Operator BE 6: Chat sessions, history & search",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-27",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12180",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66512,35 +66657,6 @@
       "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12184",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12175",
-      "summary": "Operator BE 1: Service foundation (repo, CI/CD, runtime, networking)",
-      "status": "Passed QA",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-27",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12175",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -67040,35 +67156,6 @@
       "total_mrr": 0,
       "total_arr": 0,
       "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12446",
-      "summary": "Staging - Wrong Order Statuses Showing",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "High",
-      "issue_score": 322,
-      "customers": [
-        {
-          "allmoxy_customer_id": 2082,
-          "name": "Allmoxy Project",
-          "mrr": 0,
-          "lifetime": 0,
-          "status": "never_paid"
-        }
-      ],
-      "created": "2026-07-21",
-      "updated": "2026-07-22",
-      "resolved": "2026-07-21",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12446",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
       "unmatched_labels": []
     },
     {
@@ -71968,6 +72055,145 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-11787",
+      "summary": "API - Add tax_source and tax_field",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "Sub new feature",
+      "priority": "High",
+      "issue_score": 335,
+      "customers": [],
+      "created": "2026-03-16",
+      "updated": "2026-07-30",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11787",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-12399",
+      "summary": "Dominion Dovetail - Unable to delete bid",
+      "status": "Closed",
+      "stage_category": "Done",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-07-15",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-15",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12399",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "dominiondovetails"
+      ]
+    },
+    {
+      "key": "DEV-12588",
+      "summary": "Opening Multiple Orders Requires Waiting For The Page to Load",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Low",
+      "issue_score": null,
+      "customers": [],
+      "created": "2026-07-29",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12588",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "cuttingedge"
+      ]
+    },
+    {
+      "key": "DEV-12585",
+      "summary": "\"Too Many Connections\" error recurring frequently — Mullwoods (fryburgdoor instance)",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": null,
+      "customers": [],
+      "created": "2026-07-29",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12585",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Fryburg"
+      ]
+    },
+    {
+      "key": "DEV-12584",
+      "summary": "Trigger Product Attribute Condition",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [],
+      "created": "2026-07-29",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12584",
+      "tag_count": 2,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "StanisciDesign",
+        "staniscidesign"
+      ]
+    },
+    {
+      "key": "DEV-9404",
+      "summary": "Dev Tool Improvements V1",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Epic",
+      "priority": "Low",
+      "issue_score": 126,
+      "customers": [],
+      "created": "2025-01-02",
+      "updated": "2026-07-29",
+      "resolved": "2025-01-02",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9404",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-11877",
       "summary": "#9 Multi-select statuses in triggers",
       "status": "In Beta",
@@ -72187,52 +72413,6 @@
       "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-11606",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12399",
-      "summary": "Dominion Dovetail - Unable to delete bid",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-07-15",
-      "updated": "2026-07-27",
-      "resolved": "2026-07-15",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12399",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "dominiondovetails"
-      ]
-    },
-    {
-      "key": "DEV-11787",
-      "summary": "API - Add tax_source and tax_field",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Sub new feature",
-      "priority": "High",
-      "issue_score": 335,
-      "customers": [],
-      "created": "2026-03-16",
-      "updated": "2026-07-26",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11787",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -83755,29 +83935,6 @@
       "updated": "2026-05-26",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-261",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-9404",
-      "summary": "Dev Tool Improvements V1",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Epic",
-      "priority": "Low",
-      "issue_score": 126,
-      "customers": [],
-      "created": "2025-01-02",
-      "updated": "2026-05-26",
-      "resolved": "2025-01-02",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9404",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
