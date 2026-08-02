@@ -1,18 +1,18 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-07-30T13:02:37.669Z",
-  "cachedUntil": "2026-07-30T13:07:37.670Z",
+  "fetchedAt": "2026-08-02T13:29:39.670Z",
+  "cachedUntil": "2026-08-02T13:34:39.670Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
-    "total_issues": 10,
+    "total_issues": 11,
     "resolved_count": 0,
     "by_category": {
       "hubspot_instance_missing_aid": {
-        "count": 1,
+        "count": 2,
         "label": "HubSpot Instance missing Allmoxy Customer ID",
         "severity_counts": {
           "low": 0,
-          "medium": 1,
+          "medium": 2,
           "high": 0
         }
       },
@@ -37,7 +37,7 @@
     },
     "by_severity": {
       "high": 0,
-      "medium": 3,
+      "medium": 4,
       "low": 7
     }
   },
@@ -53,6 +53,18 @@
       "suggested_aid": null,
       "suggested_customer_name": null,
       "action": "Open HubSpot Instance \"Elite Cabinets\" — no installer_id match, requires manual lookup"
+    },
+    {
+      "category": "hubspot_instance_missing_aid",
+      "category_label": "HubSpot Instance missing Allmoxy Customer ID",
+      "severity": "medium",
+      "instance_id": "59459770797",
+      "account_name": "Fox Creek Cabinets",
+      "installer_id": null,
+      "pay_status": "Active",
+      "suggested_aid": null,
+      "suggested_customer_name": null,
+      "action": "Open HubSpot Instance \"Fox Creek Cabinets\" — no installer_id match, requires manual lookup"
     },
     {
       "category": "hubspot_company_id_ghost",

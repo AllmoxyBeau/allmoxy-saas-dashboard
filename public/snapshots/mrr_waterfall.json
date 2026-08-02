@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-07-30T13:02:32.540Z",
-  "cachedUntil": "2026-07-30T13:07:32.540Z",
+  "fetchedAt": "2026-08-02T13:29:34.674Z",
+  "cachedUntil": "2026-08-02T13:34:34.674Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -4693,7 +4693,7 @@
             "name": "Global Cabinet Supply",
             "id": 275,
             "mrr": 250,
-            "status": "active",
+            "status": "at_risk",
             "pay_status": "Active"
           }
         ]
@@ -12460,7 +12460,7 @@
             "id": 391,
             "mrr": 699,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           }
         ]
       }
@@ -18255,7 +18255,7 @@
             "name": "Global Cabinet Supply",
             "id": 275,
             "mrr": 399,
-            "status": "active",
+            "status": "at_risk",
             "pay_status": "Active"
           }
         ]
@@ -20063,7 +20063,7 @@
             "name": "Cabinet Doors NJ Llc",
             "id": 521,
             "mrr": 250,
-            "status": "at_risk",
+            "status": "non_payment",
             "pay_status": "Active - Card Failure"
           }
         ]
@@ -20839,7 +20839,7 @@
             "id": 391,
             "mrr": 699,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           },
           {
             "name": "Evolve Elements",
@@ -21287,7 +21287,7 @@
             "name": "Quick Kitchens",
             "id": 2057,
             "mrr": 200,
-            "status": "at_risk",
+            "status": "non_payment",
             "pay_status": "Active - Card Failure"
           }
         ]
@@ -21449,25 +21449,203 @@
           }
         ]
       }
+    },
+    {
+      "month": "2026-07",
+      "starting_mrr": 233557.56,
+      "new_mrr": 0,
+      "reactivated_mrr": 250,
+      "expansion_mrr": 3329.69,
+      "contraction_mrr": 1818.05,
+      "churn_mrr": 250,
+      "delinquent_mrr": 4373.95,
+      "ending_mrr": 230695.25,
+      "net_new_mrr": -2862.31,
+      "new_logos": 0,
+      "reactivated_logos": 1,
+      "churned_logos": 1,
+      "delinquent_logos": 4,
+      "gross_churn_rate_monthly": 0.0011,
+      "net_churn_rate_monthly": -0.0054,
+      "expansion_rate_monthly": 0.0143,
+      "grr_monthly": 0.9911,
+      "nrr_monthly": 1.0054,
+      "quick_ratio": 1.61,
+      "details": {
+        "new": [],
+        "reactivated": [
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250
+          }
+        ],
+        "expansion": [
+          {
+            "name": "Dot Custom Cabinets LLC",
+            "id": 385,
+            "prev_mrr": 49,
+            "new_mrr": 1809,
+            "delta": 1760
+          },
+          {
+            "name": "Midwest Floor Coverings",
+            "id": 211,
+            "prev_mrr": 2780.35,
+            "new_mrr": 3820.79,
+            "delta": 1040.44
+          },
+          {
+            "name": "BTJ Cabinet Door Company",
+            "id": 256,
+            "prev_mrr": 3520,
+            "new_mrr": 3695,
+            "delta": 175
+          },
+          {
+            "name": "Cutting Edge Doors & Woodworking",
+            "id": 363,
+            "prev_mrr": 3748,
+            "new_mrr": 3859,
+            "delta": 111
+          },
+          {
+            "name": "Brandenberger Door MFG",
+            "id": 79,
+            "prev_mrr": 800,
+            "new_mrr": 900,
+            "delta": 100
+          },
+          {
+            "name": "Elite Cabinet Components",
+            "id": 528,
+            "prev_mrr": 780,
+            "new_mrr": 834,
+            "delta": 54
+          },
+          {
+            "name": "Netley Millwork",
+            "id": 432,
+            "prev_mrr": 999,
+            "new_mrr": 1049,
+            "delta": 50
+          },
+          {
+            "name": "Ideal Wood Designs",
+            "id": 537,
+            "prev_mrr": 300,
+            "new_mrr": 321,
+            "delta": 21
+          },
+          {
+            "name": "Brazen Fox Fabrication Inc",
+            "id": 540,
+            "prev_mrr": 250,
+            "new_mrr": 262.5,
+            "delta": 12.5
+          },
+          {
+            "name": "Superior Woodworking",
+            "id": 34,
+            "prev_mrr": 115,
+            "new_mrr": 120.75,
+            "delta": 5.75
+          }
+        ],
+        "contraction": [
+          {
+            "name": "LV SERVICE SOLUTIONS",
+            "id": 391,
+            "prev_mrr": 1398,
+            "new_mrr": 699,
+            "delta": 699
+          },
+          {
+            "name": "Imab Living",
+            "id": 462,
+            "prev_mrr": 899,
+            "new_mrr": 350,
+            "delta": 549
+          },
+          {
+            "name": "Phoenix-LLC",
+            "id": 475,
+            "prev_mrr": 899,
+            "new_mrr": 400,
+            "delta": 499
+          },
+          {
+            "name": "Raumplus",
+            "id": 7,
+            "prev_mrr": 163.24,
+            "new_mrr": 100.25,
+            "delta": 62.99
+          },
+          {
+            "name": "Keystone Wood Specialties",
+            "id": 523,
+            "prev_mrr": 250,
+            "new_mrr": 241.94,
+            "delta": 8.06
+          }
+        ],
+        "churn": [
+          {
+            "name": "Woodland Furniture",
+            "id": 93,
+            "mrr": 250
+          }
+        ],
+        "delinquent": [
+          {
+            "name": "Westwind",
+            "id": 43,
+            "mrr": 3673.95,
+            "status": "non_payment",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cabinet Doors NJ Llc",
+            "id": 521,
+            "mrr": 250,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Lane Industries",
+            "id": 2037,
+            "mrr": 250,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Quick Kitchens",
+            "id": 2057,
+            "mrr": 200,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          }
+        ]
+      }
     }
   ],
   "ttm": {
-    "windowStart": "2025-07",
-    "windowEnd": "2026-06",
-    "starting_mrr": 226957.69,
-    "ending_mrr": 233557.56,
-    "new_mrr": 25644.69,
-    "reactivated_mrr": 38085.12,
-    "expansion_mrr": 21894.48,
-    "contraction_mrr": 41220.65,
-    "churn_mrr": 16554.57,
-    "delinquent_mrr": 21249.2,
-    "net_new_mrr": 6599.87,
-    "gross_mrr_churn_ttm": 0.0729,
-    "annual_gross_churn_rate": 0.0692,
-    "annual_grr": 0.7784,
-    "annual_nrr": 0.8573,
-    "quick_ratio": 0.82
+    "windowStart": "2025-08",
+    "windowEnd": "2026-07",
+    "starting_mrr": 236102.28,
+    "ending_mrr": 230695.25,
+    "new_mrr": 22894.69,
+    "reactivated_mrr": 27407.17,
+    "expansion_mrr": 24506.07,
+    "contraction_mrr": 40480.37,
+    "churn_mrr": 16286.44,
+    "delinquent_mrr": 23448.15,
+    "net_new_mrr": -5407.03,
+    "gross_mrr_churn_ttm": 0.069,
+    "annual_gross_churn_rate": 0.0681,
+    "annual_grr": 0.7822,
+    "annual_nrr": 0.8711,
+    "quick_ratio": 0.84
   },
   "notes": "MRR waterfall derived from per-customer × per-month subscription MRR in customer_profiles.monthly_history (live Stripe, boundary-slip corrected). New = customer first appears with MRR > 0. Churn = confirmed-churned customer (status churned) who had MRR > 0 last month and 0 this month. Delinquent = dropped to $0 but NOT confirmed churned (card failure / non-payment / at-risk) — a missed cycle they may still pay; reported separately from churn but also reduces ending MRR. Expansion / Contraction are intra-customer month-over-month MRR changes. Services and Connect revenue are NOT included — subscription only."
 }
