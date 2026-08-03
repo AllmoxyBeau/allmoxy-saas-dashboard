@@ -1,11 +1,11 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-08-03T14:45:53.300Z",
-  "cachedUntil": "2026-08-03T14:50:53.300Z",
+  "fetchedAt": "2026-08-03T16:54:31.580Z",
+  "cachedUntil": "2026-08-03T16:59:31.580Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
-    "total_instances": 207,
-    "with_renewal_date": 173,
+    "total_instances": 206,
+    "with_renewal_date": 172,
     "unjoined_active_count": 0,
     "skipped_sandbox_count": 24,
     "renewals_in_next_90d": 30,
@@ -17,15 +17,15 @@
     "expansion_opportunities": 32,
     "contraction_risks": 83,
     "watch": 4,
-    "stable": 82,
+    "stable": 81,
     "paused": 6,
     "median_cost_ratio_lifetime_pct": 1.1,
-    "median_cost_ratio_annualized_pct": 1.01,
+    "median_cost_ratio_annualized_pct": 0.99,
     "dropoff_count": 105,
-    "customers_with_quote": 154,
+    "customers_with_quote": 153,
     "upcoming_renewals_with_quote": 61,
     "upcoming_renewals_without_quote": 34,
-    "total_quote_count": 431
+    "total_quote_count": 430
   },
   "rows": [
     {
@@ -2191,248 +2191,6 @@
       "proposed_uplift_pct": 15,
       "target_1pct_arr": 11381.18,
       "target_1pct_mrr": 950
-    },
-    {
-      "instance_id": "22253575081",
-      "account_name": "Brave Custom Woodworking",
-      "allmoxy_customer_id": 499,
-      "join_via": "installer_id",
-      "customer_name": "Brave Custom Woodworking",
-      "renewal_date": "2025-05-30",
-      "days_to_renewal": -431,
-      "calculated_renewal_date": null,
-      "renewal_date_manual": "2025-05-30",
-      "contract_status": "Yes",
-      "contract_length_months": 6,
-      "monthly_flat_fee_hubspot": 1399,
-      "arr_up_for_renewal": 16788,
-      "last_renewal_expansion": null,
-      "last_no_expansion_reason": null,
-      "payment_start_date": "2024-05-02",
-      "payment_pause_date": null,
-      "instance_creation": "2024-05-02",
-      "merchant_connect_date": "2024-05-22",
-      "last_payment_date_hubspot": "2026-07-30",
-      "goal_launch_date": null,
-      "is_launched": "Yes",
-      "pay_status": "Active",
-      "cs_pulse": "Red(this customer is not in good standing and is on track to churn)",
-      "health_score_status": "At-Risk",
-      "health_score": 0,
-      "vip_legacy": "No",
-      "implementation_status": null,
-      "hubspot_owner_id": "90679002",
-      "owner_name": "Connor",
-      "current_mrr": 1399,
-      "current_arr": 16788,
-      "lifetime_subscription": 39172,
-      "lifetime_orders_dollars": 2722452.47,
-      "orders_monthly_avg_current_year": 119000.99,
-      "orders_monthly_avg_prior_year": 114065.79,
-      "orders_yoy_pct": 0.04,
-      "cost_ratio_lifetime_pct": 1.44,
-      "cost_ratio_annualized_pct": 1.18,
-      "monthly_trend": [
-        {
-          "month": "2024-08",
-          "subscription": 1399,
-          "orders_dollars": 63221.51,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.21
-        },
-        {
-          "month": "2024-09",
-          "subscription": 1399,
-          "orders_dollars": 63221.51,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.21
-        },
-        {
-          "month": "2024-10",
-          "subscription": 1399,
-          "orders_dollars": 63221.51,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.21
-        },
-        {
-          "month": "2024-11",
-          "subscription": 1399,
-          "orders_dollars": 63221.51,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.21
-        },
-        {
-          "month": "2024-12",
-          "subscription": 1399,
-          "orders_dollars": 63221.51,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.21
-        },
-        {
-          "month": "2025-01",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-02",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-03",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-04",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-05",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-06",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-07",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-08",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-09",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-10",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-11",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2025-12",
-          "subscription": 1399,
-          "orders_dollars": 114065.78,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 1.23
-        },
-        {
-          "month": "2026-01",
-          "subscription": 1399,
-          "orders_dollars": 235043.95,
-          "orders_source": "supplement",
-          "cost_ratio_pct": 0.6
-        },
-        {
-          "month": "2026-02",
-          "subscription": 1399,
-          "orders_dollars": 35597.42,
-          "orders_source": "supplement",
-          "cost_ratio_pct": 3.93
-        },
-        {
-          "month": "2026-03",
-          "subscription": 1399,
-          "orders_dollars": 56766.87,
-          "orders_source": "supplement",
-          "cost_ratio_pct": 2.46
-        },
-        {
-          "month": "2026-04",
-          "subscription": 1399,
-          "orders_dollars": 53912.63,
-          "orders_source": "supplement",
-          "cost_ratio_pct": 2.59
-        },
-        {
-          "month": "2026-05",
-          "subscription": 1399,
-          "orders_dollars": 213684.07,
-          "orders_source": "supplement",
-          "cost_ratio_pct": 0.65
-        },
-        {
-          "month": "2026-06",
-          "subscription": 1399,
-          "orders_dollars": 49583.75,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.82
-        },
-        {
-          "month": "2026-07",
-          "subscription": 1399,
-          "orders_dollars": 49583.75,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 2.82
-        }
-      ],
-      "dropoff_pct": 0.1996,
-      "risk_tier": "green",
-      "risk_score": 80,
-      "is_bid_only": false,
-      "action_tag": "Stable",
-      "action_reason": "Orders + health both holding",
-      "customer_entered_orders_prev_billing_period": null,
-      "customer_closed_lost": null,
-      "quotes": [
-        {
-          "id": "134706843",
-          "title": "Brave Custom Woodworking Solutions - Allmoxy Subscription Agreement",
-          "status": "APPROVAL_NOT_NEEDED",
-          "amount": 1399,
-          "currency": "USD",
-          "created_date": "2024-04-19T18:28:31.977Z",
-          "expiration_date": "2024-06-19T03:59:59.999Z",
-          "last_modified_date": "2025-02-15T00:38:02.890Z",
-          "quote_number": "20240419-122831586",
-          "payment_status": "PAYMENT_NOT_ENABLED",
-          "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/134706843"
-        }
-      ],
-      "proposed_arr": 19306.2,
-      "proposed_mrr": 1600,
-      "expansion_confidence": "high",
-      "proposed_basis": "underpriced",
-      "expansion_rationale": "Underpriced vs peers — cost ratio 1.18% vs 1.44% target (orders +4% YoY). Value supports ~$20,563 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": 15,
-      "target_1pct_arr": 14280.12,
-      "target_1pct_mrr": 1200
     },
     {
       "instance_id": "22253575082",
@@ -15840,23 +15598,16 @@
       "implementation_status": null,
       "hubspot_owner_id": "535437584",
       "owner_name": "Carson",
-      "current_mrr": 0,
-      "current_arr": 0,
-      "lifetime_subscription": 213429.21,
+      "current_mrr": 3673.95,
+      "current_arr": 44087.4,
+      "lifetime_subscription": 217103.16,
       "lifetime_orders_dollars": 38602838.66,
       "orders_monthly_avg_current_year": 527496.42,
       "orders_monthly_avg_prior_year": 0,
       "orders_yoy_pct": null,
-      "cost_ratio_lifetime_pct": 0.55,
-      "cost_ratio_annualized_pct": 0,
+      "cost_ratio_lifetime_pct": 0.56,
+      "cost_ratio_annualized_pct": 0.7,
       "monthly_trend": [
-        {
-          "month": "2024-07",
-          "subscription": 3638.96,
-          "orders_dollars": 501754.09,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": 0.73
-        },
         {
           "month": "2024-08",
           "subscription": 3638.96,
@@ -16017,9 +15768,16 @@
           "orders_dollars": 219790.18,
           "orders_source": "yearly_avg",
           "cost_ratio_pct": 1.67
+        },
+        {
+          "month": "2026-07",
+          "subscription": 3673.95,
+          "orders_dollars": 219790.18,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 1.67
         }
       ],
-      "dropoff_pct": 0.3967,
+      "dropoff_pct": 0.9262999999999999,
       "risk_tier": "green",
       "risk_score": 80,
       "is_bid_only": false,
@@ -16068,12 +15826,12 @@
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/58829933"
         }
       ],
-      "proposed_arr": 0,
-      "proposed_mrr": 0,
+      "proposed_arr": 50700.51,
+      "proposed_mrr": 4225,
       "expansion_confidence": "high",
       "proposed_basis": "underpriced",
-      "expansion_rationale": "Underpriced vs peers — cost ratio 0% vs 1.1% target (orders —). Value supports ~$69,630 ARR; capped at +15% this renewal — phase remaining over future renewals.",
-      "proposed_uplift_pct": null,
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.7% vs 1.1% target (orders —). Value supports ~$69,630 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15,
       "target_1pct_arr": 63299.57,
       "target_1pct_mrr": 5275
     },
@@ -17160,7 +16918,7 @@
       "contract_length_months": 13,
       "monthly_flat_fee_hubspot": 199,
       "arr_up_for_renewal": 2388,
-      "last_renewal_expansion": "No",
+      "last_renewal_expansion": "Yes",
       "last_no_expansion_reason": "Other",
       "payment_start_date": "2021-03-09",
       "payment_pause_date": null,
@@ -37902,9 +37660,9 @@
       "implementation_status": "Active Training / Work",
       "hubspot_owner_id": "90679002",
       "owner_name": "Connor",
-      "current_mrr": 500,
-      "current_arr": 6000,
-      "lifetime_subscription": 8250,
+      "current_mrr": 0,
+      "current_arr": 0,
+      "lifetime_subscription": 7750,
       "lifetime_orders_dollars": 0,
       "orders_monthly_avg_current_year": 0,
       "orders_monthly_avg_prior_year": 0,
@@ -38026,7 +37784,7 @@
         },
         {
           "month": "2026-07",
-          "subscription": 500,
+          "subscription": 0,
           "orders_dollars": 0,
           "orders_source": "yearly_avg",
           "cost_ratio_pct": null

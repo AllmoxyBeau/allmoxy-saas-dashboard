@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-08-03T14:56:47.881Z",
-  "jira_fetchedAt": "2026-08-03T14:56:47.781Z",
+  "fetchedAt": "2026-08-03T17:05:12.032Z",
+  "jira_fetchedAt": "2026-08-03T17:05:11.907Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4192,
-    "open_tickets": 936,
-    "done_tickets": 3256,
-    "tickets_with_matched_customer": 2029,
-    "open_mrr_at_stake": 2794395.94,
+    "total_tickets": 4193,
+    "open_tickets": 935,
+    "done_tickets": 3258,
+    "tickets_with_matched_customer": 2030,
+    "open_mrr_at_stake": 2853286.48,
     "distinct_customers_tagged": 146,
     "unmatched_labels": [
       "2020",
@@ -195,6 +195,13 @@
           "status": "active"
         },
         {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
@@ -347,13 +354,6 @@
           "mrr": 0,
           "lifetime": 114320.65,
           "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
         }
       ],
       "created": "2024-11-04",
@@ -363,9 +363,9 @@
       "tag_count": 45,
       "customer_count": 28,
       "active_customer_count": 25,
-      "total_mrr": 62186.69,
-      "total_arr": 746240.28,
-      "total_lifetime": 5044569.08,
+      "total_mrr": 65860.64,
+      "total_arr": 790327.68,
+      "total_lifetime": 5048243.03,
       "unmatched_labels": [
         "DCDrawers",
         "DotCabinets",
@@ -565,6 +565,184 @@
       ]
     },
     {
+      "key": "DEV-8825",
+      "summary": "Slow Load Times reported 9/11/24",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 0,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 38,
+          "name": "Panhandle Door Inc.",
+          "mrr": 6024,
+          "lifetime": 704281.04,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 465726.16,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 75,
+          "name": "J&B Woodcrafts",
+          "mrr": 2875,
+          "lifetime": 200233.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 2,
+          "name": "CCF Industries",
+          "mrr": 2699,
+          "lifetime": 360098.03,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 405,
+          "name": "KC Doors",
+          "mrr": 2300,
+          "lifetime": 108549.49,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 82,
+          "name": "Drawers by Design",
+          "mrr": 2142.5,
+          "lifetime": 164959.19,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 396,
+          "name": "Red Rock Milling LLC",
+          "mrr": 1786.99,
+          "lifetime": 87668.65,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 463,
+          "name": "D3Customcabinets",
+          "mrr": 1391,
+          "lifetime": 81011.16,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 18,
+          "name": "Craftsman Specialty",
+          "mrr": 1318,
+          "lifetime": 94864.3,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 22,
+          "name": "Bywater Products",
+          "mrr": 1311.21,
+          "lifetime": 123094.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 30,
+          "name": "Classic Kitchen Doors",
+          "mrr": 1250,
+          "lifetime": 173979.03,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 304,
+          "name": "Nexis3",
+          "mrr": 1134,
+          "lifetime": 71171.52,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 21,
+          "name": "Crest Cabinets",
+          "mrr": 268.25,
+          "lifetime": 58092.64,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 35,
+          "name": "Pinnacle Cabinet & Millwork",
+          "mrr": 0,
+          "lifetime": 16661.26,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2024-09-11",
+      "updated": "2026-05-01",
+      "resolved": "2024-09-16",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8825",
+      "tag_count": 35,
+      "customer_count": 20,
+      "active_customer_count": 18,
+      "total_mrr": 53236.39,
+      "total_arr": 638836.68,
+      "total_lifetime": 4675454.68,
+      "unmatched_labels": [
+        "DCDrawers",
+        "DoorMastersHouston",
+        "DotCabinets",
+        "Fryburg",
+        "IMAB",
+        "IdealDrawers",
+        "SouthernStone",
+        "StanisciDesign",
+        "Woodland",
+        "brandenbergercustom",
+        "ciminos",
+        "ifccinc",
+        "m2m",
+        "netley",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
       "key": "DEV-9495",
       "summary": "Slow load times reported 1/20/25 (2 PM MST)",
       "status": "Resolved",
@@ -700,184 +878,6 @@
       ]
     },
     {
-      "key": "DEV-8825",
-      "summary": "Slow Load Times reported 9/11/24",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 0,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 38,
-          "name": "Panhandle Door Inc.",
-          "mrr": 6024,
-          "lifetime": 704281.04,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 465726.16,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 75,
-          "name": "J&B Woodcrafts",
-          "mrr": 2875,
-          "lifetime": 200233.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 2,
-          "name": "CCF Industries",
-          "mrr": 2699,
-          "lifetime": 360098.03,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 405,
-          "name": "KC Doors",
-          "mrr": 2300,
-          "lifetime": 108549.49,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 82,
-          "name": "Drawers by Design",
-          "mrr": 2142.5,
-          "lifetime": 164959.19,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 396,
-          "name": "Red Rock Milling LLC",
-          "mrr": 1786.99,
-          "lifetime": 87668.65,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 463,
-          "name": "D3Customcabinets",
-          "mrr": 1391,
-          "lifetime": 81011.16,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 18,
-          "name": "Craftsman Specialty",
-          "mrr": 1318,
-          "lifetime": 94864.3,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 22,
-          "name": "Bywater Products",
-          "mrr": 1311.21,
-          "lifetime": 123094.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 30,
-          "name": "Classic Kitchen Doors",
-          "mrr": 1250,
-          "lifetime": 173979.03,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 304,
-          "name": "Nexis3",
-          "mrr": 1134,
-          "lifetime": 71171.52,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 21,
-          "name": "Crest Cabinets",
-          "mrr": 268.25,
-          "lifetime": 58092.64,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 35,
-          "name": "Pinnacle Cabinet & Millwork",
-          "mrr": 0,
-          "lifetime": 16661.26,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2024-09-11",
-      "updated": "2026-05-01",
-      "resolved": "2024-09-16",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8825",
-      "tag_count": 35,
-      "customer_count": 20,
-      "active_customer_count": 18,
-      "total_mrr": 49562.44,
-      "total_arr": 594749.28,
-      "total_lifetime": 4671780.73,
-      "unmatched_labels": [
-        "DCDrawers",
-        "DoorMastersHouston",
-        "DotCabinets",
-        "Fryburg",
-        "IMAB",
-        "IdealDrawers",
-        "SouthernStone",
-        "StanisciDesign",
-        "Woodland",
-        "brandenbergercustom",
-        "ciminos",
-        "ifccinc",
-        "m2m",
-        "netley",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
       "key": "DEV-9454",
       "summary": "Slowness reported for Primary Kitchen 1/13/25",
       "status": "Resolved",
@@ -922,6 +922,13 @@
           "status": "active"
         },
         {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
@@ -962,13 +969,6 @@
           "mrr": 0,
           "lifetime": 114320.65,
           "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
         }
       ],
       "created": "2025-01-13",
@@ -978,9 +978,9 @@
       "tag_count": 22,
       "customer_count": 12,
       "active_customer_count": 10,
-      "total_mrr": 37375.99,
-      "total_arr": 448511.88,
-      "total_lifetime": 3457376.83,
+      "total_mrr": 41049.94,
+      "total_arr": 492599.28,
+      "total_lifetime": 3461050.78,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -992,6 +992,721 @@
         "ifccinc",
         "mykitch",
         "netley"
+      ]
+    },
+    {
+      "key": "DEV-1239",
+      "summary": "Order total summations",
+      "status": "Ready To Start",
+      "stage_category": "To Do",
+      "issue_type": "Epic",
+      "priority": "Highest",
+      "issue_score": 365,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 219197.31,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 26,
+          "name": "Rehau Inc.",
+          "mrr": 3148.95,
+          "lifetime": 208311.3,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 130,
+          "name": "Roy's Wood Products, Inc.",
+          "mrr": 3119,
+          "lifetime": 139656.33,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 82,
+          "name": "Drawers by Design",
+          "mrr": 2142.5,
+          "lifetime": 164959.19,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 545,
+          "name": "Cabinet Doors USA",
+          "mrr": 1182,
+          "lifetime": 17633,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 278,
+          "name": "Munns Door and Mill",
+          "mrr": 1172.08,
+          "lifetime": 57725.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 539,
+          "name": "Conquest Cabinetry",
+          "mrr": 270,
+          "lifetime": 13154.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 534,
+          "name": "North American Components",
+          "mrr": 250,
+          "lifetime": 6525.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 119,
+          "name": "Big Valley Wood Products",
+          "mrr": 0,
+          "lifetime": 42511.2,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 459,
+          "name": "EuroContempo",
+          "mrr": 0,
+          "lifetime": 47418.48,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2020-03-05",
+      "updated": "2026-06-24",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-1239",
+      "tag_count": 24,
+      "customer_count": 16,
+      "active_customer_count": 13,
+      "total_mrr": 39467.47,
+      "total_arr": 473609.64,
+      "total_lifetime": 2882155.69,
+      "unmatched_labels": [
+        "DotCabinets",
+        "IslandCustomCabinets",
+        "Paragon",
+        "brazenfox",
+        "dbs",
+        "netley",
+        "qcww",
+        "rcc"
+      ]
+    },
+    {
+      "key": "DEV-10601",
+      "summary": "Order Summations #4 - Audit Logs",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 454,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 219197.31,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 26,
+          "name": "Rehau Inc.",
+          "mrr": 3148.95,
+          "lifetime": 208311.3,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 130,
+          "name": "Roy's Wood Products, Inc.",
+          "mrr": 3119,
+          "lifetime": 139656.33,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 82,
+          "name": "Drawers by Design",
+          "mrr": 2142.5,
+          "lifetime": 164959.19,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 545,
+          "name": "Cabinet Doors USA",
+          "mrr": 1182,
+          "lifetime": 17633,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 278,
+          "name": "Munns Door and Mill",
+          "mrr": 1172.08,
+          "lifetime": 57725.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 539,
+          "name": "Conquest Cabinetry",
+          "mrr": 270,
+          "lifetime": 13154.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 534,
+          "name": "North American Components",
+          "mrr": 250,
+          "lifetime": 6525.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 119,
+          "name": "Big Valley Wood Products",
+          "mrr": 0,
+          "lifetime": 42511.2,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 459,
+          "name": "EuroContempo",
+          "mrr": 0,
+          "lifetime": 47418.48,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-07-30",
+      "updated": "2026-06-23",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-10601",
+      "tag_count": 24,
+      "customer_count": 16,
+      "active_customer_count": 13,
+      "total_mrr": 39467.47,
+      "total_arr": 473609.64,
+      "total_lifetime": 2882155.69,
+      "unmatched_labels": [
+        "DotCabinets",
+        "IslandCustomCabinets",
+        "Paragon",
+        "brazenfox",
+        "dbs",
+        "netley",
+        "qcww",
+        "rcc"
+      ]
+    },
+    {
+      "key": "DEV-10600",
+      "summary": "Order Summation #3 - Output Page Display",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 433,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 219197.31,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 26,
+          "name": "Rehau Inc.",
+          "mrr": 3148.95,
+          "lifetime": 208311.3,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 130,
+          "name": "Roy's Wood Products, Inc.",
+          "mrr": 3119,
+          "lifetime": 139656.33,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 82,
+          "name": "Drawers by Design",
+          "mrr": 2142.5,
+          "lifetime": 164959.19,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 545,
+          "name": "Cabinet Doors USA",
+          "mrr": 1182,
+          "lifetime": 17633,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 278,
+          "name": "Munns Door and Mill",
+          "mrr": 1172.08,
+          "lifetime": 57725.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 539,
+          "name": "Conquest Cabinetry",
+          "mrr": 270,
+          "lifetime": 13154.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 534,
+          "name": "North American Components",
+          "mrr": 250,
+          "lifetime": 6525.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 119,
+          "name": "Big Valley Wood Products",
+          "mrr": 0,
+          "lifetime": 42511.2,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 459,
+          "name": "EuroContempo",
+          "mrr": 0,
+          "lifetime": 47418.48,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-07-30",
+      "updated": "2026-06-23",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-10600",
+      "tag_count": 24,
+      "customer_count": 16,
+      "active_customer_count": 13,
+      "total_mrr": 39467.47,
+      "total_arr": 473609.64,
+      "total_lifetime": 2882155.69,
+      "unmatched_labels": [
+        "DotCabinets",
+        "IslandCustomCabinets",
+        "Paragon",
+        "brazenfox",
+        "dbs",
+        "netley",
+        "qcww",
+        "rcc"
+      ]
+    },
+    {
+      "key": "DEV-10599",
+      "summary": "Order Summations #2 - Calculations",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 433,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 219197.31,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 26,
+          "name": "Rehau Inc.",
+          "mrr": 3148.95,
+          "lifetime": 208311.3,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 130,
+          "name": "Roy's Wood Products, Inc.",
+          "mrr": 3119,
+          "lifetime": 139656.33,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 82,
+          "name": "Drawers by Design",
+          "mrr": 2142.5,
+          "lifetime": 164959.19,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 545,
+          "name": "Cabinet Doors USA",
+          "mrr": 1182,
+          "lifetime": 17633,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 278,
+          "name": "Munns Door and Mill",
+          "mrr": 1172.08,
+          "lifetime": 57725.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 539,
+          "name": "Conquest Cabinetry",
+          "mrr": 270,
+          "lifetime": 13154.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 534,
+          "name": "North American Components",
+          "mrr": 250,
+          "lifetime": 6525.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 119,
+          "name": "Big Valley Wood Products",
+          "mrr": 0,
+          "lifetime": 42511.2,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 459,
+          "name": "EuroContempo",
+          "mrr": 0,
+          "lifetime": 47418.48,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-07-30",
+      "updated": "2026-06-23",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-10599",
+      "tag_count": 24,
+      "customer_count": 16,
+      "active_customer_count": 13,
+      "total_mrr": 39467.47,
+      "total_arr": 473609.64,
+      "total_lifetime": 2882155.69,
+      "unmatched_labels": [
+        "DotCabinets",
+        "IslandCustomCabinets",
+        "Paragon",
+        "brazenfox",
+        "dbs",
+        "netley",
+        "qcww",
+        "rcc"
+      ]
+    },
+    {
+      "key": "DEV-10598",
+      "summary": "Order Summations #1 - Building Groups",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 420,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 219197.31,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 26,
+          "name": "Rehau Inc.",
+          "mrr": 3148.95,
+          "lifetime": 208311.3,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 130,
+          "name": "Roy's Wood Products, Inc.",
+          "mrr": 3119,
+          "lifetime": 139656.33,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 82,
+          "name": "Drawers by Design",
+          "mrr": 2142.5,
+          "lifetime": 164959.19,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 545,
+          "name": "Cabinet Doors USA",
+          "mrr": 1182,
+          "lifetime": 17633,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 278,
+          "name": "Munns Door and Mill",
+          "mrr": 1172.08,
+          "lifetime": 57725.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 539,
+          "name": "Conquest Cabinetry",
+          "mrr": 270,
+          "lifetime": 13154.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 534,
+          "name": "North American Components",
+          "mrr": 250,
+          "lifetime": 6525.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 119,
+          "name": "Big Valley Wood Products",
+          "mrr": 0,
+          "lifetime": 42511.2,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 459,
+          "name": "EuroContempo",
+          "mrr": 0,
+          "lifetime": 47418.48,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-07-30",
+      "updated": "2026-06-16",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-10598",
+      "tag_count": 24,
+      "customer_count": 16,
+      "active_customer_count": 13,
+      "total_mrr": 39467.47,
+      "total_arr": 473609.64,
+      "total_lifetime": 2882155.69,
+      "unmatched_labels": [
+        "DotCabinets",
+        "IslandCustomCabinets",
+        "Paragon",
+        "brazenfox",
+        "dbs",
+        "netley",
+        "qcww",
+        "rcc"
       ]
     },
     {
@@ -2636,721 +3351,6 @@
         "dbs",
         "netley",
         "peacock"
-      ]
-    },
-    {
-      "key": "DEV-1239",
-      "summary": "Order total summations",
-      "status": "Ready To Start",
-      "stage_category": "To Do",
-      "issue_type": "Epic",
-      "priority": "Highest",
-      "issue_score": 365,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 136,
-          "name": "Greyloch, LLC.",
-          "mrr": 4687,
-          "lifetime": 219197.31,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 26,
-          "name": "Rehau Inc.",
-          "mrr": 3148.95,
-          "lifetime": 208311.3,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 139656.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 82,
-          "name": "Drawers by Design",
-          "mrr": 2142.5,
-          "lifetime": 164959.19,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 545,
-          "name": "Cabinet Doors USA",
-          "mrr": 1182,
-          "lifetime": 17633,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 278,
-          "name": "Munns Door and Mill",
-          "mrr": 1172.08,
-          "lifetime": 57725.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 539,
-          "name": "Conquest Cabinetry",
-          "mrr": 270,
-          "lifetime": 13154.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 534,
-          "name": "North American Components",
-          "mrr": 250,
-          "lifetime": 6525.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 119,
-          "name": "Big Valley Wood Products",
-          "mrr": 0,
-          "lifetime": 42511.2,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 459,
-          "name": "EuroContempo",
-          "mrr": 0,
-          "lifetime": 47418.48,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2020-03-05",
-      "updated": "2026-06-24",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-1239",
-      "tag_count": 24,
-      "customer_count": 16,
-      "active_customer_count": 13,
-      "total_mrr": 35793.52,
-      "total_arr": 429522.24,
-      "total_lifetime": 2878481.74,
-      "unmatched_labels": [
-        "DotCabinets",
-        "IslandCustomCabinets",
-        "Paragon",
-        "brazenfox",
-        "dbs",
-        "netley",
-        "qcww",
-        "rcc"
-      ]
-    },
-    {
-      "key": "DEV-10601",
-      "summary": "Order Summations #4 - Audit Logs",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 454,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 136,
-          "name": "Greyloch, LLC.",
-          "mrr": 4687,
-          "lifetime": 219197.31,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 26,
-          "name": "Rehau Inc.",
-          "mrr": 3148.95,
-          "lifetime": 208311.3,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 139656.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 82,
-          "name": "Drawers by Design",
-          "mrr": 2142.5,
-          "lifetime": 164959.19,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 545,
-          "name": "Cabinet Doors USA",
-          "mrr": 1182,
-          "lifetime": 17633,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 278,
-          "name": "Munns Door and Mill",
-          "mrr": 1172.08,
-          "lifetime": 57725.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 539,
-          "name": "Conquest Cabinetry",
-          "mrr": 270,
-          "lifetime": 13154.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 534,
-          "name": "North American Components",
-          "mrr": 250,
-          "lifetime": 6525.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 119,
-          "name": "Big Valley Wood Products",
-          "mrr": 0,
-          "lifetime": 42511.2,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 459,
-          "name": "EuroContempo",
-          "mrr": 0,
-          "lifetime": 47418.48,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2025-07-30",
-      "updated": "2026-06-23",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-10601",
-      "tag_count": 24,
-      "customer_count": 16,
-      "active_customer_count": 13,
-      "total_mrr": 35793.52,
-      "total_arr": 429522.24,
-      "total_lifetime": 2878481.74,
-      "unmatched_labels": [
-        "DotCabinets",
-        "IslandCustomCabinets",
-        "Paragon",
-        "brazenfox",
-        "dbs",
-        "netley",
-        "qcww",
-        "rcc"
-      ]
-    },
-    {
-      "key": "DEV-10600",
-      "summary": "Order Summation #3 - Output Page Display",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 433,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 136,
-          "name": "Greyloch, LLC.",
-          "mrr": 4687,
-          "lifetime": 219197.31,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 26,
-          "name": "Rehau Inc.",
-          "mrr": 3148.95,
-          "lifetime": 208311.3,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 139656.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 82,
-          "name": "Drawers by Design",
-          "mrr": 2142.5,
-          "lifetime": 164959.19,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 545,
-          "name": "Cabinet Doors USA",
-          "mrr": 1182,
-          "lifetime": 17633,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 278,
-          "name": "Munns Door and Mill",
-          "mrr": 1172.08,
-          "lifetime": 57725.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 539,
-          "name": "Conquest Cabinetry",
-          "mrr": 270,
-          "lifetime": 13154.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 534,
-          "name": "North American Components",
-          "mrr": 250,
-          "lifetime": 6525.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 119,
-          "name": "Big Valley Wood Products",
-          "mrr": 0,
-          "lifetime": 42511.2,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 459,
-          "name": "EuroContempo",
-          "mrr": 0,
-          "lifetime": 47418.48,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2025-07-30",
-      "updated": "2026-06-23",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-10600",
-      "tag_count": 24,
-      "customer_count": 16,
-      "active_customer_count": 13,
-      "total_mrr": 35793.52,
-      "total_arr": 429522.24,
-      "total_lifetime": 2878481.74,
-      "unmatched_labels": [
-        "DotCabinets",
-        "IslandCustomCabinets",
-        "Paragon",
-        "brazenfox",
-        "dbs",
-        "netley",
-        "qcww",
-        "rcc"
-      ]
-    },
-    {
-      "key": "DEV-10599",
-      "summary": "Order Summations #2 - Calculations",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 433,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 136,
-          "name": "Greyloch, LLC.",
-          "mrr": 4687,
-          "lifetime": 219197.31,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 26,
-          "name": "Rehau Inc.",
-          "mrr": 3148.95,
-          "lifetime": 208311.3,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 139656.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 82,
-          "name": "Drawers by Design",
-          "mrr": 2142.5,
-          "lifetime": 164959.19,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 545,
-          "name": "Cabinet Doors USA",
-          "mrr": 1182,
-          "lifetime": 17633,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 278,
-          "name": "Munns Door and Mill",
-          "mrr": 1172.08,
-          "lifetime": 57725.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 539,
-          "name": "Conquest Cabinetry",
-          "mrr": 270,
-          "lifetime": 13154.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 534,
-          "name": "North American Components",
-          "mrr": 250,
-          "lifetime": 6525.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 119,
-          "name": "Big Valley Wood Products",
-          "mrr": 0,
-          "lifetime": 42511.2,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 459,
-          "name": "EuroContempo",
-          "mrr": 0,
-          "lifetime": 47418.48,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2025-07-30",
-      "updated": "2026-06-23",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-10599",
-      "tag_count": 24,
-      "customer_count": 16,
-      "active_customer_count": 13,
-      "total_mrr": 35793.52,
-      "total_arr": 429522.24,
-      "total_lifetime": 2878481.74,
-      "unmatched_labels": [
-        "DotCabinets",
-        "IslandCustomCabinets",
-        "Paragon",
-        "brazenfox",
-        "dbs",
-        "netley",
-        "qcww",
-        "rcc"
-      ]
-    },
-    {
-      "key": "DEV-10598",
-      "summary": "Order Summations #1 - Building Groups",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 420,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 136,
-          "name": "Greyloch, LLC.",
-          "mrr": 4687,
-          "lifetime": 219197.31,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 26,
-          "name": "Rehau Inc.",
-          "mrr": 3148.95,
-          "lifetime": 208311.3,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 139656.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 82,
-          "name": "Drawers by Design",
-          "mrr": 2142.5,
-          "lifetime": 164959.19,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 545,
-          "name": "Cabinet Doors USA",
-          "mrr": 1182,
-          "lifetime": 17633,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 278,
-          "name": "Munns Door and Mill",
-          "mrr": 1172.08,
-          "lifetime": 57725.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 539,
-          "name": "Conquest Cabinetry",
-          "mrr": 270,
-          "lifetime": 13154.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 534,
-          "name": "North American Components",
-          "mrr": 250,
-          "lifetime": 6525.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 119,
-          "name": "Big Valley Wood Products",
-          "mrr": 0,
-          "lifetime": 42511.2,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 459,
-          "name": "EuroContempo",
-          "mrr": 0,
-          "lifetime": 47418.48,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2025-07-30",
-      "updated": "2026-06-16",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-10598",
-      "tag_count": 24,
-      "customer_count": 16,
-      "active_customer_count": 13,
-      "total_mrr": 35793.52,
-      "total_arr": 429522.24,
-      "total_lifetime": 2878481.74,
-      "unmatched_labels": [
-        "DotCabinets",
-        "IslandCustomCabinets",
-        "Paragon",
-        "brazenfox",
-        "dbs",
-        "netley",
-        "qcww",
-        "rcc"
       ]
     },
     {
@@ -5702,6 +5702,118 @@
       ]
     },
     {
+      "key": "DEV-9628",
+      "summary": "Output pages - group by part instead of by product",
+      "status": "Feature Scope",
+      "stage_category": "In Progress",
+      "issue_type": "Story",
+      "priority": "Highest",
+      "issue_score": 440,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 219197.31,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 26,
+          "name": "Rehau Inc.",
+          "mrr": 3148.95,
+          "lifetime": 208311.3,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 130,
+          "name": "Roy's Wood Products, Inc.",
+          "mrr": 3119,
+          "lifetime": 139656.33,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 129398.36,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 278,
+          "name": "Munns Door and Mill",
+          "mrr": 1172.08,
+          "lifetime": 57725.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 20499,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 119,
+          "name": "Big Valley Wood Products",
+          "mrr": 0,
+          "lifetime": 42511.2,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 459,
+          "name": "EuroContempo",
+          "mrr": 0,
+          "lifetime": 47418.48,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-02-05",
+      "updated": "2026-06-23",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9628",
+      "tag_count": 17,
+      "customer_count": 12,
+      "active_customer_count": 9,
+      "total_mrr": 28501.73,
+      "total_arr": 342020.76,
+      "total_lifetime": 2117618.08,
+      "unmatched_labels": [
+        "IslandCustomCabinets",
+        "Paragon",
+        "dbs",
+        "netley",
+        "rcc"
+      ]
+    },
+    {
       "key": "DEV-12033",
       "summary": "Instances running slow",
       "status": "Resolved",
@@ -6375,118 +6487,6 @@
       ]
     },
     {
-      "key": "DEV-9628",
-      "summary": "Output pages - group by part instead of by product",
-      "status": "Feature Scope",
-      "stage_category": "In Progress",
-      "issue_type": "Story",
-      "priority": "Highest",
-      "issue_score": 440,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 136,
-          "name": "Greyloch, LLC.",
-          "mrr": 4687,
-          "lifetime": 219197.31,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 26,
-          "name": "Rehau Inc.",
-          "mrr": 3148.95,
-          "lifetime": 208311.3,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 139656.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 129398.36,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 278,
-          "name": "Munns Door and Mill",
-          "mrr": 1172.08,
-          "lifetime": 57725.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 20499,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 119,
-          "name": "Big Valley Wood Products",
-          "mrr": 0,
-          "lifetime": 42511.2,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 459,
-          "name": "EuroContempo",
-          "mrr": 0,
-          "lifetime": 47418.48,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2025-02-05",
-      "updated": "2026-06-23",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9628",
-      "tag_count": 17,
-      "customer_count": 12,
-      "active_customer_count": 9,
-      "total_mrr": 24827.78,
-      "total_arr": 297933.36,
-      "total_lifetime": 2113944.13,
-      "unmatched_labels": [
-        "IslandCustomCabinets",
-        "Paragon",
-        "dbs",
-        "netley",
-        "rcc"
-      ]
-    },
-    {
       "key": "DEV-8772",
       "summary": "Order and Report Exports Failing Customers",
       "status": "Resolved",
@@ -6941,6 +6941,79 @@
         "ciminos",
         "cuttingedge",
         "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-494",
+      "summary": "Internal remake system for parts",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Story",
+      "priority": "Highest",
+      "issue_score": 407,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 38,
+          "name": "Panhandle Door Inc.",
+          "mrr": 6024,
+          "lifetime": 704281.04,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 2,
+          "name": "CCF Industries",
+          "mrr": 2699,
+          "lifetime": 360098.03,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 20,
+          "name": "Eldorado Plywood",
+          "mrr": 1575,
+          "lifetime": 113555.68,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 147245.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2018-10-04",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-494",
+      "tag_count": 8,
+      "customer_count": 7,
+      "active_customer_count": 6,
+      "total_mrr": 23413.91,
+      "total_arr": 280966.92,
+      "total_lifetime": 2342862.72,
+      "unmatched_labels": [
+        "amco"
       ]
     },
     {
@@ -8172,6 +8245,120 @@
       ]
     },
     {
+      "key": "DEV-6640",
+      "summary": "Combined B2B products",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Story",
+      "priority": "Highest",
+      "issue_score": 368,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 38,
+          "name": "Panhandle Door Inc.",
+          "mrr": 6024,
+          "lifetime": 704281.04,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 168,
+          "name": "Diamond CNC",
+          "mrr": 1499,
+          "lifetime": 118800.9,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 310,
+          "name": "Empyre Designs",
+          "mrr": 563.06,
+          "lifetime": 38937.07,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 475,
+          "name": "Phoenix-LLC",
+          "mrr": 400,
+          "lifetime": 40159.16,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 2064,
+          "name": "Windsor Place",
+          "mrr": 272.19,
+          "lifetime": 1848.07,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 322,
+          "name": "Ultrashelf",
+          "mrr": 0,
+          "lifetime": 5027.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 439,
+          "name": "Neu-Bau LLC",
+          "mrr": 0,
+          "lifetime": 22895,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 416,
+          "name": "Wilson Cabinetry",
+          "mrr": 0,
+          "lifetime": 22210,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 243,
+          "name": "Wood Inc.",
+          "mrr": 0,
+          "lifetime": 12341,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-07-14",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6640",
+      "tag_count": 19,
+      "customer_count": 12,
+      "active_customer_count": 9,
+      "total_mrr": 20387.44,
+      "total_arr": 244649.28,
+      "total_lifetime": 1984182.61,
+      "unmatched_labels": [
+        "HogansCabinetry",
+        "Midwest",
+        "bccdoors",
+        "btjdoors",
+        "ciminos",
+        "crowncabinets",
+        "threecreeks"
+      ]
+    },
+    {
       "key": "DEV-10497",
       "summary": "Output Pages & Exporters showing to end B2B customer",
       "status": "Backlog",
@@ -8236,79 +8423,6 @@
       "unmatched_labels": [
         "btjdoors",
         "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-494",
-      "summary": "Internal remake system for parts",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Story",
-      "priority": "Highest",
-      "issue_score": 407,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 38,
-          "name": "Panhandle Door Inc.",
-          "mrr": 6024,
-          "lifetime": 704281.04,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 2,
-          "name": "CCF Industries",
-          "mrr": 2699,
-          "lifetime": 360098.03,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 20,
-          "name": "Eldorado Plywood",
-          "mrr": 1575,
-          "lifetime": 113555.68,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 147245.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2018-10-04",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-494",
-      "tag_count": 8,
-      "customer_count": 7,
-      "active_customer_count": 6,
-      "total_mrr": 19739.96,
-      "total_arr": 236879.52,
-      "total_lifetime": 2339188.77,
-      "unmatched_labels": [
-        "amco"
       ]
     },
     {
@@ -8700,120 +8814,6 @@
       "unmatched_labels": [
         "cullmancabinet",
         "netley"
-      ]
-    },
-    {
-      "key": "DEV-6640",
-      "summary": "Combined B2B products",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Story",
-      "priority": "Highest",
-      "issue_score": 368,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 38,
-          "name": "Panhandle Door Inc.",
-          "mrr": 6024,
-          "lifetime": 704281.04,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 168,
-          "name": "Diamond CNC",
-          "mrr": 1499,
-          "lifetime": 118800.9,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 310,
-          "name": "Empyre Designs",
-          "mrr": 563.06,
-          "lifetime": 38937.07,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 416,
-          "name": "Wilson Cabinetry",
-          "mrr": 500,
-          "lifetime": 22710,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 475,
-          "name": "Phoenix-LLC",
-          "mrr": 400,
-          "lifetime": 40159.16,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 2064,
-          "name": "Windsor Place",
-          "mrr": 272.19,
-          "lifetime": 1848.07,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 322,
-          "name": "Ultrashelf",
-          "mrr": 0,
-          "lifetime": 5027.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 439,
-          "name": "Neu-Bau LLC",
-          "mrr": 0,
-          "lifetime": 22895,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        },
-        {
-          "allmoxy_customer_id": 243,
-          "name": "Wood Inc.",
-          "mrr": 0,
-          "lifetime": 12341,
-          "status": "churned"
-        }
-      ],
-      "created": "2023-07-14",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6640",
-      "tag_count": 19,
-      "customer_count": 12,
-      "active_customer_count": 9,
-      "total_mrr": 17213.49,
-      "total_arr": 206561.88,
-      "total_lifetime": 1981008.66,
-      "unmatched_labels": [
-        "HogansCabinetry",
-        "Midwest",
-        "bccdoors",
-        "btjdoors",
-        "ciminos",
-        "crowncabinets",
-        "threecreeks"
       ]
     },
     {
@@ -15500,6 +15500,49 @@
       ]
     },
     {
+      "key": "DEV-5869",
+      "summary": "Validation issues for all instances",
+      "status": "Closed",
+      "stage_category": "Done",
+      "issue_type": "Investigate",
+      "priority": "Highest",
+      "issue_score": 296,
+      "customers": [
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 465726.16,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-02-16",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5869",
+      "tag_count": 3,
+      "customer_count": 3,
+      "active_customer_count": 2,
+      "total_mrr": 8914.45,
+      "total_arr": 106973.4,
+      "total_lifetime": 900644.5,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-5458",
       "summary": "Hidden attribute and Order Level Settings",
       "status": "Resolved",
@@ -15765,6 +15808,51 @@
       "total_lifetime": 927819.98,
       "unmatched_labels": [
         "bbcustomdoors"
+      ]
+    },
+    {
+      "key": "DEV-8217",
+      "summary": "Update Will call to use full address not just zip code",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 222,
+      "customers": [
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2024-05-13",
+      "updated": "2026-05-26",
+      "resolved": "2024-10-22",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8217",
+      "tag_count": 4,
+      "customer_count": 3,
+      "active_customer_count": 2,
+      "total_mrr": 8293.95,
+      "total_arr": 99527.4,
+      "total_lifetime": 725323.74,
+      "unmatched_labels": [
+        "ciminos"
       ]
     },
     {
@@ -16857,6 +16945,95 @@
       ]
     },
     {
+      "key": "DEV-12602",
+      "summary": "Ciminos - Status History Report - Group by Export Class Not working",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        }
+      ],
+      "created": "2026-08-03",
+      "updated": "2026-08-03",
+      "resolved": "2026-08-03",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12602",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 582764.42,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-12563",
+      "summary": "Lewis Cabinets: Resource allocation not reconciling supply needs from product orders — incorrect qty/timing on the Inventory Processing page",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 664,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-27",
+      "updated": "2026-08-03",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12563",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 582764.42,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12599",
+      "summary": "Supply Item Association Needs to Be Restored",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 761,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-31",
+      "updated": "2026-08-03",
+      "resolved": "2026-07-31",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12599",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 582764.42,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12466",
       "summary": "Lewis - Work Schedule Report & Status History Report",
       "status": "In Beta",
@@ -16917,35 +17094,6 @@
       ]
     },
     {
-      "key": "DEV-12599",
-      "summary": "Supply Item Association Needs to Be Restored",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 761,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-31",
-      "updated": "2026-08-03",
-      "resolved": "2026-07-31",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12599",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7955.24,
-      "total_arr": 95462.88,
-      "total_lifetime": 582764.42,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-12031",
       "summary": "Material Cost By Product Not Calculatling?",
       "status": "New",
@@ -16966,35 +17114,6 @@
       "updated": "2026-08-01",
       "resolved": "2026-05-07",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12031",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7955.24,
-      "total_arr": 95462.88,
-      "total_lifetime": 582764.42,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12563",
-      "summary": "Lewis Cabinets: Resource allocation not reconciling supply needs from product orders — incorrect qty/timing on the Inventory Processing page",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 664,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-27",
-      "updated": "2026-07-31",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12563",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -30354,7 +30473,7 @@
         }
       ],
       "created": "2024-12-11",
-      "updated": "2026-07-29",
+      "updated": "2026-08-03",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-9320",
       "tag_count": 4,
@@ -37581,6 +37700,58 @@
       ]
     },
     {
+      "key": "DEV-9069",
+      "summary": "Search bar functionality feedback",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 284,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 20,
+          "name": "Eldorado Plywood",
+          "mrr": 1575,
+          "lifetime": 113555.68,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 168,
+          "name": "Diamond CNC",
+          "mrr": 1499,
+          "lifetime": 118800.9,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2024-10-31",
+      "updated": "2026-05-01",
+      "resolved": "2024-10-31",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9069",
+      "tag_count": 5,
+      "customer_count": 4,
+      "active_customer_count": 3,
+      "total_mrr": 6747.95,
+      "total_arr": 80975.4,
+      "total_lifetime": 667274.92,
+      "unmatched_labels": [
+        "canary"
+      ]
+    },
+    {
       "key": "DEV-7453",
       "summary": "Library of Tags",
       "status": "Backlog",
@@ -37616,6 +37787,70 @@
       "total_lifetime": 674822.36,
       "unmatched_labels": [
         "cuttingedge"
+      ]
+    },
+    {
+      "key": "DEV-11919",
+      "summary": "URGENT: Companies not available in order dropdown selection",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 816,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 20,
+          "name": "Eldorado Plywood",
+          "mrr": 1575,
+          "lifetime": 113555.68,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 22,
+          "name": "Bywater Products",
+          "mrr": 1311.21,
+          "lifetime": 123094.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 312,
+          "name": "ClosetParts",
+          "mrr": 0,
+          "lifetime": 47204.61,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-04-16",
+      "updated": "2026-04-23",
+      "resolved": "2026-04-16",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11919",
+      "tag_count": 11,
+      "customer_count": 5,
+      "active_customer_count": 3,
+      "total_mrr": 6560.16,
+      "total_arr": 78721.92,
+      "total_lifetime": 718773.57,
+      "unmatched_labels": [
+        "Fryburg",
+        "bccdoors",
+        "brandenbergercustom",
+        "canary",
+        "carolinaartisan",
+        "m2m"
       ]
     },
     {
@@ -39943,49 +40178,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-5869",
-      "summary": "Validation issues for all instances",
-      "status": "Closed",
-      "stage_category": "Done",
-      "issue_type": "Investigate",
-      "priority": "Highest",
-      "issue_score": 296,
-      "customers": [
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 465726.16,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2023-02-16",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5869",
-      "tag_count": 3,
-      "customer_count": 3,
-      "active_customer_count": 2,
-      "total_mrr": 5240.5,
-      "total_arr": 62886,
-      "total_lifetime": 896970.55,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-12601",
       "summary": "API - Primary Kitchen - Order Import: Hinge Drilling",
       "status": "New",
@@ -41299,6 +41491,52 @@
       "total_arr": 62886,
       "total_lifetime": 465726.16,
       "unmatched_labels": []
+    },
+    {
+      "key": "DEV-6284",
+      "summary": "Order page search bar shows exclusive products",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 251,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 147245.21,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-05-01",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6284",
+      "tag_count": 5,
+      "customer_count": 3,
+      "active_customer_count": 2,
+      "total_mrr": 5160.67,
+      "total_arr": 61928.04,
+      "total_lifetime": 582163.55,
+      "unmatched_labels": [
+        "amco",
+        "canary"
+      ]
     },
     {
       "key": "DEV-5240",
@@ -42967,51 +43205,6 @@
       "total_arr": 56244,
       "total_lifetime": 219197.31,
       "unmatched_labels": []
-    },
-    {
-      "key": "DEV-8217",
-      "summary": "Update Will call to use full address not just zip code",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 222,
-      "customers": [
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2024-05-13",
-      "updated": "2026-05-26",
-      "resolved": "2024-10-22",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8217",
-      "tag_count": 4,
-      "customer_count": 3,
-      "active_customer_count": 2,
-      "total_mrr": 4620,
-      "total_arr": 55440,
-      "total_lifetime": 721649.79,
-      "unmatched_labels": [
-        "ciminos"
-      ]
     },
     {
       "key": "DEV-10035",
@@ -45499,6 +45692,964 @@
       ]
     },
     {
+      "key": "DEV-1358",
+      "summary": "Add math functions to part summations",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 311,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2020-05-06",
+      "updated": "2026-05-26",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-1358",
+      "tag_count": 3,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-4600",
+      "summary": "Prices being zeroed out when Importing Orders",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 741,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-05-10",
+      "updated": "2026-05-01",
+      "resolved": "2022-12-09",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4600",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-4779",
+      "summary": "Quick Link to Place Customer Order",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 299,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-06-27",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4779",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-11640",
+      "summary": "Avalara Integration Questions",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 181,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-02-24",
+      "updated": "2026-05-01",
+      "resolved": "2026-02-26",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11640",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-11126",
+      "summary": "Negative Amount Due on Paid Invoice",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 720,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-11-04",
+      "updated": "2026-05-01",
+      "resolved": "2025-11-04",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11126",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-5156",
+      "summary": "Clone Westwind to WestwindSandbox",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Highest",
+      "issue_score": 364,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-09-29",
+      "updated": "2026-05-01",
+      "resolved": "2022-10-03",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5156",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-6195",
+      "summary": "West winds report issues in the last week",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 741,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-04-14",
+      "updated": "2026-05-01",
+      "resolved": "2023-04-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6195",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-6987",
+      "summary": "Emails not being delivered",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 377,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-09-26",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6987",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-4496",
+      "summary": "Unable to Verify Bank Account for Payment Method",
+      "status": "Closed",
+      "stage_category": "Done",
+      "issue_type": "Investigate",
+      "priority": "Highest",
+      "issue_score": 217,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-04-19",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4496",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-4628",
+      "summary": "Attribute Columns don't show on available attributes in Part formula list",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 741,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-05-19",
+      "updated": "2026-05-01",
+      "resolved": "2022-06-22",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4628",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-5164",
+      "summary": "Get Westindsandbox Access to API",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Highest",
+      "issue_score": 424,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-09-30",
+      "updated": "2026-05-01",
+      "resolved": "2022-10-10",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5164",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-10833",
+      "summary": "Sales Tax - Missing City Tax Rate",
+      "status": "Closed",
+      "stage_category": "Done",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": null,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-09-09",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-10833",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-4587",
+      "summary": "Order Page sorting not saving after Verified status",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 796,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-05-03",
+      "updated": "2026-05-01",
+      "resolved": "2022-05-03",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4587",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-8528",
+      "summary": "Unable to Undo Transaction",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 173,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2024-07-16",
+      "updated": "2026-05-01",
+      "resolved": "2024-07-17",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8528",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-4612",
+      "summary": "Making changes in order causes instance to not load/slow down",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 830,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-05-12",
+      "updated": "2026-05-01",
+      "resolved": "2022-05-19",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4612",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-9020",
+      "summary": "Accidentally Cleared Sales Order Queue",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 29,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2024-10-21",
+      "updated": "2026-05-01",
+      "resolved": "2024-10-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9020",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-5245",
+      "summary": "Default preset on product isn't sticking",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 707,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2022-10-12",
+      "updated": "2026-05-01",
+      "resolved": "2022-10-12",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5245",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-672",
+      "summary": "Give customers the ability to sort by line attributes on the order page (qty, height, width, depth, etc)",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 335,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2019-01-16",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-672",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-6210",
+      "summary": "Delete West wind Sandbox account",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 34,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-04-17",
+      "updated": "2026-05-01",
+      "resolved": "2023-04-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6210",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-2118",
+      "summary": "Actual Shipped Date Field",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 241,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2021-07-01",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-2118",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-9945",
+      "summary": "Time Card Entry Logging Under Wrong Person",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Highest",
+      "issue_score": 508,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-04-09",
+      "updated": "2026-05-01",
+      "resolved": "2025-04-28",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9945",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-8890",
+      "summary": "Add search field to dropdown on Timecard Management",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 246,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2024-09-24",
+      "updated": "2026-05-01",
+      "resolved": "2025-05-06",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8890",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-6452",
+      "summary": "Can't scroll in reports",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 762,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-06-05",
+      "updated": "2026-05-01",
+      "resolved": "2023-06-05",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6452",
+      "tag_count": 4,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg"
+      ]
+    },
+    {
+      "key": "DEV-6257",
+      "summary": "Expected behavior for categories with tags",
+      "status": "Closed",
+      "stage_category": "Done",
+      "issue_type": "Investigate",
+      "priority": "Highest",
+      "issue_score": 254,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-04-26",
+      "updated": "2026-05-01",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6257",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 434918.34,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12115",
+      "summary": "Shipping Integration - Worldwide Express",
+      "status": "Approve",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 181,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        }
+      ],
+      "created": "2026-05-26",
+      "updated": "2026-07-31",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12115",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 320597.69,
+      "unmatched_labels": [
+        "DCDrawers"
+      ]
+    },
+    {
+      "key": "DEV-12442",
+      "summary": "Quickbooks Online Integration Question",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-21",
+      "updated": "2026-07-29",
+      "resolved": "2026-07-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12442",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 320597.69,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12084",
+      "summary": "Extend Westwind's supply attribute allocations to 50 unique supplies",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "High",
+      "issue_score": 280,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        }
+      ],
+      "created": "2026-05-21",
+      "updated": "2026-05-28",
+      "resolved": "2026-05-28",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12084",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 320597.69,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-8003",
       "summary": "B2B reseller isn't seeing all of the supplier's products in their catalog",
       "status": "Closed",
@@ -47062,58 +48213,6 @@
       ]
     },
     {
-      "key": "DEV-9069",
-      "summary": "Search bar functionality feedback",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 284,
-      "customers": [
-        {
-          "allmoxy_customer_id": 20,
-          "name": "Eldorado Plywood",
-          "mrr": 1575,
-          "lifetime": 113555.68,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 168,
-          "name": "Diamond CNC",
-          "mrr": 1499,
-          "lifetime": 118800.9,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2024-10-31",
-      "updated": "2026-05-01",
-      "resolved": "2024-10-31",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9069",
-      "tag_count": 5,
-      "customer_count": 4,
-      "active_customer_count": 3,
-      "total_mrr": 3074,
-      "total_arr": 36888,
-      "total_lifetime": 663600.97,
-      "unmatched_labels": [
-        "canary"
-      ]
-    },
-    {
       "key": "DEV-6347",
       "summary": "labels not lining up correctly after update",
       "status": "Resolved",
@@ -47333,70 +48432,6 @@
       "total_lifetime": 208419.98,
       "unmatched_labels": [
         "cut2size"
-      ]
-    },
-    {
-      "key": "DEV-11919",
-      "summary": "URGENT: Companies not available in order dropdown selection",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 816,
-      "customers": [
-        {
-          "allmoxy_customer_id": 20,
-          "name": "Eldorado Plywood",
-          "mrr": 1575,
-          "lifetime": 113555.68,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 22,
-          "name": "Bywater Products",
-          "mrr": 1311.21,
-          "lifetime": 123094.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 312,
-          "name": "ClosetParts",
-          "mrr": 0,
-          "lifetime": 47204.61,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2026-04-16",
-      "updated": "2026-04-23",
-      "resolved": "2026-04-16",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11919",
-      "tag_count": 11,
-      "customer_count": 5,
-      "active_customer_count": 3,
-      "total_mrr": 2886.21,
-      "total_arr": 34634.52,
-      "total_lifetime": 715099.62,
-      "unmatched_labels": [
-        "Fryburg",
-        "bccdoors",
-        "brandenbergercustom",
-        "canary",
-        "carolinaartisan",
-        "m2m"
       ]
     },
     {
@@ -51755,7 +52790,7 @@
     {
       "key": "DEV-12470",
       "summary": "Order import skips supply formula calculation — Resource Allocation under-counts sheet materials until order is manually re-saved",
-      "status": "In Staging",
+      "status": "In Production",
       "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "High",
@@ -53384,52 +54419,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-6284",
-      "summary": "Order page search bar shows exclusive products",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 251,
-      "customers": [
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 147245.21,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2023-05-01",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6284",
-      "tag_count": 5,
-      "customer_count": 3,
-      "active_customer_count": 2,
-      "total_mrr": 1486.72,
-      "total_arr": 17840.64,
-      "total_lifetime": 578489.6,
-      "unmatched_labels": [
-        "amco",
-        "canary"
-      ]
-    },
-    {
       "key": "DEV-355",
       "summary": "Validation Copy and rearrange",
       "status": "Resolved",
@@ -53969,6 +54958,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12454",
+      "summary": "D3 Custom Cabinets - Order Prolonged Loading/Timing out",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 463,
+          "name": "D3Customcabinets",
+          "mrr": 1391,
+          "lifetime": 81011.16,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-22",
+      "updated": "2026-08-03",
+      "resolved": "2026-07-22",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12454",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1391,
+      "total_arr": 16692,
+      "total_lifetime": 81011.16,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12511",
       "summary": "D3 - Category Names in Dark Mode Are Hard to Read",
       "status": "In Beta",
@@ -53989,35 +55007,6 @@
       "updated": "2026-08-03",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12511",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 1391,
-      "total_arr": 16692,
-      "total_lifetime": 81011.16,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12454",
-      "summary": "D3 Custom Cabinets - Order Prolonged Loading/Timing out",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 463,
-          "name": "D3Customcabinets",
-          "mrr": 1391,
-          "lifetime": 81011.16,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-22",
-      "updated": "2026-07-31",
-      "resolved": "2026-07-22",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12454",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -54600,7 +55589,7 @@
         }
       ],
       "created": "2026-07-28",
-      "updated": "2026-07-31",
+      "updated": "2026-08-03",
       "resolved": "2026-07-28",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12576",
       "tag_count": 1,
@@ -55451,7 +56440,7 @@
         }
       ],
       "created": "2026-07-28",
-      "updated": "2026-07-31",
+      "updated": "2026-08-03",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12577",
       "tag_count": 1,
@@ -56469,6 +57458,35 @@
       ]
     },
     {
+      "key": "DEV-12561",
+      "summary": "Attribute Company Availability Settings - Not applying to order level settings",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 479,
+          "name": "Cabinet Restylers, Inc",
+          "mrr": 1099,
+          "lifetime": 68439.5,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-27",
+      "updated": "2026-08-03",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12561",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1099,
+      "total_arr": 13188,
+      "total_lifetime": 68439.5,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-11819",
       "summary": "Create sequential numbering for individual items on an export",
       "status": "In Beta",
@@ -56532,35 +57550,6 @@
         "QualityCraft",
         "nudoors"
       ]
-    },
-    {
-      "key": "DEV-12561",
-      "summary": "Attribute Company Availability Settings - Not applying to order level settings",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 479,
-          "name": "Cabinet Restylers, Inc",
-          "mrr": 1099,
-          "lifetime": 68439.5,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-27",
-      "updated": "2026-07-31",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12561",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 1099,
-      "total_arr": 13188,
-      "total_lifetime": 68439.5,
-      "unmatched_labels": []
     },
     {
       "key": "DEV-12464",
@@ -61652,37 +62641,6 @@
       ]
     },
     {
-      "key": "DEV-12058",
-      "summary": "Product Image Default Unset, making product image look blank",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 787,
-      "customers": [
-        {
-          "allmoxy_customer_id": 416,
-          "name": "Wilson Cabinetry",
-          "mrr": 500,
-          "lifetime": 22710,
-          "status": "active"
-        }
-      ],
-      "created": "2026-05-15",
-      "updated": "2026-06-23",
-      "resolved": "2026-06-10",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12058",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 500,
-      "total_arr": 6000,
-      "total_lifetime": 22710,
-      "unmatched_labels": [
-        "PrecisionMillworks"
-      ]
-    },
-    {
       "key": "DEV-7483",
       "summary": "Pricing Discrepancies between receipt and order",
       "status": "Closed",
@@ -61712,35 +62670,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-11263",
-      "summary": "\"Add Recipient\" missing from triggers",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 795,
-      "customers": [
-        {
-          "allmoxy_customer_id": 416,
-          "name": "Wilson Cabinetry",
-          "mrr": 500,
-          "lifetime": 22710,
-          "status": "active"
-        }
-      ],
-      "created": "2025-12-11",
-      "updated": "2026-02-10",
-      "resolved": "2025-12-17",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11263",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 500,
-      "total_arr": 6000,
-      "total_lifetime": 22710,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-10966",
       "summary": "Remove 3D Designer from Dovetail Wood Traditions",
       "status": "Resolved",
@@ -61767,35 +62696,6 @@
       "total_mrr": 500,
       "total_arr": 6000,
       "total_lifetime": 8633.5,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-10094",
-      "summary": "Wilson Cabinetry- adding items to a row not saving or registering",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Highest",
-      "issue_score": 741,
-      "customers": [
-        {
-          "allmoxy_customer_id": 416,
-          "name": "Wilson Cabinetry",
-          "mrr": 500,
-          "lifetime": 22710,
-          "status": "active"
-        }
-      ],
-      "created": "2025-05-01",
-      "updated": "2026-01-30",
-      "resolved": "2025-05-15",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-10094",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 500,
-      "total_arr": 6000,
-      "total_lifetime": 22710,
       "unmatched_labels": []
     },
     {
@@ -63413,7 +64313,7 @@
     {
       "key": "DEV-12580",
       "summary": "Output Page Visibility - Unable to select Employee visibility",
-      "status": "Ready For QA",
+      "status": "In Progress",
       "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
@@ -65069,839 +65969,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-1358",
-      "summary": "Add math functions to part summations",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 311,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2020-05-06",
-      "updated": "2026-05-26",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-1358",
-      "tag_count": 3,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-4600",
-      "summary": "Prices being zeroed out when Importing Orders",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 741,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-05-10",
-      "updated": "2026-05-01",
-      "resolved": "2022-12-09",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4600",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-4779",
-      "summary": "Quick Link to Place Customer Order",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 299,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-06-27",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4779",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-11640",
-      "summary": "Avalara Integration Questions",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 181,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2026-02-24",
-      "updated": "2026-05-01",
-      "resolved": "2026-02-26",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11640",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-11126",
-      "summary": "Negative Amount Due on Paid Invoice",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 720,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2025-11-04",
-      "updated": "2026-05-01",
-      "resolved": "2025-11-04",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11126",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-5156",
-      "summary": "Clone Westwind to WestwindSandbox",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Highest",
-      "issue_score": 364,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-09-29",
-      "updated": "2026-05-01",
-      "resolved": "2022-10-03",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5156",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-6195",
-      "summary": "West winds report issues in the last week",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 741,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2023-04-14",
-      "updated": "2026-05-01",
-      "resolved": "2023-04-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6195",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-6987",
-      "summary": "Emails not being delivered",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 377,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2023-09-26",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6987",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-4496",
-      "summary": "Unable to Verify Bank Account for Payment Method",
-      "status": "Closed",
-      "stage_category": "Done",
-      "issue_type": "Investigate",
-      "priority": "Highest",
-      "issue_score": 217,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-04-19",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4496",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-4628",
-      "summary": "Attribute Columns don't show on available attributes in Part formula list",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 741,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-05-19",
-      "updated": "2026-05-01",
-      "resolved": "2022-06-22",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4628",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-5164",
-      "summary": "Get Westindsandbox Access to API",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Highest",
-      "issue_score": 424,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-09-30",
-      "updated": "2026-05-01",
-      "resolved": "2022-10-10",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5164",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-10833",
-      "summary": "Sales Tax - Missing City Tax Rate",
-      "status": "Closed",
-      "stage_category": "Done",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": null,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2025-09-09",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-10833",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-4587",
-      "summary": "Order Page sorting not saving after Verified status",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 796,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-05-03",
-      "updated": "2026-05-01",
-      "resolved": "2022-05-03",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4587",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-8528",
-      "summary": "Unable to Undo Transaction",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 173,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2024-07-16",
-      "updated": "2026-05-01",
-      "resolved": "2024-07-17",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8528",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-4612",
-      "summary": "Making changes in order causes instance to not load/slow down",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 830,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-05-12",
-      "updated": "2026-05-01",
-      "resolved": "2022-05-19",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4612",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-9020",
-      "summary": "Accidentally Cleared Sales Order Queue",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 29,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2024-10-21",
-      "updated": "2026-05-01",
-      "resolved": "2024-10-29",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9020",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-5245",
-      "summary": "Default preset on product isn't sticking",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 707,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2022-10-12",
-      "updated": "2026-05-01",
-      "resolved": "2022-10-12",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5245",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-672",
-      "summary": "Give customers the ability to sort by line attributes on the order page (qty, height, width, depth, etc)",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 335,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2019-01-16",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-672",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-6210",
-      "summary": "Delete West wind Sandbox account",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 34,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2023-04-17",
-      "updated": "2026-05-01",
-      "resolved": "2023-04-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6210",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-2118",
-      "summary": "Actual Shipped Date Field",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 241,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2021-07-01",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-2118",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-9945",
-      "summary": "Time Card Entry Logging Under Wrong Person",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Highest",
-      "issue_score": 508,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2025-04-09",
-      "updated": "2026-05-01",
-      "resolved": "2025-04-28",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9945",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-8890",
-      "summary": "Add search field to dropdown on Timecard Management",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 246,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2024-09-24",
-      "updated": "2026-05-01",
-      "resolved": "2025-05-06",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8890",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-6452",
-      "summary": "Can't scroll in reports",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 762,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2023-06-05",
-      "updated": "2026-05-01",
-      "resolved": "2023-06-05",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6452",
-      "tag_count": 4,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg"
-      ]
-    },
-    {
       "key": "DEV-4102",
       "summary": "Make discount amount total available at bottom instead of per line",
       "status": "Backlog",
@@ -65938,44 +66005,8 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-6257",
-      "summary": "Expected behavior for categories with tags",
-      "status": "Closed",
-      "stage_category": "Done",
-      "issue_type": "Investigate",
-      "priority": "Highest",
-      "issue_score": 254,
-      "customers": [
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2023-04-26",
-      "updated": "2026-05-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6257",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 431244.39,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12177",
-      "summary": "Operator BE 3: Data store, migrations & tenant isolation",
+      "key": "DEV-12180",
+      "summary": "Operator BE 6: Chat sessions, history & search",
       "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "New Feature",
@@ -65993,7 +66024,65 @@
       "created": "2026-06-10",
       "updated": "2026-08-03",
       "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12177",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12180",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12178",
+      "summary": "Operator BE 4: v2 API inventory & tool layer",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-08-03",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12178",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12182",
+      "summary": "Operator BE 8: Write confirmation gating & audit attribution",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 309,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-08-03",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12182",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66005,8 +66094,8 @@
     {
       "key": "DEV-12560",
       "summary": "Project statuses on Batch Ordering page",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "Highest",
       "issue_score": 411,
@@ -66034,8 +66123,8 @@
     {
       "key": "DEV-12179",
       "summary": "Operator BE 5: Agent loop, guardrails & gap logging for operator",
-      "status": "In QA",
-      "stage_category": "In Progress",
+      "status": "Passed QA",
+      "stage_category": "Done",
       "issue_type": "New Feature",
       "priority": "High",
       "issue_score": 254,
@@ -66052,6 +66141,64 @@
       "updated": "2026-08-03",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12179",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12181",
+      "summary": "Operator BE 7: Abilities (My/Company) & suggestion bar",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-08-03",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12181",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12177",
+      "summary": "Operator BE 3: Data store, migrations & tenant isolation",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-06-10",
+      "updated": "2026-08-03",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12177",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66110,95 +66257,6 @@
       "updated": "2026-08-01",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12176",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12180",
-      "summary": "Operator BE 6: Chat sessions, history & search",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-31",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12180",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12115",
-      "summary": "Shipping Integration - Worldwide Express",
-      "status": "Approve",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 181,
-      "customers": [
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2026-05-26",
-      "updated": "2026-07-31",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12115",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 316923.74,
-      "unmatched_labels": [
-        "DCDrawers"
-      ]
-    },
-    {
-      "key": "DEV-12181",
-      "summary": "Operator BE 7: Abilities (My/Company) & suggestion bar",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-31",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12181",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66286,35 +66344,6 @@
       "updated": "2026-07-31",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12184",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12182",
-      "summary": "Operator BE 8: Write confirmation gating & audit attribution",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 309,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-31",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12182",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -66469,35 +66498,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12442",
-      "summary": "Quickbooks Online Integration Question",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2026-07-21",
-      "updated": "2026-07-29",
-      "resolved": "2026-07-21",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12442",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 316923.74,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-12175",
       "summary": "Operator BE 1: Service foundation (repo, CI/CD, runtime, networking)",
       "status": "Passed QA",
@@ -66634,35 +66634,6 @@
       "updated": "2026-07-27",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12185",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12178",
-      "summary": "Operator BE 4: v2 API inventory & tool layer",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-06-10",
-      "updated": "2026-07-27",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12178",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -67573,6 +67544,37 @@
       ]
     },
     {
+      "key": "DEV-12058",
+      "summary": "Product Image Default Unset, making product image look blank",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 787,
+      "customers": [
+        {
+          "allmoxy_customer_id": 416,
+          "name": "Wilson Cabinetry",
+          "mrr": 0,
+          "lifetime": 22210,
+          "status": "active"
+        }
+      ],
+      "created": "2026-05-15",
+      "updated": "2026-06-23",
+      "resolved": "2026-06-10",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12058",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 22210,
+      "unmatched_labels": [
+        "PrecisionMillworks"
+      ]
+    },
+    {
       "key": "DEV-12125",
       "summary": "Allmoxy Project Cleanup",
       "status": "Resolved",
@@ -67631,35 +67633,6 @@
       "unmatched_labels": [
         "thedoorstop"
       ]
-    },
-    {
-      "key": "DEV-12084",
-      "summary": "Extend Westwind's supply attribute allocations to 50 unique supplies",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "High",
-      "issue_score": 280,
-      "customers": [
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 0,
-          "lifetime": 316923.74,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2026-05-21",
-      "updated": "2026-05-28",
-      "resolved": "2026-05-28",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12084",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 316923.74,
-      "unmatched_labels": []
     },
     {
       "key": "DEV-7005",
@@ -70229,6 +70202,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-11263",
+      "summary": "\"Add Recipient\" missing from triggers",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 795,
+      "customers": [
+        {
+          "allmoxy_customer_id": 416,
+          "name": "Wilson Cabinetry",
+          "mrr": 0,
+          "lifetime": 22210,
+          "status": "active"
+        }
+      ],
+      "created": "2025-12-11",
+      "updated": "2026-02-10",
+      "resolved": "2025-12-17",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11263",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 22210,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-11359",
       "summary": "Instance Name Misspelled - https://landind.allmoxy.com/public/login/",
       "status": "Resolved",
@@ -70460,6 +70462,35 @@
       "total_mrr": 0,
       "total_arr": 0,
       "total_lifetime": 5027.61,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-10094",
+      "summary": "Wilson Cabinetry- adding items to a row not saving or registering",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Highest",
+      "issue_score": 741,
+      "customers": [
+        {
+          "allmoxy_customer_id": 416,
+          "name": "Wilson Cabinetry",
+          "mrr": 0,
+          "lifetime": 22210,
+          "status": "active"
+        }
+      ],
+      "created": "2025-05-01",
+      "updated": "2026-01-30",
+      "resolved": "2025-05-15",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-10094",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 22210,
       "unmatched_labels": []
     },
     {
@@ -72181,7 +72212,7 @@
     {
       "key": "DEV-12565",
       "summary": "Supply Updater - Columns No Longer Sortable",
-      "status": "In Staging",
+      "status": "In Beta",
       "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Medium",
@@ -72199,6 +72230,52 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "cuttingedge"
+      ]
+    },
+    {
+      "key": "DEV-12478",
+      "summary": "Supply Updater - Column missalignment",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-07-23",
+      "updated": "2026-08-03",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12478",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "cuttingedge"
+      ]
+    },
+    {
+      "key": "DEV-12585",
+      "summary": "\"Too Many Connections\" error recurring frequently — Mullwoods (fryburgdoor instance)",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": null,
+      "customers": [],
+      "created": "2026-07-29",
+      "updated": "2026-08-03",
+      "resolved": "2026-07-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12585",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Fryburg"
       ]
     },
     {
@@ -72387,29 +72464,6 @@
       ]
     },
     {
-      "key": "DEV-12478",
-      "summary": "Supply Updater - Column missalignment",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-07-23",
-      "updated": "2026-07-31",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12478",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "cuttingedge"
-      ]
-    },
-    {
       "key": "DEV-12591",
       "summary": "Ideal Drawer Box (idealdrawers.allmoxy.com) — new customer blocked from account creation with \"email already taken or is invalid,\" email also fails password reset",
       "status": "Resolved",
@@ -72500,29 +72554,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12585",
-      "summary": "\"Too Many Connections\" error recurring frequently — Mullwoods (fryburgdoor instance)",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": null,
-      "customers": [],
-      "created": "2026-07-29",
-      "updated": "2026-07-30",
-      "resolved": "2026-07-29",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12585",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "Fryburg"
       ]
     },
     {
