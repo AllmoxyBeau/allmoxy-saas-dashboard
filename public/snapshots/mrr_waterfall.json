@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-08-03T16:54:26.228Z",
-  "cachedUntil": "2026-08-03T16:59:26.228Z",
+  "fetchedAt": "2026-08-05T14:49:03.147Z",
+  "cachedUntil": "2026-08-05T14:54:03.147Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -7094,7 +7094,7 @@
             "id": 13,
             "mrr": 3217.5,
             "status": "at_risk",
-            "pay_status": "Active"
+            "pay_status": "Active - Card Failure"
           }
         ]
       }
@@ -17978,7 +17978,7 @@
             "name": "Rehau Pty Ltd",
             "id": 489,
             "mrr": 849,
-            "status": "at_risk",
+            "status": "active",
             "pay_status": "Active - Pause Granted"
           },
           {
@@ -18268,20 +18268,20 @@
       "reactivated_mrr": 4861.12,
       "expansion_mrr": 8306.18,
       "contraction_mrr": 301,
-      "churn_mrr": 4849,
-      "delinquent_mrr": 999.68,
+      "churn_mrr": 1099,
+      "delinquent_mrr": 4749.68,
       "ending_mrr": 231488.65,
       "net_new_mrr": 7811.62,
       "new_logos": 2,
       "reactivated_logos": 5,
-      "churned_logos": 2,
-      "delinquent_logos": 2,
-      "gross_churn_rate_monthly": 0.0217,
-      "net_churn_rate_monthly": -0.0141,
+      "churned_logos": 1,
+      "delinquent_logos": 3,
+      "gross_churn_rate_monthly": 0.0049,
+      "net_churn_rate_monthly": -0.0309,
       "expansion_rate_monthly": 0.0371,
-      "grr_monthly": 0.977,
-      "nrr_monthly": 1.0141,
-      "quick_ratio": 1.77,
+      "grr_monthly": 0.9937,
+      "nrr_monthly": 1.0309,
+      "quick_ratio": 6.5,
       "details": {
         "new": [
           {
@@ -18391,17 +18391,19 @@
         ],
         "churn": [
           {
-            "name": "Keystone Wood Specialties",
-            "id": 523,
-            "mrr": 3750
-          },
-          {
             "name": "Ameridor, Inc",
             "id": 517,
             "mrr": 1099
           }
         ],
         "delinquent": [
+          {
+            "name": "Keystone Wood Specialties",
+            "id": 523,
+            "mrr": 3750,
+            "status": "active",
+            "pay_status": "Active"
+          },
           {
             "name": "Staley Custom Cabinets",
             "id": 437,
@@ -18704,7 +18706,7 @@
             "name": "Big Timber Millworks",
             "id": 527,
             "mrr": 575,
-            "status": "active",
+            "status": "at_risk",
             "pay_status": "Active"
           },
           {
@@ -21278,7 +21280,7 @@
             "name": "Rehau Pty Ltd",
             "id": 489,
             "mrr": 849,
-            "status": "at_risk",
+            "status": "active",
             "pay_status": "Active - Pause Granted"
           },
           {
@@ -21613,8 +21615,8 @@
             "name": "Lane Industries",
             "id": 2037,
             "mrr": 250,
-            "status": "non_payment",
-            "pay_status": "Active - Card Failure"
+            "status": "at_risk",
+            "pay_status": "Active"
           },
           {
             "name": "Quick Kitchens",
