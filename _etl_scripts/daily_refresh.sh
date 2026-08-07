@@ -2,9 +2,9 @@
 # Daily Allmoxy SaaS-CFO dashboard refresh — run by launchd at 7am Mountain
 # (LaunchAgent com.allmoxy.dashboard-refresh). Pulls fresh data from every live
 # source (Stripe charges + Connect gross/net, HubSpot, JIRA/Harvest, Aurora),
-# rebuilds all snapshots, and commits LOCALLY (build-only, no push). Deploying to
-# the live dashboard is an explicit manual step (`git push`) — the cron never
-# auto-deploys. (Switched from refresh:all:deploy on 2026-07-07 per Beau.)
+# rebuilds all snapshots, commits, AND pushes to deploy to Vercel automatically.
+# (Re-enabled auto-deploy on 2026-08-07 per Beau — previously build-only since
+# 2026-07-07. `refresh:all:deploy` = refresh:all without the --no-push flag.)
 #
 # launchd runs with a minimal environment, so we set PATH/HOME explicitly:
 #   - node/npm live in /usr/local/bin, git in /usr/bin
@@ -23,7 +23,7 @@ cd "$PROJ" || { echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): FATAL cd failed" >> "$LOG
 
 echo "" >> "$LOG"
 echo "========== $(date '+%Y-%m-%d %H:%M:%S %Z') · daily refresh START ==========" >> "$LOG"
-npm run refresh:all >> "$LOG" 2>&1
+npm run refresh:all:deploy >> "$LOG" 2>&1
 code=$?
 echo "========== $(date '+%Y-%m-%d %H:%M:%S %Z') · daily refresh END (exit $code) ==========" >> "$LOG"
 exit $code
