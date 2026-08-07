@@ -391,7 +391,7 @@ export default function Customers() {
                 const tier = tierById.get(p.allmoxy_customer_id);
                 return (
                   <TableRow key={p.allmoxy_customer_id} hover>
-                    <TableCell sx={{ fontWeight: 500 }}>
+                    <TableCell sx={{ fontWeight: 500, whiteSpace: 'nowrap' }}>
                       <CustomerLink id={p.allmoxy_customer_id} name={p.name} />
                     </TableCell>
                     <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', color: 'text.secondary', fontSize: 12 }}>{p.allmoxy_customer_id}</TableCell>

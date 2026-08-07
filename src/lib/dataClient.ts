@@ -45,6 +45,7 @@ export const KNOWN_SNAPSHOTS = [
   'connect_volume',
   'data_cleanup',
   'aurora_orders',
+  'hubspot_tickets',
 ] as const;
 
 export type SnapshotName = (typeof KNOWN_SNAPSHOTS)[number];

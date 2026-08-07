@@ -17,7 +17,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import TablePagination from '@mui/material/TablePagination';
 import Skeleton from '@mui/material/Skeleton';
 import Alert from '@mui/material/Alert';
-import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend, LabelList } from 'recharts';
 import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
 import CustomerLink from '../components/common/CustomerLink';
@@ -303,9 +303,14 @@ export default function OrdersVerified() {
           year,
           actual_usd: Math.round(v.total_usd * 100) / 100,
           projected_extra: Math.round(Math.max(0, annualized - v.total_usd) * 100) / 100,
+          // Full projected year-end total (processed YTD + projected remainder).
+          projected_total: Math.round(annualized * 100) / 100,
+          // Only set for the partial (current) year so the bar-top label renders there only.
+          projected_label: (isCurrent && monthsLoadedAvg < 12) ? Math.round(annualized * 100) / 100 : null,
           orders: v.orders,
           active_customers: v.active_customers,
           is_partial: isCurrent && monthsLoadedAvg < 12,
+          months_loaded: isCurrent ? Math.round(monthsLoadedAvg * 10) / 10 : 12,
         };
       })
       .sort((a, b) => a.year.localeCompare(b.year));
@@ -413,7 +418,7 @@ export default function OrdersVerified() {
           <InfoIcon info={
             <>
               <strong>What it is:</strong> Aggregate invoiced $ across all customers matching the current filters, by year.<br /><br />
-              <strong>Current year:</strong> the lighter top portion of the bar is the annualized projection (if YTD pace held for the full year). Line shows the count of customers active that year.<br /><br />
+              <strong>Current year:</strong> the solid portion is invoiced YTD; the lighter dashed portion on top is the projected remainder (if YTD pace holds). The <strong>blue number above the bar is the total projected year-end</strong> (YTD + remainder) — the same figure as the "YTD annualized" KPI. Line shows the count of customers active that year.<br /><br />
               <strong>Filters:</strong> change segment/status above to compare cohorts side-by-side.
             </>
           } />
@@ -429,18 +434,33 @@ export default function OrdersVerified() {
                 <YAxis yAxisId="left" stroke="#8B949E" fontSize={11} width={70} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
                 <YAxis yAxisId="right" orientation="right" stroke="#8B949E" fontSize={11} width={50} tickFormatter={(v) => Number(v).toLocaleString()} />
                 <RTooltip
-                  formatter={(v: number, name: string) => {
-                    if (name === 'Invoiced $' || name === 'Annualized (projected)') return [USD0.format(v), name];
-                    return [Number(v).toLocaleString(), name];
+                  content={({ active, payload, label }) => {
+                    if (!active || !payload || payload.length === 0) return null;
+                    const d = payload[0].payload as { actual_usd: number; projected_extra: number; projected_total: number; active_customers: number; is_partial: boolean; months_loaded: number };
+                    return (
+                      <Box sx={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 1, p: 1.25, color: '#FFFFFF', fontSize: 12 }}>
+                        <Typography sx={{ fontSize: 12, fontWeight: 700, mb: 0.5 }}>{label}</Typography>
+                        {d.is_partial ? (
+                          <>
+                            <div>Invoiced YTD: <b>{USD0.format(d.actual_usd)}</b> <span style={{ color: '#8B949E' }}>({d.months_loaded}mo)</span></div>
+                            <div style={{ color: '#8B949E' }}>+ Projected remainder: {USD0.format(d.projected_extra)}</div>
+                            <div style={{ borderTop: '1px solid #30363D', marginTop: 4, paddingTop: 4 }}>Projected year-end total: <b style={{ color: '#7DA9FF' }}>{USD0.format(d.projected_total)}</b></div>
+                          </>
+                        ) : (
+                          <div>Invoiced $: <b>{USD0.format(d.actual_usd)}</b></div>
+                        )}
+                        <div style={{ color: '#F59E0B', marginTop: 4 }}>Active customers: {Number(d.active_customers).toLocaleString()}</div>
+                      </Box>
+                    );
                   }}
-                  contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }}
-                  labelStyle={{ color: '#FFFFFF' }}
-                  itemStyle={{ color: '#FFFFFF' }}
                   cursor={{ fill: 'rgba(44, 115, 255, 0.06)' }}
                 />
                 <Legend wrapperStyle={{ fontSize: 11, color: '#8B949E' }} />
                 <Bar yAxisId="left" name="Invoiced $" dataKey="actual_usd" stackId="yr" fill="#2C73FF" />
-                <Bar yAxisId="left" name="Annualized (projected)" dataKey="projected_extra" stackId="yr" fill="#2C73FF" fillOpacity={0.25} stroke="#2C73FF" strokeOpacity={0.4} strokeDasharray="3 3" />
+                <Bar yAxisId="left" name="Annualized (projected)" dataKey="projected_extra" stackId="yr" fill="#2C73FF" fillOpacity={0.25} stroke="#2C73FF" strokeOpacity={0.4} strokeDasharray="3 3">
+                  {/* Label the full projected year-end total on top of the stacked (partial-year) bar. */}
+                  <LabelList dataKey="projected_label" position="top" formatter={(v: number | null) => (v ? USD_COMPACT.format(Number(v)) : '')} style={{ fill: '#7DA9FF', fontSize: 11, fontWeight: 700 }} />
+                </Bar>
                 <Line yAxisId="right" name="Active customers" type="monotone" dataKey="active_customers" stroke="#F59E0B" strokeWidth={2} dot={{ r: 3, fill: '#F59E0B' }} />
               </ComposedChart>
             </ResponsiveContainer>

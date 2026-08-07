@@ -9,6 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -349,6 +350,8 @@ export default function CustomerDetail() {
   const [churnOverrides, setChurnOverrides] = useState<ChurnOverrideMap>(() => readChurnOverrides());
   const [txnExpanded, setTxnExpanded] = useState(true);
   const [custTab, setCustTab] = useState('information');
+  // Service Tickets tab: status filter ('all' | 'open' | 'closed' | a stage label).
+  const [ticketStatusFilter, setTicketStatusFilter] = useState<string>('all');
   // Firmographics / classification — expanded by default (per Beau). The toggle
   // remains so it can be folded away, but the Information tab shows it open.
   const [firmoOpen, setFirmoOpen] = useState(true);
@@ -1617,6 +1620,18 @@ export default function CustomerDetail() {
                 return String(b.updated ?? '').localeCompare(String(a.updated ?? ''));
               });
             const openCount = tickets.filter((t) => !t.is_closed).length;
+            const closedCount = tickets.length - openCount;
+            // Distinct stage labels for the status dropdown (with per-stage counts).
+            const stageCounts = new Map<string, number>();
+            for (const t of tickets) { const s = t.stage_label || '—'; stageCounts.set(s, (stageCounts.get(s) ?? 0) + 1); }
+            const stageOptions = [...stageCounts.entries()].sort((a, b) => b[1] - a[1]);
+            // Apply the status filter.
+            const visibleTickets = tickets.filter((t) => {
+              if (ticketStatusFilter === 'all') return true;
+              if (ticketStatusFilter === 'open') return !t.is_closed;
+              if (ticketStatusFilter === 'closed') return t.is_closed;
+              return (t.stage_label || '—') === ticketStatusFilter;
+            });
             const stageColor = (t: TicketRow): string => (t.is_closed ? 'text.disabled' : 'warning.main');
             return (
               <Box sx={{ mt: 3 }}>
@@ -1640,19 +1655,36 @@ export default function CustomerDetail() {
                   </Paper>
                 ) : (
                   <>
-                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1 }}>
-                      {tickets.length} ticket{tickets.length === 1 ? '' : 's'} · {openCount} open · sorted open-first, newest first · CSV-exportable
-                    </Typography>
+                    <Stack direction="row" spacing={1.5} alignItems="center" flexWrap="wrap" useFlexGap sx={{ mb: 1 }}>
+                      <TextField
+                        select
+                        size="small"
+                        label="Status"
+                        value={ticketStatusFilter}
+                        onChange={(e) => setTicketStatusFilter(e.target.value)}
+                        sx={{ minWidth: 200 }}
+                      >
+                        <MenuItem value="all">All statuses ({tickets.length})</MenuItem>
+                        <MenuItem value="open">Open ({openCount})</MenuItem>
+                        <MenuItem value="closed">Closed ({closedCount})</MenuItem>
+                        {stageOptions.map(([stage, count]) => (
+                          <MenuItem key={stage} value={stage}>{stage} ({count})</MenuItem>
+                        ))}
+                      </TextField>
+                      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                        Showing {visibleTickets.length} of {tickets.length} · {openCount} open · sorted open-first, newest first · CSV-exportable
+                      </Typography>
+                    </Stack>
                     <DrillDownPanel<Record<string, unknown>>
                       title=""
-                      rows={tickets as unknown as Array<Record<string, unknown>>}
+                      rows={visibleTickets as unknown as Array<Record<string, unknown>>}
                       columns={[
                         {
                           key: 'subject',
                           label: 'Subject',
                           render: (r: Record<string, unknown>) => {
                             const t = r as unknown as TicketRow;
-                            return <Link href={t.hubspot_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} sx={{ fontWeight: 500 }}>{t.subject || `Ticket ${t.id}`}</Link>;
+                            return <Link href={t.hubspot_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} sx={{ fontWeight: 500, color: 'text.primary', textDecorationColor: 'rgba(230,237,243,0.4)' }}>{t.subject || `Ticket ${t.id}`}</Link>;
                           },
                           exportValue: (r: Record<string, unknown>) => (r as unknown as TicketRow).subject ?? '',
                           sortValue: (r: Record<string, unknown>) => (r as unknown as TicketRow).subject ?? '',

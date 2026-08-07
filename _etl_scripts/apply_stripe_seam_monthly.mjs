@@ -107,18 +107,23 @@ for (const m of Object.keys(monthTot).sort()) {
 mrr.rows.sort((a, b) => String(a.month).localeCompare(String(b.month)));
 fs.writeFileSync(path.join(SNAP, 'mrr_by_month.json'), JSON.stringify(mrr, null, 2));
 
-// 2) + 3) per-customer monthly snapshots — overlay seamed month columns.
+// 2) + 3) per-customer monthly snapshots — overlay AND append seamed month columns.
 function seamPerCustomer(file, field) {
   const snap = read(file);
-  const totals = snap.monthlyTotals || {};
+  const totals = snap.monthlyTotals || (snap.monthlyTotals = {});
+  // All seamed months present in the live per-customer data, capped at the
+  // current calendar month (same bound as the mrr_by_month append above). This
+  // must ADD new months (e.g. July once its Stripe data lands) — not only
+  // overlay months the source xlsx already had — otherwise the newest month is
+  // silently dropped from the per-customer snapshot + its monthlyTotals.
+  const seamMonths = Object.keys(monthTot)
+    .filter((m) => isMonth(m) && m >= SEAM && m <= NOW_MONTH)
+    .sort();
   for (const row of snap.rows || []) {
     const nm = nameMonth.get(row.customer_name);
-    for (const k of Object.keys(row)) {
-      if (isMonth(k) && k >= SEAM) row[k] = nm && nm[k] ? r2(nm[k][field]) : 0;
-    }
+    for (const k of seamMonths) row[k] = nm && nm[k] ? r2(nm[k][field]) : 0;
   }
-  // recompute monthlyTotals for seamed months
-  for (const k of Object.keys(totals)) if (isMonth(k) && k >= SEAM) totals[k] = monthTot[k] ? r2(monthTot[k][field === 'sub' ? 'sub' : 'svc']) : 0;
+  for (const k of seamMonths) totals[k] = monthTot[k] ? r2(monthTot[k][field === 'sub' ? 'sub' : 'svc']) : 0;
   fs.writeFileSync(path.join(SNAP, file), JSON.stringify(snap, null, 2));
 }
 seamPerCustomer('subscription_by_month.json', 'sub');

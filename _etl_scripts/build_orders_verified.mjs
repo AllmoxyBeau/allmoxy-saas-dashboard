@@ -428,6 +428,28 @@ for (const c of byCustomer.values()) {
 // ============================================================================
 // Compute derived fields per customer
 // ============================================================================
+// --- value overrides: correct known-corrupt source figures ---------------
+// Some per-(customer, year) dollar cells in the Orders Verified xlsx are corrupt
+// (e.g. Rehau 2018 total_usd = $102.88M, 33x its intact subtotal). Override the
+// affected total_usd from orders_value_overrides.json and adjust the customer's
+// total_lifetime_usd by the delta so lifetime stays consistent. Applied BEFORE
+// the finalize/rounding loop so downstream (latest year, aggregates) use it.
+const OVERRIDES_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/orders_value_overrides.json';
+let valueOverrides = {};
+try { valueOverrides = JSON.parse(fs.readFileSync(OVERRIDES_PATH, 'utf8')); } catch { /* no overrides file */ }
+for (const [aidStr, years] of Object.entries(valueOverrides)) {
+  if (aidStr.startsWith('_')) continue; // skip _comment
+  const c = byCustomer.get(Number(aidStr)) ?? byCustomer.get(aidStr);
+  if (!c) { process.stderr.write(`  [orders override] AID ${aidStr} not found — skipped\n`); continue; }
+  for (const [year, fields] of Object.entries(years)) {
+    if (!c.years[year] || typeof fields?.total_usd !== 'number') continue;
+    const old = c.years[year].total_usd || 0;
+    c.years[year].total_usd = fields.total_usd;
+    c.total_lifetime_usd += (fields.total_usd - old);
+    process.stderr.write(`  [orders override] AID ${aidStr} ${year} total_usd ${Math.round(old).toLocaleString()} -> ${fields.total_usd.toLocaleString()}\n`);
+  }
+}
+
 const today = new Date();
 const currentYear = String(today.getFullYear());
 const priorYear = String(today.getFullYear() - 1);
