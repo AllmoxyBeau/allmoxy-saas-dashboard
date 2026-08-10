@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-08-07T14:45:30.242Z",
-  "jira_fetchedAt": "2026-08-07T14:45:30.139Z",
+  "fetchedAt": "2026-08-10T14:17:38.018Z",
+  "jira_fetchedAt": "2026-08-10T14:17:37.897Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4190,
+    "total_tickets": 4194,
     "open_tickets": 920,
-    "done_tickets": 3270,
-    "tickets_with_matched_customer": 2026,
-    "open_mrr_at_stake": 2837784.77,
+    "done_tickets": 3274,
+    "tickets_with_matched_customer": 2028,
+    "open_mrr_at_stake": 2838730.82,
     "distinct_customers_tagged": 146,
     "unmatched_labels": [
       "2020",
@@ -247,7 +247,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
@@ -282,14 +282,14 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -317,7 +317,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -365,7 +365,7 @@
       "active_customer_count": 25,
       "total_mrr": 65860.64,
       "total_arr": 790327.68,
-      "total_lifetime": 5057635.28,
+      "total_lifetime": 5063388.49,
       "unmatched_labels": [
         "DCDrawers",
         "DotCabinets",
@@ -469,7 +469,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
@@ -497,7 +497,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         },
         {
@@ -511,7 +511,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -545,7 +545,7 @@
       "active_customer_count": 19,
       "total_mrr": 55770.99,
       "total_arr": 669251.88,
-      "total_lifetime": 4315782.99,
+      "total_lifetime": 4320297.99,
       "unmatched_labels": [
         "CabinetParts",
         "Fryburg",
@@ -661,28 +661,28 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 30,
           "name": "Classic Kitchen Doors",
           "mrr": 1250,
-          "lifetime": 174336.03,
+          "lifetime": 175586.03,
           "status": "active"
         },
         {
@@ -723,7 +723,7 @@
       "active_customer_count": 18,
       "total_mrr": 53236.39,
       "total_arr": 638836.68,
-      "total_lifetime": 4685757.43,
+      "total_lifetime": 4691027.64,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -839,7 +839,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -866,7 +866,7 @@
       "active_customer_count": 15,
       "total_mrr": 49621.42,
       "total_arr": 595457.04,
-      "total_lifetime": 4048094.92,
+      "total_lifetime": 4049406.13,
       "unmatched_labels": [
         "DCDrawers",
         "brandenbergercustom",
@@ -953,7 +953,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -980,7 +980,7 @@
       "active_customer_count": 10,
       "total_mrr": 41049.94,
       "total_arr": 492599.28,
-      "total_lifetime": 3470443.03,
+      "total_lifetime": 3471468.03,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -1042,7 +1042,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -1070,7 +1070,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         },
         {
@@ -1125,7 +1125,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2888848.94,
+      "total_lifetime": 2892096.89,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1185,7 +1185,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -1213,7 +1213,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         },
         {
@@ -1268,7 +1268,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2888848.94,
+      "total_lifetime": 2892096.89,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1328,7 +1328,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -1356,7 +1356,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         },
         {
@@ -1411,7 +1411,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2888848.94,
+      "total_lifetime": 2892096.89,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1471,7 +1471,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -1499,7 +1499,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         },
         {
@@ -1554,7 +1554,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2888848.94,
+      "total_lifetime": 2892096.89,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1614,7 +1614,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -1642,7 +1642,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         },
         {
@@ -1697,7 +1697,7 @@
       "active_customer_count": 13,
       "total_mrr": 39467.47,
       "total_arr": 473609.64,
-      "total_lifetime": 2888848.94,
+      "total_lifetime": 2892096.89,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -5427,7 +5427,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -5448,7 +5448,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         },
         {
@@ -5482,7 +5482,7 @@
       "active_customer_count": 9,
       "total_mrr": 34535.02,
       "total_arr": 414420.24,
-      "total_lifetime": 2683167.05,
+      "total_lifetime": 2686415,
       "unmatched_labels": [
         "Fryburg",
         "NYDoorandDrawer",
@@ -5555,14 +5555,14 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         },
         {
@@ -5589,7 +5589,7 @@
       "active_customer_count": 11,
       "total_mrr": 29897.96,
       "total_arr": 358775.52,
-      "total_lifetime": 2342565.53,
+      "total_lifetime": 2343975.74,
       "unmatched_labels": [
         "DCDrawers",
         "brandenbergercustom",
@@ -5631,7 +5631,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -5652,7 +5652,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
@@ -5686,7 +5686,7 @@
       "active_customer_count": 9,
       "total_mrr": 29052.14,
       "total_arr": 348625.68,
-      "total_lifetime": 2171364.51,
+      "total_lifetime": 2176612.46,
       "unmatched_labels": [
         "DotCabinets",
         "m2m",
@@ -5735,7 +5735,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -5797,7 +5797,7 @@
       "active_customer_count": 9,
       "total_mrr": 28501.73,
       "total_arr": 342020.76,
-      "total_lifetime": 2124311.33,
+      "total_lifetime": 2127460.28,
       "unmatched_labels": [
         "IslandCustomCabinets",
         "Paragon",
@@ -5875,7 +5875,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -5888,7 +5888,7 @@
       "active_customer_count": 8,
       "total_mrr": 27444.18,
       "total_arr": 329330.16,
-      "total_lifetime": 1367224.4,
+      "total_lifetime": 1368249.4,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -5940,7 +5940,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -5960,7 +5960,7 @@
       "active_customer_count": 6,
       "total_mrr": 27407.69,
       "total_arr": 328892.28,
-      "total_lifetime": 1926465.99,
+      "total_lifetime": 1929614.94,
       "unmatched_labels": [
         "DotCabinets",
         "DukeCustomKitchens",
@@ -6376,7 +6376,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         },
         {
@@ -6403,7 +6403,7 @@
       "active_customer_count": 7,
       "total_mrr": 27011.46,
       "total_arr": 324137.52,
-      "total_lifetime": 2129820.69,
+      "total_lifetime": 2132443.69,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "StanisciDesign",
@@ -6445,7 +6445,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -6472,7 +6472,7 @@
       "active_customer_count": 6,
       "total_mrr": 26710.44,
       "total_arr": 320525.28,
-      "total_lifetime": 2060680.47,
+      "total_lifetime": 2063829.42,
       "unmatched_labels": [
         "ciminos",
         "mykitch",
@@ -6513,7 +6513,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -6533,7 +6533,7 @@
       "active_customer_count": 5,
       "total_mrr": 24374.94,
       "total_arr": 292499.28,
-      "total_lifetime": 2154338.52,
+      "total_lifetime": 2157487.47,
       "unmatched_labels": [
         "Fryburg",
         "netley"
@@ -6594,7 +6594,7 @@
           "allmoxy_customer_id": 30,
           "name": "Classic Kitchen Doors",
           "mrr": 1250,
-          "lifetime": 174336.03,
+          "lifetime": 175586.03,
           "status": "active"
         },
         {
@@ -6621,7 +6621,7 @@
       "active_customer_count": 7,
       "total_mrr": 24366.97,
       "total_arr": 292403.64,
-      "total_lifetime": 2344149.39,
+      "total_lifetime": 2345399.39,
       "unmatched_labels": [
         "Fryburg",
         "LifeSpanClosets",
@@ -6688,7 +6688,7 @@
           "allmoxy_customer_id": 30,
           "name": "Classic Kitchen Doors",
           "mrr": 1250,
-          "lifetime": 174336.03,
+          "lifetime": 175586.03,
           "status": "active"
         },
         {
@@ -6715,7 +6715,7 @@
       "active_customer_count": 7,
       "total_mrr": 24366.97,
       "total_arr": 292403.64,
-      "total_lifetime": 2344149.39,
+      "total_lifetime": 2345399.39,
       "unmatched_labels": [
         "Fryburg",
         "LifeSpanClosets",
@@ -6899,14 +6899,14 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -6926,7 +6926,7 @@
       "active_customer_count": 7,
       "total_mrr": 23620.17,
       "total_arr": 283442.04,
-      "total_lifetime": 2246815.02,
+      "total_lifetime": 2249151.23,
       "unmatched_labels": [
         "Midwest",
         "amco",
@@ -7119,14 +7119,14 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -7153,7 +7153,7 @@
       "active_customer_count": 9,
       "total_mrr": 22663.72,
       "total_arr": 271964.64,
-      "total_lifetime": 1417644.88,
+      "total_lifetime": 1420347.09,
       "unmatched_labels": [
         "SouthernStone",
         "brandenbergercustom",
@@ -7566,7 +7566,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -7586,7 +7586,7 @@
       "active_customer_count": 7,
       "total_mrr": 21895.96,
       "total_arr": 262751.52,
-      "total_lifetime": 1622992.87,
+      "total_lifetime": 1624304.08,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -8067,7 +8067,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -8094,7 +8094,7 @@
       "active_customer_count": 6,
       "total_mrr": 21189.42,
       "total_arr": 254273.04,
-      "total_lifetime": 1528827.98,
+      "total_lifetime": 1531976.93,
       "unmatched_labels": [
         "Midwest",
         "netley"
@@ -8134,7 +8134,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
@@ -8175,7 +8175,7 @@
       "active_customer_count": 7,
       "total_mrr": 20547.19,
       "total_arr": 246566.28,
-      "total_lifetime": 1632066.79,
+      "total_lifetime": 1634165.79,
       "unmatched_labels": [
         "Hallmark",
         "StanisciDesign",
@@ -8392,7 +8392,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         },
         {
@@ -8412,7 +8412,7 @@
       "active_customer_count": 6,
       "total_mrr": 19870.24,
       "total_arr": 238442.88,
-      "total_lifetime": 1708108.26,
+      "total_lifetime": 1709426.26,
       "unmatched_labels": [
         "btjdoors",
         "ciminos"
@@ -8452,14 +8452,14 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -8479,7 +8479,7 @@
       "active_customer_count": 5,
       "total_mrr": 19434.45,
       "total_arr": 233213.4,
-      "total_lifetime": 1736772.78,
+      "total_lifetime": 1739108.99,
       "unmatched_labels": [
         "Midwest",
         "artisiancabinet",
@@ -8985,7 +8985,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
@@ -9005,7 +9005,7 @@
       "active_customer_count": 4,
       "total_mrr": 16160.96,
       "total_arr": 193931.52,
-      "total_lifetime": 1092052.46,
+      "total_lifetime": 1094151.46,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -9044,7 +9044,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
@@ -9058,7 +9058,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         },
         {
@@ -9078,7 +9078,7 @@
       "active_customer_count": 7,
       "total_mrr": 16075,
       "total_arr": 192900,
-      "total_lifetime": 905342.5,
+      "total_lifetime": 908832.5,
       "unmatched_labels": [
         "DoorMastersHouston",
         "IdealDrawers",
@@ -9236,7 +9236,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -9256,7 +9256,7 @@
       "active_customer_count": 6,
       "total_mrr": 15664.99,
       "total_arr": 187979.88,
-      "total_lifetime": 1354824.36,
+      "total_lifetime": 1355849.36,
       "unmatched_labels": [
         "DCDrawers",
         "SouthernStone",
@@ -9343,7 +9343,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -9370,7 +9370,7 @@
       "active_customer_count": 4,
       "total_mrr": 15413.45,
       "total_arr": 184961.4,
-      "total_lifetime": 1494503,
+      "total_lifetime": 1497651.95,
       "unmatched_labels": [
         "CabinetParts",
         "bccdoors",
@@ -9425,7 +9425,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         },
         {
@@ -9452,7 +9452,7 @@
       "active_customer_count": 7,
       "total_mrr": 15347.9,
       "total_arr": 184174.8,
-      "total_lifetime": 1153924.42,
+      "total_lifetime": 1154930.32,
       "unmatched_labels": [
         "ciminos",
         "ifccinc",
@@ -9487,7 +9487,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -9500,7 +9500,7 @@
       "active_customer_count": 3,
       "total_mrr": 15290.45,
       "total_arr": 183485.4,
-      "total_lifetime": 1410140.4,
+      "total_lifetime": 1411451.61,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -9801,7 +9801,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         },
         {
@@ -9828,7 +9828,7 @@
       "active_customer_count": 9,
       "total_mrr": 15128.4,
       "total_arr": 181540.8,
-      "total_lifetime": 1137984.21,
+      "total_lifetime": 1138990.11,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -9868,7 +9868,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -9881,7 +9881,7 @@
       "active_customer_count": 3,
       "total_mrr": 15004.24,
       "total_arr": 180050.88,
-      "total_lifetime": 1359700.86,
+      "total_lifetime": 1360725.86,
       "unmatched_labels": []
     },
     {
@@ -9918,7 +9918,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         },
         {
@@ -9938,7 +9938,7 @@
       "active_customer_count": 4,
       "total_mrr": 14776.62,
       "total_arr": 177319.44,
-      "total_lifetime": 1506187.51,
+      "total_lifetime": 1506271.71,
       "unmatched_labels": [
         "thomascreekwoodworking"
       ]
@@ -10023,7 +10023,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -10043,7 +10043,7 @@
       "active_customer_count": 5,
       "total_mrr": 14512.25,
       "total_arr": 174147,
-      "total_lifetime": 1303047.82,
+      "total_lifetime": 1304072.82,
       "unmatched_labels": [
         "netley"
       ]
@@ -10082,7 +10082,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         },
         {
@@ -10109,7 +10109,7 @@
       "active_customer_count": 5,
       "total_mrr": 14453.15,
       "total_arr": 173437.8,
-      "total_lifetime": 1277673.52,
+      "total_lifetime": 1278679.42,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "Midwest",
@@ -10153,7 +10153,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         },
         {
@@ -10180,7 +10180,7 @@
       "active_customer_count": 5,
       "total_mrr": 14453.15,
       "total_arr": 173437.8,
-      "total_lifetime": 1277673.52,
+      "total_lifetime": 1278679.42,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "Midwest",
@@ -10231,7 +10231,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -10251,7 +10251,7 @@
       "active_customer_count": 6,
       "total_mrr": 14435.95,
       "total_arr": 173231.4,
-      "total_lifetime": 800167.59,
+      "total_lifetime": 801192.59,
       "unmatched_labels": [
         "DoorMastersHouston"
       ]
@@ -10568,7 +10568,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         },
         {
@@ -10588,7 +10588,7 @@
       "active_customer_count": 5,
       "total_mrr": 13911.19,
       "total_arr": 166934.28,
-      "total_lifetime": 1209970.36,
+      "total_lifetime": 1210069.36,
       "unmatched_labels": [
         "canary",
         "netley"
@@ -10670,14 +10670,14 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
@@ -10697,7 +10697,7 @@
       "active_customer_count": 5,
       "total_mrr": 13603.32,
       "total_arr": 163239.84,
-      "total_lifetime": 850654.27,
+      "total_lifetime": 855902.22,
       "unmatched_labels": [
         "DiBosco",
         "craftlinecabinets",
@@ -10739,7 +10739,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -10752,7 +10752,7 @@
       "active_customer_count": 4,
       "total_mrr": 13512.25,
       "total_arr": 162147,
-      "total_lifetime": 1202603.82,
+      "total_lifetime": 1203628.82,
       "unmatched_labels": [
         "CabinetParts",
         "DoorMastersHouston",
@@ -11159,7 +11159,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -11193,7 +11193,7 @@
       "active_customer_count": 6,
       "total_mrr": 13192.85,
       "total_arr": 158314.2,
-      "total_lifetime": 1078091.06,
+      "total_lifetime": 1079116.06,
       "unmatched_labels": [
         "Midwest",
         "Services"
@@ -12736,7 +12736,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -12770,7 +12770,7 @@
       "active_customer_count": 3,
       "total_mrr": 12238.19,
       "total_arr": 146858.28,
-      "total_lifetime": 894518.34,
+      "total_lifetime": 897667.29,
       "unmatched_labels": [
         "DiBosco",
         "RiseUp",
@@ -12812,7 +12812,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -12825,7 +12825,7 @@
       "active_customer_count": 4,
       "total_mrr": 11965.96,
       "total_arr": 143591.52,
-      "total_lifetime": 921465.93,
+      "total_lifetime": 922490.93,
       "unmatched_labels": [
         "Midwest"
       ]
@@ -13278,7 +13278,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -13291,7 +13291,7 @@
       "active_customer_count": 2,
       "total_mrr": 11104.19,
       "total_arr": 133250.28,
-      "total_lifetime": 791075.72,
+      "total_lifetime": 794224.67,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -13323,7 +13323,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -13336,7 +13336,7 @@
       "active_customer_count": 3,
       "total_mrr": 10885.5,
       "total_arr": 130626,
-      "total_lifetime": 834027.46,
+      "total_lifetime": 835052.46,
       "unmatched_labels": [
         "DCDrawers",
         "LifeSpanClosets",
@@ -14191,14 +14191,14 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -14225,7 +14225,7 @@
       "active_customer_count": 5,
       "total_mrr": 10172.21,
       "total_arr": 122066.52,
-      "total_lifetime": 497726.98,
+      "total_lifetime": 501137.19,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -14304,7 +14304,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -14317,7 +14317,7 @@
       "active_customer_count": 3,
       "total_mrr": 10114.24,
       "total_arr": 121370.88,
-      "total_lifetime": 726591.34,
+      "total_lifetime": 727616.34,
       "unmatched_labels": []
     },
     {
@@ -14340,7 +14340,7 @@
           "allmoxy_customer_id": 30,
           "name": "Classic Kitchen Doors",
           "mrr": 1250,
-          "lifetime": 174336.03,
+          "lifetime": 175586.03,
           "status": "active"
         },
         {
@@ -14360,7 +14360,7 @@
       "active_customer_count": 3,
       "total_mrr": 9954.24,
       "total_arr": 119450.88,
-      "total_lifetime": 820037.74,
+      "total_lifetime": 821287.74,
       "unmatched_labels": []
     },
     {
@@ -14888,7 +14888,7 @@
     {
       "key": "DEV-12475",
       "summary": "Purchase Orders Not Being Created",
-      "status": "Resolved",
+      "status": "In Staging",
       "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
@@ -14905,7 +14905,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -14917,7 +14917,7 @@
         }
       ],
       "created": "2026-07-23",
-      "updated": "2026-08-05",
+      "updated": "2026-08-09",
       "resolved": "2026-07-24",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12475",
       "tag_count": 5,
@@ -14925,7 +14925,7 @@
       "active_customer_count": 2,
       "total_mrr": 9266.45,
       "total_arr": 111197.4,
-      "total_lifetime": 820180.01,
+      "total_lifetime": 821491.22,
       "unmatched_labels": [
         "cuttingedge",
         "thomascreekwoodworking"
@@ -14951,7 +14951,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -14971,7 +14971,7 @@
       "active_customer_count": 2,
       "total_mrr": 9266.45,
       "total_arr": 111197.4,
-      "total_lifetime": 820180.01,
+      "total_lifetime": 821491.22,
       "unmatched_labels": []
     },
     {
@@ -14994,7 +14994,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -15007,7 +15007,7 @@
       "active_customer_count": 2,
       "total_mrr": 9266.45,
       "total_arr": 111197.4,
-      "total_lifetime": 705859.36,
+      "total_lifetime": 707170.57,
       "unmatched_labels": []
     },
     {
@@ -15030,7 +15030,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -15043,7 +15043,7 @@
       "active_customer_count": 2,
       "total_mrr": 9266.45,
       "total_arr": 111197.4,
-      "total_lifetime": 705859.36,
+      "total_lifetime": 707170.57,
       "unmatched_labels": []
     },
     {
@@ -15066,7 +15066,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -15079,7 +15079,7 @@
       "active_customer_count": 2,
       "total_mrr": 9266.45,
       "total_arr": 111197.4,
-      "total_lifetime": 705859.36,
+      "total_lifetime": 707170.57,
       "unmatched_labels": []
     },
     {
@@ -15102,7 +15102,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -15115,7 +15115,7 @@
       "active_customer_count": 2,
       "total_mrr": 9266.45,
       "total_arr": 111197.4,
-      "total_lifetime": 705859.36,
+      "total_lifetime": 707170.57,
       "unmatched_labels": []
     },
     {
@@ -15138,7 +15138,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -15151,7 +15151,7 @@
       "active_customer_count": 2,
       "total_mrr": 9266.45,
       "total_arr": 111197.4,
-      "total_lifetime": 705859.36,
+      "total_lifetime": 707170.57,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -15176,7 +15176,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -15196,7 +15196,7 @@
       "active_customer_count": 3,
       "total_mrr": 9222.18,
       "total_arr": 110666.16,
-      "total_lifetime": 717808.76,
+      "total_lifetime": 718833.76,
       "unmatched_labels": [
         "ciminos",
         "mykitch"
@@ -15258,7 +15258,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         }
       ],
@@ -15271,7 +15271,7 @@
       "active_customer_count": 2,
       "total_mrr": 9137.24,
       "total_arr": 109646.88,
-      "total_lifetime": 600397.42,
+      "total_lifetime": 600496.42,
       "unmatched_labels": [
         "IdealDrawers"
       ]
@@ -15424,7 +15424,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -15444,7 +15444,7 @@
       "active_customer_count": 2,
       "total_mrr": 8980.24,
       "total_arr": 107762.88,
-      "total_lifetime": 672466.82,
+      "total_lifetime": 673491.82,
       "unmatched_labels": [
         "CabinetParts",
         "mykitch",
@@ -15471,7 +15471,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -15484,7 +15484,7 @@
       "active_customer_count": 2,
       "total_mrr": 8980.24,
       "total_arr": 107762.88,
-      "total_lifetime": 655419.82,
+      "total_lifetime": 656444.82,
       "unmatched_labels": [
         "Fryburg",
         "Spayce",
@@ -15652,7 +15652,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -15665,7 +15665,7 @@
       "active_customer_count": 3,
       "total_mrr": 8557.96,
       "total_arr": 102695.52,
-      "total_lifetime": 782076.7,
+      "total_lifetime": 783387.91,
       "unmatched_labels": [
         "bbcustomdoors",
         "bccdoors",
@@ -15693,7 +15693,7 @@
           "allmoxy_customer_id": 11,
           "name": "Self Woodworks",
           "mrr": 574,
-          "lifetime": 45318.74,
+          "lifetime": 45892.74,
           "status": "at_risk"
         }
       ],
@@ -15706,7 +15706,7 @@
       "active_customer_count": 2,
       "total_mrr": 8529.24,
       "total_arr": 102350.88,
-      "total_lifetime": 628083.16,
+      "total_lifetime": 628657.16,
       "unmatched_labels": [
         "Fryburg"
       ]
@@ -15778,7 +15778,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -15798,7 +15798,7 @@
       "active_customer_count": 3,
       "total_mrr": 8335.21,
       "total_arr": 100022.52,
-      "total_lifetime": 927819.98,
+      "total_lifetime": 929131.19,
       "unmatched_labels": [
         "bbcustomdoors"
       ]
@@ -15875,7 +15875,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -15888,7 +15888,7 @@
       "active_customer_count": 3,
       "total_mrr": 8271.75,
       "total_arr": 99261,
-      "total_lifetime": 731637.16,
+      "total_lifetime": 732662.16,
       "unmatched_labels": [
         "netley"
       ]
@@ -15920,7 +15920,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -15940,7 +15940,7 @@
       "active_customer_count": 4,
       "total_mrr": 8244,
       "total_arr": 98928,
-      "total_lifetime": 517106.2,
+      "total_lifetime": 518131.2,
       "unmatched_labels": [
         "NovaSouth",
         "mykitch"
@@ -16938,37 +16938,6 @@
       ]
     },
     {
-      "key": "DEV-12672",
-      "summary": "Lewis Cabinet Specialties / Cimino's — B2B Subtotal intermittently missing in webhook payload despite successful delivery (trigger #397, recurring)",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Low",
-      "issue_score": null,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        }
-      ],
-      "created": "2026-08-06",
-      "updated": "2026-08-07",
-      "resolved": "2026-08-06",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12672",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7955.24,
-      "total_arr": 95462.88,
-      "total_lifetime": 582764.42,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
       "key": "DEV-12479",
       "summary": "B2B Subtotal missing in webhook payload - Lewis instance only (trigger #397)",
       "status": "Closed",
@@ -16986,7 +16955,7 @@
         }
       ],
       "created": "2026-07-23",
-      "updated": "2026-08-06",
+      "updated": "2026-08-10",
       "resolved": "2026-07-23",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12479",
       "tag_count": 1,
@@ -16996,6 +16965,37 @@
       "total_arr": 95462.88,
       "total_lifetime": 582764.42,
       "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12672",
+      "summary": "Lewis Cabinet Specialties / Cimino's — B2B Subtotal intermittently missing in webhook payload despite successful delivery (trigger #397, recurring)",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        }
+      ],
+      "created": "2026-08-06",
+      "updated": "2026-08-10",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12672",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 582764.42,
+      "unmatched_labels": [
+        "ciminos"
+      ]
     },
     {
       "key": "DEV-11858",
@@ -17015,9 +17015,72 @@
         }
       ],
       "created": "2026-03-31",
-      "updated": "2026-08-06",
+      "updated": "2026-08-08",
       "resolved": "2026-06-18",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11858",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 582764.42,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-9442",
+      "summary": "Order report needs to show b2b orders",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 229,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        }
+      ],
+      "created": "2025-01-10",
+      "updated": "2026-08-08",
+      "resolved": "2026-06-18",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9442",
+      "tag_count": 3,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7955.24,
+      "total_arr": 95462.88,
+      "total_lifetime": 582764.42,
+      "unmatched_labels": [
+        "IntermountainWood",
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-12602",
+      "summary": "Ciminos - Status History Report - Group by Export Class Not working",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7955.24,
+          "lifetime": 582764.42,
+          "status": "active"
+        }
+      ],
+      "created": "2026-08-03",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12602",
       "tag_count": 2,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -17322,38 +17385,6 @@
       "total_lifetime": 582764.42,
       "unmatched_labels": [
         "royalplywood"
-      ]
-    },
-    {
-      "key": "DEV-9442",
-      "summary": "Order report needs to show b2b orders",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 229,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        }
-      ],
-      "created": "2025-01-10",
-      "updated": "2026-08-06",
-      "resolved": "2026-06-18",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9442",
-      "tag_count": 3,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7955.24,
-      "total_arr": 95462.88,
-      "total_lifetime": 582764.42,
-      "unmatched_labels": [
-        "IntermountainWood",
-        "ciminos"
       ]
     },
     {
@@ -23666,37 +23697,6 @@
       "total_arr": 95462.88,
       "total_lifetime": 582764.42,
       "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12602",
-      "summary": "Ciminos - Status History Report - Group by Export Class Not working",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 706,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7955.24,
-          "lifetime": 582764.42,
-          "status": "active"
-        }
-      ],
-      "created": "2026-08-03",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12602",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7955.24,
-      "total_arr": 95462.88,
-      "total_lifetime": 582764.42,
-      "unmatched_labels": [
-        "ciminos"
-      ]
     },
     {
       "key": "DEV-12599",
@@ -30120,7 +30120,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         },
         {
@@ -30140,7 +30140,7 @@
       "active_customer_count": 3,
       "total_mrr": 7436.65,
       "total_arr": 89239.8,
-      "total_lifetime": 408618.44,
+      "total_lifetime": 411241.44,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -30158,7 +30158,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -30185,7 +30185,7 @@
       "active_customer_count": 3,
       "total_mrr": 7334.67,
       "total_arr": 88016.04,
-      "total_lifetime": 718353.54,
+      "total_lifetime": 721502.49,
       "unmatched_labels": [
         "StanisciDesign",
         "amco",
@@ -30212,7 +30212,7 @@
           "allmoxy_customer_id": 30,
           "name": "Classic Kitchen Doors",
           "mrr": 1250,
-          "lifetime": 174336.03,
+          "lifetime": 175586.03,
           "status": "active"
         },
         {
@@ -30232,7 +30232,7 @@
       "active_customer_count": 2,
       "total_mrr": 7274,
       "total_arr": 87288,
-      "total_lifetime": 887697.67,
+      "total_lifetime": 888947.67,
       "unmatched_labels": []
     },
     {
@@ -30527,6 +30527,83 @@
       "unmatched_labels": [
         "Hoodsley",
         "canary",
+        "netley"
+      ]
+    },
+    {
+      "key": "DEV-9880",
+      "summary": "Slowness and Error Pages",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Low",
+      "issue_score": 95,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        }
+      ],
+      "created": "2025-03-28",
+      "updated": "2026-08-07",
+      "resolved": "2025-03-28",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9880",
+      "tag_count": 3,
+      "customer_count": 2,
+      "active_customer_count": 2,
+      "total_mrr": 7246.75,
+      "total_arr": 86961,
+      "total_lifetime": 658981.76,
+      "unmatched_labels": [
+        "netley"
+      ]
+    },
+    {
+      "key": "DEV-9320",
+      "summary": "Lock Orders at Certain Status to Preserve Product Information",
+      "status": "Feature Scope",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 393,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 527577.15,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        }
+      ],
+      "created": "2024-12-11",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9320",
+      "tag_count": 4,
+      "customer_count": 2,
+      "active_customer_count": 2,
+      "total_mrr": 7246.75,
+      "total_arr": 86961,
+      "total_lifetime": 658981.76,
+      "unmatched_labels": [
+        "StanisciDesign",
         "netley"
       ]
     },
@@ -35161,44 +35238,6 @@
       ]
     },
     {
-      "key": "DEV-9880",
-      "summary": "Slowness and Error Pages",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Low",
-      "issue_score": 95,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        }
-      ],
-      "created": "2025-03-28",
-      "updated": "2026-08-05",
-      "resolved": "2025-03-28",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9880",
-      "tag_count": 3,
-      "customer_count": 2,
-      "active_customer_count": 2,
-      "total_mrr": 7246.75,
-      "total_arr": 86961,
-      "total_lifetime": 658981.76,
-      "unmatched_labels": [
-        "netley"
-      ]
-    },
-    {
       "key": "DEV-9809",
       "summary": "Voided Order showing odd behavior",
       "status": "Closed",
@@ -35548,45 +35587,6 @@
       "unmatched_labels": [
         "StanisciDesign",
         "ciminos",
-        "netley"
-      ]
-    },
-    {
-      "key": "DEV-9320",
-      "summary": "Lock Orders at Certain Status to Preserve Product Information",
-      "status": "Feature Scope",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 393,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 527577.15,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        }
-      ],
-      "created": "2024-12-11",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9320",
-      "tag_count": 4,
-      "customer_count": 2,
-      "active_customer_count": 2,
-      "total_mrr": 7246.75,
-      "total_arr": 86961,
-      "total_lifetime": 658981.76,
-      "unmatched_labels": [
-        "StanisciDesign",
         "netley"
       ]
     },
@@ -37699,7 +37699,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         },
         {
@@ -37719,7 +37719,7 @@
       "active_customer_count": 3,
       "total_mrr": 6793,
       "total_arr": 81516,
-      "total_lifetime": 324849.44,
+      "total_lifetime": 326948.44,
       "unmatched_labels": [
         "DoorMastersHouston",
         "Fryburg",
@@ -37741,7 +37741,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -37755,7 +37755,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -37775,7 +37775,7 @@
       "active_customer_count": 4,
       "total_mrr": 6748.95,
       "total_arr": 80987.4,
-      "total_lifetime": 494966.38,
+      "total_lifetime": 499140.33,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "mykitch"
@@ -37898,7 +37898,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -37925,7 +37925,7 @@
       "active_customer_count": 3,
       "total_mrr": 6560.16,
       "total_arr": 78721.92,
-      "total_lifetime": 718773.57,
+      "total_lifetime": 720084.78,
       "unmatched_labels": [
         "Fryburg",
         "bccdoors",
@@ -37998,7 +37998,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         },
         {
@@ -38025,7 +38025,7 @@
       "active_customer_count": 3,
       "total_mrr": 6142,
       "total_arr": 73704,
-      "total_lifetime": 421015.58,
+      "total_lifetime": 423638.58,
       "unmatched_labels": [
         "DrawerConnection",
         "LifeSpanClosets",
@@ -39752,7 +39752,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -39779,7 +39779,7 @@
       "active_customer_count": 3,
       "total_mrr": 6023.95,
       "total_arr": 72287.4,
-      "total_lifetime": 430519.9,
+      "total_lifetime": 433668.85,
       "unmatched_labels": [
         "m2m"
       ]
@@ -39840,7 +39840,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -39853,7 +39853,7 @@
       "active_customer_count": 2,
       "total_mrr": 5931.21,
       "total_arr": 71174.52,
-      "total_lifetime": 413500.34,
+      "total_lifetime": 414811.55,
       "unmatched_labels": []
     },
     {
@@ -40131,7 +40131,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -40145,7 +40145,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -40165,7 +40165,7 @@
       "active_customer_count": 4,
       "total_mrr": 5435.21,
       "total_arr": 65222.52,
-      "total_lifetime": 431912.64,
+      "total_lifetime": 434248.85,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "StanisciDesign",
@@ -40243,7 +40243,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -40256,7 +40256,7 @@
       "active_customer_count": 3,
       "total_mrr": 5360.21,
       "total_arr": 64322.52,
-      "total_lifetime": 508070.97,
+      "total_lifetime": 509382.18,
       "unmatched_labels": []
     },
     {
@@ -41712,7 +41712,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -41739,7 +41739,7 @@
       "active_customer_count": 3,
       "total_mrr": 4883.34,
       "total_arr": 58600.08,
-      "total_lifetime": 505381.15,
+      "total_lifetime": 506692.36,
       "unmatched_labels": [
         "IntermountainWood"
       ]
@@ -43318,6 +43318,69 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12675",
+      "summary": "Attribute options table loses column data and misdirects focus when deleting option images (Finish Color attribute)",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 686,
+      "customers": [
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        }
+      ],
+      "created": "2026-08-07",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12675",
+      "tag_count": 3,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 4620,
+      "total_arr": 55440,
+      "total_lifetime": 290405.4,
+      "unmatched_labels": [
+        "DukeCustomKitchens",
+        "cuttingedge"
+      ]
+    },
+    {
+      "key": "DEV-9567",
+      "summary": "Too Many Conections Reported 01/28/25",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 0,
+      "customers": [
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 290405.4,
+          "status": "active"
+        }
+      ],
+      "created": "2025-01-28",
+      "updated": "2026-08-07",
+      "resolved": "2025-02-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9567",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 4620,
+      "total_arr": 55440,
+      "total_lifetime": 290405.4,
+      "unmatched_labels": [
+        "Fryburg"
+      ]
+    },
+    {
       "key": "DEV-7587",
       "summary": "Test Live Order Tool Only Works (sort of) on First Product",
       "status": "Resolved",
@@ -44194,37 +44257,6 @@
       "total_arr": 55440,
       "total_lifetime": 290405.4,
       "unmatched_labels": []
-    },
-    {
-      "key": "DEV-9567",
-      "summary": "Too Many Conections Reported 01/28/25",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 0,
-      "customers": [
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 290405.4,
-          "status": "active"
-        }
-      ],
-      "created": "2025-01-28",
-      "updated": "2026-08-05",
-      "resolved": "2025-02-21",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9567",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 4620,
-      "total_arr": 55440,
-      "total_lifetime": 290405.4,
-      "unmatched_labels": [
-        "Fryburg"
-      ]
     },
     {
       "key": "DEV-9554",
@@ -45147,7 +45179,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -45160,7 +45192,7 @@
       "active_customer_count": 2,
       "total_mrr": 4430.21,
       "total_arr": 53162.52,
-      "total_lifetime": 262751.27,
+      "total_lifetime": 264062.48,
       "unmatched_labels": []
     },
     {
@@ -45212,7 +45244,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
@@ -45232,7 +45264,7 @@
       "active_customer_count": 2,
       "total_mrr": 4247.95,
       "total_arr": 50975.4,
-      "total_lifetime": 276750.8,
+      "total_lifetime": 279899.75,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -45643,7 +45675,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -45656,7 +45688,7 @@
       "active_customer_count": 2,
       "total_mrr": 4144,
       "total_arr": 49728,
-      "total_lifetime": 212311.73,
+      "total_lifetime": 213336.73,
       "unmatched_labels": []
     },
     {
@@ -46672,35 +46704,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-12442",
-      "summary": "Quickbooks Online Integration Question",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 43,
-          "name": "Westwind",
-          "mrr": 3673.95,
-          "lifetime": 320597.69,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-21",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-21",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12442",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 3673.95,
-      "total_arr": 44087.4,
-      "total_lifetime": 320597.69,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-12115",
       "summary": "Shipping Integration - Worldwide Express",
       "status": "Backlog",
@@ -46718,7 +46721,7 @@
         }
       ],
       "created": "2026-05-26",
-      "updated": "2026-08-05",
+      "updated": "2026-08-07",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12115",
       "tag_count": 2,
@@ -46730,6 +46733,35 @@
       "unmatched_labels": [
         "DCDrawers"
       ]
+    },
+    {
+      "key": "DEV-12442",
+      "summary": "Quickbooks Online Integration Question",
+      "status": "Closed",
+      "stage_category": "Done",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 43,
+          "name": "Westwind",
+          "mrr": 3673.95,
+          "lifetime": 320597.69,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-21",
+      "updated": "2026-08-07",
+      "resolved": "2026-07-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12442",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 3673.95,
+      "total_arr": 44087.4,
+      "total_lifetime": 320597.69,
+      "unmatched_labels": []
     },
     {
       "key": "DEV-12084",
@@ -47319,7 +47351,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47332,7 +47364,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47348,7 +47380,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47361,7 +47393,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47377,7 +47409,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47390,7 +47422,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47406,7 +47438,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47419,7 +47451,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47435,7 +47467,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47448,7 +47480,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": [
         "NationalWood"
       ]
@@ -47466,7 +47498,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47479,7 +47511,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": [
         "mykitch"
       ]
@@ -47497,7 +47529,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47510,7 +47542,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47526,7 +47558,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47539,7 +47571,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": [
         "mykitch"
       ]
@@ -47557,7 +47589,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47570,7 +47602,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47586,7 +47618,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47599,7 +47631,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47615,7 +47647,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47628,7 +47660,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47644,7 +47676,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47657,7 +47689,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47673,7 +47705,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47686,7 +47718,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47702,7 +47734,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47715,7 +47747,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47731,7 +47763,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47744,7 +47776,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": [
         "LifeSpanClosets",
         "ciminos"
@@ -47763,7 +47795,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47776,7 +47808,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47792,7 +47824,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47805,7 +47837,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -47821,7 +47853,7 @@
           "allmoxy_customer_id": 26,
           "name": "Rehau Inc.",
           "mrr": 3148.95,
-          "lifetime": 208311.3,
+          "lifetime": 211460.25,
           "status": "active"
         }
       ],
@@ -47834,7 +47866,7 @@
       "active_customer_count": 1,
       "total_mrr": 3148.95,
       "total_arr": 37787.4,
-      "total_lifetime": 208311.3,
+      "total_lifetime": 211460.25,
       "unmatched_labels": []
     },
     {
@@ -48527,7 +48559,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         }
       ],
@@ -48540,7 +48572,7 @@
       "active_customer_count": 2,
       "total_mrr": 2893,
       "total_arr": 34716,
-      "total_lifetime": 208419.98,
+      "total_lifetime": 209737.98,
       "unmatched_labels": [
         "cut2size"
       ]
@@ -48975,7 +49007,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         }
       ],
@@ -48988,7 +49020,7 @@
       "active_customer_count": 2,
       "total_mrr": 2804.72,
       "total_arr": 33656.64,
-      "total_lifetime": 242109.51,
+      "total_lifetime": 243427.51,
       "unmatched_labels": [
         "mykitch"
       ]
@@ -49988,7 +50020,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         },
         {
@@ -50008,7 +50040,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 229755.43,
+      "total_lifetime": 232378.43,
       "unmatched_labels": []
     },
     {
@@ -50024,7 +50056,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         }
       ],
@@ -50037,7 +50069,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 177003.08,
+      "total_lifetime": 179626.08,
       "unmatched_labels": []
     },
     {
@@ -50053,7 +50085,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         }
       ],
@@ -50066,7 +50098,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 177003.08,
+      "total_lifetime": 179626.08,
       "unmatched_labels": []
     },
     {
@@ -50082,7 +50114,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         }
       ],
@@ -50095,7 +50127,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 177003.08,
+      "total_lifetime": 179626.08,
       "unmatched_labels": []
     },
     {
@@ -50111,7 +50143,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         }
       ],
@@ -50124,7 +50156,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 177003.08,
+      "total_lifetime": 179626.08,
       "unmatched_labels": []
     },
     {
@@ -50140,7 +50172,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 177003.08,
+          "lifetime": 179626.08,
           "status": "active"
         }
       ],
@@ -50153,7 +50185,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 177003.08,
+      "total_lifetime": 179626.08,
       "unmatched_labels": []
     },
     {
@@ -50176,7 +50208,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -50189,7 +50221,7 @@
       "active_customer_count": 2,
       "total_mrr": 2524,
       "total_arr": 30288,
-      "total_lifetime": 191456.3,
+      "total_lifetime": 192481.3,
       "unmatched_labels": []
     },
     {
@@ -50241,7 +50273,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         },
         {
@@ -50261,7 +50293,7 @@
       "active_customer_count": 2,
       "total_mrr": 2417,
       "total_arr": 29004,
-      "total_lifetime": 163303.8,
+      "total_lifetime": 164621.8,
       "unmatched_labels": []
     },
     {
@@ -50277,7 +50309,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -50297,7 +50329,7 @@
       "active_customer_count": 2,
       "total_mrr": 2410.21,
       "total_arr": 28922.52,
-      "total_lifetime": 191534.44,
+      "total_lifetime": 192845.65,
       "unmatched_labels": []
     },
     {
@@ -50313,14 +50345,14 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -50333,7 +50365,7 @@
       "active_customer_count": 2,
       "total_mrr": 2336.21,
       "total_arr": 28034.52,
-      "total_lifetime": 195750.34,
+      "total_lifetime": 198086.55,
       "unmatched_labels": []
     },
     {
@@ -50724,7 +50756,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -50737,7 +50769,7 @@
       "active_customer_count": 2,
       "total_mrr": 2180.9,
       "total_arr": 26170.8,
-      "total_lifetime": 129315.6,
+      "total_lifetime": 130321.5,
       "unmatched_labels": []
     },
     {
@@ -50996,7 +51028,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         }
       ],
@@ -51009,7 +51041,7 @@
       "active_customer_count": 1,
       "total_mrr": 2099,
       "total_arr": 25188,
-      "total_lifetime": 71637.43,
+      "total_lifetime": 73736.43,
       "unmatched_labels": [
         "DCDrawers",
         "Fryburg",
@@ -51032,7 +51064,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         }
       ],
@@ -51045,7 +51077,7 @@
       "active_customer_count": 1,
       "total_mrr": 2099,
       "total_arr": 25188,
-      "total_lifetime": 71637.43,
+      "total_lifetime": 73736.43,
       "unmatched_labels": []
     },
     {
@@ -51061,7 +51093,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         }
       ],
@@ -51074,7 +51106,7 @@
       "active_customer_count": 1,
       "total_mrr": 2099,
       "total_arr": 25188,
-      "total_lifetime": 71637.43,
+      "total_lifetime": 73736.43,
       "unmatched_labels": []
     },
     {
@@ -51090,7 +51122,7 @@
           "allmoxy_customer_id": 502,
           "name": "LINDSEY DOORS",
           "mrr": 2099,
-          "lifetime": 71637.43,
+          "lifetime": 73736.43,
           "status": "at_risk"
         }
       ],
@@ -51103,7 +51135,7 @@
       "active_customer_count": 1,
       "total_mrr": 2099,
       "total_arr": 25188,
-      "total_lifetime": 71637.43,
+      "total_lifetime": 73736.43,
       "unmatched_labels": []
     },
     {
@@ -51119,7 +51151,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -51153,7 +51185,7 @@
       "active_customer_count": 2,
       "total_mrr": 2065.21,
       "total_arr": 24782.52,
-      "total_lifetime": 203701.85,
+      "total_lifetime": 205013.06,
       "unmatched_labels": []
     },
     {
@@ -51176,7 +51208,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -51189,7 +51221,7 @@
       "active_customer_count": 2,
       "total_mrr": 2064.5,
       "total_arr": 24774,
-      "total_lifetime": 176311,
+      "total_lifetime": 177336,
       "unmatched_labels": [
         "btjdoors",
         "drawerworksusa"
@@ -51208,7 +51240,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -51235,7 +51267,7 @@
       "active_customer_count": 2,
       "total_mrr": 2025,
       "total_arr": 24300,
-      "total_lifetime": 185440.4,
+      "total_lifetime": 186465.4,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "IslandCustomCabinets",
@@ -51257,7 +51289,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         },
         {
@@ -51284,7 +51316,7 @@
       "active_customer_count": 2,
       "total_mrr": 2025,
       "total_arr": 24300,
-      "total_lifetime": 185440.4,
+      "total_lifetime": 186465.4,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "IslandCustomCabinets",
@@ -51585,7 +51617,7 @@
           "allmoxy_customer_id": 30,
           "name": "Classic Kitchen Doors",
           "mrr": 1250,
-          "lifetime": 174336.03,
+          "lifetime": 175586.03,
           "status": "active"
         },
         {
@@ -51605,7 +51637,7 @@
       "active_customer_count": 2,
       "total_mrr": 2004,
       "total_arr": 24048,
-      "total_lifetime": 210341.03,
+      "total_lifetime": 211591.03,
       "unmatched_labels": []
     },
     {
@@ -53769,7 +53801,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         },
         {
@@ -53789,7 +53821,7 @@
       "active_customer_count": 2,
       "total_mrr": 1553.15,
       "total_arr": 18637.8,
-      "total_lifetime": 185483.88,
+      "total_lifetime": 186795.09,
       "unmatched_labels": []
     },
     {
@@ -53805,7 +53837,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         },
         {
@@ -53825,7 +53857,7 @@
       "active_customer_count": 2,
       "total_mrr": 1517,
       "total_arr": 18204,
-      "total_lifetime": 102028.3,
+      "total_lifetime": 103346.3,
       "unmatched_labels": []
     },
     {
@@ -53841,7 +53873,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         },
         {
@@ -53861,7 +53893,7 @@
       "active_customer_count": 2,
       "total_mrr": 1517,
       "total_arr": 18204,
-      "total_lifetime": 102028.3,
+      "total_lifetime": 103346.3,
       "unmatched_labels": []
     },
     {
@@ -55113,12 +55145,12 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
       "created": "2026-07-22",
-      "updated": "2026-08-06",
+      "updated": "2026-08-07",
       "resolved": "2026-07-22",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12454",
       "tag_count": 1,
@@ -55126,7 +55158,36 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12509",
+      "summary": "D3 - Slowness Report (Post Beta Release)",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 463,
+          "name": "D3Customcabinets",
+          "mrr": 1391,
+          "lifetime": 82402.16,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-24",
+      "updated": "2026-08-07",
+      "resolved": "2026-07-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12509",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1391,
+      "total_arr": 16692,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55142,7 +55203,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55155,7 +55216,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55171,7 +55232,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55184,7 +55245,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": [
         "TekDmc"
       ]
@@ -55202,7 +55263,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55215,7 +55276,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55231,7 +55292,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55244,7 +55305,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55260,7 +55321,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55273,7 +55334,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55289,7 +55350,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55302,7 +55363,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55318,7 +55379,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55331,36 +55392,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12509",
-      "summary": "D3 - Slowness Report (Post Beta Release)",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 463,
-          "name": "D3Customcabinets",
-          "mrr": 1391,
-          "lifetime": 81011.16,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-24",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12509",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 1391,
-      "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55376,7 +55408,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55389,7 +55421,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55405,7 +55437,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55418,7 +55450,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55434,7 +55466,7 @@
           "allmoxy_customer_id": 463,
           "name": "D3Customcabinets",
           "mrr": 1391,
-          "lifetime": 81011.16,
+          "lifetime": 82402.16,
           "status": "active"
         }
       ],
@@ -55447,7 +55479,7 @@
       "active_customer_count": 1,
       "total_mrr": 1391,
       "total_arr": 16692,
-      "total_lifetime": 81011.16,
+      "total_lifetime": 82402.16,
       "unmatched_labels": []
     },
     {
@@ -55609,7 +55641,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         }
       ],
@@ -55622,7 +55654,7 @@
       "active_customer_count": 1,
       "total_mrr": 1318,
       "total_arr": 15816,
-      "total_lifetime": 94864.3,
+      "total_lifetime": 96182.3,
       "unmatched_labels": []
     },
     {
@@ -55638,7 +55670,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         }
       ],
@@ -55651,7 +55683,7 @@
       "active_customer_count": 1,
       "total_mrr": 1318,
       "total_arr": 15816,
-      "total_lifetime": 94864.3,
+      "total_lifetime": 96182.3,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -55669,7 +55701,7 @@
           "allmoxy_customer_id": 18,
           "name": "Craftsman Specialty",
           "mrr": 1318,
-          "lifetime": 94864.3,
+          "lifetime": 96182.3,
           "status": "active"
         }
       ],
@@ -55682,7 +55714,36 @@
       "active_customer_count": 1,
       "total_mrr": 1318,
       "total_arr": 15816,
-      "total_lifetime": 94864.3,
+      "total_lifetime": 96182.3,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12576",
+      "summary": "Beta Release Feedback - Page Sizing",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 199,
+      "customers": [
+        {
+          "allmoxy_customer_id": 22,
+          "name": "Bywater Products",
+          "mrr": 1311.21,
+          "lifetime": 124406.15,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-28",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12576",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1311.21,
+      "total_arr": 15734.52,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -55698,7 +55759,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55711,7 +55772,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -55727,7 +55788,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55740,7 +55801,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -55756,7 +55817,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55769,7 +55830,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -55785,7 +55846,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55798,7 +55859,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": [
         "IntermountainWood"
       ]
@@ -55816,7 +55877,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55829,7 +55890,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": [
         "IntermountainWood"
       ]
@@ -55847,7 +55908,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55860,7 +55921,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -55876,7 +55937,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55889,7 +55950,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -55905,7 +55966,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55918,7 +55979,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -55934,7 +55995,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55947,7 +56008,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": [
         "bbcustomdoors",
         "ifccinc",
@@ -55967,7 +56028,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -55980,7 +56041,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -55996,7 +56057,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56009,7 +56070,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56025,7 +56086,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56038,7 +56099,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56054,7 +56115,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56067,7 +56128,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56083,7 +56144,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56096,7 +56157,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -56114,7 +56175,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56127,7 +56188,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56143,7 +56204,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56156,7 +56217,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56172,7 +56233,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56185,36 +56246,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12576",
-      "summary": "Beta Release Feedback - Page Sizing",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Low",
-      "issue_score": null,
-      "customers": [
-        {
-          "allmoxy_customer_id": 22,
-          "name": "Bywater Products",
-          "mrr": 1311.21,
-          "lifetime": 123094.94,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-28",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-28",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12576",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 1311.21,
-      "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56230,7 +56262,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56243,7 +56275,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56259,7 +56291,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56272,7 +56304,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56288,7 +56320,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56301,7 +56333,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56317,7 +56349,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56330,7 +56362,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56346,7 +56378,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56359,7 +56391,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56375,7 +56407,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56388,7 +56420,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56404,7 +56436,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56417,7 +56449,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56433,7 +56465,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56446,7 +56478,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56462,7 +56494,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56475,7 +56507,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56491,7 +56523,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56504,7 +56536,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56520,7 +56552,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56533,7 +56565,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56549,7 +56581,7 @@
           "allmoxy_customer_id": 22,
           "name": "Bywater Products",
           "mrr": 1311.21,
-          "lifetime": 123094.94,
+          "lifetime": 124406.15,
           "status": "active"
         }
       ],
@@ -56562,7 +56594,7 @@
       "active_customer_count": 1,
       "total_mrr": 1311.21,
       "total_arr": 15734.52,
-      "total_lifetime": 123094.94,
+      "total_lifetime": 124406.15,
       "unmatched_labels": []
     },
     {
@@ -56715,7 +56747,7 @@
           "allmoxy_customer_id": 30,
           "name": "Classic Kitchen Doors",
           "mrr": 1250,
-          "lifetime": 174336.03,
+          "lifetime": 175586.03,
           "status": "active"
         }
       ],
@@ -56728,7 +56760,7 @@
       "active_customer_count": 1,
       "total_mrr": 1250,
       "total_arr": 15000,
-      "total_lifetime": 174336.03,
+      "total_lifetime": 175586.03,
       "unmatched_labels": []
     },
     {
@@ -56744,7 +56776,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         }
       ],
@@ -56757,7 +56789,7 @@
       "active_customer_count": 1,
       "total_mrr": 1182,
       "total_arr": 14184,
-      "total_lifetime": 17633,
+      "total_lifetime": 17732,
       "unmatched_labels": []
     },
     {
@@ -56773,7 +56805,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         }
       ],
@@ -56786,7 +56818,7 @@
       "active_customer_count": 1,
       "total_mrr": 1182,
       "total_arr": 14184,
-      "total_lifetime": 17633,
+      "total_lifetime": 17732,
       "unmatched_labels": [
         "dominiondovetails"
       ]
@@ -56804,7 +56836,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         }
       ],
@@ -56817,7 +56849,7 @@
       "active_customer_count": 1,
       "total_mrr": 1182,
       "total_arr": 14184,
-      "total_lifetime": 17633,
+      "total_lifetime": 17732,
       "unmatched_labels": []
     },
     {
@@ -56833,7 +56865,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         }
       ],
@@ -56846,7 +56878,7 @@
       "active_customer_count": 1,
       "total_mrr": 1182,
       "total_arr": 14184,
-      "total_lifetime": 17633,
+      "total_lifetime": 17732,
       "unmatched_labels": []
     },
     {
@@ -56862,7 +56894,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         }
       ],
@@ -56875,7 +56907,7 @@
       "active_customer_count": 1,
       "total_mrr": 1182,
       "total_arr": 14184,
-      "total_lifetime": 17633,
+      "total_lifetime": 17732,
       "unmatched_labels": []
     },
     {
@@ -56891,7 +56923,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         }
       ],
@@ -56904,7 +56936,7 @@
       "active_customer_count": 1,
       "total_mrr": 1182,
       "total_arr": 14184,
-      "total_lifetime": 17633,
+      "total_lifetime": 17732,
       "unmatched_labels": []
     },
     {
@@ -56920,7 +56952,7 @@
           "allmoxy_customer_id": 545,
           "name": "Cabinet Doors USA",
           "mrr": 1182,
-          "lifetime": 17633,
+          "lifetime": 17732,
           "status": "active"
         }
       ],
@@ -56933,7 +56965,7 @@
       "active_customer_count": 1,
       "total_mrr": 1182,
       "total_arr": 14184,
-      "total_lifetime": 17633,
+      "total_lifetime": 17732,
       "unmatched_labels": []
     },
     {
@@ -57601,6 +57633,35 @@
       ]
     },
     {
+      "key": "DEV-12612",
+      "summary": "Company Availability by Tag - Header Issue",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 479,
+          "name": "Cabinet Restylers, Inc",
+          "mrr": 1099,
+          "lifetime": 68439.5,
+          "status": "active"
+        }
+      ],
+      "created": "2026-08-04",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12612",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1099,
+      "total_arr": 13188,
+      "total_lifetime": 68439.5,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-9491",
       "summary": "Order Report - Not Displaying Results",
       "status": "Resolved",
@@ -57771,35 +57832,6 @@
       "updated": "2026-08-05",
       "resolved": "2025-11-26",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11210",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 1099,
-      "total_arr": 13188,
-      "total_lifetime": 68439.5,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12612",
-      "summary": "Company Availability by Tag - Header Issue",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 479,
-          "name": "Cabinet Restylers, Inc",
-          "mrr": 1099,
-          "lifetime": 68439.5,
-          "status": "active"
-        }
-      ],
-      "created": "2026-08-04",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12612",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -59461,7 +59493,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59474,7 +59506,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59490,7 +59522,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59503,7 +59535,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59519,7 +59551,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59532,7 +59564,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59548,7 +59580,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59561,7 +59593,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59577,7 +59609,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59590,7 +59622,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59606,7 +59638,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59619,7 +59651,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59635,7 +59667,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59648,7 +59680,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59664,7 +59696,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59677,7 +59709,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": [
         "ifccinc"
       ]
@@ -59695,7 +59727,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59708,7 +59740,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": [
         "Hallmark",
         "ifccinc"
@@ -59727,7 +59759,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59740,7 +59772,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59756,7 +59788,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59769,7 +59801,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59785,7 +59817,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59798,7 +59830,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59814,7 +59846,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59827,7 +59859,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59843,7 +59875,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59856,7 +59888,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59872,7 +59904,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59885,7 +59917,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59901,7 +59933,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59914,7 +59946,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59930,7 +59962,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59943,7 +59975,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59959,7 +59991,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -59972,7 +60004,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -59988,7 +60020,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60001,7 +60033,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60017,7 +60049,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60030,7 +60062,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60046,7 +60078,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60059,7 +60091,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60075,7 +60107,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60088,7 +60120,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60104,7 +60136,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60117,7 +60149,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -60135,7 +60167,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60148,7 +60180,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60164,7 +60196,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60177,7 +60209,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60193,7 +60225,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60206,7 +60238,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60222,7 +60254,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60235,7 +60267,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60251,7 +60283,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60264,7 +60296,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60280,7 +60312,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60293,7 +60325,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60309,7 +60341,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60322,7 +60354,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60338,7 +60370,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60351,7 +60383,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60367,7 +60399,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60380,7 +60412,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60396,7 +60428,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60409,7 +60441,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -60427,7 +60459,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60440,7 +60472,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60456,7 +60488,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60469,7 +60501,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60485,7 +60517,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60498,7 +60530,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60514,7 +60546,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60527,7 +60559,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60543,7 +60575,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60556,7 +60588,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60572,7 +60604,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60585,7 +60617,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60601,7 +60633,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60614,7 +60646,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60630,7 +60662,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60643,7 +60675,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60659,7 +60691,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60672,7 +60704,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60688,7 +60720,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60701,7 +60733,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60717,7 +60749,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60730,7 +60762,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -60748,7 +60780,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60761,7 +60793,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60777,7 +60809,7 @@
           "allmoxy_customer_id": 388,
           "name": "Sherwood Shelving",
           "mrr": 1025,
-          "lifetime": 72655.4,
+          "lifetime": 73680.4,
           "status": "active"
         }
       ],
@@ -60790,7 +60822,7 @@
       "active_customer_count": 1,
       "total_mrr": 1025,
       "total_arr": 12300,
-      "total_lifetime": 72655.4,
+      "total_lifetime": 73680.4,
       "unmatched_labels": []
     },
     {
@@ -60806,7 +60838,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -60819,7 +60851,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": []
     },
     {
@@ -60835,7 +60867,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -60848,7 +60880,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": []
     },
     {
@@ -60864,7 +60896,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -60877,7 +60909,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": []
     },
     {
@@ -60893,7 +60925,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -60906,7 +60938,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": []
     },
     {
@@ -60922,7 +60954,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -60935,7 +60967,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": [
         "brandenbergercustom",
         "btjdoors",
@@ -60955,7 +60987,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -60968,7 +61000,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": []
     },
     {
@@ -60984,7 +61016,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -60997,7 +61029,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": []
     },
     {
@@ -61013,7 +61045,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -61026,7 +61058,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": []
     },
     {
@@ -61042,7 +61074,7 @@
           "allmoxy_customer_id": 27,
           "name": "Arkansas Wood Doors",
           "mrr": 1005.9,
-          "lifetime": 62926.8,
+          "lifetime": 63932.7,
           "status": "active"
         }
       ],
@@ -61055,7 +61087,7 @@
       "active_customer_count": 1,
       "total_mrr": 1005.9,
       "total_arr": 12070.8,
-      "total_lifetime": 62926.8,
+      "total_lifetime": 63932.7,
       "unmatched_labels": []
     },
     {
@@ -63353,7 +63385,7 @@
           "allmoxy_customer_id": 537,
           "name": "Ideal Wood Designs",
           "mrr": 321,
-          "lifetime": 5339.45,
+          "lifetime": 5660.45,
           "status": "active"
         }
       ],
@@ -63366,7 +63398,7 @@
       "active_customer_count": 1,
       "total_mrr": 321,
       "total_arr": 3852,
-      "total_lifetime": 5339.45,
+      "total_lifetime": 5660.45,
       "unmatched_labels": []
     },
     {
@@ -63935,7 +63967,7 @@
           "allmoxy_customer_id": 532,
           "name": "SCP Cabinets",
           "mrr": 268.63,
-          "lifetime": 5938.3,
+          "lifetime": 6206.93,
           "status": "at_risk"
         }
       ],
@@ -63948,7 +63980,7 @@
       "active_customer_count": 1,
       "total_mrr": 268.63,
       "total_arr": 3223.56,
-      "total_lifetime": 5938.3,
+      "total_lifetime": 6206.93,
       "unmatched_labels": []
     },
     {
@@ -64584,7 +64616,7 @@
           "allmoxy_customer_id": 2052,
           "name": "Batesville Cabinet Company",
           "mrr": 250,
-          "lifetime": 4310,
+          "lifetime": 4560,
           "status": "active"
         }
       ],
@@ -64597,7 +64629,7 @@
       "active_customer_count": 1,
       "total_mrr": 250,
       "total_arr": 3000,
-      "total_lifetime": 4310,
+      "total_lifetime": 4560,
       "unmatched_labels": []
     },
     {
@@ -64613,7 +64645,7 @@
           "allmoxy_customer_id": 2052,
           "name": "Batesville Cabinet Company",
           "mrr": 250,
-          "lifetime": 4310,
+          "lifetime": 4560,
           "status": "active"
         }
       ],
@@ -64626,7 +64658,7 @@
       "active_customer_count": 1,
       "total_mrr": 250,
       "total_arr": 3000,
-      "total_lifetime": 4310,
+      "total_lifetime": 4560,
       "unmatched_labels": [
         "thomascreekwoodworking"
       ]
@@ -65557,7 +65589,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65570,7 +65602,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": []
     },
     {
@@ -65586,7 +65618,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65599,7 +65631,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": []
     },
     {
@@ -65615,7 +65647,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65628,7 +65660,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": [
         "canary"
       ]
@@ -65646,7 +65678,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65659,7 +65691,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": []
     },
     {
@@ -65675,7 +65707,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65688,7 +65720,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": []
     },
     {
@@ -65704,7 +65736,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65717,7 +65749,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": []
     },
     {
@@ -65733,7 +65765,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65746,7 +65778,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": []
     },
     {
@@ -65762,7 +65794,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65775,7 +65807,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": []
     },
     {
@@ -65791,7 +65823,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65804,7 +65836,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": []
     },
     {
@@ -65820,7 +65852,7 @@
           "allmoxy_customer_id": 7,
           "name": "Raumplus",
           "mrr": 100.25,
-          "lifetime": 37089.44,
+          "lifetime": 37173.64,
           "status": "active"
         }
       ],
@@ -65833,7 +65865,7 @@
       "active_customer_count": 1,
       "total_mrr": 100.25,
       "total_arr": 1203,
-      "total_lifetime": 37089.44,
+      "total_lifetime": 37173.64,
       "unmatched_labels": [
         "Fryburg"
       ]
@@ -66177,6 +66209,64 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12614",
+      "summary": "Export Locations Broken",
+      "status": "In Staging",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 672,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-08-04",
+      "updated": "2026-08-08",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12614",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-12692",
+      "summary": "Some list/report columns too narrow",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 630,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-08-07",
+      "updated": "2026-08-07",
+      "resolved": "2026-08-07",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12692",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12560",
       "summary": "Project statuses on Batch Ordering page",
       "status": "In Staging",
@@ -66344,35 +66434,6 @@
       "updated": "2026-08-06",
       "resolved": "2026-08-06",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12615",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12614",
-      "summary": "Export Locations Broken",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 672,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-08-04",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12614",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -72092,10 +72153,217 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12613",
+      "summary": "Sidebar Simplification - Step 0 for Project Orders",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 452,
+      "customers": [],
+      "created": "2026-08-04",
+      "updated": "2026-08-09",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12613",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-12588",
+      "summary": "Opening Multiple Orders Requires Waiting For The Page to Load",
+      "status": "In Staging",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [],
+      "created": "2026-07-29",
+      "updated": "2026-08-09",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12588",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "cuttingedge"
+      ]
+    },
+    {
+      "key": "DEV-12585",
+      "summary": "\"Too Many Connections\" error recurring frequently — Mullwoods (fryburgdoor instance)",
+      "status": "In Staging",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 199,
+      "customers": [],
+      "created": "2026-07-29",
+      "updated": "2026-08-09",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12585",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Fryburg"
+      ]
+    },
+    {
+      "key": "DEV-12139",
+      "summary": "Add Pay Status filter to Orders Report",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 294,
+      "customers": [],
+      "created": "2026-06-02",
+      "updated": "2026-08-08",
+      "resolved": "2026-06-18",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12139",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "dbs"
+      ]
+    },
+    {
+      "key": "DEV-12695",
+      "summary": "D3 - Missing Parts",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 782,
+      "customers": [],
+      "created": "2026-08-07",
+      "updated": "2026-08-07",
+      "resolved": "2026-08-07",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12695",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "DukeCustomKitchens"
+      ]
+    },
+    {
+      "key": "DEV-12694",
+      "summary": "D3 - Broken Order # 29882",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 782,
+      "customers": [],
+      "created": "2026-08-07",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12694",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "DukeCustomKitchens"
+      ]
+    },
+    {
+      "key": "DEV-12670",
+      "summary": "Email Logs",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-05-27",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12670",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-11875",
+      "summary": "Export Class selector on Proposal tab",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 397,
+      "customers": [],
+      "created": "2026-04-06",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11875",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-11103",
+      "summary": "Export Class Management System (#1)",
+      "status": "In Beta",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 405,
+      "customers": [],
+      "created": "2025-11-03",
+      "updated": "2026-08-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11103",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-12671",
       "summary": "Batch Print - V2",
-      "status": "New",
-      "stage_category": "To Do",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "High",
       "issue_score": 252,
@@ -72115,41 +72383,18 @@
       ]
     },
     {
-      "key": "DEV-12613",
-      "summary": "Sidebar Simplification - Step 0 for Project Orders",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 452,
-      "customers": [],
-      "created": "2026-08-04",
-      "updated": "2026-08-07",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12613",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12588",
-      "summary": "Opening Multiple Orders Requires Waiting For The Page to Load",
+      "key": "DEV-12593",
+      "summary": "Cutting Edge – QBO Integration Sandbox Setup & Export Class Investigation",
       "status": "New",
       "stage_category": "To Do",
       "issue_type": "Investigate",
       "priority": "Low",
       "issue_score": null,
       "customers": [],
-      "created": "2026-07-29",
-      "updated": "2026-08-06",
-      "resolved": "2026-07-29",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12588",
+      "created": "2026-07-30",
+      "updated": "2026-08-07",
+      "resolved": "2026-07-30",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12593",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -72158,29 +72403,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "cuttingedge"
-      ]
-    },
-    {
-      "key": "DEV-12670",
-      "summary": "Email Logs",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-05-27",
-      "updated": "2026-08-06",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12670",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
       ]
     },
     {
@@ -77177,29 +77399,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12593",
-      "summary": "Cutting Edge – QBO Integration Sandbox Setup & Export Class Investigation",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Low",
-      "issue_score": null,
-      "customers": [],
-      "created": "2026-07-30",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-30",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12593",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "cuttingedge"
       ]
     },
     {
@@ -92464,29 +92663,6 @@
       ]
     },
     {
-      "key": "DEV-11103",
-      "summary": "Export Class Management System (#1)",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 405,
-      "customers": [],
-      "created": "2025-11-03",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11103",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
       "key": "DEV-11102",
       "summary": "Include URL for images on and attribute import",
       "status": "Backlog",
@@ -94491,29 +94667,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "dominiondovetails"
-      ]
-    },
-    {
-      "key": "DEV-12139",
-      "summary": "Add Pay Status filter to Orders Report",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 294,
-      "customers": [],
-      "created": "2026-06-02",
-      "updated": "2026-08-05",
-      "resolved": "2026-06-18",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12139",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "dbs"
       ]
     },
     {
@@ -99352,29 +99505,6 @@
       "updated": "2026-08-05",
       "resolved": "2026-04-06",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11876",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-11875",
-      "summary": "Export Class selector on Proposal tab",
-      "status": "In Beta",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 397,
-      "customers": [],
-      "created": "2026-04-06",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11875",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -121711,29 +121841,6 @@
       "updated": "2026-08-05",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-207",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "Fryburg"
-      ]
-    },
-    {
-      "key": "DEV-12585",
-      "summary": "\"Too Many Connections\" error recurring frequently — Mullwoods (fryburgdoor instance)",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": null,
-      "customers": [],
-      "created": "2026-07-29",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-29",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12585",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
