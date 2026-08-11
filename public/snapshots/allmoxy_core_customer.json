@@ -1,8 +1,8 @@
 {
   "tab": "allmoxy_core_customer",
   "sheetId": "18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30",
-  "fetchedAt": "2026-08-10T13:46:27.058Z",
-  "cachedUntil": "2026-08-10T13:51:27.058Z",
+  "fetchedAt": "2026-08-11T13:31:27.584Z",
+  "cachedUntil": "2026-08-11T13:36:27.584Z",
   "columns": [
     "allmoxy_customer_id",
     "name",
@@ -7652,8 +7652,18 @@
       "installer_directory": "ditto",
       "stripe_customer_ids": [],
       "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2094,
+      "name": "Wood House Cabinets",
+      "sign_up_date": "2026-08-10",
+      "hubspot_company_id": null,
+      "installer_id": "2153",
+      "installer_directory": "woodhousecabinets",
+      "stripe_customer_ids": [],
+      "harvest_id": null
     }
   ],
-  "rowCount": 605,
+  "rowCount": 606,
   "notes": "Full customer roster from the allmoxy_core_customer tab of the local xlsx."
 }
