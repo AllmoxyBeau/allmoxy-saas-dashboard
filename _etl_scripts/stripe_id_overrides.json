@@ -1,7 +1,14 @@
 {
   "comment": "Inject missing stripe_customer_ids into the build pipeline when allmoxy_core_customer's stripe_customer_id_* fields are empty. This is a stop-gap until the customer record gets the IDs filled in directly in the source xlsx — once that happens, the override is harmlessly redundant. Each override appends to the customer's stripe_customer_ids array if not already present.",
-  "updated_at": "2026-05-01",
+  "updated_at": "2026-08-11",
   "overrides": [
+    {
+      "allmoxy_customer_id": 2092,
+      "name": "Fox Creek Cabinets",
+      "stripe_customer_ids": ["cus_UzEseP20lCR8vi"],
+      "reason": "Fox Creek (roster aid 2092) first paid $475 in 2026-07 via Stripe cus_UzEseP20lCR8vi, but the Stripe id was empty in the roster AND the Stripe customer has no allmoxy_customer_id in metadata, so it stayed orphaned and July new MRR read $0 instead of $475. Name+email (wfoxcreek@gmail.com) match the roster exactly.",
+      "added_by": "Beau, 2026-08-11"
+    },
     {
       "allmoxy_customer_id": 2060,
       "name": "Formations",

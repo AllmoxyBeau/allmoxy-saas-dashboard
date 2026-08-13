@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-11T13:32:05.717Z",
+  "fetched_at": "2026-08-13T14:08:35.425Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "by_category": {
@@ -7,7 +7,7 @@
       "amortization": 1,
       "variance": 3,
       "reclassification": 3,
-      "hygiene_stripe_id": 2,
+      "hygiene_stripe_id": 3,
       "synthetic_transaction": 1,
       "status_override": 16,
       "hygiene_connect_mapping": 1,
@@ -15,9 +15,9 @@
     },
     "by_severity": {
       "monetary": 26,
-      "hygiene": 4
+      "hygiene": 5
     },
-    "total": 30
+    "total": 31
   },
   "adjustments": [
     {
@@ -163,6 +163,22 @@
       "evidence": null,
       "source_file": "_etl_scripts/transaction_overrides.json",
       "added_by": "updated_at 2026-06-19"
+    },
+    {
+      "id": "hygiene-stripe-2092",
+      "category": "hygiene_stripe_id",
+      "severity": "hygiene",
+      "customer_name": "Fox Creek Cabinets",
+      "customer_id": 2092,
+      "period": null,
+      "txn_date": null,
+      "before": null,
+      "after": null,
+      "delta": null,
+      "reason": "Injected 1 Stripe customer ID(s): cus_UzEseP20lCR8vi. Fox Creek (roster aid 2092) first paid $475 in 2026-07 via Stripe cus_UzEseP20lCR8vi, but the Stripe id was empty in the roster AND the Stripe customer has no allmoxy_customer_id in metadata, so it stayed orphaned and July new MRR read $0 instead of $475. Name+email (wfoxcreek@gmail.com) match the roster exactly.",
+      "evidence": null,
+      "source_file": "_etl_scripts/stripe_id_overrides.json",
+      "added_by": "Beau, 2026-08-11"
     },
     {
       "id": "hygiene-stripe-2060",
@@ -495,7 +511,7 @@
       "before": null,
       "after": null,
       "delta": null,
-      "reason": "96 customer record(s) auto-classified status='never_paid' and excluded_from_logo_count=true (lifetime ≤ $0). Split: 69 pure never-paid (0 transactions) + 27 zero-net-revenue-with-activity (had transactions but they netted to $0 — refunds, chargebacks, reversed billing). Rationale: net economic contribution to Allmoxy was zero either way, so they should not appear in churn or logo counts. Sample: #44 Archer Mills, #45 Architectural Stairways, Inc., #46 Beaux Industries, ….",
+      "reason": "95 customer record(s) auto-classified status='never_paid' and excluded_from_logo_count=true (lifetime ≤ $0). Split: 68 pure never-paid (0 transactions) + 27 zero-net-revenue-with-activity (had transactions but they netted to $0 — refunds, chargebacks, reversed billing). Rationale: net economic contribution to Allmoxy was zero either way, so they should not appear in churn or logo counts. Sample: #44 Archer Mills, #45 Architectural Stairways, Inc., #46 Beaux Industries, ….",
       "evidence": null,
       "source_file": "_etl_scripts/apply_never_paid_classification.mjs",
       "added_by": "Auto-classifier (deterministic rule, not user-maintained)"

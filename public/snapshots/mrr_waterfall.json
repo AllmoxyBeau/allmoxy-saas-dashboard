@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-08-11T13:32:00.813Z",
-  "cachedUntil": "2026-08-11T13:37:00.813Z",
+  "fetchedAt": "2026-08-13T14:08:20.720Z",
+  "cachedUntil": "2026-08-13T14:13:20.720Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -21302,8 +21302,8 @@
             "name": "Quick Kitchens",
             "id": 2057,
             "mrr": 200,
-            "status": "non_payment",
-            "pay_status": "Active - Card Failure"
+            "status": "at_risk",
+            "pay_status": "Active"
           }
         ]
       }
@@ -21468,15 +21468,15 @@
     {
       "month": "2026-07",
       "starting_mrr": 233557.56,
-      "new_mrr": 0,
+      "new_mrr": 475,
       "reactivated_mrr": 250,
       "expansion_mrr": 3329.69,
       "contraction_mrr": 1818.05,
       "churn_mrr": 250,
       "delinquent_mrr": 1200,
-      "ending_mrr": 233869.2,
-      "net_new_mrr": 311.64,
-      "new_logos": 0,
+      "ending_mrr": 234344.2,
+      "net_new_mrr": 786.64,
+      "new_logos": 1,
       "reactivated_logos": 1,
       "churned_logos": 1,
       "delinquent_logos": 4,
@@ -21485,9 +21485,15 @@
       "expansion_rate_monthly": 0.0143,
       "grr_monthly": 0.9911,
       "nrr_monthly": 1.0054,
-      "quick_ratio": 1.61,
+      "quick_ratio": 1.84,
       "details": {
-        "new": [],
+        "new": [
+          {
+            "name": "Fox Creek Cabinets",
+            "id": 2092,
+            "mrr": 475
+          }
+        ],
         "reactivated": [
           {
             "name": "Urbania Cabinets",
@@ -21637,8 +21643,8 @@
             "name": "Quick Kitchens",
             "id": 2057,
             "mrr": 200,
-            "status": "non_payment",
-            "pay_status": "Active - Card Failure"
+            "status": "at_risk",
+            "pay_status": "Active"
           }
         ]
       }
@@ -21648,14 +21654,14 @@
     "windowStart": "2025-08",
     "windowEnd": "2026-07",
     "starting_mrr": 236102.28,
-    "ending_mrr": 233869.2,
-    "new_mrr": 22894.69,
+    "ending_mrr": 234344.2,
+    "new_mrr": 23369.69,
     "reactivated_mrr": 27407.17,
     "expansion_mrr": 24506.07,
     "contraction_mrr": 40480.37,
     "churn_mrr": 16286.44,
     "delinquent_mrr": 20274.2,
-    "net_new_mrr": -2233.08,
+    "net_new_mrr": -1758.08,
     "gross_mrr_churn_ttm": 0.069,
     "annual_gross_churn_rate": 0.0681,
     "annual_grr": 0.7822,
