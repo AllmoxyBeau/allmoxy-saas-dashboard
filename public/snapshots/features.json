@@ -1,7 +1,7 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-08-17T03:17:20.494Z",
-  "jira_fetchedAt": "2026-08-17T03:17:20.256Z",
+  "fetchedAt": "2026-08-17T14:23:39.255Z",
+  "jira_fetchedAt": "2026-08-17T14:23:39.076Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
     "total_tickets": 4236,
@@ -7143,7 +7143,7 @@
           "allmoxy_customer_id": 2064,
           "name": "Windsor Place",
           "mrr": 272.19,
-          "lifetime": 1848.07,
+          "lifetime": 2120.26,
           "status": "active"
         }
       ],
@@ -7156,7 +7156,7 @@
       "active_customer_count": 9,
       "total_mrr": 22663.72,
       "total_arr": 271964.64,
-      "total_lifetime": 1422647.09,
+      "total_lifetime": 1422919.28,
       "unmatched_labels": [
         "SouthernStone",
         "brandenbergercustom",
@@ -8295,7 +8295,7 @@
           "allmoxy_customer_id": 2064,
           "name": "Windsor Place",
           "mrr": 272.19,
-          "lifetime": 1848.07,
+          "lifetime": 2120.26,
           "status": "active"
         },
         {
@@ -8343,7 +8343,7 @@
       "active_customer_count": 9,
       "total_mrr": 20387.44,
       "total_arr": 244649.28,
-      "total_lifetime": 1991975.61,
+      "total_lifetime": 1992247.8,
       "unmatched_labels": [
         "HogansCabinetry",
         "Midwest",
@@ -53413,7 +53413,7 @@
         }
       ],
       "created": "2026-07-23",
-      "updated": "2026-08-14",
+      "updated": "2026-08-17",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12470",
       "tag_count": 1,
@@ -62445,7 +62445,7 @@
           "name": "Staley Custom Cabinets",
           "mrr": 748.49,
           "lifetime": 35593.01,
-          "status": "active"
+          "status": "at_risk"
         }
       ],
       "created": "2026-04-17",
@@ -62474,7 +62474,7 @@
           "name": "Staley Custom Cabinets",
           "mrr": 748.49,
           "lifetime": 35593.01,
-          "status": "active"
+          "status": "at_risk"
         }
       ],
       "created": "2025-05-28",
@@ -66798,6 +66798,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12791",
+      "summary": "Dev - can’t click on a category on an order",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 651,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-08-14",
+      "updated": "2026-08-17",
+      "resolved": "2026-08-14",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12791",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12692",
       "summary": "Some list/report columns too narrow",
       "status": "Ready For QA",
@@ -66963,35 +66992,6 @@
       "updated": "2026-08-14",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12614",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12791",
-      "summary": "Dev - can’t click on a category on an order",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 651,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-08-14",
-      "updated": "2026-08-14",
-      "resolved": "2026-08-14",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12791",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -73007,14 +73007,14 @@
     {
       "key": "DEV-12780",
       "summary": "Corona Millworks: \"Allow this person to log in\" does not persist when saved by two specific users",
-      "status": "Ready For QA",
+      "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 719,
       "customers": [],
       "created": "2026-08-13",
-      "updated": "2026-08-15",
+      "updated": "2026-08-17",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12780",
       "tag_count": 2,
@@ -73029,6 +73029,29 @@
       ]
     },
     {
+      "key": "DEV-12670",
+      "summary": "Email Logs",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-05-27",
+      "updated": "2026-08-17",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12670",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-12459",
       "summary": "Attachment Deletion Permissions",
       "status": "New",
@@ -73038,7 +73061,7 @@
       "issue_score": 298,
       "customers": [],
       "created": "2026-07-22",
-      "updated": "2026-08-15",
+      "updated": "2026-08-17",
       "resolved": "2026-07-22",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12459",
       "tag_count": 2,
@@ -75206,29 +75229,6 @@
       "updated": "2026-08-14",
       "resolved": "2026-04-21",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11865",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12670",
-      "summary": "Email Logs",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-05-27",
-      "updated": "2026-08-14",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12670",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
