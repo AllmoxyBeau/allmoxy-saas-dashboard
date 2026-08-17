@@ -1,7 +1,7 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-08-15T20:24:53.523Z",
-  "jira_fetchedAt": "2026-08-15T20:24:53.422Z",
+  "fetchedAt": "2026-08-17T03:17:20.494Z",
+  "jira_fetchedAt": "2026-08-17T03:17:20.256Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
     "total_tickets": 4236,
@@ -657,7 +657,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         },
         {
@@ -726,7 +726,7 @@
       "active_customer_count": 18,
       "total_mrr": 53236.39,
       "total_arr": 638836.68,
-      "total_lifetime": 4714216.32,
+      "total_lifetime": 4715897.63,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -7297,7 +7297,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         },
         {
@@ -7317,7 +7317,7 @@
       "active_customer_count": 6,
       "total_mrr": 22362.98,
       "total_arr": 268355.76,
-      "total_lifetime": 1665771.41,
+      "total_lifetime": 1667452.72,
       "unmatched_labels": [
         "AWIHawaii",
         "CabinetParts",
@@ -14470,7 +14470,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -14483,7 +14483,7 @@
       "active_customer_count": 2,
       "total_mrr": 9742.23,
       "total_arr": 116906.76,
-      "total_lifetime": 670538.75,
+      "total_lifetime": 672220.06,
       "unmatched_labels": [
         "cuttingedge"
       ]
@@ -14508,7 +14508,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -14521,7 +14521,7 @@
       "active_customer_count": 2,
       "total_mrr": 9742.23,
       "total_arr": 116906.76,
-      "total_lifetime": 670538.75,
+      "total_lifetime": 672220.06,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -51670,6 +51670,37 @@
       ]
     },
     {
+      "key": "DEV-12809",
+      "summary": "Mullwoods - Order Totals rows (Subtotal, Tax, Shipping) unreadable in dark mode on order confirmation page",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 664,
+      "customers": [
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        }
+      ],
+      "created": "2026-08-14",
+      "updated": "2026-08-16",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12809",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 2006.25,
+      "total_arr": 24075,
+      "total_lifetime": 131404.61,
+      "unmatched_labels": [
+        "Fryburg"
+      ]
+    },
+    {
       "key": "DEV-12801",
       "summary": "NJ Drawers — email output page modal clips leading characters, and header address is invisible in dark mode",
       "status": "In Production",
@@ -51697,37 +51728,6 @@
       "total_arr": 24075,
       "total_lifetime": 131404.61,
       "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12809",
-      "summary": "Mullwoods - Order Totals rows (Subtotal, Tax, Shipping) unreadable in dark mode on order confirmation page",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 664,
-      "customers": [
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        }
-      ],
-      "created": "2026-08-14",
-      "updated": "2026-08-14",
-      "resolved": "2026-08-14",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12809",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 2006.25,
-      "total_arr": 24075,
-      "total_lifetime": 131404.61,
-      "unmatched_labels": [
-        "Fryburg"
-      ]
     },
     {
       "key": "DEV-12794",
@@ -52523,7 +52523,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52536,7 +52536,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52552,7 +52552,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52565,7 +52565,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52581,7 +52581,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52594,7 +52594,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52610,7 +52610,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52623,7 +52623,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -52641,7 +52641,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52654,7 +52654,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52670,7 +52670,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52683,7 +52683,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52699,7 +52699,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52712,7 +52712,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52728,7 +52728,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52741,7 +52741,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52757,7 +52757,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52770,7 +52770,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -52788,7 +52788,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52801,7 +52801,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52817,7 +52817,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52830,7 +52830,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52846,7 +52846,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52859,7 +52859,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52875,7 +52875,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52888,7 +52888,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52904,7 +52904,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52917,7 +52917,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52933,7 +52933,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52946,7 +52946,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52962,7 +52962,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -52975,7 +52975,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -52991,7 +52991,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -53004,7 +53004,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
@@ -53020,7 +53020,7 @@
           "allmoxy_customer_id": 396,
           "name": "Red Rock Milling LLC",
           "mrr": 1786.99,
-          "lifetime": 87774.33,
+          "lifetime": 89455.64,
           "status": "active"
         }
       ],
@@ -53033,7 +53033,7 @@
       "active_customer_count": 1,
       "total_mrr": 1786.99,
       "total_arr": 21443.88,
-      "total_lifetime": 87774.33,
+      "total_lifetime": 89455.64,
       "unmatched_labels": []
     },
     {
