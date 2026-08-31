@@ -1,17 +1,17 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-08-20T14:04:59.787Z",
-  "cachedUntil": "2026-08-20T14:09:59.787Z",
+  "fetchedAt": "2026-08-31T13:32:29.507Z",
+  "cachedUntil": "2026-08-31T13:37:29.507Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
-    "total_issues": 12,
+    "total_issues": 13,
     "resolved_count": 0,
     "by_category": {
       "hubspot_instance_missing_aid": {
-        "count": 3,
+        "count": 4,
         "label": "HubSpot Instance missing Allmoxy Customer ID",
         "severity_counts": {
-          "low": 2,
+          "low": 3,
           "medium": 1,
           "high": 0
         }
@@ -38,7 +38,7 @@
     "by_severity": {
       "high": 0,
       "medium": 3,
-      "low": 9
+      "low": 10
     }
   },
   "issues": [
@@ -77,6 +77,18 @@
       "suggested_aid": 2094,
       "suggested_customer_name": "Wood House Cabinets",
       "action": "Open HubSpot Instance \"Woodhouse Cabinets\", set Allmoxy Customer ID = 2094"
+    },
+    {
+      "category": "hubspot_instance_missing_aid",
+      "category_label": "HubSpot Instance missing Allmoxy Customer ID",
+      "severity": "low",
+      "instance_id": "60844243228",
+      "account_name": "Criscott Properties",
+      "installer_id": "2165",
+      "pay_status": "Active",
+      "suggested_aid": 2106,
+      "suggested_customer_name": "Criscott Properies",
+      "action": "Open HubSpot Instance \"Criscott Properties\", set Allmoxy Customer ID = 2106"
     },
     {
       "category": "hubspot_company_id_ghost",
