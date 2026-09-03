@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-31T13:32:28.588Z",
+  "fetched_at": "2026-09-03T16:43:06.250Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "by_category": {
@@ -29,9 +29,9 @@
       "period": null,
       "txn_date": null,
       "before": null,
-      "after": 55929.54,
+      "after": 53935.62,
       "delta": null,
-      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $55,929.54 across 27 months.",
+      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $53,935.62 across 26 months.",
       "evidence": null,
       "source_file": "src/data/annual_payers.json",
       "added_by": "updated_at 2026-06-12"
@@ -45,9 +45,9 @@
       "period": null,
       "txn_date": null,
       "before": null,
-      "after": 21384,
+      "after": 20394,
       "delta": null,
-      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $21,384 across 21 months.",
+      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $20,394 across 20 months.",
       "evidence": null,
       "source_file": "src/data/annual_payers.json",
       "added_by": "updated_at 2026-06-12"
@@ -511,7 +511,7 @@
       "before": null,
       "after": null,
       "delta": null,
-      "reason": "107 customer record(s) auto-classified status='never_paid' and excluded_from_logo_count=true (lifetime ≤ $0). Split: 80 pure never-paid (0 transactions) + 27 zero-net-revenue-with-activity (had transactions but they netted to $0 — refunds, chargebacks, reversed billing). Rationale: net economic contribution to Allmoxy was zero either way, so they should not appear in churn or logo counts. Sample: #44 Archer Mills, #45 Architectural Stairways, Inc., #46 Beaux Industries, ….",
+      "reason": "105 customer record(s) auto-classified status='never_paid' and excluded_from_logo_count=true (lifetime ≤ $0). Split: 78 pure never-paid (0 transactions) + 27 zero-net-revenue-with-activity (had transactions but they netted to $0 — refunds, chargebacks, reversed billing). Rationale: net economic contribution to Allmoxy was zero either way, so they should not appear in churn or logo counts. Sample: #44 Archer Mills, #45 Architectural Stairways, Inc., #46 Beaux Industries, ….",
       "evidence": null,
       "source_file": "_etl_scripts/apply_never_paid_classification.mjs",
       "added_by": "Auto-classifier (deterministic rule, not user-maintained)"

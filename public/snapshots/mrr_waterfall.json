@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-08-31T13:32:24.387Z",
-  "cachedUntil": "2026-08-31T13:37:24.387Z",
+  "fetchedAt": "2026-09-03T16:43:01.270Z",
+  "cachedUntil": "2026-09-03T16:48:01.270Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -4709,7 +4709,7 @@
             "id": 275,
             "mrr": 250,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           }
         ]
       }
@@ -13242,7 +13242,7 @@
             "name": "Wilson Cabinetry",
             "id": 416,
             "mrr": 250,
-            "status": "active",
+            "status": "non_payment",
             "pay_status": "Active"
           }
         ]
@@ -18271,7 +18271,7 @@
             "id": 275,
             "mrr": 399,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           }
         ]
       }
@@ -18423,7 +18423,7 @@
             "name": "Staley Custom Cabinets",
             "id": 437,
             "mrr": 749.68,
-            "status": "at_risk",
+            "status": "non_payment",
             "pay_status": "Active - Card Failure"
           },
           {
@@ -20064,7 +20064,7 @@
             "name": "Staley Custom Cabinets",
             "id": 437,
             "mrr": 749.68,
-            "status": "at_risk",
+            "status": "non_payment",
             "pay_status": "Active - Card Failure"
           },
           {
@@ -21622,7 +21622,7 @@
             "name": "Wilson Cabinetry",
             "id": 416,
             "mrr": 500,
-            "status": "active",
+            "status": "non_payment",
             "pay_status": "Active"
           },
           {
@@ -21648,25 +21648,184 @@
           }
         ]
       }
+    },
+    {
+      "month": "2026-08",
+      "starting_mrr": 234344.2,
+      "new_mrr": 419,
+      "reactivated_mrr": 950,
+      "expansion_mrr": 3618.06,
+      "contraction_mrr": 3954.39,
+      "churn_mrr": 250,
+      "delinquent_mrr": 12388.32,
+      "ending_mrr": 222738.55,
+      "net_new_mrr": -11605.65,
+      "new_logos": 1,
+      "reactivated_logos": 3,
+      "churned_logos": 1,
+      "delinquent_logos": 7,
+      "gross_churn_rate_monthly": 0.0011,
+      "net_churn_rate_monthly": 0.0025,
+      "expansion_rate_monthly": 0.0154,
+      "grr_monthly": 0.9821,
+      "nrr_monthly": 0.9975,
+      "quick_ratio": 0.96,
+      "details": {
+        "new": [
+          {
+            "name": "Criscott Properies",
+            "id": 2106,
+            "mrr": 419
+          }
+        ],
+        "reactivated": [
+          {
+            "name": "Lane Industries",
+            "id": 2037,
+            "mrr": 500
+          },
+          {
+            "name": "Cabinet Doors NJ Llc",
+            "id": 521,
+            "mrr": 250
+          },
+          {
+            "name": "Quick Kitchens",
+            "id": 2057,
+            "mrr": 200
+          }
+        ],
+        "expansion": [
+          {
+            "name": "Keystone Wood Specialties",
+            "id": 523,
+            "prev_mrr": 241.94,
+            "new_mrr": 3750,
+            "delta": 3508.06
+          },
+          {
+            "name": "Drawer Connection - DC Drawers",
+            "id": 3,
+            "prev_mrr": 3000,
+            "new_mrr": 3065,
+            "delta": 65
+          },
+          {
+            "name": "Lewis Cabinet Specialties Group LLC",
+            "id": 1,
+            "prev_mrr": 7955.24,
+            "new_mrr": 8000.24,
+            "delta": 45
+          }
+        ],
+        "contraction": [
+          {
+            "name": "Dot Custom Cabinets LLC",
+            "id": 385,
+            "prev_mrr": 1809,
+            "new_mrr": 49,
+            "delta": 1760
+          },
+          {
+            "name": "Midwest Floor Coverings",
+            "id": 211,
+            "prev_mrr": 3820.79,
+            "new_mrr": 2178.7,
+            "delta": 1642.09
+          },
+          {
+            "name": "Wurth LAC",
+            "id": 113,
+            "prev_mrr": 1072.5,
+            "new_mrr": 536.25,
+            "delta": 536.25
+          },
+          {
+            "name": "Raumplus",
+            "id": 7,
+            "prev_mrr": 100.25,
+            "new_mrr": 84.2,
+            "delta": 16.05
+          }
+        ],
+        "churn": [
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250
+          }
+        ],
+        "delinquent": [
+          {
+            "name": "Westwind",
+            "id": 43,
+            "mrr": 3673.95,
+            "status": "non_payment",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cabredo LLC",
+            "id": 164,
+            "mrr": 3299,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Vlux",
+            "id": 543,
+            "mrr": 1611.75,
+            "status": "at_risk",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Brave Custom Woodworking",
+            "id": 499,
+            "mrr": 1399,
+            "status": "non_payment",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cabinwood NY",
+            "id": 386,
+            "mrr": 998.13,
+            "status": "non_payment",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Staley Custom Cabinets",
+            "id": 437,
+            "mrr": 748.49,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Bella Imc",
+            "id": 31,
+            "mrr": 658,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          }
+        ]
+      }
     }
   ],
   "ttm": {
-    "windowStart": "2025-08",
-    "windowEnd": "2026-07",
-    "starting_mrr": 236102.28,
-    "ending_mrr": 234344.2,
-    "new_mrr": 23369.69,
-    "reactivated_mrr": 27407.17,
-    "expansion_mrr": 24506.07,
-    "contraction_mrr": 40480.37,
-    "churn_mrr": 16286.44,
-    "delinquent_mrr": 20274.2,
-    "net_new_mrr": -1758.08,
-    "gross_mrr_churn_ttm": 0.069,
-    "annual_gross_churn_rate": 0.0681,
-    "annual_grr": 0.7822,
-    "annual_nrr": 0.8711,
-    "quick_ratio": 0.84
+    "windowStart": "2025-09",
+    "windowEnd": "2026-08",
+    "starting_mrr": 232091.16,
+    "ending_mrr": 222738.55,
+    "new_mrr": 21955.69,
+    "reactivated_mrr": 22408.97,
+    "expansion_mrr": 26777.98,
+    "contraction_mrr": 35453.29,
+    "churn_mrr": 16212.44,
+    "delinquent_mrr": 28829.52,
+    "net_new_mrr": -9352.61,
+    "gross_mrr_churn_ttm": 0.0699,
+    "annual_gross_churn_rate": 0.0678,
+    "annual_grr": 0.7995,
+    "annual_nrr": 0.899,
+    "quick_ratio": 0.94
   },
   "notes": "MRR waterfall derived from per-customer × per-month subscription MRR in customer_profiles.monthly_history (live Stripe, boundary-slip corrected). New = customer first appears with MRR > 0. Churn = confirmed-churned customer (status churned) who had MRR > 0 last month and 0 this month. Delinquent = dropped to $0 but NOT confirmed churned (card failure / non-payment / at-risk) — a missed cycle they may still pay; reported separately from churn but also reduces ending MRR. Expansion / Contraction are intra-customer month-over-month MRR changes. Services and Connect revenue are NOT included — subscription only."
 }

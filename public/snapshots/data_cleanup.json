@@ -1,18 +1,18 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-08-31T13:32:29.507Z",
-  "cachedUntil": "2026-08-31T13:37:29.507Z",
+  "fetchedAt": "2026-09-03T16:43:07.293Z",
+  "cachedUntil": "2026-09-03T16:48:07.294Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
-    "total_issues": 13,
+    "total_issues": 15,
     "resolved_count": 0,
     "by_category": {
       "hubspot_instance_missing_aid": {
-        "count": 4,
+        "count": 6,
         "label": "HubSpot Instance missing Allmoxy Customer ID",
         "severity_counts": {
-          "low": 3,
-          "medium": 1,
+          "low": 4,
+          "medium": 2,
           "high": 0
         }
       },
@@ -37,8 +37,8 @@
     },
     "by_severity": {
       "high": 0,
-      "medium": 3,
-      "low": 10
+      "medium": 4,
+      "low": 11
     }
   },
   "issues": [
@@ -82,6 +82,18 @@
       "category": "hubspot_instance_missing_aid",
       "category_label": "HubSpot Instance missing Allmoxy Customer ID",
       "severity": "low",
+      "instance_id": "60744912425",
+      "account_name": "RB Millwork",
+      "installer_id": "2159",
+      "pay_status": "Active",
+      "suggested_aid": 2100,
+      "suggested_customer_name": "Rb Millwork",
+      "action": "Open HubSpot Instance \"RB Millwork\", set Allmoxy Customer ID = 2100"
+    },
+    {
+      "category": "hubspot_instance_missing_aid",
+      "category_label": "HubSpot Instance missing Allmoxy Customer ID",
+      "severity": "low",
       "instance_id": "60844243228",
       "account_name": "Criscott Properties",
       "installer_id": "2165",
@@ -89,6 +101,18 @@
       "suggested_aid": 2106,
       "suggested_customer_name": "Criscott Properies",
       "action": "Open HubSpot Instance \"Criscott Properties\", set Allmoxy Customer ID = 2106"
+    },
+    {
+      "category": "hubspot_instance_missing_aid",
+      "category_label": "HubSpot Instance missing Allmoxy Customer ID",
+      "severity": "medium",
+      "instance_id": "61198798504",
+      "account_name": "Precise Closets & Cabinetry",
+      "installer_id": "2170",
+      "pay_status": "Active",
+      "suggested_aid": null,
+      "suggested_customer_name": null,
+      "action": "Open HubSpot Instance \"Precise Closets & Cabinetry\" — no installer_id match, requires manual lookup"
     },
     {
       "category": "hubspot_company_id_ghost",
