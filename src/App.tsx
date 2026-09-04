@@ -12,6 +12,7 @@ const LogoWaterfall = lazy(() => import('./pages/LogoWaterfall'));
 const CohortRetention = lazy(() => import('./pages/CohortRetention'));
 const NetRevenueRetention = lazy(() => import('./pages/NetRevenueRetention'));
 const UnitEconomics = lazy(() => import('./pages/UnitEconomics'));
+const RevenueRecognition = lazy(() => import('./pages/RevenueRecognition'));
 const CustomerHealth = lazy(() => import('./pages/CustomerHealth'));
 const Efficiency = lazy(() => import('./pages/Efficiency'));
 const ChurnPatterns = lazy(() => import('./pages/ChurnPatterns'));
@@ -72,6 +73,7 @@ export default function App() {
         <Route path="overview" element={<NorthStar />} />
         <Route path="current-month" element={<L><CurrentMonth /></L>} />
         <Route path="revenue-waterfall" element={<L><RevenueWaterfall /></L>} />
+        <Route path="revenue-recognition" element={<L><RevenueRecognition /></L>} />
         <Route path="logo-waterfall" element={<L><LogoWaterfall /></L>} />
         <Route path="cohort-retention" element={<L><CohortRetention /></L>} />
         <Route path="net-revenue-retention" element={<L><NetRevenueRetention /></L>} />

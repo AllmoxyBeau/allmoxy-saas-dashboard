@@ -577,6 +577,15 @@ runScript('build_data_cleanup.mjs', null); // writes data_cleanup.json itself
 console.log('  applying Stripe revenue seam to monthly aggregates (June 2026+)…');
 runScript('apply_stripe_seam_monthly.mjs', null);
 
+// Revenue Recognition (accrual / invoice basis) — parallel to the cash pipeline.
+// Recognizes subscription revenue by service period from Stripe invoices (cache
+// refreshed by sync_stripe_invoices in the npm refresh chain). Runs AFTER the
+// monthly seam so the cash comparison uses final mrr_by_month figures. Writes
+// revenue_recognition.json itself. Additive — no cash figure changes.
+console.log('  building revenue recognition (accrual / invoice basis)…');
+try { runScript('build_revenue_recognition.mjs', null); }
+catch (e) { console.log('  ⚠ revenue recognition build failed (kept previous snapshot):', e.message); }
+
 // QoE-6 Invariant tests — run AFTER all snapshots are built so they can cross-check
 // for consistency. Writes invariant_test_results.json. Exits non-zero on error-severity
 // failures, but we capture that without halting refresh_all (warnings/errors are

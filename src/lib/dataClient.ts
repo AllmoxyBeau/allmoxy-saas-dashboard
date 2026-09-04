@@ -46,6 +46,7 @@ export const KNOWN_SNAPSHOTS = [
   'data_cleanup',
   'aurora_orders',
   'hubspot_tickets',
+  'revenue_recognition',
 ] as const;
 
 export type SnapshotName = (typeof KNOWN_SNAPSHOTS)[number];

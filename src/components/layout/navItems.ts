@@ -52,6 +52,7 @@ export const NAV_ENTRIES: NavEntry[] = [
     items: [
       { label: 'Current Month', path: '/current-month' },
       { label: 'Revenue Waterfall', path: '/revenue-waterfall' },
+      { label: 'Revenue Recognition', path: '/revenue-recognition' },
       { label: 'Logo Waterfall', path: '/logo-waterfall' },
       { label: 'Cohort Retention', path: '/cohort-retention' },
       { label: 'Net Revenue Retention', path: '/net-revenue-retention' },

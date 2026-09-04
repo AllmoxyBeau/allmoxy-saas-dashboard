@@ -80,7 +80,7 @@ for (const p of PROF) {
 const profByAid = new Map(PROF.map((p) => [p.allmoxy_customer_id, p]));
 
 // --- comparison for 2026 months ---
-const MONTHS = ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06'];
+const MONTHS = ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06', '2026-07', '2026-08'];
 const sumInv = (m) => [...invMrr.values()].reduce((s, o) => s + (o[m] || 0), 0);
 const chgMonthTotal = (m) => (MRR.find((r) => r.month === m)?.mrr_subscription || 0);
 
@@ -118,7 +118,7 @@ phantom.slice(0, 12).forEach((p) => console.log(`   ${p.name}: invoice $${Math.r
 
 // --- AR ---
 console.log(`\n=== AR (open/uncollectible invoices) ===`);
-console.log(`total $${Math.round(arTotal).toLocaleString()} · by recent month: ${MONTHS.concat('2026-07').map((m) => `${m.slice(5)}:$${Math.round(arByMonth[m] || 0).toLocaleString()}`).join('  ')}`);
+console.log(`total $${Math.round(arTotal).toLocaleString()} · by recent month: ${MONTHS.map((m) => `${m.slice(5)}:$${Math.round(arByMonth[m] || 0).toLocaleString()}`).join('  ')}`);
 
 // --- DOT spotlight ---
 const dot = PROF.find((p) => /^Dot Custom/i.test(p.name));
@@ -136,7 +136,7 @@ if (dot) {
 // through their LAST active month. Months after the last invoice stay $0 (real
 // lapse/churn). This is the "subscription state" view — a missed/late invoice or
 // a card failure never zeroes MRR; only a true stop does. ---
-const ALLMONTHS = ['2025-08', '2025-09', '2025-10', '2025-11', '2025-12', '2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06', '2026-07'];
+const ALLMONTHS = ['2025-08', '2025-09', '2025-10', '2025-11', '2025-12', '2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06', '2026-07', '2026-08'];
 function fillForward(seriesMap) {
   const out = new Map();
   for (const [aid, o] of seriesMap) {
@@ -163,7 +163,7 @@ for (const aid of allAids) {
   const io = invMrrFilled.get(aid) || {}, co = chgMrr.get(aid) || {};
   const hasInv = invCustomers.has(aid);
   const o = {};
-  for (const m of MONTHS.concat(['2026-07'])) o[m] = hasInv ? (io[m] || 0) : (co[m] || 0);
+  for (const m of MONTHS) o[m] = hasInv ? (io[m] || 0) : (co[m] || 0);
   hybrid.set(aid, o);
 }
 
@@ -204,7 +204,7 @@ console.log(`\nHybrid June MRR: $${Math.round(hybridJune).toLocaleString()}  (in
 
 // --- write prototype snapshot ---
 const invByMonthAgg = {};
-for (const m of MONTHS.concat(['2026-07'])) invByMonthAgg[m] = r2(sumInv(m));
+for (const m of MONTHS) invByMonthAgg[m] = r2(sumInv(m));
 fs.writeFileSync(path.join(SNAP, 'invoice_mrr_prototype.json'), JSON.stringify({
   generatedAt: INV.fetchedAt,
   basis: 'invoice service-period accrual (recurring lines); AR = open/uncollectible',
