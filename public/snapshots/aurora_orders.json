@@ -1,6 +1,6 @@
 {
   "source": "aurora:allmoxy_core",
-  "fetchedAt": "2026-09-03T16:40:52.374Z",
+  "fetchedAt": "2026-09-04T13:10:24.606Z",
   "note": "Verified-order $ (monthly) + cumulative order counts per customer, from the Aurora warehouse. installation_id mapped to allmoxy_customer_id via customers.installer_id. Order counts are a running cumulative snapshot; monthly deltas accrue as more daily snapshots land.",
   "verified_order_months": [
     "2026-05",
@@ -8,14 +8,14 @@
     "2026-07",
     "2026-08"
   ],
-  "total_orders_asof": "2026-09-03",
+  "total_orders_asof": "2026-09-04",
   "totals": {
     "customers": 290,
     "unmapped_instances": 96,
-    "total_orders_sum": 2129762,
-    "verified_latest_month": 27732176.91,
+    "total_orders_sum": 2131003,
+    "verified_latest_month": 27715703.95,
     "verified_months": 4,
-    "total_orders_asof": "2026-09-03"
+    "total_orders_asof": "2026-09-04"
   },
   "by_customer": [
     {
@@ -26,10 +26,10 @@
         "2026-05": 1498257.96,
         "2026-06": 1640786.79,
         "2026-07": 1587996.92,
-        "2026-08": 1709912.53
+        "2026-08": 1707673.54
       },
-      "total_orders": 275343,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 275433,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 1,
@@ -42,7 +42,7 @@
         "2026-08": 0
       },
       "total_orders": 167663,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 9,
@@ -54,8 +54,8 @@
         "2026-07": 2220433.82,
         "2026-08": 1785456.75
       },
-      "total_orders": 143100,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 143128,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 38,
@@ -67,8 +67,8 @@
         "2026-07": 886046.52,
         "2026-08": 829718.72
       },
-      "total_orders": 97957,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 98008,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 12,
@@ -78,10 +78,10 @@
         "2026-05": 534756.63,
         "2026-06": 527850.04,
         "2026-07": 440225.49,
-        "2026-08": 452858.67
+        "2026-08": 453470.58
       },
-      "total_orders": 83948,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 83960,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2,
@@ -94,7 +94,7 @@
         "2026-08": 0
       },
       "total_orders": 76144,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 3,
@@ -104,10 +104,10 @@
         "2026-05": 207729.29,
         "2026-06": 289616.24,
         "2026-07": 293461.21,
-        "2026-08": 259693.16
+        "2026-08": 259717.08
       },
-      "total_orders": 72736,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 72765,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 161,
@@ -117,10 +117,10 @@
         "2026-05": 373376.99,
         "2026-06": 413434.5,
         "2026-07": 441133.39,
-        "2026-08": 382637.9
+        "2026-08": 385121.47
       },
-      "total_orders": 65999,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 66025,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 13,
@@ -130,10 +130,10 @@
         "2026-05": 758861.79,
         "2026-06": 953716.61,
         "2026-07": 899012.79,
-        "2026-08": 766140.05
+        "2026-08": 766027
       },
-      "total_orders": 65206,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 65233,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 75,
@@ -143,10 +143,10 @@
         "2026-05": 554866.85,
         "2026-06": 687551.17,
         "2026-07": 668559.65,
-        "2026-08": 554947.87
+        "2026-08": 559586.72
       },
-      "total_orders": 55657,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 55690,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 43,
@@ -158,8 +158,8 @@
         "2026-07": 541482.28,
         "2026-08": 481129.25
       },
-      "total_orders": 53136,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 53178,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 72,
@@ -171,8 +171,8 @@
         "2026-07": 689842.64,
         "2026-08": 659963.61
       },
-      "total_orders": 49946,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 50007,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 318,
@@ -184,8 +184,8 @@
         "2026-07": 407416.08,
         "2026-08": 401764.19
       },
-      "total_orders": 47525,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 47597,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 26,
@@ -197,8 +197,8 @@
         "2026-07": 247355.29,
         "2026-08": 335662.37
       },
-      "total_orders": 34795,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 34806,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 256,
@@ -208,10 +208,10 @@
         "2026-05": 568831.34,
         "2026-06": 626075.69,
         "2026-07": 622332.93,
-        "2026-08": 582777.99
+        "2026-08": 582254.67
       },
-      "total_orders": 33472,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 33489,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 20,
@@ -221,10 +221,10 @@
         "2026-05": 242710.32,
         "2026-06": 262839.37,
         "2026-07": 235934.89,
-        "2026-08": 213663.78
+        "2026-08": 213076.74
       },
-      "total_orders": 31640,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 31650,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 17,
@@ -236,8 +236,8 @@
         "2026-07": 343481.31,
         "2026-08": 314946.71
       },
-      "total_orders": 30929,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 30936,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 130,
@@ -247,10 +247,10 @@
         "2026-05": 1312604.21,
         "2026-06": 1217607.41,
         "2026-07": 1355195.53,
-        "2026-08": 1647820.01
+        "2026-08": 1647930.01
       },
-      "total_orders": 25588,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 25606,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 42,
@@ -260,10 +260,10 @@
         "2026-05": 85595.31,
         "2026-06": 87405.98,
         "2026-07": 82502.57,
-        "2026-08": 79912.34
+        "2026-08": 79940.59
       },
-      "total_orders": 24143,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 24145,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 108,
@@ -275,8 +275,8 @@
         "2026-07": 0,
         "2026-08": 97.99
       },
-      "total_orders": 22281,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 22293,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 136,
@@ -288,8 +288,8 @@
         "2026-07": 1820481.28,
         "2026-08": 2004612.82
       },
-      "total_orders": 19646,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 19660,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 449,
@@ -299,10 +299,10 @@
         "2026-05": 1004673,
         "2026-06": 1122898,
         "2026-07": 1406889,
-        "2026-08": 1013838.86
+        "2026-08": 1013871.86
       },
-      "total_orders": 19262,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 19308,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 159,
@@ -314,8 +314,8 @@
         "2026-07": 242134.67,
         "2026-08": 234783.79
       },
-      "total_orders": 19214,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 19230,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 22,
@@ -327,8 +327,8 @@
         "2026-07": 254302.1,
         "2026-08": 259283.12
       },
-      "total_orders": 19086,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 19098,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 30,
@@ -340,8 +340,8 @@
         "2026-07": 182293.2,
         "2026-08": 164052.85
       },
-      "total_orders": 18896,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 18903,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 293,
@@ -351,10 +351,10 @@
         "2026-05": 301190.1,
         "2026-06": 387828.12,
         "2026-07": 339271.99,
-        "2026-08": 308144.06
+        "2026-08": 307864.06
       },
-      "total_orders": 18119,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 18149,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 479,
@@ -366,8 +366,8 @@
         "2026-07": 1867602.97,
         "2026-08": 1805768.74
       },
-      "total_orders": 17759,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 17807,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 15,
@@ -377,10 +377,10 @@
         "2026-05": 146646.56,
         "2026-06": 117685.07,
         "2026-07": 159724.85,
-        "2026-08": 167419.55
+        "2026-08": 167869.55
       },
-      "total_orders": 16982,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 16988,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 79,
@@ -392,8 +392,8 @@
         "2026-07": 228966.79,
         "2026-08": 225964.01
       },
-      "total_orders": 16389,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 16391,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 300,
@@ -403,10 +403,10 @@
         "2026-05": 506516.9,
         "2026-06": 577389.21,
         "2026-07": 554704.8,
-        "2026-08": 688559.88
+        "2026-08": 688489.19
       },
-      "total_orders": 15549,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 15579,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 23,
@@ -418,8 +418,8 @@
         "2026-07": 216620.04,
         "2026-08": 165708.57
       },
-      "total_orders": 15546,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 15553,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 491,
@@ -429,10 +429,10 @@
         "2026-05": 446551.69,
         "2026-06": 573190.81,
         "2026-07": 518638.18,
-        "2026-08": 592105.92
+        "2026-08": 592269.52
       },
-      "total_orders": 15443,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 15471,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 82,
@@ -442,10 +442,10 @@
         "2026-05": 262955.97,
         "2026-06": 269862.91,
         "2026-07": 249193.92,
-        "2026-08": 236505.46
+        "2026-08": 236383.54
       },
-      "total_orders": 15330,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 15341,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 11,
@@ -457,8 +457,8 @@
         "2026-07": 49016.24,
         "2026-08": 43585.11
       },
-      "total_orders": 15258,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 15263,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 198,
@@ -468,10 +468,10 @@
         "2026-05": 380117.52,
         "2026-06": 364917.76,
         "2026-07": 460099.07,
-        "2026-08": 341873.47
+        "2026-08": 339494.67
       },
-      "total_orders": 14942,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 14978,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 131,
@@ -481,10 +481,10 @@
         "2026-05": 250736.94,
         "2026-06": 292194.05,
         "2026-07": 191274.35,
-        "2026-08": 253767.51
+        "2026-08": 253769.01
       },
-      "total_orders": 14561,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 14564,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 211,
@@ -496,8 +496,8 @@
         "2026-07": 458940.1,
         "2026-08": 85285.72
       },
-      "total_orders": 13869,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 13886,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 319,
@@ -507,10 +507,10 @@
         "2026-05": 639497.29,
         "2026-06": 591684.78,
         "2026-07": 499551.78,
-        "2026-08": 425474.68
+        "2026-08": 411016.05
       },
-      "total_orders": 12795,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 12799,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 382,
@@ -520,10 +520,10 @@
         "2026-05": 218446.76,
         "2026-06": 290453.72,
         "2026-07": 259947.23,
-        "2026-08": 198923.81
+        "2026-08": 200499.12
       },
-      "total_orders": 12551,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 12567,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 343,
@@ -535,8 +535,8 @@
         "2026-07": 6075.4,
         "2026-08": 2409.62
       },
-      "total_orders": 12462,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 12470,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 37,
@@ -549,7 +549,7 @@
         "2026-08": 0
       },
       "total_orders": 11598,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 262,
@@ -561,8 +561,8 @@
         "2026-07": 151788.12,
         "2026-08": 119944.29
       },
-      "total_orders": 11400,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 11401,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 18,
@@ -572,10 +572,10 @@
         "2026-05": 96491.37,
         "2026-06": 127212.32,
         "2026-07": 129401,
-        "2026-08": 91976.81
+        "2026-08": 91914.9
       },
-      "total_orders": 11342,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 11346,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 168,
@@ -587,8 +587,8 @@
         "2026-07": 80805.31,
         "2026-08": 168759.01
       },
-      "total_orders": 10194,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 10203,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 19,
@@ -601,7 +601,7 @@
         "2026-08": 3751.65
       },
       "total_orders": 10005,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 278,
@@ -613,8 +613,8 @@
         "2026-07": 141706.43,
         "2026-08": 139593.43
       },
-      "total_orders": 9559,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 9568,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 73,
@@ -626,8 +626,8 @@
         "2026-07": 147444.26,
         "2026-08": 224151.52
       },
-      "total_orders": 8601,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 8603,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 84,
@@ -639,8 +639,8 @@
         "2026-07": 95120.43,
         "2026-08": 130519.66
       },
-      "total_orders": 8350,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 8356,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 8,
@@ -652,8 +652,8 @@
         "2026-07": 19744.62,
         "2026-08": 1979.74
       },
-      "total_orders": 8338,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 8341,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 83,
@@ -665,8 +665,8 @@
         "2026-07": 50933.38,
         "2026-08": 54312.07
       },
-      "total_orders": 7967,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 7972,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 385,
@@ -678,8 +678,8 @@
         "2026-07": 272986.2,
         "2026-08": 183301.3
       },
-      "total_orders": 7712,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 7731,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 162,
@@ -691,8 +691,8 @@
         "2026-07": 37639.1,
         "2026-08": 47540.12
       },
-      "total_orders": 7486,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 7491,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 405,
@@ -704,8 +704,8 @@
         "2026-07": 371877.25,
         "2026-08": 373154.45
       },
-      "total_orders": 7466,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 7486,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 117,
@@ -717,8 +717,8 @@
         "2026-07": 63049.64,
         "2026-08": 46682.67
       },
-      "total_orders": 7411,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 7413,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 206,
@@ -730,8 +730,8 @@
         "2026-07": 22899.61,
         "2026-08": 22572.56
       },
-      "total_orders": 7313,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 7326,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 400,
@@ -743,8 +743,8 @@
         "2026-07": 123747.86,
         "2026-08": 78459.11
       },
-      "total_orders": 7199,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 7209,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 246,
@@ -754,10 +754,10 @@
         "2026-05": 350744.46,
         "2026-06": 361140.15,
         "2026-07": 448664.58,
-        "2026-08": 399876.17
+        "2026-08": 400788.68
       },
-      "total_orders": 7063,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 7065,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 76,
@@ -769,8 +769,8 @@
         "2026-07": 17801.18,
         "2026-08": 18145.62
       },
-      "total_orders": 6956,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 6958,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 463,
@@ -783,7 +783,7 @@
         "2026-08": 0
       },
       "total_orders": 6925,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 21,
@@ -796,7 +796,7 @@
         "2026-08": 0
       },
       "total_orders": 6847,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 97,
@@ -808,8 +808,8 @@
         "2026-07": 39186.86,
         "2026-08": 61977.44
       },
-      "total_orders": 6682,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 6685,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 423,
@@ -819,10 +819,10 @@
         "2026-05": 411384.27,
         "2026-06": 476433.72,
         "2026-07": 526776.27,
-        "2026-08": 450045.77
+        "2026-08": 449823.03
       },
-      "total_orders": 6396,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 6415,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 333,
@@ -832,10 +832,10 @@
         "2026-05": 243264.68,
         "2026-06": 355414.35,
         "2026-07": 454246.38,
-        "2026-08": 377876.23
+        "2026-08": 378042.72
       },
-      "total_orders": 6283,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 6290,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 164,
@@ -847,8 +847,8 @@
         "2026-07": 0,
         "2026-08": 0
       },
-      "total_orders": 6241,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 6243,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 14,
@@ -860,8 +860,8 @@
         "2026-07": 60198.25,
         "2026-08": 35499.59
       },
-      "total_orders": 6211,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 6218,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 388,
@@ -871,10 +871,10 @@
         "2026-05": 87133.19,
         "2026-06": 145171.74,
         "2026-07": 143558.56,
-        "2026-08": 122775.13
+        "2026-08": 115738.79
       },
-      "total_orders": 6028,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 6030,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 7,
@@ -887,7 +887,7 @@
         "2026-08": 8719.95
       },
       "total_orders": 5265,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 304,
@@ -899,8 +899,8 @@
         "2026-07": 59572.4,
         "2026-08": 108673.21
       },
-      "total_orders": 5206,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 5208,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 107,
@@ -912,8 +912,8 @@
         "2026-07": 39728.01,
         "2026-08": 21599.35
       },
-      "total_orders": 5090,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 5091,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 351,
@@ -926,7 +926,7 @@
         "2026-08": 0
       },
       "total_orders": 4756,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 29,
@@ -938,8 +938,8 @@
         "2026-07": 167480.98,
         "2026-08": 56947.26
       },
-      "total_orders": 4671,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 4677,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 217,
@@ -951,8 +951,8 @@
         "2026-07": 93885.27,
         "2026-08": 52552.66
       },
-      "total_orders": 4483,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 4488,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 36,
@@ -962,10 +962,10 @@
         "2026-05": 219559.99,
         "2026-06": 394351.98,
         "2026-07": 982413.9,
-        "2026-08": 708235.83
+        "2026-08": 708465.23
       },
-      "total_orders": 4422,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 4475,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 443,
@@ -977,8 +977,8 @@
         "2026-07": 94101.18,
         "2026-08": 62520.7
       },
-      "total_orders": 4409,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 4419,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 113,
@@ -990,8 +990,8 @@
         "2026-07": 122203.13,
         "2026-08": 58716.52
       },
-      "total_orders": 4401,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 4406,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 301,
@@ -1003,8 +1003,8 @@
         "2026-07": 132333.44,
         "2026-08": 130468.62
       },
-      "total_orders": 4222,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 4224,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 31,
@@ -1016,8 +1016,8 @@
         "2026-07": 17475.71,
         "2026-08": 58207.06
       },
-      "total_orders": 4154,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 4156,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 27,
@@ -1029,8 +1029,8 @@
         "2026-07": 106909.04,
         "2026-08": 131029.26
       },
-      "total_orders": 3975,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 3979,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 355,
@@ -1042,8 +1042,21 @@
         "2026-07": 104434.31,
         "2026-08": 79699.37
       },
-      "total_orders": 3842,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 3846,
+      "total_orders_asof": "2026-09-04"
+    },
+    {
+      "allmoxy_customer_id": 545,
+      "name": "Cabinet Doors USA",
+      "installer_id": 2069,
+      "verified_by_month": {
+        "2026-05": 238690.04,
+        "2026-06": 350686.16,
+        "2026-07": 451448.47,
+        "2026-08": 165650.55
+      },
+      "total_orders": 3664,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 119,
@@ -1056,20 +1069,7 @@
         "2026-08": 0
       },
       "total_orders": 3650,
-      "total_orders_asof": "2026-09-03"
-    },
-    {
-      "allmoxy_customer_id": 545,
-      "name": "Cabinet Doors USA",
-      "installer_id": 2069,
-      "verified_by_month": {
-        "2026-05": 238690.04,
-        "2026-06": 350686.16,
-        "2026-07": 451448.47,
-        "2026-08": 165450.55
-      },
-      "total_orders": 3641,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 320,
@@ -1081,8 +1081,8 @@
         "2026-07": 138953.96,
         "2026-08": 118755.8
       },
-      "total_orders": 3511,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 3516,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 440,
@@ -1094,8 +1094,8 @@
         "2026-07": 34379.68,
         "2026-08": 42665.22
       },
-      "total_orders": 3402,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 3407,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 396,
@@ -1105,10 +1105,10 @@
         "2026-05": 107620.88,
         "2026-06": 157285.49,
         "2026-07": 107123.72,
-        "2026-08": 99988.1
+        "2026-08": 100163.1
       },
-      "total_orders": 3203,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 3213,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 279,
@@ -1120,8 +1120,8 @@
         "2026-07": 75922.17,
         "2026-08": 37711.82
       },
-      "total_orders": 3188,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 3190,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 95,
@@ -1133,8 +1133,8 @@
         "2026-07": 0,
         "2026-08": 0
       },
-      "total_orders": 3177,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 3178,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 391,
@@ -1146,8 +1146,8 @@
         "2026-07": 81718.82,
         "2026-08": 37380.11
       },
-      "total_orders": 2697,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 2698,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 502,
@@ -1159,8 +1159,8 @@
         "2026-07": 162133.19,
         "2026-08": 126520.51
       },
-      "total_orders": 2615,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 2621,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 99,
@@ -1172,8 +1172,8 @@
         "2026-07": 88638.76,
         "2026-08": 329401.6
       },
-      "total_orders": 2365,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 2366,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 427,
@@ -1185,8 +1185,8 @@
         "2026-07": 42759.01,
         "2026-08": 61119.57
       },
-      "total_orders": 2220,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 2223,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 432,
@@ -1198,8 +1198,8 @@
         "2026-07": 61623.95,
         "2026-08": 106509.77
       },
-      "total_orders": 2124,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 2126,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 455,
@@ -1211,8 +1211,8 @@
         "2026-07": 99385.14,
         "2026-08": 48462.61
       },
-      "total_orders": 2070,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 2072,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 387,
@@ -1224,8 +1224,8 @@
         "2026-07": 24650.55,
         "2026-08": 28333.49
       },
-      "total_orders": 2043,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 2045,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 16,
@@ -1237,8 +1237,8 @@
         "2026-07": 5180.09,
         "2026-08": 23547.55
       },
-      "total_orders": 1980,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1981,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 186,
@@ -1250,8 +1250,8 @@
         "2026-07": 286533.65,
         "2026-08": 247333.91
       },
-      "total_orders": 1956,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1958,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 310,
@@ -1264,7 +1264,7 @@
         "2026-08": 34738.93
       },
       "total_orders": 1870,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 237,
@@ -1276,8 +1276,8 @@
         "2026-07": 6924.47,
         "2026-08": 20030.04
       },
-      "total_orders": 1861,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1862,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 275,
@@ -1289,8 +1289,8 @@
         "2026-07": 7919.3,
         "2026-08": 8276.33
       },
-      "total_orders": 1813,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1814,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 393,
@@ -1303,7 +1303,7 @@
         "2026-08": 0
       },
       "total_orders": 1775,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 39,
@@ -1315,8 +1315,8 @@
         "2026-07": 19012.37,
         "2026-08": 17847.28
       },
-      "total_orders": 1446,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1447,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 386,
@@ -1329,7 +1329,7 @@
         "2026-08": 0
       },
       "total_orders": 1417,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 528,
@@ -1341,8 +1341,8 @@
         "2026-07": 50256.72,
         "2026-08": 37904.21
       },
-      "total_orders": 1264,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1267,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 488,
@@ -1354,8 +1354,8 @@
         "2026-07": 7340.36,
         "2026-08": 0
       },
-      "total_orders": 1250,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1251,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 284,
@@ -1368,7 +1368,7 @@
         "2026-08": 0
       },
       "total_orders": 1247,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 344,
@@ -1380,8 +1380,8 @@
         "2026-07": 33968.72,
         "2026-08": 30403.67
       },
-      "total_orders": 1161,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1164,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 77,
@@ -1394,7 +1394,7 @@
         "2026-08": 796.07
       },
       "total_orders": 1117,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 257,
@@ -1407,7 +1407,7 @@
         "2026-08": 0
       },
       "total_orders": 1098,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 172,
@@ -1420,7 +1420,7 @@
         "2026-08": 0
       },
       "total_orders": 1031,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 537,
@@ -1432,8 +1432,8 @@
         "2026-07": 48259.29,
         "2026-08": 46258.43
       },
-      "total_orders": 980,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 982,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 468,
@@ -1446,7 +1446,7 @@
         "2026-08": 0
       },
       "total_orders": 932,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 505,
@@ -1456,10 +1456,10 @@
         "2026-05": 44618.41,
         "2026-06": 102082.01,
         "2026-07": 61801.31,
-        "2026-08": 113366.69
+        "2026-08": 113183.85
       },
-      "total_orders": 878,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 880,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 34,
@@ -1472,7 +1472,7 @@
         "2026-08": 1177.93
       },
       "total_orders": 816,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 223,
@@ -1485,7 +1485,7 @@
         "2026-08": 0
       },
       "total_orders": 764,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 80,
@@ -1498,7 +1498,20 @@
         "2026-08": 6407.59
       },
       "total_orders": 746,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
+    },
+    {
+      "allmoxy_customer_id": 354,
+      "name": "Royal Plywood Co.",
+      "installer_id": 1610,
+      "verified_by_month": {
+        "2026-05": 11236.31,
+        "2026-06": 8336,
+        "2026-07": 16151.09,
+        "2026-08": 10420.69
+      },
+      "total_orders": 743,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 106,
@@ -1511,20 +1524,7 @@
         "2026-08": 9709.01
       },
       "total_orders": 740,
-      "total_orders_asof": "2026-09-03"
-    },
-    {
-      "allmoxy_customer_id": 354,
-      "name": "Royal Plywood Co.",
-      "installer_id": 1610,
-      "verified_by_month": {
-        "2026-05": 11236.31,
-        "2026-06": 8336,
-        "2026-07": 16151.09,
-        "2026-08": 10420.69
-      },
-      "total_orders": 740,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 322,
@@ -1537,7 +1537,7 @@
         "2026-08": 5112.55
       },
       "total_orders": 723,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 25,
@@ -1550,7 +1550,7 @@
         "2026-08": 0
       },
       "total_orders": 692,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 224,
@@ -1563,7 +1563,7 @@
         "2026-08": 21670.26
       },
       "total_orders": 660,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 289,
@@ -1576,7 +1576,7 @@
         "2026-08": 7567.81
       },
       "total_orders": 616,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 180,
@@ -1589,7 +1589,7 @@
         "2026-08": 0
       },
       "total_orders": 579,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 323,
@@ -1601,8 +1601,8 @@
         "2026-07": 15038.65,
         "2026-08": 22388.68
       },
-      "total_orders": 552,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 551,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 33,
@@ -1615,7 +1615,7 @@
         "2026-08": 0
       },
       "total_orders": 547,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 361,
@@ -1627,8 +1627,8 @@
         "2026-07": 0,
         "2026-08": 0
       },
-      "total_orders": 538,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 540,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 332,
@@ -1641,7 +1641,7 @@
         "2026-08": 0
       },
       "total_orders": 530,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 525,
@@ -1653,8 +1653,8 @@
         "2026-07": 53218.28,
         "2026-08": 25312.43
       },
-      "total_orders": 529,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 530,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 292,
@@ -1667,7 +1667,7 @@
         "2026-08": 6727.06
       },
       "total_orders": 456,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 285,
@@ -1679,8 +1679,8 @@
         "2026-07": 972.4,
         "2026-08": 1304.47
       },
-      "total_orders": 430,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 431,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 176,
@@ -1693,7 +1693,7 @@
         "2026-08": 0
       },
       "total_orders": 416,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 329,
@@ -1706,7 +1706,7 @@
         "2026-08": 0
       },
       "total_orders": 397,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2028,
@@ -1718,8 +1718,8 @@
         "2026-07": 67447.22,
         "2026-08": 72585.98
       },
-      "total_orders": 391,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 397,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 548,
@@ -1732,7 +1732,7 @@
         "2026-08": 73080.71
       },
       "total_orders": 359,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 160,
@@ -1745,7 +1745,7 @@
         "2026-08": 0
       },
       "total_orders": 299,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 78,
@@ -1758,7 +1758,7 @@
         "2026-08": 0
       },
       "total_orders": 224,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 483,
@@ -1770,8 +1770,8 @@
         "2026-07": 19929.47,
         "2026-08": 16418.27
       },
-      "total_orders": 209,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 210,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 437,
@@ -1784,7 +1784,7 @@
         "2026-08": 20184.43
       },
       "total_orders": 205,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 93,
@@ -1797,7 +1797,7 @@
         "2026-08": 0
       },
       "total_orders": 201,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 499,
@@ -1810,7 +1810,7 @@
         "2026-08": 0
       },
       "total_orders": 196,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 196,
@@ -1823,7 +1823,7 @@
         "2026-08": 64565.94
       },
       "total_orders": 185,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 516,
@@ -1836,7 +1836,7 @@
         "2026-08": 0
       },
       "total_orders": 170,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2101,
@@ -1847,7 +1847,7 @@
         "2026-08": 185250.96
       },
       "total_orders": 164,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 524,
@@ -1859,8 +1859,8 @@
         "2026-07": 25369.48,
         "2026-08": 32618.72
       },
-      "total_orders": 156,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 158,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 462,
@@ -1873,7 +1873,7 @@
         "2026-08": 0
       },
       "total_orders": 151,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 480,
@@ -1886,7 +1886,7 @@
         "2026-08": 0
       },
       "total_orders": 140,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2018,
@@ -1898,8 +1898,8 @@
         "2026-07": 217968.14,
         "2026-08": 2367.19
       },
-      "total_orders": 135,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 136,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 459,
@@ -1912,7 +1912,7 @@
         "2026-08": 0
       },
       "total_orders": 133,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 457,
@@ -1925,7 +1925,7 @@
         "2026-08": 0
       },
       "total_orders": 132,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 446,
@@ -1938,7 +1938,7 @@
         "2026-08": 8609.97
       },
       "total_orders": 132,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 500,
@@ -1950,8 +1950,8 @@
         "2026-07": 4750.5,
         "2026-08": 0
       },
-      "total_orders": 128,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 132,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 523,
@@ -1964,7 +1964,7 @@
         "2026-08": 0
       },
       "total_orders": 116,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 441,
@@ -1977,7 +1977,7 @@
         "2026-08": 0
       },
       "total_orders": 115,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 197,
@@ -1990,7 +1990,7 @@
         "2026-08": 0
       },
       "total_orders": 105,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 384,
@@ -2003,7 +2003,7 @@
         "2026-08": 0
       },
       "total_orders": 98,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 350,
@@ -2016,7 +2016,7 @@
         "2026-08": 640.04
       },
       "total_orders": 96,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 474,
@@ -2029,7 +2029,7 @@
         "2026-08": 0
       },
       "total_orders": 93,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 64,
@@ -2042,7 +2042,7 @@
         "2026-08": 0
       },
       "total_orders": 85,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 337,
@@ -2055,7 +2055,7 @@
         "2026-08": 0
       },
       "total_orders": 84,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 412,
@@ -2068,7 +2068,7 @@
         "2026-08": 0
       },
       "total_orders": 74,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 238,
@@ -2081,7 +2081,7 @@
         "2026-08": 0
       },
       "total_orders": 70,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 521,
@@ -2094,7 +2094,7 @@
         "2026-08": 189.36
       },
       "total_orders": 56,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 472,
@@ -2107,7 +2107,7 @@
         "2026-08": 0
       },
       "total_orders": 52,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 489,
@@ -2120,7 +2120,7 @@
         "2026-08": 0
       },
       "total_orders": 51,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 514,
@@ -2133,7 +2133,7 @@
         "2026-08": 0
       },
       "total_orders": 51,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 508,
@@ -2146,7 +2146,7 @@
         "2026-08": 0
       },
       "total_orders": 44,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 86,
@@ -2159,7 +2159,7 @@
         "2026-08": 0
       },
       "total_orders": 42,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 536,
@@ -2172,7 +2172,7 @@
         "2026-08": 0
       },
       "total_orders": 42,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 268,
@@ -2185,7 +2185,7 @@
         "2026-08": 0
       },
       "total_orders": 41,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 471,
@@ -2198,7 +2198,7 @@
         "2026-08": 0
       },
       "total_orders": 40,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2051,
@@ -2211,7 +2211,7 @@
         "2026-08": 10407.19
       },
       "total_orders": 40,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 515,
@@ -2224,7 +2224,7 @@
         "2026-08": 0
       },
       "total_orders": 38,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 529,
@@ -2237,7 +2237,7 @@
         "2026-08": 5661.91
       },
       "total_orders": 36,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 420,
@@ -2250,7 +2250,7 @@
         "2026-08": 0
       },
       "total_orders": 30,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 539,
@@ -2263,7 +2263,7 @@
         "2026-08": 487.57
       },
       "total_orders": 30,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 363,
@@ -2276,7 +2276,7 @@
         "2026-08": 0
       },
       "total_orders": 29,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 426,
@@ -2289,7 +2289,7 @@
         "2026-08": 0
       },
       "total_orders": 28,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 533,
@@ -2302,7 +2302,7 @@
         "2026-08": 0
       },
       "total_orders": 28,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2057,
@@ -2315,7 +2315,7 @@
         "2026-08": 0
       },
       "total_orders": 28,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 453,
@@ -2328,7 +2328,7 @@
         "2026-08": 0
       },
       "total_orders": 27,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 475,
@@ -2341,7 +2341,7 @@
         "2026-08": 0
       },
       "total_orders": 26,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 540,
@@ -2354,7 +2354,7 @@
         "2026-08": 0
       },
       "total_orders": 24,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 543,
@@ -2367,7 +2367,7 @@
         "2026-08": 0
       },
       "total_orders": 23,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 496,
@@ -2380,7 +2380,7 @@
         "2026-08": 0
       },
       "total_orders": 22,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 535,
@@ -2393,7 +2393,7 @@
         "2026-08": 2085.22
       },
       "total_orders": 22,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2081,
@@ -2405,7 +2405,7 @@
         "2026-08": 0
       },
       "total_orders": 22,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2088,
@@ -2417,7 +2417,7 @@
         "2026-08": 0
       },
       "total_orders": 22,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 485,
@@ -2430,7 +2430,7 @@
         "2026-08": 0
       },
       "total_orders": 21,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 522,
@@ -2443,7 +2443,7 @@
         "2026-08": 0
       },
       "total_orders": 16,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 532,
@@ -2456,7 +2456,7 @@
         "2026-08": 0
       },
       "total_orders": 16,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 338,
@@ -2469,7 +2469,7 @@
         "2026-08": 0
       },
       "total_orders": 15,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 513,
@@ -2482,7 +2482,20 @@
         "2026-08": 0
       },
       "total_orders": 15,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
+    },
+    {
+      "allmoxy_customer_id": 550,
+      "name": "Capital Millwork",
+      "installer_id": 2073,
+      "verified_by_month": {
+        "2026-05": 0,
+        "2026-06": 0,
+        "2026-07": 2980.71,
+        "2026-08": 4436.87
+      },
+      "total_orders": 15,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2105,
@@ -2506,20 +2519,7 @@
         "2026-08": 0
       },
       "total_orders": 14,
-      "total_orders_asof": "2026-09-03"
-    },
-    {
-      "allmoxy_customer_id": 550,
-      "name": "Capital Millwork",
-      "installer_id": 2073,
-      "verified_by_month": {
-        "2026-05": 0,
-        "2026-06": 0,
-        "2026-07": 2980.71,
-        "2026-08": 4436.87
-      },
-      "total_orders": 14,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2044,
@@ -2532,7 +2532,7 @@
         "2026-08": 24550.27
       },
       "total_orders": 14,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 353,
@@ -2545,7 +2545,7 @@
         "2026-08": 0
       },
       "total_orders": 13,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 442,
@@ -2558,7 +2558,7 @@
         "2026-08": 0
       },
       "total_orders": 12,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 377,
@@ -2571,7 +2571,7 @@
         "2026-08": 0
       },
       "total_orders": 11,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2037,
@@ -2584,7 +2584,7 @@
         "2026-08": 0
       },
       "total_orders": 11,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 547,
@@ -2597,7 +2597,7 @@
         "2026-08": 0
       },
       "total_orders": 10,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2027,
@@ -2610,7 +2610,7 @@
         "2026-08": 0
       },
       "total_orders": 10,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2056,
@@ -2623,7 +2623,7 @@
         "2026-08": 0
       },
       "total_orders": 10,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2060,
@@ -2636,7 +2636,7 @@
         "2026-08": 0
       },
       "total_orders": 10,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 297,
@@ -2649,7 +2649,7 @@
         "2026-08": 0
       },
       "total_orders": 9,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 534,
@@ -2662,7 +2662,7 @@
         "2026-08": 0
       },
       "total_orders": 9,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 538,
@@ -2675,7 +2675,7 @@
         "2026-08": 0
       },
       "total_orders": 9,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 546,
@@ -2688,7 +2688,7 @@
         "2026-08": 0
       },
       "total_orders": 9,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 416,
@@ -2701,7 +2701,7 @@
         "2026-08": 0
       },
       "total_orders": 8,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2045,
@@ -2714,7 +2714,7 @@
         "2026-08": 0
       },
       "total_orders": 8,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2031,
@@ -2727,7 +2727,7 @@
         "2026-08": 0
       },
       "total_orders": 7,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2058,
@@ -2740,7 +2740,7 @@
         "2026-08": 0
       },
       "total_orders": 7,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 245,
@@ -2753,7 +2753,7 @@
         "2026-08": 0
       },
       "total_orders": 6,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 298,
@@ -2766,7 +2766,7 @@
         "2026-08": 0
       },
       "total_orders": 6,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 218,
@@ -2779,7 +2779,7 @@
         "2026-08": 0
       },
       "total_orders": 6,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2059,
@@ -2792,7 +2792,7 @@
         "2026-08": 0
       },
       "total_orders": 6,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 527,
@@ -2805,7 +2805,7 @@
         "2026-08": 0
       },
       "total_orders": 5,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 551,
@@ -2818,7 +2818,7 @@
         "2026-08": 0
       },
       "total_orders": 5,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 555,
@@ -2831,7 +2831,7 @@
         "2026-08": 0
       },
       "total_orders": 5,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2036,
@@ -2844,7 +2844,7 @@
         "2026-08": 0
       },
       "total_orders": 5,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2041,
@@ -2857,7 +2857,7 @@
         "2026-08": 0
       },
       "total_orders": 5,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2077,
@@ -2870,7 +2870,7 @@
         "2026-08": 0
       },
       "total_orders": 5,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 50,
@@ -2883,7 +2883,7 @@
         "2026-08": 0
       },
       "total_orders": 4,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 530,
@@ -2896,7 +2896,7 @@
         "2026-08": 0
       },
       "total_orders": 4,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 504,
@@ -2909,7 +2909,7 @@
         "2026-08": 0
       },
       "total_orders": 4,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 309,
@@ -2922,7 +2922,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 531,
@@ -2935,7 +2935,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 541,
@@ -2948,7 +2948,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2019,
@@ -2961,7 +2961,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2020,
@@ -2974,7 +2974,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2026,
@@ -2987,7 +2987,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2043,
@@ -3000,7 +3000,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2052,
@@ -3013,7 +3013,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2084,
@@ -3025,7 +3025,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2085,
@@ -3037,7 +3037,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2089,
@@ -3049,7 +3049,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 439,
@@ -3062,7 +3062,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 497,
@@ -3075,7 +3075,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 510,
@@ -3088,7 +3088,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 542,
@@ -3101,7 +3101,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 418,
@@ -3114,7 +3114,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 544,
@@ -3127,7 +3127,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 553,
@@ -3140,7 +3140,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2025,
@@ -3153,7 +3153,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2048,
@@ -3166,7 +3166,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2063,
@@ -3179,7 +3179,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2064,
@@ -3192,7 +3192,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2093,
@@ -3203,7 +3203,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2098,
@@ -3214,7 +3214,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2099,
@@ -3225,7 +3225,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2100,
@@ -3236,7 +3236,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2106,
@@ -3247,7 +3247,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 495,
@@ -3260,7 +3260,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 511,
@@ -3273,7 +3273,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2016,
@@ -3286,7 +3286,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2049,
@@ -3299,7 +3299,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2053,
@@ -3312,7 +3312,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2062,
@@ -3325,7 +3325,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2078,
@@ -3338,7 +3338,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2079,
@@ -3351,7 +3351,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2102,
@@ -3362,7 +3362,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 371,
@@ -3375,7 +3375,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 399,
@@ -3388,7 +3388,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 506,
@@ -3401,7 +3401,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 512,
@@ -3414,7 +3414,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 517,
@@ -3427,7 +3427,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 519,
@@ -3440,7 +3440,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 520,
@@ -3453,7 +3453,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 549,
@@ -3466,7 +3466,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 552,
@@ -3479,7 +3479,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 554,
@@ -3492,7 +3492,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2015,
@@ -3505,7 +3505,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2023,
@@ -3518,7 +3518,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2029,
@@ -3531,7 +3531,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2032,
@@ -3544,7 +3544,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2046,
@@ -3557,7 +3557,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2047,
@@ -3570,7 +3570,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2050,
@@ -3583,7 +3583,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2065,
@@ -3596,7 +3596,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2082,
@@ -3608,7 +3608,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2083,
@@ -3620,7 +3620,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2086,
@@ -3632,7 +3632,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2087,
@@ -3644,7 +3644,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2090,
@@ -3656,7 +3656,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2091,
@@ -3668,7 +3668,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2092,
@@ -3679,7 +3679,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2094,
@@ -3690,7 +3690,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2095,
@@ -3701,7 +3701,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2096,
@@ -3712,7 +3712,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2097,
@@ -3723,7 +3723,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2103,
@@ -3734,7 +3734,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "allmoxy_customer_id": 2104,
@@ -3745,7 +3745,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     }
   ],
   "unmapped_instances": [
@@ -3758,7 +3758,7 @@
         "2026-08": 13935.31
       },
       "total_orders": 1051,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 357,
@@ -3769,7 +3769,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 385,
@@ -3780,7 +3780,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 409,
@@ -3791,7 +3791,7 @@
         "2026-08": 84336.82
       },
       "total_orders": 1053,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 740,
@@ -3802,7 +3802,7 @@
         "2026-08": 0
       },
       "total_orders": 74,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 941,
@@ -3813,7 +3813,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1000,
@@ -3824,7 +3824,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1074,
@@ -3835,7 +3835,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1135,
@@ -3846,7 +3846,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1142,
@@ -3857,7 +3857,7 @@
         "2026-08": 0
       },
       "total_orders": 21,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1215,
@@ -3868,7 +3868,7 @@
         "2026-08": 0
       },
       "total_orders": 58,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1216,
@@ -3878,8 +3878,8 @@
         "2026-07": 0,
         "2026-08": 0
       },
-      "total_orders": 1417,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1418,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1221,
@@ -3890,7 +3890,7 @@
         "2026-08": 0
       },
       "total_orders": 108,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1222,
@@ -3901,7 +3901,7 @@
         "2026-08": 0
       },
       "total_orders": 51,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1344,
@@ -3912,7 +3912,7 @@
         "2026-08": 0
       },
       "total_orders": 126,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1494,
@@ -3923,7 +3923,7 @@
         "2026-08": 0
       },
       "total_orders": 36,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1524,
@@ -3934,7 +3934,7 @@
         "2026-08": 0
       },
       "total_orders": 14,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1575,
@@ -3945,7 +3945,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1653,
@@ -3956,7 +3956,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1670,
@@ -3967,7 +3967,7 @@
         "2026-08": 0
       },
       "total_orders": 6,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1673,
@@ -3978,7 +3978,7 @@
         "2026-08": 0
       },
       "total_orders": 10,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1691,
@@ -3989,7 +3989,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1694,
@@ -4000,7 +4000,7 @@
         "2026-08": 0
       },
       "total_orders": 14,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1695,
@@ -4011,7 +4011,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1718,
@@ -4021,8 +4021,8 @@
         "2026-07": 0,
         "2026-08": 0
       },
-      "total_orders": 1256,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 5256,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1730,
@@ -4032,8 +4032,8 @@
         "2026-07": 0,
         "2026-08": 185250.96
       },
-      "total_orders": 506,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 466,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1752,
@@ -4044,7 +4044,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1763,
@@ -4055,7 +4055,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1790,
@@ -4066,7 +4066,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1809,
@@ -4077,7 +4077,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1820,
@@ -4088,7 +4088,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1827,
@@ -4099,7 +4099,7 @@
         "2026-08": 0
       },
       "total_orders": 446,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1838,
@@ -4110,7 +4110,7 @@
         "2026-08": 0
       },
       "total_orders": 11,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1854,
@@ -4121,7 +4121,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1865,
@@ -4132,7 +4132,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1868,
@@ -4143,7 +4143,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1870,
@@ -4154,7 +4154,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1881,
@@ -4165,7 +4165,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1916,
@@ -4176,7 +4176,7 @@
         "2026-08": 0
       },
       "total_orders": 10,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1917,
@@ -4187,7 +4187,7 @@
         "2026-08": 0
       },
       "total_orders": 9,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1921,
@@ -4198,7 +4198,7 @@
         "2026-08": 185250.96
       },
       "total_orders": 160,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1968,
@@ -4209,7 +4209,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1979,
@@ -4220,7 +4220,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1993,
@@ -4231,7 +4231,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1994,
@@ -4242,7 +4242,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2009,
@@ -4253,7 +4253,7 @@
         "2026-08": 185250.96
       },
       "total_orders": 160,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2010,
@@ -4264,7 +4264,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2012,
@@ -4275,7 +4275,7 @@
         "2026-08": 185250.96
       },
       "total_orders": 160,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2028,
@@ -4286,7 +4286,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2037,
@@ -4297,7 +4297,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2038,
@@ -4308,7 +4308,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2046,
@@ -4319,7 +4319,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2047,
@@ -4330,7 +4330,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2066,
@@ -4341,7 +4341,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2074,
@@ -4352,7 +4352,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2075,
@@ -4363,7 +4363,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2084,
@@ -4374,7 +4374,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2089,
@@ -4385,7 +4385,7 @@
         "2026-08": 0
       },
       "total_orders": 30,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2091,
@@ -4396,7 +4396,7 @@
         "2026-08": 0
       },
       "total_orders": 3,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2097,
@@ -4407,7 +4407,7 @@
         "2026-08": 0
       },
       "total_orders": 17,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2100,
@@ -4418,7 +4418,7 @@
         "2026-08": 0
       },
       "total_orders": 4,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2103,
@@ -4429,7 +4429,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2104,
@@ -4440,7 +4440,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2105,
@@ -4451,7 +4451,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2125,
@@ -4462,7 +4462,7 @@
         "2026-08": 0
       },
       "total_orders": 1860,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2131,
@@ -4473,7 +4473,7 @@
         "2026-08": 0
       },
       "total_orders": 24,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2132,
@@ -4483,8 +4483,8 @@
         "2026-07": 0,
         "2026-08": 0
       },
-      "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2133,
@@ -4495,7 +4495,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2134,
@@ -4506,7 +4506,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2135,
@@ -4517,7 +4517,7 @@
         "2026-08": 0
       },
       "total_orders": 2,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2139,
@@ -4528,7 +4528,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 10,
@@ -4537,7 +4537,7 @@
         "2026-08": 0
       },
       "total_orders": 68,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 11,
@@ -4546,7 +4546,7 @@
         "2026-08": 0
       },
       "total_orders": 129,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 386,
@@ -4555,7 +4555,7 @@
         "2026-08": 0
       },
       "total_orders": 13,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 388,
@@ -4564,7 +4564,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 390,
@@ -4572,8 +4572,8 @@
         "2026-07": 0,
         "2026-08": 0
       },
-      "total_orders": 1417,
-      "total_orders_asof": "2026-09-03"
+      "total_orders": 1418,
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 391,
@@ -4582,7 +4582,7 @@
         "2026-08": 0
       },
       "total_orders": 1,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 400,
@@ -4591,7 +4591,7 @@
         "2026-08": 0
       },
       "total_orders": 405,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 401,
@@ -4600,7 +4600,7 @@
         "2026-08": 0
       },
       "total_orders": 68,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1997,
@@ -4609,7 +4609,7 @@
         "2026-08": 0
       },
       "total_orders": 129,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 15300,
@@ -4618,7 +4618,7 @@
         "2026-08": 0
       },
       "total_orders": 26,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 38600,
@@ -4627,7 +4627,7 @@
         "2026-08": 0
       },
       "total_orders": 156,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 43300,
@@ -4636,7 +4636,7 @@
         "2026-08": 0
       },
       "total_orders": 6924,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 157500,
@@ -4645,7 +4645,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 164100,
@@ -4654,7 +4654,7 @@
         "2026-08": 0
       },
       "total_orders": 7243,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 171800,
@@ -4663,7 +4663,7 @@
         "2026-08": 0
       },
       "total_orders": 147,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 172142,
@@ -4672,7 +4672,7 @@
         "2026-08": 0
       },
       "total_orders": 14,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 1807,
@@ -4681,7 +4681,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 172131,
@@ -4690,7 +4690,7 @@
         "2026-08": 269.77
       },
       "total_orders": 1106,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 172143,
@@ -4699,7 +4699,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 172144,
@@ -4708,7 +4708,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 172145,
@@ -4717,7 +4717,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2166,
@@ -4734,7 +4734,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     },
     {
       "installation_id": 2168,
@@ -4750,7 +4750,7 @@
         "2026-08": 0
       },
       "total_orders": 0,
-      "total_orders_asof": "2026-09-03"
+      "total_orders_asof": "2026-09-04"
     }
   ]
 }
