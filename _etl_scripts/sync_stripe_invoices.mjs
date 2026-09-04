@@ -41,9 +41,13 @@ if (!ENV.STRIPE_SECRET_KEY) throw new Error('Missing STRIPE_SECRET_KEY in .env.l
 const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base64');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const FULL = process.argv.includes('--full');
+// ALWAYS a full pull. An incremental pull keyed on `created` never re-fetches an
+// existing invoice, so an invoice that was OPEN in one month and PAID the next
+// would keep its stale status forever — which breaks the month-end reconciliation
+// cutoff (Cabredo: billed 8/26, paid in Sept). A full pull of ~4K invoices is
+// ~30s, so freshness wins. `--full` is accepted for compatibility (no-op).
 const prev = (() => { try { return JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch { return null; } })();
-const createdGt = (!FULL && prev?.max_created) ? prev.max_created : null;
+const createdGt = null;
 
 async function getPage(startingAfter) {
   const qs = new URLSearchParams({ limit: '100' });
@@ -99,8 +103,15 @@ for (;;) {
 
     const e = byCust.get(cus) || { invoices: [] };
     e.invoices.push({
+      id: inv.id,
       d: iso(inv.created),
       status: inv.status,                 // open / paid / uncollectible / void
+      // Status-transition dates — the month-end reconciliation cutoff depends on
+      // WHEN an invoice was paid, not just whether it is paid today.
+      paid_at: iso(inv.status_transitions?.paid_at),
+      voided_at: iso(inv.status_transitions?.voided_at),
+      uncollectible_at: iso(inv.status_transitions?.marked_uncollectible_at),
+      finalized_at: iso(inv.status_transitions?.finalized_at),
       due: r2((inv.amount_due || 0) / 100),
       paid: r2((inv.amount_paid || 0) / 100),
       remaining: r2((inv.amount_remaining || 0) / 100),

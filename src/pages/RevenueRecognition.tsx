@@ -17,22 +17,25 @@ import InfoIcon from '../components/common/InfoIcon';
 import CustomerLink from '../components/common/CustomerLink';
 import { useSheetTab } from '../hooks/useSheetTab';
 
-// Snapshot written by _etl_scripts/build_revenue_recognition.mjs (accrual / invoice basis).
-type MonthRow = { recognized: number; cash: number; ar_open: number; ar_uncollectible: number; recognized_minus_cash: number };
-type ArRow = { allmoxy_customer_id: number | null; name: string; invoice_date: string; service_month: string; amount: number; status: 'open' | 'uncollectible'; age_days: number };
-type DetailRow = { allmoxy_customer_id: number; name: string; month: string; recognized: number; collected: number; outstanding: number; basis: 'invoice' | 'charge' };
+// Snapshot written by _etl_scripts/build_revenue_recognition.mjs (accrual / invoice basis,
+// with a MONTH-END collection cutoff so Stripe reconciles to the bank).
+type MonthRow = {
+  recognized: number;               // billed = earned, by service period
+  cash: number;                     // charge basis (reference)
+  collected_in_period: number;      // cleared by month-end, this month's service
+  outstanding_at_period_end: number;// billed this month, NOT cleared by month-end (new AR)
+  collected_after_period: number;   // of this month's billings, collected in a later month
+  still_open: number;               // of this month's billings, never collected yet
+  prior_ar_collected: number;       // cash received THIS month for prior months' AR
+  cash_received: number;            // collected_in_period + prior_ar_collected → bank deposits
+};
+type ArRow = { allmoxy_customer_id: number | null; name: string; invoice_id: string | null; invoice_date: string; service_month: string; amount: number; status: 'open' | 'uncollectible'; age_days: number };
+type DetailRow = { allmoxy_customer_id: number; name: string; month: string; basis: 'invoice' | 'charge'; recognized: number; collected_in_period: number; collected_after_period: number; still_open: number; outstanding_at_period_end: number };
 type Snap = {
-  fetchedAt: string;
-  invoices_fetched_at: string | null;
-  basis: string;
-  books_go_live: string;
-  reconcile_from: string;
-  months: string[];
-  by_month: Record<string, MonthRow>;
-  ar_aging: ArRow[];
-  ar_total: number;
-  reconciliation_detail: DetailRow[];
-  orphan_stripe_customers: Array<{ stripe_customer: string; months: string[]; latest_mrr: number }>;
+  fetchedAt: string; invoices_fetched_at: string | null; basis: string; books_go_live: string; reconcile_from: string;
+  months: string[]; by_month: Record<string, MonthRow>; ar_aging: ArRow[]; ar_total: number;
+  reconciliation_detail: DetailRow[]; orphan_stripe_customers: Array<{ stripe_customer: string; months: string[]; latest_mrr: number }>;
+  data_quality?: { invoices_missing_paid_at: number };
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -41,41 +44,39 @@ const USD_COMPACT = new Intl.NumberFormat('en-US', { style: 'currency', currency
 function monthLabel(iso: string) { const [y, m] = iso.split('-').map(Number); return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }); }
 function fmtDate(iso: string | null | undefined) { if (!iso) return '—'; const [y, m, d] = String(iso).slice(0, 10).split('-'); return `${m}/${d}/${y}`; }
 const TT = { contentStyle: { background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }, labelStyle: { color: '#FFFFFF' }, itemStyle: { color: '#FFFFFF' } };
+const money = (v: number, signed = false) => `${signed && v > 0 ? '+' : ''}${v < 0 ? '−' : ''}${USD2.format(Math.abs(v))}`;
 
 export default function RevenueRecognition() {
   const { data, isLoading, error } = useSheetTab('revenue_recognition');
   const snap = data as unknown as Snap | undefined;
 
   const currentMonth = useMemo(() => new Date().toISOString().slice(0, 7), []);
-  // Months available for the reconciliation view: reconcile_from → latest COMPLETE month.
   const reconMonths = useMemo(() => (snap?.months ?? []).filter((m) => m >= (snap?.reconcile_from ?? '2026-01') && m < currentMonth), [snap, currentMonth]);
   const [month, setMonth] = useState<string>('');
   const selMonth = month || reconMonths[reconMonths.length - 1] || '';
   const row = selMonth ? snap?.by_month[selMonth] : undefined;
   const isPreGoLive = !!(snap && selMonth && selMonth < snap.books_go_live);
 
-  const detailRows = useMemo(() => (snap?.reconciliation_detail ?? []).filter((d) => d.month === selMonth).sort((a, b) => b.outstanding - a.outstanding || b.recognized - a.recognized), [snap, selMonth]);
-  const outstandingRows = useMemo(() => detailRows.filter((d) => d.outstanding > 0), [detailRows]);
+  const detailRows = useMemo(() => (snap?.reconciliation_detail ?? []).filter((d) => d.month === selMonth).sort((a, b) => b.outstanding_at_period_end - a.outstanding_at_period_end || b.recognized - a.recognized), [snap, selMonth]);
+  const outstandingRows = useMemo(() => detailRows.filter((d) => d.outstanding_at_period_end > 0), [detailRows]);
   const arRows = useMemo(() => (snap?.ar_aging ?? []).slice().sort((a, b) => b.amount - a.amount), [snap]);
+  const trend = useMemo(() => (snap?.months ?? []).filter((m) => m < currentMonth).slice(-24).map((m) => { const b = snap!.by_month[m]; return { month: m, Recognized: b.recognized, 'Cash received (bank)': b.cash_received, 'New AR (uncollected at month-end)': b.outstanding_at_period_end }; }), [snap, currentMonth]);
 
-  // Trend: last 24 complete months, recognized vs cash + AR.
-  const trend = useMemo(() => (snap?.months ?? []).filter((m) => m < currentMonth).slice(-24).map((m) => ({ month: m, Recognized: snap!.by_month[m].recognized, Cash: snap!.by_month[m].cash, 'AR (open)': snap!.by_month[m].ar_open })), [snap, currentMonth]);
-
-  const adj = row ? row.recognized_minus_cash : 0;
+  // Net accrual adjustment = recognized − cash received = new AR − prior AR collected.
+  const netAdj = row ? row.recognized - row.cash_received : 0;
 
   return (
     <Box>
       <PageHeader
         title="Revenue Recognition"
-        subtitle="Accrual (invoice-basis) subscription revenue — what was billed by service period, regardless of whether the card cleared — alongside the cash basis. Drives the monthly QuickBooks journal entry and the AR aging you handle case-by-case."
+        subtitle="Accrual (invoice-basis) subscription revenue — what was billed by service period — with a month-end collection cutoff so Stripe reconciles to the bank. Drives the monthly QuickBooks journal entry and the AR aging you handle case-by-case."
         question="durable"
       />
       {error && <Alert severity="error" sx={{ mb: 2 }}>Failed to load revenue_recognition — {String(error)}</Alert>}
 
-      {/* Basis + coverage chips */}
       <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
         <Chip size="small" label={`Books basis go‑live: ${snap ? monthLabel(snap.books_go_live + '-01') : '—'}`} sx={{ bgcolor: 'rgba(44,115,255,0.12)', color: 'primary.main', fontWeight: 600 }} />
-        <Chip size="small" label={`Reconciliation detail from ${snap ? monthLabel(snap.reconcile_from + '-01') : '—'}`} sx={{ bgcolor: 'rgba(139,148,158,0.12)' }} />
+        <Chip size="small" label="Cutoff: paid by last day of month" sx={{ bgcolor: 'rgba(139,148,158,0.12)' }} />
         <Chip size="small" label={`Invoices synced ${snap?.invoices_fetched_at ? fmtDate(snap.invoices_fetched_at) : '—'}`} sx={{ bgcolor: 'rgba(139,148,158,0.12)' }} />
         <Box sx={{ flexGrow: 1 }} />
         <TextField select size="small" label="Month" value={selMonth} onChange={(e) => setMonth(e.target.value)} sx={{ minWidth: 170 }} disabled={!reconMonths.length}>
@@ -85,46 +86,52 @@ export default function RevenueRecognition() {
 
       {isPreGoLive && (
         <Alert severity="info" sx={{ mb: 2 }}>
-          <strong>{selMonth ? monthLabel(selMonth + '-01') : ''} is before the {snap ? monthLabel(snap.books_go_live + '-01') : ''} books go‑live.</strong> These figures are for your manual QuickBooks true‑up of 2026; from {snap ? monthLabel(snap.books_go_live + '-01') : ''} forward this becomes the operating basis.
+          <strong>{selMonth ? monthLabel(selMonth + '-01') : ''} is before the {snap ? monthLabel(snap.books_go_live + '-01') : ''} go‑live.</strong> These figures support your manual QuickBooks true‑up of 2026; from {snap ? monthLabel(snap.books_go_live + '-01') : ''} forward this is the operating basis.
         </Alert>
       )}
+      {!!snap?.data_quality?.invoices_missing_paid_at && (
+        <Alert severity="warning" sx={{ mb: 2 }}>{snap.data_quality.invoices_missing_paid_at} paid invoice(s) lack a Stripe paid date; they're assumed collected in their invoice month. Re‑run the invoice sync to clear this.</Alert>
+      )}
 
-      {/* KPI strip for the selected month */}
+      {/* KPI strip */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Recognized (accrual)" value={row ? USD0.format(row.recognized) : null} hint="Billed by service period" color="primary.main" loading={isLoading} info={<><strong>What it is:</strong> Subscription revenue earned in the month on the invoice basis — recurring invoice lines whose service period lands in the month, status paid / open / uncollectible (void excluded). Direct-charge subscribers (no Stripe invoice) fall back to the charge basis.<br /><br /><strong>This is the number to recognize in QuickBooks.</strong></>} /></Grid>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Cash collected" value={row ? USD0.format(row.cash) : null} hint="Charge basis (what cleared)" loading={isLoading} info={<><strong>What it is:</strong> Subscription MRR on the current cash/charge basis for the same month — what actually cleared Stripe. Already reflected in your bank / QB deposits.</>} /></Grid>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Accrual adjustment" value={row ? `${adj >= 0 ? '+' : '−'}${USD0.format(Math.abs(adj))}` : null} hint={adj >= 0 ? 'Billed > collected → AR increases' : 'Collected > billed → AR decreases'} color={adj >= 0 ? 'success.main' : 'warning.main'} loading={isLoading} info={<><strong>What it is:</strong> Recognized − Cash. Positive = revenue earned but not yet collected (book to Accounts Receivable). Negative = cash collected for prior‑period receivables or prepayments (AR comes down).</>} /></Grid>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="AR — open" value={row ? USD0.format(row.ar_open) : null} hint="Open invoices, this service month" color="warning.main" loading={isLoading} info={<><strong>What it is:</strong> Finalized, unpaid Stripe invoices whose service period is this month — the genuine receivable to collect. Card failures land here (not in churn).</>} /></Grid>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="AR — uncollectible" value={row ? USD0.format(row.ar_uncollectible) : null} hint="Flagged in Stripe · your call" color={row && row.ar_uncollectible > 0 ? 'error.main' : 'text.primary'} loading={isLoading} info={<><strong>What it is:</strong> Invoices Stripe has marked uncollectible. Still recognized (earned) but doubtful. No automatic write‑off — you decide case by case; voiding or marking paid in Stripe flows through on the next refresh.</>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Recognized (accrual)" value={row ? USD0.format(row.recognized) : null} hint="Billed by service period" color="primary.main" loading={isLoading} info={<><strong>What it is:</strong> Subscription revenue earned in the month — recurring invoice lines whose service period lands in the month (paid / open / uncollectible; void excluded). Direct‑charge subscribers fall back to the charge basis.<br /><br /><strong>This is the revenue to recognize in QuickBooks.</strong></>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Collected in period" value={row ? USD0.format(row.collected_in_period) : null} hint="Paid by last day of month" color="success.main" loading={isLoading} info={<><strong>What it is:</strong> Of this month's billings, the amount whose Stripe payment cleared <em>on or before the last day of the month</em> — the reconciliation cutoff. Anything paid after that is AR at month‑end, even if it's paid today.</>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="New AR at month‑end" value={row ? USD0.format(row.outstanding_at_period_end) : null} hint="Billed, not cleared by cutoff" color="warning.main" loading={isLoading} info={<><strong>What it is:</strong> Recognized − Collected in period: this month's billings that hadn't cleared by month‑end. This is the receivable to set up (DR AR / CR Revenue). It splits into <em>collected after period</em> (came in later) and <em>still open</em>.</>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Collected after period" value={row ? USD0.format(row.collected_after_period) : null} hint="Of this month's billings, paid later" loading={isLoading} info={<><strong>What it is:</strong> This month's billings that were paid in a <em>later</em> month. Recognized here; the cash lands in that later month's bank deposits and relieves AR there — it is <strong>never</strong> recognized twice.</>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Still open" value={row ? USD0.format(row.still_open) : null} hint="Never collected (as of today)" color={row && row.still_open > 0 ? 'error.main' : 'text.primary'} loading={isLoading} info={<><strong>What it is:</strong> This month's billings still unpaid today (open or uncollectible in Stripe). Your case‑by‑case list — retry, void, or mark uncollectible in Stripe and it flows through on the next refresh. No automatic write‑offs.</>} /></Grid>
       </Grid>
 
-      {/* QuickBooks journal entry documentation */}
+      {/* QuickBooks journal entry */}
       <Paper sx={{ p: 3, mb: 3, borderLeft: '3px solid', borderColor: 'primary.main' }}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>QuickBooks journal entry · {selMonth ? monthLabel(selMonth + '-01') : '—'}</Typography>
-          <InfoIcon info={<><strong>What it is:</strong> The documented monthly entry that moves subscription revenue from cash to accrual. Stripe is the system of record; this is the supporting schedule. Cash deposits are already in QB, so the entry books only the <em>difference</em>. The itemized outstanding list below is the audit support.</>} />
+          <InfoIcon info={<><strong>What it is:</strong> The monthly entry that moves subscription revenue from cash to accrual. Your bank deposits (already in QB) = <em>cash received</em>. Accrual revenue = <em>recognized</em>. The <strong>net</strong> adjustment is the change in AR: new receivables from this month's uncleared billings, less prior‑period receivables that were collected this month. Stripe is the system of record; the itemized table below is the audit support.</>} />
         </Stack>
-        {!row ? <Skeleton variant="rectangular" height={120} /> : (
+        {!row ? <Skeleton variant="rectangular" height={140} /> : (
           <Grid container spacing={2}>
             <Grid item xs={12} md={7}>
-              <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%', '& td': { py: 0.6, fontVariantNumeric: 'tabular-nums' } }}>
+              <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%', '& td': { py: 0.55, fontVariantNumeric: 'tabular-nums' } }}>
                 <tbody>
                   <tr><td>Recognized subscription revenue (accrual)</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{USD2.format(row.recognized)}</td></tr>
-                  <tr><td style={{ color: '#8B949E' }}>Less: cash already recorded (deposits)</td><td style={{ textAlign: 'right', color: '#8B949E' }}>({USD2.format(row.cash)})</td></tr>
-                  <tr style={{ borderTop: '1px solid #30363D' }}><td style={{ fontWeight: 700, paddingTop: 8 }}>Accrual adjustment to book</td><td style={{ textAlign: 'right', fontWeight: 700, paddingTop: 8, color: adj >= 0 ? '#2EA043' : '#F5A623' }}>{adj >= 0 ? '' : '−'}{USD2.format(Math.abs(adj))}</td></tr>
+                  <tr><td style={{ color: '#8B949E' }}>Less: cash received this month (bank deposits)</td><td style={{ textAlign: 'right', color: '#8B949E' }}>({USD2.format(row.cash_received)})</td></tr>
+                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>· of which this month's billings collected in period</td><td style={{ textAlign: 'right', color: '#8B949E', fontSize: 12 }}>{USD2.format(row.collected_in_period)}</td></tr>
+                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>· of which prior‑period AR collected this month</td><td style={{ textAlign: 'right', color: '#8B949E', fontSize: 12 }}>{USD2.format(row.prior_ar_collected)}</td></tr>
+                  <tr style={{ borderTop: '1px solid #30363D' }}><td style={{ fontWeight: 700, paddingTop: 8 }}>Net accrual adjustment (Δ Accounts Receivable)</td><td style={{ textAlign: 'right', fontWeight: 700, paddingTop: 8, color: netAdj >= 0 ? '#2EA043' : '#F5A623' }}>{money(netAdj, true)}</td></tr>
+                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>= new AR at month‑end {USD2.format(row.outstanding_at_period_end)} − prior AR collected {USD2.format(row.prior_ar_collected)}</td><td /></tr>
                 </tbody>
               </Box>
             </Grid>
             <Grid item xs={12} md={5}>
               <Box sx={{ p: 1.5, borderRadius: 1, bgcolor: 'rgba(44,115,255,0.06)', border: '1px solid rgba(44,115,255,0.25)', fontSize: 13 }}>
-                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700, display: 'block', mb: 0.5 }}>Suggested entry</Typography>
-                {adj >= 0 ? (
-                  <><div><b>DR</b> Accounts Receivable · {USD2.format(adj)}</div><div style={{ paddingLeft: 24 }}><b>CR</b> Subscription Revenue · {USD2.format(adj)}</div></>
+                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700, display: 'block', mb: 0.5 }}>Suggested entry (net)</Typography>
+                {netAdj >= 0 ? (
+                  <><div><b>DR</b> Accounts Receivable · {USD2.format(netAdj)}</div><div style={{ paddingLeft: 24 }}><b>CR</b> Subscription Revenue · {USD2.format(netAdj)}</div></>
                 ) : (
-                  <><div><b>DR</b> Subscription Revenue · {USD2.format(Math.abs(adj))}</div><div style={{ paddingLeft: 24 }}><b>CR</b> Accounts Receivable · {USD2.format(Math.abs(adj))}</div></>
+                  <><div><b>DR</b> Subscription Revenue · {USD2.format(Math.abs(netAdj))}</div><div style={{ paddingLeft: 24 }}><b>CR</b> Accounts Receivable · {USD2.format(Math.abs(netAdj))}</div></>
                 )}
                 <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1 }}>
-                  {adj >= 0 ? 'Revenue earned this month not yet collected — sets up the receivable.' : 'Net collection of prior receivables / prepayments this month — relieves the receivable.'} Confirm account mapping with your accountant.
+                  Or book gross: <b>DR AR / CR Revenue</b> {USD2.format(row.outstanding_at_period_end)} for new receivables, and <b>DR Cash / CR AR</b> {USD2.format(row.prior_ar_collected)} for prior receivables collected. Confirm account mapping with your accountant.
                 </Typography>
               </Box>
             </Grid>
@@ -132,14 +139,14 @@ export default function RevenueRecognition() {
         )}
       </Paper>
 
-      {/* Reconciliation — which subscriptions were supposed to process */}
+      {/* Reconciliation — what was supposed to process */}
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>What was supposed to process · {selMonth ? monthLabel(selMonth + '-01') : '—'}</Typography>
-          <InfoIcon info={<><strong>What it is:</strong> Every subscription recognized in the month — expected (billed), collected (cash), and outstanding (open AR) — so you can see exactly which subscriptions make up the accrual number and which are still owed.<br /><br /><strong>Basis:</strong> <em>invoice</em> = from Stripe recurring invoices by service period; <em>charge</em> = direct‑charge subscriber with no Stripe invoice (charge basis fallback). CSV‑exportable as audit support for the entry.</>} />
+          <InfoIcon info={<><strong>What it is:</strong> Every subscription recognized in the month, with its collection status at the month‑end cutoff: <em>collected in period</em> (cleared by month‑end), <em>outstanding at month‑end</em> (the AR to book), which then resolved as <em>collected after</em> or is <em>still open</em>.<br /><br /><strong>Basis:</strong> <em>invoice</em> = Stripe recurring invoices by service period; <em>charge</em> = direct‑charge subscriber (no invoice → only what cleared is known, nothing outstanding). CSV = audit support for the entry.</>} />
         </Stack>
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>
-          {detailRows.length} subscriptions · {outstandingRows.length} with outstanding balance ({USD0.format(outstandingRows.reduce((s, r) => s + r.outstanding, 0))}) · sorted by outstanding, then recognized
+          {detailRows.length} subscriptions · {outstandingRows.length} outstanding at month‑end ({USD0.format(outstandingRows.reduce((s, r) => s + r.outstanding_at_period_end, 0))}) · sorted by outstanding, then recognized
         </Typography>
         {isLoading ? <Skeleton variant="rectangular" height={300} /> : (
           <DrillDownPanel<Record<string, unknown>>
@@ -149,19 +156,21 @@ export default function RevenueRecognition() {
               { key: 'name', label: 'Customer', render: (r: Record<string, unknown>) => { const d = r as unknown as DetailRow; return <CustomerLink id={d.allmoxy_customer_id} name={d.name} />; }, exportValue: (r: Record<string, unknown>) => (r as unknown as DetailRow).name, sortValue: (r: Record<string, unknown>) => (r as unknown as DetailRow).name },
               { key: 'basis', label: 'Basis', render: (r: Record<string, unknown>) => { const b = (r as unknown as DetailRow).basis; return <Chip size="small" label={b} sx={{ height: 20, fontSize: 11, bgcolor: b === 'invoice' ? 'rgba(44,115,255,0.12)' : 'rgba(245,166,35,0.14)', color: b === 'invoice' ? 'primary.main' : 'warning.main' }} />; } },
               { key: 'recognized', label: 'Recognized', align: 'right', render: (r: Record<string, unknown>) => USD2.format((r as unknown as DetailRow).recognized) },
-              { key: 'collected', label: 'Collected', align: 'right', render: (r: Record<string, unknown>) => USD2.format((r as unknown as DetailRow).collected) },
-              { key: 'outstanding', label: 'Outstanding (AR)', align: 'right', render: (r: Record<string, unknown>) => { const v = (r as unknown as DetailRow).outstanding; return <span style={{ color: v > 0 ? '#F5A623' : '#8B949E', fontWeight: v > 0 ? 600 : 400 }}>{USD2.format(v)}</span>; } },
+              { key: 'collected_in_period', label: 'Collected in period', align: 'right', render: (r: Record<string, unknown>) => USD2.format((r as unknown as DetailRow).collected_in_period) },
+              { key: 'outstanding_at_period_end', label: 'Outstanding at month‑end', align: 'right', render: (r: Record<string, unknown>) => { const v = (r as unknown as DetailRow).outstanding_at_period_end; return <span style={{ color: v > 0 ? '#F5A623' : '#8B949E', fontWeight: v > 0 ? 600 : 400 }}>{USD2.format(v)}</span>; } },
+              { key: 'collected_after_period', label: 'Collected after', align: 'right', render: (r: Record<string, unknown>) => { const v = (r as unknown as DetailRow).collected_after_period; return <span style={{ color: v > 0 ? '#2EA043' : '#8B949E' }}>{USD2.format(v)}</span>; } },
+              { key: 'still_open', label: 'Still open', align: 'right', render: (r: Record<string, unknown>) => { const v = (r as unknown as DetailRow).still_open; return <span style={{ color: v > 0 ? '#E5484D' : '#8B949E', fontWeight: v > 0 ? 600 : 400 }}>{USD2.format(v)}</span>; } },
             ]}
             filename={`revenue_recognition_${selMonth}`}
           />
         )}
       </Paper>
 
-      {/* AR aging — case-by-case list */}
+      {/* AR aging */}
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>AR aging · open & uncollectible invoices</Typography>
-          <InfoIcon info={<><strong>What it is:</strong> Every finalized‑unpaid Stripe invoice across all history, with its service month and age. This is your case‑by‑case list — retry, void, or mark uncollectible in Stripe and it flows through on the next refresh. No automatic write‑offs.</>} />
+          <InfoIcon info={<><strong>What it is:</strong> Every finalized‑unpaid Stripe invoice across all history, with its service month and age. Your case‑by‑case list — retry, void, or mark uncollectible in Stripe and it flows through on the next refresh. No automatic write‑offs.</>} />
         </Stack>
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>
           {arRows.length} invoices · {snap ? USD0.format(snap.ar_total) : '—'} total · {arRows.filter((r) => r.status === 'uncollectible').length} flagged uncollectible · sorted by amount
@@ -186,8 +195,8 @@ export default function RevenueRecognition() {
       {/* Trend */}
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>Recognized vs cash · trailing 24 months</Typography>
-          <InfoIcon info={<><strong>What it is:</strong> The two bases side by side. Where the lines diverge, cash is lagging (card failures / timing) or leading (prepayments). Bars show open AR by service month.</>} />
+          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>Recognized vs cash received · trailing 24 months</Typography>
+          <InfoIcon info={<><strong>What it is:</strong> Accrual revenue (line) against cash that actually reached the bank each month (dashed). Bars = new AR created that month (billings not cleared by month‑end). Where cash lags recognized, receivables are building; where it leads, prior receivables are being collected.</>} />
         </Stack>
         {isLoading ? <Skeleton variant="rectangular" height={280} /> : (
           <Box sx={{ height: 280 }}>
@@ -199,9 +208,9 @@ export default function RevenueRecognition() {
                 <YAxis yAxisId="ar" orientation="right" stroke="#8B949E" fontSize={10} width={48} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
                 <RTooltip {...TT} labelFormatter={(m) => monthLabel(String(m) + '-01')} formatter={(v: number, n: string) => [USD0.format(v), n]} />
                 <Legend wrapperStyle={{ fontSize: 11 }} />
-                <Bar yAxisId="ar" dataKey="AR (open)" fill="rgba(245,166,35,0.45)" />
+                <Bar yAxisId="ar" dataKey="New AR (uncollected at month-end)" fill="rgba(245,166,35,0.45)" />
                 <Line yAxisId="mrr" type="monotone" dataKey="Recognized" stroke="#2C73FF" strokeWidth={2.2} dot={false} />
-                <Line yAxisId="mrr" type="monotone" dataKey="Cash" stroke="#8B949E" strokeWidth={1.6} strokeDasharray="4 3" dot={false} />
+                <Line yAxisId="mrr" type="monotone" dataKey="Cash received (bank)" stroke="#8B949E" strokeWidth={1.6} strokeDasharray="4 3" dot={false} />
               </ComposedChart>
             </ResponsiveContainer>
           </Box>
@@ -210,7 +219,7 @@ export default function RevenueRecognition() {
 
       {!!snap?.orphan_stripe_customers?.length && (
         <Alert severity="warning">
-          <strong>{snap.orphan_stripe_customers.length} Stripe customer{snap.orphan_stripe_customers.length === 1 ? '' : 's'} with invoices but no customer profile</strong> — not included in recognized totals until mapped (add to <code>stripe_id_overrides.json</code>): {snap.orphan_stripe_customers.map((o) => `${o.stripe_customer} (${USD0.format(o.latest_mrr)}/mo)`).join(' · ')}
+          <strong>{snap.orphan_stripe_customers.length} Stripe customer{snap.orphan_stripe_customers.length === 1 ? '' : 's'} with invoices but no customer profile</strong> — counted in recognized totals but not in the per‑customer table until mapped (add to <code>stripe_id_overrides.json</code> or create the roster record): {snap.orphan_stripe_customers.map((o) => `${o.stripe_customer} (${USD0.format(o.latest_mrr)}/mo)`).join(' · ')}
         </Alert>
       )}
     </Box>
