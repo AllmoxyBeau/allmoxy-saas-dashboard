@@ -40,7 +40,6 @@ const RECONCILE_FROM = '2026-01';      // per-customer detail from here forward
 const r2 = (v) => Math.round(v * 100) / 100;
 const monthOf = (iso) => (iso ? String(iso).slice(0, 7) : null);
 const addMonths = (m, k) => { const [y, mo] = m.split('-').map(Number); const d = new Date(y, mo - 1 + k, 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; };
-const midMonth = (ps, pe) => monthOf(new Date((new Date(ps).getTime() + new Date(pe).getTime()) / 2).toISOString());
 const RECOGNIZED_STATUS = new Set(['paid', 'open', 'uncollectible']); // billed = earned; excludes void/draft
 const nowMonth = new Date().toISOString().slice(0, 7);
 
@@ -77,8 +76,15 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
       if (!l.rec || !l.ps || !l.pe || l.ps === l.pe) continue; // recurring subscription lines only
       const days = (new Date(l.pe) - new Date(l.ps)) / 86400000;
       const months = Math.max(1, Math.round(days / 30.44));
+      // INVOICE-DATE attribution (Beau, 2026-09): a monthly line recognizes in the
+      // month it was BILLED (line period start = billing date), not the service-
+      // period midpoint. This ties recognized revenue to Stripe's monthly invoice
+      // totals so the bank reconciliation is a direct tie-out, and it makes a
+      // late payment show as AR in the billing month (Cabredo: billed 8/26, paid
+      // 9/04 → Aug AR, Sept collection). Multi-month / annual lines still spread
+      // evenly from their period start.
       const spread = months <= 1
-        ? [[midMonth(l.ps, l.pe), l.a]]
+        ? [[monthOf(l.ps), l.a]]
         : Array.from({ length: months }, (_, k) => [addMonths(monthOf(l.ps), k), l.a / months]);
       for (const [m, v] of spread) {
         add(rec, aid, m, v);
@@ -102,7 +108,7 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
         name: nameOf(aid),
         invoice_id: inv.id || null,
         invoice_date: inv.d,
-        service_month: recLine ? midMonth(recLine.ps, recLine.pe) : monthOf(inv.d),
+        service_month: recLine ? monthOf(recLine.ps) : monthOf(inv.d), // billing month (invoice-date basis)
         amount: r2(inv.remaining),
         status: inv.status,
         age_days: Math.max(0, Math.round((Date.now() - new Date(inv.d)) / 86400000)),
@@ -202,7 +208,7 @@ const out = {
   tab: 'revenue_recognition',
   fetchedAt: new Date().toISOString(),
   invoices_fetched_at: INV.fetchedAt || INV.fetched_at || null,
-  basis: 'accrual — Stripe invoices by service period (recurring lines); recognized = paid|open|uncollectible; MONTH-END CUTOFF on collection (paid_at <= period end); AR = open (uncollectible flagged); charge-fallback for direct-charge subs; annual amortized.',
+  basis: 'accrual — Stripe invoices (recurring lines) recognized in the month BILLED (invoice date; annual spread from period start); recognized = paid|open|uncollectible; MONTH-END CUTOFF on collection (paid_at <= last day of month); AR = open (uncollectible flagged); charge-fallback for direct-charge subs.',
   books_go_live: BOOKS_GO_LIVE,
   reconcile_from: RECONCILE_FROM,
   months: MONTHS,
