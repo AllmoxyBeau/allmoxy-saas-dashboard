@@ -63,7 +63,9 @@ export default function Collections() {
   const { data, isLoading, error } = useSheetTab('revenue_recognition');
   const snap = data as unknown as Snap | undefined;
   const [pending, setPending] = useState<PendingMap>(() => readPending());
-  const [filter, setFilter] = useState<Filter>('all');
+  // Default to the working list: invoices still worth chasing. Written-off ones are
+  // hidden but one click away — the banner below the toolbar says how many and reveals them.
+  const [filter, setFilter] = useState<Filter>('chase');
   const [sortKey, setSortKey] = useState<SortKey>('amount');
   const [sortDesc, setSortDesc] = useState(true);
   // First click on a new column uses that column's natural direction; clicking the
@@ -159,16 +161,33 @@ export default function Collections() {
           <Typography variant="h6" sx={{ fontWeight: 500 }}>Open invoices</Typography>
           <InfoIcon info={<><strong>Reading a row:</strong> <em>Customer</em> shows whether the relationship is alive — a customer still paying monthly is far more likely to settle an old balance. <em>Age</em> is days since the invoice date. <em>Source</em> is how the current call was made: <strong>auto</strong> (the age rule), <strong>decided</strong> (committed), or <strong>pending</strong> (yours, not yet applied).<br /><br /><strong>Making a call:</strong> "Chase" keeps it in AR; "Write off" books it to 4950 Uncollectible Income. Only balances whose revenue was recognized from {snap?.ar_policy?.books_go_live ?? '2026-01'} onward hit the books — earlier years ran on cash, so no receivable was ever recorded.<br /><br />Decisions are saved in your browser; use <strong>Copy pending decisions</strong> and give them to Claude to commit.</>} />
           <Box sx={{ flexGrow: 1 }} />
-          <TextField select size="small" label="Show" value={filter} onChange={(e) => setFilter(e.target.value as Filter)} sx={{ minWidth: 190 }}>
-            <MenuItem value="all">All ({rows.length})</MenuItem>
+          <TextField select size="small" label="Show" value={filter} onChange={(e) => setFilter(e.target.value as Filter)} sx={{ minWidth: 210 }}>
             <MenuItem value="chase">Chasing ({t.chaseN})</MenuItem>
-            <MenuItem value="writeoff">Writing off ({t.writeoffN})</MenuItem>
-            <MenuItem value="undecided">Undecided — auto only ({rows.filter((r) => r.source === 'auto').length})</MenuItem>
+            <MenuItem value="writeoff">Written off ({t.writeoffN})</MenuItem>
+            <MenuItem value="undecided">Undecided ({rows.filter((r) => r.source === 'auto').length})</MenuItem>
             <MenuItem value="decided">Decided ({rows.filter((r) => r.source !== 'auto').length})</MenuItem>
+            <MenuItem value="all">All ({rows.length})</MenuItem>
           </TextField>
           {t.pendingN > 0 && <Button size="small" variant="contained" onClick={copyPending}>Copy pending decisions ({t.pendingN})</Button>}
         </Stack>
 
+        {filter === 'chase' && t.writeoffN > 0 && (
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5, px: 1.25, py: 0.75, borderRadius: 1, bgcolor: 'rgba(139,148,158,0.08)', border: '1px solid rgba(139,148,158,0.18)' }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+              <strong>{t.writeoffN}</strong> written-off invoice{t.writeoffN === 1 ? '' : 's'} ({USD0.format(t.writeoff)}) hidden.
+            </Typography>
+            <Button size="small" sx={{ py: 0, px: 1, fontSize: 11, textTransform: 'none' }} onClick={() => setFilter('writeoff')}>Show them</Button>
+            <Button size="small" sx={{ py: 0, px: 1, fontSize: 11, textTransform: 'none' }} onClick={() => setFilter('all')}>Show everything</Button>
+          </Stack>
+        )}
+        {filter !== 'chase' && (
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+              Viewing <strong>{filter === 'writeoff' ? 'written off' : filter === 'undecided' ? 'undecided' : filter === 'decided' ? 'decided' : 'all'}</strong>.
+            </Typography>
+            <Button size="small" sx={{ py: 0, px: 1, fontSize: 11, textTransform: 'none' }} onClick={() => setFilter('chase')}>Back to chasing</Button>
+          </Stack>
+        )}
         {isLoading ? <Skeleton variant="rectangular" height={340} /> : (
           <Box sx={{ overflowX: 'auto' }}>
             <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%', minWidth: 900 }}>
