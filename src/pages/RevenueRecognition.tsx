@@ -104,52 +104,6 @@ export default function RevenueRecognition() {
         <Alert severity="warning" sx={{ mb: 2 }}>{snap.data_quality.invoices_missing_paid_at} paid invoice(s) lack a Stripe paid date; they're assumed collected in their invoice month. Re‑run the invoice sync to clear this.</Alert>
       )}
 
-      {/* KPI strip */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Recognized (accrual)" value={row ? USD0.format(row.recognized) : null} hint="Billed by service period" color="primary.main" loading={isLoading} info={<><strong>What it is:</strong> Subscription revenue recognized in the month — every recurring invoice line <em>billed</em> in the month (invoice date), paid / open / uncollectible; void excluded. Annual invoices spread evenly across their term. This ties to Stripe's monthly invoice totals. Direct‑charge subscribers fall back to the charge basis.<br /><br /><strong>This is the revenue to recognize in QuickBooks.</strong></>} /></Grid>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Collected in period" value={row ? USD0.format(row.collected_in_period) : null} hint="Paid by last day of month" color="success.main" loading={isLoading} info={<><strong>What it is:</strong> Of this month's billings, the amount whose Stripe payment cleared <em>on or before the last day of the month</em> — the reconciliation cutoff. Anything paid after that is AR at month‑end, even if it's paid today.</>} /></Grid>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="New AR at month‑end" value={row ? USD0.format(row.outstanding_at_period_end) : null} hint="Billed, not cleared by cutoff" color="warning.main" loading={isLoading} info={<><strong>What it is:</strong> Recognized − Collected in period: this month's billings that hadn't cleared by month‑end. This is the receivable to set up (DR AR / CR Revenue). It splits into <em>collected after period</em> (came in later) and <em>still open</em>.</>} /></Grid>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Collected after period" value={row ? USD0.format(row.collected_after_period) : null} hint="Of this month's billings, paid later" loading={isLoading} info={<><strong>What it is:</strong> This month's billings that were paid in a <em>later</em> month. Recognized here; the cash lands in that later month's bank deposits and relieves AR there — it is <strong>never</strong> recognized twice.</>} /></Grid>
-        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Still open" value={row ? USD0.format(row.still_open) : null} hint="Never collected (as of today)" color={row && row.still_open > 0 ? 'error.main' : 'text.primary'} loading={isLoading} info={<><strong>What it is:</strong> This month's billings still unpaid today (open or uncollectible in Stripe). Your case‑by‑case list — retry, void, or mark uncollectible in Stripe and it flows through on the next refresh. No automatic write‑offs.</>} /></Grid>
-      </Grid>
-
-      {/* QuickBooks journal entry */}
-      <Paper sx={{ p: 3, mb: 3, borderLeft: '3px solid', borderColor: 'primary.main' }}>
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
-          <Typography variant="h6" sx={{ fontWeight: 500 }}>Accrual bridge · {selMonth ? monthLabel(selMonth + '-01') : '—'}</Typography>
-          <InfoIcon info={<><strong>What it is:</strong> The monthly entry that moves subscription revenue from cash to accrual. Your bank deposits (already in QB) = <em>cash received</em>. Accrual revenue = <em>recognized</em>. The <strong>net</strong> adjustment is the change in AR: new receivables from this month's uncleared billings, less prior‑period receivables that were collected this month. Stripe is the system of record; the itemized table below is the audit support.</>} />
-        </Stack>
-        {!row ? <Skeleton variant="rectangular" height={140} /> : (
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={7}>
-              <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%', '& td': { py: 0.55, fontVariantNumeric: 'tabular-nums' } }}>
-                <tbody>
-                  <tr><td>Recognized subscription revenue (accrual)</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{USD2.format(row.recognized)}</td></tr>
-                  <tr><td style={{ color: '#8B949E' }}>Less: cash received this month (bank deposits)</td><td style={{ textAlign: 'right', color: '#8B949E' }}>({USD2.format(row.cash_received)})</td></tr>
-                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>· of which this month's billings collected in period</td><td style={{ textAlign: 'right', color: '#8B949E', fontSize: 12 }}>{USD2.format(row.collected_in_period)}</td></tr>
-                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>· of which prior‑period AR collected this month</td><td style={{ textAlign: 'right', color: '#8B949E', fontSize: 12 }}>{USD2.format(row.prior_ar_collected)}</td></tr>
-                  <tr style={{ borderTop: '1px solid #30363D' }}><td style={{ fontWeight: 700, paddingTop: 8 }}>Net accrual adjustment (Δ Accounts Receivable)</td><td style={{ textAlign: 'right', fontWeight: 700, paddingTop: 8, color: netAdj >= 0 ? '#2EA043' : '#F5A623' }}>{money(netAdj, true)}</td></tr>
-                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>= new AR at month‑end {USD2.format(row.outstanding_at_period_end)} − prior AR collected {USD2.format(row.prior_ar_collected)}</td><td /></tr>
-                </tbody>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <Box sx={{ p: 1.5, borderRadius: 1, bgcolor: 'rgba(44,115,255,0.06)', border: '1px solid rgba(44,115,255,0.25)', fontSize: 13 }}>
-                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700, display: 'block', mb: 0.5 }}>Suggested entry (net)</Typography>
-                {netAdj >= 0 ? (
-                  <><div><b>DR</b> Accounts Receivable · {USD2.format(netAdj)}</div><div style={{ paddingLeft: 24 }}><b>CR</b> Subscription Revenue · {USD2.format(netAdj)}</div></>
-                ) : (
-                  <><div><b>DR</b> Subscription Revenue · {USD2.format(Math.abs(netAdj))}</div><div style={{ paddingLeft: 24 }}><b>CR</b> Accounts Receivable · {USD2.format(Math.abs(netAdj))}</div></>
-                )}
-                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1 }}>
-                  Or book gross: <b>DR AR / CR Revenue</b> {USD2.format(row.outstanding_at_period_end)} for new receivables, and <b>DR Cash / CR AR</b> {USD2.format(row.prior_ar_collected)} for prior receivables collected. Confirm account mapping with your accountant.
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        )}
-      </Paper>
-
       {/* Full QuickBooks journal entry — mirrors Beau's monthly Stripe entry line-for-line,
           plus sales tax by state and the accrual adjustment. Rendered when the balance-
           transactions feed has the month; otherwise the Accrual bridge above stands alone. */}
@@ -177,32 +131,6 @@ export default function RevenueRecognition() {
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>
               {je.lines.length} lines · built from {je.inputs.balance_txn_rows.toLocaleString()} Stripe balance transactions · recognized subscription revenue (ex‑tax) {USD2.format(je.inputs.recognized_ex_tax)} · accrual adjustment {money(je.inputs.accrual_adjustment, true)} · sales tax on the {je.inputs.tax_basis_used} basis {USD2.format(je.inputs.tax_total_used)}
             </Typography>
-            {je.balance_report && (() => {
-              const b = je.balance_report;
-              const row = (label: string, v: number | null, opts: { bold?: boolean; indent?: boolean; top?: boolean } = {}) => (
-                <Stack direction="row" justifyContent="space-between" sx={{ py: 0.35, pl: opts.indent ? 2 : 0, borderTop: opts.top ? '1px solid rgba(139,148,158,0.3)' : 'none', fontWeight: opts.bold ? 700 : 400, fontSize: 13, fontVariantNumeric: 'tabular-nums' }}>
-                  <span style={{ color: opts.bold ? undefined : '#8B949E' }}>{label}</span><span>{v == null ? '—' : money(v)}</span>
-                </Stack>
-              );
-              return (
-                <Box sx={{ mb: 2, p: 1.5, borderRadius: 1, bgcolor: 'rgba(139,148,158,0.06)', border: '1px solid rgba(139,148,158,0.18)', maxWidth: 520 }}>
-                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
-                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Stripe Balance report · {monthLabel(selMonth + '-01')} · US/Mountain</Typography>
-                    <InfoIcon info={<><strong>What it is:</strong> The same frame as Stripe → Reports → Balance (merchant template): starting balance + activity − payouts = ending balance. Built from the identical balance transactions, so it should match the dashboard report line for line. <em>Payouts</em> is your DR 4200 gross-deposits line; <em>ending − starting</em> is your 1003 Stripe Account line.{!b.anchored && <><br /><br />Starting/ending balances appear once the sync captures the current Stripe balance (next refresh).</>}</>} />
-                  </Stack>
-                  {row('Starting balance', b.starting_balance, { bold: true })}
-                  {row('Charges (gross)', b.charges_gross, { indent: true })}
-                  {row('Refunds', b.refunds, { indent: true })}
-                  {row('Connect platform earnings', b.connect_earnings, { indent: true })}
-                  {b.connect_refunds !== 0 && row('Connect refunds', b.connect_refunds, { indent: true })}
-                  {row('Stripe fees', b.stripe_fees, { indent: true })}
-                  {b.other_activity !== 0 && row('Other activity', b.other_activity, { indent: true })}
-                  {row('Net activity', b.net_activity, { top: true })}
-                  {row('Payouts to bank', -b.payouts)}
-                  {row('Ending balance', b.ending_balance, { bold: true, top: true })}
-                </Box>
-              );
-            })()}
             <Box sx={{ overflowX: 'auto' }}>
               <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%', minWidth: 720 }}>
                 <thead>
@@ -250,9 +178,81 @@ export default function RevenueRecognition() {
                 <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>• Includes {USD2.format(je.inputs.direct_subscription_charges)} of direct/legacy subscription charges billed outside Stripe invoices ({je.inputs.direct_rows.map((d) => `${d.name} ${USD0.format(d.amount)}`).join(', ')}) — counted in recognized revenue.</Typography>
               )}
             </Box>
+            {je.balance_report && (() => {
+              const b = je.balance_report;
+              const row = (label: string, v: number | null, opts: { bold?: boolean; indent?: boolean; top?: boolean } = {}) => (
+                <Stack direction="row" justifyContent="space-between" sx={{ py: 0.35, pl: opts.indent ? 2 : 0, borderTop: opts.top ? '1px solid rgba(139,148,158,0.3)' : 'none', fontWeight: opts.bold ? 700 : 400, fontSize: 13, fontVariantNumeric: 'tabular-nums' }}>
+                  <span style={{ color: opts.bold ? undefined : '#8B949E' }}>{label}</span><span>{v == null ? '—' : money(v)}</span>
+                </Stack>
+              );
+              return (
+                <Box sx={{ mb: 2, p: 1.5, borderRadius: 1, bgcolor: 'rgba(139,148,158,0.06)', border: '1px solid rgba(139,148,158,0.18)', maxWidth: 520 }}>
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Stripe Balance report · {monthLabel(selMonth + '-01')} · US/Mountain</Typography>
+                    <InfoIcon info={<><strong>What it is:</strong> The same frame as Stripe → Reports → Balance (merchant template): starting balance + activity − payouts = ending balance. Built from the identical balance transactions, so it should match the dashboard report line for line. <em>Payouts</em> is your DR 4200 gross-deposits line; <em>ending − starting</em> is your 1003 Stripe Account line.{!b.anchored && <><br /><br />Starting/ending balances appear once the sync captures the current Stripe balance (next refresh).</>}</>} />
+                  </Stack>
+                  {row('Starting balance', b.starting_balance, { bold: true })}
+                  {row('Charges (gross)', b.charges_gross, { indent: true })}
+                  {row('Refunds', b.refunds, { indent: true })}
+                  {row('Connect platform earnings', b.connect_earnings, { indent: true })}
+                  {b.connect_refunds !== 0 && row('Connect refunds', b.connect_refunds, { indent: true })}
+                  {row('Stripe fees', b.stripe_fees, { indent: true })}
+                  {b.other_activity !== 0 && row('Other activity', b.other_activity, { indent: true })}
+                  {row('Net activity', b.net_activity, { top: true })}
+                  {row('Payouts to bank', -b.payouts)}
+                  {row('Ending balance', b.ending_balance, { bold: true, top: true })}
+                </Box>
+              );
+            })()}
           </Paper>
         );
       })()}
+
+      {/* KPI strip */}
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Recognized (accrual)" value={row ? USD0.format(row.recognized) : null} hint="Billed by service period" color="primary.main" loading={isLoading} info={<><strong>What it is:</strong> Subscription revenue recognized in the month — every recurring invoice line <em>billed</em> in the month (invoice date), paid / open / uncollectible; void excluded. Annual invoices spread evenly across their term. This ties to Stripe's monthly invoice totals. Direct‑charge subscribers fall back to the charge basis.<br /><br /><strong>This is the revenue to recognize in QuickBooks.</strong></>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Collected in period" value={row ? USD0.format(row.collected_in_period) : null} hint="Paid by last day of month" color="success.main" loading={isLoading} info={<><strong>What it is:</strong> Of this month's billings, the amount whose Stripe payment cleared <em>on or before the last day of the month</em> — the reconciliation cutoff. Anything paid after that is AR at month‑end, even if it's paid today.</>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="New AR at month‑end" value={row ? USD0.format(row.outstanding_at_period_end) : null} hint="Billed, not cleared by cutoff" color="warning.main" loading={isLoading} info={<><strong>What it is:</strong> Recognized − Collected in period: this month's billings that hadn't cleared by month‑end. This is the receivable to set up (DR AR / CR Revenue). It splits into <em>collected after period</em> (came in later) and <em>still open</em>.</>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Collected after period" value={row ? USD0.format(row.collected_after_period) : null} hint="Of this month's billings, paid later" loading={isLoading} info={<><strong>What it is:</strong> This month's billings that were paid in a <em>later</em> month. Recognized here; the cash lands in that later month's bank deposits and relieves AR there — it is <strong>never</strong> recognized twice.</>} /></Grid>
+        <Grid item xs={12} sm={6} md={2.4}><Kpi label="Still open" value={row ? USD0.format(row.still_open) : null} hint="Never collected (as of today)" color={row && row.still_open > 0 ? 'error.main' : 'text.primary'} loading={isLoading} info={<><strong>What it is:</strong> This month's billings still unpaid today (open or uncollectible in Stripe). Your case‑by‑case list — retry, void, or mark uncollectible in Stripe and it flows through on the next refresh. No automatic write‑offs.</>} /></Grid>
+      </Grid>
+
+      {/* QuickBooks journal entry */}
+      <Paper sx={{ p: 3, mb: 3, borderLeft: '3px solid', borderColor: 'primary.main' }}>
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
+          <Typography variant="h6" sx={{ fontWeight: 500 }}>Accrual bridge · {selMonth ? monthLabel(selMonth + '-01') : '—'}</Typography>
+          <InfoIcon info={<><strong>What it is:</strong> The monthly entry that moves subscription revenue from cash to accrual. Your bank deposits (already in QB) = <em>cash received</em>. Accrual revenue = <em>recognized</em>. The <strong>net</strong> adjustment is the change in AR: new receivables from this month's uncleared billings, less prior‑period receivables that were collected this month. Stripe is the system of record; the itemized table below is the audit support.</>} />
+        </Stack>
+        {!row ? <Skeleton variant="rectangular" height={140} /> : (
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={7}>
+              <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%', '& td': { py: 0.55, fontVariantNumeric: 'tabular-nums' } }}>
+                <tbody>
+                  <tr><td>Recognized subscription revenue (accrual)</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{USD2.format(row.recognized)}</td></tr>
+                  <tr><td style={{ color: '#8B949E' }}>Less: cash received this month (bank deposits)</td><td style={{ textAlign: 'right', color: '#8B949E' }}>({USD2.format(row.cash_received)})</td></tr>
+                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>· of which this month's billings collected in period</td><td style={{ textAlign: 'right', color: '#8B949E', fontSize: 12 }}>{USD2.format(row.collected_in_period)}</td></tr>
+                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>· of which prior‑period AR collected this month</td><td style={{ textAlign: 'right', color: '#8B949E', fontSize: 12 }}>{USD2.format(row.prior_ar_collected)}</td></tr>
+                  <tr style={{ borderTop: '1px solid #30363D' }}><td style={{ fontWeight: 700, paddingTop: 8 }}>Net accrual adjustment (Δ Accounts Receivable)</td><td style={{ textAlign: 'right', fontWeight: 700, paddingTop: 8, color: netAdj >= 0 ? '#2EA043' : '#F5A623' }}>{money(netAdj, true)}</td></tr>
+                  <tr><td style={{ color: '#8B949E', paddingLeft: 16, fontSize: 12 }}>= new AR at month‑end {USD2.format(row.outstanding_at_period_end)} − prior AR collected {USD2.format(row.prior_ar_collected)}</td><td /></tr>
+                </tbody>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <Box sx={{ p: 1.5, borderRadius: 1, bgcolor: 'rgba(44,115,255,0.06)', border: '1px solid rgba(44,115,255,0.25)', fontSize: 13 }}>
+                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700, display: 'block', mb: 0.5 }}>Suggested entry (net)</Typography>
+                {netAdj >= 0 ? (
+                  <><div><b>DR</b> Accounts Receivable · {USD2.format(netAdj)}</div><div style={{ paddingLeft: 24 }}><b>CR</b> Subscription Revenue · {USD2.format(netAdj)}</div></>
+                ) : (
+                  <><div><b>DR</b> Subscription Revenue · {USD2.format(Math.abs(netAdj))}</div><div style={{ paddingLeft: 24 }}><b>CR</b> Accounts Receivable · {USD2.format(Math.abs(netAdj))}</div></>
+                )}
+                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1 }}>
+                  Or book gross: <b>DR AR / CR Revenue</b> {USD2.format(row.outstanding_at_period_end)} for new receivables, and <b>DR Cash / CR AR</b> {USD2.format(row.prior_ar_collected)} for prior receivables collected. Confirm account mapping with your accountant.
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        )}
+      </Paper>
 
       {/* Reconciliation — what was supposed to process */}
       <Paper sx={{ p: 3, mb: 3 }}>
