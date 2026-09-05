@@ -398,7 +398,7 @@ if (BT?.months) {
     // and there is nothing to relieve.
     const writeoff = r2(writeoffByMonth[m] || 0);
     if (writeoff > 0) {
-      line(A.uncollectible, writeoff, 0, `Bad debt — AR past ${WRITEOFF_DAYS} days, no longer collectible`, 'writeoff');
+      line(A.uncollectible, writeoff, 0, 'Bad debt — receivables written off as uncollectible', 'writeoff');
       line(A.accounts_receivable, 0, writeoff, 'Relieve uncollectible receivables', 'writeoff');
     }
     // — accrual adjustment —
@@ -508,8 +508,8 @@ const out = {
     writeoff_by_month: writeoffByMonth,
     books_go_live: BOOKS_GO_LIVE,
     note: WRITEOFF_DAYS == null
-      ? 'No automatic write-off — every open invoice counts as collectible AR.'
-      : `Open invoices older than ${WRITEOFF_DAYS} days are treated as closed / not collectible and excluded from the AR balance. They are NOT modified in Stripe — void or mark them uncollectible there to make it official. Revenue stays recognized; the write-off is a bad-debt expense.`,
+      ? 'No automatic write-off. Every invoice stays in AR until it is explicitly marked uncollectible on the Collections page — age alone cannot tell a dead account from one that is merely behind. Marking one books it to 4950 Uncollectible Income (only if its revenue was recognized on the accrual books); it is NOT modified in Stripe.'
+      : `Default for UNDECIDED invoices only: older than ${WRITEOFF_DAYS} days counts as not collectible. Explicit decisions on the Collections page always win. Invoices are NOT modified in Stripe — void or mark them uncollectible there to make it official. Revenue stays recognized; the write-off is a bad-debt expense.`,
   },
   accrual_reliable_from: ACCRUAL_RELIABLE_FROM,
   accrual_series,

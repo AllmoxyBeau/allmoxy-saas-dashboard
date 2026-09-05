@@ -10,6 +10,7 @@ import Alert from '@mui/material/Alert';
 import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Link from '@mui/material/Link';
 import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
@@ -322,6 +323,13 @@ export default function RevenueRecognition() {
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>
           {arRows.length} invoices · {snap ? USD0.format(snap.ar_total) : '—'} collectible · {arRows.filter((r) => r.status === 'uncollectible').length} flagged uncollectible in Stripe · sorted by amount
         </Typography>
+        {snap?.ar_policy && snap.ar_policy.writeoff_after_days == null && (
+          <Alert severity="info" sx={{ mb: 1.5 }}>
+            <strong>Nothing is written off automatically.</strong> Every invoice below stays in AR until it's marked uncollectible on{' '}
+            <Link href="/collections" sx={{ fontWeight: 600 }}>Collections</Link>.
+            {snap.ar_policy.written_off_total > 0 && <> {USD0.format(snap.ar_policy.written_off_total)} across {snap.ar_policy.written_off_count} invoice{snap.ar_policy.written_off_count === 1 ? '' : 's'} has been marked uncollectible so far (struck through below); {USD0.format(snap.ar_policy.bookable_total)} of that books to 4950.</>}
+          </Alert>
+        )}
         {snap?.ar_policy?.writeoff_after_days != null && (
           <Alert severity="info" sx={{ mb: 1.5 }}>
             <strong>Anything past {snap.ar_policy.writeoff_after_days} days is treated as closed.</strong>{' '}

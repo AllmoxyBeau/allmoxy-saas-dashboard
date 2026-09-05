@@ -143,11 +143,15 @@ export default function Collections() {
         <Grid item xs={12} sm={6} md={3}><Kpi label="Pending decisions" value={String(t.pendingN)} hint={t.pendingN ? 'Not yet applied' : 'None'} color={t.pendingN ? 'warning.main' : 'text.primary'} loading={isLoading} /></Grid>
       </Grid>
 
-      <Alert severity="info" sx={{ mb: 2 }}>
-        <strong>How an invoice becomes bad debt.</strong> By default it's automatic and blunt: anything older than{' '}
-        <strong>{threshold ?? '—'} days</strong> from its invoice date is written off, with no regard for whether the customer is still with you.
-        That's why some balances from customers who pay you every month get written off. <strong>Any decision you make here overrides that rule</strong>, in
-        either direction — keep chasing an old invoice, or write off a young one that's clearly dead.
+      <Alert severity={threshold == null ? 'success' : 'info'} sx={{ mb: 2 }}>
+        {threshold == null ? (
+          <><strong>Nothing is written off automatically.</strong> Every invoice stays in AR until you mark it uncollectible here — age never decides on its own,
+            because it can't tell an account that's gone from one that's merely behind. Work the <strong>Undecided</strong> filter and call each one;
+            <strong> Write off</strong> books it to 4950 Uncollectible Income, <strong>Chase</strong> keeps it in AR.</>
+        ) : (
+          <><strong>Undecided invoices fall back to an age rule</strong> — older than <strong>{threshold} days</strong> counts as written off.
+            Any decision you make here overrides it in either direction.</>
+        )}
       </Alert>
 
       <Paper sx={{ p: 3 }}>
