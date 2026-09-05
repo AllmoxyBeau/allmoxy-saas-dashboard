@@ -33,6 +33,7 @@ const TimeToValue = lazy(() => import('./pages/TimeToValue'));
 const OrdersVerified = lazy(() => import('./pages/OrdersVerified'));
 const StripeConnectRevenue = lazy(() => import('./pages/StripeConnectRevenue'));
 const Services = lazy(() => import('./pages/Services'));
+const ProjectCandidates = lazy(() => import('./pages/ProjectCandidates'));
 const RenewalManagement = lazy(() => import('./pages/RenewalManagement'));
 const Contracts = lazy(() => import('./pages/Contracts'));
 const Implementation = lazy(() => import('./pages/Implementation'));
@@ -85,6 +86,7 @@ export default function App() {
         <Route path="orders-verified" element={<L><OrdersVerified /></L>} />
         <Route path="stripe-connect-revenue" element={<L><StripeConnectRevenue /></L>} />
         <Route path="services" element={<L><Services /></L>} />
+        <Route path="project-candidates" element={<L><ProjectCandidates /></L>} />
         <Route path="renewal-management" element={<L><RenewalManagement /></L>} />
         <Route path="contracts" element={<L><Contracts /></L>} />
         <Route path="payments-opportunity" element={<L><PaymentsOpportunity /></L>} />

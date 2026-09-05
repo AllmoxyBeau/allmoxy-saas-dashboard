@@ -59,6 +59,7 @@ export const NAV_ENTRIES: NavEntry[] = [
       { label: 'Stripe Connect Revenue', path: '/stripe-connect-revenue' },
       { label: 'Payments Opportunity', path: '/payments-opportunity' },
       { label: 'Services', path: '/services' },
+      { label: 'Project Candidates', path: '/project-candidates' },
       { label: 'Renewal Management', path: '/renewal-management' },
       { label: 'Contracts', path: '/contracts' },
     ],

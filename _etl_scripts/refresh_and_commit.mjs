@@ -134,7 +134,7 @@ const lineCount = status.trim().split('\n').length;
 if (lineCount > 10) console.log(`    ... +${lineCount - 10} more`);
 
 // Stage only the safe paths — never commit env files, cache, or root-level changes
-execSync('git add public/snapshots/ _etl_scripts/customer_overrides.json _etl_scripts/customer_status_overrides.json _etl_scripts/bid_only_customers.json _etl_scripts/churn_subpattern_overrides.json _etl_scripts/stripe_id_overrides.json _etl_scripts/installation_overrides.json _etl_scripts/risk_driver_overrides.json _etl_scripts/restart_date_overrides.json _etl_scripts/orders_value_overrides.json _etl_scripts/customer_merge_overrides.json _etl_scripts/qb_accounts.json _etl_scripts/metric_definitions.json src/data/annual_payer_ids.json src/data/segment_framework.json src/data/cim_narrative.json 2>/dev/null || true', { cwd: ROOT, shell: true });
+execSync('git add public/snapshots/ _etl_scripts/customer_overrides.json _etl_scripts/customer_status_overrides.json _etl_scripts/bid_only_customers.json _etl_scripts/churn_subpattern_overrides.json _etl_scripts/stripe_id_overrides.json _etl_scripts/installation_overrides.json _etl_scripts/risk_driver_overrides.json _etl_scripts/restart_date_overrides.json _etl_scripts/orders_value_overrides.json _etl_scripts/customer_merge_overrides.json _etl_scripts/qb_accounts.json _etl_scripts/project_candidates.json _etl_scripts/metric_definitions.json src/data/annual_payer_ids.json src/data/segment_framework.json src/data/cim_narrative.json 2>/dev/null || true', { cwd: ROOT, shell: true });
 
 const stagedStatus = execSync('git diff --cached --stat | tail -1', { cwd: ROOT, encoding: 'utf8', shell: true });
 if (!stagedStatus.trim()) {

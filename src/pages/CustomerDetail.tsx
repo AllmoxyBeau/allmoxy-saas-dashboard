@@ -197,6 +197,7 @@ function monthLabelLong(iso: string) {
 const COMMITTED_ANNUAL_IDS = new Set<number>(annualPayersConfig.annual_payer_ids);
 const PENDING_STORAGE_KEY = 'allmoxy.annual_payers.pending';
 const BID_ONLY_STORAGE_KEY = 'allmoxy.bid_only.pending';
+const PROJECT_CANDIDATE_STORAGE_KEY = 'allmoxy.project_candidate.pending';
 
 // Bid-only override store: aid → boolean. Used by the Customer Detail toggle
 // to mark customers who use Allmoxy primarily for bids/quotes (not verified orders).
@@ -208,6 +209,18 @@ function readBidOnly(): BidOnlyMap {
 }
 function writeBidOnly(next: BidOnlyMap) {
   try { localStorage.setItem(BID_ONLY_STORAGE_KEY, JSON.stringify(next)); } catch {}
+}
+
+// Project-candidate override store: aid → boolean. CS flags customers who'd be a good
+// fit for a paid project; they collect on the Revenue → Project Candidates page for the
+// Sales hand-off. Pending in localStorage until committed to project_candidates.json.
+type ProjectCandidateMap = Record<string, boolean>;
+function readProjectCandidates(): ProjectCandidateMap {
+  try { const raw = localStorage.getItem(PROJECT_CANDIDATE_STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+  catch { return {}; }
+}
+function writeProjectCandidates(next: ProjectCandidateMap) {
+  try { localStorage.setItem(PROJECT_CANDIDATE_STORAGE_KEY, JSON.stringify(next)); } catch {}
 }
 
 type PendingMap = Record<string, boolean>; // id -> pending desired state
@@ -344,6 +357,11 @@ export default function CustomerDetail() {
 
   const [pending, setPending] = useState<PendingMap>(() => readPending());
   const [bidOnlyMap, setBidOnlyMap] = useState<BidOnlyMap>(() => readBidOnly());
+  const [projectCandidateMap, setProjectCandidateMap] = useState<ProjectCandidateMap>(() => readProjectCandidates());
+  const { data: pcData } = useSheetTab('project_candidates');
+  const committedProjectCandidates = useMemo(() => new Set(
+    ((pcData as unknown as { customers?: Array<{ allmoxy_customer_id: number }> } | undefined)?.customers ?? []).map((c) => c.allmoxy_customer_id),
+  ), [pcData]);
   // Pending churn-reason overrides — id → { reason, evidence, updatedAt }. Persists locally
   // until an ETL pass folds them into customer_profiles or churn_inferences. While pending,
   // the "Update" UI surfaces a "Pending" chip so the user knows it hasn't landed yet.
@@ -565,6 +583,36 @@ export default function CustomerDetail() {
                     <InfoIcon info={<><strong>What it does:</strong> Flags this customer as paying annually upfront — the snapshot builder amortizes the annual payment as amount/12 across 12 months so monthly MRR doesn't spike.<br /><br /><strong>Pending changes</strong> live in your browser until Claude rebuilds snapshots.</>} />
                   </Stack>
                 </Box>
+                {(() => {
+                  // Project candidate — CS's opinion that this customer is a good fit for a
+                  // paid project. Collects on Revenue → Project Candidates for the Sales hand-off.
+                  const aidKey = String(selected.allmoxy_customer_id);
+                  const committed = committedProjectCandidates.has(selected.allmoxy_customer_id);
+                  const local = projectCandidateMap[aidKey];
+                  const isCandidate = local !== undefined ? local : committed;
+                  const pending = local !== undefined && local !== committed;
+                  return (
+                    <Box>
+                      <FieldLabel>Project candidate</FieldLabel>
+                      <Stack direction="row" spacing={0.5} alignItems="center" sx={{ mt: 0.25 }}>
+                        <Switch
+                          size="small"
+                          sx={{ ml: -0.5 }}
+                          checked={isCandidate}
+                          onChange={(e) => {
+                            const next = { ...projectCandidateMap };
+                            if (e.target.checked === committed) delete next[aidKey];
+                            else next[aidKey] = e.target.checked;
+                            setProjectCandidateMap(next);
+                            writeProjectCandidates(next);
+                          }}
+                        />
+                        {isCandidate && <Chip label={pending ? 'pending' : 'on the list'} size="small" sx={{ height: 18, fontSize: 10, bgcolor: pending ? 'rgba(245,158,11,0.18)' : 'rgba(46,160,67,0.18)', color: pending ? 'warning.main' : 'success.main' }} />}
+                        <InfoIcon info={<><strong>What it does:</strong> Flags this customer as a good fit for a paid project / services engagement. They appear on <strong>Revenue → Project Candidates</strong>, the exportable hand-off list for Sales.<br /><br />It's an opinion flag — it changes no revenue, churn or health metric.<br /><br /><strong>Pending changes</strong> live in your browser until Claude commits them to <code>project_candidates.json</code> and rebuilds.</>} />
+                      </Stack>
+                    </Box>
+                  );
+                })()}
               </InfoSection>
 
               {/* Identity & links — demoted plumbing: IDs + external system links */}
