@@ -1,0 +1,5 @@
+{
+  "comment": "Per-invoice collection decisions, made on the Revenue → Collections page. An explicit decision here ALWAYS wins over the automatic age rule (qb_accounts.ar_writeoff_after_days), in both directions: mark an old invoice 'collectible' to keep chasing it and keep it out of bad debt, or mark a young one 'uncollectible' to write it off now. Keyed by Stripe invoice id. `decision`: uncollectible | collectible. Invoices with no entry fall back to the age rule.",
+  "updated_at": "2026-09-05",
+  "decisions": {}
+}

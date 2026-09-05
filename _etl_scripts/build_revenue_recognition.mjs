@@ -248,9 +248,23 @@ for (const m of MONTHS) {
 // written off. Revenue stays recognized — it was earned when billed; a write-off is
 // a bad-debt expense, not a revenue reversal. The invoice is untouched in Stripe.
 const WRITEOFF_DAYS = QB.ar_writeoff_after_days ?? null;
+// Per-invoice decisions from the Collections page ALWAYS beat the age rule, both ways:
+// keep chasing an old invoice from a live customer, or write off a young one that's
+// clearly dead. The age rule is only the default for invoices nobody has judged yet —
+// on its own it's blunt (it writes off balances from customers still paying every month).
+const AR_DECISIONS = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/ar_collection_overrides.json'), 'utf8')).decisions || {}; }
+  catch { return {}; }
+})();
 const addDaysMonth = (iso, days) => { const d = new Date(iso); d.setDate(d.getDate() + days); return d.toISOString().slice(0, 7); };
 for (const r of arRows) {
-  r.collectible = WRITEOFF_DAYS == null ? true : r.age_days <= WRITEOFF_DAYS;
+  const decided = r.invoice_id ? AR_DECISIONS[r.invoice_id] : null;
+  r.decision = decided?.decision ?? null;
+  r.decision_note = decided?.note ?? null;
+  r.decided_at = decided?.decided_at ?? null;
+  r.collectible = decided
+    ? decided.decision === 'collectible'
+    : (WRITEOFF_DAYS == null ? true : r.age_days <= WRITEOFF_DAYS);
   // BOOKABLE (Beau, 2026-09-05): prior-year books were kept on a CASH basis, so those
   // invoices never created a receivable — there is nothing to write off and booking
   // one would expense against an asset that was never recorded. Only AR whose revenue
@@ -260,7 +274,16 @@ for (const r of arRows) {
   // Bad debt is recognized when collection became improbable — i.e. the month the
   // invoice crossed the threshold — not retroactively in the month it was billed
   // (which would restate a period already posted).
-  r.writeoff_month = !r.collectible && WRITEOFF_DAYS != null ? addDaysMonth(r.invoice_date, WRITEOFF_DAYS) : null;
+  // A manual write-off is recognized the day it was decided; an automatic one on the
+  // day the invoice crossed the threshold.
+  r.writeoff_month = r.collectible ? null
+    : (decided ? (r.decided_at || '').slice(0, 7) || monthOf(r.invoice_date)
+       : (WRITEOFF_DAYS != null ? addDaysMonth(r.invoice_date, WRITEOFF_DAYS) : null));
+  // Context for the collections review: is this relationship still alive?
+  const prof = r.allmoxy_customer_id != null ? profByAid.get(r.allmoxy_customer_id) : null;
+  r.customer_status = prof?.status ?? null;
+  r.customer_mrr = r2(prof?.current_subscription_mrr || 0);
+  r.customer_still_paying = (prof?.current_subscription_mrr || 0) > 0;
 }
 const arOpenRows = arRows.filter((r) => r.collectible);
 const arWrittenOffRows = arRows.filter((r) => !r.collectible);
