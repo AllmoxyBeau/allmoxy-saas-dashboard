@@ -242,6 +242,42 @@ for (const m of MONTHS) {
   };
 }
 
+// ── AR write-off policy ──────────────────────────────────────────────────────
+// An open invoice older than `ar_writeoff_after_days` is CLOSED / no longer
+// collectible (Beau, 2026-09-05). It leaves the open-AR balance and is reported as
+// written off. Revenue stays recognized — it was earned when billed; a write-off is
+// a bad-debt expense, not a revenue reversal. The invoice is untouched in Stripe.
+const WRITEOFF_DAYS = QB.ar_writeoff_after_days ?? null;
+const addDaysMonth = (iso, days) => { const d = new Date(iso); d.setDate(d.getDate() + days); return d.toISOString().slice(0, 7); };
+for (const r of arRows) {
+  r.collectible = WRITEOFF_DAYS == null ? true : r.age_days <= WRITEOFF_DAYS;
+  // BOOKABLE (Beau, 2026-09-05): prior-year books were kept on a CASH basis, so those
+  // invoices never created a receivable — there is nothing to write off and booking
+  // one would expense against an asset that was never recorded. Only AR whose revenue
+  // was recognized in the accrual period (books go-live onward) is bookable; older
+  // balances are memo-only, shown so the aging is complete.
+  r.bookable_writeoff = !r.collectible && r.service_month >= BOOKS_GO_LIVE;
+  // Bad debt is recognized when collection became improbable — i.e. the month the
+  // invoice crossed the threshold — not retroactively in the month it was billed
+  // (which would restate a period already posted).
+  r.writeoff_month = !r.collectible && WRITEOFF_DAYS != null ? addDaysMonth(r.invoice_date, WRITEOFF_DAYS) : null;
+}
+const arOpenRows = arRows.filter((r) => r.collectible);
+const arWrittenOffRows = arRows.filter((r) => !r.collectible);
+const arBookableRows = arRows.filter((r) => r.bookable_writeoff);
+const sumAmt = (rows) => r2(rows.reduce((s, r) => s + r.amount, 0));
+// Written-off totals by the month the revenue was originally recognized (for context).
+const writtenOffByMonth = {};
+for (const r of arWrittenOffRows) writtenOffByMonth[r.service_month] = r2((writtenOffByMonth[r.service_month] || 0) + r.amount);
+// Bookable write-offs by the month they became uncollectible — these become the
+// DR 4950 / CR 1200 lines on that month's entry.
+const writeoffByMonth = {};
+for (const r of arBookableRows) {
+  const m = r.writeoff_month; if (!m || m > nowMonth) continue;
+  writeoffByMonth[m] = r2((writeoffByMonth[m] || 0) + r.amount);
+}
+
+
 // ── QuickBooks journal entry per month ──────────────────────────────────────────
 // Mirrors Beau's monthly Stripe entry line-for-line (every cash line ties to the
 // balance-transactions API to the penny), then ADDS: sales tax by state
@@ -332,6 +368,15 @@ if (BT?.months) {
       if (!amt) continue; const pay = TAXACCT[st]; const d = pay?.description || `${st} Sales Tax`;
       line(A.subscription_tax, amt, 0, d, 'tax');
       line(pay || { number: '????', name: `Sales Tax Payable:${st} — MAP ACCOUNT` }, 0, amt, d, 'tax');
+    }
+    // — bad debt: AR that crossed the collectibility threshold this month —
+    // Only balances whose revenue was recognized on the accrual books (go-live onward)
+    // are booked: prior years ran on a cash basis, so no receivable was ever recorded
+    // and there is nothing to relieve.
+    const writeoff = r2(writeoffByMonth[m] || 0);
+    if (writeoff > 0) {
+      line(A.uncollectible, writeoff, 0, `Bad debt — AR past ${WRITEOFF_DAYS} days, no longer collectible`, 'writeoff');
+      line(A.accounts_receivable, 0, writeoff, 'Relieve uncollectible receivables', 'writeoff');
     }
     // — accrual adjustment —
     if (restate) {
@@ -424,22 +469,6 @@ for (const aid of allAids) {
 const accrual_coverage = {};
 for (const m of MONTHS.filter((x) => x >= '2025-01')) { const c = chgMonthTotal(m); accrual_coverage[m] = c > 0 ? Math.round((by_month[m].recognized / c) * 1000) / 10 : null; }
 
-// ── AR write-off policy ──────────────────────────────────────────────────────
-// An open invoice older than `ar_writeoff_after_days` is CLOSED / no longer
-// collectible (Beau, 2026-09-05). It leaves the open-AR balance and is reported as
-// written off. Revenue stays recognized — it was earned when billed; a write-off is
-// a bad-debt expense, not a revenue reversal. The invoice is untouched in Stripe.
-const WRITEOFF_DAYS = QB.ar_writeoff_after_days ?? null;
-for (const r of arRows) r.collectible = WRITEOFF_DAYS == null ? true : r.age_days <= WRITEOFF_DAYS;
-const arOpenRows = arRows.filter((r) => r.collectible);
-const arWrittenOffRows = arRows.filter((r) => !r.collectible);
-const sumAmt = (rows) => r2(rows.reduce((s, r) => s + r.amount, 0));
-// Written-off totals by the month the revenue was originally recognized, so a
-// bad-debt entry can be dated to the right period if you'd rather not book it all
-// in one lump.
-const writtenOffByMonth = {};
-for (const r of arWrittenOffRows) writtenOffByMonth[r.service_month] = r2((writtenOffByMonth[r.service_month] || 0) + r.amount);
-
 arRows.sort((a, b) => b.amount - a.amount);
 const out = {
   ar_policy: {
@@ -449,6 +478,12 @@ const out = {
     written_off_total: sumAmt(arWrittenOffRows),
     written_off_count: arWrittenOffRows.length,
     written_off_by_service_month: writtenOffByMonth,
+    bookable_total: sumAmt(arBookableRows),
+    bookable_count: arBookableRows.length,
+    pre_accrual_total: r2(sumAmt(arWrittenOffRows) - sumAmt(arBookableRows)),
+    pre_accrual_count: arWrittenOffRows.length - arBookableRows.length,
+    writeoff_by_month: writeoffByMonth,
+    books_go_live: BOOKS_GO_LIVE,
     note: WRITEOFF_DAYS == null
       ? 'No automatic write-off — every open invoice counts as collectible AR.'
       : `Open invoices older than ${WRITEOFF_DAYS} days are treated as closed / not collectible and excluded from the AR balance. They are NOT modified in Stripe — void or mark them uncollectible there to make it official. Revenue stays recognized; the write-off is a bad-debt expense.`,
