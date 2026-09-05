@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-05T02:37:38.621Z",
-  "cachedUntil": "2026-09-05T02:42:38.621Z",
+  "fetchedAt": "2026-09-05T02:55:01.792Z",
+  "cachedUntil": "2026-09-05T03:00:01.792Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -20961,22 +20961,22 @@
       "reactivated_mrr": 2464.95,
       "expansion_mrr": 2811.78,
       "contraction_mrr": 1351.94,
-      "churn_mrr": 3994.6,
+      "churn_mrr": 3744.6,
       "voided_mrr": 0,
-      "delinquent_mrr": 2785.92,
+      "delinquent_mrr": 3035.92,
       "ending_mrr": 224197.35,
       "net_new_mrr": -1158.73,
       "new_logos": 5,
       "reactivated_logos": 4,
-      "churned_logos": 6,
+      "churned_logos": 5,
       "voided_logos": 0,
-      "delinquent_logos": 3,
-      "gross_churn_rate_monthly": 0.0177,
-      "net_churn_rate_monthly": 0.0112,
+      "delinquent_logos": 4,
+      "gross_churn_rate_monthly": 0.0166,
+      "net_churn_rate_monthly": 0.0101,
       "expansion_rate_monthly": 0.0125,
-      "grr_monthly": 0.9763,
-      "nrr_monthly": 0.9888,
-      "quick_ratio": 0.84,
+      "grr_monthly": 0.9774,
+      "nrr_monthly": 0.9899,
+      "quick_ratio": 0.88,
       "details": {
         "new": [
           {
@@ -21105,11 +21105,6 @@
             "name": "B & L Cabinets",
             "id": 2025,
             "mrr": 370
-          },
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
-            "mrr": 250
           }
         ],
         "voided": [],
@@ -21127,6 +21122,13 @@
             "mrr": 699,
             "status": "at_risk",
             "pay_status": "Active"
+          },
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250,
+            "status": "non_payment",
+            "pay_status": "Cancelled"
           },
           {
             "name": "Evolve Elements",
@@ -21596,22 +21598,22 @@
       "reactivated_mrr": 450,
       "expansion_mrr": 893.53,
       "contraction_mrr": 3098.35,
-      "churn_mrr": 250,
+      "churn_mrr": 0,
       "voided_mrr": 250,
-      "delinquent_mrr": 749,
+      "delinquent_mrr": 999,
       "ending_mrr": 227009.62,
       "net_new_mrr": -2603.82,
       "new_logos": 1,
       "reactivated_logos": 2,
-      "churned_logos": 1,
+      "churned_logos": 0,
       "voided_logos": 1,
-      "delinquent_logos": 1,
-      "gross_churn_rate_monthly": 0.0011,
-      "net_churn_rate_monthly": 0.0107,
+      "delinquent_logos": 2,
+      "gross_churn_rate_monthly": 0,
+      "net_churn_rate_monthly": 0.0096,
       "expansion_rate_monthly": 0.0039,
-      "grr_monthly": 0.9854,
-      "nrr_monthly": 0.9893,
-      "quick_ratio": 0.39,
+      "grr_monthly": 0.9865,
+      "nrr_monthly": 0.9904,
+      "quick_ratio": 0.42,
       "details": {
         "new": [
           {
@@ -21720,13 +21722,7 @@
             "delta": 20
           }
         ],
-        "churn": [
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
-            "mrr": 250
-          }
-        ],
+        "churn": [],
         "voided": [
           {
             "name": "Hempston Home",
@@ -21743,6 +21739,13 @@
             "mrr": 749,
             "status": "non_payment",
             "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250,
+            "status": "non_payment",
+            "pay_status": "Cancelled"
           }
         ]
       }
@@ -21955,22 +21958,22 @@
       "reactivated_mrr": 950,
       "expansion_mrr": 3889.19,
       "contraction_mrr": 3954.39,
-      "churn_mrr": 250,
+      "churn_mrr": 0,
       "voided_mrr": 2320,
-      "delinquent_mrr": 6156,
+      "delinquent_mrr": 6406,
       "ending_mrr": 220081.8,
       "net_new_mrr": -7422.2,
       "new_logos": 1,
       "reactivated_logos": 3,
-      "churned_logos": 1,
+      "churned_logos": 0,
       "voided_logos": 2,
-      "delinquent_logos": 4,
-      "gross_churn_rate_monthly": 0.0011,
-      "net_churn_rate_monthly": 0.0014,
+      "delinquent_logos": 5,
+      "gross_churn_rate_monthly": 0,
+      "net_churn_rate_monthly": 0.0003,
       "expansion_rate_monthly": 0.0171,
-      "grr_monthly": 0.9815,
-      "nrr_monthly": 0.9986,
-      "quick_ratio": 1.02,
+      "grr_monthly": 0.9826,
+      "nrr_monthly": 0.9997,
+      "quick_ratio": 1.09,
       "details": {
         "new": [
           {
@@ -22063,13 +22066,7 @@
             "delta": 16.05
           }
         ],
-        "churn": [
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
-            "mrr": 250
-          }
-        ],
+        "churn": [],
         "voided": [
           {
             "name": "Brave Custom Woodworking",
@@ -22114,6 +22111,13 @@
             "mrr": 658,
             "status": "non_payment",
             "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250,
+            "status": "non_payment",
+            "pay_status": "Cancelled"
           }
         ]
       }
@@ -22129,15 +22133,15 @@
     "reactivated_mrr": 22245.58,
     "expansion_mrr": 26992.16,
     "contraction_mrr": 35166.42,
-    "churn_mrr": 16115,
+    "churn_mrr": 15365,
     "voided_mrr": 2570,
-    "delinquent_mrr": 22213.42,
+    "delinquent_mrr": 22963.42,
     "net_new_mrr": -8032.1,
-    "gross_mrr_churn_ttm": 0.0706,
-    "annual_gross_churn_rate": 0.0683,
-    "annual_grr": 0.7978,
-    "annual_nrr": 0.8998,
-    "quick_ratio": 0.89
+    "gross_mrr_churn_ttm": 0.0674,
+    "annual_gross_churn_rate": 0.0652,
+    "annual_grr": 0.8005,
+    "annual_nrr": 0.9028,
+    "quick_ratio": 0.91
   },
   "monthly_accrual": [
     {
@@ -23771,22 +23775,22 @@
       "reactivated_mrr": 0,
       "expansion_mrr": 3610,
       "contraction_mrr": 2194.39,
-      "churn_mrr": 250,
+      "churn_mrr": 0,
       "voided_mrr": 2820,
-      "delinquent_mrr": 0,
+      "delinquent_mrr": 250,
       "ending_mrr": 225312.8,
       "net_new_mrr": -1235.39,
       "new_logos": 1,
       "reactivated_logos": 0,
-      "churned_logos": 1,
+      "churned_logos": 0,
       "voided_logos": 3,
-      "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.0011,
-      "net_churn_rate_monthly": -0.0051,
+      "delinquent_logos": 1,
+      "gross_churn_rate_monthly": 0,
+      "net_churn_rate_monthly": -0.0062,
       "expansion_rate_monthly": 0.0159,
-      "grr_monthly": 0.9892,
-      "nrr_monthly": 1.0051,
-      "quick_ratio": 1.65,
+      "grr_monthly": 0.9903,
+      "nrr_monthly": 1.0062,
+      "quick_ratio": 1.84,
       "details": {
         "new": [
           {
@@ -23842,13 +23846,7 @@
             "delta": 16.05
           }
         ],
-        "churn": [
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
-            "mrr": 250
-          }
-        ],
+        "churn": [],
         "voided": [
           {
             "name": "Brave Custom Woodworking",
@@ -23872,7 +23870,15 @@
             "pay_status": "Active"
           }
         ],
-        "delinquent": []
+        "delinquent": [
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250,
+            "status": "non_payment",
+            "pay_status": "Cancelled"
+          }
+        ]
       }
     }
   ],
@@ -23886,14 +23892,14 @@
     "reactivated_mrr": 0,
     "expansion_mrr": 32775.06,
     "contraction_mrr": 36271.57,
-    "churn_mrr": 14846,
+    "churn_mrr": 14596,
     "voided_mrr": 3070,
-    "delinquent_mrr": 1514.5,
+    "delinquent_mrr": 1764.5,
     "net_new_mrr": -2716.51,
-    "gross_mrr_churn_ttm": 0.0651,
-    "annual_gross_churn_rate": 0.0622,
-    "annual_grr": 0.8017,
-    "annual_nrr": 0.9272,
+    "gross_mrr_churn_ttm": 0.064,
+    "annual_gross_churn_rate": 0.0611,
+    "annual_grr": 0.8026,
+    "annual_nrr": 0.9282,
     "quick_ratio": 1.04
   },
   "notes": "MRR waterfall on two bases. CASH (monthly/ttm) = customer_profiles.monthly_history — what cleared Stripe, boundary-slip corrected, full history; use for bank reconciliation. ACCRUAL (monthly_accrual/ttm_accrual) = revenue_recognition.accrual_series — what was BILLED by invoice date, so a card failure is an open receivable rather than churn; use for retention metrics. Accrual starts 2025-08 because Stripe-invoice coverage before mid-2025 is 4–28% of actual revenue (Allmoxy migrated to invoicing then). New = customer first appears with MRR > 0; Reactivated = billed before, returning. Churn = confirmed-churned (status churned). Voided = dropped to $0 with a VOIDED invoice for the period — billing intentionally canceled, nothing owed (not dunning). Delinquent = dropped to $0, still billable, did not clear (card failure / non-payment) — may still pay. All three reduce ending MRR but are reported separately. Sales tax is EXCLUDED on both bases: it is a pass-through liability, not revenue. Accrual sums pre-tax invoice lines; cash has collected tax subtracted by the invoice paid month (~1.5% of gross, ~$3.4K/mo). Services and Connect revenue are NOT included — subscription only.",

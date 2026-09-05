@@ -424,8 +424,35 @@ for (const aid of allAids) {
 const accrual_coverage = {};
 for (const m of MONTHS.filter((x) => x >= '2025-01')) { const c = chgMonthTotal(m); accrual_coverage[m] = c > 0 ? Math.round((by_month[m].recognized / c) * 1000) / 10 : null; }
 
+// ── AR write-off policy ──────────────────────────────────────────────────────
+// An open invoice older than `ar_writeoff_after_days` is CLOSED / no longer
+// collectible (Beau, 2026-09-05). It leaves the open-AR balance and is reported as
+// written off. Revenue stays recognized — it was earned when billed; a write-off is
+// a bad-debt expense, not a revenue reversal. The invoice is untouched in Stripe.
+const WRITEOFF_DAYS = QB.ar_writeoff_after_days ?? null;
+for (const r of arRows) r.collectible = WRITEOFF_DAYS == null ? true : r.age_days <= WRITEOFF_DAYS;
+const arOpenRows = arRows.filter((r) => r.collectible);
+const arWrittenOffRows = arRows.filter((r) => !r.collectible);
+const sumAmt = (rows) => r2(rows.reduce((s, r) => s + r.amount, 0));
+// Written-off totals by the month the revenue was originally recognized, so a
+// bad-debt entry can be dated to the right period if you'd rather not book it all
+// in one lump.
+const writtenOffByMonth = {};
+for (const r of arWrittenOffRows) writtenOffByMonth[r.service_month] = r2((writtenOffByMonth[r.service_month] || 0) + r.amount);
+
 arRows.sort((a, b) => b.amount - a.amount);
 const out = {
+  ar_policy: {
+    writeoff_after_days: WRITEOFF_DAYS,
+    open_total: sumAmt(arOpenRows),
+    open_count: arOpenRows.length,
+    written_off_total: sumAmt(arWrittenOffRows),
+    written_off_count: arWrittenOffRows.length,
+    written_off_by_service_month: writtenOffByMonth,
+    note: WRITEOFF_DAYS == null
+      ? 'No automatic write-off — every open invoice counts as collectible AR.'
+      : `Open invoices older than ${WRITEOFF_DAYS} days are treated as closed / not collectible and excluded from the AR balance. They are NOT modified in Stripe — void or mark them uncollectible there to make it official. Revenue stays recognized; the write-off is a bad-debt expense.`,
+  },
   accrual_reliable_from: ACCRUAL_RELIABLE_FROM,
   accrual_series,
   accrual_coverage,
@@ -438,7 +465,8 @@ const out = {
   months: MONTHS,
   by_month,
   ar_aging: arRows,
-  ar_total: r2(arRows.reduce((s, r) => s + r.amount, 0)),
+  ar_total: sumAmt(arOpenRows),            // collectible only — see ar_policy
+  ar_total_including_written_off: sumAmt(arRows),
   reconciliation_detail: detail,
   orphan_stripe_customers: orphans,
   journal_entries,

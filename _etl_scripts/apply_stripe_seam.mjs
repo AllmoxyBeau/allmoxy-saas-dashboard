@@ -39,7 +39,13 @@ function recomputeStatus(p, lastPay, failed3mo) {
   const legit = /pause|pre-?sale|partnership|free/i.test(p.pay_status || '');
   const monthsSince = lastPay ? (today.getTime() - new Date(lastPay).getTime()) / (30.44 * 864e5) : Infinity;
   const missed = !!(lastPay && lastPay < `${latestCompleteMonth}-01`);
-  if (hubChurn) return 'churned';
+  // CASH OVERRIDES THE FLAG (mirrors build_customer_profiles): a customer who is still
+  // paying cannot be churned, whatever HubSpot says. `Cancelled` means the churn
+  // playbook completed, not that revenue stopped; a filled churn_reason often belongs
+  // to a playbook that ran and then SAVED the account. This runs AFTER the profile
+  // build, so without the guard here it silently re-churned live payers.
+  const payingRecently = monthsSince < 2;
+  if (hubChurn && !payingRecently) return 'churned';
   if (legit) return failed3mo > 0 ? 'at_risk' : 'active';
   if (monthsSince >= 12) return 'churned';
   if (missed && !ANNUAL.has(p.allmoxy_customer_id)) return 'non_payment';

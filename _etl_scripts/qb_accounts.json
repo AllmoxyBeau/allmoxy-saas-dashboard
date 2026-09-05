@@ -3,6 +3,8 @@
   "updated_at": "2026-09-05",
   "accrual_presentation": "append",
   "sales_tax_basis": "invoice",
+  "_ar_writeoff_comment": "Beau, 2026-09-05: an open invoice older than this many days is considered CLOSED / no longer collectible. It drops out of the open-AR balance and is reported as written off instead. This supersedes the earlier 'no auto write-off, case by case' rule — the aging showed 74% of AR was 180+ days old and not realistically collectible. This is a REPORTING policy: the invoices are NOT touched in Stripe (they stay open there until someone voids or marks them uncollectible). Set to null to go back to case-by-case.",
+  "ar_writeoff_after_days": 90,
   "apply_refund_classification_fix": true,
   "accounts": {
     "stripe_clearing":      { "number": "1003", "name": "Stripe Account" },

@@ -863,8 +863,18 @@ for (const id of allIds) {
   // pre-sale account, or a free partnership. A missed month here isn't non-payment,
   // and a long gap isn't churn. (Cancelled is handled above as hubChurnConfirmed.)
   const legitNonBilling = /pause|pre-?sale|partnership|free/i.test(resolvedPayStatus || '');
+  // CASH OVERRIDES THE FLAG: a customer who is still paying cannot be churned, no
+  // matter what HubSpot says. A `Cancelled` pay status means the churn playbook
+  // completed — not that revenue stopped — and a filled churn_reason often belongs to
+  // a playbook that ran and then SAVED the account. Both were marking live payers as
+  // churned, which removed them from churn monitoring while they kept billing
+  // (Wizzwood $2,650/mo, Santa's Kitchen $250/mo — both paying every month).
+  // They fall through to the normal ladder instead, and carry a status_conflict note
+  // so CS can reconcile the HubSpot record.
+  const payingRecently = monthsSinceLastPay < 2;
+  const churnFlagContradicted = hubChurnConfirmed && payingRecently;
   let status;
-  if (hubChurnConfirmed) status = 'churned';
+  if (hubChurnConfirmed && !payingRecently) status = 'churned';
   else if (legitNonBilling) status = failed3mo > 0 ? 'at_risk' : 'active';
   else if (monthsSinceLastPay >= 12) status = 'churned';
   else if (missedAMonth && !isAnnualPayer) status = 'non_payment';
@@ -873,6 +883,11 @@ for (const id of allIds) {
 
   profiles.push({
     allmoxy_customer_id: id,
+    // HubSpot says churned (Cancelled pay status or a filled churn reason) but the
+    // customer is still paying — surfaced so CS can fix the HubSpot record.
+    status_conflict: churnFlagContradicted
+      ? `HubSpot marks this churned (pay status: ${resolvedPayStatus || 'n/a'}${resolvedChurnReason ? '; churn reason filled' : ''}) but they last paid ${lastPay} — treated as "${status}" because revenue is live. Reconcile the HubSpot record.`
+      : null,
     name,
     hubspot_company_id: hubspotCompanyIdResolved,
     installer_id: installerId,
