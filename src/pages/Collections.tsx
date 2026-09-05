@@ -24,6 +24,8 @@ type ArRow = {
   decision?: 'uncollectible' | 'collectible' | null; decision_note?: string | null; decided_at?: string | null;
   customer_status?: string | null; customer_mrr?: number; customer_still_paying?: boolean;
 };
+type RowSource = 'auto' | 'decided' | 'pending';
+type DecoratedRow = ArRow & { effective: 'collectible' | 'uncollectible'; source: RowSource; pendingNote: string | null };
 type Snap = {
   ar_aging: ArRow[]; ar_total: number;
   ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; books_go_live: string } | null;
@@ -42,28 +44,64 @@ const writePending = (m: PendingMap) => { try { localStorage.setItem(STORAGE_KEY
 
 type Filter = 'all' | 'chase' | 'writeoff' | 'decided' | 'undecided';
 
+// Every column is sortable. `value` returns a number or string; strings compare with
+// localeCompare so names sort naturally. Defaults are the direction you actually want
+// on first click — biggest money and oldest invoices first, names A→Z.
+type SortKey = 'name' | 'invoice_date' | 'amount' | 'age_days' | 'customer' | 'source' | 'decision';
+const COLUMNS: Array<{ key: SortKey; label: string; align?: 'left' | 'right'; defaultDesc: boolean; value: (r: DecoratedRow) => string | number }> = [
+  { key: 'name', label: 'Customer', defaultDesc: false, value: (r) => (r.name || '').toLowerCase() },
+  { key: 'invoice_date', label: 'Invoice', defaultDesc: true, value: (r) => r.invoice_date || '' },
+  { key: 'amount', label: 'Amount', align: 'right', defaultDesc: true, value: (r) => r.amount },
+  { key: 'age_days', label: 'Age', align: 'right', defaultDesc: true, value: (r) => r.age_days },
+  // Live customers first, then by how much they pay — the collectibility ranking.
+  { key: 'customer', label: 'Customer state', defaultDesc: true, value: (r) => (r.customer_still_paying ? 1e9 + (r.customer_mrr ?? 0) : r.customer_status === 'churned' ? -1 : 0) },
+  { key: 'source', label: 'Source', defaultDesc: false, value: (r) => r.source },
+  { key: 'decision', label: 'Decision', defaultDesc: false, value: (r) => r.effective },
+];
+
 export default function Collections() {
   const { data, isLoading, error } = useSheetTab('revenue_recognition');
   const snap = data as unknown as Snap | undefined;
   const [pending, setPending] = useState<PendingMap>(() => readPending());
   const [filter, setFilter] = useState<Filter>('all');
+  const [sortKey, setSortKey] = useState<SortKey>('amount');
+  const [sortDesc, setSortDesc] = useState(true);
+  // First click on a new column uses that column's natural direction; clicking the
+  // active column flips it.
+  const toggleSort = (key: SortKey) => {
+    const col = COLUMNS.find((c) => c.key === key)!;
+    if (key === sortKey) setSortDesc((d) => !d);
+    else { setSortKey(key); setSortDesc(col.defaultDesc); }
+  };
 
   const threshold = snap?.ar_policy?.writeoff_after_days ?? null;
   // Effective state = pending decision > committed decision > age rule.
-  const rows = useMemo(() => (snap?.ar_aging ?? []).map((r) => {
+  const rows = useMemo<DecoratedRow[]>(() => (snap?.ar_aging ?? []).map((r) => {
     const p = r.invoice_id ? pending[r.invoice_id] : undefined;
     const effective: 'collectible' | 'uncollectible' = p ? p.decision : (r.collectible ? 'collectible' : 'uncollectible');
-    const source = p ? 'pending' : r.decision ? 'decided' : 'auto';
+    const source: RowSource = p ? 'pending' : r.decision ? 'decided' : 'auto';
     return { ...r, effective, source, pendingNote: p?.note ?? null };
-  }).sort((a, b) => b.amount - a.amount), [snap, pending]);
+  }), [snap, pending]);
 
-  const shown = useMemo(() => rows.filter((r) => {
-    if (filter === 'chase') return r.effective === 'collectible';
-    if (filter === 'writeoff') return r.effective === 'uncollectible';
-    if (filter === 'decided') return r.source !== 'auto';
-    if (filter === 'undecided') return r.source === 'auto';
-    return true;
-  }), [rows, filter]);
+  const shown = useMemo(() => {
+    const filtered = rows.filter((r) => {
+      if (filter === 'chase') return r.effective === 'collectible';
+      if (filter === 'writeoff') return r.effective === 'uncollectible';
+      if (filter === 'decided') return r.source !== 'auto';
+      if (filter === 'undecided') return r.source === 'auto';
+      return true;
+    });
+    const col = COLUMNS.find((c) => c.key === sortKey)!;
+    // Amount breaks ties so equal-ranked rows still lead with the biggest money.
+    return filtered.sort((a, b) => {
+      const av = col.value(a), bv = col.value(b);
+      let cmp = typeof av === 'string' || typeof bv === 'string'
+        ? String(av).localeCompare(String(bv))
+        : (av as number) - (bv as number);
+      if (cmp === 0) cmp = a.amount - b.amount;
+      return sortDesc ? -cmp : cmp;
+    });
+  }, [rows, filter, sortKey, sortDesc]);
 
   const t = useMemo(() => ({
     chase: rows.filter((r) => r.effective === 'collectible').reduce((s, r) => s + r.amount, 0),
@@ -131,9 +169,29 @@ export default function Collections() {
           <Box sx={{ overflowX: 'auto' }}>
             <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%', minWidth: 900 }}>
               <thead><tr>
-                {['Customer', 'Invoice', 'Amount', 'Age', 'Customer state', 'Source', 'Decision'].map((h, i) => (
-                  <Box key={h} component="th" sx={{ ...cell, textAlign: i === 2 || i === 3 ? 'right' : 'left', color: 'text.secondary', fontWeight: 600, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{h}</Box>
-                ))}
+                {COLUMNS.map((c) => {
+                  const active = c.key === sortKey;
+                  return (
+                    <Box
+                      key={c.key}
+                      component="th"
+                      onClick={() => toggleSort(c.key)}
+                      title={`Sort by ${c.label}`}
+                      sx={{
+                        ...cell, textAlign: c.align ?? 'left', fontWeight: 600, fontSize: 11,
+                        textTransform: 'uppercase', letterSpacing: '0.04em', cursor: 'pointer',
+                        userSelect: 'none', whiteSpace: 'nowrap',
+                        color: active ? 'primary.main' : 'text.secondary',
+                        '&:hover': { color: 'primary.main' },
+                      }}
+                    >
+                      {c.label}
+                      <Box component="span" sx={{ ml: 0.5, opacity: active ? 1 : 0.35, fontSize: 10 }}>
+                        {active ? (sortDesc ? '▼' : '▲') : '↕'}
+                      </Box>
+                    </Box>
+                  );
+                })}
               </tr></thead>
               <tbody>
                 {shown.map((r) => {
