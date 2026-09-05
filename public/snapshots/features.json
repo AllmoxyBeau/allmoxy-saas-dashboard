@@ -1,15 +1,15 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-09-04T14:34:11.737Z",
-  "jira_fetchedAt": "2026-09-04T14:34:11.628Z",
+  "fetchedAt": "2026-09-04T22:53:35.025Z",
+  "jira_fetchedAt": "2026-09-04T22:53:34.922Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
     "total_tickets": 4313,
-    "open_tickets": 922,
-    "done_tickets": 3391,
-    "tickets_with_matched_customer": 2102,
-    "open_mrr_at_stake": 2853166.61,
-    "distinct_customers_tagged": 150,
+    "open_tickets": 921,
+    "done_tickets": 3392,
+    "tickets_with_matched_customer": 2093,
+    "open_mrr_at_stake": 2826632.44,
+    "distinct_customers_tagged": 149,
     "unmatched_labels": [
       "2020",
       "AWIHawaii",
@@ -55,6 +55,7 @@
       "PremierCustomMillwork",
       "Prospective",
       "QualityCraft",
+      "QualityKitchens",
       "RCD",
       "RiseUp",
       "Rugby",
@@ -216,13 +217,6 @@
           "status": "active"
         },
         {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
           "allmoxy_customer_id": 2,
           "name": "CCF Industries",
           "mrr": 2699,
@@ -368,11 +362,11 @@
       "resolved": "2024-11-04",
       "url": "https://allmoxy.atlassian.net/browse/DEV-9085",
       "tag_count": 45,
-      "customer_count": 28,
+      "customer_count": 27,
       "active_customer_count": 25,
-      "total_mrr": 61573.69,
-      "total_arr": 738884.28,
-      "total_lifetime": 5116737.72,
+      "total_mrr": 58701.75,
+      "total_arr": 704421,
+      "total_lifetime": 5105204.3,
       "unmatched_labels": [
         "DCDrawers",
         "DotCabinets",
@@ -380,6 +374,7 @@
         "Fryburg",
         "Gww",
         "NationalWood",
+        "QualityKitchens",
         "StanisciDesign",
         "Woodland",
         "Zahbuilt",
@@ -881,1436 +876,6 @@
         "ifccinc",
         "m2m",
         "netley",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-11846",
-      "summary": "MRP - Connect to new payment gateway",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 219,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2026-03-27",
-      "updated": "2026-08-31",
-      "resolved": "2026-08-14",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11846",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-11248",
-      "summary": "API - Update Authorize.net",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 326,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2025-12-09",
-      "updated": "2026-08-31",
-      "resolved": "2026-08-14",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11248",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-10956",
-      "summary": "Save payment methods with auth.net",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 393,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2025-09-26",
-      "updated": "2026-08-31",
-      "resolved": "2026-08-14",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-10956",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-1588",
-      "summary": "API - Update Stripe API",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 415,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2020-09-02",
-      "updated": "2026-08-31",
-      "resolved": "2026-08-14",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-1588",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-11249",
-      "summary": "API - Universal payment layer",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Low",
-      "issue_score": 144,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2025-12-09",
-      "updated": "2026-08-31",
-      "resolved": "2026-08-14",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11249",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-12368",
-      "summary": "V2 payment method connection key",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "High",
-      "issue_score": 233,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-09",
-      "updated": "2026-08-27",
-      "resolved": "2026-07-09",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12368",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-12447",
-      "summary": "[MRP][STAGING] payment gateway error when trying to pay for an order as a customer",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-21",
-      "updated": "2026-08-17",
-      "resolved": "2026-07-22",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12447",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-11193",
-      "summary": "API - Payment system",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "Epic",
-      "priority": "Highest",
-      "issue_score": 448,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2025-11-21",
-      "updated": "2026-08-14",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11193",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-12057",
-      "summary": "Payment error and incompleted",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2026-05-15",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-20",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12057",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-12245",
-      "summary": "DEV - Payment page (error) shows up after trying to move any order from \"Bid\"",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2026-06-26",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-20",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12245",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-12372",
-      "summary": "[MRP][STAGING]  App triggers 'Online payment system is currently disabled' message when trying to submit order as customer.",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2026-07-09",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-20",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12372",
-      "tag_count": 29,
-      "customer_count": 13,
-      "active_customer_count": 12,
-      "total_mrr": 38682.23,
-      "total_arr": 464186.76,
-      "total_lifetime": 2550885.42,
-      "unmatched_labels": [
-        "DCDrawers",
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "brandenbergercustom",
-        "canary",
-        "ciminos",
-        "craftlinecabinets",
-        "lga",
-        "netley",
-        "rcc",
-        "salernoskitchen",
         "thomascreekwoodworking"
       ]
     },
@@ -5394,6 +3959,1370 @@
       ]
     },
     {
+      "key": "DEV-11846",
+      "summary": "MRP - Connect to new payment gateway",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 219,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2026-03-27",
+      "updated": "2026-08-31",
+      "resolved": "2026-08-14",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11846",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-11248",
+      "summary": "API - Update Authorize.net",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 326,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2025-12-09",
+      "updated": "2026-08-31",
+      "resolved": "2026-08-14",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11248",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-10956",
+      "summary": "Save payment methods with auth.net",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 393,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2025-09-26",
+      "updated": "2026-08-31",
+      "resolved": "2026-08-14",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-10956",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-1588",
+      "summary": "API - Update Stripe API",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 415,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2020-09-02",
+      "updated": "2026-08-31",
+      "resolved": "2026-08-14",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-1588",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-11249",
+      "summary": "API - Universal payment layer",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Low",
+      "issue_score": 144,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2025-12-09",
+      "updated": "2026-08-31",
+      "resolved": "2026-08-14",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11249",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-12368",
+      "summary": "V2 payment method connection key",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "High",
+      "issue_score": 233,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-09",
+      "updated": "2026-08-27",
+      "resolved": "2026-07-09",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12368",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-12447",
+      "summary": "[MRP][STAGING] payment gateway error when trying to pay for an order as a customer",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-21",
+      "updated": "2026-08-17",
+      "resolved": "2026-07-22",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12447",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-11193",
+      "summary": "API - Payment system",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "Epic",
+      "priority": "Highest",
+      "issue_score": 448,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2025-11-21",
+      "updated": "2026-08-14",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11193",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-12057",
+      "summary": "Payment error and incompleted",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2026-05-15",
+      "updated": "2026-08-05",
+      "resolved": "2026-07-20",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12057",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-12245",
+      "summary": "DEV - Payment page (error) shows up after trying to move any order from \"Bid\"",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2026-06-26",
+      "updated": "2026-08-05",
+      "resolved": "2026-07-20",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12245",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
+      "key": "DEV-12372",
+      "summary": "[MRP][STAGING]  App triggers 'Online payment system is currently disabled' message when trying to submit order as customer.",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2026-07-09",
+      "updated": "2026-08-05",
+      "resolved": "2026-07-20",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12372",
+      "tag_count": 29,
+      "customer_count": 12,
+      "active_customer_count": 12,
+      "total_mrr": 35810.29,
+      "total_arr": 429723.48,
+      "total_lifetime": 2539352,
+      "unmatched_labels": [
+        "DCDrawers",
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "brandenbergercustom",
+        "canary",
+        "ciminos",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
       "key": "DEV-5502",
       "summary": "Custom Reports",
       "status": "Backlog",
@@ -5538,13 +5467,6 @@
           "status": "active"
         },
         {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
           "allmoxy_customer_id": 159,
           "name": "NJ Drawers",
           "mrr": 2006.25,
@@ -5599,16 +5521,17 @@
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-10505",
       "tag_count": 27,
-      "customer_count": 12,
+      "customer_count": 11,
       "active_customer_count": 11,
-      "total_mrr": 30681.99,
-      "total_arr": 368183.88,
-      "total_lifetime": 1960075.76,
+      "total_mrr": 27810.05,
+      "total_arr": 333720.6,
+      "total_lifetime": 1948542.34,
       "unmatched_labels": [
         "DCDrawers",
         "Fryburg",
         "IdealDrawers",
         "LifeSpanClosets",
+        "QualityKitchens",
         "SouthernStone",
         "StanisciDesign",
         "Zahbuilt",
@@ -5658,13 +5581,6 @@
           "mrr": 3750,
           "lifetime": 66138.94,
           "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
         },
         {
           "allmoxy_customer_id": 159,
@@ -5721,16 +5637,17 @@
       "resolved": "2025-12-09",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11251",
       "tag_count": 27,
-      "customer_count": 12,
+      "customer_count": 11,
       "active_customer_count": 11,
-      "total_mrr": 30681.99,
-      "total_arr": 368183.88,
-      "total_lifetime": 1960075.76,
+      "total_mrr": 27810.05,
+      "total_arr": 333720.6,
+      "total_lifetime": 1948542.34,
       "unmatched_labels": [
         "DCDrawers",
         "Fryburg",
         "IdealDrawers",
         "LifeSpanClosets",
+        "QualityKitchens",
         "SouthernStone",
         "StanisciDesign",
         "Zahbuilt",
@@ -5780,13 +5697,6 @@
           "mrr": 3750,
           "lifetime": 66138.94,
           "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
         },
         {
           "allmoxy_customer_id": 159,
@@ -5843,16 +5753,17 @@
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-11250",
       "tag_count": 27,
-      "customer_count": 12,
+      "customer_count": 11,
       "active_customer_count": 11,
-      "total_mrr": 30681.99,
-      "total_arr": 368183.88,
-      "total_lifetime": 1960075.76,
+      "total_mrr": 27810.05,
+      "total_arr": 333720.6,
+      "total_lifetime": 1948542.34,
       "unmatched_labels": [
         "DCDrawers",
         "Fryburg",
         "IdealDrawers",
         "LifeSpanClosets",
+        "QualityKitchens",
         "SouthernStone",
         "StanisciDesign",
         "Zahbuilt",
@@ -5864,103 +5775,6 @@
         "rcc",
         "salernoskitchen",
         "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-116",
-      "summary": "Minimum/max order amount",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Story",
-      "priority": "High",
-      "issue_score": 273,
-      "customers": [
-        {
-          "allmoxy_customer_id": 38,
-          "name": "Panhandle Door Inc.",
-          "mrr": 6024,
-          "lifetime": 710305.04,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 300,
-          "name": "Corona Millworks",
-          "mrr": 4620,
-          "lifetime": 295025.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 26,
-          "name": "Rehau Inc.",
-          "mrr": 3148.95,
-          "lifetime": 211460.25,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 82,
-          "name": "Drawers by Design",
-          "mrr": 2142.5,
-          "lifetime": 167101.69,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 502,
-          "name": "LINDSEY DOORS",
-          "mrr": 2099,
-          "lifetime": 75835.43,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 64,
-          "name": "Perez Enterprises",
-          "mrr": 600,
-          "lifetime": 19231,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 106,
-          "name": "GW Eurocase",
-          "mrr": 299,
-          "lifetime": 47277.41,
-          "status": "active"
-        }
-      ],
-      "created": "2018-10-02",
-      "updated": "2026-08-31",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-116",
-      "tag_count": 14,
-      "customer_count": 10,
-      "active_customer_count": 9,
-      "total_mrr": 29052.14,
-      "total_arr": 348625.68,
-      "total_lifetime": 2201991.9,
-      "unmatched_labels": [
-        "DotCabinets",
-        "m2m",
-        "netley",
-        "threecreeks"
       ]
     },
     {
@@ -6282,14 +6096,21 @@
       ]
     },
     {
-      "key": "DEV-5217",
-      "summary": "Exclude debit cards from convenience fee",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 464,
+      "key": "DEV-116",
+      "summary": "Minimum/max order amount",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Story",
+      "priority": "High",
+      "issue_score": 273,
       "customers": [
+        {
+          "allmoxy_customer_id": 38,
+          "name": "Panhandle Door Inc.",
+          "mrr": 6024,
+          "lifetime": 710305.04,
+          "status": "active"
+        },
         {
           "allmoxy_customer_id": 176,
           "name": "Primary Kitchen",
@@ -6305,18 +6126,25 @@
           "status": "active"
         },
         {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
+          "allmoxy_customer_id": 26,
+          "name": "Rehau Inc.",
+          "mrr": 3148.95,
+          "lifetime": 211460.25,
           "status": "active"
         },
         {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
+          "allmoxy_customer_id": 82,
+          "name": "Drawers by Design",
+          "mrr": 2142.5,
+          "lifetime": 167101.69,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 502,
+          "name": "LINDSEY DOORS",
+          "mrr": 2099,
+          "lifetime": 75835.43,
+          "status": "at_risk"
         },
         {
           "allmoxy_customer_id": 159,
@@ -6326,74 +6154,36 @@
           "status": "active"
         },
         {
-          "allmoxy_customer_id": 423,
-          "name": "Tntdoor",
-          "mrr": 2000,
-          "lifetime": 127211.6,
+          "allmoxy_customer_id": 64,
+          "name": "Perez Enterprises",
+          "mrr": 600,
+          "lifetime": 19231,
           "status": "active"
         },
         {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 301,
-          "name": "Everwood Inc.",
-          "mrr": 1172.08,
-          "lifetime": 60777.91,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 160,
-          "name": "Rta Cabinetry Inc",
-          "mrr": 960,
-          "lifetime": 52777.2,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 528,
-          "name": "Elite Cabinet Components",
-          "mrr": 834,
-          "lifetime": 21333,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
+          "allmoxy_customer_id": 106,
+          "name": "GW Eurocase",
+          "mrr": 299,
+          "lifetime": 47277.41,
           "status": "active"
         }
       ],
-      "created": "2022-10-06",
-      "updated": "2026-08-05",
-      "resolved": "2025-09-02",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5217",
-      "tag_count": 26,
-      "customer_count": 11,
-      "active_customer_count": 10,
-      "total_mrr": 25441.49,
-      "total_arr": 305297.88,
-      "total_lifetime": 1489109.1,
+      "created": "2018-10-02",
+      "updated": "2026-08-31",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-116",
+      "tag_count": 14,
+      "customer_count": 9,
+      "active_customer_count": 9,
+      "total_mrr": 26180.2,
+      "total_arr": 314162.4,
+      "total_lifetime": 2190458.48,
       "unmatched_labels": [
-        "Fryburg",
-        "IdealDrawers",
-        "LifeSpanClosets",
-        "SouthernStone",
-        "StanisciDesign",
-        "Zahbuilt",
-        "bccdoors",
-        "brandenbergercustom",
-        "canary",
-        "craftlinecabinets",
-        "lga",
+        "DotCabinets",
+        "QualityKitchens",
+        "m2m",
         "netley",
-        "rcc",
-        "salernoskitchen",
-        "thomascreekwoodworking"
+        "threecreeks"
       ]
     },
     {
@@ -6755,225 +6545,6 @@
       ]
     },
     {
-      "key": "DEV-12033",
-      "summary": "Instances running slow",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 219,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 2058,
-          "name": "Fleetwoods",
-          "mrr": 4200,
-          "lifetime": 27589.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 142775.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 405,
-          "name": "KC Doors",
-          "mrr": 2300,
-          "lifetime": 110849.49,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 20,
-          "name": "Eldorado Plywood",
-          "mrr": 1575,
-          "lifetime": 115130.68,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 479,
-          "name": "Cabinet Restylers, Inc",
-          "mrr": 1099,
-          "lifetime": 69538.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 388,
-          "name": "Sherwood Shelving",
-          "mrr": 1025,
-          "lifetime": 73680.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 164,
-          "name": "Cabredo LLC",
-          "mrr": 0,
-          "lifetime": 249552.6,
-          "status": "non_payment"
-        }
-      ],
-      "created": "2026-05-07",
-      "updated": "2026-08-05",
-      "resolved": "2026-05-08",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12033",
-      "tag_count": 16,
-      "customer_count": 9,
-      "active_customer_count": 8,
-      "total_mrr": 24190.18,
-      "total_arr": 290282.16,
-      "total_lifetime": 1391459.58,
-      "unmatched_labels": [
-        "DCDrawers",
-        "DoorMastersHouston",
-        "brandenbergercustom",
-        "ifccinc",
-        "pam",
-        "quadro",
-        "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-5321",
-      "summary": "Folders V2 - Folder Level Settings",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 333,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 38,
-          "name": "Panhandle Door Inc.",
-          "mrr": 6024,
-          "lifetime": 710305.04,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        }
-      ],
-      "created": "2022-10-26",
-      "updated": "2026-08-05",
-      "resolved": "2024-07-08",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5321",
-      "tag_count": 6,
-      "customer_count": 5,
-      "active_customer_count": 4,
-      "total_mrr": 24142.93,
-      "total_arr": 289715.16,
-      "total_lifetime": 1976870.38,
-      "unmatched_labels": [
-        "netley"
-      ]
-    },
-    {
-      "key": "DEV-5427",
-      "summary": "Edit remake cost",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 362,
-      "customers": [
-        {
-          "allmoxy_customer_id": 38,
-          "name": "Panhandle Door Inc.",
-          "mrr": 6024,
-          "lifetime": 710305.04,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5240.5,
-          "lifetime": 470966.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 2,
-          "name": "CCF Industries",
-          "mrr": 2699,
-          "lifetime": 362797.03,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        }
-      ],
-      "created": "2022-11-23",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5427",
-      "tag_count": 8,
-      "customer_count": 6,
-      "active_customer_count": 5,
-      "total_mrr": 24082.19,
-      "total_arr": 288986.28,
-      "total_lifetime": 2219824.41,
-      "unmatched_labels": [
-        "mykitch",
-        "netley"
-      ]
-    },
-    {
       "key": "DEV-5663",
       "summary": "Able to reference Company Tags in pricing sections",
       "status": "Backlog",
@@ -7122,7 +6693,7 @@
         }
       ],
       "created": "2023-05-04",
-      "updated": "2026-08-05",
+      "updated": "2026-09-04",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-6311",
       "tag_count": 14,
@@ -7291,6 +6862,115 @@
         "cuttingedge",
         "ifcc",
         "netley"
+      ]
+    },
+    {
+      "key": "DEV-5217",
+      "summary": "Exclude debit cards from convenience fee",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 464,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 300,
+          "name": "Corona Millworks",
+          "mrr": 4620,
+          "lifetime": 295025.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 423,
+          "name": "Tntdoor",
+          "mrr": 2000,
+          "lifetime": 127211.6,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 301,
+          "name": "Everwood Inc.",
+          "mrr": 1172.08,
+          "lifetime": 60777.91,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 160,
+          "name": "Rta Cabinetry Inc",
+          "mrr": 960,
+          "lifetime": 52777.2,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 528,
+          "name": "Elite Cabinet Components",
+          "mrr": 834,
+          "lifetime": 21333,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2022-10-06",
+      "updated": "2026-08-05",
+      "resolved": "2025-09-02",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5217",
+      "tag_count": 26,
+      "customer_count": 10,
+      "active_customer_count": 10,
+      "total_mrr": 22569.55,
+      "total_arr": 270834.6,
+      "total_lifetime": 1477575.68,
+      "unmatched_labels": [
+        "Fryburg",
+        "IdealDrawers",
+        "LifeSpanClosets",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "Zahbuilt",
+        "bccdoors",
+        "brandenbergercustom",
+        "canary",
+        "craftlinecabinets",
+        "lga",
+        "netley",
+        "rcc",
+        "salernoskitchen",
+        "thomascreekwoodworking"
       ]
     },
     {
@@ -7749,6 +7429,93 @@
       ]
     },
     {
+      "key": "DEV-12033",
+      "summary": "Instances running slow",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 219,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 2058,
+          "name": "Fleetwoods",
+          "mrr": 4200,
+          "lifetime": 27589.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 130,
+          "name": "Roy's Wood Products, Inc.",
+          "mrr": 3119,
+          "lifetime": 142775.33,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 405,
+          "name": "KC Doors",
+          "mrr": 2300,
+          "lifetime": 110849.49,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 20,
+          "name": "Eldorado Plywood",
+          "mrr": 1575,
+          "lifetime": 115130.68,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 479,
+          "name": "Cabinet Restylers, Inc",
+          "mrr": 1099,
+          "lifetime": 69538.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 388,
+          "name": "Sherwood Shelving",
+          "mrr": 1025,
+          "lifetime": 73680.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 164,
+          "name": "Cabredo LLC",
+          "mrr": 0,
+          "lifetime": 249552.6,
+          "status": "non_payment"
+        }
+      ],
+      "created": "2026-05-07",
+      "updated": "2026-08-05",
+      "resolved": "2026-05-08",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12033",
+      "tag_count": 16,
+      "customer_count": 8,
+      "active_customer_count": 8,
+      "total_mrr": 21318.24,
+      "total_arr": 255818.88,
+      "total_lifetime": 1379926.16,
+      "unmatched_labels": [
+        "DCDrawers",
+        "DoorMastersHouston",
+        "QualityKitchens",
+        "brandenbergercustom",
+        "ifccinc",
+        "pam",
+        "quadro",
+        "thomascreekwoodworking"
+      ]
+    },
+    {
       "key": "DEV-6540",
       "summary": "New Price Adjustment Type - Discount Code",
       "status": "Feature Scope",
@@ -7994,6 +7761,59 @@
       ]
     },
     {
+      "key": "DEV-5321",
+      "summary": "Folders V2 - Folder Level Settings",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 333,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 38,
+          "name": "Panhandle Door Inc.",
+          "mrr": 6024,
+          "lifetime": 710305.04,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        }
+      ],
+      "created": "2022-10-26",
+      "updated": "2026-08-05",
+      "resolved": "2024-07-08",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5321",
+      "tag_count": 6,
+      "customer_count": 4,
+      "active_customer_count": 4,
+      "total_mrr": 21270.99,
+      "total_arr": 255251.88,
+      "total_lifetime": 1965336.96,
+      "unmatched_labels": [
+        "QualityKitchens",
+        "netley"
+      ]
+    },
+    {
       "key": "DEV-4704",
       "summary": "Trigger based on shipping date change",
       "status": "Resolved",
@@ -8043,6 +7863,67 @@
       "total_lifetime": 1965336.96,
       "unmatched_labels": [
         "DukeCustomKitchens",
+        "netley"
+      ]
+    },
+    {
+      "key": "DEV-5427",
+      "summary": "Edit remake cost",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 362,
+      "customers": [
+        {
+          "allmoxy_customer_id": 38,
+          "name": "Panhandle Door Inc.",
+          "mrr": 6024,
+          "lifetime": 710305.04,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5240.5,
+          "lifetime": 470966.66,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 2,
+          "name": "CCF Industries",
+          "mrr": 2699,
+          "lifetime": 362797.03,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        }
+      ],
+      "created": "2022-11-23",
+      "updated": "2026-08-05",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5427",
+      "tag_count": 8,
+      "customer_count": 5,
+      "active_customer_count": 5,
+      "total_mrr": 21210.25,
+      "total_arr": 254523,
+      "total_lifetime": 2208290.99,
+      "unmatched_labels": [
+        "QualityKitchens",
+        "mykitch",
         "netley"
       ]
     },
@@ -10943,80 +10824,6 @@
       ]
     },
     {
-      "key": "DEV-6141",
-      "summary": "Ability to merge templates with existing instances (Black Rhino)",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Story",
-      "priority": "Highest",
-      "issue_score": 396,
-      "customers": [
-        {
-          "allmoxy_customer_id": 38,
-          "name": "Panhandle Door Inc.",
-          "mrr": 6024,
-          "lifetime": 710305.04,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 262,
-          "name": "Bww Closets",
-          "mrr": 1486.72,
-          "lifetime": 148731.93,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 388,
-          "name": "Sherwood Shelving",
-          "mrr": 1025,
-          "lifetime": 73680.4,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 19,
-          "name": "Trimart",
-          "mrr": 697.13,
-          "lifetime": 68429.09,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 310,
-          "name": "Empyre Designs",
-          "mrr": 563.06,
-          "lifetime": 39500.13,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 83,
-          "name": "CP&W",
-          "mrr": 525,
-          "lifetime": 39103.9,
-          "status": "active"
-        }
-      ],
-      "created": "2023-04-06",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6141",
-      "tag_count": 9,
-      "customer_count": 7,
-      "active_customer_count": 6,
-      "total_mrr": 13192.85,
-      "total_arr": 158314.2,
-      "total_lifetime": 1091283.91,
-      "unmatched_labels": [
-        "Midwest",
-        "Services"
-      ]
-    },
-    {
       "key": "DEV-9210",
       "summary": "Add Ship Method as a condition in price adjustments",
       "status": "Backlog",
@@ -12933,63 +12740,6 @@
       ]
     },
     {
-      "key": "DEV-9526",
-      "summary": "Slowness Reported 1/23 around 2 PM MST",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 13,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 329,
-          "name": "Peterman Lumber",
-          "mrr": 1756,
-          "lifetime": 151889.9,
-          "status": "active"
-        }
-      ],
-      "created": "2025-01-23",
-      "updated": "2026-08-05",
-      "resolved": "2025-01-23",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9526",
-      "tag_count": 10,
-      "customer_count": 4,
-      "active_customer_count": 3,
-      "total_mrr": 11874.69,
-      "total_arr": 142496.28,
-      "total_lifetime": 827645.58,
-      "unmatched_labels": [
-        "DoorMastersHouston",
-        "DukeCustomKitchens",
-        "burtoncabinetco",
-        "ciminos",
-        "mykitch",
-        "netley"
-      ]
-    },
-    {
       "key": "DEV-8784",
       "summary": "Slow sales by customer report, and state filter not working on non orders",
       "status": "Resolved",
@@ -14490,6 +14240,74 @@
       ]
     },
     {
+      "key": "DEV-6141",
+      "summary": "Ability to merge templates with existing instances (Black Rhino)",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Story",
+      "priority": "Highest",
+      "issue_score": 396,
+      "customers": [
+        {
+          "allmoxy_customer_id": 38,
+          "name": "Panhandle Door Inc.",
+          "mrr": 6024,
+          "lifetime": 710305.04,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 262,
+          "name": "Bww Closets",
+          "mrr": 1486.72,
+          "lifetime": 148731.93,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 388,
+          "name": "Sherwood Shelving",
+          "mrr": 1025,
+          "lifetime": 73680.4,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 19,
+          "name": "Trimart",
+          "mrr": 697.13,
+          "lifetime": 68429.09,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 310,
+          "name": "Empyre Designs",
+          "mrr": 563.06,
+          "lifetime": 39500.13,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 83,
+          "name": "CP&W",
+          "mrr": 525,
+          "lifetime": 39103.9,
+          "status": "active"
+        }
+      ],
+      "created": "2023-04-06",
+      "updated": "2026-08-05",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6141",
+      "tag_count": 9,
+      "customer_count": 6,
+      "active_customer_count": 6,
+      "total_mrr": 10320.91,
+      "total_arr": 123850.92,
+      "total_lifetime": 1079750.49,
+      "unmatched_labels": [
+        "Midwest",
+        "QualityKitchens",
+        "Services"
+      ]
+    },
+    {
       "key": "DEV-500",
       "summary": "Add an order level adjustment",
       "status": "Ready for Dev",
@@ -14652,53 +14470,6 @@
       "total_arr": 121910.88,
       "total_lifetime": 736795.58,
       "unmatched_labels": []
-    },
-    {
-      "key": "DEV-5864",
-      "summary": "Ability to associate multiple supply items in an attribute",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 273,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5240.5,
-          "lifetime": 532817.65,
-          "status": "at_risk"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2006.25,
-          "lifetime": 131404.61,
-          "status": "active"
-        }
-      ],
-      "created": "2023-02-14",
-      "updated": "2026-08-05",
-      "resolved": "2024-05-17",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5864",
-      "tag_count": 6,
-      "customer_count": 3,
-      "active_customer_count": 2,
-      "total_mrr": 10118.69,
-      "total_arr": 121424.28,
-      "total_lifetime": 675755.68,
-      "unmatched_labels": [
-        "Midwest",
-        "cuttingedge",
-        "netley"
-      ]
     },
     {
       "key": "DEV-10699",
@@ -15806,6 +15577,57 @@
         "Spayce",
         "cuttingedge",
         "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-9526",
+      "summary": "Slowness Reported 1/23 around 2 PM MST",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 13,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 329,
+          "name": "Peterman Lumber",
+          "mrr": 1756,
+          "lifetime": 151889.9,
+          "status": "active"
+        }
+      ],
+      "created": "2025-01-23",
+      "updated": "2026-08-05",
+      "resolved": "2025-01-23",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9526",
+      "tag_count": 10,
+      "customer_count": 3,
+      "active_customer_count": 3,
+      "total_mrr": 9002.75,
+      "total_arr": 108033,
+      "total_lifetime": 816112.16,
+      "unmatched_labels": [
+        "DoorMastersHouston",
+        "DukeCustomKitchens",
+        "QualityKitchens",
+        "burtoncabinetco",
+        "ciminos",
+        "mykitch",
+        "netley"
       ]
     },
     {
@@ -17136,6 +16958,66 @@
       ]
     },
     {
+      "key": "DEV-12981",
+      "summary": "Operator working with files",
+      "status": "In Staging",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        }
+      ],
+      "created": "2026-08-31",
+      "updated": "2026-09-04",
+      "resolved": "2026-08-31",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12981",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 8000.24,
+      "total_arr": 96002.88,
+      "total_lifetime": 590809.66,
+      "unmatched_labels": [
+        "m2m"
+      ]
+    },
+    {
+      "key": "DEV-8929",
+      "summary": "Purchase Order not showing sent",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 453,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 8000.24,
+          "lifetime": 590809.66,
+          "status": "active"
+        }
+      ],
+      "created": "2024-10-02",
+      "updated": "2026-09-04",
+      "resolved": "2024-10-02",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8929",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 8000.24,
+      "total_arr": 96002.88,
+      "total_lifetime": 590809.66,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-11858",
       "summary": "Visual indicator on B2B orders for list views and reports",
       "status": "Resolved",
@@ -17164,37 +17046,6 @@
       "total_lifetime": 590809.66,
       "unmatched_labels": [
         "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12981",
-      "summary": "Operator working with files",
-      "status": "Passed QA",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        }
-      ],
-      "created": "2026-08-31",
-      "updated": "2026-09-03",
-      "resolved": "2026-08-31",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12981",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 8000.24,
-      "total_arr": 96002.88,
-      "total_lifetime": 590809.66,
-      "unmatched_labels": [
-        "m2m"
       ]
     },
     {
@@ -27649,35 +27500,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-8929",
-      "summary": "Purchase Order not showing sent",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 453,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 8000.24,
-          "lifetime": 590809.66,
-          "status": "active"
-        }
-      ],
-      "created": "2024-10-02",
-      "updated": "2026-08-05",
-      "resolved": "2024-10-02",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8929",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 8000.24,
-      "total_arr": 96002.88,
-      "total_lifetime": 590809.66,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-8927",
       "summary": "Shipping address defaulting to Lewis Cabinet address when overriding to new address",
       "status": "Resolved",
@@ -30168,83 +29990,6 @@
       "total_arr": 92657.64,
       "total_lifetime": 643257.32,
       "unmatched_labels": []
-    },
-    {
-      "key": "DEV-2100",
-      "summary": "Order level settings available on invoice",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Story",
-      "priority": "Highest",
-      "issue_score": 366,
-      "customers": [
-        {
-          "allmoxy_customer_id": 523,
-          "name": "Keystone Wood Specialties",
-          "mrr": 3750,
-          "lifetime": 66138.94,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 479,
-          "name": "Cabinet Restylers, Inc",
-          "mrr": 1099,
-          "lifetime": 69538.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 517,
-          "name": "Ameridor, Inc",
-          "mrr": 0,
-          "lifetime": 3297,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 164,
-          "name": "Cabredo LLC",
-          "mrr": 0,
-          "lifetime": 249552.6,
-          "status": "non_payment"
-        },
-        {
-          "allmoxy_customer_id": 332,
-          "name": "Cober Cabinets",
-          "mrr": 0,
-          "lifetime": 32021.1,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 486,
-          "name": "Kingwood Cabinetry",
-          "mrr": 0,
-          "lifetime": 15175.18,
-          "status": "churned"
-        }
-      ],
-      "created": "2021-06-21",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-2100",
-      "tag_count": 12,
-      "customer_count": 7,
-      "active_customer_count": 3,
-      "total_mrr": 7720.94,
-      "total_arr": 92651.28,
-      "total_lifetime": 447256.74,
-      "unmatched_labels": [
-        "Hallmark",
-        "NovaSouth",
-        "SouthernStone",
-        "StanisciDesign",
-        "TahomaCloset"
-      ]
     },
     {
       "key": "DEV-1526",
@@ -33152,6 +32897,47 @@
       "unmatched_labels": [
         "netley",
         "nudoors"
+      ]
+    },
+    {
+      "key": "DEV-5864",
+      "summary": "Ability to associate multiple supply items in an attribute",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 273,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5240.5,
+          "lifetime": 532817.65,
+          "status": "at_risk"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2006.25,
+          "lifetime": 131404.61,
+          "status": "active"
+        }
+      ],
+      "created": "2023-02-14",
+      "updated": "2026-08-05",
+      "resolved": "2024-05-17",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5864",
+      "tag_count": 6,
+      "customer_count": 2,
+      "active_customer_count": 2,
+      "total_mrr": 7246.75,
+      "total_arr": 86961,
+      "total_lifetime": 664222.26,
+      "unmatched_labels": [
+        "Midwest",
+        "QualityKitchens",
+        "cuttingedge",
+        "netley"
       ]
     },
     {
@@ -38103,56 +37889,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-4218",
-      "summary": "Allow order variables to be used in Trigger Email Subject Lines",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 282,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 405,
-          "name": "KC Doors",
-          "mrr": 2300,
-          "lifetime": 110849.49,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 479,
-          "name": "Cabinet Restylers, Inc",
-          "mrr": 1099,
-          "lifetime": 69538.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 315,
-          "name": "Ruck Cabinet Doors",
-          "mrr": 0,
-          "lifetime": 0,
-          "status": "active"
-        }
-      ],
-      "created": "2022-02-10",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4218",
-      "tag_count": 4,
-      "customer_count": 4,
-      "active_customer_count": 3,
-      "total_mrr": 6270.94,
-      "total_arr": 75251.28,
-      "total_lifetime": 191921.41,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-10134",
       "summary": "Tax Rate Not Calculating (red error)",
       "status": "Resolved",
@@ -40008,42 +39744,6 @@
       "unmatched_labels": [
         "m2m"
       ]
-    },
-    {
-      "key": "DEV-5404",
-      "summary": "Folder name variable for exports",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 307,
-      "customers": [
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 142775.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2022-11-15",
-      "updated": "2026-08-05",
-      "resolved": "2024-05-17",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5404",
-      "tag_count": 2,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 5990.94,
-      "total_arr": 71891.28,
-      "total_lifetime": 154308.75,
-      "unmatched_labels": []
     },
     {
       "key": "DEV-10238",
@@ -42359,6 +42059,77 @@
       "total_lifetime": 510264.49,
       "unmatched_labels": [
         "IntermountainWood"
+      ]
+    },
+    {
+      "key": "DEV-2100",
+      "summary": "Order level settings available on invoice",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Story",
+      "priority": "Highest",
+      "issue_score": 366,
+      "customers": [
+        {
+          "allmoxy_customer_id": 523,
+          "name": "Keystone Wood Specialties",
+          "mrr": 3750,
+          "lifetime": 66138.94,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 479,
+          "name": "Cabinet Restylers, Inc",
+          "mrr": 1099,
+          "lifetime": 69538.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 517,
+          "name": "Ameridor, Inc",
+          "mrr": 0,
+          "lifetime": 3297,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 164,
+          "name": "Cabredo LLC",
+          "mrr": 0,
+          "lifetime": 249552.6,
+          "status": "non_payment"
+        },
+        {
+          "allmoxy_customer_id": 332,
+          "name": "Cober Cabinets",
+          "mrr": 0,
+          "lifetime": 32021.1,
+          "status": "churned"
+        },
+        {
+          "allmoxy_customer_id": 486,
+          "name": "Kingwood Cabinetry",
+          "mrr": 0,
+          "lifetime": 15175.18,
+          "status": "churned"
+        }
+      ],
+      "created": "2021-06-21",
+      "updated": "2026-08-05",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-2100",
+      "tag_count": 12,
+      "customer_count": 6,
+      "active_customer_count": 3,
+      "total_mrr": 4849,
+      "total_arr": 58188,
+      "total_lifetime": 435723.32,
+      "unmatched_labels": [
+        "Hallmark",
+        "NovaSouth",
+        "QualityKitchens",
+        "SouthernStone",
+        "StanisciDesign",
+        "TahomaCloset"
       ]
     },
     {
@@ -46698,58 +46469,6 @@
       ]
     },
     {
-      "key": "DEV-11281",
-      "summary": "Folder Level Attributes Not Pushing to new Products",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 664,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 479,
-          "name": "Cabinet Restylers, Inc",
-          "mrr": 1099,
-          "lifetime": 69538.5,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 164,
-          "name": "Cabredo LLC",
-          "mrr": 0,
-          "lifetime": 249552.6,
-          "status": "non_payment"
-        },
-        {
-          "allmoxy_customer_id": 283,
-          "name": "Timberline",
-          "mrr": 0,
-          "lifetime": 114320.65,
-          "status": "churned"
-        }
-      ],
-      "created": "2025-12-16",
-      "updated": "2026-08-05",
-      "resolved": "2025-12-17",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11281",
-      "tag_count": 5,
-      "customer_count": 4,
-      "active_customer_count": 2,
-      "total_mrr": 3970.94,
-      "total_arr": 47651.28,
-      "total_lifetime": 444945.17,
-      "unmatched_labels": [
-        "ifccinc"
-      ]
-    },
-    {
       "key": "DEV-9068",
       "summary": "Group attribute images no longer showing up",
       "status": "Resolved",
@@ -47607,6 +47326,51 @@
       ]
     },
     {
+      "key": "DEV-4218",
+      "summary": "Allow order variables to be used in Trigger Email Subject Lines",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 282,
+      "customers": [
+        {
+          "allmoxy_customer_id": 405,
+          "name": "KC Doors",
+          "mrr": 2300,
+          "lifetime": 110849.49,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 479,
+          "name": "Cabinet Restylers, Inc",
+          "mrr": 1099,
+          "lifetime": 69538.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 315,
+          "name": "Ruck Cabinet Doors",
+          "mrr": 0,
+          "lifetime": 0,
+          "status": "active"
+        }
+      ],
+      "created": "2022-02-10",
+      "updated": "2026-08-05",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4218",
+      "tag_count": 4,
+      "customer_count": 3,
+      "active_customer_count": 3,
+      "total_mrr": 3399,
+      "total_arr": 40788,
+      "total_lifetime": 180387.99,
+      "unmatched_labels": [
+        "QualityKitchens"
+      ]
+    },
+    {
       "key": "DEV-8387",
       "summary": "When editing or creating a company contact, Allmoxy should copy the company's address to the contact",
       "status": "Resolved",
@@ -47643,44 +47407,6 @@
       "unmatched_labels": [
         "StanisciDesign",
         "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-6429",
-      "summary": "Broken Symbol Images",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 741,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        },
-        {
-          "allmoxy_customer_id": 217,
-          "name": "Metro Drawer Boxes",
-          "mrr": 500,
-          "lifetime": 41357.44,
-          "status": "active"
-        }
-      ],
-      "created": "2023-05-30",
-      "updated": "2026-08-05",
-      "resolved": "2023-05-31",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6429",
-      "tag_count": 3,
-      "customer_count": 2,
-      "active_customer_count": 1,
-      "total_mrr": 3371.94,
-      "total_arr": 40463.28,
-      "total_lifetime": 52890.86,
-      "unmatched_labels": [
-        "canary"
       ]
     },
     {
@@ -48454,6 +48180,37 @@
       "total_arr": 37428,
       "total_lifetime": 142775.33,
       "unmatched_labels": []
+    },
+    {
+      "key": "DEV-5404",
+      "summary": "Folder name variable for exports",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 307,
+      "customers": [
+        {
+          "allmoxy_customer_id": 130,
+          "name": "Roy's Wood Products, Inc.",
+          "mrr": 3119,
+          "lifetime": 142775.33,
+          "status": "active"
+        }
+      ],
+      "created": "2022-11-15",
+      "updated": "2026-08-05",
+      "resolved": "2024-05-17",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5404",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 3119,
+      "total_arr": 37428,
+      "total_lifetime": 142775.33,
+      "unmatched_labels": [
+        "QualityKitchens"
+      ]
     },
     {
       "key": "DEV-4128",
@@ -49270,271 +49027,6 @@
       "total_mrr": 2875,
       "total_arr": 34500,
       "total_lifetime": 203108.6,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-6936",
-      "summary": "Attribute table improvements",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 309,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2023-09-14",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6936",
-      "tag_count": 4,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
-      "unmatched_labels": [
-        "artisiancabinet",
-        "cuttingedge",
-        "mykitch"
-      ]
-    },
-    {
-      "key": "DEV-4698",
-      "summary": "Unusual Ship Date for Current Orders",
-      "status": "Closed",
-      "stage_category": "Done",
-      "issue_type": "Investigate",
-      "priority": "Highest",
-      "issue_score": 196,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2022-06-07",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4698",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-4623",
-      "summary": "Adding email to customer account error",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Lowest",
-      "issue_score": 252,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2022-05-18",
-      "updated": "2026-08-05",
-      "resolved": "2022-05-18",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-4623",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-11131",
-      "summary": "Big orders very slow to load",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2025-11-06",
-      "updated": "2026-08-05",
-      "resolved": "2026-03-31",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11131",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-11130",
-      "summary": "Product search on order page cuts off the last product",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 754,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2025-11-06",
-      "updated": "2026-08-05",
-      "resolved": "2025-12-04",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11130",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-9811",
-      "summary": "Show remake reason when converting a remake to a normal order",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 217,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2025-03-11",
-      "updated": "2026-08-05",
-      "resolved": "2025-03-11",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9811",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-9651",
-      "summary": "Permissions all blank for Quality Kitchens",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 432,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2025-02-11",
-      "updated": "2026-08-05",
-      "resolved": "2025-02-11",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9651",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-9553",
-      "summary": "Weird white rectangle/ square for end user (Quality Kitchen's customer)",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 419,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2025-01-27",
-      "updated": "2026-08-05",
-      "resolved": "2025-03-21",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9553",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-9164",
-      "summary": "On the invoice output page that shows folders, don't repeat order level setting attributes",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Low",
-      "issue_score": 79,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 2871.94,
-          "lifetime": 11533.42,
-          "status": "churned"
-        }
-      ],
-      "created": "2024-11-14",
-      "updated": "2026-08-05",
-      "resolved": "2024-11-27",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9164",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 2871.94,
-      "total_arr": 34463.28,
-      "total_lifetime": 11533.42,
       "unmatched_labels": []
     },
     {
@@ -50813,11 +50305,11 @@
     {
       "key": "DEV-12985",
       "summary": "Soelbergi — changing a private AI ability to Company visibility fails (PATCH /abilities returns 403)",
-      "status": "In QA",
-      "stage_category": "In Progress",
+      "status": "Passed QA",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
-      "issue_score": 651,
+      "issue_score": 685,
       "customers": [
         {
           "allmoxy_customer_id": 9,
@@ -50828,8 +50320,8 @@
         }
       ],
       "created": "2026-08-31",
-      "updated": "2026-09-03",
-      "resolved": null,
+      "updated": "2026-09-04",
+      "resolved": "2026-09-04",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12985",
       "tag_count": 1,
       "customer_count": 1,
@@ -51039,11 +50531,11 @@
     {
       "key": "DEV-13035",
       "summary": "KC Doors — order page top nav tabs wrap to a second row at wide viewport widths",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Highest",
-      "issue_score": 685,
+      "status": "Dev Scope",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 288,
       "customers": [
         {
           "allmoxy_customer_id": 405,
@@ -51054,8 +50546,8 @@
         }
       ],
       "created": "2026-09-03",
-      "updated": "2026-09-03",
-      "resolved": "2026-09-03",
+      "updated": "2026-09-04",
+      "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-13035",
       "tag_count": 1,
       "customer_count": 1,
@@ -51583,7 +51075,7 @@
         }
       ],
       "created": "2026-09-03",
-      "updated": "2026-09-03",
+      "updated": "2026-09-04",
       "resolved": "2026-09-03",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13039",
       "tag_count": 1,
@@ -58679,6 +58171,85 @@
       ]
     },
     {
+      "key": "DEV-11281",
+      "summary": "Folder Level Attributes Not Pushing to new Products",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 664,
+      "customers": [
+        {
+          "allmoxy_customer_id": 479,
+          "name": "Cabinet Restylers, Inc",
+          "mrr": 1099,
+          "lifetime": 69538.5,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 164,
+          "name": "Cabredo LLC",
+          "mrr": 0,
+          "lifetime": 249552.6,
+          "status": "non_payment"
+        },
+        {
+          "allmoxy_customer_id": 283,
+          "name": "Timberline",
+          "mrr": 0,
+          "lifetime": 114320.65,
+          "status": "churned"
+        }
+      ],
+      "created": "2025-12-16",
+      "updated": "2026-08-05",
+      "resolved": "2025-12-17",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11281",
+      "tag_count": 5,
+      "customer_count": 3,
+      "active_customer_count": 2,
+      "total_mrr": 1099,
+      "total_arr": 13188,
+      "total_lifetime": 433411.75,
+      "unmatched_labels": [
+        "QualityKitchens",
+        "ifccinc"
+      ]
+    },
+    {
+      "key": "DEV-8002",
+      "summary": "Shipping - compilation of needs",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Story",
+      "priority": "High",
+      "issue_score": 253,
+      "customers": [
+        {
+          "allmoxy_customer_id": 479,
+          "name": "Cabinet Restylers, Inc",
+          "mrr": 1099,
+          "lifetime": 69538.5,
+          "status": "active"
+        }
+      ],
+      "created": "2024-03-29",
+      "updated": "2026-09-04",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8002",
+      "tag_count": 4,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1099,
+      "total_arr": 13188,
+      "total_lifetime": 69538.5,
+      "unmatched_labels": [
+        "GlobalCabinetsSupply",
+        "QualityCraft",
+        "nudoors"
+      ]
+    },
+    {
       "key": "DEV-11819",
       "summary": "Create sequential numbering for individual items on an export",
       "status": "In Staging",
@@ -58696,7 +58267,7 @@
         }
       ],
       "created": "2026-03-23",
-      "updated": "2026-09-02",
+      "updated": "2026-09-04",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-11819",
       "tag_count": 3,
@@ -59733,39 +59304,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-8002",
-      "summary": "Shipping - compilation of needs",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Story",
-      "priority": "High",
-      "issue_score": 253,
-      "customers": [
-        {
-          "allmoxy_customer_id": 479,
-          "name": "Cabinet Restylers, Inc",
-          "mrr": 1099,
-          "lifetime": 69538.5,
-          "status": "active"
-        }
-      ],
-      "created": "2024-03-29",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8002",
-      "tag_count": 4,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 1099,
-      "total_arr": 13188,
-      "total_lifetime": 69538.5,
-      "unmatched_labels": [
-        "GlobalCabinetsSupply",
-        "QualityCraft",
-        "nudoors"
-      ]
-    },
-    {
       "key": "DEV-6197",
       "summary": "FexEx Integration",
       "status": "Backlog",
@@ -59828,8 +59366,8 @@
     {
       "key": "DEV-7408",
       "summary": "Edit Purchase Orders",
-      "status": "Passed QA",
-      "stage_category": "Done",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "High",
       "issue_score": 303,
@@ -59850,7 +59388,7 @@
         }
       ],
       "created": "2023-11-30",
-      "updated": "2026-08-14",
+      "updated": "2026-09-04",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-7408",
       "tag_count": 4,
@@ -59867,7 +59405,7 @@
     {
       "key": "DEV-13021",
       "summary": "Netley Millwork — order form first-edit freeze blocks the main thread for minutes on large orders",
-      "status": "Ready For QA",
+      "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
@@ -59882,7 +59420,7 @@
         }
       ],
       "created": "2026-09-02",
-      "updated": "2026-09-03",
+      "updated": "2026-09-04",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-13021",
       "tag_count": 1,
@@ -62734,8 +62272,8 @@
     {
       "key": "DEV-8038",
       "summary": "Add reply address on POs",
-      "status": "Passed QA",
-      "stage_category": "Done",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "Medium",
       "issue_score": 190,
@@ -62749,9 +62287,38 @@
         }
       ],
       "created": "2024-04-08",
-      "updated": "2026-08-14",
+      "updated": "2026-09-04",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-8038",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 697.13,
+      "total_arr": 8365.56,
+      "total_lifetime": 68429.09,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-7227",
+      "summary": "Link POs to orders",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Billable Task",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 19,
+          "name": "Trimart",
+          "mrr": 697.13,
+          "lifetime": 68429.09,
+          "status": "active"
+        }
+      ],
+      "created": "2023-10-30",
+      "updated": "2026-09-04",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-7227",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -62810,35 +62377,6 @@
       "updated": "2026-08-05",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-7719",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 697.13,
-      "total_arr": 8365.56,
-      "total_lifetime": 68429.09,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-7227",
-      "summary": "Link POs to orders",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Billable Task",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 19,
-          "name": "Trimart",
-          "mrr": 697.13,
-          "lifetime": 68429.09,
-          "status": "active"
-        }
-      ],
-      "created": "2023-10-30",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-7227",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -63828,6 +63366,38 @@
       "total_arr": 6000,
       "total_lifetime": 41357.44,
       "unmatched_labels": []
+    },
+    {
+      "key": "DEV-6429",
+      "summary": "Broken Symbol Images",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 741,
+      "customers": [
+        {
+          "allmoxy_customer_id": 217,
+          "name": "Metro Drawer Boxes",
+          "mrr": 500,
+          "lifetime": 41357.44,
+          "status": "active"
+        }
+      ],
+      "created": "2023-05-30",
+      "updated": "2026-08-05",
+      "resolved": "2023-05-31",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6429",
+      "tag_count": 3,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 500,
+      "total_arr": 6000,
+      "total_lifetime": 41357.44,
+      "unmatched_labels": [
+        "QualityKitchens",
+        "canary"
+      ]
     },
     {
       "key": "DEV-11359",
@@ -67567,6 +67137,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12762",
+      "summary": "Remove design order option from test instances",
+      "status": "Ready for Staging",
+      "stage_category": "In Progress",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 89,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-08-12",
+      "updated": "2026-09-04",
+      "resolved": "2026-08-12",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12762",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12963",
       "summary": "Operator: Ability to Direct Customers to Reports",
       "status": "In Progress",
@@ -67676,35 +67275,6 @@
       "updated": "2026-09-03",
       "resolved": "2026-08-14",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12353",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-12762",
-      "summary": "Remove design order option from test instances",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 89,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-08-12",
-      "updated": "2026-09-03",
-      "resolved": "2026-08-12",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12762",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -74473,10 +74043,263 @@
       ]
     },
     {
-      "key": "DEV-12881",
-      "summary": "BTJ Cabinet Door Company — Order-level Discount percent of 100 saved on order but not applied to order or invoice totals",
+      "key": "DEV-12268",
+      "summary": "Unable to deselect Australia Sales Tax Presence",
       "status": "Ready For QA",
       "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-07-02",
+      "updated": "2026-09-04",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12268",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-13018",
+      "summary": "IFCC Inc (ifccinc) — Attribute selection images missing from dealer view once order status is Verified",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [],
+      "created": "2026-09-02",
+      "updated": "2026-09-04",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13018",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ifccinc"
+      ]
+    },
+    {
+      "key": "DEV-11865",
+      "summary": "Staging - can't get around PO send to address even when NOT sending the PO",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [],
+      "created": "2026-04-01",
+      "updated": "2026-09-04",
+      "resolved": "2026-04-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11865",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-7627",
+      "summary": "Improvements to new PO/email page",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 155,
+      "customers": [],
+      "created": "2024-01-19",
+      "updated": "2026-09-04",
+      "resolved": "2025-03-26",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-7627",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-8698",
+      "summary": "DEV - System Error on Email Invoice for Credit Memo & Bounced Payments",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 0,
+      "customers": [],
+      "created": "2024-08-13",
+      "updated": "2026-09-04",
+      "resolved": "2024-08-13",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8698",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-11797",
+      "summary": "Create Purchase Order Button Greyed Out",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 808,
+      "customers": [],
+      "created": "2026-03-17",
+      "updated": "2026-09-04",
+      "resolved": "2026-04-07",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11797",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "LifeSpanClosets"
+      ]
+    },
+    {
+      "key": "DEV-12723",
+      "summary": "FedEx - Multiple FedEx Account Options",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 241,
+      "customers": [],
+      "created": "2026-08-11",
+      "updated": "2026-09-04",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12723",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "DCDrawers"
+      ]
+    },
+    {
+      "key": "DEV-13045",
+      "summary": "Lewis Cabinet Specialties — customer contact can't log in after self-service reset, admin-generated password, and manually-set password all fail",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 795,
+      "customers": [],
+      "created": "2026-09-03",
+      "updated": "2026-09-04",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13045",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "lewiscabinet"
+      ]
+    },
+    {
+      "key": "DEV-11520",
+      "summary": "V2 List - Allmoxy Project",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Low",
+      "issue_score": 123,
+      "customers": [],
+      "created": "2026-02-02",
+      "updated": "2026-09-04",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11520",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-8516",
+      "summary": "DEV: Move page values from attr to hidden inputs/ in designated file",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 175,
+      "customers": [],
+      "created": "2024-07-12",
+      "updated": "2026-09-04",
+      "resolved": "2024-08-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8516",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-11677",
+      "summary": "Staging - can't create PO",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 743,
+      "customers": [],
+      "created": "2026-03-04",
+      "updated": "2026-09-04",
+      "resolved": "2026-03-16",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11677",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-12881",
+      "summary": "BTJ Cabinet Door Company — Order-level Discount percent of 100 saved on order but not applied to order or invoice totals",
+      "status": "In Production",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 630,
@@ -74496,18 +74319,18 @@
       ]
     },
     {
-      "key": "DEV-13045",
-      "summary": "Lewis Cabinet Specialties — customer contact can't log in after self-service reset, admin-generated password, and manually-set password all fail",
-      "status": "New",
-      "stage_category": "To Do",
+      "key": "DEV-12983",
+      "summary": "Tax/GST $0 when it shouldn't be",
+      "status": "In Production",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
-      "issue_score": 727,
+      "issue_score": 651,
       "customers": [],
-      "created": "2026-09-03",
+      "created": "2026-08-31",
       "updated": "2026-09-04",
       "resolved": "2026-09-03",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13045",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12983",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -74515,22 +74338,22 @@
       "total_arr": 0,
       "total_lifetime": 0,
       "unmatched_labels": [
-        "lewiscabinet"
+        "cuttingedge"
       ]
     },
     {
-      "key": "DEV-13018",
-      "summary": "IFCC Inc (ifccinc) — Attribute selection images missing from dealer view once order status is Verified",
-      "status": "Ready For QA",
+      "key": "DEV-12036",
+      "summary": "B2B supplier disclaimer populates everytime reseller moves order to In Progress",
+      "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
-      "issue_score": 706,
+      "issue_score": 719,
       "customers": [],
-      "created": "2026-09-02",
-      "updated": "2026-09-03",
+      "created": "2026-05-08",
+      "updated": "2026-09-04",
       "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13018",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12036",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -74538,7 +74361,7 @@
       "total_arr": 0,
       "total_lifetime": 0,
       "unmatched_labels": [
-        "ifccinc"
+        "dbs"
       ]
     },
     {
@@ -74562,29 +74385,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "advancedcabinetsdoors"
-      ]
-    },
-    {
-      "key": "DEV-12983",
-      "summary": "Tax/GST $0 when it shouldn't be",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 651,
-      "customers": [],
-      "created": "2026-08-31",
-      "updated": "2026-09-03",
-      "resolved": "2026-09-03",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12983",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "cuttingedge"
       ]
     },
     {
@@ -74654,29 +74454,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "dominiondovetails"
-      ]
-    },
-    {
-      "key": "DEV-12723",
-      "summary": "FedEx - Multiple FedEx Account Options",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 241,
-      "customers": [],
-      "created": "2026-08-11",
-      "updated": "2026-09-03",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12723",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "DCDrawers"
       ]
     },
     {
@@ -75022,29 +74799,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "cuttingedge"
-      ]
-    },
-    {
-      "key": "DEV-12036",
-      "summary": "B2B supplier disclaimer populates everytime reseller moves order to In Progress",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 719,
-      "customers": [],
-      "created": "2026-05-08",
-      "updated": "2026-09-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12036",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "dbs"
       ]
     },
     {
@@ -77896,52 +77650,6 @@
       "updated": "2026-08-14",
       "resolved": "2026-08-14",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12396",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-11677",
-      "summary": "Staging - can't create PO",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 743,
-      "customers": [],
-      "created": "2026-03-04",
-      "updated": "2026-08-14",
-      "resolved": "2026-03-16",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11677",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-11865",
-      "summary": "Staging - can't get around PO send to address even when NOT sending the PO",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 706,
-      "customers": [],
-      "created": "2026-04-01",
-      "updated": "2026-08-14",
-      "resolved": "2026-04-21",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11865",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -81360,29 +81068,6 @@
       ]
     },
     {
-      "key": "DEV-7627",
-      "summary": "Improvements to new PO/email page",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 155,
-      "customers": [],
-      "created": "2024-01-19",
-      "updated": "2026-08-05",
-      "resolved": "2025-03-26",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-7627",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
       "key": "DEV-7625",
       "summary": "Cimino's New Domain Request",
       "status": "Resolved",
@@ -84167,6 +83852,32 @@
       "total_arr": 0,
       "total_lifetime": 0,
       "unmatched_labels": [
+        "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-6936",
+      "summary": "Attribute table improvements",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 309,
+      "customers": [],
+      "created": "2023-09-14",
+      "updated": "2026-08-05",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6936",
+      "tag_count": 4,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens",
+        "artisiancabinet",
+        "cuttingedge",
         "mykitch"
       ]
     },
@@ -91411,29 +91122,6 @@
       ]
     },
     {
-      "key": "DEV-11520",
-      "summary": "V2 List - Allmoxy Project",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "Low",
-      "issue_score": 123,
-      "customers": [],
-      "created": "2026-02-02",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11520",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
       "key": "DEV-4882",
       "summary": "Changing customer once order is placed, doesn't update address",
       "status": "Closed",
@@ -91826,6 +91514,29 @@
       ]
     },
     {
+      "key": "DEV-4698",
+      "summary": "Unusual Ship Date for Current Orders",
+      "status": "Closed",
+      "stage_category": "Done",
+      "issue_type": "Investigate",
+      "priority": "Highest",
+      "issue_score": 196,
+      "customers": [],
+      "created": "2022-06-07",
+      "updated": "2026-08-05",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4698",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens"
+      ]
+    },
+    {
       "key": "DEV-4692",
       "summary": "Which staff member applied $283.80?",
       "status": "Closed",
@@ -92170,6 +91881,29 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "amco"
+      ]
+    },
+    {
+      "key": "DEV-4623",
+      "summary": "Adding email to customer account error",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Lowest",
+      "issue_score": 252,
+      "customers": [],
+      "created": "2022-05-18",
+      "updated": "2026-08-05",
+      "resolved": "2022-05-18",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-4623",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens"
       ]
     },
     {
@@ -97451,6 +97185,52 @@
       ]
     },
     {
+      "key": "DEV-11131",
+      "summary": "Big orders very slow to load",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [],
+      "created": "2025-11-06",
+      "updated": "2026-08-05",
+      "resolved": "2026-03-31",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11131",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens"
+      ]
+    },
+    {
+      "key": "DEV-11130",
+      "summary": "Product search on order page cuts off the last product",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 754,
+      "customers": [],
+      "created": "2025-11-06",
+      "updated": "2026-08-05",
+      "resolved": "2025-12-04",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11130",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens"
+      ]
+    },
+    {
       "key": "DEV-11129",
       "summary": "Dev - Custom Email Address Field on Trigger hidden",
       "status": "Resolved",
@@ -98363,29 +98143,6 @@
       "updated": "2026-08-05",
       "resolved": "2025-10-24",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11034",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "mykitch"
-      ]
-    },
-    {
-      "key": "DEV-12268",
-      "summary": "Unable to deselect Australia Sales Tax Presence",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-07-02",
-      "updated": "2026-08-05",
-      "resolved": "2026-07-02",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12268",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -104120,6 +103877,29 @@
       ]
     },
     {
+      "key": "DEV-9811",
+      "summary": "Show remake reason when converting a remake to a normal order",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 217,
+      "customers": [],
+      "created": "2025-03-11",
+      "updated": "2026-08-05",
+      "resolved": "2025-03-11",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9811",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens"
+      ]
+    },
+    {
       "key": "DEV-9801",
       "summary": "DEV - HTTP Error 500",
       "status": "Resolved",
@@ -104831,6 +104611,29 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-9651",
+      "summary": "Permissions all blank for Quality Kitchens",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 432,
+      "customers": [],
+      "created": "2025-02-11",
+      "updated": "2026-08-05",
+      "resolved": "2025-02-11",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9651",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens"
       ]
     },
     {
@@ -105707,6 +105510,29 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-9553",
+      "summary": "Weird white rectangle/ square for end user (Quality Kitchen's customer)",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Lowest",
+      "issue_score": 419,
+      "customers": [],
+      "created": "2025-01-27",
+      "updated": "2026-08-05",
+      "resolved": "2025-03-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9553",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens"
       ]
     },
     {
@@ -109226,6 +109052,29 @@
       ]
     },
     {
+      "key": "DEV-9164",
+      "summary": "On the invoice output page that shows folders, don't repeat order level setting attributes",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Low",
+      "issue_score": 79,
+      "customers": [],
+      "created": "2024-11-14",
+      "updated": "2026-08-05",
+      "resolved": "2024-11-27",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9164",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "QualityKitchens"
+      ]
+    },
+    {
       "key": "DEV-9163",
       "summary": "DEV - Fix Close Button Positioning in Modals",
       "status": "Resolved",
@@ -111069,29 +110918,6 @@
       ]
     },
     {
-      "key": "DEV-11797",
-      "summary": "Create Purchase Order Button Greyed Out",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 808,
-      "customers": [],
-      "created": "2026-03-17",
-      "updated": "2026-08-05",
-      "resolved": "2026-04-07",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11797",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "LifeSpanClosets"
-      ]
-    },
-    {
       "key": "DEV-8821",
       "summary": "DEV - Misalignment of \"Copy Supply Name\" Icon and Text in Edit Supply",
       "status": "Resolved",
@@ -112439,29 +112265,6 @@
       "updated": "2026-08-05",
       "resolved": "2026-03-25",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11764",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-8698",
-      "summary": "DEV - System Error on Email Invoice for Credit Memo & Bounced Payments",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Lowest",
-      "issue_score": 0,
-      "customers": [],
-      "created": "2024-08-13",
-      "updated": "2026-08-05",
-      "resolved": "2024-08-13",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8698",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -113824,29 +113627,6 @@
       "updated": "2026-08-05",
       "resolved": "2024-07-12",
       "url": "https://allmoxy.atlassian.net/browse/DEV-8517",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-8516",
-      "summary": "DEV: Move page values from attr to hidden inputs/ in designated file",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 175,
-      "customers": [],
-      "created": "2024-07-12",
-      "updated": "2026-08-05",
-      "resolved": "2024-08-29",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8516",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,

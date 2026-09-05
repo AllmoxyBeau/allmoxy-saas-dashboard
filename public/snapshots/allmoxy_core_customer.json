@@ -1,8 +1,8 @@
 {
   "tab": "allmoxy_core_customer",
   "sheetId": "18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30",
-  "fetchedAt": "2026-09-04T14:19:02.551Z",
-  "cachedUntil": "2026-09-04T14:24:02.551Z",
+  "fetchedAt": "2026-09-04T22:52:04.997Z",
+  "cachedUntil": "2026-09-04T22:57:04.997Z",
   "columns": [
     "allmoxy_customer_id",
     "name",
@@ -3679,16 +3679,6 @@
       "harvest_id": "10259698"
     },
     {
-      "allmoxy_customer_id": 285,
-      "name": "Mitchell Wood Worx",
-      "sign_up_date": "2020-12-23",
-      "hubspot_company_id": "2031250735",
-      "installer_id": null,
-      "installer_directory": null,
-      "stripe_customer_ids": [],
-      "harvest_id": "10267604"
-    },
-    {
       "allmoxy_customer_id": 286,
       "name": "Closets N More, Inc",
       "sign_up_date": "2021-01-01",
@@ -4254,9 +4244,10 @@
       "installer_id": "1882",
       "installer_directory": "qualitykitchensinc",
       "stripe_customer_ids": [
-        "cus_Jh5LKj8i7mZPLR"
+        "cus_Jh5LKj8i7mZPLR",
+        "cus_OabttW0lFmXet3"
       ],
-      "harvest_id": null
+      "harvest_id": "10924269"
     },
     {
       "allmoxy_customer_id": 331,
@@ -4283,19 +4274,6 @@
         "cus_JhDXA3WUdvrzVc"
       ],
       "harvest_id": "10924272"
-    },
-    {
-      "allmoxy_customer_id": 333,
-      "name": "Quality Kitchens Inc.",
-      "sign_up_date": "2021-06-18",
-      "hubspot_company_id": "6265312348",
-      "installer_id": null,
-      "installer_directory": null,
-      "stripe_customer_ids": [
-        "cus_OabttW0lFmXet3",
-        "cus_OabttW0lFmXet3"
-      ],
-      "harvest_id": "10924269"
     },
     {
       "allmoxy_customer_id": 334,
@@ -7789,6 +7767,6 @@
       "harvest_id": null
     }
   ],
-  "rowCount": 618,
+  "rowCount": 616,
   "notes": "Full customer roster from the allmoxy_core_customer tab of the local xlsx."
 }

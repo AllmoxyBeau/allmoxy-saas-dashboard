@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-06T19:13:30.815Z",
+  "generatedAt": "2026-09-04T19:31:29.672Z",
   "basis": "invoice service-period accrual (recurring lines); AR = open/uncollectible",
   "invoice_mrr_by_month": {
     "2026-01": 223378.25,
@@ -8,15 +8,18 @@
     "2026-04": 218026.45,
     "2026-05": 223234.65,
     "2026-06": 216926.65,
-    "2026-07": 131030.1
+    "2026-07": 224242.65,
+    "2026-08": 223280.65
   },
-  "ar_total": 84684.49,
+  "ar_total": 93458.67,
   "ar_by_month": {
     "2026-02": 3925.13,
     "2026-03": 4478.36,
     "2026-04": 6994.05,
     "2026-05": 4136,
-    "2026-07": 4147.1,
+    "2026-07": 4617.1,
+    "2026-09": 3950.96,
+    "2026-08": 4353.22,
     "2026-06": 1527,
     "2026-01": 5785.96,
     "2025-12": 3773.86,
@@ -66,6 +69,11 @@
   },
   "charge_only_customers": [
     {
+      "aid": 330,
+      "name": "Wizzwood DBA - Quality Kitchens Inc.",
+      "mrr": 2871.94
+    },
+    {
       "aid": 211,
       "name": "Midwest Floor Coverings",
       "mrr": 2780.35
@@ -94,6 +102,16 @@
       "aid": 217,
       "name": "Metro Drawer Boxes",
       "mrr": 500
+    },
+    {
+      "aid": 2079,
+      "name": "Mekotech Canada",
+      "mrr": 400
+    },
+    {
+      "aid": 360,
+      "name": "Elite Cabinets",
+      "mrr": 288.75
     },
     {
       "aid": 2064,
@@ -126,7 +144,7 @@
       "mrr": 163.24
     }
   ],
-  "charge_only_total": 9988.14,
+  "charge_only_total": 13548.83,
   "phantom_june": [
     {
       "name": "Dot Custom Cabinets LLC",
@@ -161,7 +179,7 @@
       "aid": 2015,
       "inv": 250,
       "chg": 0,
-      "status": "Active - Card Failure"
+      "status": "Cancelled"
     },
     {
       "name": "Hempston Home",

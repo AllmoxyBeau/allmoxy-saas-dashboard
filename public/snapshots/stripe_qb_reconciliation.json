@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-04T14:25:48.575Z",
+  "fetched_at": "2026-09-04T22:52:40.545Z",
   "comment": "Stripe ↔ QuickBooks per-month reconciliation. Stripe side is sum of customer_profiles.transactions (status=succeeded) by type; QB side is the corresponding pnl_by_month line items. Variance = Stripe minus QB-recognized. Tie-out status: tight (≤1% variance), acceptable (≤5%), investigate (>5%). See `reconciling_items` for canonical reasons for residual variance.",
   "rows": [
     {
@@ -481,12 +481,12 @@
     {
       "month": "2026-06",
       "stripe": {
-        "subscription": 228215.43,
+        "subscription": 225054.74,
         "services": 16585.4,
         "connect": 0,
         "other": 0,
         "refunds": 0,
-        "total": 244800.83
+        "total": 241640.14
       },
       "qb": {
         "subscription_revenue": 226824.87,
@@ -499,12 +499,12 @@
         "total_income": 291612.55
       },
       "variance": {
-        "subscription_dollars": -1782.44,
-        "subscription_pct": -0.007749810900422697,
+        "subscription_dollars": -4943.13,
+        "subscription_pct": -0.021492068600461406,
         "services_dollars": 0,
         "services_pct": 0
       },
-      "tie_out_status": "tight"
+      "tie_out_status": "acceptable"
     }
   ],
   "reconciling_items": [
@@ -536,8 +536,8 @@
   ],
   "summary": {
     "n_months": 18,
-    "n_tight": 2,
-    "n_acceptable": 11,
+    "n_tight": 1,
+    "n_acceptable": 12,
     "n_investigate": 5
   }
 }

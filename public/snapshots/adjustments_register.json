@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-04T14:25:12.350Z",
+  "fetched_at": "2026-09-04T22:52:39.218Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "by_category": {
@@ -7,7 +7,7 @@
       "amortization": 1,
       "variance": 3,
       "reclassification": 3,
-      "hygiene_stripe_id": 3,
+      "hygiene_stripe_id": 4,
       "synthetic_transaction": 1,
       "status_override": 16,
       "hygiene_connect_mapping": 1,
@@ -15,9 +15,9 @@
     },
     "by_severity": {
       "monetary": 26,
-      "hygiene": 5
+      "hygiene": 6
     },
-    "total": 31
+    "total": 32
   },
   "adjustments": [
     {
@@ -163,6 +163,22 @@
       "evidence": null,
       "source_file": "_etl_scripts/transaction_overrides.json",
       "added_by": "updated_at 2026-06-19"
+    },
+    {
+      "id": "hygiene-stripe-360",
+      "category": "hygiene_stripe_id",
+      "severity": "hygiene",
+      "customer_name": "Elite Cabinets",
+      "customer_id": 360,
+      "period": null,
+      "txn_date": null,
+      "before": null,
+      "after": null,
+      "delta": null,
+      "reason": "Injected 1 Stripe customer ID(s): cus_IcwiEEQYYpXLXh. Elite Cabinets (aid 360, subdomain mitchellwoodworx) pays via Stripe invoices on cus_IcwiEEQYYpXLXh (metadata allmoxy_customer_id=360) but the id was never linked to the profile. Unlinked, the recognition engine treated the invoices as an orphan Stripe customer AND the profile's charge-basis $288.75 — a double count. Found in the Aug 2026 deposit reconciliation.",
+      "evidence": null,
+      "source_file": "_etl_scripts/stripe_id_overrides.json",
+      "added_by": "Beau, 2026-09-04"
     },
     {
       "id": "hygiene-stripe-2092",

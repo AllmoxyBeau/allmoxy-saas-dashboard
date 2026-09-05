@@ -34,6 +34,15 @@ const SNAP = path.join(ROOT, 'public/snapshots');
 const INV = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/stripe_invoices.json'), 'utf8'));
 const PROF = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8')).rows;
 const MRR = JSON.parse(fs.readFileSync(path.join(SNAP, 'mrr_by_month.json'), 'utf8')).rows;
+// QuickBooks chart-of-accounts mapping + JE presentation flags (editable, no code change).
+const QB = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/qb_accounts.json'), 'utf8'));
+// Annual prepay customers (B&B Door, Mid Michigan): Beau books their amortization on
+// 4100 Annual Deferred Monthly as a SEPARATE entry. They are routed OUT of the
+// subscription line here so recognized/collected reflect monthly billing only.
+const ANNUAL = new Set((JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/annual_payers.json'), 'utf8')).annual_payer_ids || []).map(Number));
+// Stripe balance transactions by month (sync_stripe_balance_transactions) — the
+// cash side of the JE. Optional: if not pulled yet, the JE block is skipped.
+let BT = null; try { BT = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/stripe_balance_transactions.json'), 'utf8')); } catch { /* not pulled yet */ }
 
 const BOOKS_GO_LIVE = '2027-01';
 const RECONCILE_FROM = '2026-01';      // per-customer detail from here forward
@@ -152,6 +161,10 @@ const recFilled = fillForward(rec);
 const allAids = new Set([...rec.keys(), ...chgByAid.keys()]);
 const g = (map, aid, m) => (map.get(aid) || {})[m] || 0;
 function rowFor(aid, m) {
+  // Annual prepay → 4100 (booked separately); never in the subscription line.
+  if (ANNUAL.has(aid)) {
+    return { basis: 'annual', recognized: 0, collected_in_period: 0, collected_after_period: 0, still_open: 0, outstanding_at_period_end: 0, annual_deferred: r2(g(chgByAid, aid, m)) };
+  }
   const hasInv = invCustomers.has(aid);
   if (hasInv) {
     const recognized = r2(g(recFilled, aid, m));
@@ -170,8 +183,8 @@ function rowFor(aid, m) {
 const chgMonthTotal = (m) => (MRR.find((r) => r.month === m)?.mrr_subscription || 0);
 const by_month = {};
 for (const m of MONTHS) {
-  let recognized = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, outstanding = 0;
-  for (const aid of allAids) { const r = rowFor(aid, m); recognized += r.recognized; collected_in_period += r.collected_in_period; collected_after_period += r.collected_after_period; still_open += r.still_open; outstanding += r.outstanding_at_period_end; }
+  let recognized = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, outstanding = 0, annual = 0;
+  for (const aid of allAids) { const r = rowFor(aid, m); recognized += r.recognized; collected_in_period += r.collected_in_period; collected_after_period += r.collected_after_period; still_open += r.still_open; outstanding += r.outstanding_at_period_end; annual += r.annual_deferred || 0; }
   const prior_ar_collected = r2(priorArCollected[m] || 0);
   by_month[m] = {
     recognized: r2(recognized),
@@ -182,7 +195,127 @@ for (const m of MONTHS) {
     still_open: r2(still_open),                         // of this month's billings, never collected yet
     prior_ar_collected,                                 // cash received THIS month for prior months' AR
     cash_received: r2(collected_in_period + prior_ar_collected), // reconciles to bank deposits this month
+    annual_deferred: r2(annual),                        // 4100 Annual Deferred Monthly — booked separately (memo)
   };
+}
+
+// ── QuickBooks journal entry per month ──────────────────────────────────────────
+// Mirrors Beau's monthly Stripe entry line-for-line (every cash line ties to the
+// balance-transactions API to the penny), then ADDS: sales tax by state
+// (4050 → 2141/2142/2144), and the accrual adjustment (1200 AR ↔ 4000).
+//
+// Accrual math (append mode): after the entry, 4000 + 4050 must equal recognized
+// subscription revenue (ex-tax) net of refunds issued this month. With 4050 on the
+// invoice basis, that gives   Δ AR = R + T − cash_subscription_gross
+// i.e. billed (incl. tax) − collected (incl. tax) — which naturally nets prior-
+// period AR collected this month and includes the tax owed on unpaid invoices.
+// R = invoice-basis recognized (ex-tax, excl. annual payers) + direct/legacy
+// "Subscription …allmoxy.com" / add-on charges billed outside an invoice (real
+// recurring revenue; also in the cash line, so they don't move Δ AR).
+const journal_entries = {};
+if (BT?.months) {
+  const A = QB.accounts, TAXACCT = QB.sales_tax_payable_by_state || {};
+  // Per-month net balance change (all categories incl. payouts) → mirrors Stripe's
+  // Balance report frame: starting + activity − payouts = ending. Anchored on the
+  // current balance captured by the sync; walks backwards month by month.
+  const netChange = {}; for (const [k, v] of Object.entries(BT.months)) netChange[k] = r2((v.rows || []).reduce((s, r) => s + r.net, 0));
+  const curBal = BT.current_balance?.total ?? null;
+  for (const m of MONTHS.filter((x) => x >= RECONCILE_FROM)) {
+    const bm = BT.months[m]; if (!bm) continue;
+    const T = bm.totals;
+    const rows = bm.rows || [];
+    const S = (f) => r2(rows.filter(f).reduce((s, r) => s + r.amount, 0));
+    const KNOWN = new Set(['charge', 'refund', 'platform_earning', 'platform_earning_refund', 'fee', 'payout']);
+    const later = r2(Object.keys(netChange).filter((k) => k > m).reduce((s, k) => s + netChange[k], 0));
+    const ending = curBal != null ? r2(curBal - later) : null;
+    const balance_report = {
+      period_tz: BT.timezone || 'America/Denver',
+      starting_balance: ending != null ? r2(ending - netChange[m]) : null,
+      charges_gross: S((r) => r.cat === 'charge'),
+      refunds: S((r) => r.cat === 'refund'),                               // negative
+      connect_earnings: S((r) => r.cat === 'platform_earning'),
+      connect_refunds: S((r) => r.cat === 'platform_earning_refund'),      // negative
+      stripe_fees: r2(-rows.reduce((s, r) => s + r.fee, 0) + S((r) => r.cat === 'fee')), // negative: fees on activity + separately-billed fees
+      other_activity: S((r) => !KNOWN.has(r.cat)),
+      net_activity: T.net_activity,
+      payouts: T.payouts,
+      ending_balance: ending,
+      anchored: curBal != null,
+      current_balance_as_of: BT.current_balance?.as_of || null,
+    };
+    // Direct (non-invoice) subscription charges → count in recognized for invoice-basis
+    // and unmapped customers. Charge-basis customers are already in R via monthly_history.
+    let direct = 0; const directRows = [];
+    for (const r of bm.rows || []) {
+      if (r.cat !== 'charge' || r.tt !== 'subscription' || r.inv) continue;
+      const prof = r.cust ? custToProf.get(r.cust) : null; const aid = prof?.allmoxy_customer_id;
+      if (aid != null && (ANNUAL.has(aid) || !invCustomers.has(aid))) continue;
+      direct = r2(direct + r.amount); directRows.push({ name: prof?.customer_name || prof?.hubspot_instance_name || r.name || r.cust, amount: r.amount, desc: r.desc, mapped: aid != null });
+    }
+    // Sales tax by state: invoice basis (billed in m) and cash basis (paid in m).
+    const taxInv = {}, taxCash = {};
+    for (const c of Object.values(INV.by_customer || {})) for (const i of (c.invoices || [])) {
+      if (!RECOGNIZED_STATUS.has(i.status)) continue;
+      const billed = monthOf(i.d) === m, paid = !!i.paid_at && monthOf(i.paid_at) === m;
+      for (const t of (i.taxes || [])) { const s = t.state || '??'; if (billed) taxInv[s] = r2((taxInv[s] || 0) + t.a); if (paid) taxCash[s] = r2((taxCash[s] || 0) + t.a); }
+    }
+    const taxUsed = QB.sales_tax_basis === 'cash' ? taxCash : taxInv;
+    const taxTotal = r2(Object.values(taxUsed).reduce((s, v) => s + v, 0));
+    const R = r2((by_month[m]?.recognized || 0) + direct);
+    const adj = r2(R + taxTotal - T.subscription_gross);
+    const L = [];
+    const line = (acct, debit, credit, description, group) => L.push({ account: `${acct.number} ${acct.name}`, debit: debit ? r2(debit) : null, credit: credit ? r2(credit) : null, description, group });
+    const restate = QB.accrual_presentation === 'restate';
+    // — cash lines (Beau's entry) —
+    line(A.stripe_fee_income, T.payouts, 0, 'Stripe payouts to bank (gross deposits)', 'cash');
+    if (T.stripe_balance_change >= 0) line(A.stripe_clearing, 0, T.stripe_balance_change, 'Stripe balance change (payouts exceeded activity)', 'cash');
+    else line(A.stripe_clearing, -T.stripe_balance_change, 0, 'Stripe balance change (activity exceeded payouts)', 'cash');
+    line(A.services, 0, T.services_gross, 'Services charges', 'cash');
+    line(A.subscription, 0, restate ? r2(R + taxTotal) : T.subscription_gross, restate ? 'Subscription revenue recognized (invoice basis, incl. sales tax)' : 'Subscription charges (gross, incl. sales tax)', 'cash');
+    if (T.services_refunds) line(A.services, T.services_refunds, 0, 'Services refunds', 'cash');
+    if (T.subscription_refunds) line(A.subscription, T.subscription_refunds, 0, 'Subscription refunds', 'cash');
+    if (T.connect_refunds) line(A.stripe_fee_income, T.connect_refunds, 0, 'Connect platform-fee refunds', 'cash');
+    if (T.untagged_gross) line(A.misc_income, 0, T.untagged_gross, 'Untagged charges — classify', 'cash');
+    if (T.other_refunds) line(A.misc_income, T.other_refunds, 0, 'Untagged refunds — classify', 'cash');
+    line(A.cc_fees, T.charge_fees, 0, 'Stripe processing fees on charges', 'cash');
+    line(A.cc_fees, T.other_fees, 0, 'Other Stripe fees (billing / Connect)', 'cash');
+    line(A.stripe_fee_income, 0, T.connect_gross, 'Stripe Connect platform earnings', 'cash');
+    // — sales tax by state —
+    for (const [st, amt] of Object.entries(taxUsed).sort()) {
+      if (!amt) continue; const pay = TAXACCT[st]; const d = pay?.description || `${st} Sales Tax`;
+      line(A.subscription_tax, amt, 0, d, 'tax');
+      line(pay || { number: '????', name: `Sales Tax Payable:${st} — MAP ACCOUNT` }, 0, amt, d, 'tax');
+    }
+    // — accrual adjustment —
+    if (restate) {
+      if (adj > 0) line(A.accounts_receivable, adj, 0, 'Accrual: subscription billed not yet collected (Δ AR incl. tax on unpaid)', 'accrual');
+      else if (adj < 0) line(A.accounts_receivable, 0, -adj, 'Accrual: prior-period AR collected this month', 'accrual');
+    } else if (adj > 0) {
+      line(A.accounts_receivable, adj, 0, 'Accrual: subscription billed not yet collected (Δ AR incl. tax on unpaid)', 'accrual');
+      line(A.subscription, 0, adj, 'Accrual: recognize billed subscription revenue', 'accrual');
+    } else if (adj < 0) {
+      line(A.subscription, -adj, 0, 'Accrual: reverse cash-basis revenue for prior-period AR collected', 'accrual');
+      line(A.accounts_receivable, 0, -adj, 'Accrual: relieve AR collected this month', 'accrual');
+    }
+    const debits = r2(L.reduce((s, l) => s + (l.debit || 0), 0)), credits = r2(L.reduce((s, l) => s + (l.credit || 0), 0));
+    journal_entries[m] = {
+      lines: L, debits, credits, balanced: Math.abs(debits - credits) < 0.01,
+      balance_report,
+      inputs: {
+        payouts: T.payouts, stripe_balance_change: T.stripe_balance_change,
+        subscription_gross: T.subscription_gross, services_gross: T.services_gross, connect_gross: T.connect_gross,
+        subscription_refunds: T.subscription_refunds, services_refunds: T.services_refunds, connect_refunds: T.connect_refunds,
+        charge_fees: T.charge_fees, other_fees: T.other_fees, untagged_gross: T.untagged_gross,
+        recognized_ex_tax: R, recognized_invoice_basis: by_month[m]?.recognized || 0, direct_subscription_charges: direct, direct_rows: directRows,
+        tax_by_state_invoice: taxInv, tax_by_state_cash: taxCash, tax_basis_used: QB.sales_tax_basis, tax_total_used: taxTotal,
+        accrual_adjustment: adj, annual_deferred_memo: by_month[m]?.annual_deferred || 0, balance_txn_rows: T.row_count,
+      },
+      memo: [
+        `4100 Annual Deferred Monthly $${(by_month[m]?.annual_deferred || 0).toFixed(2)} (B&B Door, Mid Michigan) is booked separately — not part of this entry.`,
+        `Sales tax shown on the ${QB.sales_tax_basis} basis; the other basis for reference: $${r2(Object.values(QB.sales_tax_basis === 'cash' ? taxInv : taxCash).reduce((s, v) => s + v, 0)).toFixed(2)}.`,
+      ],
+    };
+  }
 }
 
 // ── per-(customer, month) reconciliation detail, RECONCILE_FROM forward ──
@@ -217,6 +350,9 @@ const out = {
   ar_total: r2(arRows.reduce((s, r) => s + r.amount, 0)),
   reconciliation_detail: detail,
   orphan_stripe_customers: orphans,
+  journal_entries,
+  qb_accounts: QB,
+  balance_transactions_fetched_at: BT?.fetchedAt || null,
   data_quality: { invoices_missing_paid_at: missingPaidAt },
   notes: `Recognized subscription revenue on the accrual/invoice basis with a month-end collection cutoff, parallel to the cash pipeline. Books go live ${BOOKS_GO_LIVE}; ${RECONCILE_FROM}+ carries per-customer detail for manual QB true-up. ${arRows.length} open/uncollectible invoices in AR aging. ${orphans.length} orphan Stripe customers need roster mapping.`,
 };

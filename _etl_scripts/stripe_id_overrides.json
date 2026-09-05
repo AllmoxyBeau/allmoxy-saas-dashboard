@@ -3,6 +3,13 @@
   "updated_at": "2026-08-11",
   "overrides": [
     {
+      "allmoxy_customer_id": 360,
+      "name": "Elite Cabinets",
+      "stripe_customer_ids": ["cus_IcwiEEQYYpXLXh"],
+      "reason": "Elite Cabinets (aid 360, subdomain mitchellwoodworx) pays via Stripe invoices on cus_IcwiEEQYYpXLXh (metadata allmoxy_customer_id=360) but the id was never linked to the profile. Unlinked, the recognition engine treated the invoices as an orphan Stripe customer AND the profile's charge-basis $288.75 — a double count. Found in the Aug 2026 deposit reconciliation.",
+      "added_by": "Beau, 2026-09-04"
+    },
+    {
       "allmoxy_customer_id": 2092,
       "name": "Fox Creek Cabinets",
       "stripe_customer_ids": ["cus_UzEseP20lCR8vi"],

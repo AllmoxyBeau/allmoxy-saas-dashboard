@@ -1,7 +1,17 @@
 {
   "comment": "Merge duplicate allmoxy_customer_id rows that are really ONE customer into a single surviving record. Keyed by the AID being absorbed ('from'); 'into' is the surviving AID. apply_customer_merges.mjs folds the absorbed row's financials (lifetime/current totals, transactions, monthly_history, Stripe IDs, dates) into the survivor and removes the absorbed row. refresh_all applies it to allmoxy_core_customer (right after the core roster is built) and to customer_profiles (after enrichment), so the duplicate disappears from every downstream snapshot. Use when one real customer has two AIDs — e.g. re-onboarded under a new core id but same installer_id / HubSpot company / Stripe subscription.",
-  "updated_at": "2026-06-30",
+  "updated_at": "2026-09-04",
   "merges": {
+    "285": {
+      "into": 360,
+      "_note": "Elite Cabinets (#285, lifetime $866) is a duplicate of #360 Elite Cabinets (lifetime $18,091, active) — both carry Stripe customer cus_IcwiEEQYYpXLXh; Stripe's charge metadata says allmoxy_customer_id=360, so #360 is the live roster id. With both alive, #285 won the Stripe-id→profile map (invoice basis $288.75) while #360 kept a charge-basis $288.75 — a double count. Found in the Aug 2026 deposit reconciliation.",
+      "_set_at": "2026-09-04"
+    },
+    "333": {
+      "into": 330,
+      "_note": "Wizzwood DBA Quality Kitchens (#333) is the same customer as #330 — both carry Stripe customer cus_Jh5LKj8i7mZPLR (Stripe's charge metadata says allmoxy_customer_id=330, so #330 is the live roster id). With both alive, the one $2,871.94/mo charge was recognized AND collected twice in the revenue-recognition model, inflating August by $2,871.94. Found in the Aug 2026 deposit reconciliation. #333 also carries an older Stripe id (cus_OabttW0lFmXet3) which folds into #330.",
+      "_set_at": "2026-09-04"
+    },
     "2027": {
       "into": 500,
       "_note": "Mountain Showcase Group (#2027) is the same customer as #500 Mountain Showcase Group, Inc. — identical installer_id 1952, HubSpot company 16344570990, and Stripe subscription sub_1RcKTnHkM2QhTtxhyv1n5FOR. #2027 is an empty duplicate (never_paid, $0, 0 transactions).",

@@ -1,6 +1,6 @@
 {
   "tab": "connect_volume",
-  "fetchedAt": "2026-09-04T14:34:15.683Z",
+  "fetchedAt": "2026-09-04T22:53:38.941Z",
   "stripe_fetchedAt": "2026-09-04T13:10:21.875Z",
   "window": {
     "since": "incremental"
@@ -20,9 +20,9 @@
   },
   "attach": {
     "connected_accounts": 101,
-    "active_customers": 184,
+    "active_customers": 183,
     "active_customers_on_connect": 51,
-    "attach_rate": 0.277
+    "attach_rate": 0.279
   },
   "scenarios": [
     {
@@ -808,12 +808,12 @@
     "unknown": 1
   },
   "penetration": {
-    "active_customers": 184,
+    "active_customers": 183,
     "processing_now": 58,
-    "attach_rate": 0.315,
+    "attach_rate": 0.317,
     "lapsed": 11,
-    "never": 115,
-    "not_processing": 126,
+    "never": 114,
+    "not_processing": 125,
     "attach_target_order_volume": 164324904,
     "attach_target_fee_potential": 375377,
     "attach_capture_assumption": 0.457,
@@ -2587,8 +2587,8 @@
       "primary_segment": "Cabinetry",
       "subscription_mrr": 288.75,
       "is_launched": "Yes",
-      "connect_status": "never",
-      "ever_processed": false,
+      "connect_status": "lapsed",
+      "ever_processed": true,
       "annual_order_volume": 24713,
       "connect_gmv_annual": 0,
       "connect_attach_rate": 0,
@@ -3613,22 +3613,6 @@
       "is_launched": null,
       "connect_status": "never",
       "ever_processed": false,
-      "annual_order_volume": 0,
-      "connect_gmv_annual": 0,
-      "connect_attach_rate": null,
-      "annual_connect_fee": 0,
-      "est_annual_connect_fee": 0,
-      "lapsed_note": null
-    },
-    {
-      "allmoxy_customer_id": 285,
-      "name": "Mitchell Wood Worx",
-      "status": "active",
-      "primary_segment": "Cabinetry",
-      "subscription_mrr": 288.75,
-      "is_launched": "Yes",
-      "connect_status": "lapsed",
-      "ever_processed": true,
       "annual_order_volume": 0,
       "connect_gmv_annual": 0,
       "connect_attach_rate": null,

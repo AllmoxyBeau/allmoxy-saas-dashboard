@@ -1,7 +1,7 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-09-04T14:25:47.014Z",
-  "cachedUntil": "2026-09-04T14:30:47.014Z",
+  "fetchedAt": "2026-09-04T22:52:40.047Z",
+  "cachedUntil": "2026-09-04T22:57:40.047Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.",
   "aggregates": {
     "total_instances": 210,
@@ -16,12 +16,12 @@
     "renewals_in_next_12mo_arr": 967879.08,
     "expansion_opportunities": 33,
     "contraction_risks": 82,
-    "watch": 7,
-    "stable": 82,
+    "watch": 6,
+    "stable": 83,
     "paused": 6,
     "median_cost_ratio_lifetime_pct": 1.16,
     "median_cost_ratio_annualized_pct": 0.92,
-    "dropoff_count": 108,
+    "dropoff_count": 109,
     "customers_with_quote": 156,
     "upcoming_renewals_with_quote": 56,
     "upcoming_renewals_without_quote": 28,
@@ -41299,9 +41299,9 @@
     {
       "instance_id": "32763807050",
       "account_name": "Elite Cabinets",
-      "allmoxy_customer_id": 285,
+      "allmoxy_customer_id": 360,
       "join_via": "stripe_subscription_id",
-      "customer_name": "Mitchell Wood Worx",
+      "customer_name": "Elite Cabinets",
       "renewal_date": "2027-06-18",
       "days_to_renewal": 286,
       "calculated_renewal_date": "2027-06-18",
@@ -41329,189 +41329,189 @@
       "owner_name": "Connor",
       "current_mrr": 288.75,
       "current_arr": 3465,
-      "lifetime_subscription": 866.25,
-      "lifetime_orders_dollars": 0,
-      "orders_monthly_avg_current_year": 0,
-      "orders_monthly_avg_prior_year": 0,
-      "orders_yoy_pct": null,
-      "cost_ratio_lifetime_pct": null,
-      "cost_ratio_annualized_pct": null,
+      "lifetime_subscription": 18091.25,
+      "lifetime_orders_dollars": 215601.93,
+      "orders_monthly_avg_current_year": 2059.44,
+      "orders_monthly_avg_prior_year": 2411.03,
+      "orders_yoy_pct": -0.15,
+      "cost_ratio_lifetime_pct": 8.39,
+      "cost_ratio_annualized_pct": 14.02,
       "monthly_trend": [
         {
-          "month": "2022-11",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2022-12",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-01",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-02",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-03",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-04",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-05",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-06",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-07",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-08",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-10",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-11",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2023-12",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2024-01",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2024-02",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2024-03",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2024-04",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
-          "month": "2024-05",
-          "subscription": 0,
-          "orders_dollars": 0,
-          "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
-        },
-        {
           "month": "2024-06",
-          "subscription": 0,
-          "orders_dollars": 0,
+          "subscription": 275,
+          "orders_dollars": 3342.48,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 8.23
         },
         {
           "month": "2024-07",
-          "subscription": 0,
-          "orders_dollars": 0,
+          "subscription": 275,
+          "orders_dollars": 3342.48,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 8.23
         },
         {
           "month": "2024-08",
-          "subscription": 0,
-          "orders_dollars": 0,
+          "subscription": 275,
+          "orders_dollars": 3342.48,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 8.23
+        },
+        {
+          "month": "2024-12",
+          "subscription": 550,
+          "orders_dollars": 3342.48,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 16.45
+        },
+        {
+          "month": "2025-01",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-02",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-03",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-04",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-05",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-06",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-07",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-08",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-09",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-10",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-11",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2025-12",
+          "subscription": 275,
+          "orders_dollars": 2411.03,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 11.41
+        },
+        {
+          "month": "2026-01",
+          "subscription": 275,
+          "orders_dollars": 2651.31,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 10.37
+        },
+        {
+          "month": "2026-02",
+          "subscription": 275,
+          "orders_dollars": 49.01,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 561.11
+        },
+        {
+          "month": "2026-03",
+          "subscription": 275,
+          "orders_dollars": 3022.12,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 9.1
+        },
+        {
+          "month": "2026-04",
+          "subscription": 275,
+          "orders_dollars": 1726.18,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 15.93
+        },
+        {
+          "month": "2026-05",
+          "subscription": 275,
+          "orders_dollars": 2848.6,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 9.65
         },
         {
           "month": "2026-06",
           "subscription": 288.75,
-          "orders_dollars": 0,
+          "orders_dollars": 858.1,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 33.65
         },
         {
           "month": "2026-07",
           "subscription": 288.75,
-          "orders_dollars": 0,
+          "orders_dollars": 858.1,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 33.65
         },
         {
           "month": "2026-08",
           "subscription": 288.75,
-          "orders_dollars": 0,
+          "orders_dollars": 858.1,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 33.65
         }
       ],
-      "dropoff_pct": null,
-      "risk_tier": "yellow",
-      "risk_score": 25,
+      "dropoff_pct": -0.5354,
+      "risk_tier": "green",
+      "risk_score": 105,
       "is_bid_only": false,
-      "action_tag": "Watch",
-      "action_reason": "Health tier YELLOW — monitor through renewal",
+      "action_tag": "Stable",
+      "action_reason": "Orders + health both holding",
       "customer_entered_orders_prev_billing_period": null,
       "customer_closed_lost": null,
       "quotes": [
@@ -44967,9 +44967,9 @@
     {
       "instance_id": "47920025715",
       "account_name": "Wizzwood DBA - Quality Kitchens Inc.",
-      "allmoxy_customer_id": 333,
+      "allmoxy_customer_id": 330,
       "join_via": "installer_id",
-      "customer_name": "Quality Kitchens Inc.",
+      "customer_name": "Wizzwood DBA - Quality Kitchens Inc.",
       "renewal_date": "2025-05-22",
       "days_to_renewal": -471,
       "calculated_renewal_date": "2025-05-22",
@@ -44997,58 +44997,184 @@
       "owner_name": null,
       "current_mrr": 2871.94,
       "current_arr": 34463.28,
-      "lifetime_subscription": 8615.82,
-      "lifetime_orders_dollars": 0,
-      "orders_monthly_avg_current_year": 0,
-      "orders_monthly_avg_prior_year": 0,
-      "orders_yoy_pct": null,
-      "cost_ratio_lifetime_pct": null,
-      "cost_ratio_annualized_pct": null,
+      "lifetime_subscription": 134265.34,
+      "lifetime_orders_dollars": 14963186.37,
+      "orders_monthly_avg_current_year": 315981.6,
+      "orders_monthly_avg_prior_year": 297245.76,
+      "orders_yoy_pct": 0.06,
+      "cost_ratio_lifetime_pct": 0.9,
+      "cost_ratio_annualized_pct": 0.91,
       "monthly_trend": [
         {
-          "month": "2023-10",
-          "subscription": 0,
-          "orders_dollars": 0,
+          "month": "2024-09",
+          "subscription": 2650,
+          "orders_dollars": 343052.79,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 0.77
         },
         {
-          "month": "2023-12",
-          "subscription": 0,
-          "orders_dollars": 0,
+          "month": "2024-10",
+          "subscription": 2650,
+          "orders_dollars": 343052.79,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 0.77
         },
         {
           "month": "2024-11",
-          "subscription": 0,
-          "orders_dollars": 0,
+          "subscription": 2650,
+          "orders_dollars": 343052.79,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 0.77
+        },
+        {
+          "month": "2024-12",
+          "subscription": 2650,
+          "orders_dollars": 343052.79,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.77
+        },
+        {
+          "month": "2025-01",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-02",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-03",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-04",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-05",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-06",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-07",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-08",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-09",
+          "subscription": 2650,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.89
+        },
+        {
+          "month": "2025-10",
+          "subscription": 2871.94,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.97
+        },
+        {
+          "month": "2025-11",
+          "subscription": 2871.94,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.97
+        },
+        {
+          "month": "2025-12",
+          "subscription": 2871.94,
+          "orders_dollars": 297245.76,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": 0.97
+        },
+        {
+          "month": "2026-01",
+          "subscription": 2871.94,
+          "orders_dollars": 382658.64,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 0.75
+        },
+        {
+          "month": "2026-02",
+          "subscription": 2871.94,
+          "orders_dollars": 316832.74,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 0.91
+        },
+        {
+          "month": "2026-03",
+          "subscription": 2871.94,
+          "orders_dollars": 425663.94,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 0.67
+        },
+        {
+          "month": "2026-04",
+          "subscription": 2871.94,
+          "orders_dollars": 211488,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 1.36
+        },
+        {
+          "month": "2026-05",
+          "subscription": 2871.94,
+          "orders_dollars": 243264.68,
+          "orders_source": "supplement",
+          "cost_ratio_pct": 1.18
         },
         {
           "month": "2026-06",
           "subscription": 2871.94,
-          "orders_dollars": 0,
+          "orders_dollars": 131659,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 2.18
         },
         {
           "month": "2026-07",
           "subscription": 2871.94,
-          "orders_dollars": 0,
+          "orders_dollars": 131659,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 2.18
         },
         {
           "month": "2026-08",
           "subscription": 2871.94,
-          "orders_dollars": 0,
+          "orders_dollars": 131659,
           "orders_source": "yearly_avg",
-          "cost_ratio_pct": null
+          "cost_ratio_pct": 2.18
         }
       ],
-      "dropoff_pct": null,
+      "dropoff_pct": 1.263,
       "risk_tier": null,
       "risk_score": null,
       "is_bid_only": false,
@@ -45096,7 +45222,15 @@
           "payment_status": "PAYMENT_NOT_ENABLED",
           "hubspot_url": "https://app.hubspot.com/quotes/4910812/details/32450439"
         }
-      ]
+      ],
+      "proposed_arr": 39632.77,
+      "proposed_mrr": 3300,
+      "expansion_confidence": "high",
+      "proposed_basis": "underpriced",
+      "expansion_rationale": "Underpriced vs peers — cost ratio 0.91% vs 1.16% target (orders +6% YoY). Value supports ~$43,985 ARR; capped at +15% this renewal — phase remaining over future renewals.",
+      "proposed_uplift_pct": 15,
+      "target_1pct_arr": 37917.79,
+      "target_1pct_mrr": 3150
     },
     {
       "instance_id": "49760705197",

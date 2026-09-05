@@ -1,0 +1,23 @@
+{
+  "_comment": "QuickBooks chart-of-accounts mapping for the monthly Stripe journal entry generated on the Revenue Recognition page. Mirrors Beau's existing entry (Aug 2026 screenshot). Edit labels here — no code change needed. `accrual_presentation`: 'append' keeps the cash lines exactly as Beau books them and ADDS the accrual (AR) adjustment lines; 'restate' replaces the 4000 cash figure with the recognized figure. `sales_tax_basis`: 'invoice' = tax on invoices billed in the month (consistent with accrual 4000); 'cash' = tax embedded in the month's deposits (Beau's historical 4050 basis).",
+  "updated_at": "2026-09-04",
+  "accrual_presentation": "append",
+  "sales_tax_basis": "invoice",
+  "apply_refund_classification_fix": true,
+  "accounts": {
+    "stripe_clearing":      { "number": "1003", "name": "Stripe Account" },
+    "accounts_receivable":  { "number": "1200", "name": "Accounts Receivable" },
+    "subscription":         { "number": "4000", "name": "Monthly Subscription" },
+    "subscription_tax":     { "number": "4050", "name": "Monthly Subscription Tax" },
+    "annual_deferred":      { "number": "4100", "name": "Annual Deferred Monthly" },
+    "stripe_fee_income":    { "number": "4200", "name": "Stripe Fee Income" },
+    "services":             { "number": "4300", "name": "Services Income" },
+    "misc_income":          { "number": "4700", "name": "Miscellaneous Income" },
+    "cc_fees":              { "number": "5000", "name": "Credit Card Acceptance Fees" }
+  },
+  "sales_tax_payable_by_state": {
+    "UT": { "number": "2141", "name": "Sales Tax Payable:Utah State", "description": "Utah Sales Tax" },
+    "NY": { "number": "2142", "name": "Sales Tax Payable:NY Sales Tax", "description": "New York Sales Tax" },
+    "CO": { "number": "2144", "name": "Sales Tax Payable:Denver Sales Tax", "description": "Colorado Sales Tax" }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-04T14:25:06.901Z",
-  "cachedUntil": "2026-09-04T14:30:06.901Z",
+  "fetchedAt": "2026-09-04T22:52:34.823Z",
+  "cachedUntil": "2026-09-04T22:57:34.823Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -21311,15 +21311,15 @@
     {
       "month": "2026-06",
       "starting_mrr": 233071.66,
-      "new_mrr": 3560.69,
+      "new_mrr": 400,
       "reactivated_mrr": 466.63,
       "expansion_mrr": 872.4,
       "contraction_mrr": 3098.35,
       "churn_mrr": 250,
       "delinquent_mrr": 1065.47,
-      "ending_mrr": 233557.56,
-      "net_new_mrr": 485.9,
-      "new_logos": 3,
+      "ending_mrr": 230396.87,
+      "net_new_mrr": -2674.79,
+      "new_logos": 1,
       "reactivated_logos": 2,
       "churned_logos": 1,
       "delinquent_logos": 2,
@@ -21328,23 +21328,13 @@
       "expansion_rate_monthly": 0.0037,
       "grr_monthly": 0.9856,
       "nrr_monthly": 0.9894,
-      "quick_ratio": 1.32,
+      "quick_ratio": 0.38,
       "details": {
         "new": [
-          {
-            "name": "Quality Kitchens Inc.",
-            "id": 333,
-            "mrr": 2871.94
-          },
           {
             "name": "Mekotech Canada",
             "id": 2079,
             "mrr": 400
-          },
-          {
-            "name": "Mitchell Wood Worx",
-            "id": 285,
-            "mrr": 288.75
           }
         ],
         "reactivated": [
@@ -21467,24 +21457,24 @@
     },
     {
       "month": "2026-07",
-      "starting_mrr": 233557.56,
+      "starting_mrr": 230396.87,
       "new_mrr": 475,
       "reactivated_mrr": 250,
       "expansion_mrr": 3329.69,
       "contraction_mrr": 1818.05,
       "churn_mrr": 250,
       "delinquent_mrr": 1200,
-      "ending_mrr": 234344.2,
+      "ending_mrr": 231183.51,
       "net_new_mrr": 786.64,
       "new_logos": 1,
       "reactivated_logos": 1,
       "churned_logos": 1,
       "delinquent_logos": 4,
       "gross_churn_rate_monthly": 0.0011,
-      "net_churn_rate_monthly": -0.0054,
-      "expansion_rate_monthly": 0.0143,
-      "grr_monthly": 0.9911,
-      "nrr_monthly": 1.0054,
+      "net_churn_rate_monthly": -0.0055,
+      "expansion_rate_monthly": 0.0145,
+      "grr_monthly": 0.991,
+      "nrr_monthly": 1.0055,
       "quick_ratio": 1.84,
       "details": {
         "new": [
@@ -21651,14 +21641,14 @@
     },
     {
       "month": "2026-08",
-      "starting_mrr": 234344.2,
+      "starting_mrr": 231183.51,
       "new_mrr": 419,
       "reactivated_mrr": 950,
       "expansion_mrr": 3618.06,
       "contraction_mrr": 3954.39,
       "churn_mrr": 250,
       "delinquent_mrr": 12388.32,
-      "ending_mrr": 222738.55,
+      "ending_mrr": 219577.86,
       "net_new_mrr": -11605.65,
       "new_logos": 1,
       "reactivated_logos": 3,
@@ -21666,8 +21656,8 @@
       "delinquent_logos": 7,
       "gross_churn_rate_monthly": 0.0011,
       "net_churn_rate_monthly": 0.0025,
-      "expansion_rate_monthly": 0.0154,
-      "grr_monthly": 0.9821,
+      "expansion_rate_monthly": 0.0157,
+      "grr_monthly": 0.9818,
       "nrr_monthly": 0.9975,
       "quick_ratio": 0.96,
       "details": {
@@ -21813,19 +21803,19 @@
     "windowStart": "2025-09",
     "windowEnd": "2026-08",
     "starting_mrr": 232091.16,
-    "ending_mrr": 222738.55,
-    "new_mrr": 21955.69,
+    "ending_mrr": 219577.86,
+    "new_mrr": 18795,
     "reactivated_mrr": 22408.97,
     "expansion_mrr": 26777.98,
     "contraction_mrr": 35453.29,
     "churn_mrr": 16212.44,
     "delinquent_mrr": 28829.52,
-    "net_new_mrr": -9352.61,
+    "net_new_mrr": -12513.3,
     "gross_mrr_churn_ttm": 0.0699,
     "annual_gross_churn_rate": 0.0678,
-    "annual_grr": 0.7995,
-    "annual_nrr": 0.899,
-    "quick_ratio": 0.94
+    "annual_grr": 0.7992,
+    "annual_nrr": 0.8991,
+    "quick_ratio": 0.88
   },
   "notes": "MRR waterfall derived from per-customer × per-month subscription MRR in customer_profiles.monthly_history (live Stripe, boundary-slip corrected). New = customer first appears with MRR > 0. Churn = confirmed-churned customer (status churned) who had MRR > 0 last month and 0 this month. Delinquent = dropped to $0 but NOT confirmed churned (card failure / non-payment / at-risk) — a missed cycle they may still pay; reported separately from churn but also reduces ending MRR. Expansion / Contraction are intra-customer month-over-month MRR changes. Services and Connect revenue are NOT included — subscription only."
 }

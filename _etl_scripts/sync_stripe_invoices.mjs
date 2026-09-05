@@ -52,6 +52,7 @@ const createdGt = null;
 async function getPage(startingAfter) {
   const qs = new URLSearchParams({ limit: '100' });
   qs.append('expand[]', 'data.lines.data.price'); // need recurring flag on each line
+  qs.append('expand[]', 'data.total_tax_amounts.tax_rate'); // sales tax by jurisdiction (state) for the QB 4050/214x lines
   if (startingAfter) qs.set('starting_after', startingAfter);
   if (createdGt) qs.set('created[gt]', String(createdGt));
   for (let a = 0; a < 6; a++) {
@@ -115,6 +116,16 @@ for (;;) {
       due: r2((inv.amount_due || 0) / 100),
       paid: r2((inv.amount_paid || 0) / 100),
       remaining: r2((inv.amount_remaining || 0) / 100),
+      // Sales tax is a pass-through liability, NOT revenue. Captured per
+      // jurisdiction so the JE can split 4050 (contra) → 2141 UT / 2142 NY /
+      // 2144 CO-Denver. `sub` below stays the PRE-tax recurring line total.
+      tax: r2((inv.tax || 0) / 100),
+      taxes: (inv.total_tax_amounts || []).map((t) => ({
+        a: r2((t.amount || 0) / 100),
+        state: t.tax_rate?.state || null,
+        jur: t.tax_rate?.jurisdiction || null,
+        pct: t.tax_rate?.percentage ?? null,
+      })),
       ps: iso(inv.period_start),
       pe: iso(inv.period_end),
       sub, svc,
