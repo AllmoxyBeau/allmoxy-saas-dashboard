@@ -48,12 +48,14 @@ type MonthlyRow = {
   contraction_mrr: number;
   churn_mrr: number;
   delinquent_mrr?: number;
+  voided_mrr?: number;
   ending_mrr: number;
   net_new_mrr: number;
   new_logos: number;
   reactivated_logos?: number;
   churned_logos: number;
   delinquent_logos?: number;
+  voided_logos?: number;
   gross_churn_rate_monthly: number | null;
   net_churn_rate_monthly: number | null;
   expansion_rate_monthly: number | null;
@@ -85,6 +87,11 @@ type WaterfallSnapshot = {
     annual_nrr: number | null;
     quick_ratio: number | null;
   };
+  // Accrual basis (invoice-billed) — present on the QB snapshot from 2025-08 forward.
+  monthly_accrual?: MonthlyRow[] | null;
+  ttm_accrual?: WaterfallSnapshot['ttm'] | null;
+  accrual_reliable_from?: string | null;
+  sales_tax_excluded?: boolean;
   notes: string;
 };
 
@@ -131,11 +138,22 @@ function quickRatioColor(v: number | null): 'success.main' | 'warning.main' | 'e
 
 export default function RevenueWaterfall() {
   const [source, setSource] = useState<'qb' | 'txns'>('qb');
+  // ACCRUAL is the default basis (Beau, 2026-09-05): on the cash basis a failed card or
+  // a late capture reads as churn, which overstates churn ~2x and understates GRR/NRR.
+  // Cash stays one click away — it's the right basis for bank reconciliation.
+  const [basis, setBasis] = useState<'accrual' | 'cash'>('accrual');
   const { data: qbData, isLoading: qbLoading, error: qbError } = useSheetTab('mrr_waterfall');
   const { data: txnData, isLoading: txnLoading, error: txnError } = useSheetTab('mrr_waterfall_txns');
   const qbSnap = qbData as unknown as WaterfallSnapshot | undefined;
   const txnSnap = txnData as unknown as WaterfallSnapshot | undefined;
-  const snap = source === 'txns' ? txnSnap : qbSnap;
+  const baseSnap = source === 'txns' ? txnSnap : qbSnap;
+  // Swap in the accrual series so every chart/table below works unchanged.
+  const snap = useMemo(() => {
+    if (source === 'txns' || basis === 'cash' || !baseSnap?.monthly_accrual?.length) return baseSnap;
+    return { ...baseSnap, monthly: baseSnap.monthly_accrual, ttm: baseSnap.ttm_accrual ?? baseSnap.ttm };
+  }, [baseSnap, basis, source]);
+  const accrualAvailable = source !== 'txns' && !!qbSnap?.monthly_accrual?.length;
+  const showingAccrual = accrualAvailable && basis === 'accrual';
   const isLoading = source === 'txns' ? txnLoading : qbLoading;
   const error = source === 'txns' ? txnError : qbError;
 
@@ -252,6 +270,11 @@ export default function RevenueWaterfall() {
         {headerStats ? (
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
             {headerWindow} window: {monthLabelLong(headerStats.windowStart)} – {monthLabelLong(headerStats.windowEnd)} · rates annualized for comparability · source: {source === 'txns' ? 'Stripe transactions' : 'QuickBooks MRR by Month'}
+            {accrualAvailable && (
+              <> · basis: <strong style={{ color: showingAccrual ? '#2C73FF' : undefined }}>{showingAccrual ? 'accrual (billed)' : 'cash (cleared)'}</strong>
+                {showingAccrual && qbSnap?.accrual_reliable_from ? ` — from ${monthLabelLong(qbSnap.accrual_reliable_from)}, when Stripe invoicing reached full coverage` : ''}
+                {' · sales tax excluded'}</>
+            )}
           </Typography>
         ) : (
           <span />
@@ -267,6 +290,18 @@ export default function RevenueWaterfall() {
             <ToggleButton value="qb" title="QuickBooks-derived MRR by Month tab (current source of truth)">QB</ToggleButton>
             <ToggleButton value="txns" title="Built directly from Stripe Sync transactions, post-overrides">Stripe txns</ToggleButton>
           </ToggleButtonGroup>
+          {accrualAvailable && (
+            <ToggleButtonGroup
+              size="small"
+              exclusive
+              value={basis}
+              onChange={(_, v) => v && setBasis(v as 'accrual' | 'cash')}
+              sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
+            >
+              <ToggleButton value="accrual" title="What was BILLED by invoice date. A failed card is an open receivable, not churn — the right basis for retention.">Accrual</ToggleButton>
+              <ToggleButton value="cash" title="What CLEARED Stripe. Full history; the right basis for bank reconciliation, but dunning reads as churn.">Cash</ToggleButton>
+            </ToggleButtonGroup>
+          )}
           <ToggleButtonGroup
             size="small"
             exclusive

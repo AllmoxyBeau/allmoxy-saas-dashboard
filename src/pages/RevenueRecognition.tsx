@@ -204,7 +204,10 @@ export default function RevenueRecognition() {
             <Box sx={{ mt: 1.5 }}>
               {je.memo.map((m, i) => <Typography key={i} variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>• {m}</Typography>)}
               {je.inputs.direct_subscription_charges > 0 && (
-                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>• Includes {USD2.format(je.inputs.direct_subscription_charges)} of direct/legacy subscription charges billed outside Stripe invoices ({je.inputs.direct_rows.map((d) => `${d.name} ${USD0.format(d.amount)}`).join(', ')}) — counted in recognized revenue.</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                  • <strong>Bridge to the Revenue Waterfall:</strong> recurring MRR {USD2.format(je.inputs.recognized_ex_tax - je.inputs.direct_subscription_charges)} + {USD2.format(je.inputs.direct_subscription_charges)} direct/legacy charges billed outside Stripe invoices = {USD2.format(je.inputs.recognized_ex_tax)} recognized revenue.
+                  {' '}Those charges ({je.inputs.direct_rows.map((d) => `${d.name} ${USD0.format(d.amount)}`).join(', ')}) are revenue but post irregularly, so they're excluded from MRR — counting them would read as expansion one month and contraction the next.
+                </Typography>
               )}
             </Box>
             {je.balance_report && (() => {

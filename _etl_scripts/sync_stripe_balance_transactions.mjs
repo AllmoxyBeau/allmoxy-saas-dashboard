@@ -33,7 +33,12 @@ if (!ENV.STRIPE_SECRET_KEY) throw new Error('Missing STRIPE_SECRET_KEY in .env.l
 const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base64');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const r2 = (v) => Math.round(v * 100) / 100;
-const FROM = '2026-01';
+// Must cover the whole accrual-reliable window (2025-08+), not just the JE months:
+// build_revenue_recognition folds direct/legacy subscription charges from these rows
+// into the per-customer accrual series. If the feed started later than the accrual
+// window, those charges would appear out of nowhere in the first covered month and
+// register as fake expansion (GRR read 4.6 pts low).
+const FROM = '2025-08';
 
 async function get(p) {
   for (let a = 0; a < 6; a++) {

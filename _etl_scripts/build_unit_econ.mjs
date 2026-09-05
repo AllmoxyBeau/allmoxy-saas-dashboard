@@ -178,8 +178,15 @@ const waterfall = (() => {
   try { return JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'mrr_waterfall.json'), 'utf8')); }
   catch { return null; }
 })();
+// ACCRUAL-FIRST (2026-09-05): the accrual basis treats a failed card as an open
+// receivable rather than churn, so it doesn't double-count dunning as a lost logo —
+// on the cash basis churn runs ~2x high. Accrual only exists from 2025-08 (Stripe
+// invoicing coverage), so cash fills every month before that.
 const churnedLogosByMonth = waterfall
-  ? Object.fromEntries((waterfall.monthly || []).map((m) => [m.month, m.churned_logos ?? 0]))
+  ? Object.fromEntries([
+      ...(waterfall.monthly || []).map((m) => [m.month, m.churned_logos ?? 0]),
+      ...(waterfall.monthly_accrual || []).map((m) => [m.month, m.churned_logos ?? 0]),
+    ])
   : {};
 
 const mrrByMonth = Object.fromEntries(mrr.rows.map((r) => [r.month, r]));
@@ -315,7 +322,10 @@ const monthlyChurnRate = totalStartingLogos > 0 ? totalChurn / totalStartingLogo
 const annualChurnRate = monthlyChurnRate != null ? 1 - Math.pow(1 - monthlyChurnRate, 12) : null;
 // Also carry the waterfall's REVENUE (MRR-dollar) gross churn so the snapshot
 // exposes both lenses (small logos churn, big ones stay → revenue churn ≪ logo churn).
-const annualRevenueChurnRate = waterfall?.ttm?.annual_gross_churn_rate ?? null;
+// Accrual TTM preferred — see churnedLogosByMonth above.
+const annualRevenueChurnRate = waterfall?.ttm_accrual?.annual_gross_churn_rate
+  ?? waterfall?.ttm?.annual_gross_churn_rate ?? null;
+const retentionBasis = waterfall?.ttm_accrual ? 'accrual' : 'cash';
 
 // LTV = (avg MRR * gross margin) / monthly churn rate  (subscription only)
 const ltv = avgMRR != null && ttmSubGM != null && monthlyChurnRate && monthlyChurnRate > 0
@@ -398,6 +408,7 @@ const out = {
     net_op_income: Math.round(ttmNetOp * 100) / 100,
     monthly_churn_rate: monthlyChurnRate != null ? Math.round(monthlyChurnRate * 10000) / 10000 : null,
     annual_churn_rate: annualChurnRate != null ? Math.round(annualChurnRate * 10000) / 10000 : null,
+    retention_basis: retentionBasis,
     annual_logo_churn_rate: annualChurnRate != null ? Math.round(annualChurnRate * 10000) / 10000 : null,
     annual_revenue_churn_rate: annualRevenueChurnRate != null ? Math.round(annualRevenueChurnRate * 10000) / 10000 : null,
     avg_mrr_per_customer: avgMRR != null ? Math.round(avgMRR * 100) / 100 : null,

@@ -76,7 +76,17 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // applied today to an OLDER charge won't be re-pulled — run --full weekly.
 const FULL = process.argv.includes('--full');
 const prev = (() => { try { return JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch { return null; } })();
-const createdGt = (!FULL && prev?.max_created) ? prev.max_created : null;
+// ROLLING LOOKBACK (2026-09-05): re-fetch the trailing LOOKBACK_DAYS on every
+// incremental run instead of resuming exactly at max_created. A Link / bank (`py_`)
+// charge can surface in the API after later card charges have already advanced the
+// high-water mark, so a strict `created > max_created` cursor skipped it FOREVER —
+// the customer then read as $0 for that month and the waterfall showed false
+// delinquency (Westwind in July, again in August; Cabredo in August). Re-fetched
+// charges overwrite by id in the merge below, so the overlap is idempotent.
+const LOOKBACK_DAYS = 35;
+const createdGt = (!FULL && prev?.max_created)
+  ? prev.max_created - LOOKBACK_DAYS * 86400
+  : null;
 
 // Generic pager with hardened retry (429 / 5xx / transient network errors).
 async function getPage(url, params) {
@@ -95,12 +105,35 @@ async function getPage(url, params) {
 }
 
 // Seed aggregates from the previous cache so incremental runs append to history.
+// LOOKBACK REBUILD: because the fetch now re-reads the trailing LOOKBACK_DAYS, the
+// seeded copy must first DROP everything in that window — transactions[], failed[],
+// and their contribution to the per-type and by_month totals — so the fresh fetch
+// rebuilds it exactly once. (Charge ids aren't stored on transactions, so the
+// per-run `seen` set can't dedup against the previous cache; stripping the window
+// is what keeps the overlap idempotent instead of double-counting revenue.)
+const lookbackFromISO = createdGt ? new Date(createdGt * 1000).toISOString().slice(0, 10) : null;
 const byCust = new Map();
 if (createdGt && prev?.by_customer) for (const [cus, v] of Object.entries(prev.by_customer)) {
-  byCust.set(cus, { ...v, by_month: { ...(v.by_month || {}) }, transactions: [...(v.transactions || [])], failed: [...(v.failed || [])] });
+  const keptTx = (v.transactions || []).filter((t) => String(t.d) < lookbackFromISO);
+  const dropped = (v.transactions || []).filter((t) => String(t.d) >= lookbackFromISO);
+  const by_month = { ...(v.by_month || {}) };
+  let subscription = v.subscription || 0, services = v.services || 0, count = v.count || 0;
+  for (const t of dropped) {
+    const type = t.t === 'services' ? 'services' : 'subscription';
+    const m = String(t.d).slice(0, 7);
+    if (by_month[m]) { by_month[m] = { ...by_month[m], [type]: r2Pre((by_month[m][type] || 0) - (t.a || 0)) }; if (by_month[m].subscription <= 0.005 && by_month[m].services <= 0.005) delete by_month[m]; }
+    if (type === 'services') services = r2Pre(services - (t.a || 0)); else subscription = r2Pre(subscription - (t.a || 0));
+    count -= 1;
+  }
+  byCust.set(cus, {
+    ...v, subscription, services, count: Math.max(0, count), by_month,
+    transactions: keptTx,
+    failed: (v.failed || []).filter((f) => String(f.d) < lookbackFromISO),
+  });
 }
+function r2Pre(v) { return Math.round(v * 100) / 100; }
 const currencies = new Map(createdGt ? Object.entries(prev?.currencies || {}) : []);
-const noCustomer = createdGt ? [...(prev?.no_customer || [])] : []; // paid charges with no Stripe customer
+const noCustomer = createdGt ? (prev?.no_customer || []).filter((n) => String(n.d) < lookbackFromISO) : []; // paid charges with no Stripe customer (window re-fetched)
 let maxCreated = createdGt ? (prev?.max_created || 0) : 0;
 
 const r2 = (v) => Math.round(v * 100) / 100;

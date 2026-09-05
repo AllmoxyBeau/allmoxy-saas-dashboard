@@ -33,7 +33,6 @@ const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard
 const SNAP = path.join(ROOT, 'public/snapshots');
 const INV = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/stripe_invoices.json'), 'utf8'));
 const PROF = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8')).rows;
-const MRR = JSON.parse(fs.readFileSync(path.join(SNAP, 'mrr_by_month.json'), 'utf8')).rows;
 // QuickBooks chart-of-accounts mapping + JE presentation flags (editable, no code change).
 const QB = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/qb_accounts.json'), 'utf8'));
 // Annual prepay customers (B&B Door, Mid Michigan): Beau books their amortization on
@@ -49,6 +48,12 @@ let BT = null; try { BT = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scrip
 // every month on the page is an operating month, not reference.
 const BOOKS_GO_LIVE = '2026-01';
 const RECONCILE_FROM = '2026-01';      // per-customer detail from here forward
+// Allmoxy migrated to Stripe invoicing mid-2025: invoice coverage is 4–28% of actual
+// revenue before Jul 2025, then 91% (Jul) → 94% (Aug) → 95%+ thereafter. The accrual
+// basis is only meaningful once essentially every subscription bills via an invoice,
+// so anything reading the accrual series for retention/waterfall math must start here.
+// Deltas are therefore valid from 2025-09 (first month with a reliable prior month).
+const ACCRUAL_RELIABLE_FROM = '2025-08';
 const r2 = (v) => Math.round(v * 100) / 100;
 const monthOf = (iso) => (iso ? String(iso).slice(0, 7) : null);
 const addMonths = (m, k) => { const [y, mo] = m.split('-').map(Number); const d = new Date(y, mo - 1 + k, 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; };
@@ -129,6 +134,30 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
   }
 }
 
+// ── direct / legacy subscription charges billed OUTSIDE a Stripe invoice ──
+// Sandbox instances, extra domains, AI-token top-ups and "Subscription
+// xxx.allmoxy.com" legacy charges. They are real recurring revenue, but for a
+// customer who otherwise bills by invoice the invoice series doesn't see them —
+// which made the waterfall's accrual ending MRR sit ~$1.3–2.7K/mo BELOW the
+// journal entry's recognized revenue. Folded in here so by_month, the accrual
+// series, the waterfall and the JE all agree on one number.
+const directByAidMonth = new Map();   // aid -> { month: $ }  (invoice-basis customers)
+const directUnmapped = {};            // month -> $           (no profile; JE only)
+if (BT?.months) {
+  for (const [m, bm] of Object.entries(BT.months)) {
+    for (const r of (bm.rows || [])) {
+      if (r.cat !== 'charge' || r.tt !== 'subscription' || r.inv) continue; // invoice-backed handled by the invoice pass
+      const prof = r.cust ? custToProf.get(r.cust) : null;
+      const aid = prof?.allmoxy_customer_id;
+      if (aid == null) { directUnmapped[m] = r2((directUnmapped[m] || 0) + r.amount); continue; }
+      if (ANNUAL.has(aid)) continue;                 // annual prepay → 4100, booked separately
+      if (!invCustomers.has(aid)) continue;          // charge-basis customer: already in monthly_history
+      if (!directByAidMonth.has(aid)) directByAidMonth.set(aid, {});
+      const o = directByAidMonth.get(aid); o[m] = r2((o[m] || 0) + r.amount);
+    }
+  }
+}
+
 // ── charge basis (current cash) per aid × month, from profiles ──
 const chgByAid = new Map();
 for (const p of PROF) {
@@ -170,6 +199,12 @@ function rowFor(aid, m) {
   }
   const hasInv = invCustomers.has(aid);
   if (hasInv) {
+    // NOTE: direct/legacy charges (sandbox instances, extra domains, AI-token top-ups)
+    // are deliberately NOT in this per-customer series. They belong in REVENUE (the
+    // journal entry counts them) but not in MRR: they post irregularly, so a month
+    // with one and a month without read as expansion then contraction. Folding them
+    // in cost 5.1 pts of GRR (85.3% → 80.2%) in pure measurement noise. MRR is the
+    // recurring invoice-billed run-rate; the JE reconciles the difference.
     const recognized = r2(g(recFilled, aid, m));
     const collected_in_period = r2(g(collIn, aid, m));
     const collected_after_period = r2(g(collAfter, aid, m));
@@ -183,7 +218,11 @@ function rowFor(aid, m) {
 }
 
 // ── monthly summary ──
-const chgMonthTotal = (m) => (MRR.find((r) => r.month === m)?.mrr_subscription || 0);
+// Cash comes from the profiles themselves (identical to mrr_by_month.mrr_subscription,
+// which the monthly seam derives FROM these same profiles — verified equal to the cent).
+// Using profiles removes the mrr_by_month dependency so this build can run BEFORE the
+// waterfall, which now consumes the accrual series below.
+const chgMonthTotal = (m) => r2(PROF.reduce((s, p) => s + (p.monthly_history?.[m]?.subscription || 0), 0));
 const by_month = {};
 for (const m of MONTHS) {
   let recognized = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, outstanding = 0, annual = 0;
@@ -248,12 +287,16 @@ if (BT?.months) {
     };
     // Direct (non-invoice) subscription charges → count in recognized for invoice-basis
     // and unmapped customers. Charge-basis customers are already in R via monthly_history.
+    // Direct/legacy charges are revenue but not MRR (see rowFor), so the ENTRY adds
+    // them back on top of the recurring recognized figure. This is exactly the bridge
+    // between the waterfall's accrual MRR and the JE's recognized revenue.
     let direct = 0; const directRows = [];
     for (const r of bm.rows || []) {
       if (r.cat !== 'charge' || r.tt !== 'subscription' || r.inv) continue;
       const prof = r.cust ? custToProf.get(r.cust) : null; const aid = prof?.allmoxy_customer_id;
       if (aid != null && (ANNUAL.has(aid) || !invCustomers.has(aid))) continue;
-      direct = r2(direct + r.amount); directRows.push({ name: prof?.customer_name || prof?.hubspot_instance_name || r.name || r.cust, amount: r.amount, desc: r.desc, mapped: aid != null });
+      direct = r2(direct + r.amount);
+      directRows.push({ name: prof?.customer_name || prof?.hubspot_instance_name || r.name || r.cust, amount: r.amount, desc: r.desc, mapped: aid != null });
     }
     // Sales tax by state: invoice basis (billed in m) and cash basis (paid in m).
     const taxInv = {}, taxCash = {};
@@ -364,8 +407,27 @@ for (const aid of rec.keys()) if (typeof aid !== 'number') {
   if (recent.length) orphans.push({ stripe_customer: String(aid).replace('stripe:', ''), months: recent, latest_mrr: r2(o[recent[recent.length - 1]]) });
 }
 
+// ── per-customer accrual MRR series (for the accrual waterfall + retention metrics) ──
+// Only months >= ACCRUAL_RELIABLE_FROM are emitted: before that the invoice data is too
+// sparse and a customer who began invoicing in 2025 would read as $0 in 2021, producing
+// fake churn. Annual payers are excluded (they're on 4100, booked separately).
+const accrual_series = [];
+for (const aid of allAids) {
+  if (typeof aid !== 'number' || ANNUAL.has(aid)) continue;
+  const months = {};
+  for (const m of MONTHS) { if (m < ACCRUAL_RELIABLE_FROM) continue; const v = rowFor(aid, m).recognized; if (v > 0) months[m] = v; }
+  if (Object.keys(months).length) accrual_series.push({ allmoxy_customer_id: aid, months });
+}
+// Coverage ratio per month — how much of cash MRR the accrual basis accounts for.
+// Surfaced so any page using the accrual basis can prove the window is trustworthy.
+const accrual_coverage = {};
+for (const m of MONTHS.filter((x) => x >= '2025-01')) { const c = chgMonthTotal(m); accrual_coverage[m] = c > 0 ? Math.round((by_month[m].recognized / c) * 1000) / 10 : null; }
+
 arRows.sort((a, b) => b.amount - a.amount);
 const out = {
+  accrual_reliable_from: ACCRUAL_RELIABLE_FROM,
+  accrual_series,
+  accrual_coverage,
   tab: 'revenue_recognition',
   fetchedAt: new Date().toISOString(),
   invoices_fetched_at: INV.fetchedAt || INV.fetched_at || null,

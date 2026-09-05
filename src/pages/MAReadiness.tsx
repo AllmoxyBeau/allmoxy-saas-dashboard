@@ -58,6 +58,16 @@ type WaterfallSnap = {
     quick_ratio: number | null;
     annual_gross_churn_rate: number | null;
   };
+  // Accrual (invoice-billed) TTM — the basis retention metrics read.
+  ttm_accrual?: {
+    annual_grr: number | null;
+    annual_nrr: number | null;
+    quick_ratio: number | null;
+    annual_gross_churn_rate: number | null;
+    windowStart?: string | null;
+    windowEnd?: string | null;
+  } | null;
+  accrual_reliable_from?: string | null;
 };
 type MrrSnap = { rows: Array<{ month: string; mrr_subscription: number | null; logo_qty: number | null }> };
 type HealthSnap = { concentration: { top10: { pct: number | null }; total_active_customers: number; total_mrr: number }; dunning_summary: { total_dunning_customers: number; total_at_risk_amount: number } };
@@ -100,6 +110,11 @@ export default function MAReadiness() {
 
   const ue = ueData as unknown as UnitEconSnap | undefined;
   const wf = wfData as unknown as WaterfallSnap | undefined;
+  // Retention reads the ACCRUAL basis: on cash a failed card reads as churn, which
+  // overstates churn ~2x and understates GRR/NRR by 6-11 pts. Falls back to cash if
+  // the accrual window isn't built yet.
+  const ret = wf?.ttm_accrual ?? wf?.ttm;
+  const retentionBasis = wf?.ttm_accrual ? 'accrual (billed)' : 'cash (cleared)';
   const mrr = mrrData as unknown as MrrSnap | undefined;
   const health = healthData as unknown as HealthSnap | undefined;
 
@@ -157,9 +172,9 @@ export default function MAReadiness() {
     const tests = {
       healthy: [
         { label: 'ARR growth ≥ 15%', pass: (computed.arrGrowth ?? 0) >= 0.15 },
-        { label: 'NRR ≥ 100%', pass: (wf.ttm.annual_nrr ?? 0) >= 1 },
-        { label: 'GRR ≥ 80%', pass: (wf.ttm.annual_grr ?? 0) >= 0.8 },
-        { label: 'Annual revenue churn ≤ 10%', pass: (wf.ttm.annual_gross_churn_rate ?? 1) <= 0.1 },
+        { label: 'NRR ≥ 100%', pass: (ret!.annual_nrr ?? 0) >= 1 },
+        { label: 'GRR ≥ 80%', pass: (ret!.annual_grr ?? 0) >= 0.8 },
+        { label: 'Annual revenue churn ≤ 10%', pass: (ret!.annual_gross_churn_rate ?? 1) <= 0.1 },
         { label: 'Top-10 concentration ≤ 30%', pass: (health.concentration.top10.pct ?? 1) <= 0.3 },
       ],
       efficient: [
@@ -171,11 +186,11 @@ export default function MAReadiness() {
       ],
       exit: [
         { label: 'ARR ≥ $2M', pass: computed.arrCurrent >= 2_000_000 },
-        { label: 'NRR ≥ 100%', pass: (wf.ttm.annual_nrr ?? 0) >= 1 },
+        { label: 'NRR ≥ 100%', pass: (ret!.annual_nrr ?? 0) >= 1 },
         { label: 'LTV:CAC ≥ 3', pass: (ue.ttm.ltv_cac_ratio ?? 0) >= 3 },
         { label: 'Rule of 40 ≥ 40', pass: (computed.rule40 ?? 0) >= 40 },
         { label: 'Top-10 concentration ≤ 30%', pass: (health.concentration.top10.pct ?? 1) <= 0.3 },
-        { label: 'Annual revenue churn ≤ 10%', pass: (wf.ttm.annual_gross_churn_rate ?? 1) <= 0.1 },
+        { label: 'Annual revenue churn ≤ 10%', pass: (ret!.annual_gross_churn_rate ?? 1) <= 0.1 },
       ],
     };
     const score = (arr: Array<{ pass: boolean }>) => arr.filter((x) => x.pass).length;
@@ -271,10 +286,10 @@ export default function MAReadiness() {
             <Metric label="YoY ARR growth" value={computed ? pctSigned(computed.arrGrowth) : null} hint={computed ? `from ${USD_COMPACT.format(computed.arrYearAgo)}` : 'loading'} color={growthColor(computed?.arrGrowth)} loading={ueLoading} info={<><strong>What it is:</strong> Subscription ARR growth year-over-year.<br /><br /><strong>Data:</strong> (Current ARR − Year-ago ARR) ÷ Year-ago ARR. Both endpoints are point-in-time subscription MRR × 12.<br /><br /><strong>Target:</strong> ≥ 15% healthy · ≥ 30% strong</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="NRR (annual)" value={pct(wf?.ttm.annual_nrr)} hint="Target ≥ 110%" color={nrrColor(wf?.ttm.annual_nrr)} loading={ueLoading} info={<><strong>What it is:</strong> Net Revenue Retention — of every $1 existing customers paid a year ago, how much they pay now (including expansion, excluding new logos).<br /><br /><strong>Data:</strong> Monthly NRR from the MRR waterfall, compounded ×12.<br /><br /><strong>Target:</strong> ≥ 100% good · ≥ 110% top-quartile</>} />
+            <Metric label="NRR (annual)" value={pct(ret?.annual_nrr)} hint={`Target ≥ 110% · ${retentionBasis}`} color={nrrColor(ret?.annual_nrr)} loading={ueLoading} info={<><strong>What it is:</strong> Net Revenue Retention — of every $1 existing customers paid a year ago, how much they pay now (including expansion, excluding new logos).<br /><br /><strong>Data:</strong> Monthly NRR from the MRR waterfall, compounded ×12.<br /><br /><strong>Target:</strong> ≥ 100% good · ≥ 110% top-quartile</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="GRR (annual)" value={pct(wf?.ttm.annual_grr)} hint="Target ≥ 90%" color={grrColor(wf?.ttm.annual_grr)} loading={ueLoading} info={<><strong>What it is:</strong> Gross Revenue Retention — like NRR but without expansion credit. The retention "ceiling."<br /><br /><strong>Data:</strong> (Starting − Churn − Contraction) ÷ Starting, compounded to annual from MRR waterfall.<br /><br /><strong>Target:</strong> ≥ 90% top-quartile</>} />
+            <Metric label="GRR (annual)" value={pct(ret?.annual_grr)} hint="Target ≥ 90%" color={grrColor(ret?.annual_grr)} loading={ueLoading} info={<><strong>What it is:</strong> Gross Revenue Retention — like NRR but without expansion credit. The retention "ceiling."<br /><br /><strong>Data:</strong> (Starting − Churn − Contraction) ÷ Starting, compounded to annual from MRR waterfall.<br /><br /><strong>Target:</strong> ≥ 90% top-quartile</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <Metric label="Rule of 40" value={computed?.rule40 != null ? computed.rule40.toFixed(0) : null} hint="Growth % + Op margin %" color={rule40Color(computed?.rule40)} loading={ueLoading} info={<><strong>What it is:</strong> Growth rate + operating margin. Benchmark for "efficient growth" in SaaS.<br /><br /><strong>Data:</strong> YoY ARR growth % + TTM operating margin (Net Operating Income ÷ Total Income from QB P&L).<br /><br /><strong>Target:</strong> ≥ 40</>} />
@@ -292,7 +307,7 @@ export default function MAReadiness() {
             <Metric label="Annual logo churn" value={pct(ue?.ttm.annual_logo_churn_rate ?? ue?.ttm.annual_churn_rate)} hint="Confirmed churns only" color={churnColor(ue?.ttm.annual_logo_churn_rate ?? ue?.ttm.annual_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of customers who <em>confirmed-churned</em> in the trailing 12 months (excludes delinquency, pauses, and annual-payer gaps — those are tracked separately).<br /><br /><strong>Data:</strong> Confirmed churned logos (status=churned) from the MRR waterfall ÷ starting active logos, annualized.<br /><br /><strong>Target:</strong> ≤ 10% excellent · ≤ 20% acceptable. Compare with revenue churn → small accounts leave, large ones stay.</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="Annual revenue churn" value={pct(ue?.ttm.annual_revenue_churn_rate ?? wf?.ttm.annual_gross_churn_rate)} hint="MRR-dollar gross churn" color={churnColor(ue?.ttm.annual_revenue_churn_rate ?? wf?.ttm.annual_gross_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of MRR lost to churn in the trailing 12 months (gross, before expansion). The dollar-weighted retention signal a buyer weighs most.<br /><br /><strong>Data:</strong> Churned MRR ÷ starting MRR from the waterfall, annualized.<br /><br /><strong>Why it's far below logo churn:</strong> the accounts that leave are small — the revenue base is stickier than the customer count.</>} />
+            <Metric label="Annual revenue churn" value={pct(ue?.ttm.annual_revenue_churn_rate ?? ret?.annual_gross_churn_rate)} hint="MRR-dollar gross churn" color={churnColor(ue?.ttm.annual_revenue_churn_rate ?? ret?.annual_gross_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of MRR lost to churn in the trailing 12 months (gross, before expansion). The dollar-weighted retention signal a buyer weighs most.<br /><br /><strong>Data:</strong> Churned MRR ÷ starting MRR from the waterfall, annualized.<br /><br /><strong>Why it's far below logo churn:</strong> the accounts that leave are small — the revenue base is stickier than the customer count.</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <Metric label="Top 10 concentration" value={pct(health?.concentration.top10.pct)} hint="Target ≤ 25%" color={concColor(health?.concentration.top10.pct)} loading={ueLoading} info={<><strong>What it is:</strong> % of subscription MRR from the top 10 customers — the concentration-risk number a buyer will ask about first.<br /><br /><strong>Data:</strong> Sum of top-10 current MRR ÷ total subscription MRR from the Customer Health snapshot.<br /><br /><strong>Target:</strong> ≤ 25% low risk · &gt; 40% concerning</>} />
