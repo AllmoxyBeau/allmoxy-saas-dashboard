@@ -199,14 +199,15 @@ function rowFor(aid, m) {
   }
   const hasInv = invCustomers.has(aid);
   if (hasInv) {
-    // NOTE: direct/legacy charges (sandbox instances, extra domains, AI-token top-ups)
-    // are deliberately NOT in this per-customer series. They belong in REVENUE (the
-    // journal entry counts them) but not in MRR: they post irregularly, so a month
-    // with one and a month without read as expansion then contraction. Folding them
-    // in cost 5.1 pts of GRR (85.3% → 80.2%) in pure measurement noise. MRR is the
-    // recurring invoice-billed run-rate; the JE reconciles the difference.
-    const recognized = r2(g(recFilled, aid, m));
-    const collected_in_period = r2(g(collIn, aid, m));
+    // Direct/legacy charges (sandbox instances, extra domains, AI-token upgrades) ARE
+    // part of MRR (Beau, 2026-09-05): they're recurring subscription revenue the
+    // customer pays every month, just billed outside a Stripe invoice. Including them
+    // keeps ONE number — the waterfall's accrual MRR equals the journal entry's
+    // recognized revenue. They're cash-cleared on post, so they add to recognized AND
+    // collected and never create a receivable.
+    const direct = r2((directByAidMonth.get(aid) || {})[m] || 0);
+    const recognized = r2(g(recFilled, aid, m) + direct);
+    const collected_in_period = r2(g(collIn, aid, m) + direct);
     const collected_after_period = r2(g(collAfter, aid, m));
     const still_open = r2(g(stillOpen, aid, m));
     // Outstanding at the cutoff = everything not cleared by month-end (later-collected + still open).
@@ -287,16 +288,16 @@ if (BT?.months) {
     };
     // Direct (non-invoice) subscription charges → count in recognized for invoice-basis
     // and unmapped customers. Charge-basis customers are already in R via monthly_history.
-    // Direct/legacy charges are revenue but not MRR (see rowFor), so the ENTRY adds
-    // them back on top of the recurring recognized figure. This is exactly the bridge
-    // between the waterfall's accrual MRR and the JE's recognized revenue.
+    // Mapped direct charges are already inside by_month[m].recognized (folded into
+    // rowFor), so the entry only adds back the UNMAPPED ones — charges from Stripe
+    // customers with no roster record, which can't sit on a per-customer series.
     let direct = 0; const directRows = [];
     for (const r of bm.rows || []) {
       if (r.cat !== 'charge' || r.tt !== 'subscription' || r.inv) continue;
       const prof = r.cust ? custToProf.get(r.cust) : null; const aid = prof?.allmoxy_customer_id;
       if (aid != null && (ANNUAL.has(aid) || !invCustomers.has(aid))) continue;
-      direct = r2(direct + r.amount);
       directRows.push({ name: prof?.customer_name || prof?.hubspot_instance_name || r.name || r.cust, amount: r.amount, desc: r.desc, mapped: aid != null });
+      if (aid == null) direct = r2(direct + r.amount);
     }
     // Sales tax by state: invoice basis (billed in m) and cash basis (paid in m).
     const taxInv = {}, taxCash = {};

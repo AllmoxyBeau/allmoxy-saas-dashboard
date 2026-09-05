@@ -203,12 +203,10 @@ export default function RevenueRecognition() {
             </Box>
             <Box sx={{ mt: 1.5 }}>
               {je.memo.map((m, i) => <Typography key={i} variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>• {m}</Typography>)}
-              {je.inputs.direct_subscription_charges > 0 && (
-                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
-                  • <strong>Bridge to the Revenue Waterfall:</strong> recurring MRR {USD2.format(je.inputs.recognized_ex_tax - je.inputs.direct_subscription_charges)} + {USD2.format(je.inputs.direct_subscription_charges)} direct/legacy charges billed outside Stripe invoices = {USD2.format(je.inputs.recognized_ex_tax)} recognized revenue.
-                  {' '}Those charges ({je.inputs.direct_rows.map((d) => `${d.name} ${USD0.format(d.amount)}`).join(', ')}) are revenue but post irregularly, so they're excluded from MRR — counting them would read as expansion one month and contraction the next.
-                </Typography>
-              )}
+              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                • Direct/legacy subscription charges billed outside Stripe invoices (sandbox instances, extra domains, AI‑token upgrades) are included in both MRR and recognized revenue, so this figure matches the Revenue Waterfall's accrual ending MRR.
+                {je.inputs.direct_subscription_charges > 0 && <> Of these, {USD2.format(je.inputs.direct_subscription_charges)} is from Stripe customers with no roster record ({je.inputs.direct_rows.filter((d) => !d.mapped).map((d) => `${d.name} ${USD0.format(d.amount)}`).join(', ')}) and is added here only — it can't sit on a per‑customer series until those customers exist.</>}
+              </Typography>
             </Box>
             {je.balance_report && (() => {
               const b = je.balance_report;

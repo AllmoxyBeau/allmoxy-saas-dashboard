@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-05T02:23:45.908Z",
-  "cachedUntil": "2026-09-05T02:28:45.908Z",
+  "fetchedAt": "2026-09-05T02:28:33.780Z",
+  "cachedUntil": "2026-09-05T02:33:33.780Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -15,20 +15,20 @@
     "2025-05": 4.3,
     "2025-06": 25.8,
     "2025-07": 90.8,
-    "2025-08": 94.4,
-    "2025-09": 95.1,
-    "2025-10": 96.7,
-    "2025-11": 98.7,
-    "2025-12": 98.7,
-    "2026-01": 98.3,
-    "2026-02": 98.6,
-    "2026-03": 95.7,
-    "2026-04": 98,
-    "2026-05": 96.4,
-    "2026-06": 97.7,
-    "2026-07": 97.4,
-    "2026-08": 102.1,
-    "2026-09": 101.2
+    "2025-08": 98.1,
+    "2025-09": 98.4,
+    "2025-10": 97.2,
+    "2025-11": 100.2,
+    "2025-12": 99.6,
+    "2026-01": 99.4,
+    "2026-02": 100.1,
+    "2026-03": 101.8,
+    "2026-04": 99.7,
+    "2026-05": 98.9,
+    "2026-06": 98.8,
+    "2026-07": 98,
+    "2026-08": 102.6,
+    "2026-09": 101.3
   },
   "monthly": [
     {
@@ -22135,33 +22135,33 @@
   "monthly_accrual": [
     {
       "month": "2025-09",
-      "starting_mrr": 219402.31,
-      "new_mrr": 2155.5,
+      "starting_mrr": 228029.31,
+      "new_mrr": 1472.5,
       "reactivated_mrr": 0,
-      "expansion_mrr": 496.15,
-      "contraction_mrr": 1446.36,
+      "expansion_mrr": 907.15,
+      "contraction_mrr": 2180.36,
       "churn_mrr": 899,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 219708.6,
-      "net_new_mrr": 306.29,
-      "new_logos": 6,
+      "ending_mrr": 227329.6,
+      "net_new_mrr": -699.71,
+      "new_logos": 4,
       "reactivated_logos": 0,
       "churned_logos": 1,
       "voided_logos": 0,
       "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.0041,
-      "net_churn_rate_monthly": 0.0084,
-      "expansion_rate_monthly": 0.0023,
-      "grr_monthly": 0.9893,
-      "nrr_monthly": 0.9916,
-      "quick_ratio": 1.13,
+      "gross_churn_rate_monthly": 0.0039,
+      "net_churn_rate_monthly": 0.0095,
+      "expansion_rate_monthly": 0.004,
+      "grr_monthly": 0.9865,
+      "nrr_monthly": 0.9905,
+      "quick_ratio": 0.77,
       "details": {
         "new": [
           {
-            "name": "Cabinet Doors USA",
-            "id": 545,
-            "mrr": 833
+            "name": "Hingeworks",
+            "id": 551,
+            "mrr": 580
           },
           {
             "name": "Massachusetts Design Corp.",
@@ -22169,28 +22169,39 @@
             "mrr": 322.5
           },
           {
-            "name": "Capital Millwork",
-            "id": 550,
-            "mrr": 250
+            "name": "Kci Storage Manufacturing",
+            "id": 555,
+            "mrr": 320
           },
           {
-            "name": "Aluminum X Design",
-            "id": 548,
-            "mrr": 250
-          },
-          {
-            "name": "Closet Masters Design",
-            "id": 547,
-            "mrr": 250
-          },
-          {
-            "name": "Crafted Cabinetry & Millwork",
-            "id": 549,
+            "name": "Urbania Cabinets",
+            "id": 2015,
             "mrr": 250
           }
         ],
         "reactivated": [],
         "expansion": [
+          {
+            "name": "Conquest Cabinetry",
+            "id": 539,
+            "prev_mrr": 250,
+            "new_mrr": 449.5,
+            "delta": 199.5
+          },
+          {
+            "name": "Dovetail Wood Traditions",
+            "id": 541,
+            "prev_mrr": 500,
+            "new_mrr": 660.5,
+            "delta": 160.5
+          },
+          {
+            "name": "Cornish Custom Cabinets",
+            "id": 533,
+            "prev_mrr": 250,
+            "new_mrr": 400,
+            "delta": 150
+          },
           {
             "name": "NJ Drawers",
             "id": 159,
@@ -22204,13 +22215,6 @@
             "prev_mrr": 2199,
             "new_mrr": 2308.95,
             "delta": 109.95
-          },
-          {
-            "name": "Panhandle Door Inc.",
-            "id": 38,
-            "prev_mrr": 5925,
-            "new_mrr": 6024,
-            "delta": 99
           },
           {
             "name": "Red Rock Milling LLC",
@@ -22243,6 +22247,20 @@
             "delta": 1199
           },
           {
+            "name": "Peterman Lumber",
+            "id": 329,
+            "prev_mrr": 2140,
+            "new_mrr": 1756,
+            "delta": 384
+          },
+          {
+            "name": "Lewis Cabinet Specialties Group LLC",
+            "id": 1,
+            "prev_mrr": 7809.2,
+            "new_mrr": 7459.2,
+            "delta": 350
+          },
+          {
             "name": "Midwest Floor Coverings",
             "id": 211,
             "prev_mrr": 1424.64,
@@ -22270,47 +22288,42 @@
     },
     {
       "month": "2025-10",
-      "starting_mrr": 219708.6,
-      "new_mrr": 6750,
+      "starting_mrr": 227329.6,
+      "new_mrr": 870,
       "reactivated_mrr": 0,
-      "expansion_mrr": 1095.06,
-      "contraction_mrr": 300.38,
+      "expansion_mrr": 1228.06,
+      "contraction_mrr": 810.38,
       "churn_mrr": 0,
       "voided_mrr": 0,
       "delinquent_mrr": 1421.5,
-      "ending_mrr": 225831.78,
-      "net_new_mrr": 6123.18,
-      "new_logos": 4,
+      "ending_mrr": 227195.78,
+      "net_new_mrr": -133.82,
+      "new_logos": 3,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
       "delinquent_logos": 2,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": -0.0036,
-      "expansion_rate_monthly": 0.005,
-      "grr_monthly": 0.9986,
-      "nrr_monthly": 1.0036,
-      "quick_ratio": 26.12,
+      "net_churn_rate_monthly": -0.0018,
+      "expansion_rate_monthly": 0.0054,
+      "grr_monthly": 0.9964,
+      "nrr_monthly": 1.0018,
+      "quick_ratio": 2.59,
       "details": {
         "new": [
           {
-            "name": "Fryburg Door - Mullwood",
-            "id": 10,
-            "mrr": 5600
+            "name": "B & L Cabinets",
+            "id": 2025,
+            "mrr": 370
           },
           {
-            "name": "Hingeworks",
-            "id": 551,
-            "mrr": 580
+            "name": "Santas Cabinets",
+            "id": 2026,
+            "mrr": 250
           },
           {
-            "name": "Kci Storage Manufacturing",
-            "id": 555,
-            "mrr": 320
-          },
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
+            "name": "Prorustics",
+            "id": 2020,
             "mrr": 250
           }
         ],
@@ -22324,6 +22337,20 @@
             "delta": 574.06
           },
           {
+            "name": "Cabinet Doors USA",
+            "id": 545,
+            "prev_mrr": 833,
+            "new_mrr": 1083,
+            "delta": 250
+          },
+          {
+            "name": "Mountain Showcase Group, Inc.",
+            "id": 500,
+            "prev_mrr": 1700,
+            "new_mrr": 1805,
+            "delta": 105
+          },
+          {
             "name": "Melbourne Architectural Millwork",
             "id": 246,
             "prev_mrr": 1499,
@@ -22331,18 +22358,11 @@
             "delta": 101
           },
           {
-            "name": "CCF Industries",
-            "id": 2,
-            "prev_mrr": 2699,
-            "new_mrr": 2798,
-            "delta": 99
-          },
-          {
-            "name": "Sherwood Shelving",
-            "id": 388,
-            "prev_mrr": 950,
-            "new_mrr": 1025,
-            "delta": 75
+            "name": "New York Door & Drawer",
+            "id": 198,
+            "prev_mrr": 2020,
+            "new_mrr": 2085,
+            "delta": 65
           },
           {
             "name": "Nashville Plywood",
@@ -22352,32 +22372,18 @@
             "delta": 50
           },
           {
-            "name": "Rigel Cabinetry",
-            "id": 516,
-            "prev_mrr": 879,
-            "new_mrr": 929,
-            "delta": 50
-          },
-          {
-            "name": "Dot Custom Cabinets LLC",
-            "id": 385,
-            "prev_mrr": 799,
-            "new_mrr": 848,
-            "delta": 49
-          },
-          {
-            "name": "Mountain Showcase Group, Inc.",
-            "id": 500,
-            "prev_mrr": 1700,
-            "new_mrr": 1740,
-            "delta": 40
-          },
-          {
             "name": "Empyre Designs",
             "id": 310,
             "prev_mrr": 493,
             "new_mrr": 525,
             "delta": 32
+          },
+          {
+            "name": "Sherwood Shelving",
+            "id": 388,
+            "prev_mrr": 999,
+            "new_mrr": 1025,
+            "delta": 26
           },
           {
             "name": "Terzano Cabinetry Inc",
@@ -22394,6 +22400,27 @@
             "prev_mrr": 1399,
             "new_mrr": 1099,
             "delta": 300
+          },
+          {
+            "name": "Conquest Cabinetry",
+            "id": 539,
+            "prev_mrr": 449.5,
+            "new_mrr": 250,
+            "delta": 199.5
+          },
+          {
+            "name": "Dovetail Wood Traditions",
+            "id": 541,
+            "prev_mrr": 660.5,
+            "new_mrr": 500,
+            "delta": 160.5
+          },
+          {
+            "name": "Cornish Custom Cabinets",
+            "id": 533,
+            "prev_mrr": 400,
+            "new_mrr": 250,
+            "delta": 150
           },
           {
             "name": "Raumplus",
@@ -22425,38 +22452,43 @@
     },
     {
       "month": "2025-11",
-      "starting_mrr": 225831.78,
-      "new_mrr": 1770,
+      "starting_mrr": 227195.78,
+      "new_mrr": 3500,
       "reactivated_mrr": 0,
-      "expansion_mrr": 1818.64,
+      "expansion_mrr": 2188.64,
       "contraction_mrr": 923.4,
       "churn_mrr": 0,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 228497.02,
-      "net_new_mrr": 2665.24,
-      "new_logos": 6,
+      "ending_mrr": 231961.02,
+      "net_new_mrr": 4765.24,
+      "new_logos": 8,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": -0.004,
-      "expansion_rate_monthly": 0.0081,
+      "net_churn_rate_monthly": -0.0056,
+      "expansion_rate_monthly": 0.0096,
       "grr_monthly": 0.9959,
-      "nrr_monthly": 1.004,
-      "quick_ratio": 3.89,
+      "nrr_monthly": 1.0056,
+      "quick_ratio": 6.16,
       "details": {
         "new": [
+          {
+            "name": "Slide A Shelf",
+            "id": 2036,
+            "mrr": 1200
+          },
+          {
+            "name": "Crown Door & Drawer",
+            "id": 2028,
+            "mrr": 700
+          },
           {
             "name": "REHAU Colombia",
             "id": 95,
             "mrr": 400
-          },
-          {
-            "name": "B & L Cabinets",
-            "id": 2025,
-            "mrr": 370
           },
           {
             "name": "Lane Industries",
@@ -22464,19 +22496,24 @@
             "mrr": 250
           },
           {
-            "name": "Santas Cabinets",
-            "id": 2026,
+            "name": "Albritton Custom Cabinetry",
+            "id": 2031,
             "mrr": 250
           },
           {
-            "name": "Prorustics",
-            "id": 2020,
+            "name": "Fletcher Design Co",
+            "id": 2029,
             "mrr": 250
           },
           {
             "name": "Woodland Furniture",
             "id": 93,
             "mrr": 250
+          },
+          {
+            "name": "Adentra",
+            "id": 2032,
+            "mrr": 200
           }
         ],
         "reactivated": [],
@@ -22508,6 +22545,20 @@
             "prev_mrr": 250,
             "new_mrr": 500,
             "delta": 250
+          },
+          {
+            "name": "Mountain Showcase Group, Inc.",
+            "id": 500,
+            "prev_mrr": 1805,
+            "new_mrr": 1990,
+            "delta": 185
+          },
+          {
+            "name": "New York Door & Drawer",
+            "id": 198,
+            "prev_mrr": 2085,
+            "new_mrr": 2270,
+            "delta": 185
           },
           {
             "name": "Thomas Creek",
@@ -22554,57 +22605,49 @@
     },
     {
       "month": "2025-12",
-      "starting_mrr": 228497.02,
-      "new_mrr": 2250,
+      "starting_mrr": 231961.02,
+      "new_mrr": 1104,
       "reactivated_mrr": 0,
-      "expansion_mrr": 303.1,
-      "contraction_mrr": 1892.57,
+      "expansion_mrr": 453.1,
+      "contraction_mrr": 2307.57,
       "churn_mrr": 3483.4,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 225674.15,
-      "net_new_mrr": -2822.87,
-      "new_logos": 5,
+      "ending_mrr": 227727.15,
+      "net_new_mrr": -4233.87,
+      "new_logos": 2,
       "reactivated_logos": 0,
       "churned_logos": 7,
       "voided_logos": 0,
       "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.0152,
-      "net_churn_rate_monthly": 0.0222,
-      "expansion_rate_monthly": 0.0013,
-      "grr_monthly": 0.9765,
-      "nrr_monthly": 0.9778,
-      "quick_ratio": 0.47,
+      "gross_churn_rate_monthly": 0.015,
+      "net_churn_rate_monthly": 0.023,
+      "expansion_rate_monthly": 0.002,
+      "grr_monthly": 0.975,
+      "nrr_monthly": 0.977,
+      "quick_ratio": 0.27,
       "details": {
         "new": [
           {
-            "name": "Slide A Shelf",
-            "id": 2036,
-            "mrr": 1200
+            "name": "Ecodomo",
+            "id": 2044,
+            "mrr": 687
           },
           {
-            "name": "Crown Door & Drawer",
-            "id": 2028,
-            "mrr": 350
-          },
-          {
-            "name": "Albritton Custom Cabinetry",
-            "id": 2031,
-            "mrr": 250
-          },
-          {
-            "name": "Fletcher Design Co",
-            "id": 2029,
-            "mrr": 250
-          },
-          {
-            "name": "Adentra",
-            "id": 2032,
-            "mrr": 200
+            "name": "Crystal Cabinets",
+            "id": 2041,
+            "mrr": 417
           }
         ],
         "reactivated": [],
         "expansion": [
+          {
+            "name": "B & L Cabinets",
+            "id": 2025,
+            "prev_mrr": 370,
+            "new_mrr": 520,
+            "delta": 150
+          },
           {
             "name": "Nexis3",
             "id": 304,
@@ -22650,11 +22693,25 @@
             "delta": 500
           },
           {
+            "name": "Crown Door & Drawer",
+            "id": 2028,
+            "prev_mrr": 700,
+            "new_mrr": 350,
+            "delta": 350
+          },
+          {
             "name": "Hartley Group Coatings",
             "id": 400,
             "prev_mrr": 899,
             "new_mrr": 749,
             "delta": 150
+          },
+          {
+            "name": "Drawer Connection - DC Drawers",
+            "id": 3,
+            "prev_mrr": 3065,
+            "new_mrr": 3000,
+            "delta": 65
           }
         ],
         "churn": [
@@ -22700,38 +22757,48 @@
     },
     {
       "month": "2026-01",
-      "starting_mrr": 225674.15,
-      "new_mrr": 1197,
+      "starting_mrr": 227727.15,
+      "new_mrr": 1243,
       "reactivated_mrr": 0,
-      "expansion_mrr": 904.8,
-      "contraction_mrr": 1742.04,
+      "expansion_mrr": 1654.48,
+      "contraction_mrr": 1892.04,
       "churn_mrr": 1169,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 224864.91,
-      "net_new_mrr": -809.24,
-      "new_logos": 3,
+      "ending_mrr": 227563.59,
+      "net_new_mrr": -163.56,
+      "new_logos": 5,
       "reactivated_logos": 0,
       "churned_logos": 3,
       "voided_logos": 0,
       "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.0052,
-      "net_churn_rate_monthly": 0.0089,
-      "expansion_rate_monthly": 0.004,
-      "grr_monthly": 0.9871,
-      "nrr_monthly": 0.9911,
-      "quick_ratio": 0.72,
+      "gross_churn_rate_monthly": 0.0051,
+      "net_churn_rate_monthly": 0.0062,
+      "expansion_rate_monthly": 0.0073,
+      "grr_monthly": 0.9866,
+      "nrr_monthly": 0.9938,
+      "quick_ratio": 0.95,
       "details": {
         "new": [
           {
-            "name": "Ecodomo",
-            "id": 2044,
-            "mrr": 687
+            "name": "Stolbek",
+            "id": 2018,
+            "mrr": 400
           },
           {
-            "name": "Crystal Cabinets",
-            "id": 2041,
-            "mrr": 417
+            "name": "Hempston Home",
+            "id": 2046,
+            "mrr": 250
+          },
+          {
+            "name": "Dimitrios & Company",
+            "id": 2045,
+            "mrr": 250
+          },
+          {
+            "name": "Rise Up Labels",
+            "id": 2019,
+            "mrr": 250
           },
           {
             "name": "Evolve Elements",
@@ -22741,6 +22808,13 @@
         ],
         "reactivated": [],
         "expansion": [
+          {
+            "name": "Staley Custom Cabinets",
+            "id": 437,
+            "prev_mrr": 699,
+            "new_mrr": 1448.68,
+            "delta": 749.68
+          },
           {
             "name": "Tntdoor",
             "id": 423,
@@ -22835,6 +22909,13 @@
             "delta": 250
           },
           {
+            "name": "B & L Cabinets",
+            "id": 2025,
+            "prev_mrr": 520,
+            "new_mrr": 370,
+            "delta": 150
+          },
+          {
             "name": "Raumplus",
             "id": 7,
             "prev_mrr": 91.55,
@@ -22865,48 +22946,53 @@
     },
     {
       "month": "2026-02",
-      "starting_mrr": 224864.91,
-      "new_mrr": 1150,
+      "starting_mrr": 227563.59,
+      "new_mrr": 1697,
       "reactivated_mrr": 0,
       "expansion_mrr": 2811.78,
       "contraction_mrr": 1548,
-      "churn_mrr": 2775.8,
+      "churn_mrr": 2475.8,
       "voided_mrr": 0,
       "delinquent_mrr": 93,
-      "ending_mrr": 224409.89,
-      "net_new_mrr": -455.02,
-      "new_logos": 4,
+      "ending_mrr": 227955.57,
+      "net_new_mrr": 391.98,
+      "new_logos": 5,
       "reactivated_logos": 0,
-      "churned_logos": 4,
+      "churned_logos": 3,
       "voided_logos": 0,
       "delinquent_logos": 1,
-      "gross_churn_rate_monthly": 0.0123,
-      "net_churn_rate_monthly": 0.0067,
-      "expansion_rate_monthly": 0.0125,
-      "grr_monthly": 0.9808,
-      "nrr_monthly": 0.9933,
-      "quick_ratio": 0.92,
+      "gross_churn_rate_monthly": 0.0109,
+      "net_churn_rate_monthly": 0.0053,
+      "expansion_rate_monthly": 0.0124,
+      "grr_monthly": 0.9823,
+      "nrr_monthly": 0.9947,
+      "quick_ratio": 1.12,
       "details": {
         "new": [
           {
-            "name": "Stolbek",
-            "id": 2018,
-            "mrr": 400
+            "name": "Graber Cabinets",
+            "id": 2048,
+            "mrr": 580
           },
           {
-            "name": "Hempston Home",
-            "id": 2046,
+            "name": "Harbour City Kitchens",
+            "id": 2051,
+            "mrr": 417
+          },
+          {
+            "name": "Paquette Cabinetry",
+            "id": 2050,
             "mrr": 250
           },
           {
-            "name": "Dimitrios & Company",
-            "id": 2045,
+            "name": "Montouro Woodwork",
+            "id": 2049,
             "mrr": 250
           },
           {
-            "name": "Rise Up Labels",
-            "id": 2019,
-            "mrr": 250
+            "name": "Western Cabinet Doors - The Door Stop",
+            "id": 2047,
+            "mrr": 200
           }
         ],
         "reactivated": [],
@@ -22964,11 +23050,6 @@
             "name": "Precision Elements",
             "id": 371,
             "mrr": 598.8
-          },
-          {
-            "name": "Bw Modern",
-            "id": 223,
-            "mrr": 300
           }
         ],
         "voided": [],
@@ -22985,57 +23066,64 @@
     },
     {
       "month": "2026-03",
-      "starting_mrr": 224409.89,
-      "new_mrr": 1697,
+      "starting_mrr": 227955.57,
+      "new_mrr": 5150,
       "reactivated_mrr": 0,
-      "expansion_mrr": 3867.23,
+      "expansion_mrr": 11525.23,
       "contraction_mrr": 99,
       "churn_mrr": 620,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 229255.12,
-      "net_new_mrr": 4845.23,
+      "ending_mrr": 243911.8,
+      "net_new_mrr": 15956.23,
       "new_logos": 5,
       "reactivated_logos": 0,
       "churned_logos": 2,
       "voided_logos": 0,
       "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.0028,
-      "net_churn_rate_monthly": -0.014,
-      "expansion_rate_monthly": 0.0172,
+      "gross_churn_rate_monthly": 0.0027,
+      "net_churn_rate_monthly": -0.0474,
+      "expansion_rate_monthly": 0.0506,
       "grr_monthly": 0.9968,
-      "nrr_monthly": 1.014,
-      "quick_ratio": 7.74,
+      "nrr_monthly": 1.0474,
+      "quick_ratio": 23.19,
       "details": {
         "new": [
           {
-            "name": "Graber Cabinets",
-            "id": 2048,
-            "mrr": 580
+            "name": "Fleetwoods",
+            "id": 2058,
+            "mrr": 4200
           },
           {
-            "name": "Harbour City Kitchens",
-            "id": 2051,
-            "mrr": 417
-          },
-          {
-            "name": "Paquette Cabinetry",
-            "id": 2050,
+            "name": "Five Cabinetry",
+            "id": 2056,
             "mrr": 250
           },
           {
-            "name": "Montouro Woodwork",
-            "id": 2049,
+            "name": "Top Design Closets",
+            "id": 2059,
             "mrr": 250
           },
           {
-            "name": "Western Cabinet Doors - The Door Stop",
-            "id": 2047,
+            "name": "Batesville Cabinet Company",
+            "id": 2052,
+            "mrr": 250
+          },
+          {
+            "name": "Quick Kitchens",
+            "id": 2057,
             "mrr": 200
           }
         ],
         "reactivated": [],
         "expansion": [
+          {
+            "name": "Panhandle Door Inc.",
+            "id": 38,
+            "prev_mrr": 6024,
+            "new_mrr": 13682,
+            "delta": 7658
+          },
           {
             "name": "Midwest Floor Coverings",
             "id": 211,
@@ -23113,134 +23201,27 @@
     },
     {
       "month": "2026-04",
-      "starting_mrr": 229255.12,
-      "new_mrr": 5170,
-      "reactivated_mrr": 0,
-      "expansion_mrr": 99,
-      "contraction_mrr": 4920.41,
-      "churn_mrr": 1148.8,
-      "voided_mrr": 0,
-      "delinquent_mrr": 0,
-      "ending_mrr": 228454.91,
-      "net_new_mrr": -800.21,
-      "new_logos": 5,
-      "reactivated_logos": 0,
-      "churned_logos": 2,
-      "voided_logos": 0,
-      "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.005,
-      "net_churn_rate_monthly": 0.026,
-      "expansion_rate_monthly": 0.0004,
-      "grr_monthly": 0.9735,
-      "nrr_monthly": 0.974,
-      "quick_ratio": 0.87,
-      "details": {
-        "new": [
-          {
-            "name": "Fleetwoods",
-            "id": 2058,
-            "mrr": 4200
-          },
-          {
-            "name": "Five Cabinetry",
-            "id": 2056,
-            "mrr": 270
-          },
-          {
-            "name": "Top Design Closets",
-            "id": 2059,
-            "mrr": 250
-          },
-          {
-            "name": "Batesville Cabinet Company",
-            "id": 2052,
-            "mrr": 250
-          },
-          {
-            "name": "Quick Kitchens",
-            "id": 2057,
-            "mrr": 200
-          }
-        ],
-        "reactivated": [],
-        "expansion": [
-          {
-            "name": "Cabinet Doors USA",
-            "id": 545,
-            "prev_mrr": 833,
-            "new_mrr": 932,
-            "delta": 99
-          }
-        ],
-        "contraction": [
-          {
-            "name": "Midwest Floor Coverings",
-            "id": 211,
-            "prev_mrr": 4683.15,
-            "new_mrr": 1757.83,
-            "delta": 2925.32
-          },
-          {
-            "name": "Raumplus",
-            "id": 7,
-            "prev_mrr": 1559.02,
-            "new_mrr": 149.18,
-            "delta": 1409.84
-          },
-          {
-            "name": "Wurth LAC",
-            "id": 113,
-            "prev_mrr": 1072.5,
-            "new_mrr": 536.25,
-            "delta": 536.25
-          },
-          {
-            "name": "NJ Drawers",
-            "id": 159,
-            "prev_mrr": 2055.25,
-            "new_mrr": 2006.25,
-            "delta": 49
-          }
-        ],
-        "churn": [
-          {
-            "name": "Phoenix Direct",
-            "id": 485,
-            "mrr": 898.8
-          },
-          {
-            "name": "The Job Shop",
-            "id": 544,
-            "mrr": 250
-          }
-        ],
-        "voided": [],
-        "delinquent": []
-      }
-    },
-    {
-      "month": "2026-05",
-      "starting_mrr": 228454.91,
+      "starting_mrr": 243911.8,
       "new_mrr": 3050,
       "reactivated_mrr": 0,
-      "expansion_mrr": 813.18,
-      "contraction_mrr": 3825,
-      "churn_mrr": 3865,
+      "expansion_mrr": 427.35,
+      "contraction_mrr": 13328.09,
+      "churn_mrr": 1448.8,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 224628.09,
-      "net_new_mrr": -3826.82,
+      "ending_mrr": 232612.26,
+      "net_new_mrr": -11299.54,
       "new_logos": 4,
       "reactivated_logos": 0,
-      "churned_logos": 6,
+      "churned_logos": 3,
       "voided_logos": 0,
       "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.0169,
-      "net_churn_rate_monthly": 0.0301,
-      "expansion_rate_monthly": 0.0036,
-      "grr_monthly": 0.9663,
-      "nrr_monthly": 0.9699,
-      "quick_ratio": 0.5,
+      "gross_churn_rate_monthly": 0.0059,
+      "net_churn_rate_monthly": 0.0588,
+      "expansion_rate_monthly": 0.0018,
+      "grr_monthly": 0.9394,
+      "nrr_monthly": 0.9412,
+      "quick_ratio": 0.24,
       "details": {
         "new": [
           {
@@ -23267,6 +23248,152 @@
         "reactivated": [],
         "expansion": [
           {
+            "name": "Big Timber Millworks",
+            "id": 527,
+            "prev_mrr": 575,
+            "new_mrr": 883.35,
+            "delta": 308.35
+          },
+          {
+            "name": "Cabinet Doors USA",
+            "id": 545,
+            "prev_mrr": 1083,
+            "new_mrr": 1182,
+            "delta": 99
+          },
+          {
+            "name": "Five Cabinetry",
+            "id": 2056,
+            "prev_mrr": 250,
+            "new_mrr": 270,
+            "delta": 20
+          }
+        ],
+        "contraction": [
+          {
+            "name": "Panhandle Door Inc.",
+            "id": 38,
+            "prev_mrr": 13682,
+            "new_mrr": 6024,
+            "delta": 7658
+          },
+          {
+            "name": "Midwest Floor Coverings",
+            "id": 211,
+            "prev_mrr": 4683.15,
+            "new_mrr": 1757.83,
+            "delta": 2925.32
+          },
+          {
+            "name": "Raumplus",
+            "id": 7,
+            "prev_mrr": 1559.02,
+            "new_mrr": 149.18,
+            "delta": 1409.84
+          },
+          {
+            "name": "Staley Custom Cabinets",
+            "id": 437,
+            "prev_mrr": 1448.68,
+            "new_mrr": 699,
+            "delta": 749.68
+          },
+          {
+            "name": "Wurth LAC",
+            "id": 113,
+            "prev_mrr": 1072.5,
+            "new_mrr": 536.25,
+            "delta": 536.25
+          },
+          {
+            "name": "NJ Drawers",
+            "id": 159,
+            "prev_mrr": 2055.25,
+            "new_mrr": 2006.25,
+            "delta": 49
+          }
+        ],
+        "churn": [
+          {
+            "name": "Phoenix Direct",
+            "id": 485,
+            "mrr": 898.8
+          },
+          {
+            "name": "Bw Modern",
+            "id": 223,
+            "mrr": 300
+          },
+          {
+            "name": "The Job Shop",
+            "id": 544,
+            "mrr": 250
+          }
+        ],
+        "voided": [],
+        "delinquent": []
+      }
+    },
+    {
+      "month": "2026-05",
+      "starting_mrr": 232612.26,
+      "new_mrr": 830,
+      "reactivated_mrr": 0,
+      "expansion_mrr": 4869.18,
+      "contraction_mrr": 3825,
+      "churn_mrr": 3865,
+      "voided_mrr": 0,
+      "delinquent_mrr": 0,
+      "ending_mrr": 230621.44,
+      "net_new_mrr": -1990.82,
+      "new_logos": 2,
+      "reactivated_logos": 0,
+      "churned_logos": 6,
+      "voided_logos": 0,
+      "delinquent_logos": 0,
+      "gross_churn_rate_monthly": 0.0166,
+      "net_churn_rate_monthly": 0.0121,
+      "expansion_rate_monthly": 0.0209,
+      "grr_monthly": 0.9669,
+      "nrr_monthly": 0.9879,
+      "quick_ratio": 0.74,
+      "details": {
+        "new": [
+          {
+            "name": "Milestone Millwork",
+            "id": 2077,
+            "mrr": 580
+          },
+          {
+            "name": "Idaho Custom Closets",
+            "id": 2078,
+            "mrr": 250
+          }
+        ],
+        "reactivated": [],
+        "expansion": [
+          {
+            "name": "Rehau Pty Ltd",
+            "id": 489,
+            "prev_mrr": 849,
+            "new_mrr": 2547,
+            "delta": 1698
+          },
+          {
+            "name": "LV SERVICE SOLUTIONS",
+            "id": 391,
+            "prev_mrr": 699,
+            "new_mrr": 2097,
+            "delta": 1398
+          },
+          {
+            "name": "Rta Cabinetry Inc",
+            "id": 160,
+            "prev_mrr": 960,
+            "new_mrr": 1920,
+            "delta": 960
+          },
+          {
             "name": "Midwest Floor Coverings",
             "id": 211,
             "prev_mrr": 1757.83,
@@ -23292,8 +23419,8 @@
           {
             "name": "Big Timber Millworks",
             "id": 527,
-            "prev_mrr": 575,
-            "new_mrr": 250,
+            "prev_mrr": 883.35,
+            "new_mrr": 558.35,
             "delta": 325
           }
         ],
@@ -23335,42 +23462,44 @@
     },
     {
       "month": "2026-06",
-      "starting_mrr": 224628.09,
-      "new_mrr": 830,
+      "starting_mrr": 230621.44,
+      "new_mrr": 400,
       "reactivated_mrr": 0,
-      "expansion_mrr": 872.4,
-      "contraction_mrr": 1030,
+      "expansion_mrr": 1530.4,
+      "contraction_mrr": 4695.35,
       "churn_mrr": 0,
       "voided_mrr": 250,
       "delinquent_mrr": 0,
-      "ending_mrr": 225050.49,
-      "net_new_mrr": 422.4,
-      "new_logos": 2,
+      "ending_mrr": 227606.49,
+      "net_new_mrr": -3014.95,
+      "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 1,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0007,
-      "expansion_rate_monthly": 0.0039,
-      "grr_monthly": 0.9954,
-      "nrr_monthly": 0.9993,
-      "quick_ratio": 1.65,
+      "net_churn_rate_monthly": 0.0137,
+      "expansion_rate_monthly": 0.0066,
+      "grr_monthly": 0.9796,
+      "nrr_monthly": 0.9863,
+      "quick_ratio": 0.41,
       "details": {
         "new": [
           {
-            "name": "Milestone Millwork",
-            "id": 2077,
-            "mrr": 580
-          },
-          {
-            "name": "Idaho Custom Closets",
-            "id": 2078,
-            "mrr": 250
+            "name": "Mekotech Canada",
+            "id": 2079,
+            "mrr": 400
           }
         ],
         "reactivated": [],
         "expansion": [
+          {
+            "name": "Bella Imc",
+            "id": 31,
+            "prev_mrr": 658,
+            "new_mrr": 1316,
+            "delta": 658
+          },
           {
             "name": "Wurth LAC",
             "id": 113,
@@ -23402,11 +23531,39 @@
         ],
         "contraction": [
           {
+            "name": "Rehau Pty Ltd",
+            "id": 489,
+            "prev_mrr": 2547,
+            "new_mrr": 849,
+            "delta": 1698
+          },
+          {
+            "name": "Rta Cabinetry Inc",
+            "id": 160,
+            "prev_mrr": 1920,
+            "new_mrr": 960,
+            "delta": 960
+          },
+          {
+            "name": "LV SERVICE SOLUTIONS",
+            "id": 391,
+            "prev_mrr": 2097,
+            "new_mrr": 1398,
+            "delta": 699
+          },
+          {
             "name": "Hingeworks",
             "id": 551,
             "prev_mrr": 580,
             "new_mrr": 270,
             "delta": 310
+          },
+          {
+            "name": "Big Timber Millworks",
+            "id": 527,
+            "prev_mrr": 558.35,
+            "new_mrr": 250,
+            "delta": 308.35
           },
           {
             "name": "Slide A Shelf",
@@ -23452,33 +23609,33 @@
     },
     {
       "month": "2026-07",
-      "starting_mrr": 225050.49,
-      "new_mrr": 400,
+      "starting_mrr": 227606.49,
+      "new_mrr": 475,
       "reactivated_mrr": 0,
       "expansion_mrr": 1569.69,
-      "contraction_mrr": 1110.99,
+      "contraction_mrr": 2467.99,
       "churn_mrr": 635,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 225274.19,
-      "net_new_mrr": 223.7,
+      "ending_mrr": 226548.19,
+      "net_new_mrr": -1058.3,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 2,
       "voided_logos": 0,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0.0028,
-      "net_churn_rate_monthly": 0.0008,
-      "expansion_rate_monthly": 0.007,
-      "grr_monthly": 0.9922,
-      "nrr_monthly": 0.9992,
-      "quick_ratio": 1.13,
+      "net_churn_rate_monthly": 0.0067,
+      "expansion_rate_monthly": 0.0069,
+      "grr_monthly": 0.9864,
+      "nrr_monthly": 0.9933,
+      "quick_ratio": 0.66,
       "details": {
         "new": [
           {
-            "name": "Mekotech Canada",
-            "id": 2079,
-            "mrr": 400
+            "name": "Fox Creek Cabinets",
+            "id": 2092,
+            "mrr": 475
           }
         ],
         "reactivated": [],
@@ -23549,6 +23706,20 @@
         ],
         "contraction": [
           {
+            "name": "LV SERVICE SOLUTIONS",
+            "id": 391,
+            "prev_mrr": 1398,
+            "new_mrr": 699,
+            "delta": 699
+          },
+          {
+            "name": "Bella Imc",
+            "id": 31,
+            "prev_mrr": 1316,
+            "new_mrr": 658,
+            "delta": 658
+          },
+          {
             "name": "Imab Living",
             "id": 462,
             "prev_mrr": 899,
@@ -23588,38 +23759,33 @@
     },
     {
       "month": "2026-08",
-      "starting_mrr": 225274.19,
-      "new_mrr": 644,
+      "starting_mrr": 226548.19,
+      "new_mrr": 419,
       "reactivated_mrr": 0,
-      "expansion_mrr": 3500,
+      "expansion_mrr": 3610,
       "contraction_mrr": 2194.39,
       "churn_mrr": 250,
       "voided_mrr": 2820,
       "delinquent_mrr": 0,
-      "ending_mrr": 224153.8,
-      "net_new_mrr": -1120.39,
-      "new_logos": 2,
+      "ending_mrr": 225312.8,
+      "net_new_mrr": -1235.39,
+      "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 1,
       "voided_logos": 3,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0.0011,
-      "net_churn_rate_monthly": -0.0047,
-      "expansion_rate_monthly": 0.0155,
-      "grr_monthly": 0.9891,
-      "nrr_monthly": 1.0047,
-      "quick_ratio": 1.7,
+      "net_churn_rate_monthly": -0.0051,
+      "expansion_rate_monthly": 0.0159,
+      "grr_monthly": 0.9892,
+      "nrr_monthly": 1.0051,
+      "quick_ratio": 1.65,
       "details": {
         "new": [
           {
-            "name": "Fox Creek Cabinets",
-            "id": 2092,
-            "mrr": 475
-          },
-          {
             "name": "Criscott Properies",
             "id": 2106,
-            "mrr": 169
+            "mrr": 419
           }
         ],
         "reactivated": [],
@@ -23630,6 +23796,20 @@
             "prev_mrr": 250,
             "new_mrr": 3750,
             "delta": 3500
+          },
+          {
+            "name": "Drawer Connection - DC Drawers",
+            "id": 3,
+            "prev_mrr": 3000,
+            "new_mrr": 3065,
+            "delta": 65
+          },
+          {
+            "name": "Lewis Cabinet Specialties Group LLC",
+            "id": 1,
+            "prev_mrr": 7459.2,
+            "new_mrr": 7504.2,
+            "delta": 45
           }
         ],
         "contraction": [
@@ -23693,21 +23873,21 @@
     "windowStart": "2025-09",
     "windowEnd": "2026-08",
     "months": 12,
-    "starting_mrr": 219402.31,
-    "ending_mrr": 224153.8,
-    "new_mrr": 27063.5,
+    "starting_mrr": 228029.31,
+    "ending_mrr": 225312.8,
+    "new_mrr": 20210.5,
     "reactivated_mrr": 0,
-    "expansion_mrr": 18151.03,
-    "contraction_mrr": 21032.54,
+    "expansion_mrr": 32775.06,
+    "contraction_mrr": 36271.57,
     "churn_mrr": 14846,
     "voided_mrr": 3070,
     "delinquent_mrr": 1514.5,
-    "net_new_mrr": 4751.49,
-    "gross_mrr_churn_ttm": 0.0677,
-    "annual_gross_churn_rate": 0.0635,
-    "annual_grr": 0.8525,
-    "annual_nrr": 0.9252,
-    "quick_ratio": 1.26
+    "net_new_mrr": -2716.51,
+    "gross_mrr_churn_ttm": 0.0651,
+    "annual_gross_churn_rate": 0.0622,
+    "annual_grr": 0.8017,
+    "annual_nrr": 0.9272,
+    "quick_ratio": 1.04
   },
   "notes": "MRR waterfall on two bases. CASH (monthly/ttm) = customer_profiles.monthly_history — what cleared Stripe, boundary-slip corrected, full history; use for bank reconciliation. ACCRUAL (monthly_accrual/ttm_accrual) = revenue_recognition.accrual_series — what was BILLED by invoice date, so a card failure is an open receivable rather than churn; use for retention metrics. Accrual starts 2025-08 because Stripe-invoice coverage before mid-2025 is 4–28% of actual revenue (Allmoxy migrated to invoicing then). New = customer first appears with MRR > 0; Reactivated = billed before, returning. Churn = confirmed-churned (status churned). Voided = dropped to $0 with a VOIDED invoice for the period — billing intentionally canceled, nothing owed (not dunning). Delinquent = dropped to $0, still billable, did not clear (card failure / non-payment) — may still pay. All three reduce ending MRR but are reported separately. Sales tax is EXCLUDED on both bases: it is a pass-through liability, not revenue. Accrual sums pre-tax invoice lines; cash has collected tax subtracted by the invoice paid month (~1.5% of gross, ~$3.4K/mo). Services and Connect revenue are NOT included — subscription only.",
   "sales_tax_excluded": true
