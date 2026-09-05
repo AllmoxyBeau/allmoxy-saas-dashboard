@@ -1,6 +1,6 @@
 {
   "tab": "connect_volume",
-  "fetchedAt": "2026-09-04T22:53:38.941Z",
+  "fetchedAt": "2026-09-05T02:35:06.152Z",
   "stripe_fetchedAt": "2026-09-04T13:10:21.875Z",
   "window": {
     "since": "incremental"
@@ -20,9 +20,9 @@
   },
   "attach": {
     "connected_accounts": 101,
-    "active_customers": 183,
+    "active_customers": 184,
     "active_customers_on_connect": 51,
-    "attach_rate": 0.279
+    "attach_rate": 0.277
   },
   "scenarios": [
     {
@@ -808,9 +808,9 @@
     "unknown": 1
   },
   "penetration": {
-    "active_customers": 183,
-    "processing_now": 58,
-    "attach_rate": 0.317,
+    "active_customers": 184,
+    "processing_now": 59,
+    "attach_rate": 0.321,
     "lapsed": 11,
     "never": 114,
     "not_processing": 125,
@@ -897,6 +897,22 @@
       "connect_gmv_annual": 3456228,
       "connect_attach_rate": 0.619,
       "annual_connect_fee": 17281,
+      "est_annual_connect_fee": null,
+      "lapsed_note": null
+    },
+    {
+      "allmoxy_customer_id": 43,
+      "name": "Westwind",
+      "status": "active",
+      "primary_segment": "Cabinetry",
+      "subscription_mrr": 3673.95,
+      "is_launched": "Yes",
+      "connect_status": "processing",
+      "ever_processed": true,
+      "annual_order_volume": 6329957,
+      "connect_gmv_annual": 3298510,
+      "connect_attach_rate": 0.521,
+      "annual_connect_fee": 16493,
       "est_annual_connect_fee": null,
       "lapsed_note": null
     },

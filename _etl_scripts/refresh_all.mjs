@@ -514,6 +514,12 @@ runScript('apply_billing_period_shift.mjs', null);
 
 // MRR waterfall — now derived from the (enriched + boundary-corrected)
 // customer_profiles.monthly_history rather than the stale xlsx "MRR by Month" tab.
+// Sales tax is a pass-through liability, not revenue — strip it from the per-customer
+// MRR series BEFORE anything derives MRR from it (recognition, waterfall, the monthly
+// seam that builds mrr_by_month). Idempotent.
+console.log('  excluding sales tax from the MRR series…');
+runScript('apply_sales_tax_exclusion.mjs', null);
+
 // Revenue Recognition (accrual / invoice basis) — MUST run before the waterfall,
 // which consumes its per-customer accrual series to build the accrual basis. Depends
 // only on customer_profiles (final by here) + the Stripe invoice/balance caches.

@@ -1,7 +1,7 @@
 {
-  "fetchedAt": "2026-09-04T22:53:15.804Z",
-  "jira_fetchedAt": "2026-09-04T22:52:44.029Z",
-  "harvest_fetchedAt": "2026-09-04T22:53:15.712Z",
+  "fetchedAt": "2026-09-05T02:34:41.843Z",
+  "jira_fetchedAt": "2026-09-05T02:34:13.525Z",
+  "harvest_fetchedAt": "2026-09-05T02:34:41.755Z",
   "note": "Implementation projects = services revenue. JIRA (IPA epics) supplies stage; Harvest supplies hours + billable $. Join: harvest_id==client_id (exact); JIRA by epic-summary name-match (+ overrides).",
   "aggregates": {
     "total_customers": 115,
@@ -313,7 +313,7 @@
     {
       "allmoxy_customer_id": 164,
       "name": "Cabredo LLC",
-      "customer_status": "non_payment",
+      "customer_status": "at_risk",
       "account_rep": "Carson Ward",
       "harvest_id": "7859872",
       "sign_up_date": "2019-02-28",

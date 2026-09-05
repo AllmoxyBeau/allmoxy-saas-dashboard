@@ -25,7 +25,9 @@ import path from 'node:path';
 
 const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
 const SNAP = path.join(ROOT, 'public/snapshots');
-const profiles = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8')).rows;
+const profilesSnap = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8'));
+const profiles = profilesSnap.rows;
+const taxAlreadyExcluded = !!profilesSnap.sales_tax_excluded;
 // Accrual series + reliability window (built by build_revenue_recognition, which now
 // runs BEFORE this script). Optional: if absent, only the cash basis is emitted.
 let RR = null; try { RR = JSON.parse(fs.readFileSync(path.join(SNAP, 'revenue_recognition.json'), 'utf8')); } catch { /* first run */ }
@@ -90,12 +92,16 @@ function cashCustomers() {
         if (mrrByMonth[M] <= 0.5) delete mrrByMonth[M];
       }
     }
-    // Remove collected sales tax — it's a pass-through liability, not revenue.
-    const tx = taxByAidPaidMonth.get(p.allmoxy_customer_id);
-    if (tx) for (const [m, t] of Object.entries(tx)) {
-      if (!(mrrByMonth[m] > 0)) continue;
-      mrrByMonth[m] = r2(Math.max(0, mrrByMonth[m] - t));
-      if (mrrByMonth[m] <= 0.5) delete mrrByMonth[m];
+    // Sales tax is already out of monthly_history — apply_sales_tax_exclusion strips it
+    // at the source so EVERY MRR metric (not just this waterfall) is ex-tax. Only strip
+    // here as a fallback if that step hasn't run, otherwise we'd double-subtract.
+    if (!taxAlreadyExcluded) {
+      const tx = taxByAidPaidMonth.get(p.allmoxy_customer_id);
+      if (tx) for (const [m, t] of Object.entries(tx)) {
+        if (!(mrrByMonth[m] > 0)) continue;
+        mrrByMonth[m] = r2(Math.max(0, mrrByMonth[m] - t));
+        if (mrrByMonth[m] <= 0.5) delete mrrByMonth[m];
+      }
     }
     if (Object.keys(mrrByMonth).length) out.push({ name: p.name, id: p.allmoxy_customer_id ?? null, status: p.status ?? null, pay_status: p.pay_status ?? null, mrrByMonth });
   }
