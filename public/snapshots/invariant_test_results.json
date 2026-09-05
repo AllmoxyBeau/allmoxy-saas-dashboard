@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-05T02:52:12.417Z",
+  "fetched_at": "2026-09-05T03:52:28.147Z",
   "total": 22,
   "passed": 18,
   "errors": 0,
@@ -88,13 +88,9 @@
       "name": "customer_profiles lifetime_subscription ≈ sum of monthly_history.subscription (±1%)",
       "severity": "warn",
       "passed": false,
-      "detail": "36 customers exceed 1% drift (often a transaction reclassification — cross-check Adjustments Register)",
+      "detail": "1 customers exceed 1% drift (often a transaction reclassification — cross-check Adjustments Register)",
       "examples": [
-        "#1 Lewis Cabinet Specialties Group LLC: lifetime=$560351.36 vs sum=$552776.51 (Δ $7574.85, tol $5603.51)",
-        "#176 Primary Kitchen: lifetime=$377934.5 vs sum=$373967.5 (Δ $3967, tol $3779.35)",
-        "#13 Timberline Doors: lifetime=$325981.39 vs sum=$322002.79 (Δ $3978.6, tol $3259.81)",
-        "#82 Drawers by Design: lifetime=$124919.98 vs sum=$122894.1 (Δ $2025.88, tol $1249.2)",
-        "#262 Bww Closets: lifetime=$86015.8 vs sum=$84340 (Δ $1675.8, tol $860.16)"
+        "#535 Next Gen Cabinet Doors: lifetime=$1566.52 vs sum=$1583.15 (Δ $-16.63, tol $15.67)"
       ]
     },
     {

@@ -126,6 +126,25 @@ export default function RevenueRecognition() {
           const csv = rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
           const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `qb_journal_entry_${selMonth}.csv`; a.click(); URL.revokeObjectURL(a.href);
         };
+        // Every month in one file, for posting the whole year's true-up in a sitting.
+        // A Date column and a blank row between months keep the entries separable.
+        const exportAllCsv = () => {
+          const all = snap?.journal_entries ?? {};
+          const months = Object.keys(all).filter((m) => m < currentMonth).sort();
+          const rows: string[][] = [['Date', 'Month', '#', 'Account', 'Debits', 'Credits', 'Description']];
+          for (const m of months) {
+            const e = all[m]; if (!e) continue;
+            const [y, mo] = m.split('-').map(Number);
+            const lastDay = new Date(y, mo, 0).getDate();            // entries date to month-end
+            const dateStr = `${String(mo).padStart(2, '0')}/${lastDay}/${y}`;
+            const label = monthLabel(m + '-01');
+            e.lines.forEach((l, i) => rows.push([dateStr, label, String(i + 1), l.account, l.debit != null ? l.debit.toFixed(2) : '', l.credit != null ? l.credit.toFixed(2) : '', l.description]));
+            rows.push([dateStr, label, '', 'TOTALS', e.debits.toFixed(2), e.credits.toFixed(2), e.balanced ? 'Balanced' : 'OUT OF BALANCE']);
+            rows.push([]);
+          }
+          const csv = rows.map((r) => r.map((v) => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+          const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `qb_journal_entries_${months[0]}_to_${months[months.length - 1]}.csv`; a.click(); URL.revokeObjectURL(a.href);
+        };
         let lastGroup: string = '';
         const cell = { py: 0.6, px: 1, fontVariantNumeric: 'tabular-nums', borderBottom: '1px solid rgba(139,148,158,0.15)', fontSize: 13 } as const;
         return (
@@ -135,7 +154,8 @@ export default function RevenueRecognition() {
               <InfoIcon info={<><strong>What it is:</strong> Your complete monthly Stripe entry, generated from Stripe's balance transactions (the same data as the itemized-balance export), with the two additions you needed: <em>sales tax by state</em> and the <em>accrual adjustment</em>. Post it as-is.<br /><br /><strong>Structure:</strong> the Stripe-activity block is your existing entry line-for-line; refunds are classified by the refunded charge's type (subscription → 4000, Connect → 4200); 4000 is credited gross incl. tax and 4050 backs the tax out into 2141/2142/2144; the accrual lines move 4000 to recognized (invoice-basis) revenue and set up / relieve 1200 AR.<br /><br /><strong>Not in this entry:</strong> 4100 Annual Deferred Monthly (B&B Door, Mid Michigan) — you book that separately; shown as a memo so the P&amp;L ties.</>} />
               <Box sx={{ flexGrow: 1 }} />
               <Chip size="small" label={je.balanced ? `Balanced · ${USD2.format(je.debits)}` : `OUT OF BALANCE · Dr ${USD2.format(je.debits)} / Cr ${USD2.format(je.credits)}`} sx={{ fontWeight: 600, bgcolor: je.balanced ? 'rgba(46,160,67,0.14)' : 'rgba(229,72,77,0.16)', color: je.balanced ? 'success.main' : 'error.main' }} />
-              <Button size="small" variant="outlined" onClick={exportCsv}>Export CSV</Button>
+              <Button size="small" variant="outlined" onClick={exportCsv}>Export this month</Button>
+              <Button size="small" variant="contained" onClick={exportAllCsv} title="Every complete month in one file — for posting the 2026 true-up in a sitting">Export all months</Button>
             </Stack>
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>
               {je.lines.length} lines · built from {je.inputs.balance_txn_rows.toLocaleString()} Stripe balance transactions · recognized subscription revenue (ex‑tax) {USD2.format(je.inputs.recognized_ex_tax)} · accrual adjustment {money(je.inputs.accrual_adjustment, true)} · sales tax on the {je.inputs.tax_basis_used} basis {USD2.format(je.inputs.tax_total_used)}

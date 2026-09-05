@@ -96,7 +96,9 @@ for (const [y, m] of months) {
       const cat = t.reporting_category || t.type;
       let tt = null, cust = null, name = null, chargeId = null, inv = null;
       if (cat === 'charge') { tt = t.source?.metadata?.transaction_type || null; cust = t.source?.customer || null; name = t.source?.billing_details?.name || null; chargeId = t.source?.id || null; inv = (typeof t.source?.invoice === 'string' ? t.source.invoice : t.source?.invoice?.id) || null; }
-      else if (cat === 'refund') {
+      else if (cat === 'refund' || cat === 'dispute' || cat === 'dispute_reversal') {
+        // Disputes carry the same shape as refunds — classify by the charge they reverse
+        // so a chargeback debits the revenue account it originally credited.
         chargeId = typeof t.source?.charge === 'string' ? t.source.charge : t.source?.charge?.id || null;
         tt = await chargeType(chargeId);
         // Last-resort fallback from the balance-transaction description: Stripe writes
@@ -131,7 +133,16 @@ for (const [y, m] of months) {
     connect_gross: S((r) => r.cat === 'platform_earning'),                            // CR 4200 Stripe Fee Income
     connect_refunds: -S((r) => r.cat === 'platform_earning_refund'),                  // DR 4200
     charge_fees: F((r) => r.cat === 'charge'),                                        // DR 5000 (line 1)
-    other_fees: r2(-S((r) => r.cat === 'fee') + F((r) => r.cat === 'fee') + F((r) => r.cat === 'platform_earning')), // DR 5000 (line 2)
+    // Chargebacks. Money is pulled back plus a dispute fee, so both need a line or the
+    // entry is short by exactly that amount (Feb 2026: $417 + $15 = $432).
+    disputes: S((r) => r.cat === 'dispute' || r.cat === 'dispute_reversal'),
+    dispute_subscription: S((r) => (r.cat === 'dispute' || r.cat === 'dispute_reversal') && r.tt === 'subscription'),
+    dispute_services: S((r) => (r.cat === 'dispute' || r.cat === 'dispute_reversal') && r.tt === 'services'),
+    dispute_unclassified: S((r) => (r.cat === 'dispute' || r.cat === 'dispute_reversal') && !['subscription', 'services'].includes(r.tt)),
+    // EVERY fee that isn't a charge-processing fee: separately-billed Stripe fees,
+    // Connect fees and dispute fees. Summing categories individually kept missing new
+    // ones, so this is now "all fees minus charge fees".
+    other_fees: r2(-S((r) => r.cat === 'fee') + rows.reduce((s, r) => s + (r.cat === 'charge' ? 0 : r.fee), 0)),
     net_activity: netActivity,
     row_count: rows.length,
   };

@@ -383,6 +383,10 @@ if (BT?.months) {
     if (T.connect_refunds) line(A.stripe_fee_income, T.connect_refunds, 0, 'Connect platform-fee refunds', 'cash');
     if (T.untagged_gross) line(A.misc_income, 0, T.untagged_gross, 'Untagged charges — classify', 'cash');
     if (T.other_refunds) line(A.misc_income, T.other_refunds, 0, 'Untagged refunds — classify', 'cash');
+    // Chargebacks — debit whichever revenue account the disputed charge credited.
+    if (T.dispute_subscription) line(A.subscription, -T.dispute_subscription, 0, 'Chargebacks — subscription', 'cash');
+    if (T.dispute_services) line(A.services, -T.dispute_services, 0, 'Chargebacks — services', 'cash');
+    if (T.dispute_unclassified) line(A.misc_income, -T.dispute_unclassified, 0, 'Chargebacks — classify', 'cash');
     line(A.cc_fees, T.charge_fees, 0, 'Stripe processing fees on charges', 'cash');
     line(A.cc_fees, T.other_fees, 0, 'Other Stripe fees (billing / Connect)', 'cash');
     line(A.stripe_fee_income, 0, T.connect_gross, 'Stripe Connect platform earnings', 'cash');
@@ -436,6 +440,16 @@ if (BT?.months) {
     const priorArCollectedInclTax = r2(priorArRows.reduce((s, r) => s + r.amount + r.tax, 0));
     const ar_detail = { new_ar_rows: newArRows, prior_ar_rows: priorArRows, new_ar_ex_tax: newArExTax, new_ar_tax: newArTax, prior_ar_collected: priorArCollectedInclTax, residual: r2(adj - (newArExTax + newArTax - priorArCollectedInclTax)), total: adj };
 
+    // Safety net: if Stripe introduces a balance-transaction category we don't map, the
+    // entry would silently come up short (a $417 chargeback + $15 fee did exactly that).
+    // Surface the gap as an explicit line rather than shipping an unbalanced entry.
+    const preDebits = r2(L.reduce((s, l) => s + (l.debit || 0), 0));
+    const preCredits = r2(L.reduce((s, l) => s + (l.credit || 0), 0));
+    const gap = r2(preCredits - preDebits);
+    if (Math.abs(gap) >= 0.01) {
+      if (gap > 0) line(A.misc_income, gap, 0, 'UNMAPPED Stripe activity — classify before posting', 'cash');
+      else line(A.misc_income, 0, -gap, 'UNMAPPED Stripe activity — classify before posting', 'cash');
+    }
     const debits = r2(L.reduce((s, l) => s + (l.debit || 0), 0)), credits = r2(L.reduce((s, l) => s + (l.credit || 0), 0));
     journal_entries[m] = {
       ar_detail,

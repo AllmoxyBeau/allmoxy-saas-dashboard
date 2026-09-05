@@ -147,7 +147,7 @@ export default function CohortRetention() {
     <Box>
       <PageHeader
         title="Cohort Retention"
-        subtitle="How customers from each signup year retain and expand over time. Spot which vintages are strongest, where churn kicks in, and which cohorts to learn from."
+        subtitle="How customers from each signup year retain and expand over time. Spot which vintages are strongest, where churn kicks in, and which cohorts to learn from. Cash basis — cohorts need multi-year history, and the accrual basis only reaches back to Aug 2025, so retention here runs slightly below the accrual figures on the Revenue Waterfall."
         question="healthy"
       />
 

@@ -264,9 +264,30 @@ test('mrr_by_month subscription ≈ sum of customer_profiles monthly_history (la
 // $5 floor.
 test('customer_profiles lifetime_subscription ≈ sum of monthly_history.subscription (±1%)', 'warn', () => {
   const mismatches = [];
+  // Sales tax is stripped from monthly_history (it isn't revenue) but lifetime_* stays
+  // GROSS as the cash audit trail that ties to Stripe payouts — see
+  // apply_sales_tax_exclusion. So a taxed customer legitimately shows lifetime > sum by
+  // the tax they've paid. Add that back before comparing, or every UT/NY/CO customer
+  // trips this warning forever.
+  const taxByAid = new Map();
+  if (profiles?.sales_tax_excluded) {
+    try {
+      const inv = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/stripe_invoices.json'), 'utf8'));
+      const custToAid = new Map();
+      for (const p of profiles.rows || []) for (const c of (p.stripe_customer_ids || [])) custToAid.set(c, p.allmoxy_customer_id);
+      for (const [cid, cust] of Object.entries(inv.by_customer || {})) {
+        const aid = custToAid.get(cid); if (aid == null) continue;
+        for (const i of (cust.invoices || [])) {
+          if (!(i.tax > 0) || !i.paid_at || i.status === 'void') continue;
+          taxByAid.set(aid, round2((taxByAid.get(aid) || 0) + i.tax));
+        }
+      }
+    } catch { /* no invoice cache — compare raw */ }
+  }
   for (const p of profiles?.rows || []) {
     let sum = 0;
     for (const cell of Object.values(p.monthly_history || {})) sum += cell.subscription || 0;
+    sum += taxByAid.get(p.allmoxy_customer_id) || 0;
     const tol = Math.max(5, Math.abs(p.lifetime_subscription || 0) * 0.01);
     if (Math.abs((p.lifetime_subscription || 0) - sum) > tol) {
       mismatches.push(`#${p.allmoxy_customer_id} ${p.name}: lifetime=$${round2(p.lifetime_subscription)} vs sum=$${round2(sum)} (Δ $${round2(p.lifetime_subscription - sum)}, tol $${round2(tol)})`);

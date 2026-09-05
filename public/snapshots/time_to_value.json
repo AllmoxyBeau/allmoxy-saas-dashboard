@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-05T02:52:12.113Z",
+  "fetched_at": "2026-09-05T03:45:19.941Z",
   "comment": "Time to Value — for each active paying customer, classifies whether they are getting product value via verified order data. Categories: gym_member (never launched, no orders), never_launched_some_orders (orders but no Live Date — hygiene), launched_dormant (Live Date but no current-year orders), declining (orders down >50% YoY), healthy (launched + running orders). \"Wasted to date\" = subscription $ paid without realized value. \"Annualized burn\" = current MRR × 12 if they never realize value going forward.",
   "as_of_year": 2026,
   "cohort_size": 201,
@@ -2986,7 +2986,7 @@
       "sub_segment": "Component Manufacturer",
       "first_payment_date": "2021-02-16",
       "months_paying": 67,
-      "years_with_us": 5.5,
+      "years_with_us": 5.6,
       "current_subscription_mrr": 1005,
       "lifetime_subscription": 48633.55,
       "is_launched": true,
