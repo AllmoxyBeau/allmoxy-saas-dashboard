@@ -91,7 +91,15 @@ for (const [y, m] of months) {
       const cat = t.reporting_category || t.type;
       let tt = null, cust = null, name = null, chargeId = null, inv = null;
       if (cat === 'charge') { tt = t.source?.metadata?.transaction_type || null; cust = t.source?.customer || null; name = t.source?.billing_details?.name || null; chargeId = t.source?.id || null; inv = (typeof t.source?.invoice === 'string' ? t.source.invoice : t.source?.invoice?.id) || null; }
-      else if (cat === 'refund') { chargeId = typeof t.source?.charge === 'string' ? t.source.charge : t.source?.charge?.id || null; tt = await chargeType(chargeId); }
+      else if (cat === 'refund') {
+        chargeId = typeof t.source?.charge === 'string' ? t.source.charge : t.source?.charge?.id || null;
+        tt = await chargeType(chargeId);
+        // Last-resort fallback from the balance-transaction description: Stripe writes
+        // "REFUND FOR CHARGE (Invoice XXXX-0014)" for invoice-backed (subscription)
+        // refunds and "…Allmoxy Services Invoice #NNNN" for services. Without this, an
+        // unclassified subscription refund lands on 4700 Misc instead of 4000.
+        if (!tt) { const d = t.description || ''; tt = /services invoice/i.test(d) ? 'services' : /invoice/i.test(d) ? 'subscription' : null; }
+      }
       // `inv` null on a subscription-tagged charge = a direct/legacy "Subscription
       // xxx.allmoxy.com" or add-on charge billed OUTSIDE a Stripe invoice. These are
       // real recurring revenue and must be counted in recognized revenue, otherwise

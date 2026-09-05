@@ -1,6 +1,6 @@
 {
-  "_comment": "QuickBooks chart-of-accounts mapping for the monthly Stripe journal entry generated on the Revenue Recognition page. Mirrors Beau's existing entry (Aug 2026 screenshot). Edit labels here — no code change needed. `accrual_presentation`: 'append' keeps the cash lines exactly as Beau books them and ADDS the accrual (AR) adjustment lines; 'restate' replaces the 4000 cash figure with the recognized figure. `sales_tax_basis`: 'invoice' = tax on invoices billed in the month (consistent with accrual 4000); 'cash' = tax embedded in the month's deposits (Beau's historical 4050 basis).",
-  "updated_at": "2026-09-04",
+  "_comment": "QuickBooks chart-of-accounts mapping for the monthly Stripe journal entry generated on the Revenue Recognition page. Mirrors Beau's existing entry (Aug 2026 screenshot). Edit labels here — no code change needed. `accrual_presentation`: 'append' keeps the cash lines exactly as Beau books them and ADDS the accrual (AR) adjustment lines; 'restate' replaces the 4000 cash figure with the recognized figure. `sales_tax_basis`: 'invoice' = tax on invoices billed in the month (consistent with accrual 4000); 'cash' = tax embedded in the month's deposits (Beau's historical 4050 basis). Books go-live is set in build_revenue_recognition.mjs (BOOKS_GO_LIVE) — Jan 2026 as of 2026-09-05.",
+  "updated_at": "2026-09-05",
   "accrual_presentation": "append",
   "sales_tax_basis": "invoice",
   "apply_refund_classification_fix": true,

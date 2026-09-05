@@ -44,7 +44,10 @@ const ANNUAL = new Set((JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/ann
 // cash side of the JE. Optional: if not pulled yet, the JE block is skipped.
 let BT = null; try { BT = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/stripe_balance_transactions.json'), 'utf8')); } catch { /* not pulled yet */ }
 
-const BOOKS_GO_LIVE = '2027-01';
+// Accrual is the books basis from Jan 2026 (Beau, 2026-09-05 — moved up from 2027-01;
+// he is truing up 2026 in QB manually). Same month the per-customer detail starts, so
+// every month on the page is an operating month, not reference.
+const BOOKS_GO_LIVE = '2026-01';
 const RECONCILE_FROM = '2026-01';      // per-customer detail from here forward
 const r2 = (v) => Math.round(v * 100) / 100;
 const monthOf = (iso) => (iso ? String(iso).slice(0, 7) : null);
@@ -297,8 +300,33 @@ if (BT?.months) {
       line(A.subscription, -adj, 0, 'Accrual: reverse cash-basis revenue for prior-period AR collected', 'accrual');
       line(A.accounts_receivable, 0, -adj, 'Accrual: relieve AR collected this month', 'accrual');
     }
+    // ── AR detail: itemize Δ AR so the 1200 line is auditable ──
+    // Δ AR = [invoices BILLED this month, unpaid at month-end (ex-tax + their tax)]
+    //      − [invoices billed in PRIOR months, paid this month (incl. tax)]  + residual.
+    // Residual absorbs fill-forward/orphan/partial-payment effects so the bridge always
+    // ties to the posted line.
+    const newArRows = [], priorArRows = [];
+    for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
+      const prof = custToProf.get(cid); const aid = prof ? prof.allmoxy_customer_id : null;
+      if (aid != null && ANNUAL.has(aid)) continue;
+      const name = aid != null ? nameOf(aid) : cid;
+      for (const i of (cust.invoices || [])) {
+        if (!RECOGNIZED_STATUS.has(i.status) || !(i.sub > 0)) continue;
+        const billedM = monthOf(i.d), paidM = i.paid_at ? monthOf(i.paid_at) : null;
+        const paidByCutoff = paidM != null && paidM <= m;
+        const rowBase = { allmoxy_customer_id: aid, name, invoice_id: i.id || null, invoice_date: i.d, amount: r2(i.sub), tax: r2(i.tax || 0), status: i.status, paid_at: i.paid_at || null };
+        if (billedM === m && !paidByCutoff) newArRows.push({ ...rowBase, resolution: i.paid_at ? `paid ${i.paid_at}` : i.status === 'uncollectible' ? 'uncollectible' : 'still open' });
+        if (billedM < m && paidM === m) priorArRows.push(rowBase);
+      }
+    }
+    newArRows.sort((a, b) => (b.amount + b.tax) - (a.amount + a.tax)); priorArRows.sort((a, b) => (b.amount + b.tax) - (a.amount + a.tax));
+    const newArExTax = r2(newArRows.reduce((s, r) => s + r.amount, 0)), newArTax = r2(newArRows.reduce((s, r) => s + r.tax, 0));
+    const priorArCollectedInclTax = r2(priorArRows.reduce((s, r) => s + r.amount + r.tax, 0));
+    const ar_detail = { new_ar_rows: newArRows, prior_ar_rows: priorArRows, new_ar_ex_tax: newArExTax, new_ar_tax: newArTax, prior_ar_collected: priorArCollectedInclTax, residual: r2(adj - (newArExTax + newArTax - priorArCollectedInclTax)), total: adj };
+
     const debits = r2(L.reduce((s, l) => s + (l.debit || 0), 0)), credits = r2(L.reduce((s, l) => s + (l.credit || 0), 0));
     journal_entries[m] = {
+      ar_detail,
       lines: L, debits, credits, balanced: Math.abs(debits - credits) < 0.01,
       balance_report,
       inputs: {
