@@ -98,8 +98,11 @@ for (const [y, m] of months) {
       if (cat === 'charge') { tt = t.source?.metadata?.transaction_type || null; cust = t.source?.customer || null; name = t.source?.billing_details?.name || null; chargeId = t.source?.id || null; inv = (typeof t.source?.invoice === 'string' ? t.source.invoice : t.source?.invoice?.id) || null; }
       else if (cat === 'refund' || cat === 'dispute' || cat === 'dispute_reversal') {
         // Disputes carry the same shape as refunds — classify by the charge they reverse
-        // so a chargeback debits the revenue account it originally credited.
+        // so a chargeback debits the revenue account it originally credited. A dispute's
+        // `source.charge` is often null; Stripe puts the id in the description instead
+        // ("Chargeback withdrawal for py_3Sld…"), so fall back to parsing it out.
         chargeId = typeof t.source?.charge === 'string' ? t.source.charge : t.source?.charge?.id || null;
+        if (!chargeId) chargeId = (t.description || '').match(/\b((?:ch|py)_[A-Za-z0-9]+)\b/)?.[1] || null;
         tt = await chargeType(chargeId);
         // Last-resort fallback from the balance-transaction description: Stripe writes
         // "REFUND FOR CHARGE (Invoice XXXX-0014)" for invoice-backed (subscription)
