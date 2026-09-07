@@ -126,6 +126,18 @@ for (const p of snap.rows) {
   p.failed_3mo_count = apiFailed.length;
   p.failed_3mo_amount = r2(apiFailed.reduce((s, t) => s + (t.a || 0), 0));
   p.status = recomputeStatus(p, p.last_payment_date, p.failed_3mo_count);
+  // Set the CS-facing conflict note HERE, not in build_customer_profiles: that runs on
+  // the pre-seam (xlsx) payment dates, where a live payer looks lapsed and the guard
+  // never fires. This pass has the real Stripe last-payment date.
+  {
+    const hubChurn = /cancel/i.test(p.pay_status || '') || !!(p.churn_reason && String(p.churn_reason).trim());
+    const monthsSince = p.last_payment_date
+      ? (today.getTime() - new Date(p.last_payment_date).getTime()) / (30.44 * 864e5)
+      : Infinity;
+    p.status_conflict = (hubChurn && monthsSince < 2 && p.status !== 'churned')
+      ? `HubSpot marks this churned (pay status: ${p.pay_status || 'n/a'}${p.churn_reason ? `; churn reason "${p.churn_reason}"` : ''}) but they last paid ${p.last_payment_date} — treated as "${p.status}" because revenue is live. Reconcile the HubSpot record.`
+      : null;
+  }
   seamed++;
 }
 

@@ -77,6 +77,9 @@ type CustomerProfile = {
   stripe_fee_percent?: number | null;
   // HubSpot Instance Sync Sheet enrichment (null when no match)
   pay_status?: string | null;
+  // Set when HubSpot marks the customer churned but they're still paying — cash wins,
+  // and CS gets told to reconcile the HubSpot record.
+  status_conflict?: string | null;
   contract_status?: string | null;
   churn_reason?: string | null;
   primary_segment?: string | null;
@@ -555,6 +558,15 @@ export default function CustomerDetail() {
               <InfoSection title="Account" info="From the HubSpot Instance Sync. Firmographic segment lives under Classification below.">
                 <InfoField label="Account rep" value={selected.instance_owner_first_name?.trim() || selected.instance_owner?.trim() || selected.hubspot_owner_name?.trim() || '—'} />
                 <InfoField label="Pay status" value={selected.pay_status || '—'} />
+                {selected.status_conflict && (
+                  <Box sx={{ gridColumn: '1 / -1' }}>
+                    <FieldLabel>HubSpot conflict</FieldLabel>
+                    <Stack direction="row" spacing={0.5} alignItems="flex-start" sx={{ mt: 0.25 }}>
+                      <Box sx={{ fontSize: 12, color: 'warning.main', lineHeight: 1.45 }}>⚠ {selected.status_conflict}</Box>
+                      <InfoIcon info={<><strong>What it means:</strong> HubSpot marks this customer churned — a Cancelled pay status, or a filled churn reason — but they're still paying. Cash wins, so the dashboard treats them as live; without that guard they'd drop out of churn monitoring while billing normally.<br /><br /><strong>What to do:</strong> fix the HubSpot record (clear the churn reason, or correct the pay status). The note disappears on the next refresh.</>} />
+                    </Stack>
+                  </Box>
+                )}
                 <InfoField label="Contract" value={selected.contract_status || '—'} />
                 <InfoField label="Cohort" value={selected.cohort_year != null ? String(selected.cohort_year) : '—'} />
               </InfoSection>

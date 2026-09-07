@@ -1,7 +1,7 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-09-07T13:30:05.484Z",
-  "jira_fetchedAt": "2026-09-07T13:30:05.330Z",
+  "fetchedAt": "2026-09-07T15:19:20.779Z",
+  "jira_fetchedAt": "2026-09-07T15:19:20.612Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
     "total_tickets": 4313,
@@ -17084,6 +17084,37 @@
       ]
     },
     {
+      "key": "DEV-11858",
+      "summary": "Visual indicator on B2B orders for list views and reports",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 313,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7504.2,
+          "lifetime": 590809.66,
+          "status": "active"
+        }
+      ],
+      "created": "2026-03-31",
+      "updated": "2026-09-07",
+      "resolved": "2026-06-18",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11858",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7504.2,
+      "total_arr": 90050.4,
+      "total_lifetime": 590809.66,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-12981",
       "summary": "Operator working with files",
       "status": "In Staging",
@@ -17142,37 +17173,6 @@
       "total_arr": 90050.4,
       "total_lifetime": 590809.66,
       "unmatched_labels": []
-    },
-    {
-      "key": "DEV-11858",
-      "summary": "Visual indicator on B2B orders for list views and reports",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 313,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7504.2,
-          "lifetime": 590809.66,
-          "status": "active"
-        }
-      ],
-      "created": "2026-03-31",
-      "updated": "2026-09-03",
-      "resolved": "2026-06-18",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11858",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7504.2,
-      "total_arr": 90050.4,
-      "total_lifetime": 590809.66,
-      "unmatched_labels": [
-        "ciminos"
-      ]
     },
     {
       "key": "DEV-9442",
@@ -74020,6 +74020,29 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-12268",
+      "summary": "Unable to deselect Australia Sales Tax Presence",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-07-02",
+      "updated": "2026-09-07",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12268",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "mykitch"
+      ]
+    },
+    {
       "key": "DEV-12980",
       "summary": "Canary Closets — Order #109193 invoice subtotal renders roughly 9x the order page subtotal, corrected after a status change",
       "status": "New",
@@ -74086,29 +74109,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "dbs"
-      ]
-    },
-    {
-      "key": "DEV-12268",
-      "summary": "Unable to deselect Australia Sales Tax Presence",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-07-02",
-      "updated": "2026-09-04",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12268",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "mykitch"
       ]
     },
     {
