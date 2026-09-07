@@ -48,6 +48,7 @@ export const KNOWN_SNAPSHOTS = [
   'hubspot_tickets',
   'revenue_recognition',
   'project_candidates',
+  'identity_validation',
 ] as const;
 
 export type SnapshotName = (typeof KNOWN_SNAPSHOTS)[number];

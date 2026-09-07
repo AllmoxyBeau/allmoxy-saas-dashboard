@@ -676,7 +676,11 @@ console.log('\n[8/5] Features (JIRA DEV board, optional)');
       // build_features writes public/snapshots/features.json itself — pass null so
       // the harness does NOT also redirect stdout onto the file (that clobbered the
       // real JSON with the script's console.log summary line).
-      runScript('build_project_candidates.mjs', null); // CS → Sales hand-off list (opinion flag)
+      runScript('build_project_candidates.mjs', null);
+// Read-only: compare our Stripe→Allmoxy identity map against the Aurora warehouse and
+// report drift (double-counted or dropped revenue). Never fails a refresh.
+try { runScript('validate_identity_vs_warehouse.mjs', null); }
+catch (e) { console.log('  ⚠ identity validation skipped:', e.message); } // CS → Sales hand-off list (opinion flag)
 runScript('build_features.mjs', null);
     } catch (e) {
       console.log('  ⚠ features refresh failed (kept previous snapshot):', e.message);

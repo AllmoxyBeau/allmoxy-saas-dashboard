@@ -465,6 +465,28 @@ test('all expected snapshots exist', 'error', () => {
 });
 
 // ============================================================================
+// ============================================================================
+// CUSTOMER IDENTITY vs THE AURORA WAREHOUSE
+// ============================================================================
+// A Stripe customer mapped to two profiles double-counts its revenue; one mapped
+// to none drops out of MRR entirely. Both are silent. validate_identity_vs_warehouse
+// diffs our hand-maintained map against silver_customers — surface it here so the
+// drift shows up on the Invariant Tests page instead of only in a snapshot.
+test('customer identity agrees with the Aurora warehouse (silver_customers)', 'error', () => {
+  const v = readJson(path.join(SNAP, 'identity_validation.json'));
+  if (!v) return { passed: true, detail: 'identity_validation.json not built yet — skipped' };
+  if (!v.available) return { passed: true, detail: `warehouse unreachable (${v.reason}) — skipped` };
+  const errs = (v.findings || []).filter((f) => f.severity === 'error');
+  return {
+    passed: errs.length === 0,
+    detail: errs.length === 0
+      ? `${v.totals.stripe_customers_compared} Stripe customers reconciled against ${v.totals.warehouse_rows} warehouse rows`
+      : `${errs.length} identity conflict(s) — $${Math.round(v.totals.revenue_at_risk).toLocaleString()} of revenue mis-attributed (${Object.entries(v.totals.by_kind || {}).map(([k, n]) => `${n} ${k}`).join(', ')})`,
+    examples: errs.slice(0, 5).map((f) => `${f.kind} ${f.stripe_customer} $${Math.round(f.revenue).toLocaleString()} — ${f.detail}`),
+  };
+});
+
+
 // RUN
 // ============================================================================
 
