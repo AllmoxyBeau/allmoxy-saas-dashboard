@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T16:06:02.637Z",
+  "fetched_at": "2026-09-08T17:43:30.264Z",
   "total": 23,
   "passed": 18,
   "errors": 1,
@@ -185,13 +185,13 @@
       "name": "customer identity agrees with the Aurora warehouse (silver_customers)",
       "severity": "error",
       "passed": false,
-      "detail": "8 identity conflict(s) — $31,782 of revenue mis-attributed (33 UNKNOWN, 3 DUPLICATE, 1 MISMATCH, 4 STALE_OVERRIDE)",
+      "detail": "7 identity conflict(s) — $28,865 of revenue mis-attributed (33 UNKNOWN, 3 DUPLICATE, 4 STALE_OVERRIDE, 2 EXPECTED_MERGE)",
       "examples": [
         "UNKNOWN cus_MBo2pw3kcxpAu1 $11,087 — $11,087 of revenue on a Stripe customer neither we nor the warehouse can place — likely a new signup with no customer record yet.",
         "DUPLICATE cus_HuIb9go0WJW1Dw $10,500 — One Stripe customer sits on 2 profiles (263, 182) — its revenue is counted 2×. The warehouse has a single row, #182.",
         "DUPLICATE cus_M3zTwrzoBqvtuD $3,380 — One Stripe customer sits on 2 profiles (113, 392) — its revenue is counted 2×. The warehouse has a single row, #113.",
-        "MISMATCH cus_OabttW0lFmXet3 $2,918 — We map this to #330 (Wizzwood DBA - Quality Kitchens Inc.); the warehouse says #333 (Quality Kitchens Inc.).",
-        "UNKNOWN cus_VBLOw1g7IvXnXD $1,494 — $1,494 of revenue on a Stripe customer neither we nor the warehouse can place — likely a new signup with no customer record yet."
+        "UNKNOWN cus_VBLOw1g7IvXnXD $1,494 — $1,494 of revenue on a Stripe customer neither we nor the warehouse can place — likely a new signup with no customer record yet.",
+        "UNKNOWN cus_8nj8SkxsbFw65H $1,200 — $1,200 of revenue on a Stripe customer neither we nor the warehouse can place — likely a new signup with no customer record yet."
       ]
     }
   ]

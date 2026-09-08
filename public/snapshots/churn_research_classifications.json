@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T15:18:22.575Z",
+  "fetched_at": "2026-09-08T17:43:30.401Z",
   "comment": "Consolidated agent-proposed churn-reason classifications, keyed by allmoxy_customer_id. Sourced from _etl_scripts/churn_research_batches/. Each entry carries the proposed_churn_reason, confidence, 3-5 verbatim evidence_quotes (date + quote + interpretation), supporting_facts, alternative_reasons_considered (with rule-out reasons), and recommended_action. Surfaced on /churn-investigator so the reviewer can accept/edit the proposed reason with one click rather than re-investigating from scratch.",
   "total": 127,
   "batches": [

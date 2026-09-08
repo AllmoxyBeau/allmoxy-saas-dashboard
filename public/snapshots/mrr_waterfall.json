@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-07T15:18:16.796Z",
-  "cachedUntil": "2026-09-07T15:23:16.796Z",
+  "fetchedAt": "2026-09-08T17:43:24.849Z",
+  "cachedUntil": "2026-09-08T17:48:24.849Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -27,8 +27,8 @@
     "2026-05": 100.4,
     "2026-06": 100.3,
     "2026-07": 99.6,
-    "2026-08": 102.4,
-    "2026-09": 98.8
+    "2026-08": 106,
+    "2026-09": 103.3
   },
   "monthly": [
     {
@@ -21956,24 +21956,24 @@
       "starting_mrr": 227504,
       "new_mrr": 419,
       "reactivated_mrr": 950,
-      "expansion_mrr": 3889.19,
-      "contraction_mrr": 3954.39,
+      "expansion_mrr": 3844.19,
+      "contraction_mrr": 11368.59,
       "churn_mrr": 0,
       "voided_mrr": 2320,
       "delinquent_mrr": 6406,
-      "ending_mrr": 220081.8,
-      "net_new_mrr": -7422.2,
+      "ending_mrr": 212622.6,
+      "net_new_mrr": -14881.4,
       "new_logos": 1,
       "reactivated_logos": 3,
       "churned_logos": 0,
       "voided_logos": 2,
       "delinquent_logos": 5,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0003,
-      "expansion_rate_monthly": 0.0171,
-      "grr_monthly": 0.9826,
-      "nrr_monthly": 0.9997,
-      "quick_ratio": 1.09,
+      "net_churn_rate_monthly": 0.0331,
+      "expansion_rate_monthly": 0.0169,
+      "grr_monthly": 0.95,
+      "nrr_monthly": 0.9669,
+      "quick_ratio": 0.37,
       "details": {
         "new": [
           {
@@ -22022,13 +22022,6 @@
             "delta": 65
           },
           {
-            "name": "Lewis Cabinet Specialties Group LLC",
-            "id": 1,
-            "prev_mrr": 7459.2,
-            "new_mrr": 7504.2,
-            "delta": 45
-          },
-          {
             "name": "Intermountain Wood Products",
             "id": 80,
             "prev_mrr": 228.87,
@@ -22037,6 +22030,13 @@
           }
         ],
         "contraction": [
+          {
+            "name": "Lewis Cabinet Specialties Group LLC",
+            "id": 1,
+            "prev_mrr": 7459.2,
+            "new_mrr": 45,
+            "delta": 7414.2
+          },
           {
             "name": "Dot Custom Cabinets LLC",
             "id": 385,
@@ -22128,20 +22128,20 @@
     "windowEnd": "2026-08",
     "months": 12,
     "starting_mrr": 228113.9,
-    "ending_mrr": 220081.8,
+    "ending_mrr": 212622.6,
     "new_mrr": 18795,
     "reactivated_mrr": 22245.58,
-    "expansion_mrr": 26992.16,
-    "contraction_mrr": 35166.42,
+    "expansion_mrr": 26947.16,
+    "contraction_mrr": 42580.62,
     "churn_mrr": 15365,
     "voided_mrr": 2570,
     "delinquent_mrr": 22963.42,
-    "net_new_mrr": -8032.1,
+    "net_new_mrr": -15491.3,
     "gross_mrr_churn_ttm": 0.0674,
     "annual_gross_churn_rate": 0.0652,
-    "annual_grr": 0.8005,
-    "annual_nrr": 0.9028,
-    "quick_ratio": 0.91
+    "annual_grr": 0.7743,
+    "annual_nrr": 0.8734,
+    "quick_ratio": 0.79
   },
   "monthly_accrual": [
     {
@@ -22502,6 +22502,11 @@
             "mrr": 400
           },
           {
+            "name": "Fletcher Design Co",
+            "id": 2029,
+            "mrr": 250
+          },
+          {
             "name": "Lane Industries",
             "id": 2037,
             "mrr": 250
@@ -22509,11 +22514,6 @@
           {
             "name": "Albritton Custom Cabinetry",
             "id": 2031,
-            "mrr": 250
-          },
-          {
-            "name": "Fletcher Design Co",
-            "id": 2029,
             "mrr": 250
           },
           {

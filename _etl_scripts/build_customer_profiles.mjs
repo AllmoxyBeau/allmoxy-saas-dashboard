@@ -1130,15 +1130,24 @@ if (mergedCount > 0) process.stderr.write(`merged ${mergedCount} duplicate Allmo
 // but flag the MAIN/CURRENT one = the customer that owns the live subscription.
 // Also dedupe the array (source columns often repeat the same id). Runs after all
 // merges so a folded company's full id set is considered.
-let primaryResolved = 0;
+let primaryResolved = 0, foreignPrimaryRejected = 0;
 for (const p of profiles) {
-  const primary = pickPrimaryStripeCustomer(p.stripe_customer_ids, p.all_stripe_subscription_ids);
   const set = new Set((p.stripe_customer_ids || []).filter(Boolean));
-  if (primary) set.add(primary); // ensure the current-subscription account is in the list
+  const primary = pickPrimaryStripeCustomer([...set], p.all_stripe_subscription_ids);
+  // NEVER inject a Stripe customer this profile doesn't own. `primary` is resolved via
+  // all_stripe_subscription_ids, which comes from the HubSpot instance record — and two
+  // Allmoxy customers can share one instance (#330 Wizzwood and #333 Quality Kitchens
+  // both map to instance 47920025715 under HubSpot company 6265312348). The old
+  // `set.add(primary)` then handed #333 the id cus_Jh5LKj8i7mZPLR that belongs to #330,
+  // so one $2,872/mo subscription was counted on BOTH profiles. Same mechanism produced
+  // the 455/303, 113/392 and 263/182 double-counts. A Stripe customer belongs to exactly
+  // one Allmoxy customer; if the resolved primary isn't ours, drop it and count it.
+  if (primary && !set.has(primary)) foreignPrimaryRejected++;
   p.stripe_customer_ids = [...set];
-  p.primary_stripe_customer_id = primary ?? (p.stripe_customer_ids[0] ?? null);
+  p.primary_stripe_customer_id = (primary && set.has(primary)) ? primary : (p.stripe_customer_ids[0] ?? null);
   if (p.primary_stripe_customer_id) primaryResolved++;
 }
+if (foreignPrimaryRejected) process.stderr.write(`rejected ${foreignPrimaryRejected} foreign primary stripe id(s) — profiles sharing a HubSpot instance\n`);
 process.stderr.write(`primary_stripe_customer_id set for ${primaryResolved}/${profiles.length} profiles\n`);
 
 const now = new Date();

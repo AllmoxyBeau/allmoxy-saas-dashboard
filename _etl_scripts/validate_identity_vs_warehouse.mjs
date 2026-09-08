@@ -108,7 +108,14 @@ for (const cid of allCids) {
     continue;
   }
   if (mine.length === 1 && theirs && mine[0] !== theirs.aid) {
-    findings.push({ ...base, kind: 'MISMATCH', severity: 'error', detail: `We map this to #${mine[0]} (${nameByAid.get(mine[0]) ?? '?'}); the warehouse says #${theirs.aid} (${theirs.name}).`, suggested_fix: `Confirm which is right — if the warehouse, remap to #${theirs.aid}` });
+    // A confirmed merge legitimately diverges from the warehouse: we deliberately
+    // folded the warehouse's customer into ours (Wildwood #308 → Modern Fronts #457,
+    // confirmed by Beau). Report it as expected, not as a conflict to fix — otherwise
+    // every intentional merge nags forever and real conflicts get lost in the noise.
+    const mergedIntoUs = merges[String(theirs.aid)]?.into === mine[0];
+    findings.push(mergedIntoUs
+      ? { ...base, kind: 'EXPECTED_MERGE', severity: 'info', detail: `The warehouse still lists this under #${theirs.aid} (${theirs.name}); we folded that into #${mine[0]} (${nameByAid.get(mine[0]) ?? '?'}) via a confirmed merge.`, suggested_fix: 'None — intentional. The warehouse would need the same merge to agree.' }
+      : { ...base, kind: 'MISMATCH', severity: 'error', detail: `We map this to #${mine[0]} (${nameByAid.get(mine[0]) ?? '?'}); the warehouse says #${theirs.aid} (${theirs.name}).`, suggested_fix: `Confirm which is right — if the warehouse, remap to #${theirs.aid}` });
     continue;
   }
   if (mine.length === 0 && revenue > 0) {
@@ -142,7 +149,11 @@ for (const [from, m] of Object.entries(merges)) {
   mergeCheck.push({
     from: fromAid, into: intoAid, our_state: stillSplit ? 'NOT applied' : 'applied',
     warehouse_aids: whAids,
-    agrees: whAids.length <= 1 && (whAids.length === 0 || whAids[0] === intoAid),
+    // "Agrees" means the warehouse doesn't contradict us. It still listing the absorbed
+    // id separately is expected for a merge WE decided on — the warehouse simply hasn't
+    // been told. Only a warehouse row pointing somewhere else is a real disagreement.
+    agrees: whAids.every((a) => a === intoAid || a === fromAid),
+    warehouse_still_separate: whAids.includes(fromAid) && whAids.includes(intoAid),
     note: m._note ? String(m._note).slice(0, 200) : null,
   });
 }
