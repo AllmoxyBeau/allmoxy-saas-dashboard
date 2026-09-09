@@ -56,7 +56,7 @@ const COLUMNS: Array<{ key: SortKey; label: string; align?: 'left' | 'right'; de
   { key: 'age_days', label: 'Age', align: 'right', defaultDesc: true, value: (r) => r.age_days },
   // Live customers first, then by how much they pay — the collectibility ranking.
   { key: 'customer', label: 'Customer state', defaultDesc: true, value: (r) => (r.customer_still_paying ? 1e9 + (r.customer_mrr ?? 0) : r.customer_status === 'churned' ? -1 : 0) },
-  { key: 'owner', label: 'Owner', defaultDesc: false, value: (r) => (r.owner || 'zzz').toLowerCase() },
+  { key: 'owner', label: 'Instance owner', defaultDesc: false, value: (r) => (r.owner || 'zzz').toLowerCase() },
   { key: 'source', label: 'Source', defaultDesc: false, value: (r) => r.source },
   { key: 'decision', label: 'Decision', defaultDesc: false, value: (r) => r.effective },
 ];
@@ -195,7 +195,7 @@ export default function Collections() {
             <MenuItem value="decided">Decided ({rows.filter((r) => r.source !== 'auto').length})</MenuItem>
             <MenuItem value="all">All ({rows.length})</MenuItem>
           </TextField>
-          <TextField select size="small" label="Owner" value={ownerFilter} onChange={(e) => setOwnerFilter(e.target.value)} sx={{ minWidth: 210 }}>
+          <TextField select size="small" label="Instance owner" value={ownerFilter} onChange={(e) => setOwnerFilter(e.target.value)} sx={{ minWidth: 210 }}>
             <MenuItem value="">All owners ({rows.length})</MenuItem>
             {ownerOptions.map(([name, v]) => (
               <MenuItem key={name} value={name}>{name} — {v.n} · {USD0.format(v.amt)}</MenuItem>

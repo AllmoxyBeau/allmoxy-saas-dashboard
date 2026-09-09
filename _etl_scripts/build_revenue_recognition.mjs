@@ -300,11 +300,13 @@ for (const r of arRows) {
   r.customer_status = prof?.status ?? null;
   r.customer_mrr = r2(prof?.current_subscription_mrr || 0);
   r.customer_still_paying = (prof?.current_subscription_mrr || 0) > 0;
-  // HubSpot company owner — who should be making the collection call. Same resolution
-  // order the Customer Detail "Account rep" field uses, but the instance-sync sheet
-  // sometimes carries a bare HubSpot owner ID instead of a name (#86 stores
-  // "38077878"), so map any all-digits value through the owners cache.
-  const rawOwner = prof?.instance_owner?.trim() || prof?.hubspot_owner_name?.trim() || null;
+  // INSTANCE owner (Beau, 2026-09-09) — the owner on the HubSpot instance record, which
+  // is who actually works the account. Deliberately NO company-owner fallback: across
+  // all 44 AR customers the two never disagreed (35 identical, 1 instance-only, 0
+  // conflicts), so the fallback bought nothing and made the column's meaning ambiguous.
+  // The instance-sync sheet sometimes carries a bare HubSpot owner ID instead of a name
+  // (#86 CPM stores "38077878"), so map all-digits values through the owners cache.
+  const rawOwner = prof?.instance_owner?.trim() || null;
   const viaId = /^\d+$/.test(rawOwner || '') ? OWNERS_BY_ID[rawOwner] : null;
   r.owner = viaId?.full_name || (/^\d+$/.test(rawOwner || '') ? null : rawOwner) || null;
   r.owner_email = prof?.hubspot_owner_email?.trim() || viaId?.email || null;
