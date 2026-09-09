@@ -1,5 +1,591 @@
 {
   "comment": "Per-invoice collection decisions, made on the Revenue → Collections page. An explicit decision here ALWAYS wins over the automatic age rule (qb_accounts.ar_writeoff_after_days), in both directions: mark an old invoice 'collectible' to keep chasing it and keep it out of bad debt, or mark a young one 'uncollectible' to write it off now. Keyed by Stripe invoice id. `decision`: uncollectible | collectible. Invoices with no entry fall back to the age rule.",
-  "updated_at": "2026-09-05",
-  "decisions": {}
+  "updated_at": "2026-09-09",
+  "decisions": {
+    "in_1PH7p4HkM2QhTtxhq20JJSRR": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Ota9tHkM2QhTtxhClnSdGwF": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1O1y1eHkM2QhTtxhvgT7ddNc": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Ny0O8HkM2QhTtxh69AHXnhh": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1P1BT9HkM2QhTtxhrYkQhJPj": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1ONMS6HkM2QhTtxh30HlwXgi": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_17bg7PHkM2QhTtxhnt4lXs9h": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1GQiYzHkM2QhTtxh6VxqZiBW": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Fga6UHkM2QhTtxhzXLW8PGA": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1G1IjkHkM2QhTtxhKQIcBVPl": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1G1ImhHkM2QhTtxhzlds2uFV": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1GcwHtHkM2QhTtxh0kozrTDR": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Gv8OlHkM2QhTtxhjRB7WLEx": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Hf6IIHkM2QhTtxhkRlkLGtk": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1JfV3gHkM2QhTtxhd0s4uUgD": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1JukRIHkM2QhTtxhU8cXTkBC": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1JzrGAHkM2QhTtxhgz7d3bLe": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1K5clVHkM2QhTtxhZtSDZh0M": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1KGrWoHkM2QhTtxh4oTfZIBZ": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1KS6IwHkM2QhTtxhbIT7AGeN": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1KcFdcHkM2QhTtxhcyU2Vbib": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1KnUPqHkM2QhTtxhy3CBNBNm": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1KyMoMHkM2QhTtxhJfg3OfIp": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1L9bWjHkM2QhTtxheKTaEub7": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1LKTnYHkM2QhTtxhOqSu2A5a": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1LViYAHkM2QhTtxhavDG9BMn": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1LXmiFHkM2QhTtxhpj9GMUgf": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1LgxLUHkM2QhTtxhRdtYbi5V": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1LrpesHkM2QhTtxh9S2E07Sd": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1M34OcHkM2QhTtxhu0k9MqQ1": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1MDwhkHkM2QhTtxhU7sWwttF": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1MPBT1HkM2QhTtxhV0oUgSNx": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1MaQFUHkM2QhTtxh3PAxjoqs": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1MkZadHkM2QhTtxh9s10IkL5": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1MvoNQHkM2QhTtxhPczrip6e": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1N6giTHkM2QhTtxh7GhtD5Ru": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1NHvTTHkM2QhTtxhWB5rzQwH": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1NSntiHkM2QhTtxh21kcIsOL": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Ne2VTHkM2QhTtxhBSsBulWu": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1NpHI2HkM2QhTtxh4y991kzo": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1OK8p3HkM2QhTtxhk4W3V5PW": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Q2JogHkM2QhTtxhPRfIKzzk": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1QyfCWHkM2QhTtxh76sE1cJH": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1RZn91HkM2QhTtxhWmJXQxgb": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1RkfQuHkM2QhTtxh1Y8aagUr": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1RuGwSHkM2QhTtxh7yMoUMee": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1RyRYUHkM2QhTtxh9nNrcMbr": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1S4S4MHkM2QhTtxhKzZFWNTA": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1S4myaHkM2QhTtxhD6COboZI": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1S5VivHkM2QhTtxhEPowL6pw": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SFfHNHkM2QhTtxhr4U5LcgY": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SFqQLHkM2QhTtxhIOjsmyHE": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SI1HHHkM2QhTtxhNxams8oX": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SJ6iRHkM2QhTtxhuWQopUqa": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SOXrZHkM2QhTtxhfFVcyVDP": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SQZ8sHkM2QhTtxhX2oDZzX8": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SQu35HkM2QhTtxh7vxMuR2M": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1STG3NHkM2QhTtxhhLDGQL3I": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SULUrHkM2QhTtxhORRRGSRG": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SXbmmHkM2QhTtxhP8cBO1mN": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SaP2KHkM2QhTtxhXUoWhAjC": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SbRRDHkM2QhTtxhbZ41sQY5": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Se8M7HkM2QhTtxhD6DxirAc": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SeUpaHkM2QhTtxhUEtXYVpD": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SfDnlHkM2QhTtxhlzVOR4oQ": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SjvytHkM2QhTtxhzehuQwOJ": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SldncHkM2QhTtxhc21LKZMd": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SnMfnHkM2QhTtxh1vv4ylDL": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TIGhZHkM2QhTtxhXQFaUlj4": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T71unHkM2QhTtxhlPR7ix1i": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SwsaRHkM2QhTtxhjKm6cTGr": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TJzZCHkM2QhTtxha6D8i2KJ": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T8kmQHkM2QhTtxhaOHhHSF6": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SwU6qHkM2QhTtxhk5Syq5uy": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T45wYHkM2QhTtxhupw8T4RV": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TiypYHkM2QhTtxhBYwlvlX5": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TXk3BHkM2QhTtxhkjLVUd9x": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TMrlIHkM2QhTtxhYRl3nVjH": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TIFvuHkM2QhTtxhuaxYmpbV": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T71AMHkM2QhTtxht3fOzEE2": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SwroVHkM2QhTtxhHSyKoqWm": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TCw6nHkM2QhTtxh14ybowFF": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T2mlzHkM2QhTtxhCyAjSixm": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TM01QHkM2QhTtxhz03y74yh": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T0buPHkM2QhTtxhmIg8tQVj": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SpN8fHkM2QhTtxhhyQckfkf": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TICCPHkM2QhTtxh4jNSNVcE": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Snw9nHkM2QhTtxh210gvhya": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Snw9nHkM2QhTtxhrlwBvFr8": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SoeAwHkM2QhTtxhTmwK5b0S": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SqSZ7HkM2QhTtxhjCsU4yDW": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Sxi5VHkM2QhTtxhS8NiRtQl": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1SzAwqHkM2QhTtxhh6BxqQNW": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T1hKpHkM2QhTtxh4MpcFwQK": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T635RHkM2QhTtxhio4a40rK": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1T7rRTHkM2QhTtxhXa3TKthd": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TBqfnHkM2QhTtxhMYKrz5VA": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1THHpMHkM2QhTtxhilkesAr6": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TIjjPHkM2QhTtxhhIpgDohP": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TJ6DIHkM2QhTtxhiNk3OFn8": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TSA9BHkM2QhTtxhj3HyxYip": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TSWbcHkM2QhTtxh9Poh0yEI": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TTc31HkM2QhTtxhlrPY5AE1": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TTyVBHkM2QhTtxh6ZWlkUXA": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TW768HkM2QhTtxhNkmspYN5": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TdOuWHkM2QhTtxhl6VXir0j": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TdlNNHkM2QhTtxhXhyACiRi": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1ThytwHkM2QhTtxhKaDaiEA9": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Tmfp3HkM2QhTtxhGN5CRSvX": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TnuiTHkM2QhTtxhHH10MTWH": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1ToHCmHkM2QhTtxhJQ9yyiGv": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TqoXGHkM2QhTtxhNG1HTzxC": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TsEAbHkM2QhTtxhhhzhcto4": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TsrCKHkM2QhTtxhCQW9Vis9": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1Tyn1MHkM2QhTtxh2uqYo1Ln": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TzVy3HkM2QhTtxhKFrrEI1K": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    },
+    "in_1TzsRhHkM2QhTtxhgkJ8C5Wt": {
+      "decision": "uncollectible",
+      "note": null,
+      "decided_at": "2026-09-09"
+    }
+  }
 }
