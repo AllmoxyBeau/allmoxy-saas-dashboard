@@ -274,11 +274,21 @@ for (const r of arRows) {
   // Bad debt is recognized when collection became improbable — i.e. the month the
   // invoice crossed the threshold — not retroactively in the month it was billed
   // (which would restate a period already posted).
-  // A manual write-off is recognized the day it was decided; an automatic one on the
-  // day the invoice crossed the threshold.
+  // WHEN a write-off books:
+  //   • allocate:'service_month' → the month the revenue was recognized, so the bad
+  //     debt offsets the revenue it relates to. Used for the ONE-TIME Sept 2026
+  //     cleanup of the historical backlog (Beau): 117 invoices at once would have hit
+  //     September with a single $30K charge, distorting the month.
+  //   • default (decision date) → the month it was judged uncollectible. Correct for
+  //     ongoing one-off write-offs, which is how everything after this batch behaves.
+  //   • automatic (no decision) → the month the invoice crossed the age threshold.
+  r.writeoff_allocation = decided ? (decided.allocate || 'decision_date') : 'age_threshold';
   r.writeoff_month = r.collectible ? null
-    : (decided ? (r.decided_at || '').slice(0, 7) || monthOf(r.invoice_date)
-       : (WRITEOFF_DAYS != null ? addDaysMonth(r.invoice_date, WRITEOFF_DAYS) : null));
+    : (decided
+        ? (decided.allocate === 'service_month'
+            ? r.service_month
+            : ((r.decided_at || '').slice(0, 7) || monthOf(r.invoice_date)))
+        : (WRITEOFF_DAYS != null ? addDaysMonth(r.invoice_date, WRITEOFF_DAYS) : null));
   // Context for the collections review: is this relationship still alive?
   const prof = r.allmoxy_customer_id != null ? profByAid.get(r.allmoxy_customer_id) : null;
   r.customer_status = prof?.status ?? null;
