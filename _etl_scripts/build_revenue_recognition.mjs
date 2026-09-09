@@ -42,6 +42,12 @@ const ANNUAL = new Set((JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/ann
 // Stripe balance transactions by month (sync_stripe_balance_transactions) — the
 // cash side of the JE. Optional: if not pulled yet, the JE block is skipped.
 let BT = null; try { BT = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/stripe_balance_transactions.json'), 'utf8')); } catch { /* not pulled yet */ }
+// HubSpot owners by id — the instance-sync sheet sometimes stores a bare owner ID
+// where a name belongs, so AR rows can resolve it to a person.
+const OWNERS_BY_ID = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/hubspot_owners.json'), 'utf8')).owners_by_id || {}; }
+  catch { return {}; }
+})();
 
 // Accrual is the books basis from Jan 2026 (Beau, 2026-09-05 — moved up from 2027-01;
 // he is truing up 2026 in QB manually). Same month the per-customer detail starts, so
@@ -289,11 +295,19 @@ for (const r of arRows) {
             ? r.service_month
             : ((r.decided_at || '').slice(0, 7) || monthOf(r.invoice_date)))
         : (WRITEOFF_DAYS != null ? addDaysMonth(r.invoice_date, WRITEOFF_DAYS) : null));
-  // Context for the collections review: is this relationship still alive?
+  // Context for the collections review: is this relationship still alive, and who owns it?
   const prof = r.allmoxy_customer_id != null ? profByAid.get(r.allmoxy_customer_id) : null;
   r.customer_status = prof?.status ?? null;
   r.customer_mrr = r2(prof?.current_subscription_mrr || 0);
   r.customer_still_paying = (prof?.current_subscription_mrr || 0) > 0;
+  // HubSpot company owner — who should be making the collection call. Same resolution
+  // order the Customer Detail "Account rep" field uses, but the instance-sync sheet
+  // sometimes carries a bare HubSpot owner ID instead of a name (#86 stores
+  // "38077878"), so map any all-digits value through the owners cache.
+  const rawOwner = prof?.instance_owner?.trim() || prof?.hubspot_owner_name?.trim() || null;
+  const viaId = /^\d+$/.test(rawOwner || '') ? OWNERS_BY_ID[rawOwner] : null;
+  r.owner = viaId?.full_name || (/^\d+$/.test(rawOwner || '') ? null : rawOwner) || null;
+  r.owner_email = prof?.hubspot_owner_email?.trim() || viaId?.email || null;
 }
 const arOpenRows = arRows.filter((r) => r.collectible);
 const arWrittenOffRows = arRows.filter((r) => !r.collectible);

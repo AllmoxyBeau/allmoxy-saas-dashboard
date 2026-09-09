@@ -23,6 +23,7 @@ type ArRow = {
   collectible: boolean; bookable_writeoff?: boolean; writeoff_month?: string | null;
   decision?: 'uncollectible' | 'collectible' | null; decision_note?: string | null; decided_at?: string | null;
   customer_status?: string | null; customer_mrr?: number; customer_still_paying?: boolean;
+  owner?: string | null; owner_email?: string | null;
 };
 type RowSource = 'auto' | 'decided' | 'pending';
 type DecoratedRow = ArRow & { effective: 'collectible' | 'uncollectible'; source: RowSource; pendingNote: string | null };
@@ -47,7 +48,7 @@ type Filter = 'all' | 'chase' | 'writeoff' | 'decided' | 'undecided';
 // Every column is sortable. `value` returns a number or string; strings compare with
 // localeCompare so names sort naturally. Defaults are the direction you actually want
 // on first click — biggest money and oldest invoices first, names A→Z.
-type SortKey = 'name' | 'invoice_date' | 'amount' | 'age_days' | 'customer' | 'source' | 'decision';
+type SortKey = 'name' | 'invoice_date' | 'amount' | 'age_days' | 'customer' | 'owner' | 'source' | 'decision';
 const COLUMNS: Array<{ key: SortKey; label: string; align?: 'left' | 'right'; defaultDesc: boolean; value: (r: DecoratedRow) => string | number }> = [
   { key: 'name', label: 'Customer', defaultDesc: false, value: (r) => (r.name || '').toLowerCase() },
   { key: 'invoice_date', label: 'Invoice', defaultDesc: true, value: (r) => r.invoice_date || '' },
@@ -55,6 +56,7 @@ const COLUMNS: Array<{ key: SortKey; label: string; align?: 'left' | 'right'; de
   { key: 'age_days', label: 'Age', align: 'right', defaultDesc: true, value: (r) => r.age_days },
   // Live customers first, then by how much they pay — the collectibility ranking.
   { key: 'customer', label: 'Customer state', defaultDesc: true, value: (r) => (r.customer_still_paying ? 1e9 + (r.customer_mrr ?? 0) : r.customer_status === 'churned' ? -1 : 0) },
+  { key: 'owner', label: 'Owner', defaultDesc: false, value: (r) => (r.owner || 'zzz').toLowerCase() },
   { key: 'source', label: 'Source', defaultDesc: false, value: (r) => r.source },
   { key: 'decision', label: 'Decision', defaultDesc: false, value: (r) => r.effective },
 ];
@@ -66,6 +68,8 @@ export default function Collections() {
   // Default to the working list: invoices still worth chasing. Written-off ones are
   // hidden but one click away — the banner below the toolbar says how many and reveals them.
   const [filter, setFilter] = useState<Filter>('chase');
+  // Owner filter: '' = every owner. Lets a rep work only their own book.
+  const [ownerFilter, setOwnerFilter] = useState<string>('');
   const [sortKey, setSortKey] = useState<SortKey>('amount');
   const [sortDesc, setSortDesc] = useState(true);
   // First click on a new column uses that column's natural direction; clicking the
@@ -87,6 +91,10 @@ export default function Collections() {
 
   const shown = useMemo(() => {
     const filtered = rows.filter((r) => {
+      if (ownerFilter) {
+        const o = r.owner || '(unassigned)';
+        if (o !== ownerFilter) return false;
+      }
       if (filter === 'chase') return r.effective === 'collectible';
       if (filter === 'writeoff') return r.effective === 'uncollectible';
       if (filter === 'decided') return r.source !== 'auto';
@@ -103,7 +111,7 @@ export default function Collections() {
       if (cmp === 0) cmp = a.amount - b.amount;
       return sortDesc ? -cmp : cmp;
     });
-  }, [rows, filter, sortKey, sortDesc]);
+  }, [rows, filter, ownerFilter, sortKey, sortDesc]);
 
   const t = useMemo(() => ({
     chase: rows.filter((r) => r.effective === 'collectible').reduce((s, r) => s + r.amount, 0),
@@ -113,6 +121,25 @@ export default function Collections() {
     live: rows.filter((r) => r.effective === 'collectible' && r.customer_still_paying).reduce((s, r) => s + r.amount, 0),
     pendingN: Object.keys(pending).length,
   }), [rows, pending]);
+
+  // Owner options with their outstanding count and $ — computed off the status filter
+  // so the numbers match what selecting that owner would actually show.
+  const ownerOptions = useMemo(() => {
+    const base = rows.filter((r) => {
+      if (filter === 'chase') return r.effective === 'collectible';
+      if (filter === 'writeoff') return r.effective === 'uncollectible';
+      if (filter === 'decided') return r.source !== 'auto';
+      if (filter === 'undecided') return r.source === 'auto';
+      return true;
+    });
+    const m = new Map<string, { n: number; amt: number }>();
+    for (const r of base) {
+      const k = r.owner || '(unassigned)';
+      const e = m.get(k) || { n: 0, amt: 0 };
+      e.n += 1; e.amt += r.amount; m.set(k, e);
+    }
+    return [...m.entries()].sort((a, b) => b[1].amt - a[1].amt);
+  }, [rows, filter]);
 
   const setDecision = (inv: string | null, decision: 'uncollectible' | 'collectible' | null) => {
     if (!inv) return;
@@ -167,6 +194,12 @@ export default function Collections() {
             <MenuItem value="undecided">Undecided ({rows.filter((r) => r.source === 'auto').length})</MenuItem>
             <MenuItem value="decided">Decided ({rows.filter((r) => r.source !== 'auto').length})</MenuItem>
             <MenuItem value="all">All ({rows.length})</MenuItem>
+          </TextField>
+          <TextField select size="small" label="Owner" value={ownerFilter} onChange={(e) => setOwnerFilter(e.target.value)} sx={{ minWidth: 210 }}>
+            <MenuItem value="">All owners ({rows.length})</MenuItem>
+            {ownerOptions.map(([name, v]) => (
+              <MenuItem key={name} value={name}>{name} — {v.n} · {USD0.format(v.amt)}</MenuItem>
+            ))}
           </TextField>
           {t.pendingN > 0 && <Button size="small" variant="contained" onClick={copyPending}>Copy pending decisions ({t.pendingN})</Button>}
         </Stack>
@@ -234,6 +267,9 @@ export default function Collections() {
                         {r.customer_still_paying
                           ? <span style={{ color: '#2EA043' }}>paying {USD0.format(r.customer_mrr ?? 0)}/mo</span>
                           : <span style={{ color: '#8B949E' }}>{r.customer_status === 'churned' ? 'churned' : 'not billing'}</span>}
+                      </Box>
+                      <Box component="td" sx={{ ...cell, fontSize: 12 }}>
+                        {r.owner ? (r.owner_email ? <Link href={'mailto:' + r.owner_email} sx={{ color: 'text.primary' }} title={r.owner_email}>{r.owner}</Link> : r.owner) : <span style={{ color: '#8B949E' }}>unassigned</span>}
                       </Box>
                       <Box component="td" sx={{ ...cell }}>
                         <Chip size="small" label={r.source} sx={{ height: 18, fontSize: 10, textTransform: 'capitalize', bgcolor: r.source === 'pending' ? 'rgba(245,166,35,0.16)' : r.source === 'decided' ? 'rgba(44,115,255,0.14)' : 'rgba(139,148,158,0.12)', color: r.source === 'pending' ? 'warning.main' : r.source === 'decided' ? 'primary.main' : 'text.secondary' }} />
