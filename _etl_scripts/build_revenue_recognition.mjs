@@ -174,6 +174,15 @@ const TXO = (() => {
 // contraction and understating GRR.
 const RECURRING_DIRECT = /^\s*subscription\s+\S+\.|ai tokens|custom\s*dom/i;
 
+// Plainly-services charges whose Stripe metadata says 'subscription'. The balance-
+// transaction sync takes `tt` straight from metadata.transaction_type for charges, so a
+// mistagged charge stays mistagged. Five of these exist: four say "Allmoxy Service
+// Invoice" (singular, so a /services invoice/ regex misses them) and one is misspelled
+// "Allmoxy Servies Invoice". The description is unambiguous, so it wins over metadata
+// here (Beau, 2026-09-10: "fix the known ones that say service"). The durable fix is to
+// correct transaction_type in Stripe; this keeps the metrics honest until then.
+const SERVICES_BY_DESC = /\bservi(?:c)?e?s?\s+invoice\b/i;
+
 const directRecurring = new Map();    // aid -> { month: $ }  distinct recurring add-on → always additive
 const directPending = new Map();      // aid -> { month: $ }  additive ONLY if no invoice revenue that month
 const directServices = {};            // month -> $           retyped subscription→services by override (JE 4300)
@@ -198,6 +207,11 @@ if (BT?.months) {
           directAdjustments.push({ month: m, allmoxy_customer_id: aid, amount: r.amount, action: 'retyped_to_services', desc: r.desc });
           continue;
         }
+      }
+      if (!ov && SERVICES_BY_DESC.test(String(r.desc || ''))) {
+        directServices[m] = r2((directServices[m] || 0) + r.amount);
+        directAdjustments.push({ month: m, allmoxy_customer_id: aid ?? null, amount: r.amount, action: 'services_by_description', desc: r.desc });
+        continue;
       }
       if (aid == null) { directUnmapped[m] = r2((directUnmapped[m] || 0) + r.amount); continue; }
       if (ANNUAL.has(aid)) continue;                 // annual prepay → 4100, booked separately
@@ -328,12 +342,20 @@ for (const r of arRows) {
   r.collectible = decided
     ? decided.decision === 'collectible'
     : (WRITEOFF_DAYS == null ? true : r.age_days <= WRITEOFF_DAYS);
+  // COLLECTED MANUALLY (Beau, 2026-09-10) — a third state, distinct from both chasing
+  // and bad debt. The customer DID pay, by a manual charge outside the invoice
+  // ("March backpayment", "Allmoxy Subscription Past Due"), so Stripe never marked the
+  // invoice paid and it aged into the write-off batch. Nothing to chase and nothing to
+  // expense: it leaves open AR like a write-off but must NOT credit 4950, or bad debt
+  // is overstated by money that was actually banked. The cash is already in
+  // prior_ar_collected, so the AR bridge stays consistent.
+  r.collected_manually = decided?.decision === 'collected_manually';
   // BOOKABLE (Beau, 2026-09-05): prior-year books were kept on a CASH basis, so those
   // invoices never created a receivable — there is nothing to write off and booking
   // one would expense against an asset that was never recorded. Only AR whose revenue
   // was recognized in the accrual period (books go-live onward) is bookable; older
   // balances are memo-only, shown so the aging is complete.
-  r.bookable_writeoff = !r.collectible && r.service_month >= BOOKS_GO_LIVE;
+  r.bookable_writeoff = !r.collectible && !r.collected_manually && r.service_month >= BOOKS_GO_LIVE;
   // Bad debt is recognized when collection became improbable — i.e. the month the
   // invoice crossed the threshold — not retroactively in the month it was billed
   // (which would restate a period already posted).
@@ -346,7 +368,7 @@ for (const r of arRows) {
   //     ongoing one-off write-offs, which is how everything after this batch behaves.
   //   • automatic (no decision) → the month the invoice crossed the age threshold.
   r.writeoff_allocation = decided ? (decided.allocate || 'decision_date') : 'age_threshold';
-  r.writeoff_month = r.collectible ? null
+  r.writeoff_month = (r.collectible || r.collected_manually) ? null
     : (decided
         ? (decided.allocate === 'service_month'
             ? r.service_month
@@ -369,7 +391,8 @@ for (const r of arRows) {
   r.owner_email = prof?.hubspot_owner_email?.trim() || viaId?.email || null;
 }
 const arOpenRows = arRows.filter((r) => r.collectible);
-const arWrittenOffRows = arRows.filter((r) => !r.collectible);
+const arCollectedManuallyRows = arRows.filter((r) => r.collected_manually);
+const arWrittenOffRows = arRows.filter((r) => !r.collectible && !r.collected_manually);
 const arBookableRows = arRows.filter((r) => r.bookable_writeoff);
 const sumAmt = (rows) => r2(rows.reduce((s, r) => s + r.amount, 0));
 // Written-off totals by the month the revenue was originally recognized (for context).
@@ -607,6 +630,9 @@ const out = {
     written_off_by_service_month: writtenOffByMonth,
     bookable_total: sumAmt(arBookableRows),
     bookable_count: arBookableRows.length,
+    // Paid by a manual charge outside the invoice — out of AR, but NOT bad debt.
+    collected_manually_total: sumAmt(arCollectedManuallyRows),
+    collected_manually_count: arCollectedManuallyRows.length,
     pre_accrual_total: r2(sumAmt(arWrittenOffRows) - sumAmt(arBookableRows)),
     pre_accrual_count: arWrittenOffRows.length - arBookableRows.length,
     writeoff_by_month: writeoffByMonth,
@@ -627,6 +653,8 @@ const out = {
   months: MONTHS,
   by_month,
   ar_aging: arRows,
+  // Audit trail: every direct charge this build moved out of subscription MRR, and why.
+  direct_adjustments: directAdjustments.sort((a, b) => String(a.month).localeCompare(String(b.month)) || b.amount - a.amount),
   ar_total: sumAmt(arOpenRows),            // collectible only — see ar_policy
   ar_total_including_written_off: sumAmt(arRows),
   reconciliation_detail: detail,

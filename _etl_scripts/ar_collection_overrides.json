@@ -1,6 +1,6 @@
 {
   "comment": "Per-invoice collection decisions, made on the Revenue → Collections page. An explicit decision here ALWAYS wins over the automatic age rule (qb_accounts.ar_writeoff_after_days), in both directions: mark an old invoice 'collectible' to keep chasing it and keep it out of bad debt, or mark a young one 'uncollectible' to write it off now. Keyed by Stripe invoice id. `decision`: uncollectible | collectible. Invoices with no entry fall back to the age rule.",
-  "updated_at": "2026-09-09",
+  "updated_at": "2026-09-10",
   "decisions": {
     "in_1PH7p4HkM2QhTtxhq20JJSRR": {
       "decision": "uncollectible",
@@ -549,10 +549,9 @@
       "allocate": "service_month"
     },
     "in_1Sxi5VHkM2QhTtxhS8NiRtQl": {
-      "decision": "uncollectible",
-      "note": "One-time Sept 2026 AR cleanup — allocated to the month the revenue was recognized so a single $30K charge does not distort September.",
-      "decided_at": "2026-09-09",
-      "allocate": "service_month"
+      "decision": "collected_manually",
+      "note": "Paid by manual charge \"February backpayment\" $699 (2026-05). Invoice left open in Stripe and aged into the write-off batch.",
+      "decided_at": "2026-09-10"
     },
     "in_1SzAwqHkM2QhTtxhh6BxqQNW": {
       "decision": "uncollectible",
@@ -567,16 +566,14 @@
       "allocate": "service_month"
     },
     "in_1T635RHkM2QhTtxhio4a40rK": {
-      "decision": "uncollectible",
-      "note": "One-time Sept 2026 AR cleanup — allocated to the month the revenue was recognized so a single $30K charge does not distort September.",
-      "decided_at": "2026-09-09",
-      "allocate": "service_month"
+      "decision": "collected_manually",
+      "note": "Paid within \"March & April past due payments\" $1,698 (2026-05), split 849/849 per transaction_overrides.",
+      "decided_at": "2026-09-10"
     },
     "in_1T7rRTHkM2QhTtxhXa3TKthd": {
-      "decision": "uncollectible",
-      "note": "One-time Sept 2026 AR cleanup — allocated to the month the revenue was recognized so a single $30K charge does not distort September.",
-      "decided_at": "2026-09-09",
-      "allocate": "service_month"
+      "decision": "collected_manually",
+      "note": "Paid by manual charge \"March backpayment\" $699 (2026-05).",
+      "decided_at": "2026-09-10"
     },
     "in_1TBqfnHkM2QhTtxhMYKrz5VA": {
       "decision": "uncollectible",
@@ -585,22 +582,19 @@
       "allocate": "service_month"
     },
     "in_1THHpMHkM2QhTtxhilkesAr6": {
-      "decision": "uncollectible",
-      "note": "One-time Sept 2026 AR cleanup — allocated to the month the revenue was recognized so a single $30K charge does not distort September.",
-      "decided_at": "2026-09-09",
-      "allocate": "service_month"
+      "decision": "collected_manually",
+      "note": "Paid within \"March & April past due payments\" $1,698 (2026-05), split 849/849 per transaction_overrides.",
+      "decided_at": "2026-09-10"
     },
     "in_1TIjjPHkM2QhTtxhhIpgDohP": {
-      "decision": "uncollectible",
-      "note": "One-time Sept 2026 AR cleanup — allocated to the month the revenue was recognized so a single $30K charge does not distort September.",
-      "decided_at": "2026-09-09",
-      "allocate": "service_month"
+      "decision": "collected_manually",
+      "note": "Paid by two manual half-month charges totalling $616.70 (2026-04 + 2026-05).",
+      "decided_at": "2026-09-10"
     },
     "in_1TJ6DIHkM2QhTtxhiNk3OFn8": {
-      "decision": "uncollectible",
-      "note": "One-time Sept 2026 AR cleanup — allocated to the month the revenue was recognized so a single $30K charge does not distort September.",
-      "decided_at": "2026-09-09",
-      "allocate": "service_month"
+      "decision": "collected_manually",
+      "note": "Paid by manual charge \"April backpayment\" $699 (2026-06).",
+      "decided_at": "2026-09-10"
     },
     "in_1TSA9BHkM2QhTtxhj3HyxYip": {
       "decision": "uncollectible",
@@ -609,16 +603,14 @@
       "allocate": "service_month"
     },
     "in_1TSWbcHkM2QhTtxh9Poh0yEI": {
-      "decision": "uncollectible",
-      "note": "One-time Sept 2026 AR cleanup — allocated to the month the revenue was recognized so a single $30K charge does not distort September.",
-      "decided_at": "2026-09-09",
-      "allocate": "service_month"
+      "decision": "collected_manually",
+      "note": "Paid by manual charge \"Allmoxy Subscription Past Due\" $658 (2026-06). Applied to the OLDEST open balance (May); the June invoice remains written off. Only one $658 payment was received.",
+      "decided_at": "2026-09-10"
     },
     "in_1TTc31HkM2QhTtxhlrPY5AE1": {
-      "decision": "uncollectible",
-      "note": "One-time Sept 2026 AR cleanup — allocated to the month the revenue was recognized so a single $30K charge does not distort September.",
-      "decided_at": "2026-09-09",
-      "allocate": "service_month"
+      "decision": "collected_manually",
+      "note": "Paid by manual charge \"May 5th Allmoxy subscription payment\" $960 (2026-05).",
+      "decided_at": "2026-09-10"
     },
     "in_1TTyVBHkM2QhTtxh6ZWlkUXA": {
       "decision": "uncollectible",

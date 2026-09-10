@@ -23,7 +23,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const CONFIG = path.join(ROOT, '_etl_scripts/ar_collection_overrides.json');
 const SNAP = path.join(ROOT, 'public/snapshots/revenue_recognition.json');
-const VALID = new Set(['uncollectible', 'collectible']);
+// collected_manually = the customer paid by a manual charge outside the invoice, so
+// Stripe never marked it paid. Leaves open AR (nothing to chase) but books NO bad debt.
+const VALID = new Set(['uncollectible', 'collectible', 'collected_manually']);
 
 const cfg = JSON.parse(fs.readFileSync(CONFIG, 'utf8'));
 cfg.decisions = cfg.decisions || {};

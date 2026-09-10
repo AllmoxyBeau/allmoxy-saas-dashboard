@@ -21,15 +21,17 @@ type ArRow = {
   allmoxy_customer_id: number | null; name: string; invoice_id: string | null; invoice_date: string;
   service_month: string; amount: number; status: 'open' | 'uncollectible'; age_days: number;
   collectible: boolean; bookable_writeoff?: boolean; writeoff_month?: string | null;
-  decision?: 'uncollectible' | 'collectible' | null; decision_note?: string | null; decided_at?: string | null;
+  decision?: 'uncollectible' | 'collectible' | 'collected_manually' | null; decision_note?: string | null; decided_at?: string | null;
+  collected_manually?: boolean;
   customer_status?: string | null; customer_mrr?: number; customer_still_paying?: boolean;
   owner?: string | null; owner_email?: string | null;
 };
 type RowSource = 'auto' | 'decided' | 'pending';
-type DecoratedRow = ArRow & { effective: 'collectible' | 'uncollectible'; source: RowSource; pendingNote: string | null };
+type Effective = 'collectible' | 'uncollectible' | 'collected_manually';
+type DecoratedRow = ArRow & { effective: Effective; source: RowSource; pendingNote: string | null };
 type Snap = {
   ar_aging: ArRow[]; ar_total: number;
-  ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; books_go_live: string } | null;
+  ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; collected_manually_total?: number; collected_manually_count?: number; books_go_live: string } | null;
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -39,11 +41,11 @@ function fmtDate(iso: string | null | undefined) { if (!iso) return '—'; const
 // Pending decisions live in the browser until they're applied to
 // _etl_scripts/ar_collection_overrides.json (the deployed site has no backend).
 const STORAGE_KEY = 'allmoxy.ar_collection.pending';
-type PendingMap = Record<string, { decision: 'uncollectible' | 'collectible'; note?: string | null }>;
+type PendingMap = Record<string, { decision: 'uncollectible' | 'collectible' | 'collected_manually'; note?: string | null }>;
 const readPending = (): PendingMap => { try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : {}; } catch { return {}; } };
 const writePending = (m: PendingMap) => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(m)); } catch { /* quota / private mode */ } };
 
-type Filter = 'all' | 'chase' | 'writeoff' | 'decided' | 'undecided';
+type Filter = 'all' | 'chase' | 'writeoff' | 'collected' | 'decided' | 'undecided';
 
 // Every column is sortable. `value` returns a number or string; strings compare with
 // localeCompare so names sort naturally. Defaults are the direction you actually want
@@ -84,7 +86,9 @@ export default function Collections() {
   // Effective state = pending decision > committed decision > age rule.
   const rows = useMemo<DecoratedRow[]>(() => (snap?.ar_aging ?? []).map((r) => {
     const p = r.invoice_id ? pending[r.invoice_id] : undefined;
-    const effective: 'collectible' | 'uncollectible' = p ? p.decision : (r.collectible ? 'collectible' : 'uncollectible');
+    const effective: Effective = p ? p.decision
+      : r.collected_manually ? 'collected_manually'
+      : (r.collectible ? 'collectible' : 'uncollectible');
     const source: RowSource = p ? 'pending' : r.decision ? 'decided' : 'auto';
     return { ...r, effective, source, pendingNote: p?.note ?? null };
   }), [snap, pending]);
@@ -97,6 +101,7 @@ export default function Collections() {
       }
       if (filter === 'chase') return r.effective === 'collectible';
       if (filter === 'writeoff') return r.effective === 'uncollectible';
+      if (filter === 'collected') return r.effective === 'collected_manually';
       if (filter === 'decided') return r.source !== 'auto';
       if (filter === 'undecided') return r.source === 'auto';
       return true;
@@ -118,6 +123,8 @@ export default function Collections() {
     chaseN: rows.filter((r) => r.effective === 'collectible').length,
     writeoff: rows.filter((r) => r.effective === 'uncollectible').reduce((s, r) => s + r.amount, 0),
     writeoffN: rows.filter((r) => r.effective === 'uncollectible').length,
+    collected: rows.filter((r) => r.effective === 'collected_manually').reduce((s, r) => s + r.amount, 0),
+    collectedN: rows.filter((r) => r.effective === 'collected_manually').length,
     live: rows.filter((r) => r.effective === 'collectible' && r.customer_still_paying).reduce((s, r) => s + r.amount, 0),
     pendingN: Object.keys(pending).length,
   }), [rows, pending]);
@@ -128,6 +135,7 @@ export default function Collections() {
     const base = rows.filter((r) => {
       if (filter === 'chase') return r.effective === 'collectible';
       if (filter === 'writeoff') return r.effective === 'uncollectible';
+      if (filter === 'collected') return r.effective === 'collected_manually';
       if (filter === 'decided') return r.source !== 'auto';
       if (filter === 'undecided') return r.source === 'auto';
       return true;
@@ -141,7 +149,7 @@ export default function Collections() {
     return [...m.entries()].sort((a, b) => b[1].amt - a[1].amt);
   }, [rows, filter]);
 
-  const setDecision = (inv: string | null, decision: 'uncollectible' | 'collectible' | null) => {
+  const setDecision = (inv: string | null, decision: 'uncollectible' | 'collectible' | 'collected_manually' | null) => {
     if (!inv) return;
     const next = { ...pending };
     if (decision == null) delete next[inv]; else next[inv] = { decision };
@@ -169,6 +177,9 @@ export default function Collections() {
         <Grid item xs={12} sm={6} md={3}><Kpi label="Chasing" value={USD0.format(t.chase)} hint={`${t.chaseN} invoices still collectible`} color="success.main" loading={isLoading} /></Grid>
         <Grid item xs={12} sm={6} md={3}><Kpi label="Writing off" value={USD0.format(t.writeoff)} hint={`${t.writeoffN} invoices → 4950`} color="error.main" loading={isLoading} /></Grid>
         <Grid item xs={12} sm={6} md={3}><Kpi label="Owed by live customers" value={USD0.format(t.live)} hint="Still paying you — best odds" color="primary.main" loading={isLoading} /></Grid>
+        {t.collectedN > 0 && (
+          <Grid item xs={12} sm={6} md={3}><Kpi label="Collected manually" value={USD0.format(t.collected)} hint={`${t.collectedN} paid outside the invoice — no bad debt`} color="info.main" loading={isLoading} /></Grid>
+        )}
         <Grid item xs={12} sm={6} md={3}><Kpi label="Pending decisions" value={String(t.pendingN)} hint={t.pendingN ? 'Not yet applied' : 'None'} color={t.pendingN ? 'warning.main' : 'text.primary'} loading={isLoading} /></Grid>
       </Grid>
 
@@ -191,6 +202,7 @@ export default function Collections() {
           <TextField select size="small" label="Show" value={filter} onChange={(e) => setFilter(e.target.value as Filter)} sx={{ minWidth: 210 }}>
             <MenuItem value="chase">Chasing ({t.chaseN})</MenuItem>
             <MenuItem value="writeoff">Written off ({t.writeoffN})</MenuItem>
+            <MenuItem value="collected">Collected manually ({t.collectedN})</MenuItem>
             <MenuItem value="undecided">Undecided ({rows.filter((r) => r.source === 'auto').length})</MenuItem>
             <MenuItem value="decided">Decided ({rows.filter((r) => r.source !== 'auto').length})</MenuItem>
             <MenuItem value="all">All ({rows.length})</MenuItem>
@@ -216,7 +228,7 @@ export default function Collections() {
         {filter !== 'chase' && (
           <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-              Viewing <strong>{filter === 'writeoff' ? 'written off' : filter === 'undecided' ? 'undecided' : filter === 'decided' ? 'decided' : 'all'}</strong>.
+              Viewing <strong>{filter === 'writeoff' ? 'written off' : filter === 'collected' ? 'collected manually' : filter === 'undecided' ? 'undecided' : filter === 'decided' ? 'decided' : 'all'}</strong>.
             </Typography>
             <Button size="small" sx={{ py: 0, px: 1, fontSize: 11, textTransform: 'none' }} onClick={() => setFilter('chase')}>Back to chasing</Button>
           </Stack>
