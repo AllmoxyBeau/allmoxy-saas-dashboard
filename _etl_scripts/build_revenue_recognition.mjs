@@ -147,19 +147,64 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
 // which made the waterfall's accrual ending MRR sit ~$1.3–2.7K/mo BELOW the
 // journal entry's recognized revenue. Folded in here so by_month, the accrual
 // series, the waterfall and the JE all agree on one number.
-const directByAidMonth = new Map();   // aid -> { month: $ }  (invoice-basis customers)
-const directUnmapped = {};            // month -> $           (no profile; JE only)
+// Transaction overrides — the SAME file the cash basis uses (apply_transaction_overrides
+// rewrites monthly_history from it). The accrual path used to read the raw balance-
+// transaction cache and ignore them, so every correction already made for the cash basis
+// was silently re-introduced here: Panhandle's $7,658 one-off migration project came back
+// as recurring subscription MRR (fake +$7,658 expansion in 2026-03, fake contraction in
+// 2026-04) even though the override retypes it to services and re-attributes it off
+// Stolbek. Fixed 2026-09-10.
+const TXO = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/transaction_overrides.json'), 'utf8')).overrides || []; }
+  catch { return []; }
+})();
+
+// A direct (non-invoice) charge is ADDITIONAL recurring revenue only when it is a
+// distinct recurring line item: a per-instance "Subscription <host>.allmoxy.com" fee, an
+// extra custom domain, or an AI-token tier. Those legitimately sit alongside the
+// customer's main invoice and must be added (Beau, 2026-09-05).
+//
+// Everything else is the customer paying an amount that was ALREADY INVOICED — and
+// therefore already recognized in the month it was billed. "March backpayment",
+// "Allmoxy Subscription Past Due", "½ April Subscription", "May 5th Allmoxy subscription
+// payment" are collections against open AR, not new revenue. Folding them into
+// recognized revenue double-counted it: LV Service Solutions invoices a flat $699/mo but
+// read $2,097 in 2026-05 and $1,398 in 2026-06; Bella IMC $1,316 in 2026-06; Rta $1,920
+// in 2026-05. Each then "contracted" the next month, inflating BOTH expansion and
+// contraction and understating GRR.
+const RECURRING_DIRECT = /^\s*subscription\s+\S+\.|ai tokens|custom\s*dom/i;
+
+const directRecurring = new Map();    // aid -> { month: $ }  distinct recurring add-on → always additive
+const directPending = new Map();      // aid -> { month: $ }  additive ONLY if no invoice revenue that month
+const directServices = {};            // month -> $           retyped subscription→services by override (JE 4300)
+const directUnmapped = {};            // month -> $           no profile; JE only
+const directAdjustments = [];         // audit trail for the snapshot
 if (BT?.months) {
   for (const [m, bm] of Object.entries(BT.months)) {
     for (const r of (bm.rows || [])) {
       if (r.cat !== 'charge' || r.tt !== 'subscription' || r.inv) continue; // invoice-backed handled by the invoice pass
       const prof = r.cust ? custToProf.get(r.cust) : null;
-      const aid = prof?.allmoxy_customer_id;
+      let aid = prof?.allmoxy_customer_id;
+      // Match an override on month + amount, scoped to either the customer it should
+      // land on or the one the Stripe data wrongly attributes it to.
+      const ov = TXO.find((o) => o.month === m
+        && Math.abs((o.amount ?? -1) - r.amount) < 0.01
+        && (aid == null || aid === o.allmoxy_customer_id || aid === o.source_allmoxy_customer_id)
+        && (!o.txn_created_starts_with || String(r.created || '').startsWith(o.txn_created_starts_with)));
+      if (ov) {
+        if (ov.allmoxy_customer_id != null) aid = ov.allmoxy_customer_id;   // re-attribute
+        if (ov.to === 'services') {                                        // retype → 4300, never MRR
+          directServices[m] = r2((directServices[m] || 0) + r.amount);
+          directAdjustments.push({ month: m, allmoxy_customer_id: aid, amount: r.amount, action: 'retyped_to_services', desc: r.desc });
+          continue;
+        }
+      }
       if (aid == null) { directUnmapped[m] = r2((directUnmapped[m] || 0) + r.amount); continue; }
       if (ANNUAL.has(aid)) continue;                 // annual prepay → 4100, booked separately
       if (!invCustomers.has(aid)) continue;          // charge-basis customer: already in monthly_history
-      if (!directByAidMonth.has(aid)) directByAidMonth.set(aid, {});
-      const o = directByAidMonth.get(aid); o[m] = r2((o[m] || 0) + r.amount);
+      const bucket = RECURRING_DIRECT.test(String(r.desc || '')) ? directRecurring : directPending;
+      if (!bucket.has(aid)) bucket.set(aid, {});
+      const o = bucket.get(aid); o[m] = r2((o[m] || 0) + r.amount);
     }
   }
 }
@@ -211,14 +256,23 @@ function rowFor(aid, m) {
     // keeps ONE number — the waterfall's accrual MRR equals the journal entry's
     // recognized revenue. They're cash-cleared on post, so they add to recognized AND
     // collected and never create a receivable.
-    const direct = r2((directByAidMonth.get(aid) || {})[m] || 0);
-    const recognized = r2(g(recFilled, aid, m) + direct);
+    const invoiceRec = g(recFilled, aid, m);
+    const addOn = r2(g(directRecurring, aid, m));        // distinct recurring item → always revenue
+    const pending = r2(g(directPending, aid, m));
+    // If the invoice series already recognized revenue this month, a non-add-on direct
+    // charge is money against an amount already booked → collection, not new revenue.
+    // If it did NOT (no invoice covering the month), the direct charge IS the month's
+    // revenue and must count, or the customer reads as churned.
+    const directCollection = invoiceRec > 0 ? pending : 0;
+    const direct = r2(addOn + (invoiceRec > 0 ? 0 : pending));
+    const recognized = r2(invoiceRec + direct);
+    // Direct charges clear on post, so they're cash in-period as well as revenue.
     const collected_in_period = r2(g(collIn, aid, m) + direct);
     const collected_after_period = r2(g(collAfter, aid, m));
     const still_open = r2(g(stillOpen, aid, m));
     // Outstanding at the cutoff = everything not cleared by month-end (later-collected + still open).
     const outstanding_at_period_end = r2(Math.max(0, recognized - collected_in_period));
-    return { basis: 'invoice', recognized, collected_in_period, collected_after_period, still_open, outstanding_at_period_end };
+    return { basis: 'invoice', recognized, collected_in_period, collected_after_period, still_open, outstanding_at_period_end, direct_collection: r2(directCollection) };
   }
   const chg = r2(g(chgByAid, aid, m)); // direct-charge: we only know what cleared
   return { basis: 'charge', recognized: chg, collected_in_period: chg, collected_after_period: 0, still_open: 0, outstanding_at_period_end: 0 };
@@ -232,9 +286,12 @@ function rowFor(aid, m) {
 const chgMonthTotal = (m) => r2(PROF.reduce((s, p) => s + (p.monthly_history?.[m]?.subscription || 0), 0));
 const by_month = {};
 for (const m of MONTHS) {
-  let recognized = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, outstanding = 0, annual = 0;
-  for (const aid of allAids) { const r = rowFor(aid, m); recognized += r.recognized; collected_in_period += r.collected_in_period; collected_after_period += r.collected_after_period; still_open += r.still_open; outstanding += r.outstanding_at_period_end; annual += r.annual_deferred || 0; }
-  const prior_ar_collected = r2(priorArCollected[m] || 0);
+  let recognized = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, outstanding = 0, annual = 0, directColl = 0;
+  for (const aid of allAids) { const r = rowFor(aid, m); recognized += r.recognized; collected_in_period += r.collected_in_period; collected_after_period += r.collected_after_period; still_open += r.still_open; outstanding += r.outstanding_at_period_end; annual += r.annual_deferred || 0; directColl += r.direct_collection || 0; }
+  // Manual catch-up charges ("March backpayment") are cash received THIS month against a
+  // PRIOR month's already-recognized invoice. They belong in prior-AR collections, not in
+  // revenue — that keeps cash_received tied to the bank while revenue stays on invoice date.
+  const prior_ar_collected = r2((priorArCollected[m] || 0) + directColl);
   by_month[m] = {
     recognized: r2(recognized),
     cash: r2(chgMonthTotal(m)),                         // charge basis (reference)
@@ -351,6 +408,13 @@ if (BT?.months) {
   for (const m of MONTHS.filter((x) => x >= RECONCILE_FROM)) {
     const bm = BT.months[m]; if (!bm) continue;
     const T = bm.totals;
+    // An override that retypes a direct charge subscription→services has to move it in
+    // the ENTRY too, otherwise Panhandle's one-off migration project credits 4000
+    // Monthly Subscription instead of 4300 Services Income. The balance-transaction
+    // cache classifies charges purely from Stripe metadata, which says 'subscription'.
+    const svcShift = r2(directServices[m] || 0);
+    const subGross = r2(T.subscription_gross - svcShift);
+    const svcGross = r2(T.services_gross + svcShift);
     const rows = bm.rows || [];
     const S = (f) => r2(rows.filter(f).reduce((s, r) => s + r.amount, 0));
     const KNOWN = new Set(['charge', 'refund', 'platform_earning', 'platform_earning_refund', 'fee', 'payout']);
@@ -394,7 +458,7 @@ if (BT?.months) {
     const taxUsed = QB.sales_tax_basis === 'cash' ? taxCash : taxInv;
     const taxTotal = r2(Object.values(taxUsed).reduce((s, v) => s + v, 0));
     const R = r2((by_month[m]?.recognized || 0) + direct);
-    const adj = r2(R + taxTotal - T.subscription_gross);
+    const adj = r2(R + taxTotal - subGross);
     const L = [];
     const line = (acct, debit, credit, description, group) => L.push({ account: `${acct.number} ${acct.name}`, debit: debit ? r2(debit) : null, credit: credit ? r2(credit) : null, description, group });
     const restate = QB.accrual_presentation === 'restate';
@@ -402,8 +466,8 @@ if (BT?.months) {
     line(A.stripe_fee_income, T.payouts, 0, 'Stripe payouts to bank (gross deposits)', 'cash');
     if (T.stripe_balance_change >= 0) line(A.stripe_clearing, 0, T.stripe_balance_change, 'Stripe balance change (payouts exceeded activity)', 'cash');
     else line(A.stripe_clearing, -T.stripe_balance_change, 0, 'Stripe balance change (activity exceeded payouts)', 'cash');
-    line(A.services, 0, T.services_gross, 'Services charges', 'cash');
-    line(A.subscription, 0, restate ? r2(R + taxTotal) : T.subscription_gross, restate ? 'Subscription revenue recognized (invoice basis, incl. sales tax)' : 'Subscription charges (gross, incl. sales tax)', 'cash');
+    line(A.services, 0, svcGross, 'Services charges', 'cash');
+    line(A.subscription, 0, restate ? r2(R + taxTotal) : subGross, restate ? 'Subscription revenue recognized (invoice basis, incl. sales tax)' : 'Subscription charges (gross, incl. sales tax)', 'cash');
     if (T.services_refunds) line(A.services, T.services_refunds, 0, 'Services refunds', 'cash');
     if (T.subscription_refunds) line(A.subscription, T.subscription_refunds, 0, 'Subscription refunds', 'cash');
     if (T.connect_refunds) line(A.stripe_fee_income, T.connect_refunds, 0, 'Connect platform-fee refunds', 'cash');
@@ -483,7 +547,7 @@ if (BT?.months) {
       balance_report,
       inputs: {
         payouts: T.payouts, stripe_balance_change: T.stripe_balance_change,
-        subscription_gross: T.subscription_gross, services_gross: T.services_gross, connect_gross: T.connect_gross,
+        subscription_gross: subGross, services_gross: svcGross, connect_gross: T.connect_gross,
         subscription_refunds: T.subscription_refunds, services_refunds: T.services_refunds, connect_refunds: T.connect_refunds,
         charge_fees: T.charge_fees, other_fees: T.other_fees, untagged_gross: T.untagged_gross,
         recognized_ex_tax: R, recognized_invoice_basis: by_month[m]?.recognized || 0, direct_subscription_charges: direct, direct_rows: directRows,

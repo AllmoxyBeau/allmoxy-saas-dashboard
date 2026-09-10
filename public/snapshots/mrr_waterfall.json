@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-08T17:43:24.849Z",
-  "cachedUntil": "2026-09-08T17:48:24.849Z",
+  "fetchedAt": "2026-09-10T21:13:29.150Z",
+  "cachedUntil": "2026-09-10T21:18:29.150Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -15,17 +15,17 @@
     "2025-05": 4.3,
     "2025-06": 25.9,
     "2025-07": 92.2,
-    "2025-08": 99.8,
-    "2025-09": 100.1,
+    "2025-08": 99.5,
+    "2025-09": 99.9,
     "2025-10": 98.8,
     "2025-11": 101.8,
     "2025-12": 101.2,
     "2026-01": 101,
     "2026-02": 101.7,
-    "2026-03": 103.3,
-    "2026-04": 101.2,
-    "2026-05": 100.4,
-    "2026-06": 100.3,
+    "2026-03": 100.1,
+    "2026-04": 101.1,
+    "2026-05": 98.5,
+    "2026-06": 99.7,
     "2026-07": 99.6,
     "2026-08": 106,
     "2026-09": 103.3
@@ -22146,27 +22146,27 @@
   "monthly_accrual": [
     {
       "month": "2025-09",
-      "starting_mrr": 228029.31,
+      "starting_mrr": 227295.31,
       "new_mrr": 1472.5,
       "reactivated_mrr": 0,
-      "expansion_mrr": 907.15,
-      "contraction_mrr": 2180.36,
+      "expansion_mrr": 397.15,
+      "contraction_mrr": 1446.36,
       "churn_mrr": 899,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 227329.6,
-      "net_new_mrr": -699.71,
+      "ending_mrr": 226819.6,
+      "net_new_mrr": -475.71,
       "new_logos": 4,
       "reactivated_logos": 0,
       "churned_logos": 1,
       "voided_logos": 0,
       "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.0039,
-      "net_churn_rate_monthly": 0.0095,
-      "expansion_rate_monthly": 0.004,
-      "grr_monthly": 0.9865,
-      "nrr_monthly": 0.9905,
-      "quick_ratio": 0.77,
+      "gross_churn_rate_monthly": 0.004,
+      "net_churn_rate_monthly": 0.0086,
+      "expansion_rate_monthly": 0.0017,
+      "grr_monthly": 0.9897,
+      "nrr_monthly": 0.9914,
+      "quick_ratio": 0.8,
       "details": {
         "new": [
           {
@@ -22192,27 +22192,6 @@
         ],
         "reactivated": [],
         "expansion": [
-          {
-            "name": "Conquest Cabinetry",
-            "id": 539,
-            "prev_mrr": 250,
-            "new_mrr": 449.5,
-            "delta": 199.5
-          },
-          {
-            "name": "Dovetail Wood Traditions",
-            "id": 541,
-            "prev_mrr": 500,
-            "new_mrr": 660.5,
-            "delta": 160.5
-          },
-          {
-            "name": "Cornish Custom Cabinets",
-            "id": 533,
-            "prev_mrr": 250,
-            "new_mrr": 400,
-            "delta": 150
-          },
           {
             "name": "NJ Drawers",
             "id": 159,
@@ -22258,20 +22237,6 @@
             "delta": 1199
           },
           {
-            "name": "Peterman Lumber",
-            "id": 329,
-            "prev_mrr": 2140,
-            "new_mrr": 1756,
-            "delta": 384
-          },
-          {
-            "name": "Lewis Cabinet Specialties Group LLC",
-            "id": 1,
-            "prev_mrr": 7809.2,
-            "new_mrr": 7459.2,
-            "delta": 350
-          },
-          {
             "name": "Midwest Floor Coverings",
             "id": 211,
             "prev_mrr": 1424.64,
@@ -22299,27 +22264,27 @@
     },
     {
       "month": "2025-10",
-      "starting_mrr": 227329.6,
+      "starting_mrr": 226819.6,
       "new_mrr": 870,
       "reactivated_mrr": 0,
       "expansion_mrr": 1228.06,
-      "contraction_mrr": 810.38,
+      "contraction_mrr": 300.38,
       "churn_mrr": 0,
       "voided_mrr": 0,
       "delinquent_mrr": 1421.5,
       "ending_mrr": 227195.78,
-      "net_new_mrr": -133.82,
+      "net_new_mrr": 376.18,
       "new_logos": 3,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
       "delinquent_logos": 2,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": -0.0018,
+      "net_churn_rate_monthly": -0.0041,
       "expansion_rate_monthly": 0.0054,
-      "grr_monthly": 0.9964,
-      "nrr_monthly": 1.0018,
-      "quick_ratio": 2.59,
+      "grr_monthly": 0.9987,
+      "nrr_monthly": 1.0041,
+      "quick_ratio": 6.98,
       "details": {
         "new": [
           {
@@ -22411,27 +22376,6 @@
             "prev_mrr": 1399,
             "new_mrr": 1099,
             "delta": 300
-          },
-          {
-            "name": "Conquest Cabinetry",
-            "id": 539,
-            "prev_mrr": 449.5,
-            "new_mrr": 250,
-            "delta": 199.5
-          },
-          {
-            "name": "Dovetail Wood Traditions",
-            "id": 541,
-            "prev_mrr": 660.5,
-            "new_mrr": 500,
-            "delta": 160.5
-          },
-          {
-            "name": "Cornish Custom Cabinets",
-            "id": 533,
-            "prev_mrr": 400,
-            "new_mrr": 250,
-            "delta": 150
           },
           {
             "name": "Raumplus",
@@ -22619,24 +22563,24 @@
       "starting_mrr": 231961.02,
       "new_mrr": 1104,
       "reactivated_mrr": 0,
-      "expansion_mrr": 453.1,
+      "expansion_mrr": 303.1,
       "contraction_mrr": 2307.57,
       "churn_mrr": 3483.4,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 227727.15,
-      "net_new_mrr": -4233.87,
+      "ending_mrr": 227577.15,
+      "net_new_mrr": -4383.87,
       "new_logos": 2,
       "reactivated_logos": 0,
       "churned_logos": 7,
       "voided_logos": 0,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0.015,
-      "net_churn_rate_monthly": 0.023,
-      "expansion_rate_monthly": 0.002,
+      "net_churn_rate_monthly": 0.0237,
+      "expansion_rate_monthly": 0.0013,
       "grr_monthly": 0.975,
-      "nrr_monthly": 0.977,
-      "quick_ratio": 0.27,
+      "nrr_monthly": 0.9763,
+      "quick_ratio": 0.24,
       "details": {
         "new": [
           {
@@ -22652,13 +22596,6 @@
         ],
         "reactivated": [],
         "expansion": [
-          {
-            "name": "B & L Cabinets",
-            "id": 2025,
-            "prev_mrr": 370,
-            "new_mrr": 520,
-            "delta": 150
-          },
           {
             "name": "Nexis3",
             "id": 304,
@@ -22768,27 +22705,27 @@
     },
     {
       "month": "2026-01",
-      "starting_mrr": 227727.15,
+      "starting_mrr": 227577.15,
       "new_mrr": 1243,
       "reactivated_mrr": 0,
       "expansion_mrr": 1654.48,
-      "contraction_mrr": 1892.04,
+      "contraction_mrr": 1742.04,
       "churn_mrr": 1169,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
       "ending_mrr": 227563.59,
-      "net_new_mrr": -163.56,
+      "net_new_mrr": -13.56,
       "new_logos": 5,
       "reactivated_logos": 0,
       "churned_logos": 3,
       "voided_logos": 0,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0.0051,
-      "net_churn_rate_monthly": 0.0062,
+      "net_churn_rate_monthly": 0.0055,
       "expansion_rate_monthly": 0.0073,
-      "grr_monthly": 0.9866,
-      "nrr_monthly": 0.9938,
-      "quick_ratio": 0.95,
+      "grr_monthly": 0.9872,
+      "nrr_monthly": 0.9945,
+      "quick_ratio": 1,
       "details": {
         "new": [
           {
@@ -22918,13 +22855,6 @@
             "prev_mrr": 500,
             "new_mrr": 250,
             "delta": 250
-          },
-          {
-            "name": "B & L Cabinets",
-            "id": 2025,
-            "prev_mrr": 520,
-            "new_mrr": 370,
-            "delta": 150
           },
           {
             "name": "Raumplus",
@@ -23080,24 +23010,24 @@
       "starting_mrr": 227955.57,
       "new_mrr": 5150,
       "reactivated_mrr": 0,
-      "expansion_mrr": 11525.23,
+      "expansion_mrr": 3867.23,
       "contraction_mrr": 99,
       "churn_mrr": 620,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 243911.8,
-      "net_new_mrr": 15956.23,
+      "ending_mrr": 236253.8,
+      "net_new_mrr": 8298.23,
       "new_logos": 5,
       "reactivated_logos": 0,
       "churned_logos": 2,
       "voided_logos": 0,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0.0027,
-      "net_churn_rate_monthly": -0.0474,
-      "expansion_rate_monthly": 0.0506,
+      "net_churn_rate_monthly": -0.0138,
+      "expansion_rate_monthly": 0.017,
       "grr_monthly": 0.9968,
-      "nrr_monthly": 1.0474,
-      "quick_ratio": 23.19,
+      "nrr_monthly": 1.0138,
+      "quick_ratio": 12.54,
       "details": {
         "new": [
           {
@@ -23128,13 +23058,6 @@
         ],
         "reactivated": [],
         "expansion": [
-          {
-            "name": "Panhandle Door Inc.",
-            "id": 38,
-            "prev_mrr": 6024,
-            "new_mrr": 13682,
-            "delta": 7658
-          },
           {
             "name": "Midwest Floor Coverings",
             "id": 211,
@@ -23212,27 +23135,27 @@
     },
     {
       "month": "2026-04",
-      "starting_mrr": 243911.8,
+      "starting_mrr": 236253.8,
       "new_mrr": 3050,
       "reactivated_mrr": 0,
-      "expansion_mrr": 427.35,
-      "contraction_mrr": 13328.09,
+      "expansion_mrr": 119,
+      "contraction_mrr": 5670.09,
       "churn_mrr": 1448.8,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 232612.26,
-      "net_new_mrr": -11299.54,
+      "ending_mrr": 232303.91,
+      "net_new_mrr": -3949.89,
       "new_logos": 4,
       "reactivated_logos": 0,
       "churned_logos": 3,
       "voided_logos": 0,
       "delinquent_logos": 0,
-      "gross_churn_rate_monthly": 0.0059,
-      "net_churn_rate_monthly": 0.0588,
-      "expansion_rate_monthly": 0.0018,
-      "grr_monthly": 0.9394,
-      "nrr_monthly": 0.9412,
-      "quick_ratio": 0.24,
+      "gross_churn_rate_monthly": 0.0061,
+      "net_churn_rate_monthly": 0.0296,
+      "expansion_rate_monthly": 0.0005,
+      "grr_monthly": 0.9699,
+      "nrr_monthly": 0.9704,
+      "quick_ratio": 0.45,
       "details": {
         "new": [
           {
@@ -23259,13 +23182,6 @@
         "reactivated": [],
         "expansion": [
           {
-            "name": "Big Timber Millworks",
-            "id": 527,
-            "prev_mrr": 575,
-            "new_mrr": 883.35,
-            "delta": 308.35
-          },
-          {
             "name": "Cabinet Doors USA",
             "id": 545,
             "prev_mrr": 1083,
@@ -23281,13 +23197,6 @@
           }
         ],
         "contraction": [
-          {
-            "name": "Panhandle Door Inc.",
-            "id": 38,
-            "prev_mrr": 13682,
-            "new_mrr": 6024,
-            "delta": 7658
-          },
           {
             "name": "Midwest Floor Coverings",
             "id": 211,
@@ -23347,27 +23256,27 @@
     },
     {
       "month": "2026-05",
-      "starting_mrr": 232612.26,
+      "starting_mrr": 232303.91,
       "new_mrr": 830,
       "reactivated_mrr": 0,
-      "expansion_mrr": 4869.18,
+      "expansion_mrr": 813.18,
       "contraction_mrr": 3825,
       "churn_mrr": 3865,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
-      "ending_mrr": 230621.44,
-      "net_new_mrr": -1990.82,
+      "ending_mrr": 226257.09,
+      "net_new_mrr": -6046.82,
       "new_logos": 2,
       "reactivated_logos": 0,
       "churned_logos": 6,
       "voided_logos": 0,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0.0166,
-      "net_churn_rate_monthly": 0.0121,
-      "expansion_rate_monthly": 0.0209,
+      "net_churn_rate_monthly": 0.0296,
+      "expansion_rate_monthly": 0.0035,
       "grr_monthly": 0.9669,
-      "nrr_monthly": 0.9879,
-      "quick_ratio": 0.74,
+      "nrr_monthly": 0.9704,
+      "quick_ratio": 0.21,
       "details": {
         "new": [
           {
@@ -23383,27 +23292,6 @@
         ],
         "reactivated": [],
         "expansion": [
-          {
-            "name": "Rehau Pty Ltd",
-            "id": 489,
-            "prev_mrr": 849,
-            "new_mrr": 2547,
-            "delta": 1698
-          },
-          {
-            "name": "LV SERVICE SOLUTIONS",
-            "id": 391,
-            "prev_mrr": 699,
-            "new_mrr": 2097,
-            "delta": 1398
-          },
-          {
-            "name": "Rta Cabinetry Inc",
-            "id": 160,
-            "prev_mrr": 960,
-            "new_mrr": 1920,
-            "delta": 960
-          },
           {
             "name": "Midwest Floor Coverings",
             "id": 211,
@@ -23430,8 +23318,8 @@
           {
             "name": "Big Timber Millworks",
             "id": 527,
-            "prev_mrr": 883.35,
-            "new_mrr": 558.35,
+            "prev_mrr": 575,
+            "new_mrr": 250,
             "delta": 325
           }
         ],
@@ -23473,27 +23361,27 @@
     },
     {
       "month": "2026-06",
-      "starting_mrr": 230621.44,
+      "starting_mrr": 226257.09,
       "new_mrr": 400,
       "reactivated_mrr": 0,
-      "expansion_mrr": 1530.4,
-      "contraction_mrr": 4695.35,
+      "expansion_mrr": 872.4,
+      "contraction_mrr": 1030,
       "churn_mrr": 0,
       "voided_mrr": 250,
       "delinquent_mrr": 0,
-      "ending_mrr": 227606.49,
-      "net_new_mrr": -3014.95,
+      "ending_mrr": 226249.49,
+      "net_new_mrr": -7.6,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 1,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0137,
-      "expansion_rate_monthly": 0.0066,
-      "grr_monthly": 0.9796,
-      "nrr_monthly": 0.9863,
-      "quick_ratio": 0.41,
+      "net_churn_rate_monthly": 0.0007,
+      "expansion_rate_monthly": 0.0039,
+      "grr_monthly": 0.9954,
+      "nrr_monthly": 0.9993,
+      "quick_ratio": 1.24,
       "details": {
         "new": [
           {
@@ -23504,13 +23392,6 @@
         ],
         "reactivated": [],
         "expansion": [
-          {
-            "name": "Bella Imc",
-            "id": 31,
-            "prev_mrr": 658,
-            "new_mrr": 1316,
-            "delta": 658
-          },
           {
             "name": "Wurth LAC",
             "id": 113,
@@ -23542,39 +23423,11 @@
         ],
         "contraction": [
           {
-            "name": "Rehau Pty Ltd",
-            "id": 489,
-            "prev_mrr": 2547,
-            "new_mrr": 849,
-            "delta": 1698
-          },
-          {
-            "name": "Rta Cabinetry Inc",
-            "id": 160,
-            "prev_mrr": 1920,
-            "new_mrr": 960,
-            "delta": 960
-          },
-          {
-            "name": "LV SERVICE SOLUTIONS",
-            "id": 391,
-            "prev_mrr": 2097,
-            "new_mrr": 1398,
-            "delta": 699
-          },
-          {
             "name": "Hingeworks",
             "id": 551,
             "prev_mrr": 580,
             "new_mrr": 270,
             "delta": 310
-          },
-          {
-            "name": "Big Timber Millworks",
-            "id": 527,
-            "prev_mrr": 558.35,
-            "new_mrr": 250,
-            "delta": 308.35
           },
           {
             "name": "Slide A Shelf",
@@ -23620,27 +23473,27 @@
     },
     {
       "month": "2026-07",
-      "starting_mrr": 227606.49,
+      "starting_mrr": 226249.49,
       "new_mrr": 475,
       "reactivated_mrr": 0,
       "expansion_mrr": 1569.69,
-      "contraction_mrr": 2467.99,
+      "contraction_mrr": 1110.99,
       "churn_mrr": 635,
       "voided_mrr": 0,
       "delinquent_mrr": 0,
       "ending_mrr": 226548.19,
-      "net_new_mrr": -1058.3,
+      "net_new_mrr": 298.7,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 2,
       "voided_logos": 0,
       "delinquent_logos": 0,
       "gross_churn_rate_monthly": 0.0028,
-      "net_churn_rate_monthly": 0.0067,
+      "net_churn_rate_monthly": 0.0008,
       "expansion_rate_monthly": 0.0069,
-      "grr_monthly": 0.9864,
-      "nrr_monthly": 0.9933,
-      "quick_ratio": 0.66,
+      "grr_monthly": 0.9923,
+      "nrr_monthly": 0.9992,
+      "quick_ratio": 1.17,
       "details": {
         "new": [
           {
@@ -23716,20 +23569,6 @@
           }
         ],
         "contraction": [
-          {
-            "name": "LV SERVICE SOLUTIONS",
-            "id": 391,
-            "prev_mrr": 1398,
-            "new_mrr": 699,
-            "delta": 699
-          },
-          {
-            "name": "Bella Imc",
-            "id": 31,
-            "prev_mrr": 1316,
-            "new_mrr": 658,
-            "delta": 658
-          },
           {
             "name": "Imab Living",
             "id": 462,
@@ -23886,21 +23725,21 @@
     "windowStart": "2025-09",
     "windowEnd": "2026-08",
     "months": 12,
-    "starting_mrr": 228029.31,
+    "starting_mrr": 227295.31,
     "ending_mrr": 225312.8,
     "new_mrr": 20210.5,
     "reactivated_mrr": 0,
-    "expansion_mrr": 32775.06,
-    "contraction_mrr": 36271.57,
+    "expansion_mrr": 19434.71,
+    "contraction_mrr": 22197.22,
     "churn_mrr": 14596,
     "voided_mrr": 3070,
     "delinquent_mrr": 1764.5,
-    "net_new_mrr": -2716.51,
-    "gross_mrr_churn_ttm": 0.064,
-    "annual_gross_churn_rate": 0.0611,
-    "annual_grr": 0.8026,
-    "annual_nrr": 0.9282,
-    "quick_ratio": 1.04
+    "net_new_mrr": -1982.51,
+    "gross_mrr_churn_ttm": 0.0642,
+    "annual_gross_churn_rate": 0.0614,
+    "annual_grr": 0.8516,
+    "annual_nrr": 0.9284,
+    "quick_ratio": 1.08
   },
   "notes": "MRR waterfall on two bases. CASH (monthly/ttm) = customer_profiles.monthly_history — what cleared Stripe, boundary-slip corrected, full history; use for bank reconciliation. ACCRUAL (monthly_accrual/ttm_accrual) = revenue_recognition.accrual_series — what was BILLED by invoice date, so a card failure is an open receivable rather than churn; use for retention metrics. Accrual starts 2025-08 because Stripe-invoice coverage before mid-2025 is 4–28% of actual revenue (Allmoxy migrated to invoicing then). New = customer first appears with MRR > 0; Reactivated = billed before, returning. Churn = confirmed-churned (status churned). Voided = dropped to $0 with a VOIDED invoice for the period — billing intentionally canceled, nothing owed (not dunning). Delinquent = dropped to $0, still billable, did not clear (card failure / non-payment) — may still pay. All three reduce ending MRR but are reported separately. Sales tax is EXCLUDED on both bases: it is a pass-through liability, not revenue. Accrual sums pre-tax invoice lines; cash has collected tax subtracted by the invoice paid month (~1.5% of gross, ~$3.4K/mo). Services and Connect revenue are NOT included — subscription only.",
   "sales_tax_excluded": true
