@@ -59,8 +59,13 @@ function safeEqual(a, b) {
 }
 
 export default function middleware(request) {
-  const expected = process.env.DASHBOARD_PASSWORD;
-  const expectedUser = process.env.DASHBOARD_USER || DEFAULT_USER;
+  // Trim the CONFIGURED values (not what the caller submits). Pasting a secret into a
+  // dashboard field routinely carries a trailing newline or space; it is invisible in
+  // the UI and then rejects every login attempt with no way to see why. Surrounding
+  // whitespace is not a meaningful part of a shared password, so stripping it is the
+  // right trade — it removes a silent lockout without weakening anything.
+  const expected = (process.env.DASHBOARD_PASSWORD || '').trim();
+  const expectedUser = (process.env.DASHBOARD_USER || '').trim() || DEFAULT_USER;
 
   if (!expected) {
     return deny(503, 'Dashboard unavailable: DASHBOARD_PASSWORD is not configured.', false);
