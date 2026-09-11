@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-10T22:53:58.047Z",
-  "cachedUntil": "2026-09-10T22:58:58.047Z",
+  "fetchedAt": "2026-09-11T14:27:39.915Z",
+  "cachedUntil": "2026-09-11T14:32:39.915Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -27,8 +27,8 @@
     "2026-05": 98.5,
     "2026-06": 99.7,
     "2026-07": 99.6,
-    "2026-08": 106,
-    "2026-09": 103.3
+    "2026-08": 112.1,
+    "2026-09": 104.1
   },
   "monthly": [
     {
@@ -7450,7 +7450,7 @@
             "id": 160,
             "mrr": 250,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           },
           {
             "name": "Whitson Brothers LLC",
@@ -11149,7 +11149,7 @@
             "id": 160,
             "mrr": 250,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           }
         ]
       }
@@ -19891,7 +19891,7 @@
             "id": 543,
             "mrr": 1500,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           },
           {
             "name": "Imab Living",
@@ -21957,23 +21957,23 @@
       "new_mrr": 419,
       "reactivated_mrr": 950,
       "expansion_mrr": 3844.19,
-      "contraction_mrr": 11368.59,
+      "contraction_mrr": 9608.59,
       "churn_mrr": 0,
       "voided_mrr": 2320,
-      "delinquent_mrr": 6406,
-      "ending_mrr": 212622.6,
-      "net_new_mrr": -14881.4,
+      "delinquent_mrr": 19810.7,
+      "ending_mrr": 200977.9,
+      "net_new_mrr": -26526.1,
       "new_logos": 1,
       "reactivated_logos": 3,
       "churned_logos": 0,
       "voided_logos": 2,
-      "delinquent_logos": 5,
+      "delinquent_logos": 10,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0331,
+      "net_churn_rate_monthly": 0.0253,
       "expansion_rate_monthly": 0.0169,
-      "grr_monthly": 0.95,
-      "nrr_monthly": 0.9669,
-      "quick_ratio": 0.37,
+      "grr_monthly": 0.9578,
+      "nrr_monthly": 0.9747,
+      "quick_ratio": 0.44,
       "details": {
         "new": [
           {
@@ -22038,13 +22038,6 @@
             "delta": 7414.2
           },
           {
-            "name": "Dot Custom Cabinets LLC",
-            "id": 385,
-            "prev_mrr": 1809,
-            "new_mrr": 49,
-            "delta": 1760
-          },
-          {
             "name": "Midwest Floor Coverings",
             "id": 211,
             "prev_mrr": 3820.79,
@@ -22085,6 +22078,20 @@
         ],
         "delinquent": [
           {
+            "name": "Drawer Box Specialties",
+            "id": 36,
+            "mrr": 6000,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Greyloch, LLC.",
+            "id": 136,
+            "mrr": 4687,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
             "name": "Cabredo LLC",
             "id": 164,
             "mrr": 3299,
@@ -22092,11 +22099,18 @@
             "pay_status": "Active"
           },
           {
+            "name": "Dot Custom Cabinets LLC",
+            "id": 385,
+            "mrr": 1809,
+            "status": "at_risk",
+            "pay_status": "Active - Card Failure"
+          },
+          {
             "name": "Vlux",
             "id": 543,
             "mrr": 1500,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           },
           {
             "name": "Staley Custom Cabinets",
@@ -22109,8 +22123,22 @@
             "name": "Bella Imc",
             "id": 31,
             "mrr": 658,
-            "status": "non_payment",
+            "status": "at_risk",
             "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "S&S Signature Millworks, Inc.",
+            "id": 298,
+            "mrr": 618.7,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Webster Door Company",
+            "id": 107,
+            "mrr": 290,
+            "status": "active",
+            "pay_status": "Active"
           },
           {
             "name": "Urbania Cabinets",
@@ -22128,20 +22156,20 @@
     "windowEnd": "2026-08",
     "months": 12,
     "starting_mrr": 228113.9,
-    "ending_mrr": 212622.6,
+    "ending_mrr": 200977.9,
     "new_mrr": 18795,
     "reactivated_mrr": 22245.58,
     "expansion_mrr": 26947.16,
-    "contraction_mrr": 42580.62,
+    "contraction_mrr": 40820.62,
     "churn_mrr": 15365,
     "voided_mrr": 2570,
-    "delinquent_mrr": 22963.42,
-    "net_new_mrr": -15491.3,
+    "delinquent_mrr": 36368.12,
+    "net_new_mrr": -27136,
     "gross_mrr_churn_ttm": 0.0674,
     "annual_gross_churn_rate": 0.0652,
-    "annual_grr": 0.7743,
-    "annual_nrr": 0.8734,
-    "quick_ratio": 0.79
+    "annual_grr": 0.7805,
+    "annual_nrr": 0.8803,
+    "quick_ratio": 0.81
   },
   "monthly_accrual": [
     {
@@ -22502,17 +22530,17 @@
             "delta": 250
           },
           {
-            "name": "Mountain Showcase Group, Inc.",
-            "id": 500,
-            "prev_mrr": 1805,
-            "new_mrr": 1990,
-            "delta": 185
-          },
-          {
             "name": "New York Door & Drawer",
             "id": 198,
             "prev_mrr": 2085,
             "new_mrr": 2270,
+            "delta": 185
+          },
+          {
+            "name": "Mountain Showcase Group, Inc.",
+            "id": 500,
+            "prev_mrr": 1805,
+            "new_mrr": 1990,
             "delta": 185
           },
           {
@@ -22921,13 +22949,13 @@
             "mrr": 417
           },
           {
-            "name": "Montouro Woodwork",
-            "id": 2049,
+            "name": "Paquette Cabinetry",
+            "id": 2050,
             "mrr": 250
           },
           {
-            "name": "Paquette Cabinetry",
-            "id": 2050,
+            "name": "Montouro Woodwork",
+            "id": 2049,
             "mrr": 250
           },
           {
@@ -23036,6 +23064,11 @@
             "mrr": 4200
           },
           {
+            "name": "Batesville Cabinet Company",
+            "id": 2052,
+            "mrr": 250
+          },
+          {
             "name": "Five Cabinetry",
             "id": 2056,
             "mrr": 250
@@ -23043,11 +23076,6 @@
           {
             "name": "Top Design Closets",
             "id": 2059,
-            "mrr": 250
-          },
-          {
-            "name": "Batesville Cabinet Company",
-            "id": 2052,
             "mrr": 250
           },
           {
