@@ -1,7 +1,7 @@
 {
-  "fetched_at": "2026-09-14T15:17:22.150Z",
-  "total": 24,
-  "passed": 19,
+  "fetched_at": "2026-09-14T16:29:44.549Z",
+  "total": 28,
+  "passed": 23,
   "errors": 1,
   "warnings": 4,
   "status": "red",
@@ -199,6 +199,34 @@
       "severity": "error",
       "passed": true,
       "detail": "2712 paid invoices since 2025-08 all reconcile to a cached charge",
+      "examples": []
+    },
+    {
+      "name": "customer base: MRR equals the sum of the counted members",
+      "severity": "error",
+      "passed": true,
+      "detail": "197 customers reconcile to $228,486 MRR (ARPA $1,160)",
+      "examples": []
+    },
+    {
+      "name": "customer base: no customer is counted twice",
+      "severity": "error",
+      "passed": true,
+      "detail": "197 distinct customers, no duplicates",
+      "examples": []
+    },
+    {
+      "name": "customer base: every counted customer traces to invoiced or annual revenue",
+      "severity": "error",
+      "passed": true,
+      "detail": "all 197 trace to a source (195 invoiced, 2 annual_amortized)",
+      "examples": []
+    },
+    {
+      "name": "customer base MRR reconciles to the accrual waterfall",
+      "severity": "warn",
+      "passed": true,
+      "detail": "$228,486 = waterfall $225,313 + $3,173 annual amortization",
       "examples": []
     }
   ]

@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-09-14T15:08:02.652Z",
-  "jira_fetchedAt": "2026-09-14T15:08:00.245Z",
+  "fetchedAt": "2026-09-14T16:38:34.745Z",
+  "jira_fetchedAt": "2026-09-14T16:38:33.234Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4336,
-    "open_tickets": 926,
+    "total_tickets": 4338,
+    "open_tickets": 928,
     "done_tickets": 3410,
-    "tickets_with_matched_customer": 2117,
-    "open_mrr_at_stake": 2797758.5,
+    "tickets_with_matched_customer": 2118,
+    "open_mrr_at_stake": 2802445.5,
     "distinct_customers_tagged": 151,
     "unmatched_labels": [
       "2020",
@@ -2531,7 +2531,7 @@
         }
       ],
       "created": "2025-09-26",
-      "updated": "2026-09-09",
+      "updated": "2026-09-14",
       "resolved": "2026-08-14",
       "url": "https://allmoxy.atlassian.net/browse/DEV-10960",
       "tag_count": 18,
@@ -17234,7 +17234,7 @@
         }
       ],
       "created": "2026-03-31",
-      "updated": "2026-09-11",
+      "updated": "2026-09-14",
       "resolved": "2026-06-18",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11858",
       "tag_count": 2,
@@ -42837,6 +42837,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-13121",
+      "summary": "Greyloch Sandbox Data Update",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 186,
+      "customers": [
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 228661.31,
+          "status": "at_risk"
+        }
+      ],
+      "created": "2026-09-14",
+      "updated": "2026-09-14",
+      "resolved": "2026-09-14",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13121",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 4687,
+      "total_arr": 56244,
+      "total_lifetime": 228661.31,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-12876",
       "summary": "Greyloch order page times out when loading a large order",
       "status": "Resolved",
@@ -54718,7 +54747,7 @@
         }
       ],
       "created": "2026-09-11",
-      "updated": "2026-09-11",
+      "updated": "2026-09-14",
       "resolved": "2026-09-11",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13112",
       "tag_count": 1,
@@ -60550,7 +60579,7 @@
     {
       "key": "DEV-7408",
       "summary": "Edit Purchase Orders",
-      "status": "Ready For QA",
+      "status": "In Progress",
       "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "High",
@@ -63833,35 +63862,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-7227",
-      "summary": "Link POs to orders",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Billable Task",
-      "priority": "High",
-      "issue_score": 275,
-      "customers": [
-        {
-          "allmoxy_customer_id": 19,
-          "name": "Trimart",
-          "mrr": 650,
-          "lifetime": 68429.09,
-          "status": "active"
-        }
-      ],
-      "created": "2023-10-30",
-      "updated": "2026-09-14",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-7227",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 650,
-      "total_arr": 7800,
-      "total_lifetime": 68429.09,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-8038",
       "summary": "Add reply address on POs",
       "status": "Ready For QA",
@@ -63882,6 +63882,35 @@
       "updated": "2026-09-14",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-8038",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 650,
+      "total_arr": 7800,
+      "total_lifetime": 68429.09,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-7227",
+      "summary": "Link POs to orders",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Billable Task",
+      "priority": "High",
+      "issue_score": 275,
+      "customers": [
+        {
+          "allmoxy_customer_id": 19,
+          "name": "Trimart",
+          "mrr": 650,
+          "lifetime": 68429.09,
+          "status": "active"
+        }
+      ],
+      "created": "2023-10-30",
+      "updated": "2026-09-14",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-7227",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -74898,6 +74927,305 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-11865",
+      "summary": "Staging - can't get around PO send to address even when NOT sending the PO",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [],
+      "created": "2026-04-01",
+      "updated": "2026-09-14",
+      "resolved": "2026-04-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11865",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-11677",
+      "summary": "Staging - can't create PO",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 743,
+      "customers": [],
+      "created": "2026-03-04",
+      "updated": "2026-09-14",
+      "resolved": "2026-03-16",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11677",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-8516",
+      "summary": "DEV: Move page values from attr to hidden inputs/ in designated file",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 175,
+      "customers": [],
+      "created": "2024-07-12",
+      "updated": "2026-09-14",
+      "resolved": "2024-08-29",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8516",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-7627",
+      "summary": "Improvements to new PO/email page",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 155,
+      "customers": [],
+      "created": "2024-01-19",
+      "updated": "2026-09-14",
+      "resolved": "2025-03-26",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-7627",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-12831",
+      "summary": "BTJ Cabinet Door Company — Invoice output page Order Totals read $0.00 while line items on the same page total $1,763.25",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 630,
+      "customers": [],
+      "created": "2026-08-18",
+      "updated": "2026-09-14",
+      "resolved": "2026-08-19",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12831",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "btjdoors"
+      ]
+    },
+    {
+      "key": "DEV-13058",
+      "summary": "BTJ Cabinet Door Company — Invoice output page Order Totals read $0.00 Subtotal while line item totals $207.60, order #35104",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 685,
+      "customers": [],
+      "created": "2026-09-09",
+      "updated": "2026-09-14",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13058",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "btj"
+      ]
+    },
+    {
+      "key": "DEV-11797",
+      "summary": "Create Purchase Order Button Greyed Out",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 808,
+      "customers": [],
+      "created": "2026-03-17",
+      "updated": "2026-09-14",
+      "resolved": "2026-04-07",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11797",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "LifeSpanClosets"
+      ]
+    },
+    {
+      "key": "DEV-8705",
+      "summary": "Itemized order \"other costs\" do not show up on output pages",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 398,
+      "customers": [],
+      "created": "2024-08-14",
+      "updated": "2026-09-14",
+      "resolved": "2026-05-20",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8705",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-13062",
+      "summary": "Cutting Edge Doors & Woodworking — Customer cannot create a purchase order, blocked by \"Errors on this page\" validation banner",
+      "status": "Closed",
+      "stage_category": "Done",
+      "issue_type": "Investigate",
+      "priority": "Low",
+      "issue_score": null,
+      "customers": [],
+      "created": "2026-09-09",
+      "updated": "2026-09-14",
+      "resolved": "2026-09-09",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13062",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "cuttingedge"
+      ]
+    },
+    {
+      "key": "DEV-6916",
+      "summary": "Phone input fields with country code and number formatting",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 432,
+      "customers": [],
+      "created": "2023-09-13",
+      "updated": "2026-09-14",
+      "resolved": "2026-02-17",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6916",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-12712",
+      "summary": "Include Product ID as variable for part export formulas",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 278,
+      "customers": [],
+      "created": "2026-08-10",
+      "updated": "2026-09-14",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12712",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Fryburg"
+      ]
+    },
+    {
+      "key": "DEV-12671",
+      "summary": "Batch Print - V2",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 252,
+      "customers": [],
+      "created": "2026-08-06",
+      "updated": "2026-09-14",
+      "resolved": "2026-08-06",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-12671",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "dbs"
+      ]
+    },
+    {
+      "key": "DEV-13122",
+      "summary": "Corona Millworks — Display Issue: Category tree names that wrap to multiple lines overlap the row below",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 685,
+      "customers": [],
+      "created": "2026-09-14",
+      "updated": "2026-09-14",
+      "resolved": "2026-09-14",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13122",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "cmw"
+      ]
+    },
+    {
       "key": "DEV-13120",
       "summary": "Kitch (mykitch) — My Home page redirects to an error page loading Jocelyn Jones's account",
       "status": "New",
@@ -74941,167 +75269,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ifccinc"
-      ]
-    },
-    {
-      "key": "DEV-13058",
-      "summary": "BTJ Cabinet Door Company — Invoice output page Order Totals read $0.00 Subtotal while line item totals $207.60, order #35104",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 685,
-      "customers": [],
-      "created": "2026-09-09",
-      "updated": "2026-09-14",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13058",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "btj"
-      ]
-    },
-    {
-      "key": "DEV-7627",
-      "summary": "Improvements to new PO/email page",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 155,
-      "customers": [],
-      "created": "2024-01-19",
-      "updated": "2026-09-14",
-      "resolved": "2025-03-26",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-7627",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-11865",
-      "summary": "Staging - can't get around PO send to address even when NOT sending the PO",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 706,
-      "customers": [],
-      "created": "2026-04-01",
-      "updated": "2026-09-14",
-      "resolved": "2026-04-21",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11865",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-8516",
-      "summary": "DEV: Move page values from attr to hidden inputs/ in designated file",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 175,
-      "customers": [],
-      "created": "2024-07-12",
-      "updated": "2026-09-14",
-      "resolved": "2024-08-29",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8516",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-11677",
-      "summary": "Staging - can't create PO",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 743,
-      "customers": [],
-      "created": "2026-03-04",
-      "updated": "2026-09-14",
-      "resolved": "2026-03-16",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11677",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12671",
-      "summary": "Batch Print - V2",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 252,
-      "customers": [],
-      "created": "2026-08-06",
-      "updated": "2026-09-11",
-      "resolved": "2026-08-06",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12671",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "dbs"
-      ]
-    },
-    {
-      "key": "DEV-13062",
-      "summary": "Cutting Edge Doors & Woodworking — Customer cannot create a purchase order, blocked by \"Errors on this page\" validation banner",
-      "status": "Closed",
-      "stage_category": "Done",
-      "issue_type": "Investigate",
-      "priority": "Low",
-      "issue_score": null,
-      "customers": [],
-      "created": "2026-09-09",
-      "updated": "2026-09-11",
-      "resolved": "2026-09-09",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13062",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "cuttingedge"
       ]
     },
     {
@@ -75289,29 +75456,6 @@
       ]
     },
     {
-      "key": "DEV-6916",
-      "summary": "Phone input fields with country code and number formatting",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 432,
-      "customers": [],
-      "created": "2023-09-13",
-      "updated": "2026-09-09",
-      "resolved": "2026-02-17",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6916",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
       "key": "DEV-13018",
       "summary": "IFCC Inc (ifccinc) — Attribute selection images missing from dealer view once order status is Verified",
       "status": "In Production",
@@ -75332,29 +75476,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ifccinc"
-      ]
-    },
-    {
-      "key": "DEV-12831",
-      "summary": "BTJ Cabinet Door Company — Invoice output page Order Totals read $0.00 while line items on the same page total $1,763.25",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 630,
-      "customers": [],
-      "created": "2026-08-18",
-      "updated": "2026-09-09",
-      "resolved": "2026-08-19",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12831",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "btjdoors"
       ]
     },
     {
@@ -77177,29 +77298,6 @@
       ]
     },
     {
-      "key": "DEV-11797",
-      "summary": "Create Purchase Order Button Greyed Out",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 808,
-      "customers": [],
-      "created": "2026-03-17",
-      "updated": "2026-09-04",
-      "resolved": "2026-04-07",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11797",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "LifeSpanClosets"
-      ]
-    },
-    {
       "key": "DEV-11520",
       "summary": "V2 List - Allmoxy Project",
       "status": "Backlog",
@@ -77489,29 +77587,6 @@
       "updated": "2026-08-31",
       "resolved": "2026-03-25",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11604",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-8705",
-      "summary": "Itemized order \"other costs\" do not show up on output pages",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 398,
-      "customers": [],
-      "created": "2024-08-14",
-      "updated": "2026-08-31",
-      "resolved": "2026-05-20",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8705",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -78743,29 +78818,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-12712",
-      "summary": "Include Product ID as variable for part export formulas",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 278,
-      "customers": [],
-      "created": "2026-08-10",
-      "updated": "2026-08-12",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-12712",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "Fryburg"
       ]
     },
     {

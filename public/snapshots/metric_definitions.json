@@ -41,10 +41,34 @@
   ],
   "metrics": [
     {
+      "id": "active_customers",
+      "name": "Active Customers (canonical logo count)",
+      "category": "revenue",
+      "definition": "A customer with a live subscription generating recognized recurring revenue in the period, measured on the INVOICED (accrual) basis. Includes annual payers at their amortized monthly revenue; excludes duplicate records flagged excluded_from_logo_count so one business counts once. THE single logo count — every page reads this. Chosen for PE diligence because it is reproducible from Stripe invoices alone by a third party, it ties to reported MRR (so ARPA reconciles), and it does not flicker on payment timing: a failed card is a collections event, not a lost customer.",
+      "formula": "Per month m: count of customers with revenue_recognition.accrual_series[m] > 0, plus annual payers with monthly_history[m].subscription > 0, minus any customer flagged excluded_from_logo_count. MRR = the sum of those same members MRR, so count and MRR always come from ONE population.",
+      "source_files": [
+        "public/snapshots/customer_base.json",
+        "public/snapshots/revenue_recognition.json",
+        "src/data/annual_payers.json"
+      ],
+      "source_lineage": "Stripe invoices -> sync_stripe_invoices -> build_revenue_recognition (accrual_series) -> build_customer_base -> customer_base.json",
+      "window": "Monthly, from 2025-08 (first month with reliable Stripe invoice coverage). The current partial month is excluded.",
+      "adjustments": "Annual payers added back at amortized MRR (they bill yearly, so they appear in no monthly invoice series but are real customers whose revenue is on the books at 4100). Duplicate/rebrand pairs counted once.",
+      "displayed_on": [
+        "North Star",
+        "Customer Health",
+        "Unit Economics",
+        "CIM Packet",
+        "Revenue Waterfall"
+      ],
+      "verified_by": "run_invariant_tests.mjs — MRR ties to member sum, no customer counted twice, every member traceable to invoiced or annual revenue, and customer_base MRR = accrual waterfall ending MRR + annual amortization",
+      "verified_at": "2026-09-14"
+    },
+    {
       "id": "mrr_subscription",
       "name": "Subscription MRR",
       "category": "revenue",
-      "definition": "Monthly recurring subscription revenue from Allmoxy SaaS billing. Excludes one-time services, affiliate (Connect) fees, and tax. Annual-payer lump sums are amortized so the series shows true run-rate, not lumpy receipts.",
+      "definition": "Monthly recurring subscription revenue from Allmoxy SaaS billing. Excludes one-time services, affiliate (Connect) fees, and tax. Annual-payer lump sums are amortized so the series shows true run-rate, not lumpy receipts. Customer counts paired with this metric MUST come from customer_base.json (see active_customers) — three different counts (184/191/195) were published simultaneously before 2026-09-14 because each page derived its own.",
       "formula": "Per month m: sum across all active customers of monthly_history[m].subscription. Annual-payer charges (≥ $3K from customers in annual_payers.json) are spread as amount/months over their coverage window (default 12 months forward; override-driven windows for specific customers).",
       "source_files": [
         "public/snapshots/mrr_by_month.json",
@@ -633,5 +657,5 @@
       "verified_at": "2026-06-12"
     }
   ],
-  "fetched_at": "2026-09-14T14:59:29.740Z"
+  "fetched_at": "2026-09-14T16:29:38.775Z"
 }

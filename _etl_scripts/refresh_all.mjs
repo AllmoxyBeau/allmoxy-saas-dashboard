@@ -528,6 +528,9 @@ try { runScript('build_revenue_recognition.mjs', null); }
 catch (e) { console.log('  ⚠ revenue recognition build failed (kept previous snapshot):', e.message); }
 
 runScript('build_waterfall.mjs', 'mrr_waterfall');
+// THE canonical logo count + MRR (reads revenue_recognition.accrual_series, so it must
+// run after it). Every page showing "customers" or "MRR" reads this one file.
+runScript('build_customer_base.mjs', null);
 
 // Parallel transaction-driven waterfall for spot-checking against mrr_waterfall.json.
 // Same schema, different data path: built from customer_profiles.transactions
@@ -535,7 +538,6 @@ runScript('build_waterfall.mjs', 'mrr_waterfall');
 runScript('build_waterfall_from_txns.mjs', null);
 
 runScript('build_roster.mjs', null); // writes its own output file
-runScript('build_unit_econ.mjs', 'unit_economics');
 runScript('build_pnl.mjs', null); // writes pnl_by_month.json itself
 
 // Annual-amortization evidence registry (QoE-4). Joins annual_payers + overrides +
@@ -589,6 +591,20 @@ runScript('build_data_cleanup.mjs', null); // writes data_cleanup.json itself
 // reconciles for the seamed months. Runs after all monthly builds, before the tests.
 console.log('  applying Stripe revenue seam to monthly aggregates (June 2026+)…');
 runScript('apply_stripe_seam_monthly.mjs', null);
+
+// Canonical customer count into the monthly aggregates, then rebuild customer_health so
+// its concentration view counts the same base. customer_health has to run EARLY too
+// (build_customer_profiles consumes it), which is circular with customer_base — so it
+// gets a second pass here, once the canonical base exists.
+runScript('apply_canonical_logo_counts.mjs', null);
+runScript('build_customer_health.mjs', 'customer_health');
+
+// Unit economics runs AFTER the monthly seam, not before it. Built earlier, its month
+// universe came from the un-seamed mrr_by_month and stopped at 2026-06 — so the CIM and
+// Unit Economics pages reported logo_qty for a month two behind the canonical base while
+// the business was already at 2026-08. Nothing else in the ETL consumes
+// unit_economics.json, so moving it here is safe.
+runScript('build_unit_econ.mjs', 'unit_economics');
 
 
 // QoE-6 Invariant tests — run AFTER all snapshots are built so they can cross-check

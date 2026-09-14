@@ -215,6 +215,42 @@ for (const c of customers) {
   }
 }
 
+// ---------- CANONICAL BASE (Beau, 2026-09-14: "I want to have 1" logo count) -------
+// This view must count the SAME customers as the rest of the dashboard. It used to
+// derive its own population from current_subscription_mrr (a single CASH month) over a
+// stale xlsx roster, and reported 179 customers as of 2026-06 while the canonical base
+// was 197 as of 2026-08. customer_base.json is the single source: invoiced basis plus
+// annual amortization, duplicates removed, reproducible from Stripe invoices.
+const BASE = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'customer_base.json'), 'utf8')); }
+  catch { return null; }
+})();
+if (BASE?.members?.length) {
+  const canon = new Map(BASE.members.map((m) => [m.allmoxy_customer_id, m]));
+  const have = new Set();
+  for (const c of customers) {
+    const m = c.allmoxy_customer_id != null ? canon.get(c.allmoxy_customer_id) : null;
+    c.current_mrr = m ? m.mrr : 0;          // absent from the base ⇒ not a counted customer
+    c.last_month = BASE.as_of;
+    if (m) have.add(c.allmoxy_customer_id);
+  }
+  for (const m of BASE.members) {           // counted but missing from the xlsx roster
+    if (have.has(m.allmoxy_customer_id)) continue;
+    const p = profById.get(m.allmoxy_customer_id);
+    customers.push({
+      name: m.name,
+      allmoxy_customer_id: m.allmoxy_customer_id,
+      sign_up_date: p?.sign_up_date ?? null,
+      current_mrr: m.mrr,
+      last_month: BASE.as_of,
+      months_paying: Object.keys(p?.monthly_history || {}).length,
+      ever_paid: true,
+      lifetime_subscription: lifetimeByCustomer.get(m.allmoxy_customer_id)?.lifetime_revenue ?? null,
+    });
+  }
+  liveLatestMonth = BASE.as_of;
+}
+
 // ---------- concentration ----------
 const activeCustomers = customers.filter((c) => c.current_mrr > 0);
 activeCustomers.sort((a, b) => b.current_mrr - a.current_mrr);
@@ -282,7 +318,7 @@ const out = {
   columns: [],
   rows: [],
   rowCount: 0,
-  latestMonth: latestComplete.month,
+  latestMonth: BASE?.as_of ?? latestComplete.month,
   concentration,
   distribution: distribution.map((b) => ({
     ...b,

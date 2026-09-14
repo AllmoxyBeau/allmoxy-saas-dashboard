@@ -548,6 +548,74 @@ test('every paid Stripe invoice has a matching charge in the cash cache', 'error
 });
 
 
+// ============================================================================
+// ONE CUSTOMER COUNT. The dashboard used to publish 184 / 191 / 195 simultaneously
+// because every page derived its own. customer_base.json is now the single source;
+// these guard the properties that make it auditable.
+test('customer base: MRR equals the sum of the counted members', 'error', () => {
+  const b = readJson(path.join(SNAP, 'customer_base.json'));
+  if (!b) return { passed: true, detail: 'customer_base.json not built yet — skipped' };
+  const sum = Math.round(b.members.reduce((s, m) => s + m.mrr, 0) * 100) / 100;
+  const gap = Math.round((sum - b.mrr) * 100) / 100;
+  return {
+    passed: Math.abs(gap) < 0.01 && b.members.length === b.customers,
+    detail: Math.abs(gap) < 0.01 && b.members.length === b.customers
+      ? `${b.customers} customers reconcile to $${Math.round(b.mrr).toLocaleString()} MRR (ARPA $${Math.round(b.arpa).toLocaleString()})`
+      : `count/MRR do not tie: ${b.customers} counted vs ${b.members.length} members, $${b.mrr} stated vs $${sum} summed (gap $${gap})`,
+  };
+});
+
+// A logo counted twice inflates the count AND double-counts its revenue — the single
+// most damaging error possible in this number, and silent.
+test('customer base: no customer is counted twice', 'error', () => {
+  const b = readJson(path.join(SNAP, 'customer_base.json'));
+  if (!b) return { passed: true, detail: 'customer_base.json not built yet — skipped' };
+  const seen = new Map();
+  for (const m of b.members) seen.set(m.allmoxy_customer_id, (seen.get(m.allmoxy_customer_id) || 0) + 1);
+  const dups = [...seen.entries()].filter(([, n]) => n > 1);
+  return {
+    passed: dups.length === 0,
+    detail: dups.length === 0
+      ? `${b.members.length} distinct customers, no duplicates`
+      : `${dups.length} customer(s) counted more than once`,
+    examples: dups.slice(0, 5).map(([aid, n]) => `aid ${aid} counted ${n}x`),
+  };
+});
+
+// Every counted customer must be traceable to a source document — a Stripe invoice or
+// an annual contract. This is what lets a diligence team rebuild the number themselves.
+test('customer base: every counted customer traces to invoiced or annual revenue', 'error', () => {
+  const b = readJson(path.join(SNAP, 'customer_base.json'));
+  if (!b) return { passed: true, detail: 'customer_base.json not built yet — skipped' };
+  const bad = b.members.filter((m) => !['invoiced', 'annual_amortized'].includes(m.source) || !(m.mrr > 0));
+  return {
+    passed: bad.length === 0,
+    detail: bad.length === 0
+      ? `all ${b.members.length} trace to a source (${Object.entries(b.by_source || {}).map(([k, v]) => `${v} ${k}`).join(', ')})`
+      : `${bad.length} counted customer(s) have no traceable source or no revenue`,
+    examples: bad.slice(0, 5).map((m) => `${m.name} source=${m.source} mrr=${m.mrr}`),
+  };
+});
+
+// The canonical MRR must agree with the accrual waterfall's ending MRR, allowing for
+// annual amortization which the waterfall deliberately excludes (booked on 4100).
+test('customer base MRR reconciles to the accrual waterfall', 'warn', () => {
+  const b = readJson(path.join(SNAP, 'customer_base.json'));
+  const w = readJson(path.join(SNAP, 'mrr_waterfall.json'));
+  if (!b || !w?.monthly_accrual?.length) return { passed: true, detail: 'not built yet — skipped' };
+  const row = w.monthly_accrual.find((r) => r.month === b.as_of);
+  if (!row) return { passed: true, detail: `no accrual waterfall row for ${b.as_of} — skipped` };
+  const annual = Math.round(b.members.filter((m) => m.source === 'annual_amortized').reduce((s, m) => s + m.mrr, 0) * 100) / 100;
+  const gap = Math.round((b.mrr - annual - row.ending_mrr) * 100) / 100;
+  return {
+    passed: Math.abs(gap) < 1,
+    detail: Math.abs(gap) < 1
+      ? `$${Math.round(b.mrr).toLocaleString()} = waterfall $${Math.round(row.ending_mrr).toLocaleString()} + $${Math.round(annual).toLocaleString()} annual amortization`
+      : `customer_base $${b.mrr} − annual $${annual} ≠ waterfall ending $${row.ending_mrr} (gap $${gap})`,
+  };
+});
+
+
 
 // RUN
 // ============================================================================

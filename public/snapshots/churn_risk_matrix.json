@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-14T14:59:30.310Z",
+  "fetched_at": "2026-09-14T16:29:39.417Z",
   "comment": "5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to all active paying customers. Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.",
   "scoring_mode": "full",
   "totals": {
@@ -8386,7 +8386,7 @@
       "owner_name": "Connor",
       "current_subscription_mrr": 850,
       "lifetime_subscription": 49090,
-      "years_with_us": 7.5,
+      "years_with_us": 7.6,
       "primary_segment": "Cabinetry",
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2018-08-28",

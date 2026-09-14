@@ -13,6 +13,17 @@ import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-
 const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
 const SNAPSHOTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
 
+// CANONICAL customer count (Beau, 2026-09-14). logo_qty used to come from the xlsx
+// headline row, which is stale — it reported 183 logos for 2026-06 while the canonical
+// base was 197 for 2026-08. ARPA, CAC and LTV are all built on this number, so it has
+// to be the same one every other page shows. customer_base.json is the single source.
+const CUSTOMER_BASE = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'customer_base.json'), 'utf8')); }
+  catch { return null; }
+})();
+const CANON_LOGOS = new Map((CUSTOMER_BASE?.by_month || []).map((r) => [r.month, r.customers]));
+const CANON_MRR = new Map((CUSTOMER_BASE?.by_month || []).map((r) => [r.month, r.mrr]));
+
 const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
 
 // ---------- parse QuickBooks P&L ----------
@@ -240,8 +251,15 @@ const monthly = months.map((m) => {
   const subGM = pnlAvailable && qbSubRev > 0 ? (qbSubRev - ccFees * (qbSubRev / (qbTotalIncome || 1))) / qbSubRev : null;
   const overallGM = pnlAvailable && qbTotalIncome > 0 ? grossProfit / qbTotalIncome : null;
   const servicesGM = pnlAvailable && qbServicesRev > 0 ? (qbServicesRev - servicesCommission) / qbServicesRev : null;
-  const logoQty = row.logo_qty ?? null;
-  const avgMRR = row.mrr_subscription && logoQty ? row.mrr_subscription / logoQty : null;
+  // Canonical count wins wherever the accrual window covers the month; the xlsx row is
+  // the fallback for older months the invoiced basis cannot reach.
+  // The current month is PARTIAL — the canonical base deliberately excludes it. Falling
+  // back to the xlsx row there reported 117 logos mid-September against a real 197, so
+  // show nothing rather than a number that is wrong by construction.
+  const partialMonth = m >= new Date().toISOString().slice(0, 7);
+  const logoQty = CANON_LOGOS.get(m) ?? (partialMonth ? null : row.logo_qty ?? null);
+  const logoMrr = CANON_MRR.get(m) ?? row.mrr_subscription ?? null;
+  const avgMRR = logoMrr && logoQty ? logoMrr / logoQty : null;
 
   return {
     month: m,
