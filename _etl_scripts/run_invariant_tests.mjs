@@ -486,6 +486,68 @@ test('customer identity agrees with the Aurora warehouse (silver_customers)', 'e
   };
 });
 
+// ============================================================================
+// SILENT CASH DATA LOSS. sync_stripe re-fetches a rolling 35-day window and STRIPS
+// that window from the seeded cache before rebuilding it. If a re-fetch comes back
+// incomplete, the stripped rows are gone for good — later runs move the window past
+// those dates and never restore them. Nothing errors; the money just disappears from
+// the cash basis, which is what current_subscription_mrr, the logo counts and the
+// cash waterfall are built on.
+//
+// Found 2026-09-14: 38 paid invoices worth $55,947 had no charge in the cache, 17 of
+// them ($29,520) in Aug 2026 alone. Lewis Cabinet Specialties' Aug charge
+// (ch_3U0FsBHkM2Q, $7,955.24, paid against in_1U0EvXHkM2Q) was absent while July and
+// September were present, so a $7.5K/mo customer read as $0 MRR and looked churned.
+//
+// A paid invoice is the strongest possible evidence a charge exists, so reconciling
+// the two catches this the day it happens.
+test('every paid Stripe invoice has a matching charge in the cash cache', 'error', () => {
+  const inv = readJson(path.join(ROOT, '_etl_scripts/cache/stripe_invoices.json'));
+  const chg = readJson(path.join(ROOT, '_etl_scripts/cache/stripe_charges.json'));
+  if (!inv || !chg) return { passed: true, detail: 'invoice or charge cache not built yet — skipped' };
+  const FROM = '2025-08'; // Stripe invoicing is only near-complete from here
+  const gaps = [];
+  let checked = 0;
+  for (const [cid, c] of Object.entries(inv.by_customer || {})) {
+    const txns = ((chg.by_customer || {})[cid]?.transactions || []).filter((t) => t.t === 'subscription');
+    for (const i of (c.invoices || [])) {
+      if (i.status !== 'paid' || !i.paid_at) continue;
+      const m = String(i.paid_at).slice(0, 7);
+      if (m < FROM) continue;
+      checked++;
+      const amt = i.paid || i.sub || 0;
+      if (amt <= 0) continue; // $0 invoice — no charge to match
+      // Matching rules, each one tuned against a real false positive:
+      //   • anchor on BOTH paid_at and the invoice date — Westwind's bank/Link payments
+      //     create the charge on the invoice date but settle (paid_at) up to 6 days later
+      //   • +/-7 days of either anchor — the gap curve flattens at 7, so wider only
+      //     loses detection without finding anything
+      //   • compare GROSS (a + r): the cache stores amounts NET of refunds, so a
+      //     partially-refunded charge never matches its invoice otherwise
+      //   • 15% tolerance absorbs sales tax on top of the subtotal
+      const anchors = [Date.parse(i.paid_at), Date.parse(i.d)];
+      const hit = txns.find((t) => {
+        const gross = (t.a || 0) + (t.r || 0);
+        return anchors.some((a) => Math.abs(Date.parse(t.d) - a) <= 7 * 864e5)
+          && Math.abs(gross - amt) <= Math.max(2, (i.sub || 0) * 0.15);
+      });
+      if (!hit) gaps.push({ m, date: String(i.paid_at).slice(0, 10), amt, cid });
+    }
+  }
+  const total = Math.round(gaps.reduce((s, g) => s + g.amt, 0));
+  const byMonth = {};
+  for (const g of gaps) byMonth[g.m] = Math.round((byMonth[g.m] || 0) + g.amt);
+  const worst = Object.entries(byMonth).sort((a, b) => b[1] - a[1])[0];
+  return {
+    passed: gaps.length === 0,
+    detail: gaps.length === 0
+      ? `${checked} paid invoices since ${FROM} all reconcile to a cached charge`
+      : `${gaps.length} paid invoice(s) worth $${total.toLocaleString()} have NO charge in the cash cache — run sync_stripe.mjs --full${worst ? ` (worst month ${worst[0]}: $${worst[1].toLocaleString()})` : ''}`,
+    examples: gaps.sort((a, b) => b.amt - a.amt).slice(0, 5).map((g) => `${g.date} $${Math.round(g.amt).toLocaleString()} ${g.cid}`),
+  };
+});
+
+
 
 // RUN
 // ============================================================================

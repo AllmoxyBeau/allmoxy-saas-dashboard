@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-14T14:16:44.600Z",
-  "cachedUntil": "2026-09-14T14:21:44.600Z",
+  "fetchedAt": "2026-09-14T14:59:25.493Z",
+  "cachedUntil": "2026-09-14T15:04:25.493Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -26,9 +26,9 @@
     "2026-04": 101.1,
     "2026-05": 98.5,
     "2026-06": 99.7,
-    "2026-07": 99.6,
-    "2026-08": 115.8,
-    "2026-09": 103
+    "2026-07": 100.1,
+    "2026-08": 102.4,
+    "2026-09": 100.8
   },
   "monthly": [
     {
@@ -21756,23 +21756,23 @@
       "new_mrr": 475,
       "reactivated_mrr": 250,
       "expansion_mrr": 3329.69,
-      "contraction_mrr": 2110.31,
+      "contraction_mrr": 1860.31,
       "churn_mrr": 250,
       "voided_mrr": 0,
-      "delinquent_mrr": 1200,
-      "ending_mrr": 227504,
-      "net_new_mrr": 494.38,
+      "delinquent_mrr": 2599,
+      "ending_mrr": 226355,
+      "net_new_mrr": -654.62,
       "new_logos": 1,
       "reactivated_logos": 1,
       "churned_logos": 1,
       "voided_logos": 0,
-      "delinquent_logos": 4,
+      "delinquent_logos": 5,
       "gross_churn_rate_monthly": 0.0011,
-      "net_churn_rate_monthly": -0.0043,
+      "net_churn_rate_monthly": -0.0054,
       "expansion_rate_monthly": 0.0147,
-      "grr_monthly": 0.9896,
-      "nrr_monthly": 1.0043,
-      "quick_ratio": 1.61,
+      "grr_monthly": 0.9907,
+      "nrr_monthly": 1.0054,
+      "quick_ratio": 1.8,
       "details": {
         "new": [
           {
@@ -21883,13 +21883,6 @@
             "delta": 499
           },
           {
-            "name": "Mountain Showcase Group, Inc.",
-            "id": 500,
-            "prev_mrr": 1990,
-            "new_mrr": 1740,
-            "delta": 250
-          },
-          {
             "name": "Raumplus",
             "id": 7,
             "prev_mrr": 163.24,
@@ -21920,6 +21913,13 @@
         ],
         "voided": [],
         "delinquent": [
+          {
+            "name": "Brave Custom Woodworking",
+            "id": 499,
+            "mrr": 1399,
+            "status": "non_payment",
+            "pay_status": "Active"
+          },
           {
             "name": "Wilson Cabinetry",
             "id": 416,
@@ -21953,27 +21953,27 @@
     },
     {
       "month": "2026-08",
-      "starting_mrr": 227504,
+      "starting_mrr": 226355,
       "new_mrr": 419,
-      "reactivated_mrr": 700,
-      "expansion_mrr": 3844.19,
-      "contraction_mrr": 12231.59,
+      "reactivated_mrr": 950,
+      "expansion_mrr": 3639.19,
+      "contraction_mrr": 3954.39,
       "churn_mrr": 0,
-      "voided_mrr": 2320,
-      "delinquent_mrr": 23347.7,
-      "ending_mrr": 194567.9,
-      "net_new_mrr": -32936.1,
+      "voided_mrr": 921,
+      "delinquent_mrr": 6406,
+      "ending_mrr": 220081.8,
+      "net_new_mrr": -6273.2,
       "new_logos": 1,
-      "reactivated_logos": 2,
+      "reactivated_logos": 3,
       "churned_logos": 0,
-      "voided_logos": 2,
-      "delinquent_logos": 15,
+      "voided_logos": 1,
+      "delinquent_logos": 5,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0369,
-      "expansion_rate_monthly": 0.0169,
-      "grr_monthly": 0.9462,
-      "nrr_monthly": 0.9631,
-      "quick_ratio": 0.35,
+      "net_churn_rate_monthly": 0.0014,
+      "expansion_rate_monthly": 0.0161,
+      "grr_monthly": 0.9825,
+      "nrr_monthly": 0.9986,
+      "quick_ratio": 1.03,
       "details": {
         "new": [
           {
@@ -21987,6 +21987,11 @@
             "name": "Lane Industries",
             "id": 2037,
             "mrr": 500
+          },
+          {
+            "name": "Cabinet Doors NJ Llc",
+            "id": 521,
+            "mrr": 250
           },
           {
             "name": "Quick Kitchens",
@@ -22003,18 +22008,18 @@
             "delta": 3508.06
           },
           {
-            "name": "Mountain Showcase Group, Inc.",
-            "id": 500,
-            "prev_mrr": 1740,
-            "new_mrr": 1990,
-            "delta": 250
-          },
-          {
             "name": "Drawer Connection - DC Drawers",
             "id": 3,
             "prev_mrr": 3000,
             "new_mrr": 3065,
             "delta": 65
+          },
+          {
+            "name": "Lewis Cabinet Specialties Group LLC",
+            "id": 1,
+            "prev_mrr": 7459.2,
+            "new_mrr": 7504.2,
+            "delta": 45
           },
           {
             "name": "Intermountain Wood Products",
@@ -22026,18 +22031,11 @@
         ],
         "contraction": [
           {
-            "name": "Lewis Cabinet Specialties Group LLC",
-            "id": 1,
-            "prev_mrr": 7459.2,
-            "new_mrr": 45,
-            "delta": 7414.2
-          },
-          {
-            "name": "Closet City",
-            "id": 17,
-            "prev_mrr": 2643,
-            "new_mrr": 20,
-            "delta": 2623
+            "name": "Dot Custom Cabinets LLC",
+            "id": 385,
+            "prev_mrr": 1809,
+            "new_mrr": 49,
+            "delta": 1760
           },
           {
             "name": "Midwest Floor Coverings",
@@ -22064,13 +22062,6 @@
         "churn": [],
         "voided": [
           {
-            "name": "Brave Custom Woodworking",
-            "id": 499,
-            "mrr": 1399,
-            "status": "non_payment",
-            "pay_status": "Active"
-          },
-          {
             "name": "Cabinwood NY",
             "id": 386,
             "mrr": 921,
@@ -22080,20 +22071,6 @@
         ],
         "delinquent": [
           {
-            "name": "Drawer Box Specialties",
-            "id": 36,
-            "mrr": 6000,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Greyloch, LLC.",
-            "id": 136,
-            "mrr": 4687,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
             "name": "Cabredo LLC",
             "id": 164,
             "mrr": 3299,
@@ -22101,31 +22078,10 @@
             "pay_status": "Active"
           },
           {
-            "name": "Dot Custom Cabinets LLC",
-            "id": 385,
-            "mrr": 1809,
-            "status": "at_risk",
-            "pay_status": "Active - Card Failure"
-          },
-          {
             "name": "Vlux",
             "id": 543,
             "mrr": 1500,
             "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
-            "name": "D3Customcabinets",
-            "id": 463,
-            "mrr": 1391,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Bywater Products",
-            "id": 22,
-            "mrr": 1222,
-            "status": "active",
             "pay_status": "Active"
           },
           {
@@ -22143,46 +22099,11 @@
             "pay_status": "Active"
           },
           {
-            "name": "S&S Signature Millworks, Inc.",
-            "id": 298,
-            "mrr": 618.7,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Self Woodworks",
-            "id": 11,
-            "mrr": 574,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Webster Door Company",
-            "id": 107,
-            "mrr": 290,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Advantage Cabinet Doors, LLC",
-            "id": 8,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Urbania Cabinets",
             "id": 2015,
             "mrr": 250,
             "status": "non_payment",
             "pay_status": "Cancelled"
-          },
-          {
-            "name": "Country Lazer",
-            "id": 76,
-            "mrr": 100,
-            "status": "active",
-            "pay_status": "Active"
           }
         ]
       }
@@ -22193,20 +22114,20 @@
     "windowEnd": "2026-08",
     "months": 12,
     "starting_mrr": 228113.9,
-    "ending_mrr": 194567.9,
+    "ending_mrr": 220081.8,
     "new_mrr": 18795,
-    "reactivated_mrr": 21995.58,
-    "expansion_mrr": 26947.16,
-    "contraction_mrr": 43443.62,
+    "reactivated_mrr": 22245.58,
+    "expansion_mrr": 26742.16,
+    "contraction_mrr": 34916.42,
     "churn_mrr": 15365,
-    "voided_mrr": 2570,
-    "delinquent_mrr": 39905.12,
-    "net_new_mrr": -33546,
+    "voided_mrr": 1171,
+    "delinquent_mrr": 24362.42,
+    "net_new_mrr": -8032.1,
     "gross_mrr_churn_ttm": 0.0674,
     "annual_gross_churn_rate": 0.0652,
-    "annual_grr": 0.7713,
-    "annual_nrr": 0.8701,
-    "quick_ratio": 0.78
+    "annual_grr": 0.8013,
+    "annual_nrr": 0.9028,
+    "quick_ratio": 0.91
   },
   "monthly_accrual": [
     {
