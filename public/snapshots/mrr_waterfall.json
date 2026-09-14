@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-11T14:27:39.915Z",
-  "cachedUntil": "2026-09-11T14:32:39.915Z",
+  "fetchedAt": "2026-09-14T14:16:44.600Z",
+  "cachedUntil": "2026-09-14T14:21:44.600Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -27,8 +27,8 @@
     "2026-05": 98.5,
     "2026-06": 99.7,
     "2026-07": 99.6,
-    "2026-08": 112.1,
-    "2026-09": 104.1
+    "2026-08": 115.8,
+    "2026-09": 103
   },
   "monthly": [
     {
@@ -16652,7 +16652,7 @@
             "name": "Door Masters of Houston",
             "id": 443,
             "mrr": 1499,
-            "status": "active",
+            "status": "at_risk",
             "pay_status": "Active"
           },
           {
@@ -21955,25 +21955,25 @@
       "month": "2026-08",
       "starting_mrr": 227504,
       "new_mrr": 419,
-      "reactivated_mrr": 950,
+      "reactivated_mrr": 700,
       "expansion_mrr": 3844.19,
-      "contraction_mrr": 9608.59,
+      "contraction_mrr": 12231.59,
       "churn_mrr": 0,
       "voided_mrr": 2320,
-      "delinquent_mrr": 19810.7,
-      "ending_mrr": 200977.9,
-      "net_new_mrr": -26526.1,
+      "delinquent_mrr": 23347.7,
+      "ending_mrr": 194567.9,
+      "net_new_mrr": -32936.1,
       "new_logos": 1,
-      "reactivated_logos": 3,
+      "reactivated_logos": 2,
       "churned_logos": 0,
       "voided_logos": 2,
-      "delinquent_logos": 10,
+      "delinquent_logos": 15,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0253,
+      "net_churn_rate_monthly": 0.0369,
       "expansion_rate_monthly": 0.0169,
-      "grr_monthly": 0.9578,
-      "nrr_monthly": 0.9747,
-      "quick_ratio": 0.44,
+      "grr_monthly": 0.9462,
+      "nrr_monthly": 0.9631,
+      "quick_ratio": 0.35,
       "details": {
         "new": [
           {
@@ -21987,11 +21987,6 @@
             "name": "Lane Industries",
             "id": 2037,
             "mrr": 500
-          },
-          {
-            "name": "Cabinet Doors NJ Llc",
-            "id": 521,
-            "mrr": 250
           },
           {
             "name": "Quick Kitchens",
@@ -22036,6 +22031,13 @@
             "prev_mrr": 7459.2,
             "new_mrr": 45,
             "delta": 7414.2
+          },
+          {
+            "name": "Closet City",
+            "id": 17,
+            "prev_mrr": 2643,
+            "new_mrr": 20,
+            "delta": 2623
           },
           {
             "name": "Midwest Floor Coverings",
@@ -22113,6 +22115,20 @@
             "pay_status": "Active"
           },
           {
+            "name": "D3Customcabinets",
+            "id": 463,
+            "mrr": 1391,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Bywater Products",
+            "id": 22,
+            "mrr": 1222,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Staley Custom Cabinets",
             "id": 437,
             "mrr": 699,
@@ -22124,13 +22140,20 @@
             "id": 31,
             "mrr": 658,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           },
           {
             "name": "S&S Signature Millworks, Inc.",
             "id": 298,
             "mrr": 618.7,
             "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Self Woodworks",
+            "id": 11,
+            "mrr": 574,
+            "status": "at_risk",
             "pay_status": "Active"
           },
           {
@@ -22141,11 +22164,25 @@
             "pay_status": "Active"
           },
           {
+            "name": "Advantage Cabinet Doors, LLC",
+            "id": 8,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Urbania Cabinets",
             "id": 2015,
             "mrr": 250,
             "status": "non_payment",
             "pay_status": "Cancelled"
+          },
+          {
+            "name": "Country Lazer",
+            "id": 76,
+            "mrr": 100,
+            "status": "active",
+            "pay_status": "Active"
           }
         ]
       }
@@ -22156,20 +22193,20 @@
     "windowEnd": "2026-08",
     "months": 12,
     "starting_mrr": 228113.9,
-    "ending_mrr": 200977.9,
+    "ending_mrr": 194567.9,
     "new_mrr": 18795,
-    "reactivated_mrr": 22245.58,
+    "reactivated_mrr": 21995.58,
     "expansion_mrr": 26947.16,
-    "contraction_mrr": 40820.62,
+    "contraction_mrr": 43443.62,
     "churn_mrr": 15365,
     "voided_mrr": 2570,
-    "delinquent_mrr": 36368.12,
-    "net_new_mrr": -27136,
+    "delinquent_mrr": 39905.12,
+    "net_new_mrr": -33546,
     "gross_mrr_churn_ttm": 0.0674,
     "annual_gross_churn_rate": 0.0652,
-    "annual_grr": 0.7805,
-    "annual_nrr": 0.8803,
-    "quick_ratio": 0.81
+    "annual_grr": 0.7713,
+    "annual_nrr": 0.8701,
+    "quick_ratio": 0.78
   },
   "monthly_accrual": [
     {
@@ -22474,6 +22511,11 @@
             "mrr": 400
           },
           {
+            "name": "Albritton Custom Cabinetry",
+            "id": 2031,
+            "mrr": 250
+          },
+          {
             "name": "Fletcher Design Co",
             "id": 2029,
             "mrr": 250
@@ -22481,11 +22523,6 @@
           {
             "name": "Lane Industries",
             "id": 2037,
-            "mrr": 250
-          },
-          {
-            "name": "Albritton Custom Cabinetry",
-            "id": 2031,
             "mrr": 250
           },
           {
@@ -22530,17 +22567,17 @@
             "delta": 250
           },
           {
-            "name": "New York Door & Drawer",
-            "id": 198,
-            "prev_mrr": 2085,
-            "new_mrr": 2270,
-            "delta": 185
-          },
-          {
             "name": "Mountain Showcase Group, Inc.",
             "id": 500,
             "prev_mrr": 1805,
             "new_mrr": 1990,
+            "delta": 185
+          },
+          {
+            "name": "New York Door & Drawer",
+            "id": 198,
+            "prev_mrr": 2085,
+            "new_mrr": 2270,
             "delta": 185
           },
           {
@@ -23064,13 +23101,13 @@
             "mrr": 4200
           },
           {
-            "name": "Batesville Cabinet Company",
-            "id": 2052,
+            "name": "Five Cabinetry",
+            "id": 2056,
             "mrr": 250
           },
           {
-            "name": "Five Cabinetry",
-            "id": 2056,
+            "name": "Batesville Cabinet Company",
+            "id": 2052,
             "mrr": 250
           },
           {
