@@ -132,6 +132,14 @@ export default function NorthStar() {
     useSheetTab<ConnectRow>('connect_by_month');
   const { data: healthData } = useSheetTab('customer_health');
   const health = healthData as unknown as CustomerHealthSnap | undefined;
+  // THE canonical customer count + the MRR it ties to (build_customer_base.mjs).
+  // Overview used to show mrr_by_month.mrr_subscription, which is CASH — the identical
+  // number the Revenue Waterfall shows under its cash toggle — while the waterfall
+  // DEFAULTS to accrual. Same month, two figures, no label saying why. MRR is a
+  // run-rate, not a collections figure, so the headline now reads the canonical
+  // invoiced basis including annual amortization.
+  const { data: baseData } = useSheetTab('customer_base');
+  const base = baseData as unknown as { customers: number; mrr: number; arpa: number; as_of: string } | undefined;
   const { data: subMonthlyData } = useSheetTab('subscription_by_month');
   const subMonthly = subMonthlyData as unknown as { rows: Array<{ customer_name: string } & Record<string, number | null>> } | undefined;
   const { data: connectByCustomerData } = useSheetTab('connect_by_customer_month');
@@ -270,23 +278,25 @@ export default function NorthStar() {
             hint={headline ? `${monthLabel(headline.month)} · click for list` : 'loading'}
             stream="Blended"
             onClick={() => openDrill({ kind: 'active_logos' })}
-            info={<><strong>What it is:</strong> Count of unique customers with subscription MRR &gt; 0 in the latest complete month.<br /><br /><strong>Data:</strong> "Logo Qty" row of the MRR by Month tab, which counts distinct paying customers per month from the per-customer × month subscription grid.<br /><br /><strong>Click:</strong> Drill to the full list of active customers with their current MRR.</>}
+            info={<><strong>What it is:</strong> Count of unique customers with subscription MRR &gt; 0 in the latest complete month.<br /><br /><strong>Data:</strong> <code>customer_base.json</code> — THE canonical logo count. A customer counts when it has recognized recurring revenue in the month on the invoiced basis; annual payers are included at amortized MRR and duplicate records are excluded. Reproducible from Stripe invoices alone, which is what makes it auditable.<br /><br /><strong>Click:</strong> Drill to the full list of active customers with their current MRR.</>}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={2.4}>
           <MetricCard
             label="Subscription MRR"
             value={
-              isLoading || !headline
+              isLoading
                 ? null
-                : headline.mrr_subscription != null
-                  ? USD0.format(headline.mrr_subscription)
-                  : '—'
+                : base?.mrr != null
+                  ? USD0.format(base.mrr)
+                  : headline?.mrr_subscription != null
+                    ? USD0.format(headline.mrr_subscription)
+                    : '—'
             }
-            hint={headline ? `${monthLabel(headline.month)} · Stream 1 · click` : 'loading'}
+            hint={base ? `${monthLabel(base.as_of)} · Stream 1 · click` : headline ? `${monthLabel(headline.month)} · Stream 1 · click` : 'loading'}
             stream="Stream 1"
             onClick={() => openDrill({ kind: 'subscription' })}
-            info={<><strong>What it is:</strong> Total subscription MRR for the latest complete month — the recurring-revenue engine of the business.<br /><br /><strong>Data:</strong> Sum of per-customer subscription MRR from the MRR by Month tab for the headline month.<br /><br /><strong>Includes:</strong> regular monthly subscriptions <em>plus</em> 1/12 of any annual lump-sum payments still in their 12-month amortization window (annual-payer list: <code>src/data/annual_payers.json</code>).<br /><br /><strong>Click:</strong> Drill to each contributing transaction; filter for annual vs. regular.</>}
+            info={<><strong>What it is:</strong> Subscription MRR for the latest complete month, on the <strong>invoiced (accrual) basis</strong> — what was billed and earned, which is the run-rate the business is actually running at.<br /><br /><strong>Data:</strong> <code>customer_base.json</code>, the single canonical source. It is the sum of the MRR of the same {base?.customers ?? '—'} customers shown in "Active paying customers", so the two always reconcile and ARPA is meaningful.<br /><br /><strong>Includes:</strong> annual payers at their amortized monthly revenue (annual-payer list: <code>src/data/annual_payers.json</code>). Excludes duplicate records so one business counts once.<br /><br /><strong>Why it differs from the Revenue Waterfall:</strong> the waterfall's accrual view excludes annual amortization (booked separately on 4100), and its cash toggle shows what actually cleared Stripe. All three reconcile: cash + billed-not-yet-collected + annual amortization = this number.<br /><br /><strong>Click:</strong> Drill to each contributing transaction; filter for annual vs. regular.</>}
             footerChip={
               annualizedSubscription > 0
                 ? { label: `incl. ${USD0.format(annualizedSubscription)} annualized`, tooltip: '1/12 portions of annual lump-sum payments from annual-payer customers' }

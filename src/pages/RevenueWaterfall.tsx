@@ -273,7 +273,11 @@ export default function RevenueWaterfall() {
             {accrualAvailable && (
               <> · basis: <strong style={{ color: showingAccrual ? '#2C73FF' : undefined }}>{showingAccrual ? 'accrual (billed)' : 'cash (cleared)'}</strong>
                 {showingAccrual && qbSnap?.accrual_reliable_from ? ` — from ${monthLabelLong(qbSnap.accrual_reliable_from)}, when Stripe invoicing reached full coverage` : ''}
-                {' · sales tax excluded'}</>
+                {' · sales tax excluded'}
+                {/* Overview shows a different (larger) MRR and people reasonably ask which
+                    is right. Both are — they answer different questions. Say so here rather
+                    than leaving the reader to discover it. */}
+                {' · excludes annual amortization (booked separately on 4100), so Overview\u2019s canonical MRR is this figure plus that'}</>
             )}
           </Typography>
         ) : (
