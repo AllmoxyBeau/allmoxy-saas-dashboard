@@ -1,19 +1,19 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-09-14T16:29:42.235Z",
-  "cachedUntil": "2026-09-14T16:34:42.235Z",
+  "fetchedAt": "2026-09-15T18:32:27.275Z",
+  "cachedUntil": "2026-09-15T18:37:27.275Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
   "latestMonth": "2026-08",
   "concentration": {
-    "total_active_customers": 197,
-    "total_mrr": 228485.8,
+    "total_active_customers": 196,
+    "total_mrr": 228401.6,
     "top1": {
       "n": 1,
       "customers": 1,
       "mrr": 7504.2,
-      "pct": 0.0328
+      "pct": 0.0329
     },
     "top5": {
       "n": 5,
@@ -25,27 +25,19 @@
       "n": 10,
       "customers": 10,
       "mrr": 52801.2,
-      "pct": 0.2311
+      "pct": 0.2312
     },
     "top20": {
       "n": 20,
       "customers": 20,
       "mrr": 87443.1,
-      "pct": 0.3827
+      "pct": 0.3828
     }
   },
   "distribution": [
     {
       "bucket": "< $100",
       "customers": [
-        {
-          "name": "Raumplus",
-          "allmoxy_customer_id": 7,
-          "current_mrr": 84.2,
-          "lifetime_revenue": 40580.96,
-          "years_with_us": 14.3,
-          "failed_3mo": 0
-        },
         {
           "name": "UC Cabinet Components",
           "allmoxy_customer_id": 25,
@@ -55,7 +47,7 @@
           "failed_3mo": 0
         }
       ],
-      "mrr": 149.2
+      "mrr": 65
     },
     {
       "bucket": "$100–$500",
@@ -193,7 +185,7 @@
           "allmoxy_customer_id": 77,
           "current_mrr": 375,
           "lifetime_revenue": 38510,
-          "years_with_us": 9.1,
+          "years_with_us": 9.2,
           "failed_3mo": 0
         },
         {
@@ -649,7 +641,7 @@
           "allmoxy_customer_id": 441,
           "current_mrr": 100,
           "lifetime_revenue": 4300,
-          "years_with_us": 3.4,
+          "years_with_us": 3.5,
           "failed_3mo": 0
         },
         {
@@ -665,7 +657,7 @@
           "allmoxy_customer_id": 224,
           "current_mrr": 100,
           "lifetime_revenue": 8492.45,
-          "years_with_us": 6.5,
+          "years_with_us": 6.6,
           "failed_3mo": 0
         }
       ],
@@ -743,7 +735,7 @@
           "allmoxy_customer_id": 131,
           "current_mrr": 850,
           "lifetime_revenue": 47575,
-          "years_with_us": 8,
+          "years_with_us": 8.1,
           "failed_3mo": 0
         },
         {
@@ -1205,7 +1197,7 @@
           "allmoxy_customer_id": 84,
           "current_mrr": 1305,
           "lifetime_revenue": 89380,
-          "years_with_us": 8.7,
+          "years_with_us": 8.8,
           "failed_3mo": 0
         },
         {
@@ -2272,7 +2264,7 @@
       "allmoxy_customer_id": 84,
       "current_mrr": 1305,
       "lifetime_revenue": 89380,
-      "years_with_us": 8.7,
+      "years_with_us": 8.8,
       "failed_3mo": 0
     },
     {
@@ -2488,7 +2480,7 @@
       "allmoxy_customer_id": 131,
       "current_mrr": 850,
       "lifetime_revenue": 47575,
-      "years_with_us": 8,
+      "years_with_us": 8.1,
       "failed_3mo": 0
     },
     {
@@ -2936,7 +2928,7 @@
       "allmoxy_customer_id": 77,
       "current_mrr": 375,
       "lifetime_revenue": 38510,
-      "years_with_us": 9.1,
+      "years_with_us": 9.2,
       "failed_3mo": 0
     },
     {
@@ -3392,7 +3384,7 @@
       "allmoxy_customer_id": 441,
       "current_mrr": 100,
       "lifetime_revenue": 4300,
-      "years_with_us": 3.4,
+      "years_with_us": 3.5,
       "failed_3mo": 0
     },
     {
@@ -3408,15 +3400,7 @@
       "allmoxy_customer_id": 224,
       "current_mrr": 100,
       "lifetime_revenue": 8492.45,
-      "years_with_us": 6.5,
-      "failed_3mo": 0
-    },
-    {
-      "name": "Raumplus",
-      "allmoxy_customer_id": 7,
-      "current_mrr": 84.2,
-      "lifetime_revenue": 40580.96,
-      "years_with_us": 14.3,
+      "years_with_us": 6.6,
       "failed_3mo": 0
     },
     {
@@ -3490,5 +3474,5 @@
     "total_dunning_customers": 8,
     "total_at_risk_amount": 14884.76
   },
-  "notes": "Per-customer MRR drawn from MRR by Month tab (197 customers with MRR > $0 in 2026-06). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue and dunning counts joined from Stripe Sync (20K+ classified transactions). Dunning = charge attempts with status=failed in trailing 3 months."
+  "notes": "Per-customer MRR drawn from MRR by Month tab (196 customers with MRR > $0 in 2026-06). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue and dunning counts joined from Stripe Sync (20K+ classified transactions). Dunning = charge attempts with status=failed in trailing 3 months."
 }

@@ -111,6 +111,59 @@ const by_month = months.map((m) => {
   return { month: m, customers: mem.length, mrr, arpa: mem.length ? r2(mrr / mem.length) : 0 };
 });
 
+// ── LOGO FLOW ─────────────────────────────────────────────────────────────────
+// Derived from the canonical membership itself, so it BALANCES BY CONSTRUCTION:
+//   starting + new + reactivated − churned − lapsed = ending, exactly, every month.
+//
+// The Logo Waterfall page used to build this by welding CASH-basis movements from
+// mrr_waterfall onto CANONICAL (invoiced) endpoints from mrr_by_month, and it dropped
+// the voided and delinquent buckets entirely. The rows therefore did not add up — in
+// 2026-08 it showed 200 + 1 + 3 − 0 and an ending of 197, a gap of 7, with 6 customers
+// leaving the count invisibly. Computing both the endpoints and the movements from one
+// membership set removes the possibility.
+//
+// Departures are split by WHY, which is an attribute lookup, not a second calculation:
+//   churned — the relationship is confirmed over (profile status 'churned')
+//   lapsed  — stopped billing but not confirmed gone (delinquent / voided / at-risk).
+//             These may come back, and several do: that is what `reactivated` counts.
+const memberSets = new Map(months.map((m) => [m, new Map(membersFor(m).map((x) => [x.allmoxy_customer_id, x]))]));
+const everSeen = new Set();
+const logo_flow = [];
+for (let i = 0; i < months.length; i++) {
+  const m = months[i];
+  const cur = memberSets.get(m);
+  const prev = i > 0 ? memberSets.get(months[i - 1]) : new Map();
+  const newOnes = [], reactivated = [], churned = [], lapsed = [];
+  for (const [aid, x] of cur) {
+    if (prev.has(aid)) continue;
+    (everSeen.has(aid) ? reactivated : newOnes).push({ allmoxy_customer_id: aid, name: x.name, mrr: x.mrr });
+  }
+  for (const [aid, x] of prev) {
+    if (cur.has(aid)) continue;
+    const st = byAid.get(aid)?.status;
+    (st === 'churned' ? churned : lapsed).push({ allmoxy_customer_id: aid, name: x.name, mrr: x.mrr, status: st ?? null });
+  }
+  for (const aid of cur.keys()) everSeen.add(aid);
+  const starting = i > 0 ? prev.size : 0;
+  const ending = cur.size;
+  logo_flow.push({
+    month: m,
+    starting_logos: starting,
+    new_logos: newOnes.length,
+    reactivated_logos: reactivated.length,
+    churned_logos: churned.length,
+    lapsed_logos: lapsed.length,
+    ending_logos: ending,
+    net_new_logos: newOnes.length + reactivated.length - churned.length - lapsed.length,
+    // Gross logo churn counts every departure, confirmed or not — understating it by
+    // excluding lapses is how the old table hid 6 of August's 7 missing customers.
+    gross_logo_churn: starting > 0 ? Math.round(((churned.length + lapsed.length) / starting) * 10000) / 10000 : null,
+    balances: starting + newOnes.length + reactivated.length - churned.length - lapsed.length === ending,
+    details: { new: newOnes, reactivated, churned, lapsed },
+  });
+}
+const unbalanced = logo_flow.filter((r) => r.month !== months[0] && !r.balances).length;
+
 const asOf = months[months.length - 1];
 const members = membersFor(asOf).sort((a, b) => b.mrr - a.mrr);
 const mrr = r2(members.reduce((s, x) => s + x.mrr, 0));
@@ -134,8 +187,10 @@ const out = {
   members,
   excluded: excludedLog,
   by_month,
+  logo_flow,
   notes: 'THE canonical logo count and MRR. Every page showing "customers" or "MRR" should read this, not derive its own — three separate counts (184/191/195) and four MRR figures were being published before 2026-09-14. `status` remains an attribute (see by_status) for CS workflows; it is not a count. Annual payers appear with source=annual_amortized because they bill yearly and so are absent from the monthly invoice series.',
 };
 
 fs.writeFileSync(path.join(SNAP, 'customer_base.json'), JSON.stringify(out));
+if (unbalanced) console.error(`[customer_base] WARNING: ${unbalanced} month(s) of logo_flow do not balance`);
 console.error(`[customer_base] ${asOf}: ${out.customers} customers · $${Math.round(out.mrr).toLocaleString()} MRR · ARPA $${Math.round(out.arpa).toLocaleString()} · ${Object.entries(bySource).map(([k, v]) => `${v} ${k}`).join(', ')}${excludedLog.length ? ` · ${excludedLog.length} excluded` : ''}`);

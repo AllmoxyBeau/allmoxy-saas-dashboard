@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-14T16:29:36.356Z",
-  "cachedUntil": "2026-09-14T16:34:36.356Z",
+  "fetchedAt": "2026-09-15T18:32:21.912Z",
+  "cachedUntil": "2026-09-15T18:37:21.912Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -27,8 +27,8 @@
     "2026-05": 98.5,
     "2026-06": 99.7,
     "2026-07": 100.1,
-    "2026-08": 102.4,
-    "2026-09": 100.8
+    "2026-08": 106.7,
+    "2026-09": 97.5
   },
   "monthly": [
     {
@@ -21957,22 +21957,22 @@
       "new_mrr": 419,
       "reactivated_mrr": 950,
       "expansion_mrr": 3639.19,
-      "contraction_mrr": 3954.39,
+      "contraction_mrr": 3938.34,
       "churn_mrr": 0,
       "voided_mrr": 921,
-      "delinquent_mrr": 6406,
-      "ending_mrr": 220081.8,
-      "net_new_mrr": -6273.2,
+      "delinquent_mrr": 15395.4,
+      "ending_mrr": 211108.45,
+      "net_new_mrr": -15246.55,
       "new_logos": 1,
       "reactivated_logos": 3,
       "churned_logos": 0,
       "voided_logos": 1,
-      "delinquent_logos": 5,
+      "delinquent_logos": 14,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0014,
+      "net_churn_rate_monthly": 0.0013,
       "expansion_rate_monthly": 0.0161,
-      "grr_monthly": 0.9825,
-      "nrr_monthly": 0.9986,
+      "grr_monthly": 0.9826,
+      "nrr_monthly": 0.9987,
       "quick_ratio": 1.03,
       "details": {
         "new": [
@@ -22050,13 +22050,6 @@
             "prev_mrr": 1072.5,
             "new_mrr": 536.25,
             "delta": 536.25
-          },
-          {
-            "name": "Raumplus",
-            "id": 7,
-            "prev_mrr": 100.25,
-            "new_mrr": 84.2,
-            "delta": 16.05
           }
         ],
         "churn": [],
@@ -22070,6 +22063,13 @@
           }
         ],
         "delinquent": [
+          {
+            "name": "Westwind",
+            "id": 43,
+            "mrr": 3673.95,
+            "status": "non_payment",
+            "pay_status": "Active"
+          },
           {
             "name": "Cabredo LLC",
             "id": 164,
@@ -22085,11 +22085,39 @@
             "pay_status": "Active"
           },
           {
+            "name": "Craftsman Specialty",
+            "id": 18,
+            "mrr": 1318,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Classic Kitchen Doors",
+            "id": 30,
+            "mrr": 1250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Sherwood Shelving",
+            "id": 388,
+            "mrr": 1025,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Staley Custom Cabinets",
             "id": 437,
             "mrr": 699,
             "status": "non_payment",
             "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Ironwood Cabinet And Millworks",
+            "id": 292,
+            "mrr": 675,
+            "status": "active",
+            "pay_status": "Active"
           },
           {
             "name": "Bella Imc",
@@ -22099,11 +22127,39 @@
             "pay_status": "Active"
           },
           {
+            "name": "Mullet Door",
+            "id": 14,
+            "mrr": 576.45,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Ashby's Cabinetry, Inc",
+            "id": 33,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Urbania Cabinets",
             "id": 2015,
             "mrr": 250,
             "status": "non_payment",
             "pay_status": "Cancelled"
+          },
+          {
+            "name": "Superior Woodworking",
+            "id": 34,
+            "mrr": 120.75,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Raumplus",
+            "id": 7,
+            "mrr": 100.25,
+            "status": "active",
+            "pay_status": "Active"
           }
         ]
       }
@@ -22114,19 +22170,19 @@
     "windowEnd": "2026-08",
     "months": 12,
     "starting_mrr": 228113.9,
-    "ending_mrr": 220081.8,
+    "ending_mrr": 211108.45,
     "new_mrr": 18795,
     "reactivated_mrr": 22245.58,
     "expansion_mrr": 26742.16,
-    "contraction_mrr": 34916.42,
+    "contraction_mrr": 34900.37,
     "churn_mrr": 15365,
     "voided_mrr": 1171,
-    "delinquent_mrr": 24362.42,
-    "net_new_mrr": -8032.1,
+    "delinquent_mrr": 33351.82,
+    "net_new_mrr": -17005.45,
     "gross_mrr_churn_ttm": 0.0674,
     "annual_gross_churn_rate": 0.0652,
-    "annual_grr": 0.8013,
-    "annual_nrr": 0.9028,
+    "annual_grr": 0.8014,
+    "annual_nrr": 0.9029,
     "quick_ratio": 0.91
   },
   "monthly_accrual": [
@@ -23599,23 +23655,23 @@
       "new_mrr": 419,
       "reactivated_mrr": 0,
       "expansion_mrr": 3610,
-      "contraction_mrr": 2194.39,
+      "contraction_mrr": 2178.34,
       "churn_mrr": 0,
       "voided_mrr": 2820,
-      "delinquent_mrr": 250,
-      "ending_mrr": 225312.8,
-      "net_new_mrr": -1235.39,
+      "delinquent_mrr": 350.25,
+      "ending_mrr": 225228.6,
+      "net_new_mrr": -1319.59,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 3,
-      "delinquent_logos": 1,
+      "delinquent_logos": 2,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": -0.0062,
+      "net_churn_rate_monthly": -0.0063,
       "expansion_rate_monthly": 0.0159,
-      "grr_monthly": 0.9903,
-      "nrr_monthly": 1.0062,
-      "quick_ratio": 1.84,
+      "grr_monthly": 0.9904,
+      "nrr_monthly": 1.0063,
+      "quick_ratio": 1.85,
       "details": {
         "new": [
           {
@@ -23662,13 +23718,6 @@
             "prev_mrr": 1072.5,
             "new_mrr": 536.25,
             "delta": 536.25
-          },
-          {
-            "name": "Raumplus",
-            "id": 7,
-            "prev_mrr": 100.25,
-            "new_mrr": 84.2,
-            "delta": 16.05
           }
         ],
         "churn": [],
@@ -23702,6 +23751,13 @@
             "mrr": 250,
             "status": "non_payment",
             "pay_status": "Cancelled"
+          },
+          {
+            "name": "Raumplus",
+            "id": 7,
+            "mrr": 100.25,
+            "status": "active",
+            "pay_status": "Active"
           }
         ]
       }
@@ -23712,19 +23768,19 @@
     "windowEnd": "2026-08",
     "months": 12,
     "starting_mrr": 227295.31,
-    "ending_mrr": 225312.8,
+    "ending_mrr": 225228.6,
     "new_mrr": 20210.5,
     "reactivated_mrr": 0,
     "expansion_mrr": 19434.71,
-    "contraction_mrr": 22197.22,
+    "contraction_mrr": 22181.17,
     "churn_mrr": 14596,
     "voided_mrr": 3070,
-    "delinquent_mrr": 1764.5,
-    "net_new_mrr": -1982.51,
+    "delinquent_mrr": 1864.75,
+    "net_new_mrr": -2066.71,
     "gross_mrr_churn_ttm": 0.0642,
     "annual_gross_churn_rate": 0.0614,
-    "annual_grr": 0.8516,
-    "annual_nrr": 0.9284,
+    "annual_grr": 0.8517,
+    "annual_nrr": 0.9285,
     "quick_ratio": 1.08
   },
   "notes": "MRR waterfall on two bases. CASH (monthly/ttm) = customer_profiles.monthly_history — what cleared Stripe, boundary-slip corrected, full history; use for bank reconciliation. ACCRUAL (monthly_accrual/ttm_accrual) = revenue_recognition.accrual_series — what was BILLED by invoice date, so a card failure is an open receivable rather than churn; use for retention metrics. Accrual starts 2025-08 because Stripe-invoice coverage before mid-2025 is 4–28% of actual revenue (Allmoxy migrated to invoicing then). New = customer first appears with MRR > 0; Reactivated = billed before, returning. Churn = confirmed-churned (status churned). Voided = dropped to $0 with a VOIDED invoice for the period — billing intentionally canceled, nothing owed (not dunning). Delinquent = dropped to $0, still billable, did not clear (card failure / non-payment) — may still pay. All three reduce ending MRR but are reported separately. Sales tax is EXCLUDED on both bases: it is a pass-through liability, not revenue. Accrual sums pre-tax invoice lines; cash has collected tax subtracted by the invoice paid month (~1.5% of gross, ~$3.4K/mo). Services and Connect revenue are NOT included — subscription only.",

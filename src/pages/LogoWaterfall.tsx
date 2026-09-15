@@ -27,23 +27,15 @@ import CustomerLink from '../components/common/CustomerLink';
 import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
 import { useSheetTab } from '../hooks/useSheetTab';
 
-type WaterfallMonthly = {
-  month: string;
-  new_logos: number;
-  reactivated_logos: number;
-  churned_logos: number;
-  details?: {
-    new?: Array<{ name: string; mrr?: number }>;
-    reactivated?: Array<{ name: string; mrr?: number }>;
-    churn?: Array<{ name: string; mrr?: number }>;
-  };
-};
-type WaterfallSnapshot = { monthly: WaterfallMonthly[] };
-type MrrByMonthRow = { month: string; logo_qty: number | null };
-type MrrByMonthSnapshot = { rows: MrrByMonthRow[] };
-
 type Preset = '12M' | '24M' | '60M' | 'ALL' | 'CUSTOM';
-type DrillCategory = 'new' | 'reactivated' | 'churn';
+type LogoFlowRow = {
+  month: string;
+  starting_logos: number; new_logos: number; reactivated_logos: number;
+  churned_logos: number; lapsed_logos: number; ending_logos: number;
+  net_new_logos: number; gross_logo_churn: number | null;
+  details?: { new?: Array<{ name: string; mrr?: number }>; reactivated?: Array<{ name: string; mrr?: number }>; churned?: Array<{ name: string; mrr?: number }>; lapsed?: Array<{ name: string; mrr?: number }> };
+};
+type DrillCategory = 'new' | 'reactivated' | 'churn' | 'lapsed';
 
 const monthLabel = (iso: string) => {
   const [y, m] = iso.split('-').map(Number);
@@ -70,10 +62,17 @@ function churnColor(v: number | null) {
 }
 
 export default function LogoWaterfall() {
-  const { data: wfData, isLoading: wfLoading, error: wfError } = useSheetTab('mrr_waterfall');
-  const { data: mrrData, isLoading: mrrLoading } = useSheetTab('mrr_by_month');
-  const wf = wfData as unknown as WaterfallSnapshot | undefined;
-  const mrr = mrrData as unknown as MrrByMonthSnapshot | undefined;
+  // mrr_waterfall is still loaded for its error/loading state; the logo numbers now
+  // come from customer_base so both endpoints and movements share one basis.
+  const { isLoading: wfLoading, error: wfError } = useSheetTab('mrr_waterfall');
+  const { isLoading: mrrLoading } = useSheetTab('mrr_by_month');
+  // THE canonical logo flow. Endpoints AND movements now come from one membership set,
+  // so every row balances by construction. Before this the page welded CASH-basis
+  // movements from mrr_waterfall onto CANONICAL endpoints from mrr_by_month and dropped
+  // the voided/delinquent buckets, so 2026-08 read 200 + 1 + 3 − 0 with an ending of
+  // 197 — a gap of 7, and 0.0% gross churn in a month when 4 customers left.
+  const { data: baseData } = useSheetTab('customer_base');
+  const base = baseData as unknown as { logo_flow?: LogoFlowRow[] } | undefined;
 
   const [preset, setPreset] = useState<Preset>('12M');
   const [fromMonth, setFromMonth] = useState<string>('');
@@ -94,34 +93,23 @@ export default function LogoWaterfall() {
   // ending; ending = starting + new + reactivated - churned. For the very
   // first month in the data, starting = 0.
   const monthly = useMemo(() => {
-    if (!wf || !mrr) return [];
-    const logoQtyByMonth = new Map<string, number>();
-    for (const r of mrr.rows ?? []) {
-      if (typeof r.logo_qty === 'number') logoQtyByMonth.set(r.month, r.logo_qty);
-    }
-    const months = wf.monthly ?? [];
-    return months.map((m, i) => {
-      const ending = logoQtyByMonth.get(m.month) ?? null;
-      const prevMonth = months[i - 1]?.month;
-      const starting = prevMonth ? (logoQtyByMonth.get(prevMonth) ?? 0) : Math.max(0, (ending ?? 0) - m.new_logos - m.reactivated_logos + m.churned_logos);
-      const computedEnding = starting + m.new_logos + m.reactivated_logos - m.churned_logos;
-      const finalEnding = ending ?? computedEnding;
-      const netNew = m.new_logos + m.reactivated_logos - m.churned_logos;
-      // Logo-weighted churn (gross): churned ÷ starting
-      const grossChurn = starting > 0 ? m.churned_logos / starting : null;
-      return {
-        month: m.month,
-        starting_logos: starting,
-        new_logos: m.new_logos,
-        reactivated_logos: m.reactivated_logos,
-        churned_logos: m.churned_logos,
-        ending_logos: finalEnding,
-        net_new_logos: netNew,
-        logo_growth_rate: starting > 0 ? netNew / starting : null,
-        gross_churn_rate_monthly: grossChurn,
-      };
-    });
-  }, [wf, mrr]);
+    const flow = base?.logo_flow ?? [];
+    if (!flow.length) return [];
+    return flow.map((r) => ({
+      month: r.month,
+      starting_logos: r.starting_logos,
+      new_logos: r.new_logos,
+      reactivated_logos: r.reactivated_logos,
+      churned_logos: r.churned_logos,
+      lapsed_logos: r.lapsed_logos,
+      ending_logos: r.ending_logos,
+      net_new_logos: r.net_new_logos,
+      logo_growth_rate: r.starting_logos > 0 ? r.net_new_logos / r.starting_logos : null,
+      // Gross churn counts EVERY departure, confirmed or not. Counting only confirmed
+      // churn reported 0.0% for 2026-08 while 4 customers stopped billing.
+      gross_churn_rate_monthly: r.gross_logo_churn,
+    }));
+  }, [base]);
 
   const firstMonth = monthly[0]?.month;
   const lastMonth = monthly[monthly.length - 1]?.month;
@@ -368,6 +356,7 @@ export default function LogoWaterfall() {
                 <TableCell align="right">New</TableCell>
                 <TableCell align="right">Reactiv.</TableCell>
                 <TableCell align="right">Churned</TableCell>
+                <TableCell align="right">Lapsed</TableCell>
                 <TableCell align="right">Ending</TableCell>
                 <TableCell align="right">Net new</TableCell>
                 <TableCell align="right">Gross churn</TableCell>
@@ -389,6 +378,11 @@ export default function LogoWaterfall() {
                     <TableCell align="right" sx={{ color: 'error.main', ...hoverCell }} onClick={() => openDrill(r.month, 'churn')}>
                       {r.churned_logos > 0 ? `-${r.churned_logos}` : '—'}
                     </TableCell>
+                    {/* Stopped billing but not confirmed gone. These used to be invisible,
+                        which is why the rows never added up. */}
+                    <TableCell align="right" sx={{ color: 'warning.main', ...hoverCell }} onClick={() => openDrill(r.month, 'lapsed')}>
+                      {r.lapsed_logos > 0 ? `-${r.lapsed_logos}` : '—'}
+                    </TableCell>
                     <TableCell align="right" sx={{ fontWeight: 500 }}>{r.ending_logos}</TableCell>
                     <TableCell align="right" sx={{ fontWeight: 500, color: r.net_new_logos >= 0 ? 'success.main' : 'error.main' }}>
                       {r.net_new_logos >= 0 ? `+${r.net_new_logos}` : `${r.net_new_logos}`}
@@ -408,18 +402,25 @@ export default function LogoWaterfall() {
         </Collapse>
       </Paper>
 
-      {drill && wf && (() => {
-        const row = wf.monthly.find((r) => r.month === drill.month);
+      {drill && base?.logo_flow && (() => {
+        const row = base.logo_flow!.find((r) => r.month === drill.month);
         if (!row) return null;
         const { category, month } = drill;
-        const title = category === 'new' ? 'New logos' : category === 'reactivated' ? 'Reactivated logos' : 'Churned logos';
-        const accent = category === 'new' ? 'rgba(26, 158, 92, 0.5)' : category === 'reactivated' ? 'rgba(159, 122, 234, 0.5)' : 'rgba(218, 54, 51, 0.5)';
-        const items = (row.details?.[category] ?? []) as Array<{ name: string; mrr?: number }>;
+        const title = category === 'new' ? 'New logos'
+          : category === 'reactivated' ? 'Reactivated logos'
+          : category === 'lapsed' ? 'Lapsed logos (stopped billing, not confirmed churned)'
+          : 'Churned logos';
+        const accent = category === 'new' ? 'rgba(26, 158, 92, 0.5)'
+          : category === 'reactivated' ? 'rgba(159, 122, 234, 0.5)'
+          : category === 'lapsed' ? 'rgba(214, 158, 46, 0.5)'
+          : 'rgba(218, 54, 51, 0.5)';
+        const key = category === 'churn' ? 'churned' : category;
+        const items = (row.details?.[key as 'new' | 'reactivated' | 'churned' | 'lapsed'] ?? []) as Array<{ name: string; mrr?: number }>;
         const columns: DrillColumn<{ name: string; mrr?: number }>[] = [
           { key: 'name', label: 'Customer', render: (r) => <CustomerLink name={r.name} /> },
           {
             key: 'mrr',
-            label: category === 'churn' ? 'Last MRR' : 'MRR',
+            label: category === 'churn' || category === 'lapsed' ? 'Last MRR' : 'MRR',
             align: 'right',
             render: (r) => (typeof r.mrr === 'number' ? `$${r.mrr.toLocaleString('en-US', { maximumFractionDigits: 0 })}` : '—'),
             exportValue: (r) => r.mrr ?? 0,

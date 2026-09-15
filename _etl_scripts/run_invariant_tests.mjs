@@ -616,6 +616,62 @@ test('customer base MRR reconciles to the accrual waterfall', 'warn', () => {
 });
 
 
+// ============================================================================
+// SECOND, INDEPENDENT CHECK ON THE CHARGE CACHE. The paid-invoice reconciliation
+// above is blind to DIRECT charges — per-instance "Subscription <host>" fees, add-ons
+// and legacy billing have no invoice to reconcile against, so a missing one is
+// invisible to it. Found 2026-09-15: Raumplus' Aug charge (ch_3U2lUVHkM2QhT, $84.20)
+// was absent from stripe_charges while present in Stripe and in the balance-transaction
+// cache, which silently dropped them out of the canonical customer count for August.
+//
+// stripe_balance_transactions is pulled with explicit per-month windows; stripe_charges
+// is pulled by cursor pagination with a rolling strip-and-rebuild. They are independent
+// enough that comparing them catches what either misses alone — including the fact that
+// `--full` is itself lossy (it dropped Westwind's 2026-08-10 charge of $3,673.95).
+//
+// Compared per CUSTOMER over the whole window, never per month: the two caches bucket
+// months differently (BT uses US-Mountain windows, charges use UTC dates), so a
+// per-month diff reports boundary shifts as loss.
+test('charge cache reconciles to the balance-transaction cache', 'error', () => {
+  const ch = readJson(path.join(ROOT, '_etl_scripts/cache/stripe_charges.json'));
+  const bt = readJson(path.join(ROOT, '_etl_scripts/cache/stripe_balance_transactions.json'));
+  if (!ch || !bt?.months) return { passed: true, detail: 'a cache is not built yet — skipped' };
+  const FROM = Object.keys(bt.months).sort()[0];
+  const r2 = (v) => Math.round(v * 100) / 100;
+  const btBy = new Map(), chBy = new Map();
+  for (const [m, bm] of Object.entries(bt.months)) {
+    if (m < FROM) continue;
+    for (const r of (bm.rows || [])) {
+      if (r.cat !== 'charge' || !r.cust) continue;
+      btBy.set(r.cust, r2((btBy.get(r.cust) || 0) + r.amount));
+    }
+  }
+  for (const [cid, c] of Object.entries(ch.by_customer || {})) {
+    for (const t of (c.transactions || [])) {
+      if (String(t.d || '').slice(0, 7) < FROM) continue;
+      chBy.set(cid, r2((chBy.get(cid) || 0) + (t.a || 0) + (t.r || 0)));
+    }
+  }
+  // $50 floor: below that it is rounding and partial-refund noise, not lost charges.
+  const gaps = [];
+  for (const [cid, v] of btBy) {
+    const gap = r2(v - (chBy.get(cid) || 0));
+    if (gap > 50) gaps.push({ cid, gap });
+  }
+  const total = Math.round(gaps.reduce((s, g) => s + g.gap, 0));
+  const profiles = readJson(path.join(SNAP, 'customer_profiles.json'), { rows: [] }).rows || [];
+  const nameBy = new Map();
+  for (const p of profiles) for (const x of (p.stripe_customer_ids || [])) nameBy.set(x, p.customer_name || p.name);
+  return {
+    passed: gaps.length === 0,
+    detail: gaps.length === 0
+      ? `charge cache matches balance transactions for every customer since ${FROM}`
+      : `${gaps.length} customer(s) are short $${total.toLocaleString()} in the charge cache vs balance transactions since ${FROM} — charges exist in Stripe but are missing locally; re-run sync_stripe.mjs --full and re-check (it is itself lossy, so verify)`,
+    examples: gaps.sort((a, b) => b.gap - a.gap).slice(0, 5).map((g) => `${nameBy.get(g.cid) || g.cid} short $${Math.round(g.gap).toLocaleString()}`),
+  };
+});
+
+
 
 // RUN
 // ============================================================================
