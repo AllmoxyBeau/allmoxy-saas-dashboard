@@ -102,7 +102,108 @@ const [cntRows] = await conn.query(`
   FROM instance_total_orders t
   JOIN (SELECT installation_id, MAX(snapshot_date) AS d FROM instance_total_orders GROUP BY installation_id) m
     ON m.installation_id = t.installation_id AND m.d = t.snapshot_date`);
+
+// ── GOLD: modelled verified orders by customer × month (Beau, 2026-09-15: make this
+// the source of truth for orders verified, refreshed daily). The dbt table already
+// resolves installation_id -> allmoxy_customer_id and carries ORDER COUNTS, which the
+// xlsx never had for the current year. It also runs to the current month, where the
+// spreadsheet had stalled at 2026-05.
+//
+// Aggregated per (customer, month) here because 29 customers bill across several
+// installations — one has 28 — and leaving the rows split would double-count.
+//
+// DATA QUALITY IS CARRIED, NOT HIDDEN. Two known defects in the source, flagged per
+// row so the build can decide rather than silently publishing them:
+//   • order counts repeat verbatim across 2026-01..03 (a carry-forward, not real
+//     monthly counts) and are absent for 2026-04..06
+//   • the current month has order counts but no dollars yet
+let goldRows = [];
+try {
+  [goldRows] = await conn.query(`
+    SELECT allmoxy_customer_id AS aid,
+           period_year  AS y,
+           period_month AS m,
+           SUM(invoice_total)  AS usd,
+           SUM(monthly_orders) AS orders,
+           COUNT(DISTINCT installation_id) AS installations,
+           COUNT(monthly_orders) AS order_rows
+    FROM gold_commercial.gold_orders_verified_monthly
+    WHERE allmoxy_customer_id IS NOT NULL
+    GROUP BY 1, 2, 3`);
+} catch (e) {
+  console.error(`[aurora] gold_orders_verified_monthly unavailable (${e.message}) — orders_verified will fall back to the xlsx`);
+}
 await conn.end();
+
+if (goldRows.length) {
+  // QUALITY MODEL (measured 2026-09-15, not assumed):
+  //   • ANNUAL totals are trustworthy. Summed by year they agree with the hand-kept
+  //     xlsx within 0.3% on order counts and 2% on dollars — two independent sources
+  //     converging, which is the point of moving to the warehouse.
+  //   • MONTHLY detail is NOT real before 2026. 88% of customers carry the identical
+  //     invoice_total in all 12 months of 2024 and 2025 — an annual figure spread
+  //     evenly, so 12 × the monthly value reconstructs the year. Only 4% look like
+  //     that in 2026, so from 2026 the monthly series is genuine.
+  // Flagged per customer-year as `even_spread` so the build can total by year safely
+  // while refusing to plot a synthetic flat line as a monthly trend.
+  const byCustYear = new Map();
+  for (const r of goldRows) {
+    const k = `${r.aid}|${r.y}`;
+    if (!byCustYear.has(k)) byCustYear.set(k, new Set());
+    byCustYear.get(k).add(r.usd == null ? 'null' : String(r.usd));
+  }
+  const evenSpread = new Set();
+  for (const [k, vals] of byCustYear) {
+    // one distinct value across 12 months = an annual figure divided evenly
+    if (vals.size === 1) evenSpread.add(k);
+  }
+
+  const out = {
+    fetchedAt: new Date().toISOString(),
+    source: 'gold_commercial.gold_orders_verified_monthly (Aurora, dbt)',
+    note: 'Verified order volume by customer x month. ANNUAL totals are reliable. MONTHLY values before 2026 are an even spread of the annual figure (even_spread=true) and must not be read as a monthly trend. The current month often has order counts before dollars land, so $0 there means "not yet aggregated", not "no orders".',
+    by_customer: {},
+    months: [],
+  };
+  const monthSet = new Set();
+  for (const r of goldRows) {
+    const aid = Number(r.aid);
+    const key = `${r.y}-${String(r.m).padStart(2, '0')}`;
+    monthSet.add(key);
+    if (!out.by_customer[aid]) out.by_customer[aid] = {};
+    const prev = out.by_customer[aid][key];
+    const usd = r.usd == null ? null : Math.round(Number(r.usd) * 100) / 100;
+    const orders = r.orders == null ? null : Math.round(Number(r.orders));
+    // A customer can appear on several installation rows for the same month; sum them.
+    out.by_customer[aid][key] = {
+      usd: prev ? Math.round(((prev.usd || 0) + (usd || 0)) * 100) / 100 : usd,
+      orders: prev ? ((prev.orders || 0) + (orders || 0)) || null : orders,
+      installations: (prev?.installations || 0) + Number(r.installations),
+      even_spread: evenSpread.has(`${r.aid}|${r.y}`),
+    };
+  }
+  out.months = [...monthSet].sort();
+  // ORDER COUNTS can also be carried forward: 2026-01..03 repeat one value verbatim
+  // while dollars move, so they are not real monthly counts. Flag (never null) the
+  // months whose counts match the previous month across the board, so a chart can
+  // refuse them while annual totals stay intact.
+  const carried = new Set();
+  for (let i = 1; i < out.months.length; i++) {
+    const cur = out.months[i], prev = out.months[i - 1];
+    const pairs = Object.values(out.by_customer)
+      .filter((c) => c[cur]?.orders != null && c[prev]?.orders != null);
+    if (pairs.length >= 10 && pairs.every((c) => c[cur].orders === c[prev].orders)) carried.add(cur);
+  }
+  for (const [, mm] of Object.entries(out.by_customer)) {
+    for (const [mk, v] of Object.entries(mm)) if (carried.has(mk) && v.orders != null) v.orders_carried_forward = true;
+  }
+  out.order_counts_carried_forward = [...carried].sort();
+  fs.writeFileSync(path.join(ROOT, '_etl_scripts/cache/aurora_orders_verified_monthly.json'), JSON.stringify(out));
+  const usdTot = goldRows.reduce((s, r) => s + Number(r.usd || 0), 0);
+  const ordTot = goldRows.reduce((s, r) => s + Number(r.orders || 0), 0);
+  console.error(`[aurora] gold orders verified: ${Object.keys(out.by_customer).length} customers · ${out.months[0]}→${out.months[out.months.length - 1]} · $${Math.round(usdTot).toLocaleString()} · ${Math.round(ordTot).toLocaleString()} orders · ${evenSpread.size} customer-years are an even annual spread`);
+}
+
 
 // Aggregate per customer (mapped) + collect unmapped instances separately.
 const byCust = new Map();   // aid -> { aid, name, installer_id, verified_by_month, total_orders, total_orders_asof }

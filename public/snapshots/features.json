@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-09-15T18:41:45.555Z",
-  "jira_fetchedAt": "2026-09-15T18:41:43.164Z",
+  "fetchedAt": "2026-09-15T21:41:31.774Z",
+  "jira_fetchedAt": "2026-09-15T21:41:29.207Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4345,
-    "open_tickets": 924,
-    "done_tickets": 3421,
-    "tickets_with_matched_customer": 2121,
-    "open_mrr_at_stake": 2729510.35,
+    "total_tickets": 4346,
+    "open_tickets": 920,
+    "done_tickets": 3426,
+    "tickets_with_matched_customer": 2122,
+    "open_mrr_at_stake": 2718049.9,
     "distinct_customers_tagged": 152,
     "unmatched_labels": [
       "2020",
@@ -17048,8 +17048,8 @@
     {
       "key": "DEV-13055",
       "summary": "New batch page date filters not reliably responsive",
-      "status": "In QA",
-      "stage_category": "In Progress",
+      "status": "Passed QA",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 630,
@@ -40492,8 +40492,8 @@
     {
       "key": "DEV-13128",
       "summary": "Primary Kitchen - Import warns of custom column mismatch when re-importing an unmodified, just-exported attribute options file",
-      "status": "In QA",
-      "stage_category": "In Progress",
+      "status": "In Production",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 651,
@@ -40508,7 +40508,7 @@
       ],
       "created": "2026-09-14",
       "updated": "2026-09-15",
-      "resolved": null,
+      "resolved": "2026-09-15",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13128",
       "tag_count": 1,
       "customer_count": 1,
@@ -47762,6 +47762,42 @@
       ]
     },
     {
+      "key": "DEV-13144",
+      "summary": "KC Doors - Time Tracking shows \"Invalid Order Number\" for orders entered",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [
+        {
+          "allmoxy_customer_id": 405,
+          "name": "KC Doors",
+          "mrr": 2300,
+          "lifetime": 113149.49,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 42,
+          "name": "My Door Factory",
+          "mrr": 1000,
+          "lifetime": 101444,
+          "status": "active"
+        }
+      ],
+      "created": "2026-09-15",
+      "updated": "2026-09-15",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13144",
+      "tag_count": 2,
+      "customer_count": 2,
+      "active_customer_count": 2,
+      "total_mrr": 3300,
+      "total_arr": 39600,
+      "total_lifetime": 214593.49,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-7068",
       "summary": "Batch Print",
       "status": "Resolved",
@@ -51152,8 +51188,8 @@
     {
       "key": "DEV-13143",
       "summary": "NJ Drawers / Fl Drawers - Site root redirects to login despite Allow Public Ordering Page enabled",
-      "status": "New",
-      "stage_category": "To Do",
+      "status": "In Production",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 740,
@@ -64301,7 +64337,7 @@
     {
       "key": "DEV-12969",
       "summary": "Devtools price adjustment popup does not open - unable to verify pricing issue with DBS",
-      "status": "Ready For QA",
+      "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
@@ -65997,8 +66033,8 @@
     {
       "key": "DEV-12963",
       "summary": "Operator: Ability to Direct Customers to Reports",
-      "status": "Ready for Staging",
-      "stage_category": "In Progress",
+      "status": "In Production",
+      "stage_category": "Done",
       "issue_type": "New Feature",
       "priority": "Medium",
       "issue_score": 178,
@@ -66013,7 +66049,7 @@
       ],
       "created": "2026-08-26",
       "updated": "2026-09-15",
-      "resolved": null,
+      "resolved": "2026-09-15",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12963",
       "tag_count": 1,
       "customer_count": 1,
@@ -75047,17 +75083,40 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-11606",
+      "summary": "API - add is_taxable to order_other_costs calls",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Sub new feature",
+      "priority": "High",
+      "issue_score": 343,
+      "customers": [],
+      "created": "2026-02-17",
+      "updated": "2026-09-15",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11606",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-13000",
       "summary": "Advanced Cabinet Doors - New helper parts produce no export rows despite matching Qty conditions",
-      "status": "In QA",
-      "stage_category": "In Progress",
+      "status": "In Production",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 630,
       "customers": [],
       "created": "2026-09-01",
       "updated": "2026-09-15",
-      "resolved": null,
+      "resolved": "2026-09-15",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13000",
       "tag_count": 1,
       "customer_count": 0,
@@ -75067,6 +75126,52 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "advancedcabinetsdoors"
+      ]
+    },
+    {
+      "key": "DEV-13142",
+      "summary": "Drawer Connection - Payment receipt PDF export renders without card/table CSS (styling lost vs. web page)",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [],
+      "created": "2026-09-15",
+      "updated": "2026-09-15",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13142",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "dcdrawers"
+      ]
+    },
+    {
+      "key": "DEV-13058",
+      "summary": "BTJ Cabinet Door Company — Invoice output page Order Totals read $0.00 Subtotal while line item totals $207.60, order #35104",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 685,
+      "customers": [],
+      "created": "2026-09-09",
+      "updated": "2026-09-15",
+      "resolved": "2026-09-15",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13058",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "btj"
       ]
     },
     {
@@ -75116,29 +75221,6 @@
       ]
     },
     {
-      "key": "DEV-13058",
-      "summary": "BTJ Cabinet Door Company — Invoice output page Order Totals read $0.00 Subtotal while line item totals $207.60, order #35104",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 685,
-      "customers": [],
-      "created": "2026-09-09",
-      "updated": "2026-09-15",
-      "resolved": "2026-09-15",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13058",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "btj"
-      ]
-    },
-    {
       "key": "DEV-12831",
       "summary": "BTJ Cabinet Door Company — Invoice output page Order Totals read $0.00 while line items on the same page total $1,763.25",
       "status": "Resolved",
@@ -75185,29 +75267,6 @@
       ]
     },
     {
-      "key": "DEV-13142",
-      "summary": "Drawer Connection - Payment receipt PDF export renders without card/table CSS (styling lost vs. web page)",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 706,
-      "customers": [],
-      "created": "2026-09-15",
-      "updated": "2026-09-15",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13142",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "dcdrawers"
-      ]
-    },
-    {
       "key": "DEV-12268",
       "summary": "Unable to deselect Australia Sales Tax Presence",
       "status": "In Production",
@@ -75228,29 +75287,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "mykitch"
-      ]
-    },
-    {
-      "key": "DEV-11606",
-      "summary": "API - add is_taxable to order_other_costs calls",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Sub new feature",
-      "priority": "High",
-      "issue_score": 343,
-      "customers": [],
-      "created": "2026-02-17",
-      "updated": "2026-09-15",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11606",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
       ]
     },
     {

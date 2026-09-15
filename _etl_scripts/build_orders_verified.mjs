@@ -407,6 +407,88 @@ for (const c of byCustomer.values()) {
 console.log(`Live Date inferred for ${inferredCount} customers (orders present but no xlsx Live Date)`);
 
 // ============================================================================
+// Pass 4a2: GOLD OVERLAY — Aurora becomes the source of truth for order volume.
+//
+// Beau, 2026-09-15: use gold_orders_verified_monthly as the source of truth, refreshed
+// daily, and surface the order counts it carries. The spreadsheet had stalled at
+// 2026-05 and never had current-year counts at all.
+//
+// What gold is trusted for, measured rather than assumed:
+//   • ANNUAL dollars and order counts — summed by year they agree with the xlsx within
+//     0.3% on counts and 2% on dollars. Two independently-maintained sources landing
+//     that close is the whole reason to switch.
+//   • MONTHLY detail from 2026 onward — genuine per-month variation.
+// What it is NOT trusted for:
+//   • MONTHLY detail before 2026. 88% of customers carry one identical value in all
+//     twelve months of 2024 and 2025: an annual figure spread evenly. Summing the year
+//     reconstructs it correctly, but plotting it as a trend would draw a flat line that
+//     means nothing. Carried through as `even_spread` so consumers can refuse it.
+//   • ORDER COUNTS in a year where some months have dollars but no count (2026-04..06
+//     are null). A partial sum would read as a collapse in volume, so the count is
+//     nulled for that year and `order_count_source` says why.
+//
+// The xlsx is still the only source of live_date / months_to_launch, so it stays.
+// orders_value_overrides.json still applies below: the Rehau 2018 corruption
+// ($102.88M against a real $3.49M) is present in gold too — it inherits the same
+// upstream data, so migrating does not retire that correction.
+// ============================================================================
+const GOLD_PATH = path.join('/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard', '_etl_scripts/cache/aurora_orders_verified_monthly.json');
+let goldApplied = 0, goldMonths = null, goldCountYears = 0;
+try {
+  const gold = JSON.parse(fs.readFileSync(GOLD_PATH, 'utf8'));
+  goldMonths = gold.months || [];
+  for (const c of byCustomer.values()) {
+    const g = gold.by_customer?.[String(c.allmoxy_customer_id)];
+    if (!g) continue;
+    // Monthly detail, kept whole so the UI can show 2026 by month.
+    // A month with orders but no dollars is "not yet aggregated", not "no revenue" —
+    // the current month routinely lands counts before invoice totals.
+    for (const v of Object.values(g)) {
+      if ((v.orders || 0) > 0 && !(v.usd > 0)) v.usd_pending = true;
+    }
+    c.monthly_verified = g;
+    // Roll up to years.
+    const years = {};
+    for (const [mk, v] of Object.entries(g)) {
+      const y = mk.slice(0, 4);
+      if (!years[y]) years[y] = { usd: 0, orders: 0, monthsWithUsd: 0, monthsWithOrders: 0, even: false };
+      years[y].usd += v.usd || 0;
+      if (v.orders != null) { years[y].orders += v.orders; years[y].monthsWithOrders++; }
+      if (v.usd != null && v.usd > 0) years[y].monthsWithUsd++;
+      if (v.even_spread) years[y].even = true;
+    }
+    for (const [y, agg] of Object.entries(years)) {
+      if (!c.years[y]) c.years[y] = { order_count: 0, total_usd: 0, subtotal_usd: 0, b2b_subtotal_usd: 0 };
+      c.years[y].total_usd = Math.round(agg.usd * 100) / 100;
+      c.years[y].subtotal_usd = Math.round(agg.usd * 100) / 100;
+      c.years[y].source = 'gold';
+      c.years[y].monthly_is_even_spread = agg.even;
+      // The CURRENT year can never have a complete annual count: 2026 carries a
+      // carry-forward value in Jan–Mar, nothing in Apr–Jun, and real counts only from
+      // Jul. Summing those produced 18,029 — a figure that is neither YTD nor annual
+      // and would read as a volume collapse. Publish the monthly detail instead.
+      if (y === currentYearStr) {
+        c.years[y].order_count = null;
+        c.years[y].order_count_source = 'suppressed — partial year with month gaps; see monthly_verified';
+      } else if (agg.monthsWithOrders > 0 && agg.monthsWithOrders >= agg.monthsWithUsd) {
+        c.years[y].order_count = agg.orders;
+        c.years[y].order_count_source = 'gold';
+        goldCountYears++;
+      } else if (agg.monthsWithOrders > 0) {
+        c.years[y].order_count = null;
+        c.years[y].order_count_source = `partial (${agg.monthsWithOrders} of ${agg.monthsWithUsd} months have counts)`;
+      }
+      goldApplied++;
+    }
+    c.total_lifetime_usd = Object.values(c.years).reduce((t, v) => t + (v.total_usd || 0), 0);
+    c.total_lifetime_orders = Object.values(c.years).reduce((t, v) => t + (v.order_count || 0), 0);
+  }
+  console.error(`[orders_verified] gold overlay: ${goldApplied} customer-years from Aurora (${goldCountYears} with usable order counts), months ${goldMonths[0]}→${goldMonths[goldMonths.length - 1]}`);
+} catch (e) {
+  console.error(`[orders_verified] gold cache unavailable (${e.code || e.message}) — falling back to the xlsx entirely`);
+}
+
+// ============================================================================
 // Pass 4b: Suppress 2026 order counts.
 //
 // The 2026 monthly source xlsx ("Verified Orders 2026.xlsx") carries $ invoiced
@@ -418,10 +500,13 @@ console.log(`Live Date inferred for ${inferredCount} customers (orders present b
 // column. See memory: 2026-order-counts-unavailable.
 // ============================================================================
 for (const c of byCustomer.values()) {
-  if (c.years[VERIFIED_2026_YEAR]) {
-    const stale = c.years[VERIFIED_2026_YEAR].order_count || 0;
+  const y26 = c.years[VERIFIED_2026_YEAR];
+  // Leave it alone when Aurora supplied a count it vouches for; only the xlsx's
+  // unreliable current-year count needs suppressing.
+  if (y26 && y26.order_count_source !== 'gold') {
+    const stale = y26.order_count || 0;
     c.total_lifetime_orders = Math.max(0, c.total_lifetime_orders - stale);
-    c.years[VERIFIED_2026_YEAR].order_count = null;
+    y26.order_count = null;
   }
 }
 
@@ -489,7 +574,21 @@ for (const c of byCustomer.values()) {
 
 const out = {
   fetched_at: new Date().toISOString(),
-  source: 'Orders Verified Data.xlsx · Raw Data + Monthly Average + Month to Month Veified Raw Data',
+  source: goldMonths
+    ? 'gold_commercial.gold_orders_verified_monthly (Aurora, refreshed daily) for order volume · Orders Verified Data.xlsx for live date / months to launch'
+    : 'Orders Verified Data.xlsx · Raw Data + Monthly Average + Month to Month Veified Raw Data',
+  orders_source: goldMonths ? 'aurora_gold' : 'xlsx',
+  orders_months: goldMonths,
+  orders_latest_month: goldMonths ? goldMonths[goldMonths.length - 1] : null,
+  orders_data_quality: goldMonths ? {
+    annual_totals: 'reliable — agrees with the xlsx within 0.3% on order counts and 2% on dollars',
+    monthly_before_2026: 'EVEN SPREAD of the annual figure (monthly_is_even_spread=true); sums correctly by year, but is not a monthly trend',
+    monthly_from_2026: 'genuine per-month variation',
+    order_counts_carried_forward: 'months where counts repeat the prior month verbatim are flagged orders_carried_forward',
+    current_year_order_count: 'suppressed — the year has month gaps; use monthly_verified',
+    usd_pending: 'a month with orders but no dollars is not yet aggregated, not zero revenue',
+    still_overridden: 'orders_value_overrides.json still applies — the Rehau 2018 corruption ($102.88M vs a real $3.49M) is present in Aurora too',
+  } : null,
   comment:
     'Per-customer verified order data. Three signals captured: (1) per-year order counts + USD totals (from Raw Data), (2) MONTHLY AVERAGE revenue by year (from Monthly Average sheet — used for apples-to-apples YoY trend since 2026 is partial), (3) Live Date (year customer went live) + Months to Launch (from Month to Month Veified Raw Data sheet — answers Launch Status without HubSpot note scanning).',
   current_year: currentYear,
