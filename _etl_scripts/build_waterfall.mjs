@@ -136,7 +136,16 @@ function walk(customers, { startMonth = null } = {}) {
   const monthly = [];
   for (let i = 1; i < monthCols.length; i++) {
     const prev = monthCols[i - 1], cur = monthCols[i];
-    if (cur >= currentMonth) break; // exclude current (partial) month
+    // The current month is emitted but FLAGGED (Beau, 2026-09-16: he wants it on the
+    // waterfall as an opt-in filter). It is genuinely incomplete — billing dates
+    // cluster through the month, so a mid-month row understates every category and
+    // must never be read as performance. summarize() already excludes it from the TTM
+    // aggregates, so including it here cannot leak into the headline retention rates.
+    // Stop after the current month. monthly_history runs INTO THE FUTURE for annual
+    // payers (their prepayment amortizes 12 months forward), so without this bound the
+    // cash basis emits 2027 rows built from amortization alone.
+    if (cur > currentMonth) break;
+    const isPartial = cur >= currentMonth;
     let newMrr = 0, reactivatedMrr = 0, expansion = 0, contraction = 0, churn = 0, voided = 0, delinquent = 0;
     let startingMrr = 0, endingMrr = 0, churnedLogos = 0, voidedLogos = 0, delinquentLogos = 0, newLogos = 0, reactivatedLogos = 0;
     const details = { new: [], reactivated: [], expansion: [], contraction: [], churn: [], voided: [], delinquent: [] };
@@ -170,6 +179,7 @@ function walk(customers, { startMonth = null } = {}) {
     const p4 = (v) => (v != null ? Math.round(v * 10000) / 10000 : null);
     monthly.push({
       month: cur,
+      partial: isPartial,
       starting_mrr: r2(startingMrr), new_mrr: r2(newMrr), reactivated_mrr: r2(reactivatedMrr),
       expansion_mrr: r2(expansion), contraction_mrr: r2(contraction), churn_mrr: r2(churn),
       voided_mrr: r2(voided), delinquent_mrr: r2(delinquent),

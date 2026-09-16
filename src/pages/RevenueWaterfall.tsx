@@ -9,6 +9,8 @@ import Skeleton from '@mui/material/Skeleton';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import ToggleButton from '@mui/material/ToggleButton';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -158,6 +160,10 @@ export default function RevenueWaterfall() {
   const error = source === 'txns' ? txnError : qbError;
 
   const [preset, setPreset] = useState<Preset>('12M');
+  // The in-progress month, off by default. Billing dates cluster through a month, so a
+  // mid-month row understates every category — it is a "where are we so far" view, not
+  // performance. Kept out of the TTM aggregates entirely (build_waterfall.summarize).
+  const [includePartial, setIncludePartial] = useState(false);
   const [fromMonth, setFromMonth] = useState<string>('');
   const [toMonth, setToMonth] = useState<string>('');
   const [headerWindow, setHeaderWindow] = useState<'3M' | '6M' | '12M'>('12M');
@@ -171,7 +177,12 @@ export default function RevenueWaterfall() {
     }, 50);
   }
 
-  const monthly = snap?.monthly ?? [];
+  const allMonthly = snap?.monthly ?? [];
+  const monthly = useMemo(
+    () => (includePartial ? allMonthly : allMonthly.filter((r) => !(r as { partial?: boolean }).partial)),
+    [allMonthly, includePartial],
+  );
+  const partialMonth = useMemo(() => allMonthly.find((r) => (r as { partial?: boolean }).partial)?.month ?? null, [allMonthly]);
   const firstMonth = monthly[0]?.month;
   const lastMonth = monthly[monthly.length - 1]?.month;
 
@@ -277,7 +288,12 @@ export default function RevenueWaterfall() {
                 {/* Overview shows a different (larger) MRR and people reasonably ask which
                     is right. Both are — they answer different questions. Say so here rather
                     than leaving the reader to discover it. */}
-                {' · excludes annual amortization (booked separately on 4100), so Overview\u2019s canonical MRR is this figure plus that'}</>
+                {' · excludes annual amortization (booked separately on 4100), so Overview\u2019s canonical MRR is this figure plus that'}
+                {includePartial && partialMonth && (
+                  <span style={{ color: '#D69E2E' }}>
+                    {` · ${monthLabelLong(partialMonth)} is IN PROGRESS — billing dates cluster through a month, so every category is understated. It is excluded from the TTM rates above.`}
+                  </span>
+                )}</>
             )}
           </Typography>
         ) : (
@@ -400,6 +416,13 @@ export default function RevenueWaterfall() {
             <InfoIcon info={<><strong>What it is:</strong> The MRR bridge — how each month's ending MRR gets from the previous month's ending MRR.<br /><br /><strong>Data:</strong> For each customer × month in the MRR by Month tab, classify the change vs. prior month: New (0→&gt;0) · Churn (&gt;0→0) · Expansion (cur&gt;prev) · Contraction (cur&lt;prev). Stream is subscription only.<br /><br /><strong>White line</strong> = Net new MRR (the resulting $ change that month). <strong>Click any bar segment</strong> to see the contributing customers.</>} />
           </Stack>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} alignItems={{ xs: 'stretch', sm: 'center' }}>
+            {partialMonth && (
+              <FormControlLabel
+                sx={{ mr: 0, '& .MuiFormControlLabel-label': { fontSize: 11, color: 'text.secondary' } }}
+                control={<Switch size="small" checked={includePartial} onChange={(e) => setIncludePartial(e.target.checked)} />}
+                label={`Include ${monthLabelLong(partialMonth)} (in progress)`}
+              />
+            )}
             <ToggleButtonGroup
               size="small"
               exclusive
