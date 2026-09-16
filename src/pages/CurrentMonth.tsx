@@ -149,9 +149,18 @@ function round2(n: number) {
 export default function CurrentMonth() {
   const { data: mrrData, isLoading: mrrLoading } = useSheetTab('mrr_by_month');
   const { data: profilesData } = useSheetTab('customer_profiles');
+  // Accrual (invoiced) series — see the 'billing_timing' category below. A cash gap in
+  // the prior month is only a real interruption if the customer was not INVOICED then.
+  const { data: rrData } = useSheetTab('revenue_recognition');
+  const accrualByCustomer = useMemo(() => {
+    const m = new Map<number, Record<string, number>>();
+    const series = (rrData as unknown as { accrual_series?: Array<{ allmoxy_customer_id: number; months: Record<string, number> }> } | undefined)?.accrual_series ?? [];
+    for (const r of series) m.set(r.allmoxy_customer_id, r.months || {});
+    return m;
+  }, [rrData]);
 
-  type VarianceCategory = 'overdue' | 'cancelled' | 'contracted' | 'expanded' | 'new_sub' | 'reactivated' | 'reconnected';
-  const ALL_CATEGORIES: VarianceCategory[] = ['overdue', 'cancelled', 'contracted', 'expanded', 'new_sub', 'reactivated', 'reconnected'];
+  type VarianceCategory = 'overdue' | 'cancelled' | 'contracted' | 'expanded' | 'new_sub' | 'reactivated' | 'reconnected' | 'billing_timing';
+  const ALL_CATEGORIES: VarianceCategory[] = ['overdue', 'cancelled', 'contracted', 'expanded', 'new_sub', 'reactivated', 'reconnected', 'billing_timing'];
   const [activeCategories, setActiveCategories] = useState<Set<VarianceCategory>>(new Set(ALL_CATEGORIES));
   const varianceTable = useCollapse(true);
   const toggleCategory = (cat: VarianceCategory) => {
@@ -493,15 +502,29 @@ export default function CurrentMonth() {
           postedCur += c.currentTotal;
           postedSubs += 1;
           if (!billedLastMonth) {
-            // Reconnected: subscription history exists within the 3-month lookback,
-            // but the customer skipped the immediately prior month. Variance vs pm is
-            // the full currentTotal — not an expansion of an actively-billing sub.
+            // A cash gap in the prior month has two very different causes, and until
+            // the accrual report existed there was no way to tell them apart:
+            //
+            //   billing_timing — the customer WAS invoiced last month; only the cash
+            //     landed outside it (a late clear, a Link/bank settlement, or a charge
+            //     the sync failed to capture). Nothing happened commercially, so
+            //     counting the full amount as variance is noise. In Sept 2026 this was
+            //     10 of 11 "reconnections", and the same customers the charge-cache
+            //     invariant reports as short — Craftsman Specialty, Classic Kitchen
+            //     Doors, Sherwood Shelving, Ironwood, Mullet Door, Superior Woodworking.
+            //
+            //   reconnected — genuinely not invoiced last month and billing again now.
+            //
+            const accrualPrior = accrualByCustomer.get(p.allmoxy_customer_id)?.[pm] ?? 0;
+            const timingOnly = accrualPrior > 0;
             detail.push({
               ...rowBase,
-              category: 'reconnected',
-              priorAmount: 0,
+              category: timingOnly ? 'billing_timing' : 'reconnected',
+              priorAmount: timingOnly ? round2(accrualPrior) : 0,
               currentAmount: round2(c.currentTotal),
-              delta: round2(c.currentTotal),
+              // Timing rows carry only the true change vs what was invoiced, so they
+              // stop inflating the month's variance by a full subscription.
+              delta: timingOnly ? round2(c.currentTotal - accrualPrior) : round2(c.currentTotal),
             });
             continue;
           }
@@ -608,7 +631,7 @@ export default function CurrentMonth() {
     // Within each category, biggest mover first (|delta| desc) — EXCEPT Overdue, which
     // sorts by days overdue desc (oldest first) since longer-unbilled subs are higher
     // priority to chase.
-    const catOrder: Record<VarianceCategory, number> = { new_sub: 0, reactivated: 1, reconnected: 2, expanded: 3, contracted: 4, overdue: 5, cancelled: 6 };
+    const catOrder: Record<VarianceCategory, number> = { new_sub: 0, reactivated: 1, reconnected: 2, billing_timing: 3, expanded: 4, contracted: 5, overdue: 6, cancelled: 7 };
     detail.sort((a, b) => {
       const catDiff = catOrder[a.category] - catOrder[b.category];
       if (catDiff !== 0) return catDiff;
@@ -657,6 +680,7 @@ export default function CurrentMonth() {
       new_sub: detail.filter((d) => d.category === 'new_sub').length,
       reactivated: detail.filter((d) => d.category === 'reactivated').length,
       reconnected: detail.filter((d) => d.category === 'reconnected').length,
+      billing_timing: detail.filter((d) => d.category === 'billing_timing').length,
     };
     const sums = {
       overdue: round2(sumDelta('overdue')),
@@ -666,6 +690,7 @@ export default function CurrentMonth() {
       new_sub: round2(sumDelta('new_sub')),
       reactivated: round2(sumDelta('reactivated')),
       reconnected: round2(sumDelta('reconnected')),
+      billing_timing: round2(sumDelta('billing_timing')),
     };
 
     // Annual prepay recognized this month — the amortized monthly slice of
@@ -827,7 +852,7 @@ export default function CurrentMonth() {
                 <InfoIcon
                   info={
                     <>
-                      Per-customer breakdown of the subscription MRR variance vs {monthLabel(view.prior)}. Each customer falls into one of these categories: <em>new logo</em> (no prior subscription history, billed this month), <em>reactivated</em> (returning after 4+ month gap), <em>reconnected</em> (skipped prior month but has recent history, now billing again), <em>expanded</em> (billed prior month and paid more this month), <em>contracted</em> (billed prior month and paid less), <em>overdue</em> (billed prior month, past their expected day with no charge yet), or <em>cancelled</em> (billed prior month, confirmed cancellation in HubSpot, no charge this month). Category sums reconcile to the total variance.
+                      Per-customer breakdown of the subscription MRR variance vs {monthLabel(view.prior)}. Each customer falls into one of these categories: <em>new logo</em> (no prior subscription history, billed this month), <em>reactivated</em> (returning after 4+ month gap), <em>reconnected</em> (genuinely not invoiced last month, billing again now), <em>billing timing</em> (invoiced last month on the accrual basis — only the cash landed outside it, so nothing changed commercially), <em>expanded</em> (billed prior month and paid more this month), <em>contracted</em> (billed prior month and paid less), <em>overdue</em> (billed prior month, past their expected day with no charge yet), or <em>cancelled</em> (billed prior month, confirmed cancellation in HubSpot, no charge this month). Category sums reconcile to the total variance.
                       <br /><br />
                       Click chips to filter the table.
                     </>
@@ -887,6 +912,7 @@ export default function CurrentMonth() {
                     <VarianceCard label="New" count={subscriptionView.counts.new_sub} sum={subscriptionView.sums.new_sub} variance={subscriptionView.varianceAbs} accent="#2C73FF" active={activeCategories.has('new_sub')} onClick={() => toggleCategory('new_sub')} />
                     <VarianceCard label="Reactivated" count={subscriptionView.counts.reactivated} sum={subscriptionView.sums.reactivated} variance={subscriptionView.varianceAbs} accent="#9F7AEA" active={activeCategories.has('reactivated')} onClick={() => toggleCategory('reactivated')} />
                     <VarianceCard label="Reconnected" count={subscriptionView.counts.reconnected} sum={subscriptionView.sums.reconnected} variance={subscriptionView.varianceAbs} accent="#14B8A6" active={activeCategories.has('reconnected')} onClick={() => toggleCategory('reconnected')} />
+                    <VarianceCard label="Billing timing" count={subscriptionView.counts.billing_timing} sum={subscriptionView.sums.billing_timing} variance={subscriptionView.varianceAbs} accent="#8B949E" active={activeCategories.has('billing_timing')} onClick={() => toggleCategory('billing_timing')} />
                     <VarianceCard label="Expansion" count={subscriptionView.counts.expanded} sum={subscriptionView.sums.expanded} variance={subscriptionView.varianceAbs} accent="#1A9E5C" active={activeCategories.has('expanded')} onClick={() => toggleCategory('expanded')} />
                     <VarianceCard label="Contraction" count={subscriptionView.counts.contracted} sum={subscriptionView.sums.contracted} variance={subscriptionView.varianceAbs} accent="#E53E3E" active={activeCategories.has('contracted')} onClick={() => toggleCategory('contracted')} />
                     <VarianceCard label="Overdue" count={subscriptionView.counts.overdue} sum={subscriptionView.sums.overdue} variance={subscriptionView.varianceAbs} accent="#F5A623" active={activeCategories.has('overdue')} onClick={() => toggleCategory('overdue')} />
@@ -977,11 +1003,12 @@ export default function CurrentMonth() {
                       // New logos → Reactivated → Expanded → Contracted → Overdue.
                       // Headers span the full row with a left accent stripe so they
                       // can't be mistaken for data rows.
-                      const groupOrder: VarianceCategory[] = ['new_sub', 'reactivated', 'reconnected', 'expanded', 'contracted', 'overdue', 'cancelled'];
+                      const groupOrder: VarianceCategory[] = ['new_sub', 'reactivated', 'reconnected', 'billing_timing', 'expanded', 'contracted', 'overdue', 'cancelled'];
                       const accentColors: Record<VarianceCategory, string> = {
                         new_sub: '#2C73FF',
                         reactivated: '#9F7AEA',
                         reconnected: '#14B8A6',
+                        billing_timing: '#8B949E',
                         expanded: '#1A9E5C',
                         contracted: '#E53E3E',
                         overdue: '#F5A623',
@@ -1100,7 +1127,7 @@ export default function CurrentMonth() {
   );
 }
 
-type CategoryKey = 'overdue' | 'cancelled' | 'contracted' | 'expanded' | 'new_sub' | 'reactivated' | 'reconnected';
+type CategoryKey = 'overdue' | 'cancelled' | 'contracted' | 'expanded' | 'new_sub' | 'reactivated' | 'reconnected' | 'billing_timing';
 type ChipColor = 'warning' | 'error' | 'success' | 'info' | 'secondary' | 'primary' | 'default';
 function categoryLabel(c: CategoryKey): string {
   switch (c) {
@@ -1111,6 +1138,7 @@ function categoryLabel(c: CategoryKey): string {
     case 'new_sub': return 'New';
     case 'reactivated': return 'Reactivated';
     case 'reconnected': return 'Reconnected';
+    case 'billing_timing': return 'Billing timing';
   }
 }
 function categoryChipColor(c: CategoryKey): ChipColor {
@@ -1122,6 +1150,7 @@ function categoryChipColor(c: CategoryKey): ChipColor {
     case 'new_sub': return 'info';
     case 'reactivated': return 'secondary';
     case 'reconnected': return 'primary';
+    case 'billing_timing': return 'default';
   }
 }
 function VarianceCard({
