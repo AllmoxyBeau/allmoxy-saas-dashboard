@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import AppShell from './components/layout/AppShell';
 import NorthStar from './pages/NorthStar';
+const ServiceTickets = lazy(() => import('./pages/ServiceTickets'));
 import { useViewMode } from './config/features';
 
 const CurrentMonth = lazy(() => import('./pages/CurrentMonth'));
@@ -81,6 +82,7 @@ export default function App() {
         <Route path="cohort-retention" element={<L><CohortRetention /></L>} />
         <Route path="net-revenue-retention" element={<L><NetRevenueRetention /></L>} />
         <Route path="customer-health" element={<L><CustomerHealth /></L>} />
+        <Route path="service-tickets" element={<L><ServiceTickets /></L>} />
         <Route path="churn-patterns" element={<L><ChurnPatterns /></L>} />
         <Route path="churn-investigator" element={<L><ChurnInvestigator /></L>} />
         <Route path="churn-risk-matrix" element={<L><ChurnRiskMatrix /></L>} />

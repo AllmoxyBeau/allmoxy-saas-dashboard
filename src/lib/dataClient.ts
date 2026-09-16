@@ -11,6 +11,7 @@ import type { SheetTabResponse } from '../hooks/useSheetTab';
  */
 
 export const KNOWN_SNAPSHOTS = [
+  'service_tickets',
   'customer_base',
   'allmoxy_core_customer',
   'classification_master',

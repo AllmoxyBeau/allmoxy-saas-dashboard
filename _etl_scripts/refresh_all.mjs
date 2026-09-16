@@ -583,7 +583,11 @@ runScript('build_renewal_management.mjs', null); // writes renewal_management.js
 // Data Cleanup — surfaces every detectable data-hygiene issue (Instance aid
 // missing, ghost HubSpot Company IDs, Connect mapping orphans, pay-status
 // drift). Drives the Maintenance → Data Cleanup page.
-runScript('build_data_cleanup.mjs', null); // writes data_cleanup.json itself
+runScript('build_data_cleanup.mjs', null);
+
+// HubSpot Help Desk trends (needs hubspot_tickets.json from sync_hubspot + profiles).
+try { runScript('build_service_tickets.mjs', null); }
+catch (e) { console.log('  ⚠ build_service_tickets failed:', e.message); } // writes data_cleanup.json itself
 
 // Phase 2 revenue seam: overlay June 2026+ onto the aggregate monthly snapshots
 // (mrr_by_month / subscription_by_month / services_by_month) from the live Stripe

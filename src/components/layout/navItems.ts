@@ -78,6 +78,7 @@ export const NAV_ENTRIES: NavEntry[] = [
       { label: 'Rep Dashboard', path: '/rep-dashboard' },
       { label: 'Features', path: '/features' },
       { label: 'Customer Health', path: '/customer-health' },
+      { label: 'Service Tickets', path: '/service-tickets' },
       { label: 'Churn Risk Matrix', path: '/churn-risk-matrix' },
       { label: 'Churn Patterns', path: '/churn-patterns' },
       { label: 'Churn Investigator', path: '/churn-investigator' },
