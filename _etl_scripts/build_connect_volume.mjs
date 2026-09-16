@@ -45,10 +45,27 @@ for (const year of ['2025', '2026', '2024']) { // later years first so recent na
     for (const r of XLSX.utils.sheet_to_json(ws, { header: 1, defval: null })) {
       const acct = String(r[0] || '').trim();
       const name = String(r[1] || '').trim();
-      if (acct.startsWith('acct_') && name && !acctName.has(acct)) acctName.set(acct, name);
+      // '#N/A' is Excel's error value leaking out of the export — it is not a name, and
+      // treating it as one made 19 unattributed accounts report as "named".
+      if (acct.startsWith('acct_') && name && name !== '#N/A' && !acctName.has(acct)) acctName.set(acct, name);
     }
   } catch { /* ignore */ }
 }
+
+// --- acct_id → name from the hand-confirmed overrides, which WIN over the xlsx ---
+// The spreadsheet only names accounts that existed when it was last exported, so every
+// newly-onboarded Connect account reads "#N/A" until someone re-exports it. Today that
+// is 20 of 101 accounts carrying ~$445K of GMV — real fee revenue that cannot be
+// attributed to a customer, and therefore invisible in per-customer economics and in
+// the attach-rate denominator. connect_customer_overrides.json is the durable place to
+// record them (Beau identified acct_1S1UoS0atrcrba4J as Capital Millwork LLC, 2026-09-16).
+try {
+  const ov = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/connect_customer_overrides.json'), 'utf8'));
+  for (const [name, v] of Object.entries(ov.mapping || {})) {
+    const acct = typeof v === 'object' ? v.stripe_connect_account_id : null;
+    if (acct && acct.startsWith('acct_')) acctName.set(acct, name);   // overrides beat the xlsx
+  }
+} catch { /* no overrides file — fall back to the xlsx alone */ }
 
 // --- name → customer profile (normalized) for AID/MRR attribution ---
 const norm = (s) => String(s || '').toLowerCase().replace(/\b(llc|inc|incorporated|ltd|co|company|corp|the|and)\b/g, ' ').replace(/[^a-z0-9]/g, '');
@@ -280,4 +297,4 @@ const out = {
   notes: 'Stripe Connect processing volume + take-rate from the live application_fees API (charge expanded for gross). Annualized figures use the last 12 complete months. Scenarios hold GMV constant and vary take-rate — the embedded-payments expansion lever.',
 };
 fs.writeFileSync(path.join(SNAP, 'connect_volume.json'), JSON.stringify(out, null, 2));
-console.error(`✓ connect_volume.json: annual GMV $${out.annualized.gross_volume.toLocaleString()} · fees $${out.annualized.fee_revenue.toLocaleString()} · take ${(out.annualized.blended_take_rate * 100).toFixed(2)}% · ${out.attach.active_customers_on_connect}/${out.attach.active_customers} active on Connect · ${byAccount.filter(a => a.customer_name).length}/${byAccount.length} accounts named`);
+console.error(`✓ connect_volume.json: annual GMV $${out.annualized.gross_volume.toLocaleString()} · fees $${out.annualized.fee_revenue.toLocaleString()} · take ${(out.annualized.blended_take_rate * 100).toFixed(2)}% · ${out.attach.active_customers_on_connect}/${out.attach.active_customers} active on Connect · ${byAccount.filter((a) => a.customer_name && a.customer_name !== '#N/A').length}/${byAccount.length} accounts named`);

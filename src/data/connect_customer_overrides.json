@@ -1,6 +1,6 @@
 {
   "comment": "Maps each Connect-fee-earning customer name (from the 3 Stripe Connect Revenue sheets) to its allmoxy_customer_id and (when researched) Stripe Connect account_id. Two supported shapes for a mapping entry: (1) shorthand — just the allmoxy_customer_id as a number; (2) full — { allmoxy_customer_id, stripe_connect_account_id }. The connect attribution builder accepts either.",
-  "updated_at": "2026-04-18",
+  "updated_at": "2026-09-16",
   "mapping": {
     "Primary Kitchen": 176,
     "BTJ Cabinet Door Company": 256,
@@ -108,9 +108,14 @@
     "Cabinet Doors USA": 545,
     "Core Cabinet Production": 313,
     "Prorustics": 2020,
-    "Cabinet Parts to Go": 514
+    "Cabinet Parts to Go": 514,
+    "Capital Millwork LLC": {
+      "allmoxy_customer_id": 550,
+      "stripe_connect_account_id": "acct_1S1UoS0atrcrba4J"
+    }
   },
   "stripe_connect_account_ids_by_id": {
+    "550": "acct_1S1UoS0atrcrba4J",
     "_comment": "Map from allmoxy_customer_id → Stripe Connect acct_... ID. Populate as you research. Read by the Custom Report page to surface a 'Connect account ID' column next to the other IDs."
   },
   "unmapped": {
@@ -126,7 +131,6 @@
     }
   },
   "alternate_stripe_connect_account_ids": {
-    "_comment": "Additional acct_ IDs found in source data that belong to customers who already have a primary acct_ (likely legacy/migrated Stripe Connect accounts).",
     "172": {
       "name": "Kiwi Closets - ProComm Closets LLC",
       "alternate_acct": "acct_1F5d1gBe8NnS7dZk",
@@ -136,6 +140,7 @@
       "name": "B&B Door Co.",
       "alternate_acct": "acct_1Igs38DdtBM0vgBC",
       "primary_acct": "acct_1KdKOPFvFDbiIaRb"
-    }
+    },
+    "_comment": "Additional acct_ IDs found in source data that belong to customers who already have a primary acct_ (likely legacy/migrated Stripe Connect accounts)."
   }
 }
