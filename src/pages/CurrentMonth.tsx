@@ -515,16 +515,23 @@ export default function CurrentMonth() {
             //
             //   reconnected — genuinely not invoiced last month and billing again now.
             //
-            const accrualPrior = accrualByCustomer.get(p.allmoxy_customer_id)?.[pm] ?? 0;
+            const accrualMonths = accrualByCustomer.get(p.allmoxy_customer_id);
+            const accrualPrior = accrualMonths?.[pm] ?? 0;
+            const accrualCur = accrualMonths?.[cm] ?? 0;
             const timingOnly = accrualPrior > 0;
             detail.push({
               ...rowBase,
               category: timingOnly ? 'billing_timing' : 'reconnected',
               priorAmount: timingOnly ? round2(accrualPrior) : 0,
               currentAmount: round2(c.currentTotal),
-              // Timing rows carry only the true change vs what was invoiced, so they
-              // stop inflating the month's variance by a full subscription.
-              delta: timingOnly ? round2(c.currentTotal - accrualPrior) : round2(c.currentTotal),
+              // Measure timing rows INVOICE TO INVOICE, never against the cash that
+              // happened to arrive. Comparing cash to the prior invoice still credits a
+              // catch-up as growth: Bella IMC paid two months at once in Sept 2026, so
+              // cash $1,316 against an invoiced $658 read as +$658 of expansion when
+              // their subscription had not moved at all. When this month's invoice has
+              // not been issued yet (mid-month, most have not), there is no evidence of
+              // any change, so the honest contribution is zero.
+              delta: timingOnly ? (accrualCur > 0 ? round2(accrualCur - accrualPrior) : 0) : round2(c.currentTotal),
             });
             continue;
           }
