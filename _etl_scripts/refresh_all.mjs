@@ -598,6 +598,10 @@ catch (e) { console.log('  ⚠ build_service_tickets failed:', e.message); }
 try { runScript('build_churn_timeline.mjs', null); }
 catch (e) { console.log('  ⚠ build_churn_timeline failed:', e.message); }
 
+// Activation funnel — needs churn_timeline, orders_verified and customer_base.
+try { runScript('build_activation.mjs', null); }
+catch (e) { console.log('  ⚠ build_activation failed:', e.message); }
+
 // Phase 2 revenue seam: overlay June 2026+ onto the aggregate monthly snapshots
 // (mrr_by_month / subscription_by_month / services_by_month) from the live Stripe
 // cache, so the MRR trend agrees with the per-customer seam and the invariant
