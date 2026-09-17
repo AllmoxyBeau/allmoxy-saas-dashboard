@@ -1,19 +1,19 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-09-17T14:41:12.429Z",
-  "cachedUntil": "2026-09-17T14:46:12.429Z",
+  "fetchedAt": "2026-09-17T16:54:26.496Z",
+  "cachedUntil": "2026-09-17T16:59:26.496Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
   "latestMonth": "2026-08",
   "concentration": {
-    "total_active_customers": 196,
-    "total_mrr": 228401.6,
+    "total_active_customers": 197,
+    "total_mrr": 228485.8,
     "top1": {
       "n": 1,
       "customers": 1,
       "mrr": 7504.2,
-      "pct": 0.0329
+      "pct": 0.0328
     },
     "top5": {
       "n": 5,
@@ -25,19 +25,27 @@
       "n": 10,
       "customers": 10,
       "mrr": 52801.2,
-      "pct": 0.2312
+      "pct": 0.2311
     },
     "top20": {
       "n": 20,
       "customers": 20,
       "mrr": 87443.1,
-      "pct": 0.3828
+      "pct": 0.3827
     }
   },
   "distribution": [
     {
       "bucket": "< $100",
       "customers": [
+        {
+          "name": "Raumplus",
+          "allmoxy_customer_id": 7,
+          "current_mrr": 84.2,
+          "lifetime_revenue": 40580.96,
+          "years_with_us": 14.3,
+          "failed_3mo": 0
+        },
         {
           "name": "UC Cabinet Components",
           "allmoxy_customer_id": 25,
@@ -47,7 +55,7 @@
           "failed_3mo": 0
         }
       ],
-      "mrr": 65
+      "mrr": 149.2
     },
     {
       "bucket": "$100–$500",
@@ -1325,7 +1333,7 @@
           "allmoxy_customer_id": 27,
           "current_mrr": 1005.9,
           "lifetime_revenue": 62121.9,
-          "years_with_us": 7.5,
+          "years_with_us": 7.6,
           "failed_3mo": 0
         },
         {
@@ -2392,7 +2400,7 @@
       "allmoxy_customer_id": 27,
       "current_mrr": 1005.9,
       "lifetime_revenue": 62121.9,
-      "years_with_us": 7.5,
+      "years_with_us": 7.6,
       "failed_3mo": 0
     },
     {
@@ -3404,6 +3412,14 @@
       "failed_3mo": 0
     },
     {
+      "name": "Raumplus",
+      "allmoxy_customer_id": 7,
+      "current_mrr": 84.2,
+      "lifetime_revenue": 40580.96,
+      "years_with_us": 14.3,
+      "failed_3mo": 0
+    },
+    {
       "name": "UC Cabinet Components",
       "allmoxy_customer_id": 25,
       "current_mrr": 65,
@@ -3446,5 +3462,5 @@
     "total_dunning_customers": 4,
     "total_at_risk_amount": 2820.76
   },
-  "notes": "Per-customer MRR drawn from MRR by Month tab (196 customers with MRR > $0 in 2026-06). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue and dunning counts joined from Stripe Sync (20K+ classified transactions). Dunning = charge attempts with status=failed in trailing 3 months."
+  "notes": "Per-customer MRR drawn from MRR by Month tab (197 customers with MRR > $0 in 2026-06). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue and dunning counts joined from Stripe Sync (20K+ classified transactions). Dunning = charge attempts with status=failed in trailing 3 months."
 }

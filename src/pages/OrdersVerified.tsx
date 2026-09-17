@@ -40,6 +40,7 @@ type OrdersRecord = {
   years: Record<string, OrdersYear>;
   monthly_avg: Record<string, number>;
   monthly_supplement?: Record<string, number>;
+  monthly_verified?: Record<string, { usd: number | null; orders: number | null; even_spread?: boolean }>;
   live_date: string | null;
   is_launched: boolean;
   months_to_launch: number | null;
@@ -146,7 +147,18 @@ export default function OrdersVerified() {
     const rows: Row[] = [];
     for (const ov of Object.values(ordersByAid)) {
       const profile = profileByAid.get(ov.allmoxy_customer_id);
-      const monthsLoaded = Object.keys(ov.monthly_supplement || {}).length;
+      // MONTHS LOADED MUST MATCH THE NUMERATOR. curYearTotal now comes from the Aurora
+      // gold table, which runs to the current month, but this denominator was still
+      // counting the retired xlsx supplement — five months. The page therefore
+      // annualised eight months of revenue as if it were five, reporting $595.3M
+      // against a 2025 actual of $327.8M.
+      //
+      // Count months that actually carry DOLLARS, not months that carry any data: the
+      // current month lands order counts before invoice totals, so including a $0
+      // September would divide eight months of revenue by nine and understate instead.
+      const goldMonths = Object.entries(ov.monthly_verified || {})
+        .filter(([m, v]) => m.startsWith(String(currentYear)) && (v?.usd || 0) > 0).length;
+      const monthsLoaded = goldMonths || Object.keys(ov.monthly_supplement || {}).length;
       const curYearTotal = ov.years?.[String(currentYear)]?.total_usd || 0;
       const priorYearTotal = ov.years?.[String(priorYear)]?.total_usd || 0;
       const annualized = monthsLoaded > 0 && monthsLoaded < 12
