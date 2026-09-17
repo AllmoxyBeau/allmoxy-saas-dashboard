@@ -10,6 +10,8 @@ import Chip from '@mui/material/Chip';
 import Link from '@mui/material/Link';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip } from 'recharts';
 
@@ -62,6 +64,9 @@ export default function ChurnTimeline() {
   const snap = data as unknown as Snap | undefined;
   const [reason, setReason] = useState('');
   const [since, setSince] = useState('ttm');
+  // The chart range is separate from the story-list window on purpose: you read the
+  // trend over a long span but work the recent churns.
+  const [chartRange, setChartRange] = useState<'12M' | '24M' | 'ALL'>('24M');
 
   const rows = useMemo(() => {
     let r = snap?.customers ?? [];
@@ -75,11 +80,22 @@ export default function ChurnTimeline() {
     return r;
   }, [snap, reason, since]);
 
-  const chart = useMemo(() => (snap?.monthly ?? []).slice(-36).map((m) => ({
-    month: monthLabel(m.month).replace(' ', ' '),
-    customers: m.customers,
-    mrr: m.mrr_lost,
-  })), [snap]);
+  const chart = useMemo(() => {
+    const all = snap?.monthly ?? [];
+    // Churn months are sparse — a customer-free month simply has no row — so slicing
+    // the array would take the last N *churn events*, not the last N months. Cut by
+    // date instead, or a quiet stretch would silently widen the window.
+    let rowsIn = all;
+    if (chartRange !== 'ALL' && all.length) {
+      const last = all[all.length - 1].month;
+      const [y, mo] = last.split('-').map(Number);
+      const back = chartRange === '12M' ? 11 : 23;
+      const d = new Date(y, mo - 1 - back, 1);
+      const cut = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      rowsIn = all.filter((m) => m.month >= cut);
+    }
+    return rowsIn.map((m) => ({ month: monthLabel(m.month), customers: m.customers, mrr: m.mrr_lost }));
+  }, [snap, chartRange]);
 
   if (error) {
     return (
@@ -123,7 +139,19 @@ export default function ChurnTimeline() {
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.5 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>Churn by month</Typography>
-          <InfoIcon info={<><strong>Churn month</strong> is the first month a customer did not pay for, derived from the last month carrying subscription revenue.<br /><br />That is deliberately not HubSpot's cancellation date, which records when someone closed the record — often months later, sometimes never.<br /><br />Bars are customers lost; the line is the MRR that left with them.</>} />
+          <InfoIcon info={<><strong>Churn month</strong> is the first month a customer did not pay for, derived from the last month carrying subscription revenue.<br /><br />That is deliberately not HubSpot's cancellation date, which records when someone closed the record — often months later, sometimes never.<br /><br />Bars are customers lost; the line is the MRR that left with them. A month with no bar had no churn at all.</>} />
+          <Box sx={{ flexGrow: 1 }} />
+          <ToggleButtonGroup
+            size="small"
+            exclusive
+            value={chartRange}
+            onChange={(_, v) => v && setChartRange(v)}
+            sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
+          >
+            <ToggleButton value="12M">12M</ToggleButton>
+            <ToggleButton value="24M">24M</ToggleButton>
+            <ToggleButton value="ALL">All time</ToggleButton>
+          </ToggleButtonGroup>
         </Stack>
         {isLoading ? <Skeleton variant="rectangular" height={240} /> : (
           <ResponsiveContainer width="100%" height={260}>
