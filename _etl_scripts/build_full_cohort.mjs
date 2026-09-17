@@ -200,6 +200,11 @@ function addYears(iso, n) {
   const [y, m] = iso.split('-').map(Number);
   return `${y + n}-${String(m).padStart(2, '0')}`;
 }
+function addMonthsStr(iso, n) {
+  const [y, m] = iso.split('-').map(Number);
+  const d = new Date(y, m - 1 + n, 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
 
 function slimCustomer(c) {
   return {
@@ -240,6 +245,34 @@ for (const y of cohortYears) {
     });
     offset += 1;
   }
+  // MONTHLY SERIES (Beau, 2026-09-17: toggle for yearly or monthly). Same baseline and
+  // the same retention maths, stepped a month at a time instead of a year. The yearly
+  // view answers "how does a vintage hold up over years"; the monthly one shows WHEN
+  // inside a year the drop happened, which the annual snapshot hides entirely — a
+  // cohort that loses a third of its logos in month three and one that bleeds evenly
+  // across twelve look identical at December.
+  const seriesMonthly = [];
+  {
+    let m = baseline;
+    let idx = 0;
+    while (m <= lastComplete) {
+      const active = activeByCohort[m]?.[y] ?? { subscription: 0, services: 0, unique: 0 };
+      const dollar = dollarByCohort[m]?.[y] ?? { subscription: 0, services: 0, total: 0 };
+      seriesMonthly.push({
+        monthsSince: idx,
+        yearsSince: Math.floor(idx / 12),
+        month: m,
+        activeLogos: active.unique,
+        subscription: dollar.subscription,
+        services: dollar.services,
+        logoRetentionPct: baseLogos > 0 ? Math.round((100 * active.unique) / baseLogos * 10) / 10 : null,
+        dollarRetentionPct: baseSubDollar > 0 ? Math.round((100 * dollar.subscription) / baseSubDollar * 10) / 10 : null,
+      });
+      m = addMonthsStr(m, 1);
+      idx += 1;
+    }
+  }
+
   const cohortMembers = allCustomers
     .filter((c) => (c.signup ?? c.firstPay).getFullYear() === y)
     .map(slimCustomer)
@@ -251,6 +284,7 @@ for (const y of cohortYears) {
     baselineDollar: baseSubDollar,
     initialLogos: byCohort.get(y).initial,
     series,
+    seriesMonthly,
     members: cohortMembers,
   };
 }

@@ -56,7 +56,9 @@ type CohortMember = {
   active_today: boolean;
 };
 
+type TriangleCellMonthly = TriangleCell & { monthsSince: number };
 type TriangleEntry = {
+  seriesMonthly?: TriangleCellMonthly[];
   baselineMonth: string;
   baselineLogos: number;
   baselineDollar: number;
@@ -133,6 +135,11 @@ export default function CohortRetention() {
     [snap, showPre2018]
   );
 
+  // Yearly shows how a vintage holds up across years; monthly shows WHEN inside a year
+  // it broke. The 2024 cohort reads 100% → 55.6% annually, but monthly it is already at
+  // 77.8% by month three — a fact the annual snapshot cannot express.
+  const [grain, setGrain] = useState<'year' | 'month'>('year');
+
   const maxYearsSince = useMemo(() => {
     if (!snap) return 0;
     let max = 0;
@@ -142,6 +149,17 @@ export default function CohortRetention() {
     }
     return max;
   }, [snap, visibleCohortYears]);
+
+  const maxSteps = useMemo(() => {
+    if (!snap) return 0;
+    if (grain === 'year') return maxYearsSince;
+    let max = 0;
+    for (const y of visibleCohortYears) {
+      const n = snap.cohortTriangle[String(y)]?.seriesMonthly?.length ?? 0;
+      if (n > max) max = n;
+    }
+    return max;
+  }, [snap, visibleCohortYears, grain, maxYearsSince]);
 
   return (
     <Box>
@@ -220,9 +238,9 @@ export default function CohortRetention() {
         >
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-              Retention triangle · baseline = December of cohort year
+              Retention triangle · baseline = December of cohort year · {grain === 'year' ? 'yearly' : 'monthly'} steps
             </Typography>
-            <InfoIcon info={<><strong>What it is:</strong> Each row is a cohort of customers who made their first payment in a given year. Each column is a year after that cohort year — cells show the % retained at that point.<br /><br /><strong>Subscription $ retention</strong> = cohort's share of total subscription MRR at year-N ÷ cohort's share at baseline (Dec of cohort year). Logo-weighted proportional allocation — services revenue is excluded so project-based one-offs don't inflate the NDR story.<br /><br /><strong>Logo retention</strong> = % of the cohort's customers still active at year-N. Exact from Stripe transaction dates.<br /><br /><strong>Click any cell</strong> to drill into the cohort members active in that specific month.</>} />
+            <InfoIcon info={<><strong>What it is:</strong> Each row is a cohort of customers who made their first payment in a given year. Each column is a step after that cohort's baseline — cells show the % retained at that point.<br /><br /><strong>Yearly vs monthly:</strong> yearly answers how a vintage holds up over years; monthly shows <em>when inside a year</em> it broke. The 2024 cohort reads 100% then 55.6% annually, but monthly it is already at 77.8% by month three — a loss the annual view cannot express, and one that points at onboarding rather than long-run fit.<br /><br /><strong>Subscription $ retention</strong> = cohort's share of total subscription MRR at year-N ÷ cohort's share at baseline (Dec of cohort year). Logo-weighted proportional allocation — services revenue is excluded so project-based one-offs don't inflate the NDR story.<br /><br /><strong>Logo retention</strong> = % of the cohort's customers still active at year-N. Exact from Stripe transaction dates.<br /><br /><strong>Click any cell</strong> to drill into the cohort members active in that specific month.</>} />
             {pre2018Count > 0 && (
               <Button
                 size="small"
@@ -244,6 +262,16 @@ export default function CohortRetention() {
           >
             <ToggleButton value="dollar">Subscription $ retention</ToggleButton>
             <ToggleButton value="logo">Logo retention</ToggleButton>
+            </ToggleButtonGroup>
+            <ToggleButtonGroup
+              size="small"
+              exclusive
+              value={grain}
+              onChange={(_, v) => v && setGrain(v as 'year' | 'month')}
+              sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
+            >
+              <ToggleButton value="year">Yearly</ToggleButton>
+              <ToggleButton value="month">Monthly</ToggleButton>
           </ToggleButtonGroup>
         </Stack>
 
@@ -259,10 +287,10 @@ export default function CohortRetention() {
                     Baseline (Dec)
                   </Typography>
                 </Box>
-                {Array.from({ length: maxYearsSince }).map((_, i) => (
+                {Array.from({ length: maxSteps }).map((_, i) => (
                   <Box key={i} sx={{ flex: 1, minWidth: 60, textAlign: 'center', px: 0.5 }}>
                     <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: 10 }}>
-                      Year {i}
+                      {grain === 'year' ? `Year ${i}` : `M${i}`}
                     </Typography>
                   </Box>
                 ))}
@@ -285,8 +313,8 @@ export default function CohortRetention() {
                         {USD0.format(entry.baselineDollar)}/mo baseline
                       </Typography>
                     </Box>
-                    {Array.from({ length: maxYearsSince }).map((_, i) => {
-                      const cell = entry.series[i];
+                    {Array.from({ length: maxSteps }).map((_, i) => {
+                      const cell = grain === 'year' ? entry.series[i] : entry.seriesMonthly?.[i];
                       const pct = cell
                         ? metric === 'dollar'
                           ? cell.dollarRetentionPct
