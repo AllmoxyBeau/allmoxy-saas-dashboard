@@ -591,7 +591,12 @@ try { runScript('build_current_month.mjs', null); }
 catch (e) { console.log('  ⚠ build_current_month failed:', e.message); }
 
 try { runScript('build_service_tickets.mjs', null); }
-catch (e) { console.log('  ⚠ build_service_tickets failed:', e.message); } // writes data_cleanup.json itself
+catch (e) { console.log('  ⚠ build_service_tickets failed:', e.message); }
+
+// Churn stories — assembles profiles + the three reason layers + orders/tickets, so it
+// must run after churn_subpatterns, orders_verified and service_tickets.
+try { runScript('build_churn_timeline.mjs', null); }
+catch (e) { console.log('  ⚠ build_churn_timeline failed:', e.message); }
 
 // Phase 2 revenue seam: overlay June 2026+ onto the aggregate monthly snapshots
 // (mrr_by_month / subscription_by_month / services_by_month) from the live Stripe
