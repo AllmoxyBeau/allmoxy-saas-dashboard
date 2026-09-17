@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-15T21:33:01.244Z",
+  "fetched_at": "2026-09-17T14:41:09.283Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "by_category": {
@@ -511,10 +511,10 @@
       "before": null,
       "after": null,
       "delta": null,
-      "reason": "107 customer-name → allmoxy_customer_id mappings for Stripe Connect revenue attribution. Source: Stripe Connect Revenue sheets carry the customer NAME on each transaction; this file resolves names to canonical Allmoxy IDs so per-customer Connect rollups join correctly. Roughly 0 names remain unmapped (acceptable — typically dormant or one-off accounts).",
+      "reason": "108 customer-name → allmoxy_customer_id mappings for Stripe Connect revenue attribution. Source: Stripe Connect Revenue sheets carry the customer NAME on each transaction; this file resolves names to canonical Allmoxy IDs so per-customer Connect rollups join correctly. Roughly 0 names remain unmapped (acceptable — typically dormant or one-off accounts).",
       "evidence": null,
       "source_file": "src/data/connect_customer_overrides.json",
-      "added_by": "updated_at 2026-04-18"
+      "added_by": "updated_at 2026-09-16"
     },
     {
       "id": "auto-never-paid-classification",

@@ -586,6 +586,10 @@ runScript('build_renewal_management.mjs', null); // writes renewal_management.js
 runScript('build_data_cleanup.mjs', null);
 
 // HubSpot Help Desk trends (needs hubspot_tickets.json from sync_hubspot + profiles).
+// Accrual view of the month in progress (needs revenue_recognition + the Stripe caches).
+try { runScript('build_current_month.mjs', null); }
+catch (e) { console.log('  ⚠ build_current_month failed:', e.message); }
+
 try { runScript('build_service_tickets.mjs', null); }
 catch (e) { console.log('  ⚠ build_service_tickets failed:', e.message); } // writes data_cleanup.json itself
 

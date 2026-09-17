@@ -1,10 +1,10 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-09-15T21:33:02.208Z",
-  "cachedUntil": "2026-09-15T21:38:02.209Z",
+  "fetchedAt": "2026-09-17T14:41:10.139Z",
+  "cachedUntil": "2026-09-17T14:46:10.140Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
-    "total_issues": 15,
+    "total_issues": 16,
     "resolved_count": 0,
     "by_category": {
       "hubspot_instance_missing_aid": {
@@ -26,10 +26,10 @@
         }
       },
       "connect_mapping_orphan": {
-        "count": 7,
+        "count": 8,
         "label": "Connect customer in mapping but no longer in source xlsx",
         "severity_counts": {
-          "low": 7,
+          "low": 8,
           "medium": 0,
           "high": 0
         }
@@ -38,7 +38,7 @@
     "by_severity": {
       "high": 0,
       "medium": 4,
-      "low": 11
+      "low": 12
     }
   },
   "issues": [
@@ -203,6 +203,19 @@
       "connect_name": "Cabinet Parts to Go",
       "pay_status": "Active",
       "action": "Either the customer churned (remove from src/data/connect_customer_overrides.json mapping) or their Connect account changed — check Stripe Connect dashboard for \"Cabinet Parts to Go\""
+    },
+    {
+      "category": "connect_mapping_orphan",
+      "category_label": "Connect customer in mapping but no longer in source xlsx",
+      "severity": "low",
+      "allmoxy_customer_id": {
+        "allmoxy_customer_id": 550,
+        "stripe_connect_account_id": "acct_1S1UoS0atrcrba4J"
+      },
+      "customer_name": "(unknown)",
+      "connect_name": "Capital Millwork LLC",
+      "pay_status": null,
+      "action": "Either the customer churned (remove from src/data/connect_customer_overrides.json mapping) or their Connect account changed — check Stripe Connect dashboard for \"Capital Millwork LLC\""
     }
   ]
 }

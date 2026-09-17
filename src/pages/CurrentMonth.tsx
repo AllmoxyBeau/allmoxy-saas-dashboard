@@ -17,6 +17,7 @@ import TableCell from '@mui/material/TableCell';
 import Collapse from '@mui/material/Collapse';
 
 import PageHeader from '../components/common/PageHeader';
+import AccrualMonthPanel from '../components/common/AccrualMonthPanel';
 import InfoIcon from '../components/common/InfoIcon';
 import CsvExportButton from '../components/common/CsvExportButton';
 import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
@@ -749,6 +750,10 @@ export default function CurrentMonth() {
         title={`${monthLabel(view.currentMonth)} · Month-to-date`}
         subtitle={`Live snapshot of the partial current month. Data refreshed ${fmtIso(mrr?.fetchedAt)} · ${elapsedCaveat} elapsed · ${view.remaining} days remaining.`}
       />
+
+      {/* The accrual answer leads: how MRR moved, and what is billed vs still to come.
+          The cash sections below remain for reconciling to the bank. */}
+      <AccrualMonthPanel />
 
       {view.elapsed === 0 && (
         <Alert severity="info" sx={{ mb: 2 }}>
