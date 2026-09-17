@@ -152,7 +152,20 @@ for (const p of PROF) {
     last_paid_month: lastMonth,
     last_payment_date: p.last_payment_date ?? null,
     sign_up_date: p.effective_start_date || p.sign_up_date || null,
-    tenure_years: p.years_with_us ?? null,
+    // TENURE AT CHURN, computed here rather than taken from profiles.
+    // customer_profiles.years_with_us is (today − signup), which for a churned customer
+    // keeps growing after they leave: ClosetParts reads 5.4y there but actually churned
+    // after 1.5y. Using it made "Failed Implementation" show a 5-year median tenure,
+    // which is impossible as a literal reason and would have sent the whole analysis
+    // in the wrong direction.
+    tenure_years: (() => {
+      const su = p.effective_start_date || p.sign_up_date;
+      const end = p.last_payment_date || (lastMonth ? `${lastMonth}-28` : null);
+      if (!su || !end) return null;
+      const y = (Date.parse(end) - Date.parse(su)) / (365.25 * 864e5);
+      return Number.isFinite(y) && y >= 0 ? r2(y) : null;
+    })(),
+    tenure_years_as_of_today: p.years_with_us ?? null,
     mrr_at_churn: r2(finalMrr),
     peak_mrr: r2(peak),
     peak_month: peakMonth,
