@@ -150,6 +150,16 @@ export default function CohortRetention() {
     return max;
   }, [snap, visibleCohortYears]);
 
+  // Monthly needs a FIXED narrow cell, not flex:1. With 201 columns, `flex: 1` plus
+  // minWidth 60 forces a 12,000px row and the percentages get squeezed out of view —
+  // which is why the monthly grid looked empty. Yearly keeps flex so it fills the width.
+  const cellSx = grain === 'year'
+    ? { flex: 1, minWidth: 60 }
+    : { flex: '0 0 auto', width: 44 };
+  // Three years of months is where the retention signal lives; beyond that the row is
+  // unreadable and the yearly view answers the question better anyway.
+  const MONTH_CAP = 36;
+
   const maxSteps = useMemo(() => {
     if (!snap) return 0;
     if (grain === 'year') return maxYearsSince;
@@ -158,7 +168,7 @@ export default function CohortRetention() {
       const n = snap.cohortTriangle[String(y)]?.seriesMonthly?.length ?? 0;
       if (n > max) max = n;
     }
-    return max;
+    return Math.min(max, MONTH_CAP);
   }, [snap, visibleCohortYears, grain, maxYearsSince]);
 
   return (
@@ -238,7 +248,7 @@ export default function CohortRetention() {
         >
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-              Retention triangle · baseline = December of cohort year · {grain === 'year' ? 'yearly' : 'monthly'} steps
+              Retention triangle · baseline = December of cohort year · {grain === 'year' ? 'yearly steps' : `monthly steps, first ${MONTH_CAP} months, values are %`}
             </Typography>
             <InfoIcon info={<><strong>What it is:</strong> Each row is a cohort of customers who made their first payment in a given year. Each column is a step after that cohort's baseline — cells show the % retained at that point.<br /><br /><strong>Yearly vs monthly:</strong> yearly answers how a vintage holds up over years; monthly shows <em>when inside a year</em> it broke. The 2024 cohort reads 100% then 55.6% annually, but monthly it is already at 77.8% by month three — a loss the annual view cannot express, and one that points at onboarding rather than long-run fit.<br /><br /><strong>Subscription $ retention</strong> = cohort's share of total subscription MRR at year-N ÷ cohort's share at baseline (Dec of cohort year). Logo-weighted proportional allocation — services revenue is excluded so project-based one-offs don't inflate the NDR story.<br /><br /><strong>Logo retention</strong> = % of the cohort's customers still active at year-N. Exact from Stripe transaction dates.<br /><br /><strong>Click any cell</strong> to drill into the cohort members active in that specific month.</>} />
             {pre2018Count > 0 && (
@@ -288,7 +298,7 @@ export default function CohortRetention() {
                   </Typography>
                 </Box>
                 {Array.from({ length: maxSteps }).map((_, i) => (
-                  <Box key={i} sx={{ flex: 1, minWidth: 60, textAlign: 'center', px: 0.5 }}>
+                  <Box key={i} sx={{ ...cellSx, textAlign: 'center', px: 0.5 }}>
                     <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: 10 }}>
                       {grain === 'year' ? `Year ${i}` : `M${i}`}
                     </Typography>
@@ -330,8 +340,7 @@ export default function CohortRetention() {
                           <Box
                             onClick={() => cell && openDrill(year, cell.month)}
                             sx={{
-                              flex: 1,
-                              minWidth: 60,
+                              ...cellSx,
                               mx: 0.25,
                               py: 1,
                               textAlign: 'center',
@@ -343,8 +352,11 @@ export default function CohortRetention() {
                               '&:hover': cell ? { transform: 'scale(1.03)' } : {},
                             }}
                           >
-                            <Typography variant="body2" sx={{ fontWeight: 500, fontSize: 12 }}>
-                              {pct != null ? `${pct}%` : '—'}
+                            <Typography variant="body2" sx={{ fontWeight: 500, fontSize: grain === 'year' ? 12 : 10 }}>
+                              {/* Monthly cells are 44px wide, so "93.2%" is rounded to
+                                  "93" — the decimal is noise at this density and the
+                                  tooltip carries the exact figure anyway. */}
+                              {pct != null ? (grain === 'year' ? `${pct}%` : `${Math.round(pct)}`) : '—'}
                             </Typography>
                           </Box>
                         </Tooltip>
