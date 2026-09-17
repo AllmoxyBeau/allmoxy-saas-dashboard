@@ -13,6 +13,7 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import TableSortLabel from '@mui/material/TableSortLabel';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip } from 'recharts';
@@ -45,6 +46,19 @@ type Snap = {
   customers: Row[];
 };
 
+// Every column sorts. `value` returns a number or string; strings compare with
+// localeCompare so names order naturally. `defaultDesc` is the direction you actually
+// want on the first click — biggest money and longest-waiting first, names A→Z.
+type SortKey = 'name' | 'mrr' | 'days_since_signup' | 'lifetime_subscription' | 'owner' | 'status';
+const COLUMNS: Array<{ key: SortKey; label: string; align?: 'right'; defaultDesc: boolean; value: (r: Row) => string | number }> = [
+  { key: 'name', label: 'Customer', defaultDesc: false, value: (r) => r.name ?? '' },
+  { key: 'mrr', label: 'MRR', align: 'right', defaultDesc: true, value: (r) => r.mrr ?? 0 },
+  { key: 'days_since_signup', label: 'Days since signup', align: 'right', defaultDesc: true, value: (r) => r.days_since_signup ?? 0 },
+  { key: 'lifetime_subscription', label: 'Paid to date', align: 'right', defaultDesc: true, value: (r) => r.lifetime_subscription ?? 0 },
+  { key: 'owner', label: 'Owner', defaultDesc: false, value: (r) => r.owner ?? '\uffff' },   // unassigned sorts last
+  { key: 'status', label: 'Status', defaultDesc: false, value: (r) => r.status ?? '' },
+];
+
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 const N0 = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
 const pctOf = (v: number | null | undefined) => (v == null ? '—' : `${Math.round(v * 100)}%`);
@@ -58,6 +72,26 @@ export default function Activation() {
   const { data, isLoading, error } = useSheetTab('activation');
   const snap = data as unknown as Snap | undefined;
   const [range, setRange] = useState<'24M' | '48M' | 'ALL'>('24M');
+  const [sortKey, setSortKey] = useState<SortKey>('mrr');
+  const [sortDesc, setSortDesc] = useState(true);
+  const toggleSort = (k: SortKey) => {
+    if (k === sortKey) { setSortDesc((d) => !d); return; }
+    setSortKey(k);
+    setSortDesc(COLUMNS.find((c) => c.key === k)!.defaultDesc);
+  };
+
+  const stalled = useMemo(() => {
+    const col = COLUMNS.find((c) => c.key === sortKey)!;
+    // MRR breaks ties so equal-ranked rows still lead with the biggest money at risk.
+    return [...(snap?.stalled_customers ?? [])].sort((a, b) => {
+      const av = col.value(a), bv = col.value(b);
+      let cmp = typeof av === 'string' || typeof bv === 'string'
+        ? String(av).localeCompare(String(bv))
+        : (av as number) - (bv as number);
+      if (cmp === 0) cmp = a.mrr - b.mrr;
+      return sortDesc ? -cmp : cmp;
+    });
+  }, [snap, sortKey, sortDesc]);
 
   const chart = useMemo(() => {
     const all = (snap?.cohorts ?? []).filter((c) => c.signups > 0);
@@ -163,7 +197,7 @@ export default function Activation() {
           <Box sx={{ flexGrow: 1 }} />
           <CsvExportButton
             filename="activation_stalled.csv"
-            rows={snap?.stalled_customers ?? []}
+            rows={stalled}
             columns={[
               { key: 'name', label: 'Customer' }, { key: 'mrr', label: 'MRR' },
               { key: 'days_since_signup', label: 'Days since signup' }, { key: 'signup_date', label: 'Signed up' },
@@ -175,17 +209,22 @@ export default function Activation() {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Customer</TableCell>
-              <TableCell align="right">MRR</TableCell>
-              <TableCell align="right">Days since signup</TableCell>
-              <TableCell align="right">Paid to date</TableCell>
-              <TableCell>Owner</TableCell>
-              <TableCell>Status</TableCell>
+              {COLUMNS.map((c) => (
+                <TableCell key={c.key} align={c.align} sortDirection={sortKey === c.key ? (sortDesc ? 'desc' : 'asc') : false}>
+                  <TableSortLabel
+                    active={sortKey === c.key}
+                    direction={sortKey === c.key ? (sortDesc ? 'desc' : 'asc') : (c.defaultDesc ? 'desc' : 'asc')}
+                    onClick={() => toggleSort(c.key)}
+                  >
+                    {c.label}
+                  </TableSortLabel>
+                </TableCell>
+              ))}
               <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
-            {(snap?.stalled_customers ?? []).map((r) => (
+            {stalled.map((r) => (
               <TableRow key={r.allmoxy_customer_id} hover>
                 <TableCell><CustomerLink name={r.name} /></TableCell>
                 <TableCell align="right" sx={{ fontWeight: 500 }}>{USD0.format(r.mrr)}</TableCell>
