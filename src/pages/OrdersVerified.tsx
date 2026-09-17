@@ -88,6 +88,7 @@ type Row = {
   monthly_avg_prior: number;
   yoy_pct: number | null;
   months_loaded: number;           // how many months of current-year data exist
+  monthly_verified?: Record<string, { usd: number | null; orders: number | null; even_spread?: boolean }>;
   current_mrr: number;
   years_by_total: Record<string, { order_count: number | null; total_usd: number }>;
 };
@@ -183,6 +184,7 @@ export default function OrdersVerified() {
         monthly_avg_prior: ov.monthly_avg_prior_year || 0,
         yoy_pct: ov.monthly_avg_yoy_pct,
         months_loaded: monthsLoaded,
+        monthly_verified: ov.monthly_verified,
         current_mrr: profile?.current_subscription_mrr || 0,
         years_by_total: ov.years || {},
       });
@@ -298,15 +300,21 @@ export default function OrdersVerified() {
       .map(([year, v]) => {
         const isCurrent = Number(year) === currentYear;
         // Find avg months loaded across filtered customers contributing to this year
+        // Denominator = how many months of the YEAR carry revenue, not the average of
+        // each customer's own month count. Averaging is wrong here: a customer
+        // onboarded in August has one month of data, which drags the mean to 6.48 and
+        // annualises eight months of revenue as if they were six and a half — $459.6M
+        // against a 2025 actual of $327.8M. The year either has eight months of
+        // invoicing behind it or it does not, whoever contributed them.
         let monthsLoadedAvg = 12;
         if (isCurrent) {
-          const monthsLoadedList = filtered
-            .filter((r) => (r.years_by_total[year]?.total_usd || 0) > 0)
-            .map((r) => r.months_loaded || 0)
-            .filter((m) => m > 0);
-          if (monthsLoadedList.length > 0) {
-            monthsLoadedAvg = monthsLoadedList.reduce((a, b) => a + b, 0) / monthsLoadedList.length;
+          const monthsWithRevenue = new Set<string>();
+          for (const r of filtered) {
+            for (const [m, mv] of Object.entries(r.monthly_verified || {})) {
+              if (m.startsWith(year) && (mv?.usd || 0) > 0) monthsWithRevenue.add(m);
+            }
           }
+          if (monthsWithRevenue.size > 0) monthsLoadedAvg = monthsWithRevenue.size;
         }
         const annualized = isCurrent && monthsLoadedAvg > 0 && monthsLoadedAvg < 12
           ? (v.total_usd * 12) / monthsLoadedAvg
