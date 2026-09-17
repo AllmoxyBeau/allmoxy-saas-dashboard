@@ -502,7 +502,6 @@ runScript('apply_never_paid_classification.mjs', null);
 // Reconcile cohort_retention's "active today" with customer_profiles after all
 // upstream adjustments. Must run AFTER apply_annual_amortization so the patch
 // reads the final canonical MRR values.
-runScript('patch_cohort_active.mjs', null);
 
 // Boundary-slip correction: re-attribute end-of-month subscription charges that
 // cleared on the 1st–3rd of the next month back to the cycle they cover, in
@@ -531,6 +530,10 @@ runScript('build_waterfall.mjs', 'mrr_waterfall');
 // THE canonical logo count + MRR (reads revenue_recognition.accrual_series, so it must
 // run after it). Every page showing "customers" or "MRR" reads this one file.
 runScript('build_customer_base.mjs', null);
+// Cohort "active today" is reconciled to the canonical base, so it has to run AFTER it.
+// It used to sit earlier in the pipeline and read a stale base, which is exactly how the
+// cohort page came to report 189 active against a canonical 197.
+runScript('patch_cohort_active.mjs', null);
 
 // Parallel transaction-driven waterfall for spot-checking against mrr_waterfall.json.
 // Same schema, different data path: built from customer_profiles.transactions
