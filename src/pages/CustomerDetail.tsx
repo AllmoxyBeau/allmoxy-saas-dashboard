@@ -21,7 +21,7 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { ResponsiveContainer, BarChart, Bar, ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, Cell, ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
 import DrillDownPanel from '../components/common/DrillDownPanel';
@@ -1416,12 +1416,18 @@ export default function CustomerDetail() {
             // says where the real series starts. The xlsx supplement and the older
             // aurora_orders map remain as fallbacks for customers gold has not mapped.
             const gold = ov?.monthly_verified || {};
-            const realMonths = Object.entries(gold)
-              .filter(([, v]) => !v.even_spread && (Number(v.usd) > 0 || Number(v.orders) > 0))
+            const allMonths = Object.entries(gold)
+              .filter(([, v]) => Number(v.usd) > 0 || Number(v.orders) > 0)
               .map(([m]) => m).sort();
-            let monthRows: Array<{ month: string; verified: number; orders: number | null; pending?: boolean; missing?: boolean }>;
-            if (realMonths.length > 0) {
-              monthRows = realMonths.map((m) => {
+            const realMonths = allMonths.filter((m) => !gold[m].even_spread);
+            let monthRows: Array<{ month: string; verified: number; orders: number | null; spread?: boolean; pending?: boolean; missing?: boolean }>;
+            if (allMonths.length > 0) {
+              // ALL TIME (Beau, 2026-09-17). The pre-2026 months are an annual figure
+              // divided evenly across twelve, so they are shown in a muted fill rather
+              // than hidden — the shape is real at the year level even though the
+              // month-to-month variation is manufactured. Keeping them the same colour
+              // as measured months would imply a monthly trend that does not exist.
+              monthRows = allMonths.map((m) => {
                 const v = gold[m];
                 return {
                   month: monthLabel(m),
@@ -1429,6 +1435,7 @@ export default function CustomerDetail() {
                   // Counts that simply repeat the prior month are not real monthly
                   // counts — drop the point rather than draw a false plateau.
                   orders: v.orders == null || v.orders_carried_forward ? null : Number(v.orders),
+                  spread: !!v.even_spread,
                   pending: !!v.usd_pending,
                   missing: !!v.usd_missing,
                 };
@@ -1444,6 +1451,7 @@ export default function CustomerDetail() {
             const ytd = monthRows.reduce((s, r) => s + r.verified, 0);
             const avg = Math.round(ytd / monthRows.length);
             const totalOrders = monthRows.reduce((s, r) => s + (r.orders ?? 0), 0);
+            const spreadCount = monthRows.filter((r) => r.spread).length;
             return (
               <Paper sx={{ p: 3, mb: 3 }}>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
@@ -1454,10 +1462,12 @@ export default function CustomerDetail() {
                     <>
                       <strong>What it is:</strong> Verified order invoice $ per month, with order count where it is genuinely monthly.<br /><br />
                       <strong>Data:</strong> <code>gold_orders_verified_monthly</code> in the Aurora warehouse, refreshed daily.<br /><br />
-                      {firstReal ? (
-                        <>Starts {monthLabel(firstReal)}, because earlier months in the source are an <strong>annual figure divided evenly across twelve</strong> — they sum to the right year but are not a monthly trend, so charting them would draw a flat line. Use the by-year chart below for the longer history.</>
-                      ) : (
+                      {allMonths.length === 0 ? (
                         <>This customer is not yet mapped in the warehouse monthly table, so this falls back to the {currentYear} spreadsheet supplement.</>
+                      ) : spreadCount > 0 ? (
+                        <><strong>Muted bars are estimated.</strong> For {spreadCount} of these months the source holds an annual figure divided evenly across twelve, so the year total is right but the month-to-month variation is manufactured — read those as a level, not a trend. {firstReal ? <>Measured monthly data begins {monthLabel(firstReal)}.</> : null}</>
+                      ) : (
+                        <>Every month shown is measured.</>
                       )}<br /><br />
                       Order counts are omitted for any month whose count simply repeats the prior month, which is a carry-forward rather than a real count. A month showing orders but $0 is a gap in the warehouse if the month is over, and simply not aggregated yet if it is the current one.
                     </>
@@ -1468,13 +1478,14 @@ export default function CustomerDetail() {
                   <MetaBit label="Monthly average" value={`${USD0.format(avg)}/mo`} />
                   <MetaBit label="Months" value={`${monthRows.length}`} />
                   {totalOrders > 0 && <MetaBit label="Orders shown" value={totalOrders.toLocaleString()} />}
-                  {firstReal && <MetaBit label="Monthly from" value={monthLabel(firstReal)} />}
+                  {firstReal && <MetaBit label="Measured from" value={monthLabel(firstReal)} />}
+                  {spreadCount > 0 && <MetaBit label="Estimated months" value={`${spreadCount} of ${monthRows.length}`} />}
                 </Stack>
                 <Box sx={{ height: 260 }}>
                   <ResponsiveContainer>
                     <ComposedChart data={monthRows}>
                       <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
-                      <XAxis dataKey="month" stroke="#8B949E" fontSize={11} />
+                      <XAxis dataKey="month" stroke="#8B949E" fontSize={11} interval="preserveStartEnd" minTickGap={24} />
                       <YAxis yAxisId="usd" stroke="#8B949E" fontSize={11} width={60} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
                       <YAxis yAxisId="orders" orientation="right" stroke="#8B949E" fontSize={11} width={48} />
                       <RTooltip
@@ -1484,7 +1495,13 @@ export default function CustomerDetail() {
                         itemStyle={{ color: '#FFFFFF' }}
                         cursor={{ fill: 'rgba(26, 158, 92, 0.06)' }}
                       />
-                      <Bar yAxisId="usd" name="Verified $" dataKey="verified" fill="#1A9E5C" />
+                      <Bar yAxisId="usd" name="Verified $" dataKey="verified" fill="#1A9E5C">
+                        {monthRows.map((r, i) => (
+                          // Estimated months render muted so an evenly-spread annual
+                          // figure is never mistaken for measured monthly movement.
+                          <Cell key={i} fill={r.spread ? 'rgba(26, 158, 92, 0.28)' : '#1A9E5C'} />
+                        ))}
+                      </Bar>
                       {/* connectNulls is deliberately OFF: a gap means we have no real
                           monthly count for that month, and bridging it would invent one. */}
                       <Line yAxisId="orders" name="Orders" type="monotone" dataKey="orders" stroke="#2C73FF" strokeWidth={2} dot={{ r: 2 }} />
