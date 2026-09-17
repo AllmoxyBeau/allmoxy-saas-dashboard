@@ -113,22 +113,24 @@ async function getPage(url, params) {
 // is what keeps the overlap idempotent instead of double-counting revenue.)
 const lookbackFromISO = createdGt ? new Date(createdGt * 1000).toISOString().slice(0, 10) : null;
 const byCust = new Map();
+// Every transaction now carries its charge id (`i`), which is what makes an ADDITIVE
+// merge possible. The previous design stripped the whole lookback window from the seed
+// and rebuilt it from the fetch — and when a fetch came back incomplete, the stripped
+// rows were gone for good, because the next run's window has moved past those dates.
+// That silently deleted $45,732 of August 2026 on a single daily run (30 paid invoices
+// with no charge behind them), and had cost $55,947 across 38 invoices before that.
+//
+// Now: keep everything, and let the fetch REPLACE rows by id. Aggregates are recomputed
+// from the merged transactions at the end rather than adjusted incrementally, so an
+// arithmetic slip cannot drift the totals either.
+//
+// Legacy rows inside the window have no id and cannot be de-duplicated against the
+// re-fetch, so those alone are dropped — a one-time migration that heals on first run.
 if (createdGt && prev?.by_customer) for (const [cus, v] of Object.entries(prev.by_customer)) {
-  const keptTx = (v.transactions || []).filter((t) => String(t.d) < lookbackFromISO);
-  const dropped = (v.transactions || []).filter((t) => String(t.d) >= lookbackFromISO);
-  const by_month = { ...(v.by_month || {}) };
-  let subscription = v.subscription || 0, services = v.services || 0, count = v.count || 0;
-  for (const t of dropped) {
-    const type = t.t === 'services' ? 'services' : 'subscription';
-    const m = String(t.d).slice(0, 7);
-    if (by_month[m]) { by_month[m] = { ...by_month[m], [type]: r2Pre((by_month[m][type] || 0) - (t.a || 0)) }; if (by_month[m].subscription <= 0.005 && by_month[m].services <= 0.005) delete by_month[m]; }
-    if (type === 'services') services = r2Pre(services - (t.a || 0)); else subscription = r2Pre(subscription - (t.a || 0));
-    count -= 1;
-  }
   byCust.set(cus, {
-    ...v, subscription, services, count: Math.max(0, count), by_month,
-    transactions: keptTx,
-    failed: (v.failed || []).filter((f) => String(f.d) < lookbackFromISO),
+    ...v,
+    transactions: (v.transactions || []).filter((t) => t.i || String(t.d) < lookbackFromISO),
+    failed: (v.failed || []).filter((f) => f.i || String(f.d) < lookbackFromISO),
   });
 }
 function r2Pre(v) { return Math.round(v * 100) / 100; }
@@ -152,13 +154,13 @@ function record(c) {
   const cus = c.customer || null;
   const currency = (c.currency || 'usd').toUpperCase();
   currencies.set(currency, (currencies.get(currency) || 0) + 1);
-  const month = new Date(c.created * 1000).toISOString().slice(0, 7);
 
   // Failed charges (paid=false) — kept for the at-risk/dunning signal.
   if (!c.paid || !c.captured) {
     if (c.status === 'failed' && cus) {
       const e = byCust.get(cus) || newEntry(c.created);
-      e.failed.push({ d: iso(c.created), a: r2(c.amount / 100) });
+      e.failed = e.failed.filter((f) => f.i !== c.id);
+      e.failed.push({ d: iso(c.created), a: r2(c.amount / 100), i: c.id });
       byCust.set(cus, e);
       failedCount++;
     }
@@ -170,13 +172,10 @@ function record(c) {
   const gross = (c.amount - (c.amount_refunded || 0)) / 100;
   if (!cus) { noCustomer.push({ d: iso(c.created), a: r2(gross), type, desc: (c.description || '').slice(0, 80) }); counted++; return; }
   const e = byCust.get(cus) || newEntry(c.created);
-  e[type] = r2((e[type] || 0) + gross);
-  e.refunded = r2(e.refunded + (c.amount_refunded || 0) / 100);
-  e.count += 1;
   e.first_ts = Math.min(e.first_ts, c.created); e.last_ts = Math.max(e.last_ts, c.created);
-  const mm = e.by_month[month] || { subscription: 0, services: 0 };
-  mm[type] = r2(mm[type] + gross); e.by_month[month] = mm;
-  e.transactions.push({ d: iso(c.created), a: r2(gross), t: type, r: r2((c.amount_refunded || 0) / 100) });
+  // Replace by id so a re-fetched charge (new refund, say) updates rather than doubles.
+  e.transactions = e.transactions.filter((t) => t.i !== c.id);
+  e.transactions.push({ d: iso(c.created), a: r2(gross), t: type, r: r2((c.amount_refunded || 0) / 100), i: c.id });
   byCust.set(cus, e);
   counted++;
 }
@@ -210,14 +209,38 @@ for (;;) {
   cursor = page.data[page.data.length - 1].id;
 }
 
-const by_customer = Object.fromEntries([...byCust.entries()].map(([cus, v]) => [cus, {
-  ...v,
-  transactions: v.transactions.sort((a, b) => a.d.localeCompare(b.d)),
-  first_seen: iso(v.first_ts),
-  last_seen: iso(v.last_ts),
-}]));
-const totSub = r2([...byCust.values()].reduce((s, v) => s + (v.subscription || 0), 0));
-const totSvc = r2([...byCust.values()].reduce((s, v) => s + (v.services || 0), 0));
+// AGGREGATES ARE DERIVED, NOT ACCUMULATED. Every per-customer total is recomputed from
+// the merged transaction list here, so the cache cannot drift: previously these were
+// adjusted incrementally on both the seed (subtracting stripped rows) and the fetch
+// (adding new ones), and any mismatch between those two paths silently biased revenue.
+// Deriving them makes the transactions array the single source and the totals a pure
+// function of it.
+const by_customer = Object.fromEntries([...byCust.entries()].map(([cus, v]) => {
+  const transactions = (v.transactions || []).slice().sort((a, b) => a.d.localeCompare(b.d));
+  const by_month = {};
+  let subscription = 0, services = 0, refunded = 0;
+  for (const t of transactions) {
+    const type = t.t === 'services' ? 'services' : 'subscription';
+    const m = String(t.d).slice(0, 7);
+    const mm = by_month[m] || { subscription: 0, services: 0 };
+    mm[type] = r2(mm[type] + (t.a || 0));
+    by_month[m] = mm;
+    if (type === 'services') services = r2(services + (t.a || 0)); else subscription = r2(subscription + (t.a || 0));
+    refunded = r2(refunded + (t.r || 0));
+  }
+  return [cus, {
+    ...v,
+    subscription, services, refunded,
+    count: transactions.length,
+    by_month,
+    transactions,
+    failed: (v.failed || []).slice().sort((a, b) => String(a.d).localeCompare(String(b.d))),
+    first_seen: iso(v.first_ts),
+    last_seen: iso(v.last_ts),
+  }];
+}));
+const totSub = r2(Object.values(by_customer).reduce((s, v) => s + (v.subscription || 0), 0));
+const totSvc = r2(Object.values(by_customer).reduce((s, v) => s + (v.services || 0), 0));
 
 const noCustTotal = r2(noCustomer.reduce((s, x) => s + x.a, 0));
 fs.writeFileSync(OUT, JSON.stringify({

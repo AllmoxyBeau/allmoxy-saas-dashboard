@@ -715,6 +715,8 @@ console.log('\n[8/5] Features (JIRA DEV board, optional)');
 try { runScript('validate_identity_vs_warehouse.mjs', null); }
 catch (e) { console.log('  ⚠ identity validation skipped:', e.message); } // CS → Sales hand-off list (opinion flag)
 runScript('build_features.mjs', null);
+// Bug report reads the same DEV-board cache the Features page uses.
+runScript('build_bug_report.mjs', null);
     } catch (e) {
       console.log('  ⚠ features refresh failed (kept previous snapshot):', e.message);
     }

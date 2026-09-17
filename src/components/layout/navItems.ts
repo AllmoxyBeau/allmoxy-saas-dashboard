@@ -79,6 +79,7 @@ export const NAV_ENTRIES: NavEntry[] = [
       { label: 'Features', path: '/features' },
       { label: 'Customer Health', path: '/customer-health' },
       { label: 'Service Tickets', path: '/service-tickets' },
+      { label: 'Bug Report', path: '/bug-report' },
       { label: 'Activation', path: '/activation' },
       { label: 'Churn Timeline', path: '/churn-timeline' },
       { label: 'Churn Risk Matrix', path: '/churn-risk-matrix' },

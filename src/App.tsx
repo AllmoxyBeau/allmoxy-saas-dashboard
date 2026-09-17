@@ -7,6 +7,7 @@ import NorthStar from './pages/NorthStar';
 const ServiceTickets = lazy(() => import('./pages/ServiceTickets'));
 const ChurnTimeline = lazy(() => import('./pages/ChurnTimeline'));
 const Activation = lazy(() => import('./pages/Activation'));
+const BugReport = lazy(() => import('./pages/BugReport'));
 import { useViewMode } from './config/features';
 
 const CurrentMonth = lazy(() => import('./pages/CurrentMonth'));
@@ -86,6 +87,7 @@ export default function App() {
         <Route path="customer-health" element={<L><CustomerHealth /></L>} />
         <Route path="service-tickets" element={<L><ServiceTickets /></L>} />
         <Route path="activation" element={<L><Activation /></L>} />
+        <Route path="bug-report" element={<L><BugReport /></L>} />
         <Route path="churn-timeline" element={<L><ChurnTimeline /></L>} />
         <Route path="churn-patterns" element={<L><ChurnPatterns /></L>} />
         <Route path="churn-investigator" element={<L><ChurnInvestigator /></L>} />

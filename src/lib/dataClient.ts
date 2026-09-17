@@ -11,6 +11,7 @@ import type { SheetTabResponse } from '../hooks/useSheetTab';
  */
 
 export const KNOWN_SNAPSHOTS = [
+  'bug_report',
   'activation',
   'churn_timeline',
   'current_month',
