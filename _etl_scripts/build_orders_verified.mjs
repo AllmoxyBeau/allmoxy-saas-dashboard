@@ -441,10 +441,16 @@ try {
     const g = gold.by_customer?.[String(c.allmoxy_customer_id)];
     if (!g) continue;
     // Monthly detail, kept whole so the UI can show 2026 by month.
-    // A month with orders but no dollars is "not yet aggregated", not "no revenue" —
-    // the current month routinely lands counts before invoice totals.
-    for (const v of Object.values(g)) {
-      if ((v.orders || 0) > 0 && !(v.usd > 0)) v.usd_pending = true;
+    // A month with orders but no dollars needs splitting by whether the month is over.
+    // In the CURRENT month it is simply not aggregated yet — counts land before invoice
+    // totals. In a COMPLETED month it is a genuine gap in the warehouse, and calling
+    // that "pending" would be a lie that never resolves (Lewis Cabinet Specialties has
+    // real order counts but $0 for both 2026-07 and 2026-08).
+    const thisMonth = new Date().toISOString().slice(0, 7);
+    for (const [mk, v] of Object.entries(g)) {
+      if (!((v.orders || 0) > 0) || v.usd > 0) continue;
+      if (mk >= thisMonth) v.usd_pending = true;
+      else v.usd_missing = true;
     }
     c.monthly_verified = g;
     // Roll up to years.

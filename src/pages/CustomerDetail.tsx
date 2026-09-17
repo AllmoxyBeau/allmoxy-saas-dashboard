@@ -167,6 +167,9 @@ type OrdersVerifiedRecord = {
   years: Record<string, OrdersVerifiedYear>;
   monthly_avg: Record<string, number>;
   monthly_supplement?: Record<string, number>;
+  // Aurora gold: full monthly history with order counts. usd/orders per month,
+  // even_spread marks months that are an annual figure divided evenly (pre-2026).
+  monthly_verified?: Record<string, { usd: number | null; orders: number | null; even_spread?: boolean; orders_carried_forward?: boolean; usd_pending?: boolean; usd_missing?: boolean }>;
   live_date: string | null;
   live_date_source: string | null;
   is_launched: boolean;
@@ -1406,46 +1409,86 @@ export default function CustomerDetail() {
             const auroraVer = (auroraData as unknown as { by_customer?: Array<{ allmoxy_customer_id: number; verified_by_month?: Record<string, number> }> } | undefined)
               ?.by_customer?.find((c) => c.allmoxy_customer_id === selected.allmoxy_customer_id)?.verified_by_month || {};
             const currentYear = String(new Date().getFullYear());
-            const map: Record<string, number> = {};
-            for (const [m, v] of Object.entries(ov?.monthly_supplement || {})) if (m.startsWith(currentYear)) map[m] = Number(v) || 0;
-            for (const [m, v] of Object.entries(auroraVer)) if (m.startsWith(currentYear)) map[m] = Number(v) || 0; // Aurora extends/confirms recent months
-            const monthRows = Object.keys(map).sort().map((m) => ({ month: monthLabel(m), verified: Math.round(map[m]) }));
+            // Monthly now comes from the Aurora gold table, which carries the full
+            // history AND order counts. Months flagged even_spread are an annual figure
+            // divided by twelve (true for 88% of customers before 2026) — charting them
+            // draws a flat line that means nothing, so they are excluded and the caption
+            // says where the real series starts. The xlsx supplement and the older
+            // aurora_orders map remain as fallbacks for customers gold has not mapped.
+            const gold = ov?.monthly_verified || {};
+            const realMonths = Object.entries(gold)
+              .filter(([, v]) => !v.even_spread && (Number(v.usd) > 0 || Number(v.orders) > 0))
+              .map(([m]) => m).sort();
+            let monthRows: Array<{ month: string; verified: number; orders: number | null; pending?: boolean; missing?: boolean }>;
+            if (realMonths.length > 0) {
+              monthRows = realMonths.map((m) => {
+                const v = gold[m];
+                return {
+                  month: monthLabel(m),
+                  verified: Math.round(Number(v.usd) || 0),
+                  // Counts that simply repeat the prior month are not real monthly
+                  // counts — drop the point rather than draw a false plateau.
+                  orders: v.orders == null || v.orders_carried_forward ? null : Number(v.orders),
+                  pending: !!v.usd_pending,
+                  missing: !!v.usd_missing,
+                };
+              });
+            } else {
+              const map: Record<string, number> = {};
+              for (const [m, v] of Object.entries(ov?.monthly_supplement || {})) if (m.startsWith(currentYear)) map[m] = Number(v) || 0;
+              for (const [m, v] of Object.entries(auroraVer)) if (m.startsWith(currentYear)) map[m] = Number(v) || 0;
+              monthRows = Object.keys(map).sort().map((m) => ({ month: monthLabel(m), verified: Math.round(map[m]), orders: null }));
+            }
             if (monthRows.length === 0) return null;
+            const firstReal = realMonths[0] ?? null;
             const ytd = monthRows.reduce((s, r) => s + r.verified, 0);
             const avg = Math.round(ytd / monthRows.length);
+            const totalOrders = monthRows.reduce((s, r) => s + (r.orders ?? 0), 0);
             return (
               <Paper sx={{ p: 3, mb: 3 }}>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
                   <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                    Orders verified · {currentYear} by month
+                    Orders verified · by month
                   </Typography>
                   <InfoIcon info={
                     <>
-                      <strong>What it is:</strong> Verified order invoice $ for each month of {currentYear} — a month-by-month view beneath the by-year trend.<br /><br />
-                      <strong>Data:</strong> Jan–May from <code>Verified Orders {currentYear}</code> (orders_verified monthly supplement); June onward overlaid from the Aurora warehouse (<code>instance_verified_orders</code>), which agree on the overlap month. <strong>Dollars only</strong> — {currentYear} order counts aren't available in the monthly source.
+                      <strong>What it is:</strong> Verified order invoice $ per month, with order count where it is genuinely monthly.<br /><br />
+                      <strong>Data:</strong> <code>gold_orders_verified_monthly</code> in the Aurora warehouse, refreshed daily.<br /><br />
+                      {firstReal ? (
+                        <>Starts {monthLabel(firstReal)}, because earlier months in the source are an <strong>annual figure divided evenly across twelve</strong> — they sum to the right year but are not a monthly trend, so charting them would draw a flat line. Use the by-year chart below for the longer history.</>
+                      ) : (
+                        <>This customer is not yet mapped in the warehouse monthly table, so this falls back to the {currentYear} spreadsheet supplement.</>
+                      )}<br /><br />
+                      Order counts are omitted for any month whose count simply repeats the prior month, which is a carry-forward rather than a real count. A month showing orders but $0 is a gap in the warehouse if the month is over, and simply not aggregated yet if it is the current one.
                     </>
                   } />
                 </Stack>
                 <Stack direction="row" spacing={3} sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
-                  <MetaBit label={`${currentYear} YTD verified $`} value={USD0.format(ytd)} />
+                  <MetaBit label="Verified $ shown" value={USD0.format(ytd)} />
                   <MetaBit label="Monthly average" value={`${USD0.format(avg)}/mo`} />
-                  <MetaBit label="Months loaded" value={`${monthRows.length}`} />
+                  <MetaBit label="Months" value={`${monthRows.length}`} />
+                  {totalOrders > 0 && <MetaBit label="Orders shown" value={totalOrders.toLocaleString()} />}
+                  {firstReal && <MetaBit label="Monthly from" value={monthLabel(firstReal)} />}
                 </Stack>
                 <Box sx={{ height: 260 }}>
                   <ResponsiveContainer>
-                    <BarChart data={monthRows}>
+                    <ComposedChart data={monthRows}>
                       <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 148, 158, 0.12)" vertical={false} />
                       <XAxis dataKey="month" stroke="#8B949E" fontSize={11} />
-                      <YAxis stroke="#8B949E" fontSize={11} width={60} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                      <YAxis yAxisId="usd" stroke="#8B949E" fontSize={11} width={60} tickFormatter={(v) => USD_COMPACT.format(Number(v))} />
+                      <YAxis yAxisId="orders" orientation="right" stroke="#8B949E" fontSize={11} width={48} />
                       <RTooltip
-                        formatter={(v: number) => [USD0.format(v), 'Verified $']}
+                        formatter={(v: number, n: string) => (n === 'Orders' ? [Number(v).toLocaleString(), 'Orders'] : [USD0.format(v), 'Verified $'])}
                         contentStyle={{ background: '#161B22', border: '1px solid #21262D', borderRadius: 6, color: '#FFFFFF' }}
                         labelStyle={{ color: '#FFFFFF' }}
                         itemStyle={{ color: '#FFFFFF' }}
                         cursor={{ fill: 'rgba(26, 158, 92, 0.06)' }}
                       />
-                      <Bar name="Verified $" dataKey="verified" fill="#1A9E5C" />
-                    </BarChart>
+                      <Bar yAxisId="usd" name="Verified $" dataKey="verified" fill="#1A9E5C" />
+                      {/* connectNulls is deliberately OFF: a gap means we have no real
+                          monthly count for that month, and bridging it would invent one. */}
+                      <Line yAxisId="orders" name="Orders" type="monotone" dataKey="orders" stroke="#2C73FF" strokeWidth={2} dot={{ r: 2 }} />
+                    </ComposedChart>
                   </ResponsiveContainer>
                 </Box>
               </Paper>
