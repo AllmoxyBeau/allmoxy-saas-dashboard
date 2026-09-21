@@ -26,7 +26,15 @@ type PlanRow = {
   net_required: number; expected_losses: number; gross_required: number; new_logos_required: number | null;
   actual_closing_mrr: number | null; actual_gross: number | null; actual_losses: number | null; variance: number | null;
 };
+type Stream = { key: string; label: string; basis: string; ttm: number; monthly: number; share: number | null };
 type Snap = {
+  streams: Stream[];
+  total_revenue: { ttm: number; monthly: number; target_annual: number; gap: number; note: string };
+  connect_opportunity: {
+    processing_now: number; active_customers: number; attach_rate: number; not_processing: number;
+    fee_potential_annual: number; current_fees_annual: number; basis: string | null;
+    covers_pct_of_subscription_gap: number; covers_pct_of_total_gap: number;
+  } | null;
   config: { target_annual_growth: number; plan_months: number; churn_improvement: number; editable_at: string };
   baseline: { as_of: string; mrr: number; arr: number; customers: number; arpa: number };
   target: { annual_growth: number; monthly_growth: number; target_arr: number; target_mrr: number; arr_gap: number; end_month: string | null };
@@ -129,6 +137,63 @@ export default function SalesBudget() {
         )}
       </Paper>
 
+      {snap?.connect_opportunity && (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          <strong>Connect attach is the largest single lever, and it is sold to customers you already have.</strong>{' '}
+          Only {snap.connect_opportunity.processing_now} of {snap.connect_opportunity.active_customers} active customers process payments through Allmoxy ({(snap.connect_opportunity.attach_rate * 100).toFixed(0)}%).
+          Attaching the other {snap.connect_opportunity.not_processing} is worth about {USD0.format(snap.connect_opportunity.fee_potential_annual)} a year —
+          <strong> {(snap.connect_opportunity.covers_pct_of_subscription_gap * 100).toFixed(0)}% of the subscription growth gap</strong>, at roughly 99.6% gross margin, without winning a single new logo.
+          Six new logos a month is one route to the target; this is another, and it starts from a warm list.
+        </Alert>
+      )}
+
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.5 }}>
+          <Typography variant="h6" sx={{ fontWeight: 500 }}>The whole revenue base</Typography>
+          <InfoIcon info={<>The monthly plan above is priced on <strong>subscription only</strong>, which is the recurring line and the one MRR discipline applies to. It is 78% of the business.<br /><br />Connect fees and services are the other 22% and are shown here so the target is set against what the company actually earns.<br /><br /><strong>Bases are not fused.</strong> Subscription is the invoiced (accrual) basis; Connect and services are cash. Adding them gives a useful revenue figure but not a single-basis one, which is why they are listed separately.</>} />
+        </Stack>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Stream</TableCell>
+              <TableCell align="right">TTM</TableCell>
+              <TableCell align="right">Per month</TableCell>
+              <TableCell align="right">Share</TableCell>
+              <TableCell>Basis</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {(snap?.streams ?? []).map((st) => (
+              <TableRow key={st.key} hover>
+                <TableCell sx={{ fontWeight: 500 }}>{st.label}</TableCell>
+                <TableCell align="right">{USD0.format(st.ttm)}</TableCell>
+                <TableCell align="right" sx={{ color: 'text.secondary' }}>{USD0.format(st.monthly)}</TableCell>
+                <TableCell align="right">{st.share != null ? `${(st.share * 100).toFixed(1)}%` : '—'}</TableCell>
+                <TableCell sx={{ color: 'text.secondary', fontSize: 11 }}>{st.basis}</TableCell>
+              </TableRow>
+            ))}
+            {snap && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: 600 }}>Total revenue</TableCell>
+                <TableCell align="right" sx={{ fontWeight: 600 }}>{USD0.format(snap.total_revenue.ttm)}</TableCell>
+                <TableCell align="right" sx={{ fontWeight: 600, color: 'text.secondary' }}>{USD0.format(snap.total_revenue.monthly)}</TableCell>
+                <TableCell align="right">100%</TableCell>
+                <TableCell sx={{ color: 'text.secondary', fontSize: 11 }}>mixed</TableCell>
+              </TableRow>
+            )}
+            {snap && (
+              <TableRow>
+                <TableCell sx={{ color: 'primary.main', fontWeight: 600 }}>Target at +{Math.round(snap.config.target_annual_growth * 100)}%</TableCell>
+                <TableCell align="right" sx={{ color: 'primary.main', fontWeight: 600 }}>{USD0.format(snap.total_revenue.target_annual)}</TableCell>
+                <TableCell align="right" colSpan={3} sx={{ color: 'text.secondary', fontSize: 11 }}>
+                  gap of {USD0.format(snap.total_revenue.gap)} across all streams
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </Paper>
+
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3, height: '100%' }}>
@@ -142,6 +207,7 @@ export default function SalesBudget() {
                   ['Win more', `${snap.plan[0]?.new_logos_required ?? '—'} new logos/mo`, `${tr!.new_logos_per_month ?? '—'}/mo today`, 'error.main'],
                   ['Expand more', `${USD0.format(ef!.required_gross_per_month)}/mo gross`, `${USD0.format(ef!.run_rate_gross_per_month)}/mo today`, 'warning.main'],
                   ['Lose less', `${pct1(tr!.monthly_loss_rate)}/mo leaking`, `GRR ${pct1(tr!.grr)} · NRR ${pct1(tr!.nrr)}`, 'info.main'],
+                  ['Attach payments', snap.connect_opportunity ? `${USD0.format(snap.connect_opportunity.fee_potential_annual)}/yr available` : '—', snap.connect_opportunity ? `${snap.connect_opportunity.not_processing} customers not processing` : '—', 'success.main'],
                 ] as Array<[string, string, string, string]>).map(([lever, need, now, tone]) => (
                   <TableRow key={lever}>
                     <TableCell sx={{ borderBottom: 'none', py: 0.75, fontWeight: 500 }}>{lever}</TableCell>
