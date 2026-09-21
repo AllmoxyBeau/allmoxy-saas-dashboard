@@ -530,6 +530,8 @@ runScript('build_waterfall.mjs', 'mrr_waterfall');
 // THE canonical logo count + MRR (reads revenue_recognition.accrual_series, so it must
 // run after it). Every page showing "customers" or "MRR" reads this one file.
 runScript('build_customer_base.mjs', null);
+// Sales budget is priced off the canonical base and the accrual waterfall.
+runScript('build_sales_budget.mjs', null);
 // Cohort "active today" is reconciled to the canonical base, so it has to run AFTER it.
 // It used to sit earlier in the pipeline and read a stale base, which is exactly how the
 // cohort page came to report 189 active against a canonical 197.

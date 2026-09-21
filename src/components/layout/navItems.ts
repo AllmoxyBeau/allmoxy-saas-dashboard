@@ -66,6 +66,12 @@ export const NAV_ENTRIES: NavEntry[] = [
     ],
   },
   {
+    label: 'Sales',
+    items: [
+      { label: 'Sales Budget', path: '/sales-budget' },
+    ],
+  },
+  {
     label: 'Implementation',
     items: [
       { label: 'Implementation Overview', path: '/implementation' },
