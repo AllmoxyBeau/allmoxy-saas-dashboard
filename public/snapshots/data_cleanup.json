@@ -1,18 +1,18 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-09-17T16:54:23.506Z",
-  "cachedUntil": "2026-09-17T16:59:23.507Z",
+  "fetchedAt": "2026-09-22T14:56:30.678Z",
+  "cachedUntil": "2026-09-22T15:01:30.679Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
-    "total_issues": 16,
+    "total_issues": 17,
     "resolved_count": 0,
     "by_category": {
       "hubspot_instance_missing_aid": {
-        "count": 6,
+        "count": 7,
         "label": "HubSpot Instance missing Allmoxy Customer ID",
         "severity_counts": {
           "low": 4,
-          "medium": 2,
+          "medium": 3,
           "high": 0
         }
       },
@@ -37,7 +37,7 @@
     },
     "by_severity": {
       "high": 0,
-      "medium": 4,
+      "medium": 5,
       "low": 12
     }
   },
@@ -113,6 +113,18 @@
       "suggested_aid": null,
       "suggested_customer_name": null,
       "action": "Open HubSpot Instance \"Precise Closets & Cabinetry\" — no installer_id match, requires manual lookup"
+    },
+    {
+      "category": "hubspot_instance_missing_aid",
+      "category_label": "HubSpot Instance missing Allmoxy Customer ID",
+      "severity": "medium",
+      "instance_id": "62111099509",
+      "account_name": "Martin Wood Products",
+      "installer_id": "2171",
+      "pay_status": "Active",
+      "suggested_aid": null,
+      "suggested_customer_name": null,
+      "action": "Open HubSpot Instance \"Martin Wood Products\" — no installer_id match, requires manual lookup"
     },
     {
       "category": "hubspot_company_id_ghost",
