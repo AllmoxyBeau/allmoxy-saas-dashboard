@@ -18,7 +18,7 @@ import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { ResponsiveContainer, ComposedChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Bar, LabelList, Legend, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
@@ -103,11 +103,27 @@ export default function BugReport() {
   // about throughput; the question here is how many bugs are being raised over time,
   // which a single series answers far more legibly.
   const chart = useMemo(() => {
+    // ELAPSED FRACTION of the in-progress period, so the current bar can show where it
+    // is heading rather than just how little has accumulated so far. Bugs are filed
+    // continuously through a period, so a straight-line pace is the right estimator
+    // here — unlike subscription billing, which clusters on billing dates.
+    const now = new Date();
     if (grain === 'week') {
       const all = snap?.weekly ?? [];
       if (!all.length) return [];
       const weeks = range === 'ALL' ? all : all.slice(range === '12M' ? -53 : -105);
-      return weeks.map((w) => ({ label: weekLabel(w.week), filed: w.filed, partial: w.partial }));
+      const dowElapsed = ((now.getDay() + 6) % 7) + 1;      // Mon = 1 … Sun = 7
+      return weeks.map((w) => {
+        const frac = w.partial ? Math.min(1, dowElapsed / 7) : 1;
+        const projTotal = w.partial && frac > 0 ? Math.round(w.filed / frac) : w.filed;
+        return {
+          label: weekLabel(w.week),
+          filed: w.filed,
+          projected_extra: w.partial ? Math.max(0, projTotal - w.filed) : 0,
+          projected_total: w.partial ? projTotal : null,
+          partial: w.partial,
+        };
+      });
     }
     const all = snap?.monthly ?? [];
     if (!all.length) return [];
@@ -120,7 +136,19 @@ export default function BugReport() {
       const cut = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
       rowsIn = all.filter((c) => c.month >= cut);
     }
-    return rowsIn.map((c) => ({ label: monthLabel(c.month), filed: c.filed, partial: c.partial }));
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    const monthFrac = Math.min(1, now.getDate() / daysInMonth);
+    return rowsIn.map((c) => {
+      const frac = c.partial ? monthFrac : 1;
+      const projTotal = c.partial && frac > 0 ? Math.round(c.filed / frac) : c.filed;
+      return {
+        label: monthLabel(c.month),
+        filed: c.filed,
+        projected_extra: c.partial ? Math.max(0, projTotal - c.filed) : 0,
+        projected_total: c.partial ? projTotal : null,
+        partial: c.partial,
+      };
+    });
   }, [snap, range, grain]);
 
   if (error) {
@@ -174,7 +202,7 @@ export default function BugReport() {
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.5 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>Bugs filed</Typography>
-          <InfoIcon info={<>How many bugs are raised over time. Weeks are keyed to the Monday that starts them, and quiet weeks show as zero rather than a gap — a missing bar would read as missing data when it is really a real observation.<br /><br />The current {grain === 'week' ? 'week' : 'month'} is partial and drawn muted, since it has not finished accumulating.</>} />
+          <InfoIcon info={<>How many bugs are raised over time. Weeks are keyed to the Monday that starts them, and quiet weeks show as zero rather than a gap — a missing bar would read as missing data when it is really a real observation.<br /><br />The current {grain === 'week' ? 'week' : 'month'} is still running, so its bar carries a dashed block for the rest of the period and the <strong>projected total is labelled above it</strong> — filings so far divided by the fraction of the period elapsed. Bugs arrive steadily through a period, so a straight-line pace is a fair estimator; it is not used for subscription billing elsewhere, which clusters on billing dates.</>} />
           <Box sx={{ flexGrow: 1 }} />
           <ToggleButtonGroup size="small" exclusive value={grain} onChange={(_, v) => v && setGrain(v)} sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}>
             <ToggleButton value="month">Monthly</ToggleButton>
@@ -196,14 +224,21 @@ export default function BugReport() {
                 contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12, color: '#FFFFFF' }}
                 labelStyle={{ color: '#FFFFFF' }}
                 itemStyle={{ color: '#FFFFFF' }}
-                formatter={(v: number) => [N0.format(v), 'Bugs filed']}
+                formatter={(v: number, n: string) => [N0.format(v), n === 'projected_extra' ? 'Projected remainder' : 'Filed so far']}
               />
-              <Bar dataKey="filed" name="filed">
-                {chart.map((c, i) => (
-                  // The in-progress period is muted so a half-finished week is not read
-                  // as a drop in filings.
-                  <Cell key={i} fill={c.partial ? 'rgba(218,54,51,0.35)' : '#DA3633'} />
-                ))}
+              <Legend wrapperStyle={{ fontSize: 11 }} formatter={(v: string) => (v === 'projected_extra' ? 'Projected remainder' : 'Filed')} />
+              <Bar dataKey="filed" stackId="f" fill="#DA3633" name="filed" />
+              {/* Same treatment the Orders Verified chart uses: a dashed, translucent
+                  block for the un-elapsed part of the period, with the PROJECTED TOTAL
+                  labelled above the bar — the label is what makes "where it ends"
+                  readable, not the block on its own. */}
+              <Bar dataKey="projected_extra" stackId="f" fill="#DA3633" fillOpacity={0.25} stroke="#DA3633" strokeOpacity={0.45} strokeDasharray="3 3" name="projected_extra">
+                <LabelList
+                  dataKey="projected_total"
+                  position="top"
+                  formatter={(v: number | null) => (v ? String(v) : '')}
+                  style={{ fill: '#F0857F', fontSize: 11, fontWeight: 700 }}
+                />
               </Bar>
             </ComposedChart>
           </ResponsiveContainer>
