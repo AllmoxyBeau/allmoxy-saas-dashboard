@@ -18,6 +18,7 @@ import Collapse from '@mui/material/Collapse';
 
 import PageHeader from '../components/common/PageHeader';
 import AccrualMonthPanel from '../components/common/AccrualMonthPanel';
+import MonthPaceChart from '../components/common/MonthPaceChart';
 import InfoIcon from '../components/common/InfoIcon';
 import CsvExportButton from '../components/common/CsvExportButton';
 import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle';
@@ -754,6 +755,10 @@ export default function CurrentMonth() {
       {/* The accrual answer leads: how MRR moved, and what is billed vs still to come.
           The cash sections below remain for reconciling to the bank. */}
       <AccrualMonthPanel />
+
+      {/* Apples-to-apples: the current bar carries a shaded block for what is still
+          expected, so a part-month can be read against completed ones. */}
+      <MonthPaceChart />
 
       {view.elapsed === 0 && (
         <Alert severity="info" sx={{ mb: 2 }}>

@@ -77,15 +77,48 @@ export default function AccrualMonthPanel() {
 
       <Grid container spacing={2} sx={{ mb: 2 }}>
         {[
-          { label: 'Starting MRR', value: m ? USD0.format(m.starting) : '—', hint: `billed in ${snap?.prior_month ?? ''}`, color: 'text.primary' },
-          { label: 'Expected ending', value: m ? USD0.format(m.expected_ending) : '—', hint: 'billed + still to bill', color: 'text.primary' },
-          { label: 'Net change', value: m ? signed(m.net_change) : '—', hint: m?.net_change_pct != null ? `${(m.net_change_pct * 100).toFixed(1)}%` : '', color: (m?.net_change ?? 0) >= 0 ? 'success.main' : 'error.main' },
-          { label: 'Billed so far', value: m ? USD0.format(m.billed_so_far) : '—', hint: `${USD0.format(m?.still_to_bill ?? 0)} still to bill`, color: 'text.primary' },
-          { label: 'At risk', value: snap ? USD0.format(snap.billing.nothing_scheduled.amount + snap.billing.failing.amount) : '—', hint: 'nothing scheduled + failing', color: (snap && (snap.billing.nothing_scheduled.amount + snap.billing.failing.amount) > 0) ? 'error.main' : 'success.main' },
+          {
+            label: 'Starting MRR',
+            value: m ? USD0.format(m.starting) : '—',
+            hint: `billed in ${snap?.prior_month ?? ''}`,
+            color: 'text.primary',
+            info: <>What the book billed last month on the invoiced basis — invoices by invoice date plus recurring direct charges. This is the line the month has to beat.<br /><br />It is not last month&rsquo;s cash: a customer who paid late still counts in the month they were billed.</>,
+          },
+          {
+            label: 'Expected ending',
+            value: m ? USD0.format(m.expected_ending) : '—',
+            hint: 'billed + still to bill',
+            color: 'text.primary',
+            info: <>Billing already issued this month, plus what customers still to bill are expected to bill. Part fact, part projection.<br /><br />The projected half assumes anyone with a billing date still ahead repeats last month. It is deliberately <em>not</em> a straight-line pace: billing dates cluster early, so extrapolating from elapsed days overstates badly.</>,
+          },
+          {
+            label: 'Net change',
+            value: m ? signed(m.net_change) : '—',
+            hint: m?.net_change_pct != null ? `${(m.net_change_pct * 100).toFixed(1)}%` : '',
+            color: (m?.net_change ?? 0) >= 0 ? 'success.main' : 'error.main',
+            info: <>Expected ending against starting MRR — the month&rsquo;s actual commercial movement, measured billing to billing.<br /><br />Payment timing cannot move this number. A late payment is not contraction and a catch-up payment is not growth, which is the whole reason this panel is on the invoiced basis.</>,
+          },
+          {
+            label: 'Billed so far',
+            value: m ? USD0.format(m.billed_so_far) : '—',
+            hint: `${USD0.format(m?.still_to_bill ?? 0)} still to bill`,
+            color: 'text.primary',
+            info: <>Invoices issued and recurring direct charges posted so far this month, against what is still scheduled.<br /><br />&ldquo;Still to bill&rdquo; is an expectation, not a fact — it is the customers whose billing day has not arrived yet, valued at last month&rsquo;s billing.</>,
+          },
+          {
+            label: 'At risk',
+            value: snap ? USD0.format(snap.billing.nothing_scheduled.amount + snap.billing.failing.amount) : '—',
+            hint: 'nothing scheduled + failing',
+            color: (snap && (snap.billing.nothing_scheduled.amount + snap.billing.failing.amount) > 0) ? 'error.main' : 'success.main',
+            info: <>The two states worth acting on today, added together.<br /><br /><strong>Nothing scheduled</strong> — billed last month, no invoice issued and no billing date ahead. That is the genuine risk set.<br /><br /><strong>Failing</strong> — invoice issued and a charge attempt has already failed, so it is dunning rather than merely unpaid.<br /><br />Everything else in the billing table is either collected, simply early, or not due yet.</>,
+          },
         ].map((k) => (
           <Grid item xs={12} sm={6} md={2.4} key={k.label}>
             <Box>
-              <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>{k.label}</Typography>
+              <Stack direction="row" spacing={0.5} alignItems="center">
+                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>{k.label}</Typography>
+                <InfoIcon info={k.info} />
+              </Stack>
               {isLoading ? <Skeleton variant="text" width="70%" sx={{ fontSize: 22 }} /> : (
                 <Typography variant="h6" sx={{ fontWeight: 600, color: k.color, mt: 0.25, fontVariantNumeric: 'tabular-nums' }}>{k.value}</Typography>
               )}
