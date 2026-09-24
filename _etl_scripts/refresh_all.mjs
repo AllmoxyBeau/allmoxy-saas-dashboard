@@ -711,6 +711,8 @@ console.log('\n[8/5] Features (JIRA DEV board, optional)');
   } else {
     try {
       runScript('sync_jira_features.mjs', null);
+      // Defects get their own unscoped pull — the features JQL hides untagged bugs.
+      try { runScript('sync_jira_bugs.mjs', null); } catch (e) { console.log('  ⚠ sync_jira_bugs failed:', e.message); }
       // build_features writes public/snapshots/features.json itself — pass null so
       // the harness does NOT also redirect stdout onto the file (that clobbered the
       // real JSON with the script's console.log summary line).

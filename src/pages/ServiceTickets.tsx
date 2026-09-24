@@ -174,7 +174,9 @@ export default function ServiceTickets() {
               <YAxis yAxisId="v" tick={{ fontSize: 11 }} />
               <YAxis yAxisId="b" orientation="right" tick={{ fontSize: 11 }} />
               <RTooltip
-                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12 }}
+                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12, color: '#FFFFFF' }}
+                labelStyle={{ color: '#FFFFFF' }}
+                itemStyle={{ color: '#FFFFFF' }}
                 formatter={(v: number, n: string) => [n === 'closed' ? N0.format(Math.abs(v)) : N0.format(v), n === 'backlog' ? 'Open at month end' : n === 'closed' ? 'Closed' : 'Created']}
               />
               <Legend wrapperStyle={{ fontSize: 11 }} />
@@ -200,7 +202,9 @@ export default function ServiceTickets() {
                   <XAxis dataKey="month" tick={{ fontSize: 11 }} interval="preserveStartEnd" />
                   <YAxis tick={{ fontSize: 11 }} scale="sqrt" />
                   <RTooltip
-                    contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12 }}
+                    contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12, color: '#FFFFFF' }}
+                labelStyle={{ color: '#FFFFFF' }}
+                itemStyle={{ color: '#FFFFFF' }}
                     formatter={(v: number) => [days(v), 'Median time to close']}
                   />
                   <Line type="monotone" dataKey="resolution" stroke="#2C73FF" strokeWidth={2} dot={{ r: 2 }} name="resolution" connectNulls />

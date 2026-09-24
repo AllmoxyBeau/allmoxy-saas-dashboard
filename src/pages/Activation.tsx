@@ -179,7 +179,9 @@ export default function Activation() {
               <YAxis yAxisId="n" tick={{ fontSize: 11 }} />
               <YAxis yAxisId="r" orientation="right" tick={{ fontSize: 11 }} domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
               <RTooltip
-                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12 }}
+                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12, color: '#FFFFFF' }}
+                labelStyle={{ color: '#FFFFFF' }}
+                itemStyle={{ color: '#FFFFFF' }}
                 formatter={(v: number, n: string) => (n === 'rate' ? [`${v}%`, 'Activation rate'] : [v, n === 'activated' ? 'Activated' : 'Signed up'])}
               />
               <Bar yAxisId="n" dataKey="signups" fill="rgba(44,115,255,0.30)" name="signups" />

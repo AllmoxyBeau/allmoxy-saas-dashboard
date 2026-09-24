@@ -28,7 +28,7 @@ import { useSheetTab } from '../hooks/useSheetTab';
 
 type Cust = { allmoxy_customer_id: number; name: string; mrr: number; status: string };
 type Bug = {
-  key: string; summary: string; status: string; stage_category: string; priority: string;
+  key: string; issue_type: string; summary: string; status: string; stage_category: string; priority: string;
   issue_score: number | null; created: string; updated: string; resolved: string | null;
   closed_at: string | null; resolution_date_missing: boolean; is_open: boolean; age_days: number | null;
   customers: Cust[]; customer_count: number; mrr_affected: number; active_customers_affected: number; url: string;
@@ -40,7 +40,7 @@ type Snap = {
   age: { median_open_days: number | null; p90_open_days: number | null; median_days_to_resolve: number | null; note: string };
   monthly: Array<{ month: string; filed: number; resolved: number; net: number; open_at_month_end: number; median_days_to_resolve: number | null; partial: boolean }>;
   weekly: Array<{ week: string; filed: number; partial: boolean }>;
-  by_priority: Tally[]; by_status: Tally[];
+  by_priority: Tally[]; by_status: Tally[]; by_type: Tally[];
   customers: Array<Cust & { open_bugs: number; highest_priority: string | null; oldest_days: number }>;
   bugs: Bug[];
   unmatched_labels: Array<{ label: string; tickets: number }>;
@@ -75,6 +75,7 @@ export default function BugReport() {
   const snap = data as unknown as Snap | undefined;
   const [view, setView] = useState<'open' | 'all'>('open');
   const [priority, setPriority] = useState('');
+  const [issueType, setIssueType] = useState('');
   const [range, setRange] = useState<'12M' | '24M' | 'ALL'>('24M');
   const [grain, setGrain] = useState<'month' | 'week'>('month');
   const [sortKey, setSortKey] = useState<SortKey>('mrr_affected');
@@ -88,6 +89,7 @@ export default function BugReport() {
     let r = snap?.bugs ?? [];
     if (view === 'open') r = r.filter((b) => b.is_open);
     if (priority) r = r.filter((b) => b.priority === priority);
+    if (issueType) r = r.filter((b) => b.issue_type === issueType);
     const col = COLUMNS.find((c) => c.key === sortKey)!;
     return [...r].sort((a, b) => {
       const av = col.value(a), bv = col.value(b);
@@ -95,7 +97,7 @@ export default function BugReport() {
       if (cmp === 0) cmp = a.mrr_affected - b.mrr_affected;
       return sortDesc ? -cmp : cmp;
     }).slice(0, view === 'open' ? 500 : 300);
-  }, [snap, view, priority, sortKey, sortDesc]);
+  }, [snap, view, priority, issueType, sortKey, sortDesc]);
 
   // Filed volume only (Beau, 2026-09-24). The filed-vs-fixed pairing made the chart
   // about throughput; the question here is how many bugs are being raised over time,
@@ -191,7 +193,9 @@ export default function BugReport() {
               <XAxis dataKey="label" tick={{ fontSize: 11 }} interval="preserveStartEnd" minTickGap={grain === 'week' ? 34 : 26} />
               <YAxis tick={{ fontSize: 11 }} />
               <RTooltip
-                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12 }}
+                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12, color: '#FFFFFF' }}
+                labelStyle={{ color: '#FFFFFF' }}
+                itemStyle={{ color: '#FFFFFF' }}
                 formatter={(v: number) => [N0.format(v), 'Bugs filed']}
               />
               <Bar dataKey="filed" name="filed">
@@ -246,6 +250,10 @@ export default function BugReport() {
             <ToggleButton value="open">Open</ToggleButton>
             <ToggleButton value="all">All</ToggleButton>
           </ToggleButtonGroup>
+          <TextField select size="small" label="Type" value={issueType} onChange={(e) => setIssueType(e.target.value)} sx={{ minWidth: 140 }}>
+            <MenuItem value="">All types</MenuItem>
+            {(snap?.by_type ?? []).map((t) => <MenuItem key={t.key} value={t.key}>{t.key} ({t.bugs})</MenuItem>)}
+          </TextField>
           <TextField select size="small" label="Priority" value={priority} onChange={(e) => setPriority(e.target.value)} sx={{ minWidth: 150 }}>
             <MenuItem value="">All priorities</MenuItem>
             {(snap?.by_priority ?? []).map((p) => <MenuItem key={p.key} value={p.key}>{p.key} ({p.bugs})</MenuItem>)}
@@ -300,7 +308,9 @@ export default function BugReport() {
         </Table>
         {snap && (
           <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 2 }}>
-            {snap.source} · {snap.unmatched_labels.length} customer labels on bug tickets match no roster customer and are excluded from MRR affected.
+            {snap.source} · Bug and Investigate issue types, including tickets with no customer tag.
+            {' '}{snap.unmatched_labels.length} customer labels match no roster customer and are excluded from MRR affected.
+            {' '}A customer-reported problem triaged onto a Task or New Feature is not counted here — HubSpot&rsquo;s &ldquo;Bug Reported&rdquo; resolution is a wider net than JIRA&rsquo;s defect types.
           </Typography>
         )}
       </Paper>

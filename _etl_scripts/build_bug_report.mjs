@@ -31,7 +31,17 @@ const SNAP = path.join(ROOT, 'public/snapshots');
 const read = (p, d = null) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } };
 const r2 = (v) => Math.round(v * 100) / 100;
 
-const JIRA = read(path.join(ROOT, '_etl_scripts/cache/jira_features.json'), { tickets: [] });
+// DEDICATED DEFECT PULL, not the Features cache. The Features sync filters on
+// `cf[10242] IS NOT EMPTY` because it ranks by tagged-customer revenue — and that
+// filter silently hid every untagged defect. 8 of the 24 currently-open ones carry no
+// customer tag, DEV-13221 among them, which is why this page reported 8 open when Beau
+// could see 17 in HubSpot. Falls back to the Features cache if the defect pull has not
+// run yet.
+const JIRA = (() => {
+  const bugs = read(path.join(ROOT, '_etl_scripts/cache/jira_bugs.json'));
+  if (bugs?.tickets?.length) return bugs;
+  return read(path.join(ROOT, '_etl_scripts/cache/jira_features.json'), { tickets: [] });
+})();
 const PROF = read(path.join(SNAP, 'customer_profiles.json'), { rows: [] }).rows || [];
 
 // Same matcher as build_features.mjs — see the note above.
@@ -47,7 +57,11 @@ const matchCustomer = (label) => byPlain.get(plain(label)) || byStrip.get(stripS
 const today = new Date().toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5);
 
-const bugs = (JIRA.tickets || []).filter((t) => t.issue_type === 'Bug');
+// The defect pull is already scoped to Bug + Investigate. Both are "something is
+// wrong" — Investigate is triage for a reported problem, not new work — and excluding
+// it undercounted. The page carries a type filter so either can be isolated.
+const DEFECT_TYPES = new Set(['Bug', 'Investigate']);
+const bugs = (JIRA.tickets || []).filter((t) => DEFECT_TYPES.has(t.issue_type));
 const unmatchedLabels = new Map();
 
 const rows = bugs.map((t) => {
@@ -69,6 +83,7 @@ const rows = bugs.map((t) => {
   const closedAt = t.resolved || (isOpen ? null : t.updated || null);
   return {
     key: t.key,
+    issue_type: t.issue_type,
     summary: t.summary,
     status: t.status,
     stage_category: t.stage_category,
@@ -182,6 +197,7 @@ const out = {
     open_mrr_affected: r2(open.reduce((s, r) => s + r.mrr_affected, 0)),
     customers_waiting: customers.length,
     unattributed_open: open.filter((r) => r.customer_count === 0).length,
+    source_scope: JIRA.source || null,
     closed_without_resolution_date: rows.filter((r) => r.resolution_date_missing).length,
   },
   age: {
@@ -193,6 +209,7 @@ const out = {
   monthly,
   weekly,
   by_priority: tally(rows, (r) => r.priority),
+  by_type: tally(rows, (r) => r.issue_type),
   by_status: tally(open, (r) => r.status),
   customers,
   bugs: rows.sort((a, b) => Number(b.is_open) - Number(a.is_open) || b.mrr_affected - a.mrr_affected || (b.age_days || 0) - (a.age_days || 0)),

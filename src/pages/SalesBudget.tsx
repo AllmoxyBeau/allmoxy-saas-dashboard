@@ -126,7 +126,9 @@ export default function SalesBudget() {
               <XAxis dataKey="month" tick={{ fontSize: 11 }} />
               <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${Math.round(Number(v) / 1000)}k`} domain={['dataMin - 50000', 'dataMax + 50000']} />
               <RTooltip
-                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12 }}
+                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12, color: '#FFFFFF' }}
+                labelStyle={{ color: '#FFFFFF' }}
+                itemStyle={{ color: '#FFFFFF' }}
                 formatter={(v: number, n: string) => [USD0.format(v), n === 'target' ? 'Target' : 'Actual']}
               />
               <Legend wrapperStyle={{ fontSize: 11 }} />

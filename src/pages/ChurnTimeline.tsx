@@ -161,7 +161,9 @@ export default function ChurnTimeline() {
               <YAxis yAxisId="c" tick={{ fontSize: 11 }} />
               <YAxis yAxisId="m" orientation="right" tick={{ fontSize: 11 }} tickFormatter={(v) => `$${Math.round(Number(v) / 1000)}k`} />
               <RTooltip
-                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12 }}
+                contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12, color: '#FFFFFF' }}
+                labelStyle={{ color: '#FFFFFF' }}
+                itemStyle={{ color: '#FFFFFF' }}
                 formatter={(v: number, n: string) => (n === 'mrr' ? [USD0.format(v), 'MRR lost'] : [v, 'Customers'])}
               />
               <Bar yAxisId="c" dataKey="customers" fill="#DA3633" name="customers" />
