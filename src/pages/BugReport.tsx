@@ -18,7 +18,7 @@ import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip } from 'recharts';
 
 import PageHeader from '../components/common/PageHeader';
 import InfoIcon from '../components/common/InfoIcon';
@@ -39,6 +39,7 @@ type Snap = {
   totals: { bugs: number; open: number; resolved: number; open_mrr_affected: number; customers_waiting: number; unattributed_open: number; closed_without_resolution_date: number };
   age: { median_open_days: number | null; p90_open_days: number | null; median_days_to_resolve: number | null; note: string };
   monthly: Array<{ month: string; filed: number; resolved: number; net: number; open_at_month_end: number; median_days_to_resolve: number | null; partial: boolean }>;
+  weekly: Array<{ week: string; filed: number; partial: boolean }>;
   by_priority: Tally[]; by_status: Tally[];
   customers: Array<Cust & { open_bugs: number; highest_priority: string | null; oldest_days: number }>;
   bugs: Bug[];
@@ -47,6 +48,10 @@ type Snap = {
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 const N0 = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+function weekLabel(w: string) {
+  const [, m, d] = w.split('-');
+  return `${m}/${d}`;
+}
 function monthLabel(m: string) {
   const [y, mo] = m.split('-').map(Number);
   return new Date(y, mo - 1, 1).toLocaleString('en-US', { month: 'short', year: '2-digit' });
@@ -71,6 +76,7 @@ export default function BugReport() {
   const [view, setView] = useState<'open' | 'all'>('open');
   const [priority, setPriority] = useState('');
   const [range, setRange] = useState<'12M' | '24M' | 'ALL'>('24M');
+  const [grain, setGrain] = useState<'month' | 'week'>('month');
   const [sortKey, setSortKey] = useState<SortKey>('mrr_affected');
   const [sortDesc, setSortDesc] = useState(true);
   const toggleSort = (k: SortKey) => {
@@ -91,7 +97,16 @@ export default function BugReport() {
     }).slice(0, view === 'open' ? 500 : 300);
   }, [snap, view, priority, sortKey, sortDesc]);
 
+  // Filed volume only (Beau, 2026-09-24). The filed-vs-fixed pairing made the chart
+  // about throughput; the question here is how many bugs are being raised over time,
+  // which a single series answers far more legibly.
   const chart = useMemo(() => {
+    if (grain === 'week') {
+      const all = snap?.weekly ?? [];
+      if (!all.length) return [];
+      const weeks = range === 'ALL' ? all : all.slice(range === '12M' ? -53 : -105);
+      return weeks.map((w) => ({ label: weekLabel(w.week), filed: w.filed, partial: w.partial }));
+    }
     const all = snap?.monthly ?? [];
     if (!all.length) return [];
     let rowsIn = all;
@@ -103,8 +118,8 @@ export default function BugReport() {
       const cut = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
       rowsIn = all.filter((c) => c.month >= cut);
     }
-    return rowsIn.map((c) => ({ month: monthLabel(c.month), filed: c.filed, resolved: -c.resolved, backlog: c.open_at_month_end }));
-  }, [snap, range]);
+    return rowsIn.map((c) => ({ label: monthLabel(c.month), filed: c.filed, partial: c.partial }));
+  }, [snap, range, grain]);
 
   if (error) {
     return (
@@ -156,9 +171,13 @@ export default function BugReport() {
 
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.5 }}>
-          <Typography variant="h6" sx={{ fontWeight: 500 }}>Filed vs fixed</Typography>
-          <InfoIcon info={<>Bars are bugs filed (up) against bugs closed (down) each month; the line is the open backlog at month end.<br /><br />Backlog is a filed-minus-closed running balance from the first month on record, so it is a trend rather than an audited count.</>} />
+          <Typography variant="h6" sx={{ fontWeight: 500 }}>Bugs filed</Typography>
+          <InfoIcon info={<>How many bugs are raised over time. Weeks are keyed to the Monday that starts them, and quiet weeks show as zero rather than a gap — a missing bar would read as missing data when it is really a real observation.<br /><br />The current {grain === 'week' ? 'week' : 'month'} is partial and drawn muted, since it has not finished accumulating.</>} />
           <Box sx={{ flexGrow: 1 }} />
+          <ToggleButtonGroup size="small" exclusive value={grain} onChange={(_, v) => v && setGrain(v)} sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}>
+            <ToggleButton value="month">Monthly</ToggleButton>
+            <ToggleButton value="week">Weekly</ToggleButton>
+          </ToggleButtonGroup>
           <ToggleButtonGroup size="small" exclusive value={range} onChange={(_, v) => v && setRange(v)} sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}>
             <ToggleButton value="12M">12M</ToggleButton>
             <ToggleButton value="24M">24M</ToggleButton>
@@ -169,16 +188,19 @@ export default function BugReport() {
           <ResponsiveContainer width="100%" height={270}>
             <ComposedChart data={chart} margin={{ top: 8, right: 16, bottom: 4, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" vertical={false} />
-              <XAxis dataKey="month" tick={{ fontSize: 11 }} interval="preserveStartEnd" minTickGap={26} />
-              <YAxis yAxisId="n" tick={{ fontSize: 11 }} />
-              <YAxis yAxisId="b" orientation="right" tick={{ fontSize: 11 }} />
+              <XAxis dataKey="label" tick={{ fontSize: 11 }} interval="preserveStartEnd" minTickGap={grain === 'week' ? 34 : 26} />
+              <YAxis tick={{ fontSize: 11 }} />
               <RTooltip
                 contentStyle={{ background: '#161b22', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontSize: 12 }}
-                formatter={(v: number, n: string) => [N0.format(Math.abs(v)), n === 'backlog' ? 'Open at month end' : n === 'resolved' ? 'Closed' : 'Filed']}
+                formatter={(v: number) => [N0.format(v), 'Bugs filed']}
               />
-              <Bar yAxisId="n" dataKey="filed" fill="#DA3633" name="filed" />
-              <Bar yAxisId="n" dataKey="resolved" fill="#1A9E5C" name="resolved" />
-              <Line yAxisId="b" type="monotone" dataKey="backlog" stroke="#D69E2E" strokeWidth={2} dot={false} name="backlog" />
+              <Bar dataKey="filed" name="filed">
+                {chart.map((c, i) => (
+                  // The in-progress period is muted so a half-finished week is not read
+                  // as a drop in filings.
+                  <Cell key={i} fill={c.partial ? 'rgba(218,54,51,0.35)' : '#DA3633'} />
+                ))}
+              </Bar>
             </ComposedChart>
           </ResponsiveContainer>
         )}

@@ -111,6 +111,38 @@ const monthly = sorted.map((m) => {
   };
 });
 
+// ── weekly filings (Beau, 2026-09-24: track filed volume by month AND by week) ──
+// Keyed by the MONDAY of each week rather than an ISO week number: "2026-09-21" is
+// readable on an axis and sorts correctly, where "2026-W39" does neither.
+// Weeks with no bugs are emitted as zeros — a gap in a volume series reads as missing
+// data, and a quiet week is a real observation worth seeing.
+const mondayOf = (iso) => {
+  const d = new Date(`${iso}T00:00:00Z`);
+  const dow = (d.getUTCDay() + 6) % 7;            // Monday = 0
+  d.setUTCDate(d.getUTCDate() - dow);
+  return d.toISOString().slice(0, 10);
+};
+const weekly = (() => {
+  const filedBy = new Map();
+  for (const r of rows) {
+    if (!r.created) continue;
+    const w = mondayOf(r.created);
+    filedBy.set(w, (filedBy.get(w) || 0) + 1);
+  }
+  if (!filedBy.size) return [];
+  const keys = [...filedBy.keys()].sort();
+  const out = [];
+  const cur = new Date(`${keys[0]}T00:00:00Z`);
+  const end = new Date(`${keys[keys.length - 1]}T00:00:00Z`);
+  const thisWeek = mondayOf(today);
+  while (cur <= end) {
+    const w = cur.toISOString().slice(0, 10);
+    out.push({ week: w, filed: filedBy.get(w) || 0, partial: w === thisWeek });
+    cur.setUTCDate(cur.getUTCDate() + 7);
+  }
+  return out;
+})();
+
 const tally = (list, keyFn) => {
   const m = new Map();
   for (const r of list) {
@@ -159,6 +191,7 @@ const out = {
     note: 'Open bugs are aged to today, resolved bugs to their resolution date. Never averaged together — a bug open 300 days and one closed in 2 describe different things.',
   },
   monthly,
+  weekly,
   by_priority: tally(rows, (r) => r.priority),
   by_status: tally(open, (r) => r.status),
   customers,
@@ -168,4 +201,4 @@ const out = {
 };
 
 fs.writeFileSync(path.join(SNAP, 'bug_report.json'), JSON.stringify(out));
-console.error(`[bug_report] ${rows.length} bugs · ${open.length} open ($${Math.round(out.totals.open_mrr_affected).toLocaleString()} MRR affected, ${customers.length} customers waiting) · median open ${out.age.median_open_days}d, median resolve ${out.age.median_days_to_resolve}d · ${out.unmatched_labels.length} unmatched labels`);
+console.error(`[bug_report] ${rows.length} bugs · ${weekly.length} weeks of filings · ${open.length} open ($${Math.round(out.totals.open_mrr_affected).toLocaleString()} MRR affected, ${customers.length} customers waiting) · median open ${out.age.median_open_days}d, median resolve ${out.age.median_days_to_resolve}d · ${out.unmatched_labels.length} unmatched labels`);
