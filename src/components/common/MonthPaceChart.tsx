@@ -101,12 +101,28 @@ export default function MonthPaceChart() {
               itemStyle={{ color: '#FFFFFF' }}
               formatter={(v: number, n: string) => [USD0.format(v), n === 'remaining' ? 'Still expected' : 'Booked so far']}
             />
-            <Legend wrapperStyle={{ fontSize: 11 }} />
+            <Legend
+              wrapperStyle={{ fontSize: 11 }}
+              formatter={(v: string) => (v === 'remaining' ? 'Still expected (estimate)' : 'Booked so far')}
+            />
             {priorAvg > 0 && (
               <ReferenceLine y={priorAvg} stroke="#8B949E" strokeDasharray="4 4" label={{ value: 'prior 3-mo avg', position: 'insideTopRight', fill: '#8B949E', fontSize: 10 }} />
             )}
             <Bar dataKey="actual" stackId="m" fill="#2C73FF" name="actual" />
-            <Bar dataKey="remaining" stackId="m" fill="rgba(44,115,255,0.28)" name="remaining" />
+            {/* A translucent tint of the same blue was invisible against the dark
+                ground. The projected block now uses a distinct hue with a dashed
+                outline: different colour so it reads at a glance, dashed so it still
+                says "estimate" rather than "booked". */}
+            <Bar
+              dataKey="remaining"
+              stackId="m"
+              fill="#D69E2E"
+              fillOpacity={0.75}
+              stroke="#F0B849"
+              strokeWidth={1}
+              strokeDasharray="3 2"
+              name="remaining"
+            />
           </BarChart>
         </ResponsiveContainer>
       )}
