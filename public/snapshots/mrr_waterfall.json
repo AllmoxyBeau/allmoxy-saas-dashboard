@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-09-22T14:56:27.363Z",
-  "cachedUntil": "2026-09-22T15:01:27.363Z",
+  "fetchedAt": "2026-10-06T14:24:15.530Z",
+  "cachedUntil": "2026-10-06T14:29:15.530Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -28,7 +28,8 @@
     "2026-06": 99.7,
     "2026-07": 100.1,
     "2026-08": 102.4,
-    "2026-09": 102.3
+    "2026-09": 102.3,
+    "2026-10": 98.8
   },
   "monthly": [
     {
@@ -14447,7 +14448,7 @@
             "name": "Netley Millwork",
             "id": 432,
             "mrr": 250,
-            "status": "at_risk",
+            "status": "active",
             "pay_status": "Active"
           }
         ]
@@ -18304,7 +18305,7 @@
             "id": 513,
             "mrr": 250,
             "status": "active",
-            "pay_status": "Active"
+            "pay_status": "Cancelled"
           }
         ]
       }
@@ -19983,7 +19984,7 @@
             "id": 427,
             "mrr": 769,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           },
           {
             "name": "Dominion Dovetail",
@@ -21045,22 +21046,22 @@
       "reactivated_mrr": 2464.95,
       "expansion_mrr": 2811.78,
       "contraction_mrr": 1351.94,
-      "churn_mrr": 3744.6,
+      "churn_mrr": 3994.6,
       "voided_mrr": 0,
-      "delinquent_mrr": 3035.92,
+      "delinquent_mrr": 2785.92,
       "ending_mrr": 224197.35,
       "net_new_mrr": -1158.73,
       "new_logos": 5,
       "reactivated_logos": 4,
-      "churned_logos": 5,
+      "churned_logos": 6,
       "voided_logos": 0,
-      "delinquent_logos": 4,
-      "gross_churn_rate_monthly": 0.0166,
-      "net_churn_rate_monthly": 0.0101,
+      "delinquent_logos": 3,
+      "gross_churn_rate_monthly": 0.0177,
+      "net_churn_rate_monthly": 0.0112,
       "expansion_rate_monthly": 0.0125,
-      "grr_monthly": 0.9774,
-      "nrr_monthly": 0.9899,
-      "quick_ratio": 0.88,
+      "grr_monthly": 0.9763,
+      "nrr_monthly": 0.9888,
+      "quick_ratio": 0.84,
       "details": {
         "new": [
           {
@@ -21189,6 +21190,11 @@
             "name": "B & L Cabinets",
             "id": 2025,
             "mrr": 370
+          },
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250
           }
         ],
         "voided": [],
@@ -21206,13 +21212,6 @@
             "mrr": 699,
             "status": "at_risk",
             "pay_status": "Active"
-          },
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
-            "mrr": 250,
-            "status": "non_payment",
-            "pay_status": "Cancelled"
           },
           {
             "name": "Evolve Elements",
@@ -21686,22 +21685,22 @@
       "reactivated_mrr": 450,
       "expansion_mrr": 893.53,
       "contraction_mrr": 3098.35,
-      "churn_mrr": 0,
+      "churn_mrr": 250,
       "voided_mrr": 250,
-      "delinquent_mrr": 999,
+      "delinquent_mrr": 749,
       "ending_mrr": 227009.62,
       "net_new_mrr": -2603.82,
       "new_logos": 1,
       "reactivated_logos": 2,
-      "churned_logos": 0,
+      "churned_logos": 1,
       "voided_logos": 1,
-      "delinquent_logos": 2,
-      "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0096,
+      "delinquent_logos": 1,
+      "gross_churn_rate_monthly": 0.0011,
+      "net_churn_rate_monthly": 0.0107,
       "expansion_rate_monthly": 0.0039,
-      "grr_monthly": 0.9865,
-      "nrr_monthly": 0.9904,
-      "quick_ratio": 0.42,
+      "grr_monthly": 0.9854,
+      "nrr_monthly": 0.9893,
+      "quick_ratio": 0.39,
       "details": {
         "new": [
           {
@@ -21810,7 +21809,13 @@
             "delta": 20
           }
         ],
-        "churn": [],
+        "churn": [
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250
+          }
+        ],
         "voided": [
           {
             "name": "Hempston Home",
@@ -21827,13 +21832,6 @@
             "mrr": 749,
             "status": "non_payment",
             "pay_status": "Active - Card Failure"
-          },
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
-            "mrr": 250,
-            "status": "non_payment",
-            "pay_status": "Cancelled"
           }
         ]
       }
@@ -22048,22 +22046,22 @@
       "reactivated_mrr": 950,
       "expansion_mrr": 3574.19,
       "contraction_mrr": 3954.39,
-      "churn_mrr": 0,
+      "churn_mrr": 250,
       "voided_mrr": 921,
-      "delinquent_mrr": 6406,
+      "delinquent_mrr": 6156,
       "ending_mrr": 220016.8,
       "net_new_mrr": -6338.2,
       "new_logos": 1,
       "reactivated_logos": 3,
-      "churned_logos": 0,
+      "churned_logos": 1,
       "voided_logos": 1,
-      "delinquent_logos": 5,
-      "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0017,
+      "delinquent_logos": 4,
+      "gross_churn_rate_monthly": 0.0011,
+      "net_churn_rate_monthly": 0.0028,
       "expansion_rate_monthly": 0.0158,
-      "grr_monthly": 0.9825,
-      "nrr_monthly": 0.9983,
-      "quick_ratio": 1.01,
+      "grr_monthly": 0.9814,
+      "nrr_monthly": 0.9972,
+      "quick_ratio": 0.95,
       "details": {
         "new": [
           {
@@ -22142,7 +22140,13 @@
             "delta": 16.05
           }
         ],
-        "churn": [],
+        "churn": [
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250
+          }
+        ],
         "voided": [
           {
             "name": "Cabinwood NY",
@@ -22180,41 +22184,34 @@
             "mrr": 658,
             "status": "at_risk",
             "pay_status": "Active"
-          },
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
-            "mrr": 250,
-            "status": "non_payment",
-            "pay_status": "Cancelled"
           }
         ]
       }
     },
     {
       "month": "2026-09",
-      "partial": true,
+      "partial": false,
       "starting_mrr": 220016.8,
       "new_mrr": 2595,
-      "reactivated_mrr": 6115,
-      "expansion_mrr": 344.25,
-      "contraction_mrr": 3788,
+      "reactivated_mrr": 9414,
+      "expansion_mrr": 1625.47,
+      "contraction_mrr": 879,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 24162.7,
-      "ending_mrr": 201120.35,
-      "net_new_mrr": -18896.45,
+      "delinquent_mrr": 994,
+      "ending_mrr": 231778.27,
+      "net_new_mrr": 11761.47,
       "new_logos": 1,
       "reactivated_logos": 3,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 38,
+      "delinquent_logos": 3,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0157,
-      "expansion_rate_monthly": 0.0016,
-      "grr_monthly": 0.9828,
-      "nrr_monthly": 0.9843,
-      "quick_ratio": 0.78,
+      "net_churn_rate_monthly": -0.0034,
+      "expansion_rate_monthly": 0.0074,
+      "grr_monthly": 0.996,
+      "nrr_monthly": 1.0034,
+      "quick_ratio": 4.8,
       "details": {
         "new": [
           {
@@ -22227,7 +22224,7 @@
           {
             "name": "Cabredo LLC",
             "id": 164,
-            "mrr": 3299
+            "mrr": 6598
           },
           {
             "name": "Vlux",
@@ -22241,6 +22238,20 @@
           }
         ],
         "expansion": [
+          {
+            "name": "Midwest Floor Coverings",
+            "id": 211,
+            "prev_mrr": 2178.7,
+            "new_mrr": 2870.92,
+            "delta": 692.22
+          },
+          {
+            "name": "Phoenix-LLC",
+            "id": 475,
+            "prev_mrr": 400,
+            "new_mrr": 899,
+            "delta": 499
+          },
           {
             "name": "NJ Drawers",
             "id": 159,
@@ -22256,10 +22267,24 @@
             "delta": 90
           },
           {
+            "name": "Primary Kitchen",
+            "id": 176,
+            "prev_mrr": 5000,
+            "new_mrr": 5045,
+            "delta": 45
+          },
+          {
             "name": "Fryburg Door - Mullwood",
             "id": 10,
             "prev_mrr": 5600,
             "new_mrr": 5645,
+            "delta": 45
+          },
+          {
+            "name": "Panhandle Door Inc.",
+            "id": 38,
+            "prev_mrr": 6024,
+            "new_mrr": 6069,
             "delta": 45
           },
           {
@@ -22293,13 +22318,6 @@
         ],
         "contraction": [
           {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "prev_mrr": 3119,
-            "new_mrr": 99,
-            "delta": 3020
-          },
-          {
             "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
             "id": 457,
             "prev_mrr": 399,
@@ -22307,30 +22325,193 @@
             "delta": 379
           },
           {
-            "name": "Mountain Showcase Group, Inc.",
-            "id": 500,
-            "prev_mrr": 1990,
-            "new_mrr": 1720,
-            "delta": 270
+            "name": "Lane Industries",
+            "id": 2037,
+            "prev_mrr": 500,
+            "new_mrr": 250,
+            "delta": 250
           },
           {
-            "name": "Panhandle Door Inc.",
-            "id": 38,
-            "prev_mrr": 6024,
-            "new_mrr": 5925,
-            "delta": 99
-          },
-          {
-            "name": "Corona Millworks",
-            "id": 300,
-            "prev_mrr": 4620,
-            "new_mrr": 4600,
-            "delta": 20
+            "name": "Criscott Properies",
+            "id": 2106,
+            "prev_mrr": 419,
+            "new_mrr": 169,
+            "delta": 250
           }
         ],
         "churn": [],
         "voided": [],
         "delinquent": [
+          {
+            "name": "Empyre Designs",
+            "id": 310,
+            "mrr": 525,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Hingeworks",
+            "id": 551,
+            "mrr": 270,
+            "status": "active",
+            "pay_status": "Active - Pause Granted"
+          },
+          {
+            "name": "KSC Sales Inc.",
+            "id": 471,
+            "mrr": 199,
+            "status": "active",
+            "pay_status": "Active"
+          }
+        ]
+      }
+    },
+    {
+      "month": "2026-10",
+      "partial": true,
+      "starting_mrr": 231778.27,
+      "new_mrr": 0,
+      "reactivated_mrr": 0,
+      "expansion_mrr": 20,
+      "contraction_mrr": 1392,
+      "churn_mrr": 0,
+      "voided_mrr": 0,
+      "delinquent_mrr": 159077.87,
+      "ending_mrr": 71328.4,
+      "net_new_mrr": -160449.87,
+      "new_logos": 0,
+      "reactivated_logos": 0,
+      "churned_logos": 0,
+      "voided_logos": 0,
+      "delinquent_logos": 146,
+      "gross_churn_rate_monthly": 0,
+      "net_churn_rate_monthly": 0.0059,
+      "expansion_rate_monthly": 0.0001,
+      "grr_monthly": 0.994,
+      "nrr_monthly": 0.9941,
+      "quick_ratio": 0.01,
+      "details": {
+        "new": [],
+        "reactivated": [],
+        "expansion": [
+          {
+            "name": "Rb Millwork",
+            "id": 2100,
+            "prev_mrr": 2595,
+            "new_mrr": 2615,
+            "delta": 20
+          }
+        ],
+        "contraction": [
+          {
+            "name": "Bella Imc",
+            "id": 31,
+            "prev_mrr": 1316,
+            "new_mrr": 658,
+            "delta": 658
+          },
+          {
+            "name": "Cabinet Doors USA",
+            "id": 545,
+            "prev_mrr": 1182,
+            "new_mrr": 833,
+            "delta": 349
+          },
+          {
+            "name": "GW Eurocase",
+            "id": 106,
+            "prev_mrr": 299,
+            "new_mrr": 49,
+            "delta": 250
+          },
+          {
+            "name": "Lewis Cabinet Specialties Group LLC",
+            "id": 1,
+            "prev_mrr": 7594.2,
+            "new_mrr": 7459.2,
+            "delta": 135
+          }
+        ],
+        "churn": [],
+        "voided": [],
+        "delinquent": [
+          {
+            "name": "Cabredo LLC",
+            "id": 164,
+            "mrr": 6598,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Panhandle Door Inc.",
+            "id": 38,
+            "mrr": 6069,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Fryburg Door - Mullwood",
+            "id": 10,
+            "mrr": 5645,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Primary Kitchen",
+            "id": 176,
+            "mrr": 5045,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Corona Millworks",
+            "id": 300,
+            "mrr": 4620,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Fleetwoods",
+            "id": 2058,
+            "mrr": 4200,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "BTJ Cabinet Door Company",
+            "id": 256,
+            "mrr": 3695,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Westwind",
+            "id": 43,
+            "mrr": 3693.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "SouthernStone Cabinets",
+            "id": 319,
+            "mrr": 3499,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Rehau Inc.",
+            "id": 26,
+            "mrr": 3148.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Roy's Wood Products, Inc.",
+            "id": 130,
+            "mrr": 3119,
+            "status": "active",
+            "pay_status": "Active"
+          },
           {
             "name": "Brushy Creek Custom Doors, LLC",
             "id": 72,
@@ -22339,9 +22520,184 @@
             "pay_status": "Active"
           },
           {
+            "name": "Drawer Connection - DC Drawers",
+            "id": 3,
+            "mrr": 3000,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "J&B Woodcrafts",
+            "id": 75,
+            "mrr": 2920,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Midwest Floor Coverings",
             "id": 211,
-            "mrr": 2178.7,
+            "mrr": 2870.92,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Wizzwood DBA - Quality Kitchens Inc.",
+            "id": 330,
+            "mrr": 2650,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cimino's Cabinet Doors Inc.",
+            "id": 491,
+            "mrr": 2644,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Closet City",
+            "id": 17,
+            "mrr": 2643,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Thomas Creek",
+            "id": 318,
+            "mrr": 2610.3,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Soelbergi",
+            "id": 9,
+            "mrr": 2308.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "KC Doors",
+            "id": 405,
+            "mrr": 2300,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "New York Door & Drawer",
+            "id": 198,
+            "mrr": 2270,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Drawers by Design",
+            "id": 82,
+            "mrr": 1993.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Mountain Showcase Group, Inc.",
+            "id": 500,
+            "mrr": 1990,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Elliot Woodworking",
+            "id": 2062,
+            "mrr": 1800,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Peterman Lumber",
+            "id": 329,
+            "mrr": 1756,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Ideal Drawer Box Inc",
+            "id": 382,
+            "mrr": 1699,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Red Rock Milling LLC",
+            "id": 396,
+            "mrr": 1674,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Melbourne Architectural Millwork",
+            "id": 246,
+            "mrr": 1600,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Kitch Components Inc.",
+            "id": 73,
+            "mrr": 1599,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Eldorado Plywood",
+            "id": 20,
+            "mrr": 1575,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Vlux",
+            "id": 543,
+            "mrr": 1500,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Diamond CNC",
+            "id": 168,
+            "mrr": 1499,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Door Masters of Houston",
+            "id": 443,
+            "mrr": 1499,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "D3Customcabinets",
+            "id": 463,
+            "mrr": 1391,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Bww Closets",
+            "id": 262,
+            "mrr": 1375,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "M2M components",
+            "id": 97,
+            "mrr": 1343,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Craftsman Specialty",
+            "id": 18,
+            "mrr": 1318,
             "status": "active",
             "pay_status": "Active"
           },
@@ -22353,6 +22709,34 @@
             "pay_status": "Active"
           },
           {
+            "name": "Classic Kitchen Doors",
+            "id": 30,
+            "mrr": 1250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Bywater Products",
+            "id": 22,
+            "mrr": 1222,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "B & B Outdoor Furniture",
+            "id": 343,
+            "mrr": 1175,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "IFCC Inc - Imminik Finishing",
+            "id": 186,
+            "mrr": 1153.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "NuDoors DBA - Spayce Integrated LLC",
             "id": 440,
             "mrr": 1100,
@@ -22360,9 +22744,51 @@
             "pay_status": "Active"
           },
           {
+            "name": "Cabinet Restylers, Inc",
+            "id": 479,
+            "mrr": 1099,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Mountain States Kitchen and Bath",
+            "id": 446,
+            "mrr": 1099,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Drawer Works",
             "id": 505,
             "mrr": 1099,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Nexis3",
+            "id": 304,
+            "mrr": 1050,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Sherwood Shelving",
+            "id": 388,
+            "mrr": 1025,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Arkansas Wood Doors",
+            "id": 27,
+            "mrr": 1005.9,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cabsource - Innovative Cabinet",
+            "id": 455,
+            "mrr": 1005,
             "status": "active",
             "pay_status": "Active"
           },
@@ -22374,9 +22800,30 @@
             "pay_status": "Active"
           },
           {
+            "name": "Royal Plywood Co.",
+            "id": 354,
+            "mrr": 956,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Brandenberger Door MFG",
+            "id": 79,
+            "mrr": 900,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Slide A Shelf",
             "id": 2036,
             "mrr": 900,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Phoenix-LLC",
+            "id": 475,
+            "mrr": 899,
             "status": "active",
             "pay_status": "Active"
           },
@@ -22395,6 +22842,34 @@
             "pay_status": "Active"
           },
           {
+            "name": "Elite Cabinet Components",
+            "id": 528,
+            "mrr": 834,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Precision Millwork Utah",
+            "id": 513,
+            "mrr": 815.45,
+            "status": "active",
+            "pay_status": "Cancelled"
+          },
+          {
+            "name": "Amco Distributors Inc.",
+            "id": 23,
+            "mrr": 799,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Salt City Mill - WC Doors",
+            "id": 117,
+            "mrr": 799,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Cabinet Parts to Go",
             "id": 514,
             "mrr": 799,
@@ -22406,12 +22881,26 @@
             "id": 427,
             "mrr": 769,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           },
           {
             "name": "Cascade Distribution Group",
             "id": 387,
             "mrr": 754,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Heritage Wood Mills",
+            "id": 530,
+            "mrr": 750,
+            "status": "active",
+            "pay_status": "Cancelled"
+          },
+          {
+            "name": "Formations",
+            "id": 2060,
+            "mrr": 750,
             "status": "active",
             "pay_status": "Active"
           },
@@ -22423,9 +22912,51 @@
             "pay_status": "Active"
           },
           {
+            "name": "Ironwood Cabinet And Millworks",
+            "id": 292,
+            "mrr": 675,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Jesse Williams Inc",
+            "id": 426,
+            "mrr": 669,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Ecodomo",
             "id": 2044,
             "mrr": 667,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Trimart",
+            "id": 19,
+            "mrr": 650,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Elite Woodworking",
+            "id": 309,
+            "mrr": 637,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Vision Kitchen & Bath",
+            "id": 37,
+            "mrr": 628.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cabinartny",
+            "id": 284,
+            "mrr": 618.7,
             "status": "active",
             "pay_status": "Active"
           },
@@ -22437,6 +22968,41 @@
             "pay_status": "Active"
           },
           {
+            "name": "Perez Enterprises",
+            "id": 64,
+            "mrr": 600,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Milestone Millwork",
+            "id": 2077,
+            "mrr": 580,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Mullet Door",
+            "id": 14,
+            "mrr": 576.45,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Self Woodworks",
+            "id": 11,
+            "mrr": 574,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cullman Cabinet Supply",
+            "id": 162,
+            "mrr": 550,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Wurth LAC",
             "id": 113,
             "mrr": 536.25,
@@ -22444,17 +23010,17 @@
             "pay_status": "Active"
           },
           {
-            "name": "Empyre Designs",
-            "id": 310,
+            "name": "CP&W",
+            "id": 83,
             "mrr": 525,
-            "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "status": "active",
+            "pay_status": "Active"
           },
           {
-            "name": "Lane Industries",
-            "id": 2037,
+            "name": "Metro Drawer Boxes",
+            "id": 217,
             "mrr": 500,
-            "status": "at_risk",
+            "status": "active",
             "pay_status": "Active"
           },
           {
@@ -22465,9 +23031,16 @@
             "pay_status": "Active"
           },
           {
-            "name": "Criscott Properies",
-            "id": 2106,
+            "name": "Quality Craft Woodworks",
+            "id": 29,
             "mrr": 419,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Harbour City Kitchens",
+            "id": 2051,
+            "mrr": 417,
             "status": "active",
             "pay_status": "Active"
           },
@@ -22479,8 +23052,8 @@
             "pay_status": "Active"
           },
           {
-            "name": "Phoenix-LLC",
-            "id": 475,
+            "name": "Whitson Brothers LLC",
+            "id": 196,
             "mrr": 400,
             "status": "active",
             "pay_status": "Active"
@@ -22493,6 +23066,13 @@
             "pay_status": "Active"
           },
           {
+            "name": "Mekotech Canada",
+            "id": 2079,
+            "mrr": 400,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Global Cabinet Supply",
             "id": 275,
             "mrr": 399,
@@ -22500,8 +23080,71 @@
             "pay_status": "Active"
           },
           {
+            "name": "Terzano Cabinetry Inc",
+            "id": 206,
+            "mrr": 375,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "White Oak Custom Woodworking",
+            "id": 77,
+            "mrr": 375,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Imab Living",
+            "id": 462,
+            "mrr": 350,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Pinnacle Cabinets & Millwork",
+            "id": 474,
+            "mrr": 350,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Crown Door & Drawer",
+            "id": 2028,
+            "mrr": 350,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Jerome J. Brezniski & Assoc., Ltd.",
+            "id": 399,
+            "mrr": 349,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Ideal Wood Designs",
+            "id": 537,
+            "mrr": 321,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Kci Storage Manufacturing",
+            "id": 555,
+            "mrr": 320,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Jim Chambers Architectural Products",
             "id": 289,
+            "mrr": 300,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Nashville Plywood",
+            "id": 237,
             "mrr": 300,
             "status": "active",
             "pay_status": "Active"
@@ -22514,15 +23157,29 @@
             "pay_status": "Active"
           },
           {
-            "name": "Hingeworks",
-            "id": 551,
+            "name": "Five Cabinetry",
+            "id": 2056,
             "mrr": 270,
             "status": "active",
-            "pay_status": "Active - Pause Granted"
+            "pay_status": "Active"
           },
           {
             "name": "Crest Cabinets",
             "id": 21,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Burton Cabinet Company",
+            "id": 180,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Ashby's Cabinetry, Inc",
+            "id": 33,
             "mrr": 250,
             "status": "active",
             "pay_status": "Active"
@@ -22535,8 +23192,57 @@
             "pay_status": "Active"
           },
           {
+            "name": "Signature Cabinetry",
+            "id": 39,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Advantage Cabinet Doors, LLC",
+            "id": 8,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Arizona Cabinet Door Store / Cutting Edge Foil Fin",
+            "id": 108,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Salerno's Custom Cab",
+            "id": 344,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Conquest Cabinetry",
+            "id": 539,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Closet Masters Design",
+            "id": 547,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Fl Drawers",
             "id": 483,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Albritton Custom Cabinetry",
+            "id": 2031,
             "mrr": 250,
             "status": "active",
             "pay_status": "Active"
@@ -22549,6 +23255,13 @@
             "pay_status": "Cancelled"
           },
           {
+            "name": "Aluminum X Design",
+            "id": 548,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "KOA Komponents",
             "id": 546,
             "mrr": 250,
@@ -22556,8 +23269,36 @@
             "pay_status": "Active"
           },
           {
+            "name": "Cabinet Doors NJ Llc",
+            "id": 521,
+            "mrr": 250,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Batesville Cabinet Company",
+            "id": 2052,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Montouro Woodwork",
+            "id": 2049,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Capital Millwork",
             "id": 550,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Prorustics",
+            "id": 2020,
             "mrr": 250,
             "status": "active",
             "pay_status": "Active"
@@ -22577,6 +23318,90 @@
             "pay_status": "Active"
           },
           {
+            "name": "Prestige Art Millwork",
+            "id": 2063,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Lane Industries",
+            "id": 2037,
+            "mrr": 250,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Fletcher Design Co",
+            "id": 2029,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Windsor Place",
+            "id": 2064,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Next Gen Cabinet Doors",
+            "id": 535,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Top Design Closets",
+            "id": 2059,
+            "mrr": 250,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Paquette Cabinetry",
+            "id": 2050,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Idaho Custom Closets",
+            "id": 2078,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Advanced Hardware Supply",
+            "id": 525,
+            "mrr": 219,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Adentra",
+            "id": 2032,
+            "mrr": 200,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Quick Kitchens",
+            "id": 2057,
+            "mrr": 200,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Architectural Woods Inc",
+            "id": 323,
+            "mrr": 199,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Specialty Forest Products",
             "id": 384,
             "mrr": 199,
@@ -22584,9 +23409,16 @@
             "pay_status": "Active"
           },
           {
-            "name": "KSC Sales Inc.",
-            "id": 471,
-            "mrr": 199,
+            "name": "Criscott Properies",
+            "id": 2106,
+            "mrr": 169,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Superior Woodworking",
+            "id": 34,
+            "mrr": 120.75,
             "status": "active",
             "pay_status": "Active"
           },
@@ -22596,30 +23428,58 @@
             "mrr": 100,
             "status": "at_risk",
             "pay_status": "Active"
+          },
+          {
+            "name": "Country Lazer",
+            "id": 76,
+            "mrr": 100,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Raumplus",
+            "id": 7,
+            "mrr": 84.7,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "UC Cabinet Components",
+            "id": 25,
+            "mrr": 65,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
+            "id": 457,
+            "mrr": 20,
+            "status": "at_risk",
+            "pay_status": "Active - Card Failure"
           }
         ]
       }
     }
   ],
   "ttm": {
-    "windowStart": "2025-09",
-    "windowEnd": "2026-08",
+    "windowStart": "2025-10",
+    "windowEnd": "2026-09",
     "months": 12,
-    "starting_mrr": 228113.9,
-    "ending_mrr": 220016.8,
-    "new_mrr": 18795,
-    "reactivated_mrr": 22245.58,
-    "expansion_mrr": 26677.16,
-    "contraction_mrr": 34916.42,
-    "churn_mrr": 15365,
+    "starting_mrr": 227052.19,
+    "ending_mrr": 231778.27,
+    "new_mrr": 20240,
+    "reactivated_mrr": 28485.08,
+    "expansion_mrr": 27395.48,
+    "contraction_mrr": 31540.06,
+    "churn_mrr": 15176,
     "voided_mrr": 1171,
-    "delinquent_mrr": 24362.42,
-    "net_new_mrr": -8097.1,
-    "gross_mrr_churn_ttm": 0.0674,
-    "annual_gross_churn_rate": 0.0652,
-    "annual_grr": 0.8013,
-    "annual_nrr": 0.9025,
-    "quick_ratio": 0.9
+    "delinquent_mrr": 23507.42,
+    "net_new_mrr": 4726.08,
+    "gross_mrr_churn_ttm": 0.0668,
+    "annual_gross_churn_rate": 0.0644,
+    "annual_grr": 0.814,
+    "annual_nrr": 0.9199,
+    "quick_ratio": 1.02
   },
   "monthly_accrual": [
     {
@@ -22773,13 +23633,13 @@
             "mrr": 370
           },
           {
-            "name": "Prorustics",
-            "id": 2020,
+            "name": "Santas Cabinets",
+            "id": 2026,
             "mrr": 250
           },
           {
-            "name": "Santas Cabinets",
-            "id": 2026,
+            "name": "Prorustics",
+            "id": 2020,
             "mrr": 250
           }
         ],
@@ -22927,6 +23787,11 @@
             "mrr": 400
           },
           {
+            "name": "Lane Industries",
+            "id": 2037,
+            "mrr": 250
+          },
+          {
             "name": "Albritton Custom Cabinetry",
             "id": 2031,
             "mrr": 250
@@ -22934,11 +23799,6 @@
           {
             "name": "Fletcher Design Co",
             "id": 2029,
-            "mrr": 250
-          },
-          {
-            "name": "Lane Industries",
-            "id": 2037,
             "mrr": 250
           },
           {
@@ -24104,22 +24964,22 @@
       "reactivated_mrr": 0,
       "expansion_mrr": 3610,
       "contraction_mrr": 2194.39,
-      "churn_mrr": 0,
+      "churn_mrr": 250,
       "voided_mrr": 2820,
-      "delinquent_mrr": 250,
+      "delinquent_mrr": 0,
       "ending_mrr": 225312.8,
       "net_new_mrr": -1235.39,
       "new_logos": 1,
       "reactivated_logos": 0,
-      "churned_logos": 0,
+      "churned_logos": 1,
       "voided_logos": 3,
-      "delinquent_logos": 1,
-      "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": -0.0062,
+      "delinquent_logos": 0,
+      "gross_churn_rate_monthly": 0.0011,
+      "net_churn_rate_monthly": -0.0051,
       "expansion_rate_monthly": 0.0159,
-      "grr_monthly": 0.9903,
-      "nrr_monthly": 1.0062,
-      "quick_ratio": 1.84,
+      "grr_monthly": 0.9892,
+      "nrr_monthly": 1.0051,
+      "quick_ratio": 1.65,
       "details": {
         "new": [
           {
@@ -24175,7 +25035,13 @@
             "delta": 16.05
           }
         ],
-        "churn": [],
+        "churn": [
+          {
+            "name": "Urbania Cabinets",
+            "id": 2015,
+            "mrr": 250
+          }
+        ],
         "voided": [
           {
             "name": "Brave Custom Woodworking",
@@ -24199,41 +25065,33 @@
             "pay_status": "Active"
           }
         ],
-        "delinquent": [
-          {
-            "name": "Urbania Cabinets",
-            "id": 2015,
-            "mrr": 250,
-            "status": "non_payment",
-            "pay_status": "Cancelled"
-          }
-        ]
+        "delinquent": []
       }
     },
     {
       "month": "2026-09",
-      "partial": true,
+      "partial": false,
       "starting_mrr": 225312.8,
       "new_mrr": 2595,
       "reactivated_mrr": 0,
-      "expansion_mrr": 164.25,
-      "contraction_mrr": 4604,
+      "expansion_mrr": 1355.47,
+      "contraction_mrr": 815,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 26068.7,
-      "ending_mrr": 197399.35,
-      "net_new_mrr": -27913.45,
+      "delinquent_mrr": 270,
+      "ending_mrr": 228178.27,
+      "net_new_mrr": 2865.47,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 36,
+      "delinquent_logos": 1,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0197,
-      "expansion_rate_monthly": 0.0007,
-      "grr_monthly": 0.9796,
-      "nrr_monthly": 0.9803,
-      "quick_ratio": 0.6,
+      "net_churn_rate_monthly": -0.0024,
+      "expansion_rate_monthly": 0.006,
+      "grr_monthly": 0.9964,
+      "nrr_monthly": 1.0024,
+      "quick_ratio": 4.85,
       "details": {
         "new": [
           {
@@ -24244,6 +25102,20 @@
         ],
         "reactivated": [],
         "expansion": [
+          {
+            "name": "Midwest Floor Coverings",
+            "id": 211,
+            "prev_mrr": 2178.7,
+            "new_mrr": 2870.92,
+            "delta": 692.22
+          },
+          {
+            "name": "Phoenix-LLC",
+            "id": 475,
+            "prev_mrr": 400,
+            "new_mrr": 899,
+            "delta": 499
+          },
           {
             "name": "NJ Drawers",
             "id": 159,
@@ -24275,25 +25147,18 @@
         ],
         "contraction": [
           {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "prev_mrr": 3119,
-            "new_mrr": 99,
-            "delta": 3020
-          },
-          {
-            "name": "Dot Custom Cabinets LLC",
-            "id": 385,
-            "prev_mrr": 929,
-            "new_mrr": 49,
-            "delta": 880
-          },
-          {
             "name": "Mountain Showcase Group, Inc.",
             "id": 500,
             "prev_mrr": 1990,
-            "new_mrr": 1720,
-            "delta": 270
+            "new_mrr": 1740,
+            "delta": 250
+          },
+          {
+            "name": "Criscott Properies",
+            "id": 2106,
+            "prev_mrr": 419,
+            "new_mrr": 169,
+            "delta": 250
           },
           {
             "name": "New York Door & Drawer",
@@ -24303,35 +25168,163 @@
             "delta": 250
           },
           {
-            "name": "Panhandle Door Inc.",
-            "id": 38,
-            "prev_mrr": 6024,
-            "new_mrr": 5925,
-            "delta": 99
-          },
-          {
             "name": "Drawer Connection - DC Drawers",
             "id": 3,
             "prev_mrr": 3065,
             "new_mrr": 3000,
             "delta": 65
-          },
-          {
-            "name": "Corona Millworks",
-            "id": 300,
-            "prev_mrr": 4620,
-            "new_mrr": 4600,
-            "delta": 20
           }
         ],
         "churn": [],
         "voided": [],
         "delinquent": [
           {
+            "name": "Hingeworks",
+            "id": 551,
+            "mrr": 270,
+            "status": "active",
+            "pay_status": "Active - Pause Granted"
+          }
+        ]
+      }
+    },
+    {
+      "month": "2026-10",
+      "partial": true,
+      "starting_mrr": 228178.27,
+      "new_mrr": 0,
+      "reactivated_mrr": 0,
+      "expansion_mrr": 20,
+      "contraction_mrr": 1274,
+      "churn_mrr": 0,
+      "voided_mrr": 0,
+      "delinquent_mrr": 157569.87,
+      "ending_mrr": 69354.4,
+      "net_new_mrr": -158823.87,
+      "new_logos": 0,
+      "reactivated_logos": 0,
+      "churned_logos": 0,
+      "voided_logos": 0,
+      "delinquent_logos": 150,
+      "gross_churn_rate_monthly": 0,
+      "net_churn_rate_monthly": 0.0055,
+      "expansion_rate_monthly": 0.0001,
+      "grr_monthly": 0.9944,
+      "nrr_monthly": 0.9945,
+      "quick_ratio": 0.02,
+      "details": {
+        "new": [],
+        "reactivated": [],
+        "expansion": [
+          {
+            "name": "Rb Millwork",
+            "id": 2100,
+            "prev_mrr": 2595,
+            "new_mrr": 2615,
+            "delta": 20
+          }
+        ],
+        "contraction": [
+          {
+            "name": "Dot Custom Cabinets LLC",
+            "id": 385,
+            "prev_mrr": 929,
+            "new_mrr": 49,
+            "delta": 880
+          },
+          {
+            "name": "Cabinet Doors USA",
+            "id": 545,
+            "prev_mrr": 1182,
+            "new_mrr": 833,
+            "delta": 349
+          },
+          {
+            "name": "Lewis Cabinet Specialties Group LLC",
+            "id": 1,
+            "prev_mrr": 7504.2,
+            "new_mrr": 7459.2,
+            "delta": 45
+          }
+        ],
+        "churn": [],
+        "voided": [],
+        "delinquent": [
+          {
+            "name": "Panhandle Door Inc.",
+            "id": 38,
+            "mrr": 6024,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Fryburg Door - Mullwood",
+            "id": 10,
+            "mrr": 5600,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Primary Kitchen",
+            "id": 176,
+            "mrr": 5000,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Corona Millworks",
+            "id": 300,
+            "mrr": 4620,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Fleetwoods",
+            "id": 2058,
+            "mrr": 4200,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "BTJ Cabinet Door Company",
+            "id": 256,
+            "mrr": 3695,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Westwind",
+            "id": 43,
+            "mrr": 3693.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "SouthernStone Cabinets",
+            "id": 319,
+            "mrr": 3499,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Cabredo LLC",
             "id": 164,
             "mrr": 3299,
             "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Rehau Inc.",
+            "id": 26,
+            "mrr": 3148.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Roy's Wood Products, Inc.",
+            "id": 130,
+            "mrr": 3119,
+            "status": "active",
             "pay_status": "Active"
           },
           {
@@ -24342,9 +25335,184 @@
             "pay_status": "Active"
           },
           {
+            "name": "Drawer Connection - DC Drawers",
+            "id": 3,
+            "mrr": 3000,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "J&B Woodcrafts",
+            "id": 75,
+            "mrr": 2920,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Midwest Floor Coverings",
             "id": 211,
-            "mrr": 2178.7,
+            "mrr": 2870.92,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Wizzwood DBA - Quality Kitchens Inc.",
+            "id": 330,
+            "mrr": 2650,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Closet City",
+            "id": 17,
+            "mrr": 2643,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Thomas Creek",
+            "id": 318,
+            "mrr": 2610.3,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cimino's Cabinet Doors Inc.",
+            "id": 491,
+            "mrr": 2599,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Soelbergi",
+            "id": 9,
+            "mrr": 2308.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "KC Doors",
+            "id": 405,
+            "mrr": 2300,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "New York Door & Drawer",
+            "id": 198,
+            "mrr": 2020,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Drawers by Design",
+            "id": 82,
+            "mrr": 1993.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Elliot Woodworking",
+            "id": 2062,
+            "mrr": 1800,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Peterman Lumber",
+            "id": 329,
+            "mrr": 1756,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Mountain Showcase Group, Inc.",
+            "id": 500,
+            "mrr": 1740,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Ideal Drawer Box Inc",
+            "id": 382,
+            "mrr": 1699,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Red Rock Milling LLC",
+            "id": 396,
+            "mrr": 1674,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Melbourne Architectural Millwork",
+            "id": 246,
+            "mrr": 1600,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Kitch Components Inc.",
+            "id": 73,
+            "mrr": 1599,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Eldorado Plywood",
+            "id": 20,
+            "mrr": 1575,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Vlux",
+            "id": 543,
+            "mrr": 1500,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Door Masters of Houston",
+            "id": 443,
+            "mrr": 1499,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Diamond CNC",
+            "id": 168,
+            "mrr": 1499,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "D3Customcabinets",
+            "id": 463,
+            "mrr": 1391,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Bww Closets",
+            "id": 262,
+            "mrr": 1375,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "M2M components",
+            "id": 97,
+            "mrr": 1343,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Craftsman Specialty",
+            "id": 18,
+            "mrr": 1318,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24352,6 +25520,34 @@
             "name": "Quadro Cabinets",
             "id": 84,
             "mrr": 1305,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Classic Kitchen Doors",
+            "id": 30,
+            "mrr": 1250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Bywater Products",
+            "id": 22,
+            "mrr": 1222,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "B & B Outdoor Furniture",
+            "id": 343,
+            "mrr": 1175,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "IFCC Inc - Imminik Finishing",
+            "id": 186,
+            "mrr": 1153.95,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24370,6 +25566,48 @@
             "pay_status": "Active"
           },
           {
+            "name": "Cabinet Restylers, Inc",
+            "id": 479,
+            "mrr": 1099,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Mountain States Kitchen and Bath",
+            "id": 446,
+            "mrr": 1099,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Nexis3",
+            "id": 304,
+            "mrr": 1050,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Sherwood Shelving",
+            "id": 388,
+            "mrr": 1025,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Arkansas Wood Doors",
+            "id": 27,
+            "mrr": 1005.9,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cabsource - Innovative Cabinet",
+            "id": 455,
+            "mrr": 1005,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "My Door Factory",
             "id": 42,
             "mrr": 1000,
@@ -24377,9 +25615,30 @@
             "pay_status": "Active"
           },
           {
+            "name": "Royal Plywood Co.",
+            "id": 354,
+            "mrr": 956,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Slide A Shelf",
             "id": 2036,
             "mrr": 900,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Brandenberger Door MFG",
+            "id": 79,
+            "mrr": 900,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Phoenix-LLC",
+            "id": 475,
+            "mrr": 899,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24398,9 +25657,44 @@
             "pay_status": "Active"
           },
           {
+            "name": "Elite Cabinet Components",
+            "id": 528,
+            "mrr": 834,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Precision Millwork Utah",
+            "id": 513,
+            "mrr": 815.45,
+            "status": "active",
+            "pay_status": "Cancelled"
+          },
+          {
             "name": "Cabinet Parts to Go",
             "id": 514,
             "mrr": 799,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Salt City Mill - WC Doors",
+            "id": 117,
+            "mrr": 799,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Amco Distributors Inc.",
+            "id": 23,
+            "mrr": 799,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Drawer Box Solutions",
+            "id": 427,
+            "mrr": 769,
             "status": "at_risk",
             "pay_status": "Active"
           },
@@ -24410,6 +25704,20 @@
             "mrr": 754,
             "status": "active",
             "pay_status": "Active"
+          },
+          {
+            "name": "Formations",
+            "id": 2060,
+            "mrr": 750,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Heritage Wood Mills",
+            "id": 530,
+            "mrr": 750,
+            "status": "active",
+            "pay_status": "Cancelled"
           },
           {
             "name": "Smart Custom Closets",
@@ -24426,9 +25734,58 @@
             "pay_status": "Active"
           },
           {
+            "name": "Staley Custom Cabinets",
+            "id": 437,
+            "mrr": 699,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Ironwood Cabinet And Millworks",
+            "id": 292,
+            "mrr": 675,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Jesse Williams Inc",
+            "id": 426,
+            "mrr": 669,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Ecodomo",
             "id": 2044,
             "mrr": 667,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Trimart",
+            "id": 19,
+            "mrr": 650,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Elite Woodworking",
+            "id": 309,
+            "mrr": 637,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Vision Kitchen & Bath",
+            "id": 37,
+            "mrr": 628.95,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cabinartny",
+            "id": 284,
+            "mrr": 618.7,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24440,9 +25797,65 @@
             "pay_status": "Active"
           },
           {
+            "name": "Perez Enterprises",
+            "id": 64,
+            "mrr": 600,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Milestone Millwork",
+            "id": 2077,
+            "mrr": 580,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Mullet Door",
+            "id": 14,
+            "mrr": 576.45,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Self Woodworks",
+            "id": 11,
+            "mrr": 574,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cullman Cabinet Supply",
+            "id": 162,
+            "mrr": 550,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Wurth LAC",
             "id": 113,
             "mrr": 536.25,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "CP&W",
+            "id": 83,
+            "mrr": 525,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Empyre Designs",
+            "id": 310,
+            "mrr": 525,
+            "status": "non_payment",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Metro Drawer Boxes",
+            "id": 217,
+            "mrr": 500,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24454,9 +25867,23 @@
             "pay_status": "Active"
           },
           {
-            "name": "Criscott Properies",
-            "id": 2106,
+            "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
+            "id": 457,
             "mrr": 419,
+            "status": "at_risk",
+            "pay_status": "Active - Card Failure"
+          },
+          {
+            "name": "Quality Craft Woodworks",
+            "id": 29,
+            "mrr": 419,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Harbour City Kitchens",
+            "id": 2051,
+            "mrr": 417,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24468,16 +25895,79 @@
             "pay_status": "Active"
           },
           {
-            "name": "Phoenix-LLC",
-            "id": 475,
+            "name": "Stolbek",
+            "id": 2018,
             "mrr": 400,
             "status": "active",
             "pay_status": "Active"
           },
           {
-            "name": "Stolbek",
-            "id": 2018,
+            "name": "Mekotech Canada",
+            "id": 2079,
             "mrr": 400,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Whitson Brothers LLC",
+            "id": 196,
+            "mrr": 400,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "White Oak Custom Woodworking",
+            "id": 77,
+            "mrr": 375,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Terzano Cabinetry Inc",
+            "id": 206,
+            "mrr": 375,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Imab Living",
+            "id": 462,
+            "mrr": 350,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Pinnacle Cabinets & Millwork",
+            "id": 474,
+            "mrr": 350,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Crown Door & Drawer",
+            "id": 2028,
+            "mrr": 350,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Jerome J. Brezniski & Assoc., Ltd.",
+            "id": 399,
+            "mrr": 349,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Ideal Wood Designs",
+            "id": 537,
+            "mrr": 321,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Kci Storage Manufacturing",
+            "id": 555,
+            "mrr": 320,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24489,6 +25979,20 @@
             "pay_status": "Active"
           },
           {
+            "name": "Nashville Plywood",
+            "id": 237,
+            "mrr": 300,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "GW Eurocase",
+            "id": 106,
+            "mrr": 299,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Elite Cabinets",
             "id": 360,
             "mrr": 288.75,
@@ -24496,22 +26000,22 @@
             "pay_status": "Active"
           },
           {
-            "name": "Hingeworks",
-            "id": 551,
+            "name": "Five Cabinetry",
+            "id": 2056,
             "mrr": 270,
-            "status": "active",
-            "pay_status": "Active - Pause Granted"
-          },
-          {
-            "name": "Intermountain Wood Products",
-            "id": 80,
-            "mrr": 250,
             "status": "active",
             "pay_status": "Active"
           },
           {
             "name": "Fl Drawers",
             "id": 483,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Intermountain Wood Products",
+            "id": 80,
             "mrr": 250,
             "status": "active",
             "pay_status": "Active"
@@ -24566,9 +26070,205 @@
             "pay_status": "Active"
           },
           {
+            "name": "Top Design Closets",
+            "id": 2059,
+            "mrr": 250,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Arizona Cabinet Door Store / Cutting Edge Foil Fin",
+            "id": 108,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Conquest Cabinetry",
+            "id": 539,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Windsor Place",
+            "id": 2064,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Prorustics",
+            "id": 2020,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Next Gen Cabinet Doors",
+            "id": 535,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Prestige Art Millwork",
+            "id": 2063,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Aluminum X Design",
+            "id": 548,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Signature Cabinetry",
+            "id": 39,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Closet Masters Design",
+            "id": 547,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Idaho Custom Closets",
+            "id": 2078,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Albritton Custom Cabinetry",
+            "id": 2031,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Burton Cabinet Company",
+            "id": 180,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Ashby's Cabinetry, Inc",
+            "id": 33,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Paquette Cabinetry",
+            "id": 2050,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Batesville Cabinet Company",
+            "id": 2052,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Advantage Cabinet Doors, LLC",
+            "id": 8,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Cabinet Doors NJ Llc",
+            "id": 521,
+            "mrr": 250,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Fletcher Design Co",
+            "id": 2029,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Montouro Woodwork",
+            "id": 2049,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Salerno's Custom Cab",
+            "id": 344,
+            "mrr": 250,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Advanced Hardware Supply",
+            "id": 525,
+            "mrr": 219,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Adentra",
+            "id": 2032,
+            "mrr": 200,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Quick Kitchens",
+            "id": 2057,
+            "mrr": 200,
+            "status": "at_risk",
+            "pay_status": "Active"
+          },
+          {
             "name": "Specialty Forest Products",
             "id": 384,
             "mrr": 199,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Architectural Woods Inc",
+            "id": 323,
+            "mrr": 199,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "KSC Sales Inc.",
+            "id": 471,
+            "mrr": 199,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Criscott Properies",
+            "id": 2106,
+            "mrr": 169,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Superior Woodworking",
+            "id": 34,
+            "mrr": 120.75,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24578,30 +26278,51 @@
             "mrr": 100,
             "status": "at_risk",
             "pay_status": "Active"
+          },
+          {
+            "name": "Country Lazer",
+            "id": 76,
+            "mrr": 100,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "Raumplus",
+            "id": 7,
+            "mrr": 84.7,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
+            "name": "UC Cabinet Components",
+            "id": 25,
+            "mrr": 65,
+            "status": "at_risk",
+            "pay_status": "Active"
           }
         ]
       }
     }
   ],
   "ttm_accrual": {
-    "windowStart": "2025-09",
-    "windowEnd": "2026-08",
+    "windowStart": "2025-10",
+    "windowEnd": "2026-09",
     "months": 12,
-    "starting_mrr": 227295.31,
-    "ending_mrr": 225312.8,
-    "new_mrr": 20210.5,
+    "starting_mrr": 226819.6,
+    "ending_mrr": 228178.27,
+    "new_mrr": 21333,
     "reactivated_mrr": 0,
-    "expansion_mrr": 19434.71,
-    "contraction_mrr": 22197.22,
-    "churn_mrr": 14596,
+    "expansion_mrr": 20393.03,
+    "contraction_mrr": 21565.86,
+    "churn_mrr": 13947,
     "voided_mrr": 3070,
-    "delinquent_mrr": 1764.5,
-    "net_new_mrr": -1982.51,
-    "gross_mrr_churn_ttm": 0.0642,
-    "annual_gross_churn_rate": 0.0614,
-    "annual_grr": 0.8516,
-    "annual_nrr": 0.9284,
-    "quick_ratio": 1.08
+    "delinquent_mrr": 1784.5,
+    "net_new_mrr": 1358.67,
+    "gross_mrr_churn_ttm": 0.0615,
+    "annual_gross_churn_rate": 0.0587,
+    "annual_grr": 0.8564,
+    "annual_nrr": 0.9377,
+    "quick_ratio": 1.17
   },
   "notes": "MRR waterfall on two bases. CASH (monthly/ttm) = customer_profiles.monthly_history — what cleared Stripe, boundary-slip corrected, full history; use for bank reconciliation. ACCRUAL (monthly_accrual/ttm_accrual) = revenue_recognition.accrual_series — what was BILLED by invoice date, so a card failure is an open receivable rather than churn; use for retention metrics. Accrual starts 2025-08 because Stripe-invoice coverage before mid-2025 is 4–28% of actual revenue (Allmoxy migrated to invoicing then). New = customer first appears with MRR > 0; Reactivated = billed before, returning. Churn = confirmed-churned (status churned). Voided = dropped to $0 with a VOIDED invoice for the period — billing intentionally canceled, nothing owed (not dunning). Delinquent = dropped to $0, still billable, did not clear (card failure / non-payment) — may still pay. All three reduce ending MRR but are reported separately. Sales tax is EXCLUDED on both bases: it is a pass-through liability, not revenue. Accrual sums pre-tax invoice lines; cash has collected tax subtracted by the invoice paid month (~1.5% of gross, ~$3.4K/mo). Services and Connect revenue are NOT included — subscription only.",
   "sales_tax_excluded": true

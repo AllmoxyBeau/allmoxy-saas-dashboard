@@ -1,37 +1,37 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-09-22T14:56:33.160Z",
-  "cachedUntil": "2026-09-22T15:01:33.160Z",
+  "fetchedAt": "2026-10-06T14:24:21.245Z",
+  "cachedUntil": "2026-10-06T14:29:21.245Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
-  "latestMonth": "2026-08",
+  "latestMonth": "2026-09",
   "concentration": {
     "total_active_customers": 197,
-    "total_mrr": 228485.8,
+    "total_mrr": 231351.27,
     "top1": {
       "n": 1,
       "customers": 1,
       "mrr": 7504.2,
-      "pct": 0.0328
+      "pct": 0.0324
     },
     "top5": {
       "n": 5,
       "customers": 5,
       "mrr": 30128.2,
-      "pct": 0.1319
+      "pct": 0.1302
     },
     "top10": {
       "n": 10,
       "customers": 10,
       "mrr": 52801.2,
-      "pct": 0.2311
+      "pct": 0.2282
     },
     "top20": {
       "n": 20,
       "customers": 20,
-      "mrr": 87443.1,
-      "pct": 0.3827
+      "mrr": 87463.1,
+      "pct": 0.3781
     }
   },
   "distribution": [
@@ -41,7 +41,7 @@
         {
           "name": "Raumplus",
           "allmoxy_customer_id": 7,
-          "current_mrr": 84.2,
+          "current_mrr": 84.7,
           "lifetime_revenue": 40580.96,
           "years_with_us": 14.3,
           "failed_3mo": 0
@@ -51,11 +51,11 @@
           "allmoxy_customer_id": 25,
           "current_mrr": 65,
           "lifetime_revenue": 5590,
-          "years_with_us": 11.2,
+          "years_with_us": 11.3,
           "failed_3mo": 0
         }
       ],
-      "mrr": 149.2
+      "mrr": 149.7
     },
     {
       "bucket": "$100–$500",
@@ -80,8 +80,8 @@
           "name": "Customer 2092",
           "allmoxy_customer_id": 2092,
           "current_mrr": 475,
-          "lifetime_revenue": 950,
-          "years_with_us": 0.1,
+          "lifetime_revenue": 1425,
+          "years_with_us": 0.2,
           "failed_3mo": 0
         },
         {
@@ -105,15 +105,7 @@
           "allmoxy_customer_id": 29,
           "current_mrr": 419,
           "lifetime_revenue": 27909.4,
-          "years_with_us": 10.6,
-          "failed_3mo": 0
-        },
-        {
-          "name": "Customer 2106",
-          "allmoxy_customer_id": 2106,
-          "current_mrr": 419,
-          "lifetime_revenue": 419,
-          "years_with_us": 0.1,
+          "years_with_us": 10.7,
           "failed_3mo": 0
         },
         {
@@ -121,7 +113,7 @@
           "allmoxy_customer_id": 2051,
           "current_mrr": 417,
           "lifetime_revenue": 4873.5,
-          "years_with_us": 0.6,
+          "years_with_us": 0.7,
           "failed_3mo": 0
         },
         {
@@ -129,7 +121,7 @@
           "allmoxy_customer_id": 320,
           "current_mrr": 415,
           "lifetime_revenue": 23128.5,
-          "years_with_us": 5.4,
+          "years_with_us": 5.5,
           "failed_3mo": 0
         },
         {
@@ -138,14 +130,6 @@
           "current_mrr": 415,
           "lifetime_revenue": 30311.17,
           "years_with_us": 5.2,
-          "failed_3mo": 0
-        },
-        {
-          "name": "Phoenix-LLC",
-          "allmoxy_customer_id": 475,
-          "current_mrr": 400,
-          "lifetime_revenue": 40586.8,
-          "years_with_us": 3,
           "failed_3mo": 0
         },
         {
@@ -177,7 +161,7 @@
           "allmoxy_customer_id": 275,
           "current_mrr": 399,
           "lifetime_revenue": 25854.8,
-          "years_with_us": 7.6,
+          "years_with_us": 7.7,
           "failed_3mo": 0
         },
         {
@@ -185,7 +169,7 @@
           "allmoxy_customer_id": 206,
           "current_mrr": 375,
           "lifetime_revenue": 31005,
-          "years_with_us": 8,
+          "years_with_us": 8.1,
           "failed_3mo": 0
         },
         {
@@ -217,7 +201,7 @@
           "allmoxy_customer_id": 474,
           "current_mrr": 350,
           "lifetime_revenue": 54296.3,
-          "years_with_us": 3,
+          "years_with_us": 3.1,
           "failed_3mo": 0
         },
         {
@@ -241,7 +225,7 @@
           "allmoxy_customer_id": 555,
           "current_mrr": 320,
           "lifetime_revenue": 4937,
-          "years_with_us": 1,
+          "years_with_us": 1.1,
           "failed_3mo": 0
         },
         {
@@ -257,7 +241,7 @@
           "allmoxy_customer_id": 237,
           "current_mrr": 300,
           "lifetime_revenue": 19200,
-          "years_with_us": 6.4,
+          "years_with_us": 6.5,
           "failed_3mo": 0
         },
         {
@@ -273,7 +257,7 @@
           "allmoxy_customer_id": 107,
           "current_mrr": 290,
           "lifetime_revenue": 26240,
-          "years_with_us": 8.3,
+          "years_with_us": 8.4,
           "failed_3mo": 0
         },
         {
@@ -289,15 +273,7 @@
           "allmoxy_customer_id": 2056,
           "current_mrr": 270,
           "lifetime_revenue": 6143.5,
-          "years_with_us": 0.5,
-          "failed_3mo": 0
-        },
-        {
-          "name": "Hingeworks",
-          "allmoxy_customer_id": 551,
-          "current_mrr": 270,
-          "lifetime_revenue": 5640,
-          "years_with_us": 1,
+          "years_with_us": 0.6,
           "failed_3mo": 0
         },
         {
@@ -305,7 +281,7 @@
           "allmoxy_customer_id": 540,
           "current_mrr": 262.5,
           "lifetime_revenue": 5206.88,
-          "years_with_us": 1.2,
+          "years_with_us": 1.3,
           "failed_3mo": 0
         },
         {
@@ -345,7 +321,7 @@
           "allmoxy_customer_id": 33,
           "current_mrr": 250,
           "lifetime_revenue": 24750,
-          "years_with_us": 10.4,
+          "years_with_us": 10.5,
           "failed_3mo": 0
         },
         {
@@ -353,7 +329,7 @@
           "allmoxy_customer_id": 2052,
           "current_mrr": 250,
           "lifetime_revenue": 4060,
-          "years_with_us": 0.5,
+          "years_with_us": 0.6,
           "failed_3mo": 0
         },
         {
@@ -409,7 +385,7 @@
           "allmoxy_customer_id": 21,
           "current_mrr": 250,
           "lifetime_revenue": 59413.07,
-          "years_with_us": 12,
+          "years_with_us": 12.1,
           "failed_3mo": 0
         },
         {
@@ -441,7 +417,7 @@
           "allmoxy_customer_id": 524,
           "current_mrr": 250,
           "lifetime_revenue": 4271.06,
-          "years_with_us": 1.6,
+          "years_with_us": 1.7,
           "failed_3mo": 0
         },
         {
@@ -465,7 +441,7 @@
           "allmoxy_customer_id": 546,
           "current_mrr": 250,
           "lifetime_revenue": 4980.5,
-          "years_with_us": 1.1,
+          "years_with_us": 1.2,
           "failed_3mo": 0
         },
         {
@@ -473,7 +449,7 @@
           "allmoxy_customer_id": 2037,
           "current_mrr": 250,
           "lifetime_revenue": 2150,
-          "years_with_us": 0.8,
+          "years_with_us": 0.9,
           "failed_3mo": 0
         },
         {
@@ -481,7 +457,7 @@
           "allmoxy_customer_id": 2049,
           "current_mrr": 250,
           "lifetime_revenue": 3677,
-          "years_with_us": 0.6,
+          "years_with_us": 0.7,
           "failed_3mo": 0
         },
         {
@@ -505,7 +481,7 @@
           "allmoxy_customer_id": 2050,
           "current_mrr": 250,
           "lifetime_revenue": 1250,
-          "years_with_us": 0.6,
+          "years_with_us": 0.7,
           "failed_3mo": 0
         },
         {
@@ -513,7 +489,7 @@
           "allmoxy_customer_id": 2063,
           "current_mrr": 250,
           "lifetime_revenue": 2295,
-          "years_with_us": 0.4,
+          "years_with_us": 0.5,
           "failed_3mo": 0
         },
         {
@@ -521,7 +497,7 @@
           "allmoxy_customer_id": 2020,
           "current_mrr": 250,
           "lifetime_revenue": 3067.5,
-          "years_with_us": 0.9,
+          "years_with_us": 1,
           "failed_3mo": 0
         },
         {
@@ -537,7 +513,7 @@
           "allmoxy_customer_id": 344,
           "current_mrr": 250,
           "lifetime_revenue": 17711,
-          "years_with_us": 5.1,
+          "years_with_us": 5.2,
           "failed_3mo": 0
         },
         {
@@ -545,7 +521,7 @@
           "allmoxy_customer_id": 2026,
           "current_mrr": 250,
           "lifetime_revenue": 6238.5,
-          "years_with_us": 0.9,
+          "years_with_us": 1,
           "failed_3mo": 0
         },
         {
@@ -577,7 +553,7 @@
           "allmoxy_customer_id": 2064,
           "current_mrr": 250,
           "lifetime_revenue": 1575.88,
-          "years_with_us": 0.4,
+          "years_with_us": 0.5,
           "failed_3mo": 0
         },
         {
@@ -585,7 +561,7 @@
           "allmoxy_customer_id": 525,
           "current_mrr": 219,
           "lifetime_revenue": 9645,
-          "years_with_us": 1.6,
+          "years_with_us": 1.7,
           "failed_3mo": 0
         },
         {
@@ -593,7 +569,7 @@
           "allmoxy_customer_id": 2032,
           "current_mrr": 200,
           "lifetime_revenue": 1600,
-          "years_with_us": 0.8,
+          "years_with_us": 0.9,
           "failed_3mo": 0
         },
         {
@@ -601,7 +577,7 @@
           "allmoxy_customer_id": 2057,
           "current_mrr": 200,
           "lifetime_revenue": 600,
-          "years_with_us": 0.5,
+          "years_with_us": 0.6,
           "failed_3mo": 0
         },
         {
@@ -609,7 +585,7 @@
           "allmoxy_customer_id": 2047,
           "current_mrr": 200,
           "lifetime_revenue": 1000,
-          "years_with_us": 0.6,
+          "years_with_us": 0.7,
           "failed_3mo": 0
         },
         {
@@ -625,7 +601,7 @@
           "allmoxy_customer_id": 471,
           "current_mrr": 199,
           "lifetime_revenue": 6868,
-          "years_with_us": 3,
+          "years_with_us": 3.1,
           "failed_3mo": 0
         },
         {
@@ -633,7 +609,15 @@
           "allmoxy_customer_id": 384,
           "current_mrr": 199,
           "lifetime_revenue": 10200,
-          "years_with_us": 4.3,
+          "years_with_us": 4.4,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Customer 2106",
+          "allmoxy_customer_id": 2106,
+          "current_mrr": 169,
+          "lifetime_revenue": 588,
+          "years_with_us": 0.1,
           "failed_3mo": 0
         },
         {
@@ -657,7 +641,7 @@
           "allmoxy_customer_id": 76,
           "current_mrr": 100,
           "lifetime_revenue": 8267.75,
-          "years_with_us": 9.5,
+          "years_with_us": 9.6,
           "failed_3mo": 0
         },
         {
@@ -669,7 +653,7 @@
           "failed_3mo": 0
         }
       ],
-      "mrr": 21789
+      "mrr": 20869
     },
     {
       "bucket": "$500–$1K",
@@ -679,7 +663,7 @@
           "allmoxy_customer_id": 160,
           "current_mrr": 960,
           "lifetime_revenue": 49153.87,
-          "years_with_us": 7.6,
+          "years_with_us": 7.7,
           "failed_3mo": 0
         },
         {
@@ -687,7 +671,7 @@
           "allmoxy_customer_id": 354,
           "current_mrr": 956,
           "lifetime_revenue": 54492,
-          "years_with_us": 4.9,
+          "years_with_us": 5,
           "failed_3mo": 0
         },
         {
@@ -719,7 +703,7 @@
           "allmoxy_customer_id": 2036,
           "current_mrr": 900,
           "lifetime_revenue": 11821.5,
-          "years_with_us": 0.8,
+          "years_with_us": 0.9,
           "failed_3mo": 0
         },
         {
@@ -727,7 +711,15 @@
           "allmoxy_customer_id": 511,
           "current_mrr": 899,
           "lifetime_revenue": 23033,
-          "years_with_us": 2,
+          "years_with_us": 2.1,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Phoenix-LLC",
+          "allmoxy_customer_id": 475,
+          "current_mrr": 899,
+          "lifetime_revenue": 40586.8,
+          "years_with_us": 3,
           "failed_3mo": 0
         },
         {
@@ -783,7 +775,7 @@
           "allmoxy_customer_id": 513,
           "current_mrr": 815.45,
           "lifetime_revenue": 23647.01,
-          "years_with_us": 1.9,
+          "years_with_us": 2,
           "failed_3mo": 0
         },
         {
@@ -839,7 +831,7 @@
           "allmoxy_customer_id": 530,
           "current_mrr": 750,
           "lifetime_revenue": 13057.5,
-          "years_with_us": 1.5,
+          "years_with_us": 1.6,
           "failed_3mo": 0
         },
         {
@@ -863,7 +855,7 @@
           "allmoxy_customer_id": 480,
           "current_mrr": 749,
           "lifetime_revenue": 30292.39,
-          "years_with_us": 2.9,
+          "years_with_us": 3,
           "failed_3mo": 0
         },
         {
@@ -871,7 +863,7 @@
           "allmoxy_customer_id": 391,
           "current_mrr": 699,
           "lifetime_revenue": 45856,
-          "years_with_us": 4.2,
+          "years_with_us": 4.3,
           "failed_3mo": 0
         },
         {
@@ -887,7 +879,7 @@
           "allmoxy_customer_id": 218,
           "current_mrr": 690,
           "lifetime_revenue": 17744.26,
-          "years_with_us": 6.6,
+          "years_with_us": 6.7,
           "failed_3mo": 0
         },
         {
@@ -911,7 +903,7 @@
           "allmoxy_customer_id": 2044,
           "current_mrr": 667,
           "lifetime_revenue": 8288.2,
-          "years_with_us": 0.7,
+          "years_with_us": 0.8,
           "failed_3mo": 0
         },
         {
@@ -919,7 +911,7 @@
           "allmoxy_customer_id": 31,
           "current_mrr": 658,
           "lifetime_revenue": 50404,
-          "years_with_us": 10.6,
+          "years_with_us": 10.7,
           "failed_3mo": 0
         },
         {
@@ -927,7 +919,7 @@
           "allmoxy_customer_id": 19,
           "current_mrr": 650,
           "lifetime_revenue": 54609.29,
-          "years_with_us": 12.4,
+          "years_with_us": 12.5,
           "failed_3mo": 0
         },
         {
@@ -935,7 +927,7 @@
           "allmoxy_customer_id": 309,
           "current_mrr": 637,
           "lifetime_revenue": 39994,
-          "years_with_us": 5.5,
+          "years_with_us": 5.6,
           "failed_3mo": 0
         },
         {
@@ -959,7 +951,7 @@
           "allmoxy_customer_id": 298,
           "current_mrr": 618.7,
           "lifetime_revenue": 36503.3,
-          "years_with_us": 5.6,
+          "years_with_us": 5.7,
           "failed_3mo": 0
         },
         {
@@ -975,7 +967,7 @@
           "allmoxy_customer_id": 64,
           "current_mrr": 600,
           "lifetime_revenue": 18031,
-          "years_with_us": 9.7,
+          "years_with_us": 9.8,
           "failed_3mo": 0
         },
         {
@@ -983,7 +975,7 @@
           "allmoxy_customer_id": 2048,
           "current_mrr": 580,
           "lifetime_revenue": 7128.5,
-          "years_with_us": 0.6,
+          "years_with_us": 0.7,
           "failed_3mo": 0
         },
         {
@@ -999,7 +991,7 @@
           "allmoxy_customer_id": 14,
           "current_mrr": 576.45,
           "lifetime_revenue": 31510.53,
-          "years_with_us": 13.5,
+          "years_with_us": 13.6,
           "failed_3mo": 0
         },
         {
@@ -1007,7 +999,7 @@
           "allmoxy_customer_id": 11,
           "current_mrr": 574,
           "lifetime_revenue": 44744.74,
-          "years_with_us": 13.9,
+          "years_with_us": 14,
           "failed_3mo": 0
         },
         {
@@ -1031,7 +1023,7 @@
           "allmoxy_customer_id": 83,
           "current_mrr": 525,
           "lifetime_revenue": 38802.9,
-          "years_with_us": 8.8,
+          "years_with_us": 8.9,
           "failed_3mo": 0
         },
         {
@@ -1039,7 +1031,7 @@
           "allmoxy_customer_id": 310,
           "current_mrr": 525,
           "lifetime_revenue": 33243.66,
-          "years_with_us": 5.5,
+          "years_with_us": 5.6,
           "failed_3mo": 0
         },
         {
@@ -1047,7 +1039,7 @@
           "allmoxy_customer_id": 541,
           "current_mrr": 500,
           "lifetime_revenue": 7633.5,
-          "years_with_us": 1.2,
+          "years_with_us": 1.3,
           "failed_3mo": 0
         },
         {
@@ -1055,11 +1047,11 @@
           "allmoxy_customer_id": 217,
           "current_mrr": 500,
           "lifetime_revenue": 28000,
-          "years_with_us": 6.7,
+          "years_with_us": 6.8,
           "failed_3mo": 0
         }
       ],
-      "mrr": 34647.5
+      "mrr": 35546.5
     },
     {
       "bucket": "$1K–$2K",
@@ -1070,14 +1062,6 @@
           "current_mrr": 1993.95,
           "lifetime_revenue": 121900.18,
           "years_with_us": 8.9,
-          "failed_3mo": 0
-        },
-        {
-          "name": "Mountain Showcase Group, Inc.",
-          "allmoxy_customer_id": 500,
-          "current_mrr": 1990,
-          "lifetime_revenue": 79307.5,
-          "years_with_us": 2.3,
           "failed_3mo": 0
         },
         {
@@ -1097,6 +1081,14 @@
           "failed_3mo": 0
         },
         {
+          "name": "Mountain Showcase Group, Inc.",
+          "allmoxy_customer_id": 500,
+          "current_mrr": 1740,
+          "lifetime_revenue": 79307.5,
+          "years_with_us": 2.4,
+          "failed_3mo": 0
+        },
+        {
           "name": "Ideal Drawer Box Inc",
           "allmoxy_customer_id": 382,
           "current_mrr": 1699,
@@ -1109,7 +1101,7 @@
           "allmoxy_customer_id": 396,
           "current_mrr": 1674,
           "lifetime_revenue": 87490.41,
-          "years_with_us": 4.1,
+          "years_with_us": 4.2,
           "failed_3mo": 0
         },
         {
@@ -1117,7 +1109,7 @@
           "allmoxy_customer_id": 246,
           "current_mrr": 1600,
           "lifetime_revenue": 72268.5,
-          "years_with_us": 6.3,
+          "years_with_us": 6.4,
           "failed_3mo": 0
         },
         {
@@ -1149,7 +1141,7 @@
           "allmoxy_customer_id": 168,
           "current_mrr": 1499,
           "lifetime_revenue": 118806.9,
-          "years_with_us": 7.5,
+          "years_with_us": 7.6,
           "failed_3mo": 0
         },
         {
@@ -1157,7 +1149,7 @@
           "allmoxy_customer_id": 443,
           "current_mrr": 1499,
           "lifetime_revenue": 51447.5,
-          "years_with_us": 3.4,
+          "years_with_us": 3.5,
           "failed_3mo": 0
         },
         {
@@ -1173,7 +1165,7 @@
           "allmoxy_customer_id": 262,
           "current_mrr": 1375,
           "lifetime_revenue": 94974.46,
-          "years_with_us": 6.1,
+          "years_with_us": 6.2,
           "failed_3mo": 0
         },
         {
@@ -1213,7 +1205,7 @@
           "allmoxy_customer_id": 30,
           "current_mrr": 1250,
           "lifetime_revenue": 135944.4,
-          "years_with_us": 10.6,
+          "years_with_us": 10.7,
           "failed_3mo": 0
         },
         {
@@ -1221,7 +1213,7 @@
           "allmoxy_customer_id": 22,
           "current_mrr": 1222,
           "lifetime_revenue": 92631.99,
-          "years_with_us": 11.8,
+          "years_with_us": 11.9,
           "failed_3mo": 0
         },
         {
@@ -1229,7 +1221,7 @@
           "allmoxy_customer_id": 545,
           "current_mrr": 1182,
           "lifetime_revenue": 15868,
-          "years_with_us": 1.1,
+          "years_with_us": 1.2,
           "failed_3mo": 0
         },
         {
@@ -1237,7 +1229,7 @@
           "allmoxy_customer_id": 343,
           "current_mrr": 1175,
           "lifetime_revenue": 65213.8,
-          "years_with_us": 5.1,
+          "years_with_us": 5.2,
           "failed_3mo": 0
         },
         {
@@ -1245,7 +1237,7 @@
           "allmoxy_customer_id": 186,
           "current_mrr": 1153.95,
           "lifetime_revenue": 44316.5,
-          "years_with_us": 7.3,
+          "years_with_us": 7.4,
           "failed_3mo": 0
         },
         {
@@ -1261,7 +1253,7 @@
           "allmoxy_customer_id": 479,
           "current_mrr": 1099,
           "lifetime_revenue": 67340.5,
-          "years_with_us": 2.9,
+          "years_with_us": 3,
           "failed_3mo": 0
         },
         {
@@ -1309,15 +1301,15 @@
           "allmoxy_customer_id": 432,
           "current_mrr": 1049,
           "lifetime_revenue": 69804.5,
-          "years_with_us": 3.7,
-          "failed_3mo": 1
+          "years_with_us": 3.8,
+          "failed_3mo": 0
         },
         {
           "name": "Mid Michigan Wood",
           "allmoxy_customer_id": 15,
           "current_mrr": 1039.5,
           "lifetime_revenue": 68294.75,
-          "years_with_us": 13.5,
+          "years_with_us": 13.6,
           "failed_3mo": 0
         },
         {
@@ -1325,7 +1317,7 @@
           "allmoxy_customer_id": 388,
           "current_mrr": 1025,
           "lifetime_revenue": 47675.8,
-          "years_with_us": 4.2,
+          "years_with_us": 4.3,
           "failed_3mo": 0
         },
         {
@@ -1341,7 +1333,7 @@
           "allmoxy_customer_id": 455,
           "current_mrr": 1005,
           "lifetime_revenue": 46477.83,
-          "years_with_us": 5.6,
+          "years_with_us": 5.7,
           "failed_3mo": 0
         },
         {
@@ -1349,11 +1341,11 @@
           "allmoxy_customer_id": 42,
           "current_mrr": 1000,
           "lifetime_revenue": 88887,
-          "years_with_us": 9.8,
+          "years_with_us": 9.9,
           "failed_3mo": 0
         }
       ],
-      "mrr": 48019.3
+      "mrr": 47769.3
     },
     {
       "bucket": "$2K–$5K",
@@ -1371,7 +1363,7 @@
           "allmoxy_customer_id": 300,
           "current_mrr": 4620,
           "lifetime_revenue": 291098.4,
-          "years_with_us": 8.7,
+          "years_with_us": 8.8,
           "failed_3mo": 0
         },
         {
@@ -1379,7 +1371,7 @@
           "allmoxy_customer_id": 2058,
           "current_mrr": 4200,
           "lifetime_revenue": 19189.5,
-          "years_with_us": 0.5,
+          "years_with_us": 0.6,
           "failed_3mo": 0
         },
         {
@@ -1395,7 +1387,7 @@
           "allmoxy_customer_id": 363,
           "current_mrr": 3859,
           "lifetime_revenue": 186764,
-          "years_with_us": 4.7,
+          "years_with_us": 4.8,
           "failed_3mo": 0
         },
         {
@@ -1417,7 +1409,7 @@
         {
           "name": "Westwind",
           "allmoxy_customer_id": 43,
-          "current_mrr": 3673.95,
+          "current_mrr": 3693.95,
           "lifetime_revenue": 218056.2,
           "years_with_us": 9.8,
           "failed_3mo": 0
@@ -1427,7 +1419,7 @@
           "allmoxy_customer_id": 319,
           "current_mrr": 3499,
           "lifetime_revenue": 313574.4,
-          "years_with_us": 5.4,
+          "years_with_us": 5.5,
           "failed_3mo": 0
         },
         {
@@ -1473,7 +1465,7 @@
         {
           "name": "Drawer Connection - DC Drawers",
           "allmoxy_customer_id": 3,
-          "current_mrr": 3065,
+          "current_mrr": 3000,
           "lifetime_revenue": 267575.9,
           "years_with_us": 15.1,
           "failed_3mo": 0
@@ -1481,9 +1473,17 @@
         {
           "name": "J&B Woodcrafts",
           "allmoxy_customer_id": 75,
-          "current_mrr": 2875,
+          "current_mrr": 2920,
           "lifetime_revenue": 117138,
-          "years_with_us": 9.5,
+          "years_with_us": 9.6,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Midwest Floor Coverings",
+          "allmoxy_customer_id": 211,
+          "current_mrr": 2870.92,
+          "lifetime_revenue": 153292.38,
+          "years_with_us": 6.9,
           "failed_3mo": 0
         },
         {
@@ -1527,6 +1527,14 @@
           "failed_3mo": 0
         },
         {
+          "name": "Customer 2100",
+          "allmoxy_customer_id": 2100,
+          "current_mrr": 2595,
+          "lifetime_revenue": 5210,
+          "years_with_us": 0.1,
+          "failed_3mo": 0
+        },
+        {
           "name": "Soelbergi",
           "allmoxy_customer_id": 9,
           "current_mrr": 2308.95,
@@ -1539,23 +1547,7 @@
           "allmoxy_customer_id": 405,
           "current_mrr": 2300,
           "lifetime_revenue": 97402.6,
-          "years_with_us": 4,
-          "failed_3mo": 0
-        },
-        {
-          "name": "New York Door & Drawer",
-          "allmoxy_customer_id": 198,
-          "current_mrr": 2270,
-          "lifetime_revenue": 81045.75,
-          "years_with_us": 7.2,
-          "failed_3mo": 0
-        },
-        {
-          "name": "Midwest Floor Coverings",
-          "allmoxy_customer_id": 211,
-          "current_mrr": 2178.7,
-          "lifetime_revenue": 153292.38,
-          "years_with_us": 6.9,
+          "years_with_us": 4.1,
           "failed_3mo": 0
         },
         {
@@ -1563,7 +1555,15 @@
           "allmoxy_customer_id": 293,
           "current_mrr": 2133.5,
           "lifetime_revenue": 122031.7,
-          "years_with_us": 5.6,
+          "years_with_us": 5.7,
+          "failed_3mo": 0
+        },
+        {
+          "name": "NJ Drawers",
+          "allmoxy_customer_id": 159,
+          "current_mrr": 2105,
+          "lifetime_revenue": 99548.5,
+          "years_with_us": 7.7,
           "failed_3mo": 0
         },
         {
@@ -1575,11 +1575,11 @@
           "failed_3mo": 0
         },
         {
-          "name": "NJ Drawers",
-          "allmoxy_customer_id": 159,
-          "current_mrr": 2006.25,
-          "lifetime_revenue": 99548.5,
-          "years_with_us": 7.6,
+          "name": "New York Door & Drawer",
+          "allmoxy_customer_id": 198,
+          "current_mrr": 2020,
+          "lifetime_revenue": 81045.75,
+          "years_with_us": 7.2,
           "failed_3mo": 0
         },
         {
@@ -1587,11 +1587,11 @@
           "allmoxy_customer_id": 423,
           "current_mrr": 2000,
           "lifetime_revenue": 121211.6,
-          "years_with_us": 3.7,
+          "years_with_us": 3.8,
           "failed_3mo": 0
         }
       ],
-      "mrr": 88752.6
+      "mrr": 91888.57
     },
     {
       "bucket": "$5K+",
@@ -1601,7 +1601,7 @@
           "allmoxy_customer_id": 1,
           "current_mrr": 7504.2,
           "lifetime_revenue": 576593.94,
-          "years_with_us": 17,
+          "years_with_us": 17.1,
           "failed_3mo": 0
         },
         {
@@ -1617,7 +1617,7 @@
           "allmoxy_customer_id": 36,
           "current_mrr": 6000,
           "lifetime_revenue": 318233.1,
-          "years_with_us": 10.1,
+          "years_with_us": 10.2,
           "failed_3mo": 0
         },
         {
@@ -1633,7 +1633,7 @@
           "allmoxy_customer_id": 161,
           "current_mrr": 5000,
           "lifetime_revenue": 410553,
-          "years_with_us": 7.6,
+          "years_with_us": 7.7,
           "failed_3mo": 0
         },
         {
@@ -1654,7 +1654,7 @@
       "allmoxy_customer_id": 1,
       "current_mrr": 7504.2,
       "lifetime_revenue": 576593.94,
-      "years_with_us": 17,
+      "years_with_us": 17.1,
       "failed_3mo": 0
     },
     {
@@ -1670,7 +1670,7 @@
       "allmoxy_customer_id": 36,
       "current_mrr": 6000,
       "lifetime_revenue": 318233.1,
-      "years_with_us": 10.1,
+      "years_with_us": 10.2,
       "failed_3mo": 0
     },
     {
@@ -1686,7 +1686,7 @@
       "allmoxy_customer_id": 161,
       "current_mrr": 5000,
       "lifetime_revenue": 410553,
-      "years_with_us": 7.6,
+      "years_with_us": 7.7,
       "failed_3mo": 0
     },
     {
@@ -1710,7 +1710,7 @@
       "allmoxy_customer_id": 300,
       "current_mrr": 4620,
       "lifetime_revenue": 291098.4,
-      "years_with_us": 8.7,
+      "years_with_us": 8.8,
       "failed_3mo": 0
     },
     {
@@ -1718,7 +1718,7 @@
       "allmoxy_customer_id": 2058,
       "current_mrr": 4200,
       "lifetime_revenue": 19189.5,
-      "years_with_us": 0.5,
+      "years_with_us": 0.6,
       "failed_3mo": 0
     },
     {
@@ -1734,7 +1734,7 @@
       "allmoxy_customer_id": 363,
       "current_mrr": 3859,
       "lifetime_revenue": 186764,
-      "years_with_us": 4.7,
+      "years_with_us": 4.8,
       "failed_3mo": 0
     },
     {
@@ -1756,7 +1756,7 @@
     {
       "name": "Westwind",
       "allmoxy_customer_id": 43,
-      "current_mrr": 3673.95,
+      "current_mrr": 3693.95,
       "lifetime_revenue": 218056.2,
       "years_with_us": 9.8,
       "failed_3mo": 0
@@ -1766,7 +1766,7 @@
       "allmoxy_customer_id": 319,
       "current_mrr": 3499,
       "lifetime_revenue": 313574.4,
-      "years_with_us": 5.4,
+      "years_with_us": 5.5,
       "failed_3mo": 0
     },
     {
@@ -1812,7 +1812,7 @@
     {
       "name": "Drawer Connection - DC Drawers",
       "allmoxy_customer_id": 3,
-      "current_mrr": 3065,
+      "current_mrr": 3000,
       "lifetime_revenue": 267575.9,
       "years_with_us": 15.1,
       "failed_3mo": 0
@@ -1820,9 +1820,17 @@
     {
       "name": "J&B Woodcrafts",
       "allmoxy_customer_id": 75,
-      "current_mrr": 2875,
+      "current_mrr": 2920,
       "lifetime_revenue": 117138,
-      "years_with_us": 9.5,
+      "years_with_us": 9.6,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Midwest Floor Coverings",
+      "allmoxy_customer_id": 211,
+      "current_mrr": 2870.92,
+      "lifetime_revenue": 153292.38,
+      "years_with_us": 6.9,
       "failed_3mo": 0
     },
     {
@@ -1840,14 +1848,6 @@
       "lifetime_revenue": 128521.46,
       "years_with_us": 5.3,
       "failed_3mo": 0
-    },
-    {
-      "name": "Closet City",
-      "allmoxy_customer_id": 17,
-      "current_mrr": 2643,
-      "lifetime_revenue": 176395.71,
-      "years_with_us": 13.1,
-      "failed_3mo": 0
     }
   ],
   "all_active_customers": [
@@ -1856,7 +1856,7 @@
       "allmoxy_customer_id": 1,
       "current_mrr": 7504.2,
       "lifetime_revenue": 576593.94,
-      "years_with_us": 17,
+      "years_with_us": 17.1,
       "failed_3mo": 0
     },
     {
@@ -1872,7 +1872,7 @@
       "allmoxy_customer_id": 36,
       "current_mrr": 6000,
       "lifetime_revenue": 318233.1,
-      "years_with_us": 10.1,
+      "years_with_us": 10.2,
       "failed_3mo": 0
     },
     {
@@ -1888,7 +1888,7 @@
       "allmoxy_customer_id": 161,
       "current_mrr": 5000,
       "lifetime_revenue": 410553,
-      "years_with_us": 7.6,
+      "years_with_us": 7.7,
       "failed_3mo": 0
     },
     {
@@ -1912,7 +1912,7 @@
       "allmoxy_customer_id": 300,
       "current_mrr": 4620,
       "lifetime_revenue": 291098.4,
-      "years_with_us": 8.7,
+      "years_with_us": 8.8,
       "failed_3mo": 0
     },
     {
@@ -1920,7 +1920,7 @@
       "allmoxy_customer_id": 2058,
       "current_mrr": 4200,
       "lifetime_revenue": 19189.5,
-      "years_with_us": 0.5,
+      "years_with_us": 0.6,
       "failed_3mo": 0
     },
     {
@@ -1936,7 +1936,7 @@
       "allmoxy_customer_id": 363,
       "current_mrr": 3859,
       "lifetime_revenue": 186764,
-      "years_with_us": 4.7,
+      "years_with_us": 4.8,
       "failed_3mo": 0
     },
     {
@@ -1958,7 +1958,7 @@
     {
       "name": "Westwind",
       "allmoxy_customer_id": 43,
-      "current_mrr": 3673.95,
+      "current_mrr": 3693.95,
       "lifetime_revenue": 218056.2,
       "years_with_us": 9.8,
       "failed_3mo": 0
@@ -1968,7 +1968,7 @@
       "allmoxy_customer_id": 319,
       "current_mrr": 3499,
       "lifetime_revenue": 313574.4,
-      "years_with_us": 5.4,
+      "years_with_us": 5.5,
       "failed_3mo": 0
     },
     {
@@ -2014,7 +2014,7 @@
     {
       "name": "Drawer Connection - DC Drawers",
       "allmoxy_customer_id": 3,
-      "current_mrr": 3065,
+      "current_mrr": 3000,
       "lifetime_revenue": 267575.9,
       "years_with_us": 15.1,
       "failed_3mo": 0
@@ -2022,9 +2022,17 @@
     {
       "name": "J&B Woodcrafts",
       "allmoxy_customer_id": 75,
-      "current_mrr": 2875,
+      "current_mrr": 2920,
       "lifetime_revenue": 117138,
-      "years_with_us": 9.5,
+      "years_with_us": 9.6,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Midwest Floor Coverings",
+      "allmoxy_customer_id": 211,
+      "current_mrr": 2870.92,
+      "lifetime_revenue": 153292.38,
+      "years_with_us": 6.9,
       "failed_3mo": 0
     },
     {
@@ -2068,6 +2076,14 @@
       "failed_3mo": 0
     },
     {
+      "name": "Customer 2100",
+      "allmoxy_customer_id": 2100,
+      "current_mrr": 2595,
+      "lifetime_revenue": 5210,
+      "years_with_us": 0.1,
+      "failed_3mo": 0
+    },
+    {
       "name": "Soelbergi",
       "allmoxy_customer_id": 9,
       "current_mrr": 2308.95,
@@ -2080,23 +2096,7 @@
       "allmoxy_customer_id": 405,
       "current_mrr": 2300,
       "lifetime_revenue": 97402.6,
-      "years_with_us": 4,
-      "failed_3mo": 0
-    },
-    {
-      "name": "New York Door & Drawer",
-      "allmoxy_customer_id": 198,
-      "current_mrr": 2270,
-      "lifetime_revenue": 81045.75,
-      "years_with_us": 7.2,
-      "failed_3mo": 0
-    },
-    {
-      "name": "Midwest Floor Coverings",
-      "allmoxy_customer_id": 211,
-      "current_mrr": 2178.7,
-      "lifetime_revenue": 153292.38,
-      "years_with_us": 6.9,
+      "years_with_us": 4.1,
       "failed_3mo": 0
     },
     {
@@ -2104,7 +2104,15 @@
       "allmoxy_customer_id": 293,
       "current_mrr": 2133.5,
       "lifetime_revenue": 122031.7,
-      "years_with_us": 5.6,
+      "years_with_us": 5.7,
+      "failed_3mo": 0
+    },
+    {
+      "name": "NJ Drawers",
+      "allmoxy_customer_id": 159,
+      "current_mrr": 2105,
+      "lifetime_revenue": 99548.5,
+      "years_with_us": 7.7,
       "failed_3mo": 0
     },
     {
@@ -2116,11 +2124,11 @@
       "failed_3mo": 0
     },
     {
-      "name": "NJ Drawers",
-      "allmoxy_customer_id": 159,
-      "current_mrr": 2006.25,
-      "lifetime_revenue": 99548.5,
-      "years_with_us": 7.6,
+      "name": "New York Door & Drawer",
+      "allmoxy_customer_id": 198,
+      "current_mrr": 2020,
+      "lifetime_revenue": 81045.75,
+      "years_with_us": 7.2,
       "failed_3mo": 0
     },
     {
@@ -2128,7 +2136,7 @@
       "allmoxy_customer_id": 423,
       "current_mrr": 2000,
       "lifetime_revenue": 121211.6,
-      "years_with_us": 3.7,
+      "years_with_us": 3.8,
       "failed_3mo": 0
     },
     {
@@ -2137,14 +2145,6 @@
       "current_mrr": 1993.95,
       "lifetime_revenue": 121900.18,
       "years_with_us": 8.9,
-      "failed_3mo": 0
-    },
-    {
-      "name": "Mountain Showcase Group, Inc.",
-      "allmoxy_customer_id": 500,
-      "current_mrr": 1990,
-      "lifetime_revenue": 79307.5,
-      "years_with_us": 2.3,
       "failed_3mo": 0
     },
     {
@@ -2164,6 +2164,14 @@
       "failed_3mo": 0
     },
     {
+      "name": "Mountain Showcase Group, Inc.",
+      "allmoxy_customer_id": 500,
+      "current_mrr": 1740,
+      "lifetime_revenue": 79307.5,
+      "years_with_us": 2.4,
+      "failed_3mo": 0
+    },
+    {
       "name": "Ideal Drawer Box Inc",
       "allmoxy_customer_id": 382,
       "current_mrr": 1699,
@@ -2176,7 +2184,7 @@
       "allmoxy_customer_id": 396,
       "current_mrr": 1674,
       "lifetime_revenue": 87490.41,
-      "years_with_us": 4.1,
+      "years_with_us": 4.2,
       "failed_3mo": 0
     },
     {
@@ -2184,7 +2192,7 @@
       "allmoxy_customer_id": 246,
       "current_mrr": 1600,
       "lifetime_revenue": 72268.5,
-      "years_with_us": 6.3,
+      "years_with_us": 6.4,
       "failed_3mo": 0
     },
     {
@@ -2216,7 +2224,7 @@
       "allmoxy_customer_id": 168,
       "current_mrr": 1499,
       "lifetime_revenue": 118806.9,
-      "years_with_us": 7.5,
+      "years_with_us": 7.6,
       "failed_3mo": 0
     },
     {
@@ -2224,7 +2232,7 @@
       "allmoxy_customer_id": 443,
       "current_mrr": 1499,
       "lifetime_revenue": 51447.5,
-      "years_with_us": 3.4,
+      "years_with_us": 3.5,
       "failed_3mo": 0
     },
     {
@@ -2240,7 +2248,7 @@
       "allmoxy_customer_id": 262,
       "current_mrr": 1375,
       "lifetime_revenue": 94974.46,
-      "years_with_us": 6.1,
+      "years_with_us": 6.2,
       "failed_3mo": 0
     },
     {
@@ -2280,7 +2288,7 @@
       "allmoxy_customer_id": 30,
       "current_mrr": 1250,
       "lifetime_revenue": 135944.4,
-      "years_with_us": 10.6,
+      "years_with_us": 10.7,
       "failed_3mo": 0
     },
     {
@@ -2288,7 +2296,7 @@
       "allmoxy_customer_id": 22,
       "current_mrr": 1222,
       "lifetime_revenue": 92631.99,
-      "years_with_us": 11.8,
+      "years_with_us": 11.9,
       "failed_3mo": 0
     },
     {
@@ -2296,7 +2304,7 @@
       "allmoxy_customer_id": 545,
       "current_mrr": 1182,
       "lifetime_revenue": 15868,
-      "years_with_us": 1.1,
+      "years_with_us": 1.2,
       "failed_3mo": 0
     },
     {
@@ -2304,7 +2312,7 @@
       "allmoxy_customer_id": 343,
       "current_mrr": 1175,
       "lifetime_revenue": 65213.8,
-      "years_with_us": 5.1,
+      "years_with_us": 5.2,
       "failed_3mo": 0
     },
     {
@@ -2312,7 +2320,7 @@
       "allmoxy_customer_id": 186,
       "current_mrr": 1153.95,
       "lifetime_revenue": 44316.5,
-      "years_with_us": 7.3,
+      "years_with_us": 7.4,
       "failed_3mo": 0
     },
     {
@@ -2328,7 +2336,7 @@
       "allmoxy_customer_id": 479,
       "current_mrr": 1099,
       "lifetime_revenue": 67340.5,
-      "years_with_us": 2.9,
+      "years_with_us": 3,
       "failed_3mo": 0
     },
     {
@@ -2376,15 +2384,15 @@
       "allmoxy_customer_id": 432,
       "current_mrr": 1049,
       "lifetime_revenue": 69804.5,
-      "years_with_us": 3.7,
-      "failed_3mo": 1
+      "years_with_us": 3.8,
+      "failed_3mo": 0
     },
     {
       "name": "Mid Michigan Wood",
       "allmoxy_customer_id": 15,
       "current_mrr": 1039.5,
       "lifetime_revenue": 68294.75,
-      "years_with_us": 13.5,
+      "years_with_us": 13.6,
       "failed_3mo": 0
     },
     {
@@ -2392,7 +2400,7 @@
       "allmoxy_customer_id": 388,
       "current_mrr": 1025,
       "lifetime_revenue": 47675.8,
-      "years_with_us": 4.2,
+      "years_with_us": 4.3,
       "failed_3mo": 0
     },
     {
@@ -2408,7 +2416,7 @@
       "allmoxy_customer_id": 455,
       "current_mrr": 1005,
       "lifetime_revenue": 46477.83,
-      "years_with_us": 5.6,
+      "years_with_us": 5.7,
       "failed_3mo": 0
     },
     {
@@ -2416,7 +2424,7 @@
       "allmoxy_customer_id": 42,
       "current_mrr": 1000,
       "lifetime_revenue": 88887,
-      "years_with_us": 9.8,
+      "years_with_us": 9.9,
       "failed_3mo": 0
     },
     {
@@ -2424,7 +2432,7 @@
       "allmoxy_customer_id": 160,
       "current_mrr": 960,
       "lifetime_revenue": 49153.87,
-      "years_with_us": 7.6,
+      "years_with_us": 7.7,
       "failed_3mo": 0
     },
     {
@@ -2432,7 +2440,7 @@
       "allmoxy_customer_id": 354,
       "current_mrr": 956,
       "lifetime_revenue": 54492,
-      "years_with_us": 4.9,
+      "years_with_us": 5,
       "failed_3mo": 0
     },
     {
@@ -2464,7 +2472,7 @@
       "allmoxy_customer_id": 2036,
       "current_mrr": 900,
       "lifetime_revenue": 11821.5,
-      "years_with_us": 0.8,
+      "years_with_us": 0.9,
       "failed_3mo": 0
     },
     {
@@ -2472,7 +2480,15 @@
       "allmoxy_customer_id": 511,
       "current_mrr": 899,
       "lifetime_revenue": 23033,
-      "years_with_us": 2,
+      "years_with_us": 2.1,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Phoenix-LLC",
+      "allmoxy_customer_id": 475,
+      "current_mrr": 899,
+      "lifetime_revenue": 40586.8,
+      "years_with_us": 3,
       "failed_3mo": 0
     },
     {
@@ -2528,7 +2544,7 @@
       "allmoxy_customer_id": 513,
       "current_mrr": 815.45,
       "lifetime_revenue": 23647.01,
-      "years_with_us": 1.9,
+      "years_with_us": 2,
       "failed_3mo": 0
     },
     {
@@ -2584,7 +2600,7 @@
       "allmoxy_customer_id": 530,
       "current_mrr": 750,
       "lifetime_revenue": 13057.5,
-      "years_with_us": 1.5,
+      "years_with_us": 1.6,
       "failed_3mo": 0
     },
     {
@@ -2608,7 +2624,7 @@
       "allmoxy_customer_id": 480,
       "current_mrr": 749,
       "lifetime_revenue": 30292.39,
-      "years_with_us": 2.9,
+      "years_with_us": 3,
       "failed_3mo": 0
     },
     {
@@ -2616,7 +2632,7 @@
       "allmoxy_customer_id": 391,
       "current_mrr": 699,
       "lifetime_revenue": 45856,
-      "years_with_us": 4.2,
+      "years_with_us": 4.3,
       "failed_3mo": 0
     },
     {
@@ -2632,7 +2648,7 @@
       "allmoxy_customer_id": 218,
       "current_mrr": 690,
       "lifetime_revenue": 17744.26,
-      "years_with_us": 6.6,
+      "years_with_us": 6.7,
       "failed_3mo": 0
     },
     {
@@ -2656,7 +2672,7 @@
       "allmoxy_customer_id": 2044,
       "current_mrr": 667,
       "lifetime_revenue": 8288.2,
-      "years_with_us": 0.7,
+      "years_with_us": 0.8,
       "failed_3mo": 0
     },
     {
@@ -2664,7 +2680,7 @@
       "allmoxy_customer_id": 31,
       "current_mrr": 658,
       "lifetime_revenue": 50404,
-      "years_with_us": 10.6,
+      "years_with_us": 10.7,
       "failed_3mo": 0
     },
     {
@@ -2672,7 +2688,7 @@
       "allmoxy_customer_id": 19,
       "current_mrr": 650,
       "lifetime_revenue": 54609.29,
-      "years_with_us": 12.4,
+      "years_with_us": 12.5,
       "failed_3mo": 0
     },
     {
@@ -2680,7 +2696,7 @@
       "allmoxy_customer_id": 309,
       "current_mrr": 637,
       "lifetime_revenue": 39994,
-      "years_with_us": 5.5,
+      "years_with_us": 5.6,
       "failed_3mo": 0
     },
     {
@@ -2704,7 +2720,7 @@
       "allmoxy_customer_id": 298,
       "current_mrr": 618.7,
       "lifetime_revenue": 36503.3,
-      "years_with_us": 5.6,
+      "years_with_us": 5.7,
       "failed_3mo": 0
     },
     {
@@ -2720,7 +2736,7 @@
       "allmoxy_customer_id": 64,
       "current_mrr": 600,
       "lifetime_revenue": 18031,
-      "years_with_us": 9.7,
+      "years_with_us": 9.8,
       "failed_3mo": 0
     },
     {
@@ -2728,7 +2744,7 @@
       "allmoxy_customer_id": 2048,
       "current_mrr": 580,
       "lifetime_revenue": 7128.5,
-      "years_with_us": 0.6,
+      "years_with_us": 0.7,
       "failed_3mo": 0
     },
     {
@@ -2744,7 +2760,7 @@
       "allmoxy_customer_id": 14,
       "current_mrr": 576.45,
       "lifetime_revenue": 31510.53,
-      "years_with_us": 13.5,
+      "years_with_us": 13.6,
       "failed_3mo": 0
     },
     {
@@ -2752,7 +2768,7 @@
       "allmoxy_customer_id": 11,
       "current_mrr": 574,
       "lifetime_revenue": 44744.74,
-      "years_with_us": 13.9,
+      "years_with_us": 14,
       "failed_3mo": 0
     },
     {
@@ -2776,7 +2792,7 @@
       "allmoxy_customer_id": 83,
       "current_mrr": 525,
       "lifetime_revenue": 38802.9,
-      "years_with_us": 8.8,
+      "years_with_us": 8.9,
       "failed_3mo": 0
     },
     {
@@ -2784,7 +2800,7 @@
       "allmoxy_customer_id": 310,
       "current_mrr": 525,
       "lifetime_revenue": 33243.66,
-      "years_with_us": 5.5,
+      "years_with_us": 5.6,
       "failed_3mo": 0
     },
     {
@@ -2792,7 +2808,7 @@
       "allmoxy_customer_id": 541,
       "current_mrr": 500,
       "lifetime_revenue": 7633.5,
-      "years_with_us": 1.2,
+      "years_with_us": 1.3,
       "failed_3mo": 0
     },
     {
@@ -2800,7 +2816,7 @@
       "allmoxy_customer_id": 217,
       "current_mrr": 500,
       "lifetime_revenue": 28000,
-      "years_with_us": 6.7,
+      "years_with_us": 6.8,
       "failed_3mo": 0
     },
     {
@@ -2823,8 +2839,8 @@
       "name": "Customer 2092",
       "allmoxy_customer_id": 2092,
       "current_mrr": 475,
-      "lifetime_revenue": 950,
-      "years_with_us": 0.1,
+      "lifetime_revenue": 1425,
+      "years_with_us": 0.2,
       "failed_3mo": 0
     },
     {
@@ -2848,15 +2864,7 @@
       "allmoxy_customer_id": 29,
       "current_mrr": 419,
       "lifetime_revenue": 27909.4,
-      "years_with_us": 10.6,
-      "failed_3mo": 0
-    },
-    {
-      "name": "Customer 2106",
-      "allmoxy_customer_id": 2106,
-      "current_mrr": 419,
-      "lifetime_revenue": 419,
-      "years_with_us": 0.1,
+      "years_with_us": 10.7,
       "failed_3mo": 0
     },
     {
@@ -2864,7 +2872,7 @@
       "allmoxy_customer_id": 2051,
       "current_mrr": 417,
       "lifetime_revenue": 4873.5,
-      "years_with_us": 0.6,
+      "years_with_us": 0.7,
       "failed_3mo": 0
     },
     {
@@ -2872,7 +2880,7 @@
       "allmoxy_customer_id": 320,
       "current_mrr": 415,
       "lifetime_revenue": 23128.5,
-      "years_with_us": 5.4,
+      "years_with_us": 5.5,
       "failed_3mo": 0
     },
     {
@@ -2881,14 +2889,6 @@
       "current_mrr": 415,
       "lifetime_revenue": 30311.17,
       "years_with_us": 5.2,
-      "failed_3mo": 0
-    },
-    {
-      "name": "Phoenix-LLC",
-      "allmoxy_customer_id": 475,
-      "current_mrr": 400,
-      "lifetime_revenue": 40586.8,
-      "years_with_us": 3,
       "failed_3mo": 0
     },
     {
@@ -2920,7 +2920,7 @@
       "allmoxy_customer_id": 275,
       "current_mrr": 399,
       "lifetime_revenue": 25854.8,
-      "years_with_us": 7.6,
+      "years_with_us": 7.7,
       "failed_3mo": 0
     },
     {
@@ -2928,7 +2928,7 @@
       "allmoxy_customer_id": 206,
       "current_mrr": 375,
       "lifetime_revenue": 31005,
-      "years_with_us": 8,
+      "years_with_us": 8.1,
       "failed_3mo": 0
     },
     {
@@ -2960,7 +2960,7 @@
       "allmoxy_customer_id": 474,
       "current_mrr": 350,
       "lifetime_revenue": 54296.3,
-      "years_with_us": 3,
+      "years_with_us": 3.1,
       "failed_3mo": 0
     },
     {
@@ -2984,7 +2984,7 @@
       "allmoxy_customer_id": 555,
       "current_mrr": 320,
       "lifetime_revenue": 4937,
-      "years_with_us": 1,
+      "years_with_us": 1.1,
       "failed_3mo": 0
     },
     {
@@ -3000,7 +3000,7 @@
       "allmoxy_customer_id": 237,
       "current_mrr": 300,
       "lifetime_revenue": 19200,
-      "years_with_us": 6.4,
+      "years_with_us": 6.5,
       "failed_3mo": 0
     },
     {
@@ -3016,7 +3016,7 @@
       "allmoxy_customer_id": 107,
       "current_mrr": 290,
       "lifetime_revenue": 26240,
-      "years_with_us": 8.3,
+      "years_with_us": 8.4,
       "failed_3mo": 0
     },
     {
@@ -3032,15 +3032,7 @@
       "allmoxy_customer_id": 2056,
       "current_mrr": 270,
       "lifetime_revenue": 6143.5,
-      "years_with_us": 0.5,
-      "failed_3mo": 0
-    },
-    {
-      "name": "Hingeworks",
-      "allmoxy_customer_id": 551,
-      "current_mrr": 270,
-      "lifetime_revenue": 5640,
-      "years_with_us": 1,
+      "years_with_us": 0.6,
       "failed_3mo": 0
     },
     {
@@ -3048,7 +3040,7 @@
       "allmoxy_customer_id": 540,
       "current_mrr": 262.5,
       "lifetime_revenue": 5206.88,
-      "years_with_us": 1.2,
+      "years_with_us": 1.3,
       "failed_3mo": 0
     },
     {
@@ -3088,7 +3080,7 @@
       "allmoxy_customer_id": 33,
       "current_mrr": 250,
       "lifetime_revenue": 24750,
-      "years_with_us": 10.4,
+      "years_with_us": 10.5,
       "failed_3mo": 0
     },
     {
@@ -3096,7 +3088,7 @@
       "allmoxy_customer_id": 2052,
       "current_mrr": 250,
       "lifetime_revenue": 4060,
-      "years_with_us": 0.5,
+      "years_with_us": 0.6,
       "failed_3mo": 0
     },
     {
@@ -3152,7 +3144,7 @@
       "allmoxy_customer_id": 21,
       "current_mrr": 250,
       "lifetime_revenue": 59413.07,
-      "years_with_us": 12,
+      "years_with_us": 12.1,
       "failed_3mo": 0
     },
     {
@@ -3184,7 +3176,7 @@
       "allmoxy_customer_id": 524,
       "current_mrr": 250,
       "lifetime_revenue": 4271.06,
-      "years_with_us": 1.6,
+      "years_with_us": 1.7,
       "failed_3mo": 0
     },
     {
@@ -3208,7 +3200,7 @@
       "allmoxy_customer_id": 546,
       "current_mrr": 250,
       "lifetime_revenue": 4980.5,
-      "years_with_us": 1.1,
+      "years_with_us": 1.2,
       "failed_3mo": 0
     },
     {
@@ -3216,7 +3208,7 @@
       "allmoxy_customer_id": 2037,
       "current_mrr": 250,
       "lifetime_revenue": 2150,
-      "years_with_us": 0.8,
+      "years_with_us": 0.9,
       "failed_3mo": 0
     },
     {
@@ -3224,7 +3216,7 @@
       "allmoxy_customer_id": 2049,
       "current_mrr": 250,
       "lifetime_revenue": 3677,
-      "years_with_us": 0.6,
+      "years_with_us": 0.7,
       "failed_3mo": 0
     },
     {
@@ -3248,7 +3240,7 @@
       "allmoxy_customer_id": 2050,
       "current_mrr": 250,
       "lifetime_revenue": 1250,
-      "years_with_us": 0.6,
+      "years_with_us": 0.7,
       "failed_3mo": 0
     },
     {
@@ -3256,7 +3248,7 @@
       "allmoxy_customer_id": 2063,
       "current_mrr": 250,
       "lifetime_revenue": 2295,
-      "years_with_us": 0.4,
+      "years_with_us": 0.5,
       "failed_3mo": 0
     },
     {
@@ -3264,7 +3256,7 @@
       "allmoxy_customer_id": 2020,
       "current_mrr": 250,
       "lifetime_revenue": 3067.5,
-      "years_with_us": 0.9,
+      "years_with_us": 1,
       "failed_3mo": 0
     },
     {
@@ -3280,7 +3272,7 @@
       "allmoxy_customer_id": 344,
       "current_mrr": 250,
       "lifetime_revenue": 17711,
-      "years_with_us": 5.1,
+      "years_with_us": 5.2,
       "failed_3mo": 0
     },
     {
@@ -3288,7 +3280,7 @@
       "allmoxy_customer_id": 2026,
       "current_mrr": 250,
       "lifetime_revenue": 6238.5,
-      "years_with_us": 0.9,
+      "years_with_us": 1,
       "failed_3mo": 0
     },
     {
@@ -3320,7 +3312,7 @@
       "allmoxy_customer_id": 2064,
       "current_mrr": 250,
       "lifetime_revenue": 1575.88,
-      "years_with_us": 0.4,
+      "years_with_us": 0.5,
       "failed_3mo": 0
     },
     {
@@ -3328,7 +3320,7 @@
       "allmoxy_customer_id": 525,
       "current_mrr": 219,
       "lifetime_revenue": 9645,
-      "years_with_us": 1.6,
+      "years_with_us": 1.7,
       "failed_3mo": 0
     },
     {
@@ -3336,7 +3328,7 @@
       "allmoxy_customer_id": 2032,
       "current_mrr": 200,
       "lifetime_revenue": 1600,
-      "years_with_us": 0.8,
+      "years_with_us": 0.9,
       "failed_3mo": 0
     },
     {
@@ -3344,7 +3336,7 @@
       "allmoxy_customer_id": 2057,
       "current_mrr": 200,
       "lifetime_revenue": 600,
-      "years_with_us": 0.5,
+      "years_with_us": 0.6,
       "failed_3mo": 0
     },
     {
@@ -3352,7 +3344,7 @@
       "allmoxy_customer_id": 2047,
       "current_mrr": 200,
       "lifetime_revenue": 1000,
-      "years_with_us": 0.6,
+      "years_with_us": 0.7,
       "failed_3mo": 0
     },
     {
@@ -3368,7 +3360,7 @@
       "allmoxy_customer_id": 471,
       "current_mrr": 199,
       "lifetime_revenue": 6868,
-      "years_with_us": 3,
+      "years_with_us": 3.1,
       "failed_3mo": 0
     },
     {
@@ -3376,7 +3368,15 @@
       "allmoxy_customer_id": 384,
       "current_mrr": 199,
       "lifetime_revenue": 10200,
-      "years_with_us": 4.3,
+      "years_with_us": 4.4,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Customer 2106",
+      "allmoxy_customer_id": 2106,
+      "current_mrr": 169,
+      "lifetime_revenue": 588,
+      "years_with_us": 0.1,
       "failed_3mo": 0
     },
     {
@@ -3400,7 +3400,7 @@
       "allmoxy_customer_id": 76,
       "current_mrr": 100,
       "lifetime_revenue": 8267.75,
-      "years_with_us": 9.5,
+      "years_with_us": 9.6,
       "failed_3mo": 0
     },
     {
@@ -3414,7 +3414,7 @@
     {
       "name": "Raumplus",
       "allmoxy_customer_id": 7,
-      "current_mrr": 84.2,
+      "current_mrr": 84.7,
       "lifetime_revenue": 40580.96,
       "years_with_us": 14.3,
       "failed_3mo": 0
@@ -3424,22 +3424,14 @@
       "allmoxy_customer_id": 25,
       "current_mrr": 65,
       "lifetime_revenue": 5590,
-      "years_with_us": 11.2,
+      "years_with_us": 11.3,
       "failed_3mo": 0
     }
   ],
-  "dunning_customers": [
-    {
-      "name": "Netley Millwork",
-      "allmoxy_customer_id": 432,
-      "current_mrr": 1049,
-      "failed_3mo": 1,
-      "failed_3mo_amount": 85.5
-    }
-  ],
+  "dunning_customers": [],
   "dunning_summary": {
-    "total_dunning_customers": 1,
-    "total_at_risk_amount": 85.5
+    "total_dunning_customers": 0,
+    "total_at_risk_amount": 0
   },
   "notes": "Per-customer MRR drawn from MRR by Month tab (197 customers with MRR > $0 in 2026-06). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue and dunning counts joined from Stripe Sync (20K+ classified transactions). Dunning = charge attempts with status=failed in trailing 3 months."
 }
