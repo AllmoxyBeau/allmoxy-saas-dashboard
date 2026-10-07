@@ -1,7 +1,7 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-10-06T14:24:18.733Z",
-  "cachedUntil": "2026-10-06T14:29:18.734Z",
+  "fetchedAt": "2026-10-07T13:19:43.404Z",
+  "cachedUntil": "2026-10-07T13:24:43.404Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
     "total_issues": 19,
@@ -227,7 +227,7 @@
       "allmoxy_customer_id": 2020,
       "customer_name": "Prorustics",
       "connect_name": "Prorustics",
-      "pay_status": "Active",
+      "pay_status": "Active - Pause Granted",
       "action": "Either the customer churned (remove from src/data/connect_customer_overrides.json mapping) or their Connect account changed — check Stripe Connect dashboard for \"Prorustics\""
     },
     {

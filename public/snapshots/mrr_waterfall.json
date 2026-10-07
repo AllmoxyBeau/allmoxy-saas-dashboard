@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-10-06T14:24:15.530Z",
-  "cachedUntil": "2026-10-06T14:29:15.530Z",
+  "fetchedAt": "2026-10-07T13:19:38.305Z",
+  "cachedUntil": "2026-10-07T13:24:38.305Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -29,7 +29,7 @@
     "2026-07": 100.1,
     "2026-08": 102.4,
     "2026-09": 102.3,
-    "2026-10": 98.8
+    "2026-10": 98.2
   },
   "monthly": [
     {
@@ -19747,7 +19747,7 @@
             "id": 457,
             "mrr": 419,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           }
         ]
       }
@@ -22372,28 +22372,35 @@
       "starting_mrr": 231778.27,
       "new_mrr": 0,
       "reactivated_mrr": 0,
-      "expansion_mrr": 20,
-      "contraction_mrr": 1392,
+      "expansion_mrr": 399,
+      "contraction_mrr": 1412,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 159077.87,
-      "ending_mrr": 71328.4,
-      "net_new_mrr": -160449.87,
+      "delinquent_mrr": 158138.87,
+      "ending_mrr": 72626.4,
+      "net_new_mrr": -159151.87,
       "new_logos": 0,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 146,
+      "delinquent_logos": 141,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0059,
-      "expansion_rate_monthly": 0.0001,
-      "grr_monthly": 0.994,
-      "nrr_monthly": 0.9941,
-      "quick_ratio": 0.01,
+      "net_churn_rate_monthly": 0.0044,
+      "expansion_rate_monthly": 0.0017,
+      "grr_monthly": 0.9939,
+      "nrr_monthly": 0.9956,
+      "quick_ratio": 0.28,
       "details": {
         "new": [],
         "reactivated": [],
         "expansion": [
+          {
+            "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
+            "id": 457,
+            "prev_mrr": 20,
+            "new_mrr": 399,
+            "delta": 379
+          },
           {
             "name": "Rb Millwork",
             "id": 2100,
@@ -22430,6 +22437,13 @@
             "prev_mrr": 7594.2,
             "new_mrr": 7459.2,
             "delta": 135
+          },
+          {
+            "name": "Advanced Hardware Supply",
+            "id": 525,
+            "prev_mrr": 219,
+            "new_mrr": 199,
+            "delta": 20
           }
         ],
         "churn": [],
@@ -23108,13 +23122,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Crown Door & Drawer",
-            "id": 2028,
-            "mrr": 350,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Jerome J. Brezniski & Assoc., Ltd.",
             "id": 399,
             "mrr": 349,
@@ -23283,13 +23290,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Montouro Woodwork",
-            "id": 2049,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Capital Millwork",
             "id": 550,
             "mrr": 250,
@@ -23301,7 +23301,7 @@
             "id": 2020,
             "mrr": 250,
             "status": "active",
-            "pay_status": "Active"
+            "pay_status": "Active - Pause Granted"
           },
           {
             "name": "Rise Up Labels",
@@ -23374,13 +23374,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Advanced Hardware Supply",
-            "id": 525,
-            "mrr": 219,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Adentra",
             "id": 2032,
             "mrr": 200,
@@ -23430,13 +23423,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Country Lazer",
-            "id": 76,
-            "mrr": 100,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Raumplus",
             "id": 7,
             "mrr": 84.7,
@@ -23449,13 +23435,6 @@
             "mrr": 65,
             "status": "at_risk",
             "pay_status": "Active"
-          },
-          {
-            "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
-            "id": 457,
-            "mrr": 20,
-            "status": "at_risk",
-            "pay_status": "Active - Card Failure"
           }
         ]
       }
@@ -24265,13 +24244,13 @@
             "mrr": 417
           },
           {
-            "name": "Paquette Cabinetry",
-            "id": 2050,
+            "name": "Montouro Woodwork",
+            "id": 2049,
             "mrr": 250
           },
           {
-            "name": "Montouro Woodwork",
-            "id": 2049,
+            "name": "Paquette Cabinetry",
+            "id": 2050,
             "mrr": 250
           },
           {
@@ -25195,22 +25174,22 @@
       "new_mrr": 0,
       "reactivated_mrr": 0,
       "expansion_mrr": 20,
-      "contraction_mrr": 1274,
+      "contraction_mrr": 1294,
       "churn_mrr": 0,
-      "voided_mrr": 0,
-      "delinquent_mrr": 157569.87,
-      "ending_mrr": 69354.4,
-      "net_new_mrr": -158823.87,
+      "voided_mrr": 199,
+      "delinquent_mrr": 156451.87,
+      "ending_mrr": 70253.4,
+      "net_new_mrr": -157924.87,
       "new_logos": 0,
       "reactivated_logos": 0,
       "churned_logos": 0,
-      "voided_logos": 0,
-      "delinquent_logos": 150,
+      "voided_logos": 1,
+      "delinquent_logos": 145,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0055,
+      "net_churn_rate_monthly": 0.0056,
       "expansion_rate_monthly": 0.0001,
-      "grr_monthly": 0.9944,
-      "nrr_monthly": 0.9945,
+      "grr_monthly": 0.9943,
+      "nrr_monthly": 0.9944,
       "quick_ratio": 0.02,
       "details": {
         "new": [],
@@ -25245,10 +25224,25 @@
             "prev_mrr": 7504.2,
             "new_mrr": 7459.2,
             "delta": 45
+          },
+          {
+            "name": "Advanced Hardware Supply",
+            "id": 525,
+            "prev_mrr": 219,
+            "new_mrr": 199,
+            "delta": 20
           }
         ],
         "churn": [],
-        "voided": [],
+        "voided": [
+          {
+            "name": "KSC Sales Inc.",
+            "id": 471,
+            "mrr": 199,
+            "status": "active",
+            "pay_status": "Active"
+          }
+        ],
         "delinquent": [
           {
             "name": "Panhandle Door Inc.",
@@ -25871,7 +25865,7 @@
             "id": 457,
             "mrr": 419,
             "status": "at_risk",
-            "pay_status": "Active - Card Failure"
+            "pay_status": "Active"
           },
           {
             "name": "Quality Craft Woodworks",
@@ -25939,13 +25933,6 @@
           {
             "name": "Pinnacle Cabinets & Millwork",
             "id": 474,
-            "mrr": 350,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Crown Door & Drawer",
-            "id": 2028,
             "mrr": 350,
             "status": "active",
             "pay_status": "Active"
@@ -26102,7 +26089,7 @@
             "id": 2020,
             "mrr": 250,
             "status": "active",
-            "pay_status": "Active"
+            "pay_status": "Active - Pause Granted"
           },
           {
             "name": "Next Gen Cabinet Doors",
@@ -26203,23 +26190,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Montouro Woodwork",
-            "id": 2049,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Salerno's Custom Cab",
             "id": 344,
             "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Advanced Hardware Supply",
-            "id": 525,
-            "mrr": 219,
             "status": "active",
             "pay_status": "Active"
           },
@@ -26252,13 +26225,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "KSC Sales Inc.",
-            "id": 471,
-            "mrr": 199,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Criscott Properies",
             "id": 2106,
             "mrr": 169,
@@ -26277,13 +26243,6 @@
             "id": 224,
             "mrr": 100,
             "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Country Lazer",
-            "id": 76,
-            "mrr": 100,
-            "status": "active",
             "pay_status": "Active"
           },
           {

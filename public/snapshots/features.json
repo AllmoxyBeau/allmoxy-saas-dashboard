@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-10-06T14:34:09.554Z",
-  "jira_fetchedAt": "2026-10-06T14:33:30.043Z",
+  "fetchedAt": "2026-10-07T13:30:41.199Z",
+  "jira_fetchedAt": "2026-10-07T13:30:00.368Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4523,
-    "open_tickets": 891,
-    "done_tickets": 3632,
-    "tickets_with_matched_customer": 2271,
-    "open_mrr_at_stake": 2748271.3,
+    "total_tickets": 4522,
+    "open_tickets": 885,
+    "done_tickets": 3637,
+    "tickets_with_matched_customer": 2268,
+    "open_mrr_at_stake": 2702709.35,
     "distinct_customers_tagged": 152,
     "unmatched_labels": [
       "2020",
@@ -9638,59 +9638,6 @@
       ]
     },
     {
-      "key": "DEV-1877",
-      "summary": "New report: commission of sales reps",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 273,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5045,
-          "lifetime": 538103.15,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5000,
-          "lifetime": 481447.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 130,
-          "name": "Roy's Wood Products, Inc.",
-          "mrr": 3119,
-          "lifetime": 145894.33,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2105,
-          "lifetime": 135614.61,
-          "status": "active"
-        }
-      ],
-      "created": "2021-02-24",
-      "updated": "2026-10-02",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-1877",
-      "tag_count": 6,
-      "customer_count": 4,
-      "active_customer_count": 4,
-      "total_mrr": 15269,
-      "total_arr": 183228,
-      "total_lifetime": 1301059.75,
-      "unmatched_labels": [
-        "NYDoorandDrawer",
-        "netley"
-      ]
-    },
-    {
       "key": "DEV-223",
       "summary": "Can't convert attribute units (metric vs imperial) on output pages",
       "status": "Backlog",
@@ -11731,52 +11678,6 @@
       ]
     },
     {
-      "key": "DEV-1357",
-      "summary": "Sales Rep mode (roles)",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 304,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5045,
-          "lifetime": 538103.15,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5000,
-          "lifetime": 481447.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2105,
-          "lifetime": 135614.61,
-          "status": "active"
-        }
-      ],
-      "created": "2020-05-06",
-      "updated": "2026-10-02",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-1357",
-      "tag_count": 5,
-      "customer_count": 3,
-      "active_customer_count": 3,
-      "total_mrr": 12150,
-      "total_arr": 145800,
-      "total_lifetime": 1155165.42,
-      "unmatched_labels": [
-        "ifccinc",
-        "netley"
-      ]
-    },
-    {
       "key": "DEV-10935",
       "summary": "Add subtotal data and/or filter to Orders report/csv",
       "status": "Backlog",
@@ -11818,52 +11719,6 @@
       "total_arr": 145800,
       "total_lifetime": 1155165.42,
       "unmatched_labels": [
-        "netley"
-      ]
-    },
-    {
-      "key": "DEV-1876",
-      "summary": "New \"commission\" field for sales reps",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 252,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5045,
-          "lifetime": 538103.15,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 161,
-          "name": "Premier EuroCase",
-          "mrr": 5000,
-          "lifetime": 481447.66,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2105,
-          "lifetime": 135614.61,
-          "status": "active"
-        }
-      ],
-      "created": "2021-02-24",
-      "updated": "2026-10-01",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-1876",
-      "tag_count": 5,
-      "customer_count": 3,
-      "active_customer_count": 3,
-      "total_mrr": 12150,
-      "total_arr": 145800,
-      "total_lifetime": 1155165.42,
-      "unmatched_labels": [
-        "NYDoorandDrawer",
         "netley"
       ]
     },
@@ -14436,7 +14291,7 @@
         }
       ],
       "created": "2026-10-02",
-      "updated": "2026-10-05",
+      "updated": "2026-10-06",
       "resolved": "2026-10-02",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13572",
       "tag_count": 2,
@@ -30735,7 +30590,7 @@
           "allmoxy_customer_id": 76,
           "name": "Country Lazer",
           "mrr": 100,
-          "lifetime": 7837.7,
+          "lifetime": 7944.35,
           "status": "active"
         }
       ],
@@ -30748,7 +30603,7 @@
       "active_customer_count": 3,
       "total_mrr": 7430,
       "total_arr": 89160,
-      "total_lifetime": 423475.09,
+      "total_lifetime": 423581.74,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -31166,6 +31021,47 @@
       "unmatched_labels": [
         "Hoodsley",
         "canary",
+        "netley"
+      ]
+    },
+    {
+      "key": "DEV-148",
+      "summary": "Changes to remake report",
+      "status": "Feature Scope",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 270,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5045,
+          "lifetime": 538103.15,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 159,
+          "name": "NJ Drawers",
+          "mrr": 2105,
+          "lifetime": 135614.61,
+          "status": "active"
+        }
+      ],
+      "created": "2018-10-02",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-148",
+      "tag_count": 6,
+      "customer_count": 2,
+      "active_customer_count": 2,
+      "total_mrr": 7150,
+      "total_arr": 85800,
+      "total_lifetime": 673717.76,
+      "unmatched_labels": [
+        "Fryburg",
+        "m2m",
+        "mykitch",
         "netley"
       ]
     },
@@ -32271,47 +32167,6 @@
       "total_arr": 85800,
       "total_lifetime": 673717.76,
       "unmatched_labels": [
-        "netley"
-      ]
-    },
-    {
-      "key": "DEV-148",
-      "summary": "Changes to remake report",
-      "status": "Feature Scope",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 270,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5045,
-          "lifetime": 538103.15,
-          "status": "active"
-        },
-        {
-          "allmoxy_customer_id": 159,
-          "name": "NJ Drawers",
-          "mrr": 2105,
-          "lifetime": 135614.61,
-          "status": "active"
-        }
-      ],
-      "created": "2018-10-02",
-      "updated": "2026-09-21",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-148",
-      "tag_count": 6,
-      "customer_count": 2,
-      "active_customer_count": 2,
-      "total_mrr": 7150,
-      "total_arr": 85800,
-      "total_lifetime": 673717.76,
-      "unmatched_labels": [
-        "Fryburg",
-        "m2m",
-        "mykitch",
         "netley"
       ]
     },
@@ -41093,7 +40948,7 @@
           "allmoxy_customer_id": 2028,
           "name": "Crown Door & Drawer",
           "mrr": 350,
-          "lifetime": 17705.5,
+          "lifetime": 18055.5,
           "status": "active"
         }
       ],
@@ -41106,7 +40961,7 @@
       "active_customer_count": 2,
       "total_mrr": 5350,
       "total_arr": 64200,
-      "total_lifetime": 499153.16,
+      "total_lifetime": 499503.16,
       "unmatched_labels": [
         "arizonacabinetdoorstore"
       ]
@@ -41380,8 +41235,8 @@
     {
       "key": "DEV-13585",
       "summary": "Primary Kitchen — Product dev tool \"Test Form\" returns \"Request failed, see console log\" on product 808",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 719,
@@ -41395,8 +41250,8 @@
         }
       ],
       "created": "2026-10-05",
-      "updated": "2026-10-05",
-      "resolved": "2026-10-05",
+      "updated": "2026-10-06",
+      "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-13585",
       "tag_count": 1,
       "customer_count": 1,
@@ -43517,7 +43372,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -43530,7 +43385,7 @@
       "active_customer_count": 2,
       "total_mrr": 4839,
       "total_arr": 58068,
-      "total_lifetime": 311045.4,
+      "total_lifetime": 311244.4,
       "unmatched_labels": []
     },
     {
@@ -43553,7 +43408,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -43566,7 +43421,7 @@
       "active_customer_count": 2,
       "total_mrr": 4839,
       "total_arr": 58068,
-      "total_lifetime": 311045.4,
+      "total_lifetime": 311244.4,
       "unmatched_labels": []
     },
     {
@@ -43589,7 +43444,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -43602,7 +43457,7 @@
       "active_customer_count": 2,
       "total_mrr": 4839,
       "total_arr": 58068,
-      "total_lifetime": 311045.4,
+      "total_lifetime": 311244.4,
       "unmatched_labels": [
         "dbs"
       ]
@@ -43627,7 +43482,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -43640,7 +43495,7 @@
       "active_customer_count": 2,
       "total_mrr": 4839,
       "total_arr": 58068,
-      "total_lifetime": 311045.4,
+      "total_lifetime": 311244.4,
       "unmatched_labels": [
         "dbs"
       ]
@@ -49498,8 +49353,8 @@
     {
       "key": "DEV-13486",
       "summary": "Westwind Wood Specialties - QuickBooks Online sync last ran Sept 24, payments and invoices from Sept 25 onward still queued",
-      "status": "In Progress",
-      "stage_category": "In Progress",
+      "status": "In Production",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 672,
@@ -49513,8 +49368,8 @@
         }
       ],
       "created": "2026-09-29",
-      "updated": "2026-10-05",
-      "resolved": null,
+      "updated": "2026-10-06",
+      "resolved": "2026-10-06",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13486",
       "tag_count": 1,
       "customer_count": 1,
@@ -49955,7 +49810,7 @@
           "allmoxy_customer_id": 76,
           "name": "Country Lazer",
           "mrr": 100,
-          "lifetime": 7837.7,
+          "lifetime": 7944.35,
           "status": "active"
         }
       ],
@@ -49968,7 +49823,7 @@
       "active_customer_count": 2,
       "total_mrr": 3219,
       "total_arr": 38628,
-      "total_lifetime": 153732.03,
+      "total_lifetime": 153838.68,
       "unmatched_labels": []
     },
     {
@@ -50522,7 +50377,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -50535,7 +50390,7 @@
       "active_customer_count": 2,
       "total_mrr": 3139,
       "total_arr": 37668,
-      "total_lifetime": 217428.6,
+      "total_lifetime": 217627.6,
       "unmatched_labels": [
         "Paragon",
         "btjdoors",
@@ -54031,8 +53886,8 @@
     {
       "key": "DEV-13541",
       "summary": "Lindsey Doors - Operator Not Available",
-      "status": "Dev Scope",
-      "stage_category": "In Progress",
+      "status": "Resolved",
+      "stage_category": "Done",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 630,
@@ -54046,8 +53901,8 @@
         }
       ],
       "created": "2026-09-30",
-      "updated": "2026-10-05",
-      "resolved": "2026-09-30",
+      "updated": "2026-10-06",
+      "resolved": "2026-10-06",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13541",
       "tag_count": 1,
       "customer_count": 1,
@@ -54808,7 +54663,7 @@
         }
       ],
       "created": "2026-09-03",
-      "updated": "2026-09-24",
+      "updated": "2026-10-06",
       "resolved": "2026-09-21",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13039",
       "tag_count": 1,
@@ -55096,7 +54951,7 @@
           "allmoxy_customer_id": 76,
           "name": "Country Lazer",
           "mrr": 100,
-          "lifetime": 7837.7,
+          "lifetime": 7944.35,
           "status": "active"
         }
       ],
@@ -55109,7 +54964,7 @@
       "active_customer_count": 2,
       "total_mrr": 1675,
       "total_arr": 20100,
-      "total_lifetime": 124543.38,
+      "total_lifetime": 124650.03,
       "unmatched_labels": []
     },
     {
@@ -57046,6 +56901,35 @@
       ]
     },
     {
+      "key": "DEV-6752",
+      "summary": "Strip special characters on B2B order numbers for importing into other software",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "Highest",
+      "issue_score": 384,
+      "customers": [
+        {
+          "allmoxy_customer_id": 168,
+          "name": "Diamond CNC",
+          "mrr": 1499,
+          "lifetime": 121798.9,
+          "status": "active"
+        }
+      ],
+      "created": "2023-08-08",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6752",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1499,
+      "total_arr": 17988,
+      "total_lifetime": 121798.9,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-13267",
       "summary": "Midwest Floor Coverings - Order 115380 edits not applied after a slow save, orders slow to open, order search not returning results until retyped",
       "status": "Resolved",
@@ -57186,35 +57070,6 @@
       "updated": "2026-09-22",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-5680",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 1499,
-      "total_arr": 17988,
-      "total_lifetime": 121798.9,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-6752",
-      "summary": "Strip special characters on B2B order numbers for importing into other software",
-      "status": "Feature Scope",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Highest",
-      "issue_score": 384,
-      "customers": [
-        {
-          "allmoxy_customer_id": 168,
-          "name": "Diamond CNC",
-          "mrr": 1499,
-          "lifetime": 121798.9,
-          "status": "active"
-        }
-      ],
-      "created": "2023-08-08",
-      "updated": "2026-09-17",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6752",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -65938,7 +65793,7 @@
         }
       ],
       "created": "2026-09-25",
-      "updated": "2026-10-05",
+      "updated": "2026-10-06",
       "resolved": "2026-10-05",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13441",
       "tag_count": 1,
@@ -66837,12 +66692,12 @@
           "allmoxy_customer_id": 2028,
           "name": "Crown Door & Drawer",
           "mrr": 350,
-          "lifetime": 17705.5,
+          "lifetime": 18055.5,
           "status": "active"
         }
       ],
       "created": "2026-10-02",
-      "updated": "2026-10-05",
+      "updated": "2026-10-06",
       "resolved": "2026-10-05",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13573",
       "tag_count": 1,
@@ -66850,7 +66705,7 @@
       "active_customer_count": 1,
       "total_mrr": 350,
       "total_arr": 4200,
-      "total_lifetime": 17705.5,
+      "total_lifetime": 18055.5,
       "unmatched_labels": []
     },
     {
@@ -66866,7 +66721,7 @@
           "allmoxy_customer_id": 2028,
           "name": "Crown Door & Drawer",
           "mrr": 350,
-          "lifetime": 17705.5,
+          "lifetime": 18055.5,
           "status": "active"
         }
       ],
@@ -66879,7 +66734,7 @@
       "active_customer_count": 1,
       "total_mrr": 350,
       "total_arr": 4200,
-      "total_lifetime": 17705.5,
+      "total_lifetime": 18055.5,
       "unmatched_labels": []
     },
     {
@@ -68157,7 +68012,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -68170,7 +68025,7 @@
       "active_customer_count": 1,
       "total_mrr": 219,
       "total_arr": 2628,
-      "total_lifetime": 11400,
+      "total_lifetime": 11599,
       "unmatched_labels": [
         "dbs"
       ]
@@ -68188,7 +68043,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -68201,7 +68056,7 @@
       "active_customer_count": 1,
       "total_mrr": 219,
       "total_arr": 2628,
-      "total_lifetime": 11400,
+      "total_lifetime": 11599,
       "unmatched_labels": []
     },
     {
@@ -68217,7 +68072,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -68230,7 +68085,7 @@
       "active_customer_count": 1,
       "total_mrr": 219,
       "total_arr": 2628,
-      "total_lifetime": 11400,
+      "total_lifetime": 11599,
       "unmatched_labels": []
     },
     {
@@ -68246,7 +68101,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -68259,7 +68114,7 @@
       "active_customer_count": 1,
       "total_mrr": 219,
       "total_arr": 2628,
-      "total_lifetime": 11400,
+      "total_lifetime": 11599,
       "unmatched_labels": []
     },
     {
@@ -68275,7 +68130,7 @@
           "allmoxy_customer_id": 525,
           "name": "Advanced Hardware Supply",
           "mrr": 219,
-          "lifetime": 11400,
+          "lifetime": 11599,
           "status": "active"
         }
       ],
@@ -68288,7 +68143,7 @@
       "active_customer_count": 1,
       "total_mrr": 219,
       "total_arr": 2628,
-      "total_lifetime": 11400,
+      "total_lifetime": 11599,
       "unmatched_labels": []
     },
     {
@@ -68316,7 +68171,7 @@
         }
       ],
       "created": "2026-05-11",
-      "updated": "2026-09-14",
+      "updated": "2026-10-06",
       "resolved": "2026-09-03",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12042",
       "tag_count": 2,
@@ -68330,8 +68185,8 @@
     {
       "key": "DEV-12040",
       "summary": "UI Clean Up of Create Account flow",
-      "status": "Feature Scope",
-      "stage_category": "In Progress",
+      "status": "Resolved",
+      "stage_category": "Done",
       "issue_type": "Task",
       "priority": "High",
       "issue_score": 267,
@@ -68345,8 +68200,8 @@
         }
       ],
       "created": "2026-05-11",
-      "updated": "2026-09-17",
-      "resolved": "2026-05-11",
+      "updated": "2026-10-06",
+      "resolved": "2026-10-06",
       "url": "https://allmoxy.atlassian.net/browse/DEV-12040",
       "tag_count": 2,
       "customer_count": 1,
@@ -68400,7 +68255,7 @@
           "allmoxy_customer_id": 76,
           "name": "Country Lazer",
           "mrr": 100,
-          "lifetime": 7837.7,
+          "lifetime": 7944.35,
           "status": "active"
         }
       ],
@@ -68413,7 +68268,7 @@
       "active_customer_count": 1,
       "total_mrr": 100,
       "total_arr": 1200,
-      "total_lifetime": 7837.7,
+      "total_lifetime": 7944.35,
       "unmatched_labels": []
     },
     {
@@ -68518,7 +68373,7 @@
           "allmoxy_customer_id": 76,
           "name": "Country Lazer",
           "mrr": 100,
-          "lifetime": 7837.7,
+          "lifetime": 7944.35,
           "status": "active"
         }
       ],
@@ -68531,7 +68386,7 @@
       "active_customer_count": 1,
       "total_mrr": 100,
       "total_arr": 1200,
-      "total_lifetime": 7837.7,
+      "total_lifetime": 7944.35,
       "unmatched_labels": []
     },
     {
@@ -68666,7 +68521,7 @@
           "allmoxy_customer_id": 76,
           "name": "Country Lazer",
           "mrr": 100,
-          "lifetime": 7837.7,
+          "lifetime": 7944.35,
           "status": "active"
         }
       ],
@@ -68679,7 +68534,7 @@
       "active_customer_count": 1,
       "total_mrr": 100,
       "total_arr": 1200,
-      "total_lifetime": 7837.7,
+      "total_lifetime": 7944.35,
       "unmatched_labels": []
     },
     {
@@ -68695,7 +68550,7 @@
           "allmoxy_customer_id": 76,
           "name": "Country Lazer",
           "mrr": 100,
-          "lifetime": 7837.7,
+          "lifetime": 7944.35,
           "status": "active"
         }
       ],
@@ -68708,7 +68563,7 @@
       "active_customer_count": 1,
       "total_mrr": 100,
       "total_arr": 1200,
-      "total_lifetime": 7837.7,
+      "total_lifetime": 7944.35,
       "unmatched_labels": []
     },
     {
@@ -69136,6 +68991,93 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-13064",
+      "summary": "Explicitly removing permission for Operator does not work",
+      "status": "Ready for Staging QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Low",
+      "issue_score": 157,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-09-09",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13064",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-13059",
+      "summary": "Update CloudWatch Lambda Insights extension layer across API Lambdas before Dec 1, 2026 (AWS Action Required)",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-09-09",
+      "updated": "2026-10-06",
+      "resolved": "2026-09-09",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13059",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-13364",
+      "summary": "Settings › E-commerce › Order Settings",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 212,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-09-24",
+      "updated": "2026-10-06",
+      "resolved": "2026-09-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13364",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-13483",
       "summary": "Empyre Designs - New Employee Timecards report omits salaried employee shown in legacy report",
       "status": "In Production",
@@ -69153,7 +69095,7 @@
         }
       ],
       "created": "2026-09-29",
-      "updated": "2026-10-05",
+      "updated": "2026-10-06",
       "resolved": "2026-10-05",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13483",
       "tag_count": 1,
@@ -69194,35 +69136,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-13364",
-      "summary": "Settings › E-commerce › Order Settings",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 212,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-09-24",
-      "updated": "2026-10-05",
-      "resolved": "2026-09-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13364",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-13438",
       "summary": "Sticky bar is inconsistent across pages",
       "status": "In Production",
@@ -69243,64 +69156,6 @@
       "updated": "2026-10-05",
       "resolved": "2026-09-28",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13438",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-13064",
-      "summary": "Explicitly removing permission for Operator does not work",
-      "status": "Ready for Staging QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Low",
-      "issue_score": 157,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-09-09",
-      "updated": "2026-10-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13064",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-13059",
-      "summary": "Update CloudWatch Lambda Insights extension layer across API Lambdas before Dec 1, 2026 (AWS Action Required)",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-09-09",
-      "updated": "2026-10-05",
-      "resolved": "2026-09-09",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13059",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -79474,6 +79329,98 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-13537",
+      "summary": "BTJ Cabinet Door Company: Create sandbox with API access for CDP integration",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-09-30",
+      "updated": "2026-10-06",
+      "resolved": "2026-09-30",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13537",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "btj"
+      ]
+    },
+    {
+      "key": "DEV-13456",
+      "summary": "Availability by tags on 'edit override' crossing over to other products",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [],
+      "created": "2026-09-28",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13456",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Fryburg"
+      ]
+    },
+    {
+      "key": "DEV-13739",
+      "summary": "Lewis Cabinet: new Sales by Export Class report shows 1 B2B order and 0 for \"B2B Sheminos\", legacy report shows 482 for September",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 685,
+      "customers": [],
+      "created": "2026-10-06",
+      "updated": "2026-10-06",
+      "resolved": "2026-10-06",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13739",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "lewiscabinet"
+      ]
+    },
+    {
+      "key": "DEV-13738",
+      "summary": "Lewis Cabinet: Sales Tax Report state selector has no Select All, each state must be added individually",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 241,
+      "customers": [],
+      "created": "2026-10-06",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13738",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "lewiscabinet"
+      ]
+    },
+    {
       "key": "DEV-13602",
       "summary": "Canary Closets - Operator button not showing for employee James Klob on his own login; visible when staff hijack the same contact",
       "status": "New",
@@ -79483,7 +79430,7 @@
       "issue_score": 199,
       "customers": [],
       "created": "2026-10-05",
-      "updated": "2026-10-05",
+      "updated": "2026-10-06",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-13602",
       "tag_count": 1,
@@ -79494,6 +79441,167 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "canary"
+      ]
+    },
+    {
+      "key": "DEV-13463",
+      "summary": "Midwest Floor Coverings - New Orders report Company tags filter lists only some company tags; M4-DD5% not selectable or searchable",
+      "status": "In Staging QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 685,
+      "customers": [],
+      "created": "2026-09-28",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13463",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "midwest1938"
+      ]
+    },
+    {
+      "key": "DEV-13574",
+      "summary": "Stanisci Design & Manufacturing - Attribute images intermittently do not enlarge on click in order entry; same attribute works on some products but not others",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [],
+      "created": "2026-10-02",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13574",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "staniscidesign"
+      ]
+    },
+    {
+      "key": "DEV-13163",
+      "summary": "Email Log shows a different From address than what the recipient actually received, for the same message (Kitch / mykitch)",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 651,
+      "customers": [],
+      "created": "2026-09-16",
+      "updated": "2026-10-06",
+      "resolved": "2026-10-02",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13163",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-13527",
+      "summary": "Panhandle Door & Drawer - Shipping report CSV export does not follow the column order set in the report view",
+      "status": "Feature Scope",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 228,
+      "customers": [],
+      "created": "2026-09-29",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13527",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "panhandledooranddrawer"
+      ]
+    },
+    {
+      "key": "DEV-11190",
+      "summary": "Output page Currency / Calculations not adding up",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 212,
+      "customers": [],
+      "created": "2025-11-20",
+      "updated": "2026-10-06",
+      "resolved": "2025-11-20",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11190",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-13496",
+      "summary": "Mullwoods - Add Show Buying History button to Individual account Orders section",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Low",
+      "issue_score": 139,
+      "customers": [],
+      "created": "2026-09-29",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13496",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "fryburgdoor"
+      ]
+    },
+    {
+      "key": "DEV-13490",
+      "summary": "Large orders slow to open: option dropdowns rebuilt on every line-item row; folderless items rendered in every folder",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 199,
+      "customers": [],
+      "created": "2026-09-29",
+      "updated": "2026-10-06",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13490",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "brandenbergercustom"
       ]
     },
     {
@@ -79566,52 +79674,6 @@
       ]
     },
     {
-      "key": "DEV-13463",
-      "summary": "Midwest Floor Coverings - New Orders report Company tags filter lists only some company tags; M4-DD5% not selectable or searchable",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 685,
-      "customers": [],
-      "created": "2026-09-28",
-      "updated": "2026-10-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13463",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "midwest1938"
-      ]
-    },
-    {
-      "key": "DEV-13527",
-      "summary": "Panhandle Door & Drawer - Shipping report CSV export does not follow the column order set in the report view",
-      "status": "Feature Scope",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 228,
-      "customers": [],
-      "created": "2026-09-29",
-      "updated": "2026-10-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13527",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "panhandledooranddrawer"
-      ]
-    },
-    {
       "key": "DEV-13485",
       "summary": "DC Drawers - Search bar intermittently returns no results for an order number or company name until the text is retyped",
       "status": "In Production",
@@ -79656,29 +79718,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "mykitch"
-      ]
-    },
-    {
-      "key": "DEV-13490",
-      "summary": "Large orders slow to open: option dropdowns rebuilt on every line-item row; folderless items rendered in every folder",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 199,
-      "customers": [],
-      "created": "2026-09-29",
-      "updated": "2026-10-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13490",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "brandenbergercustom"
       ]
     },
     {
@@ -79820,52 +79859,6 @@
       ]
     },
     {
-      "key": "DEV-13537",
-      "summary": "BTJ Cabinet Door Company: Create sandbox with API access for CDP integration",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [],
-      "created": "2026-09-30",
-      "updated": "2026-10-05",
-      "resolved": "2026-09-30",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13537",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "btj"
-      ]
-    },
-    {
-      "key": "DEV-13574",
-      "summary": "Stanisci Design & Manufacturing - Attribute images intermittently do not enlarge on click in order entry; same attribute works on some products but not others",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 719,
-      "customers": [],
-      "created": "2026-10-02",
-      "updated": "2026-10-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13574",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "staniscidesign"
-      ]
-    },
-    {
       "key": "DEV-13530",
       "summary": "DC Drawers - New shipping report filtered to 9/30 returns order 147121, whose delivery_date is 2026-09-29",
       "status": "Ready For QA",
@@ -79932,29 +79925,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "thomascreekwoodworking"
-      ]
-    },
-    {
-      "key": "DEV-13456",
-      "summary": "Availability by tags on 'edit override' crossing over to other products",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 706,
-      "customers": [],
-      "created": "2026-09-28",
-      "updated": "2026-10-02",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13456",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "Fryburg"
       ]
     },
     {
@@ -80071,29 +80041,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "fryburgdoor"
-      ]
-    },
-    {
-      "key": "DEV-13163",
-      "summary": "Email Log shows a different From address than what the recipient actually received, for the same message (Kitch / mykitch)",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 651,
-      "customers": [],
-      "created": "2026-09-16",
-      "updated": "2026-10-02",
-      "resolved": "2026-10-02",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13163",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "mykitch"
       ]
     },
     {
@@ -80465,29 +80412,6 @@
       ]
     },
     {
-      "key": "DEV-13496",
-      "summary": "Mullwoods - Add Show Buying History button to Individual account Orders section",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "Low",
-      "issue_score": 139,
-      "customers": [],
-      "created": "2026-09-29",
-      "updated": "2026-09-30",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13496",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "fryburgdoor"
-      ]
-    },
-    {
       "key": "DEV-10072",
       "summary": "Build Translations frontend processes",
       "status": "Ready for Dev",
@@ -80600,29 +80524,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "mykitch"
-      ]
-    },
-    {
-      "key": "DEV-11190",
-      "summary": "Output page Currency / Calculations not adding up",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 212,
-      "customers": [],
-      "created": "2025-11-20",
-      "updated": "2026-09-30",
-      "resolved": "2025-11-20",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11190",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
       ]
     },
     {
