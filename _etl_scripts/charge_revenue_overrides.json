@@ -1,0 +1,16 @@
+{
+  "_comment": "Revenue-type breakdown for charges that carry NO INVOICE, so build_revenue_recognition has no line items to allocate from. One-off and manually-created charges land here: Stripe records a single amount with a free-text description, and nothing in the payload says what was sold. Key by charge id (ch_/py_) or balance-transaction id (txn_). Line amounts must sum to the charge gross; the builder refuses an override that does not reconcile rather than silently mis-stating revenue. revenue_type must be one of the types in product_revenue_types.json.",
+  "updated_at": "2026-10-07",
+  "overrides": {
+    "ch_3UMDkIHkM2QhTtxh0bWuGHIJ": {
+      "customer": "Glacier Millworks",
+      "charge_gross": 4600,
+      "note": "Beau, 2026-10-07, from the Stripe pricing screen. Taken as a single one-off charge — the customer has no subscription object, so there is no invoice and no line items to read. Once they are moved onto a subscription the normal per-line allocation takes over and this override stops being used.",
+      "lines": [
+        { "amount": 2000, "revenue_type": "subscription",  "label": "Core Software" },
+        { "amount": 500,  "revenue_type": "services",      "label": "Allmoxy Support — Plus" },
+        { "amount": 2100, "revenue_type": "services",      "label": "Allmoxy Implementation — Plus" }
+      ]
+    }
+  }
+}

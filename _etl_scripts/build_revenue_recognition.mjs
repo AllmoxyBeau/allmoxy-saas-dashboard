@@ -439,6 +439,28 @@ const PRODUCTS = (() => {
   catch { return {}; }
 })();
 const SPLIT_START = QB.revenue_split_start || null;
+
+// Charges with no invoice have no lines to allocate from — a one-off charge is a single
+// amount and a free-text description, and nothing in the payload says what was sold.
+// Beau supplies the breakdown here. An override whose lines do not sum to the charge is
+// REFUSED rather than applied, because a mis-stated split is worse than an unclassified
+// charge: the unclassified one is visible on 4700, the bad split is not visible anywhere.
+const CHARGE_OVERRIDES = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/charge_revenue_overrides.json'), 'utf8')).overrides || {}; }
+  catch { return {}; }
+})();
+const chargeOverrideMix = (r) => {
+  const o = CHARGE_OVERRIDES[r.charge] || CHARGE_OVERRIDES[r.id];
+  if (!o?.lines?.length) return null;
+  const total = o.lines.reduce((s, l) => s + (l.amount || 0), 0);
+  if (Math.abs(total - r.amount) > 0.01) {
+    console.error(`[revenue_recognition] ⚠ override for ${r.charge || r.id} sums to $${total} but the charge is $${r.amount} — IGNORED`);
+    return null;
+  }
+  const mix = {};
+  for (const l of o.lines) mix[l.revenue_type] = (mix[l.revenue_type] || 0) + l.amount / total;
+  return mix;
+};
 const REV_TYPES = ['subscription', 'services', 'apitokens', 'customdomain'];
 
 // invoice id -> { type: share of the invoice's line total }
@@ -454,7 +476,13 @@ for (const c of Object.values(INV?.by_customer || {})) {
       const amt = l.a || 0;
       if (!amt) continue;
       let t = l.prod ? PRODUCTS[l.prod]?.revenue_type : null;
-      if (l.prod && !t) unmappedProducts.set(l.prod, r2((unmappedProducts.get(l.prod) || 0) + amt));
+      // Only complain about products on invoices in the split window. 806 retired
+      // one-off products from 2018-2023 are referenced by old invoices and will never be
+      // mapped; warning about them trains the eye to ignore the warning, which is how a
+      // real unmapped product would slip through.
+      if (l.prod && !t && SPLIT_START && String(inv.d || '') >= SPLIT_START) {
+        unmappedProducts.set(l.prod, r2((unmappedProducts.get(l.prod) || 0) + amt));
+      }
       // No product on the line (older invoices) falls back to the recurring flag, which
       // is what the pre-September world used.
       if (!t) t = l.rec ? 'subscription' : 'services';
@@ -468,7 +496,7 @@ for (const c of Object.values(INV?.by_customer || {})) {
   }
 }
 if (unmappedProducts.size) {
-  console.error(`[revenue_recognition] ⚠ ${unmappedProducts.size} product(s) missing from product_revenue_types.json:`);
+  console.error(`[revenue_recognition] ⚠ ${unmappedProducts.size} product(s) on invoices since ${SPLIT_START} are missing from product_revenue_types.json:`);
   for (const [pid, amt] of unmappedProducts) console.error(`    ${pid}  $${amt}`);
 }
 
@@ -541,7 +569,7 @@ if (BT?.months) {
     let unsplit = 0;
     if (splitOn) {
       for (const r of chargeRows) {
-        const mix = r.inv ? invoiceMix.get(r.inv) : null;
+        const mix = (r.inv ? invoiceMix.get(r.inv) : null) || chargeOverrideMix(r);
         if (mix) {
           for (const [t, share] of Object.entries(mix)) {
             if (byType[t] == null) byType[t] = 0;
