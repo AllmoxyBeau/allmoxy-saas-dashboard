@@ -421,6 +421,7 @@ for (const r of arBookableRows) {
 // "Subscription …allmoxy.com" / add-on charges billed outside an invoice (real
 // recurring revenue; also in the cash line, so they don't move Δ AR).
 const journal_entries = {};
+const reclassLog = [];   // months where untagged charges were recovered by description
 if (BT?.months) {
   const A = QB.accounts, TAXACCT = QB.sales_tax_payable_by_state || {};
   // Per-month net balance change (all categories incl. payouts) → mirrors Stripe's
@@ -436,8 +437,51 @@ if (BT?.months) {
     // Monthly Subscription instead of 4300 Services Income. The balance-transaction
     // cache classifies charges purely from Stripe metadata, which says 'subscription'.
     const svcShift = r2(directServices[m] || 0);
-    const subGross = r2(T.subscription_gross - svcShift);
-    const svcGross = r2(T.services_gross + svcShift);
+    // RECLASSIFY UNTAGGED CHARGES FROM THEIR DESCRIPTION. The balance-transaction cache
+    // takes `tt` from Stripe metadata, which stopped being set in mid-September 2026 —
+    // so bm.totals put $79,518 (Sept) and $77,671 (Oct) into untagged_gross, and the
+    // entry credited 4700 Miscellaneous Income. They are ordinary subscription and
+    // services charges. Recomputed here from the rows so the cached months are correct
+    // without re-pulling; the sync carries the same rules for future pulls.
+    const reTag = (r) => {
+      // Case-insensitive, because the metadata is typed by hand: "Services" and
+      // "services" both appear, and "AI Tokens" is a recurring per-month add-on that
+      // belongs with subscription — the accrual side already counts it there.
+      const v = String(r.tt ?? '').trim().toLowerCase();
+      if (v === 'services' || v === 'service') return 'services';
+      if (v === 'subscription' || v === 'ai tokens' || v === 'ai_tokens') return 'subscription';
+      const d = String(r.desc || '');
+      if (/allmoxy ai tokens/i.test(d)) return 'subscription';
+      if (/\bservi(?:c)?e?s?\s+invoice\b/i.test(d)) return 'services';
+      if (/^\s*subscription\s+\S+\.|custom\s*dom/i.test(d)) return 'subscription';
+      if (r.inv) return 'subscription';
+      if (/\binvoice\b/i.test(d)) return 'subscription';
+      return null;
+    };
+    // Refunds get the same treatment as charges, and for the same reason: the old test
+    // looked for the word "invoice", which "REFUND FOR CHARGE (Subscription creation)"
+    // does not contain, so $1,130 of plainly-subscription refunds debited 4700.
+    const reTagRefund = (r) => {
+      const v = String(r.tt ?? '').trim().toLowerCase();
+      if (v === 'services' || v === 'service') return 'services';
+      if (v === 'subscription' || v === 'ai tokens' || v === 'ai_tokens') return 'subscription';
+      const d = String(r.desc || '');
+      if (/services invoice/i.test(d)) return 'services';
+      if (/subscription|custom\s*dom|ai tokens|invoice/i.test(d)) return 'subscription';
+      return null;
+    };
+    const refundRows = (bm.rows || []).filter((r) => r.cat === 'refund' || r.cat === 'dispute' || r.cat === 'dispute_reversal');
+    const reSubRef = r2(refundRows.filter((r) => reTagRefund(r) === 'subscription').reduce((s, r) => s + Math.abs(r.amount), 0));
+    const reSvcRef = r2(refundRows.filter((r) => reTagRefund(r) === 'services').reduce((s, r) => s + Math.abs(r.amount), 0));
+    const reUnkRef = r2(refundRows.filter((r) => reTagRefund(r) == null).reduce((s, r) => s + Math.abs(r.amount), 0));
+
+    const chargeRows = (bm.rows || []).filter((r) => r.cat === 'charge');
+    const reSub = r2(chargeRows.filter((r) => reTag(r) === 'subscription').reduce((s, r) => s + r.amount, 0));
+    const reSvc = r2(chargeRows.filter((r) => reTag(r) === 'services').reduce((s, r) => s + r.amount, 0));
+    const reUnknown = r2(chargeRows.filter((r) => reTag(r) == null).reduce((s, r) => s + r.amount, 0));
+    const reclassified = r2((T.untagged_gross || 0) - reUnknown);
+    const subGross = r2(reSub - svcShift);
+    const svcGross = r2(reSvc + svcShift);
     const rows = bm.rows || [];
     const S = (f) => r2(rows.filter(f).reduce((s, r) => s + r.amount, 0));
     const KNOWN = new Set(['charge', 'refund', 'platform_earning', 'platform_earning_refund', 'fee', 'payout']);
@@ -482,6 +526,7 @@ if (BT?.months) {
     const taxTotal = r2(Object.values(taxUsed).reduce((s, v) => s + v, 0));
     const R = r2((by_month[m]?.recognized || 0) + direct);
     const adj = r2(R + taxTotal - subGross);
+    if (reclassified > 0.01) reclassLog.push({ month: m, amount: reclassified });
     const L = [];
     const line = (acct, debit, credit, description, group) => L.push({ account: `${acct.number} ${acct.name}`, debit: debit ? r2(debit) : null, credit: credit ? r2(credit) : null, description, group });
     const restate = QB.accrual_presentation === 'restate';
@@ -489,13 +534,14 @@ if (BT?.months) {
     line(A.stripe_fee_income, T.payouts, 0, 'Stripe payouts to bank (gross deposits)', 'cash');
     if (T.stripe_balance_change >= 0) line(A.stripe_clearing, 0, T.stripe_balance_change, 'Stripe balance change (payouts exceeded activity)', 'cash');
     else line(A.stripe_clearing, -T.stripe_balance_change, 0, 'Stripe balance change (activity exceeded payouts)', 'cash');
-    line(A.services, 0, svcGross, 'Services charges', 'cash');
+    // A zero line renders as "$null" in the entry and means nothing to a bookkeeper.
+    if (svcGross) line(A.services, 0, svcGross, 'Services charges', 'cash');
     line(A.subscription, 0, restate ? r2(R + taxTotal) : subGross, restate ? 'Subscription revenue recognized (invoice basis, incl. sales tax)' : 'Subscription charges (gross, incl. sales tax)', 'cash');
-    if (T.services_refunds) line(A.services, T.services_refunds, 0, 'Services refunds', 'cash');
-    if (T.subscription_refunds) line(A.subscription, T.subscription_refunds, 0, 'Subscription refunds', 'cash');
+    if (reSvcRef) line(A.services, reSvcRef, 0, 'Services refunds', 'cash');
+    if (reSubRef) line(A.subscription, reSubRef, 0, 'Subscription refunds', 'cash');
     if (T.connect_refunds) line(A.stripe_fee_income, T.connect_refunds, 0, 'Connect platform-fee refunds', 'cash');
-    if (T.untagged_gross) line(A.misc_income, 0, T.untagged_gross, 'Untagged charges — classify', 'cash');
-    if (T.other_refunds) line(A.misc_income, T.other_refunds, 0, 'Untagged refunds — classify', 'cash');
+    if (reUnknown) line(A.misc_income, 0, reUnknown, 'Untagged charges — classify', 'cash');
+    if (reUnkRef) line(A.misc_income, reUnkRef, 0, 'Untagged refunds — classify', 'cash');
     // Chargebacks — debit whichever revenue account the disputed charge credited.
     if (T.dispute_subscription) line(A.subscription, -T.dispute_subscription, 0, 'Chargebacks — subscription', 'cash');
     if (T.dispute_services) line(A.services, -T.dispute_services, 0, 'Chargebacks — services', 'cash');
@@ -661,6 +707,7 @@ const out = {
   orphan_stripe_customers: orphans,
   journal_entries,
   qb_accounts: QB,
+  untagged_reclassified: reclassLog,
   balance_transactions_fetched_at: BT?.fetchedAt || null,
   data_quality: { invoices_missing_paid_at: missingPaidAt },
   notes: `Recognized subscription revenue on the accrual/invoice basis with a month-end collection cutoff, parallel to the cash pipeline. Books go live ${BOOKS_GO_LIVE}; ${RECONCILE_FROM}+ carries per-customer detail for manual QB true-up. ${arRows.length} open/uncollectible invoices in AR aging. ${orphans.length} orphan Stripe customers need roster mapping.`,

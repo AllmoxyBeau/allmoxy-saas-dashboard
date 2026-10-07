@@ -95,7 +95,43 @@ for (const [y, m] of months) {
     for (const t of pg.data) {
       const cat = t.reporting_category || t.type;
       let tt = null, cust = null, name = null, chargeId = null, inv = null;
-      if (cat === 'charge') { tt = t.source?.metadata?.transaction_type || null; cust = t.source?.customer || null; name = t.source?.billing_details?.name || null; chargeId = t.source?.id || null; inv = (typeof t.source?.invoice === 'string' ? t.source.invoice : t.source?.invoice?.id) || null; }
+      if (cat === 'charge') {
+        cust = t.source?.customer || null; name = t.source?.billing_details?.name || null; chargeId = t.source?.id || null;
+        inv = (typeof t.source?.invoice === 'string' ? t.source.invoice : t.source?.invoice?.id) || null;
+        // NORMALISE THE METADATA VALUE. Beau's re-tagging in Stripe (2026-10-07) writes
+        // "Services" and "services" interchangeably and adds a new "AI Tokens" type. A
+        // case-sensitive match would drop "Services" and every AI-token charge straight
+        // back into 4700 Miscellaneous Income — the same hole we just closed, reopened
+        // by capitalisation.
+        //
+        // AI tokens map to subscription because that is what they are: a recurring
+        // per-month add-on, and the accrual engine already counts them as recurring
+        // direct subscription revenue. Keeping the two sides on different accounts
+        // would make the cash and accrual numbers disagree for no reason.
+        const meta = t.source?.metadata || {};
+        tt = normaliseType(meta.transaction_type);
+        // These charges carry no transaction_type on either the charge or the payment
+        // intent — checked live. What they do carry is `feature: "ai_tokens"`, which is
+        // a structured field rather than prose, so prefer it over parsing the
+        // description. AI tokens are a recurring per-month add-on and the accrual engine
+        // already counts them as recurring subscription revenue.
+        if (!tt && /ai[_ ]?tokens/i.test(String(meta.feature || ''))) tt = 'subscription';
+        // FALLBACK, matching sync_stripe.mjs classifyType. Charges had no fallback at
+        // all — only refunds did — so when Stripe stopped carrying
+        // metadata.transaction_type in mid-September 2026 every charge became
+        // "untagged" and the journal entry pushed it to 4700 Miscellaneous Income:
+        // $79,518 in September and all $77,671 of October. The descriptions say plainly
+        // what these are ("Allmoxy Services Invoice #6163", "Invoice ABCD-0012",
+        // "Subscription midwest2.allmoxy.com:"), so read them rather than post real
+        // subscription revenue to a suspense account.
+        if (!tt) {
+          const d = String(t.description || '');
+          if (/\bservi(?:c)?e?s?\s+invoice\b/i.test(d)) tt = 'services';
+          else if (/^\s*subscription\s+\S+\.|custom\s*dom/i.test(d)) tt = 'subscription';
+          else if (inv) tt = 'subscription';
+          else if (/\binvoice\b/i.test(d)) tt = 'subscription';
+        }
+      }
       else if (cat === 'refund' || cat === 'dispute' || cat === 'dispute_reversal') {
         // Disputes carry the same shape as refunds — classify by the charge they reverse
         // so a chargeback debits the revenue account it originally credited. A dispute's
@@ -108,7 +144,15 @@ for (const [y, m] of months) {
         // "REFUND FOR CHARGE (Invoice XXXX-0014)" for invoice-backed (subscription)
         // refunds and "…Allmoxy Services Invoice #NNNN" for services. Without this, an
         // unclassified subscription refund lands on 4700 Misc instead of 4000.
-        if (!tt) { const d = t.description || ''; tt = /services invoice/i.test(d) ? 'services' : /invoice/i.test(d) ? 'subscription' : null; }
+        if (!tt) {
+          const d = t.description || '';
+          // "REFUND FOR CHARGE (Subscription creation)" and "(Subscription
+          // template_db.allmoxy.com…)" carry no "invoice", so the old test missed them
+          // and $1,130 of plainly-subscription refunds debited 4700 instead of 4000.
+          tt = /services invoice/i.test(d) ? 'services'
+             : /subscription|custom\s*dom|ai tokens|invoice/i.test(d) ? 'subscription'
+             : null;
+        }
       }
       // `inv` null on a subscription-tagged charge = a direct/legacy "Subscription
       // xxx.allmoxy.com" or add-on charge billed OUTSIDE a Stripe invoice. These are
