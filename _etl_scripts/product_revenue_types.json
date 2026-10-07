@@ -1,0 +1,162 @@
+{
+ "_comment": "Beau's Stripe product -> revenue type map (products.csv export, 2026-10-07). From Sep 2026 Allmoxy sells MULTIPLE LINE ITEMS on one subscription, so revenue is recognised per invoice LINE, not per charge. Edit here - no code change needed. Revenue types map to QB accounts in qb_accounts.json under revenue_accounts.",
+ "updated_at": "2026-10-07",
+ "products": {
+  "prod_VHMb4oBFOAXoCV": {
+   "name": "Allmoxy Add-on - API & sandbox",
+   "revenue_type": "apitokens"
+  },
+  "prod_VHMbsjVdmePsB3": {
+   "name": "Allmoxy Support - Plus",
+   "revenue_type": "services"
+  },
+  "prod_VHMbYFw9AYlG9u": {
+   "name": "Allmoxy Core - Production Cabinets Pro",
+   "revenue_type": "subscription"
+  },
+  "prod_VBin1ANZrDosU5": {
+   "name": "Allmoxy Implementation - Standard",
+   "revenue_type": "services"
+  },
+  "prod_VBLOSBtr4oSesR": {
+   "name": "Allmoxy Core - Closets Starter",
+   "revenue_type": "subscription"
+  },
+  "prod_VBJZbYY5aMzvHw": {
+   "name": "Allmoxy Add-on - Custom domain",
+   "revenue_type": "customdomain"
+  },
+  "prod_VBJZ6kO2SGn6Nn": {
+   "name": "Allmoxy Implementation - Plus",
+   "revenue_type": "services"
+  },
+  "prod_VBJZc2W1qfEtID": {
+   "name": "Allmoxy Support - Standard",
+   "revenue_type": "subscription"
+  },
+  "prod_VBJZJcEZIvrx76": {
+   "name": "Allmoxy Core - Components Starter",
+   "revenue_type": "subscription"
+  },
+  "prod_VBIuUrXeWNzTny": {
+   "name": "Allmoxy Core - Suppliers Starter",
+   "revenue_type": "subscription"
+  },
+  "prod_V8Uwvr1XV1LIXG": {
+   "name": "Allmoxy Core - Custom Starter",
+   "revenue_type": "subscription"
+  },
+  "prod_UzGHDhiYCpOlmS": {
+   "name": "Support Plan",
+   "revenue_type": "services"
+  },
+  "prod_UiXGR2TmnGegPB": {
+   "name": "Sponsorship",
+   "revenue_type": "subscription"
+  },
+  "prod_TOlWPUpJmbKiE3": {
+   "name": "API Access",
+   "revenue_type": "apitokens"
+  },
+  "prod_T9O6GuAzRUDZAT": {
+   "name": "Services",
+   "revenue_type": "services"
+  },
+  "prod_SBA1iE4yTJ6VGn": {
+   "name": "Subscription - Sandbox",
+   "revenue_type": "subscription"
+  },
+  "prod_RvOn0tfeKT2LJj": {
+   "name": "Subscription - Custom Domain",
+   "revenue_type": "subscription"
+  },
+  "prod_RvOg9QJivKDox3": {
+   "name": "Subscription - Annual",
+   "revenue_type": "subscription"
+  },
+  "prod_RvOfCUgRWAj9fE": {
+   "name": "Subscription - B2B Monthly",
+   "revenue_type": "subscription"
+  },
+  "prod_RthYPv0w7cEotz": {
+   "name": "Core Software",
+   "revenue_type": "subscription"
+  },
+  "prod_RthRxc0XpuBlrH": {
+   "name": "B2B Instance Subscription",
+   "revenue_type": "subscription"
+  },
+  "prod_RsQL8VTheN6Gzg": {
+   "name": "Subscription - Old",
+   "revenue_type": "subscription"
+  },
+  "prod_Q7Mhp2r6PEJWz7": {
+   "name": "Allmoxy Delinquent Payments",
+   "revenue_type": "subscription"
+  },
+  "prod_OFdx38s6GJ0bBY": {
+   "name": "Allmoxy Custom URL",
+   "revenue_type": "customdomain"
+  },
+  "prod_NwwSbGjmOywyD7": {
+   "name": "Allmoxy Cancellation - Just Cabinet Door",
+   "revenue_type": "subscription"
+  },
+  "prod_Me4TXLiAji0IQd": {
+   "name": "Custom Domain",
+   "revenue_type": "customdomain"
+  },
+  "prod_MLoP3QeQ6CVfsQ": {
+   "name": "Allmoxy Cancellation",
+   "revenue_type": "subscription"
+  },
+  "prod_MLoO7pdtXDtIwR": {
+   "name": "Allmoxy Cancellation",
+   "revenue_type": "subscription"
+  },
+  "prod_La3h5uYoAolXx0": {
+   "name": "Allmoxy Cancellation - Chester Cabinets",
+   "revenue_type": "subscription"
+  },
+  "prod_La3fnDDmDnOLpi": {
+   "name": "Allmoxy Cancellation",
+   "revenue_type": "subscription"
+  },
+  "prod_LDZvvC8iYoo4Xm": {
+   "name": "Allmoxy Annual Subscription",
+   "revenue_type": "subscription"
+  },
+  "prod_KZuEDnEM8gnsnR": {
+   "name": "Allmoxy Monthly Subscription",
+   "revenue_type": "subscription"
+  },
+  "prod_Fd2pIcCf9G1xKW": {
+   "name": "CustomDomain",
+   "revenue_type": "customdomain"
+  },
+  "prod_CuSoWcLXlkNAym": {
+   "name": "Services",
+   "revenue_type": "services"
+  },
+  "prod_C45YV8JQHA5c1y": {
+   "name": "Services",
+   "revenue_type": "services"
+  },
+  "prod_BUuBFPYm3qIZWK": {
+   "name": "$499 Support package",
+   "revenue_type": "services"
+  },
+  "prod_BUeZZyw0pHGuT9": {
+   "name": "Test plan",
+   "revenue_type": "subscription"
+  },
+  "prod_7vU8D650mlZ3Jr": {
+   "name": "$65 month",
+   "revenue_type": "subscription"
+  },
+  "prod_HE2LphajWsMGku": {
+   "name": "General Services: Basic Catalog / Product Cloning (retired 2020)",
+   "revenue_type": "services"
+  }
+ }
+}

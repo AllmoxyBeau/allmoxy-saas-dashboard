@@ -420,6 +420,58 @@ for (const r of arBookableRows) {
 // R = invoice-basis recognized (ex-tax, excl. annual payers) + direct/legacy
 // "Subscription …allmoxy.com" / add-on charges billed outside an invoice (real
 // recurring revenue; also in the cash line, so they don't move Δ AR).
+// ── PER-LINE REVENUE RECOGNITION (Beau, 2026-10-07) ──────────────────────────
+// "We moved to multiple line items on one subscription in Stripe. We started to sale AI
+// Tokens, we also started selling implementation packages."
+//
+// A single charge can now span several revenue accounts: core software, an
+// implementation package (services), AI tokens, a custom domain. Charge-level
+// transaction_type cannot express that — it has one value for the whole payment — so
+// from revenue_split_start the charge is ALLOCATED ACROSS TYPES in the proportions of
+// its invoice's line items, using Beau's product -> type map.
+//
+// Allocation is pro-rata on line amounts and includes sales tax, because the entry
+// credits revenue gross of tax and backs the tax out separately on 4050/214x. Charges
+// with no invoice behind them (direct subscriptions, one-off AI-token upgrades) keep
+// the charge-level classification; there are no lines to read.
+const PRODUCTS = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/product_revenue_types.json'), 'utf8')).products || {}; }
+  catch { return {}; }
+})();
+const SPLIT_START = QB.revenue_split_start || null;
+const REV_TYPES = ['subscription', 'services', 'apitokens', 'customdomain'];
+
+// invoice id -> { type: share of the invoice's line total }
+const invoiceMix = new Map();
+const unmappedProducts = new Map();
+for (const c of Object.values(INV?.by_customer || {})) {
+  for (const inv of (c.invoices || [])) {
+    const lines = inv.lines || [];
+    if (!lines.length) continue;
+    const byType = {};
+    let total = 0;
+    for (const l of lines) {
+      const amt = l.a || 0;
+      if (!amt) continue;
+      let t = l.prod ? PRODUCTS[l.prod]?.revenue_type : null;
+      if (l.prod && !t) unmappedProducts.set(l.prod, r2((unmappedProducts.get(l.prod) || 0) + amt));
+      // No product on the line (older invoices) falls back to the recurring flag, which
+      // is what the pre-September world used.
+      if (!t) t = l.rec ? 'subscription' : 'services';
+      byType[t] = (byType[t] || 0) + amt;
+      total += amt;
+    }
+    if (total <= 0) continue;
+    const mix = {};
+    for (const [t, v] of Object.entries(byType)) mix[t] = v / total;
+    invoiceMix.set(inv.id, mix);
+  }
+}
+if (unmappedProducts.size) {
+  console.error(`[revenue_recognition] ⚠ ${unmappedProducts.size} product(s) missing from product_revenue_types.json:`);
+  for (const [pid, amt] of unmappedProducts) console.error(`    ${pid}  $${amt}`);
+}
+
 const journal_entries = {};
 const reclassLog = [];   // months where untagged charges were recovered by description
 if (BT?.months) {
@@ -478,10 +530,41 @@ if (BT?.months) {
     const chargeRows = (bm.rows || []).filter((r) => r.cat === 'charge');
     const reSub = r2(chargeRows.filter((r) => reTag(r) === 'subscription').reduce((s, r) => s + r.amount, 0));
     const reSvc = r2(chargeRows.filter((r) => reTag(r) === 'services').reduce((s, r) => s + r.amount, 0));
-    const reUnknown = r2(chargeRows.filter((r) => reTag(r) == null).reduce((s, r) => s + r.amount, 0));
+    let reUnknown = r2(chargeRows.filter((r) => reTag(r) == null).reduce((s, r) => s + r.amount, 0));
     const reclassified = r2((T.untagged_gross || 0) - reUnknown);
-    const subGross = r2(reSub - svcShift);
-    const svcGross = r2(reSvc + svcShift);
+
+    // Allocate each charge across revenue types. Before SPLIT_START the products did not
+    // exist, so the charge-level classification stands and everything lands on the two
+    // accounts it always did.
+    const splitOn = SPLIT_START && m >= SPLIT_START;
+    const byType = Object.fromEntries(REV_TYPES.map((t) => [t, 0]));
+    let unsplit = 0;
+    if (splitOn) {
+      for (const r of chargeRows) {
+        const mix = r.inv ? invoiceMix.get(r.inv) : null;
+        if (mix) {
+          for (const [t, share] of Object.entries(mix)) {
+            if (byType[t] == null) byType[t] = 0;
+            byType[t] += r.amount * share;
+          }
+        } else {
+          // No invoice to read lines from. A standalone AI-token upgrade is apitokens;
+          // anything else keeps what the charge itself says.
+          const d = String(r.desc || '');
+          const t = /allmoxy ai tokens|ai[_ ]?tokens/i.test(d) ? 'apitokens' : reTag(r);
+          if (t) byType[t] = (byType[t] || 0) + r.amount;
+          else unsplit += r.amount;
+        }
+      }
+      for (const t of Object.keys(byType)) byType[t] = r2(byType[t]);
+      unsplit = r2(unsplit);
+    }
+
+    const subGross = splitOn ? r2(byType.subscription - svcShift) : r2(reSub - svcShift);
+    const svcGross = splitOn ? r2(byType.services + svcShift) : r2(reSvc + svcShift);
+    const apiGross = splitOn ? r2(byType.apitokens) : 0;
+    const domGross = splitOn ? r2(byType.customdomain) : 0;
+    if (splitOn) reUnknown = unsplit;
     const rows = bm.rows || [];
     const S = (f) => r2(rows.filter(f).reduce((s, r) => s + r.amount, 0));
     const KNOWN = new Set(['charge', 'refund', 'platform_earning', 'platform_earning_refund', 'fee', 'payout']);
@@ -536,6 +619,8 @@ if (BT?.months) {
     else line(A.stripe_clearing, -T.stripe_balance_change, 0, 'Stripe balance change (activity exceeded payouts)', 'cash');
     // A zero line renders as "$null" in the entry and means nothing to a bookkeeper.
     if (svcGross) line(A.services, 0, svcGross, 'Services charges', 'cash');
+    if (apiGross) line(A.apitokens, 0, apiGross, 'API & AI token charges', 'cash');
+    if (domGross) line(A.customdomain, 0, domGross, 'Custom domain charges', 'cash');
     line(A.subscription, 0, restate ? r2(R + taxTotal) : subGross, restate ? 'Subscription revenue recognized (invoice basis, incl. sales tax)' : 'Subscription charges (gross, incl. sales tax)', 'cash');
     if (reSvcRef) line(A.services, reSvcRef, 0, 'Services refunds', 'cash');
     if (reSubRef) line(A.subscription, reSubRef, 0, 'Subscription refunds', 'cash');

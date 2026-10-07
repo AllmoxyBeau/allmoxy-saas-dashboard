@@ -1,26 +1,80 @@
 {
-  "_comment": "QuickBooks chart-of-accounts mapping for the monthly Stripe journal entry generated on the Revenue Recognition page. Mirrors Beau's existing entry (Aug 2026 screenshot). Edit labels here — no code change needed. `accrual_presentation`: 'append' keeps the cash lines exactly as Beau books them and ADDS the accrual (AR) adjustment lines; 'restate' replaces the 4000 cash figure with the recognized figure. `sales_tax_basis`: 'invoice' = tax on invoices billed in the month (consistent with accrual 4000); 'cash' = tax embedded in the month's deposits (Beau's historical 4050 basis). Books go-live is set in build_revenue_recognition.mjs (BOOKS_GO_LIVE) — Jan 2026 as of 2026-09-05.",
+  "_comment": "QuickBooks chart-of-accounts mapping for the monthly Stripe journal entry generated on the Revenue Recognition page. Mirrors Beau's existing entry (Aug 2026 screenshot). Edit labels here \u2014 no code change needed. `accrual_presentation`: 'append' keeps the cash lines exactly as Beau books them and ADDS the accrual (AR) adjustment lines; 'restate' replaces the 4000 cash figure with the recognized figure. `sales_tax_basis`: 'invoice' = tax on invoices billed in the month (consistent with accrual 4000); 'cash' = tax embedded in the month's deposits (Beau's historical 4050 basis). Books go-live is set in build_revenue_recognition.mjs (BOOKS_GO_LIVE) \u2014 Jan 2026 as of 2026-09-05.",
   "updated_at": "2026-09-05",
   "accrual_presentation": "append",
   "sales_tax_basis": "invoice",
-  "_ar_writeoff_comment": "NULL = no automatic write-off (Beau, 2026-09-05, final). Every invoice stays in AR until HE marks it uncollectible on the Revenue → Collections page; nothing is written off by age. The brief 90-day auto rule was removed because age alone can't tell 'gone' from 'behind' — it was writing off $8,154 from customers still paying every month (LV Service Solutions pays $699/mo with four unpaid $699 invoices). Setting a number here re-enables the age rule as a DEFAULT for undecided invoices; explicit decisions in ar_collection_overrides.json always win either way.",
+  "_ar_writeoff_comment": "NULL = no automatic write-off (Beau, 2026-09-05, final). Every invoice stays in AR until HE marks it uncollectible on the Revenue \u2192 Collections page; nothing is written off by age. The brief 90-day auto rule was removed because age alone can't tell 'gone' from 'behind' \u2014 it was writing off $8,154 from customers still paying every month (LV Service Solutions pays $699/mo with four unpaid $699 invoices). Setting a number here re-enables the age rule as a DEFAULT for undecided invoices; explicit decisions in ar_collection_overrides.json always win either way.",
   "ar_writeoff_after_days": null,
   "apply_refund_classification_fix": true,
   "accounts": {
-    "stripe_clearing":      { "number": "1003", "name": "Stripe Account" },
-    "accounts_receivable":  { "number": "1200", "name": "Accounts Receivable" },
-    "subscription":         { "number": "4000", "name": "Monthly Subscription" },
-    "subscription_tax":     { "number": "4050", "name": "Monthly Subscription Tax" },
-    "annual_deferred":      { "number": "4100", "name": "Annual Deferred Monthly" },
-    "stripe_fee_income":    { "number": "4200", "name": "Stripe Fee Income" },
-    "uncollectible":        { "number": "4950", "name": "Uncollectible Income" },
-    "services":             { "number": "4300", "name": "Services Income" },
-    "misc_income":          { "number": "4700", "name": "Miscellaneous Income" },
-    "cc_fees":              { "number": "5000", "name": "Credit Card Acceptance Fees" }
+    "stripe_clearing": {
+      "number": "1003",
+      "name": "Stripe Account"
+    },
+    "accounts_receivable": {
+      "number": "1200",
+      "name": "Accounts Receivable"
+    },
+    "subscription": {
+      "number": "4000",
+      "name": "Monthly Subscription"
+    },
+    "subscription_tax": {
+      "number": "4050",
+      "name": "Monthly Subscription Tax"
+    },
+    "annual_deferred": {
+      "number": "4100",
+      "name": "Annual Deferred Monthly"
+    },
+    "stripe_fee_income": {
+      "number": "4200",
+      "name": "Stripe Fee Income"
+    },
+    "uncollectible": {
+      "number": "4950",
+      "name": "Uncollectible Income"
+    },
+    "services": {
+      "number": "4300",
+      "name": "Services Income"
+    },
+    "misc_income": {
+      "number": "4700",
+      "name": "Miscellaneous Income"
+    },
+    "cc_fees": {
+      "number": "5000",
+      "name": "Credit Card Acceptance Fees"
+    },
+    "apitokens": {
+      "number": "4400",
+      "name": "API & AI Token Income",
+      "_confirm": "PLACEHOLDER NUMBER - Beau to confirm the real GL account"
+    },
+    "customdomain": {
+      "number": "4500",
+      "name": "Custom Domain Income",
+      "_confirm": "PLACEHOLDER NUMBER - Beau to confirm the real GL account"
+    }
   },
   "sales_tax_payable_by_state": {
-    "UT": { "number": "2141", "name": "Sales Tax Payable:Utah State", "description": "Utah Sales Tax" },
-    "NY": { "number": "2142", "name": "Sales Tax Payable:NY Sales Tax", "description": "New York Sales Tax" },
-    "CO": { "number": "2144", "name": "Sales Tax Payable:Denver Sales Tax", "description": "Colorado Sales Tax" }
-  }
+    "UT": {
+      "number": "2141",
+      "name": "Sales Tax Payable:Utah State",
+      "description": "Utah Sales Tax"
+    },
+    "NY": {
+      "number": "2142",
+      "name": "Sales Tax Payable:NY Sales Tax",
+      "description": "New York Sales Tax"
+    },
+    "CO": {
+      "number": "2144",
+      "name": "Sales Tax Payable:Denver Sales Tax",
+      "description": "Colorado Sales Tax"
+    }
+  },
+  "revenue_split_start": "2026-09",
+  "_revenue_split_comment": "From this month revenue is recognised PER INVOICE LINE, not per charge. Allmoxy moved to multiple line items on one Stripe subscription (core software + implementation + AI tokens + custom domain), so a single charge can span several revenue accounts. Line products map to revenue types in product_revenue_types.json; types map to the accounts above. Before this month the charge-level transaction_type is used, because the line-item products did not exist yet."
 }

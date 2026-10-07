@@ -98,6 +98,13 @@ for (;;) {
       pe: iso(l.period?.end),
       rec: !!(l.price?.recurring) || l.type === 'subscription',
       manual: !!(l.period && l.period.start === l.period.end),
+      // PRODUCT ID, so revenue can be recognised per line. From Sep 2026 one
+      // subscription carries several products — core software, an implementation
+      // package, AI tokens, a custom domain — which land on different revenue
+      // accounts. `data.lines.data.price` was already expanded for the recurring flag;
+      // the product was simply being thrown away.
+      prod: (typeof l.price?.product === 'string' ? l.price.product : l.price?.product?.id) || null,
+      desc: (l.description || '').slice(0, 80) || null,
     }));
     const sub = r2(lines.filter((l) => l.rec).reduce((s, l) => s + l.a, 0));
     const svc = r2(lines.filter((l) => !l.rec).reduce((s, l) => s + l.a, 0));
