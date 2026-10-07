@@ -5,11 +5,35 @@
     "ch_3UMDkIHkM2QhTtxh0bWuGHIJ": {
       "customer": "Glacier Millworks",
       "charge_gross": 4600,
-      "note": "Beau, 2026-10-07, from the Stripe pricing screen. Taken as a single one-off charge — the customer has no subscription object, so there is no invoice and no line items to read. Once they are moved onto a subscription the normal per-line allocation takes over and this override stops being used.",
+      "note": "Beau, 2026-10-07, from the Stripe pricing screen. Taken as a single one-off charge \u2014 the customer has no subscription object, so there is no invoice and no line items to read. Once they are moved onto a subscription the normal per-line allocation takes over and this override stops being used.",
       "lines": [
-        { "amount": 2000, "revenue_type": "subscription",  "label": "Core Software" },
-        { "amount": 500,  "revenue_type": "services",      "label": "Allmoxy Support — Plus" },
-        { "amount": 2100, "revenue_type": "services",      "label": "Allmoxy Implementation — Plus" }
+        {
+          "amount": 2000,
+          "revenue_type": "subscription",
+          "label": "Core Software"
+        },
+        {
+          "amount": 500,
+          "revenue_type": "services",
+          "label": "Allmoxy Support \u2014 Plus"
+        },
+        {
+          "amount": 2100,
+          "revenue_type": "services",
+          "label": "Allmoxy Implementation \u2014 Plus"
+        }
+      ]
+    },
+    "py_3Sz1u3HkM2QhTtxh10uCzuu1": {
+      "customer": "Harbour City Kitchens",
+      "charge_gross": 417,
+      "note": "One-off charge taken 2026-02-09 before the customer was put on a subscription. Their live subscription sub_1T9BG2Hk is a single $417 Core Software line (prod_RthYPv0w7cEotz) \u2014 same amount, same product \u2014 so this is plain subscription revenue. Verified against Stripe, not inferred from the description.",
+      "lines": [
+        {
+          "amount": 417,
+          "revenue_type": "subscription",
+          "label": "Core Software (pre-subscription one-off)"
+        }
       ]
     }
   }

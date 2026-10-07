@@ -73,6 +73,6 @@
       "description": "Colorado Sales Tax"
     }
   },
-  "revenue_split_start": "2026-09",
-  "_revenue_split_comment": "From this month revenue is recognised PER INVOICE LINE, not per charge. Allmoxy moved to multiple line items on one Stripe subscription (core software + implementation + AI tokens + custom domain), so a single charge can span several revenue accounts. Line products map to revenue types in product_revenue_types.json; types map to the accounts above. Before this month the charge-level transaction_type is used, because the line-item products did not exist yet."
+  "revenue_split_start": "2026-01",
+  "_revenue_split_comment": "From this month revenue is recognised PER INVOICE LINE, not per charge. Allmoxy moved to multiple line items on one Stripe subscription (core software + implementation + AI tokens + custom domain), so a single charge can span several revenue accounts. Line products map to revenue types in product_revenue_types.json; types map to the accounts above. Set to 2026-01 (Beau, 2026-10-07) to carry the add-on breakout back through the reconciliation window that starts with the books go-live year, not just from the September pricing change. All 1,682 Jan-Aug 2026 invoice lines map to a known product, so nothing falls through."
 }
