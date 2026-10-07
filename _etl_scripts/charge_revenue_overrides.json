@@ -23,18 +23,6 @@
           "label": "Allmoxy Implementation \u2014 Plus"
         }
       ]
-    },
-    "py_3Sz1u3HkM2QhTtxh10uCzuu1": {
-      "customer": "Harbour City Kitchens",
-      "charge_gross": 417,
-      "note": "One-off charge taken 2026-02-09 before the customer was put on a subscription. Their live subscription sub_1T9BG2Hk is a single $417 Core Software line (prod_RthYPv0w7cEotz) \u2014 same amount, same product \u2014 so this is plain subscription revenue. Verified against Stripe, not inferred from the description.",
-      "lines": [
-        {
-          "amount": 417,
-          "revenue_type": "subscription",
-          "label": "Core Software (pre-subscription one-off)"
-        }
-      ]
     }
   }
 }

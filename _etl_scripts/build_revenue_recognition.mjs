@@ -461,7 +461,7 @@ const chargeOverrideMix = (r) => {
   for (const l of o.lines) mix[l.revenue_type] = (mix[l.revenue_type] || 0) + l.amount / total;
   return mix;
 };
-const REV_TYPES = ['subscription', 'services', 'apitokens', 'customdomain'];
+const REV_TYPES = ['subscription', 'services', 'operatortokens', 'customdomain'];
 
 // invoice id -> { type: share of the invoice's line total }
 const invoiceMix = new Map();
@@ -550,7 +550,11 @@ if (BT?.months) {
       if (/subscription|custom\s*dom|ai tokens|invoice/i.test(d)) return 'subscription';
       return null;
     };
-    const refundRows = (bm.rows || []).filter((r) => r.cat === 'refund' || r.cat === 'dispute' || r.cat === 'dispute_reversal');
+    // REFUNDS ONLY. Disputes have their own lines below, driven by T.dispute_* — pulling
+    // them in here too debits the chargeback twice, which is what put a spurious $417
+    // on 4700 in February as "UNMAPPED Stripe activity". My own regression, from the
+    // refund recompute; the dedicated dispute handling was already correct.
+    const refundRows = (bm.rows || []).filter((r) => r.cat === 'refund');
     const reSubRef = r2(refundRows.filter((r) => reTagRefund(r) === 'subscription').reduce((s, r) => s + Math.abs(r.amount), 0));
     const reSvcRef = r2(refundRows.filter((r) => reTagRefund(r) === 'services').reduce((s, r) => s + Math.abs(r.amount), 0));
     const reUnkRef = r2(refundRows.filter((r) => reTagRefund(r) == null).reduce((s, r) => s + Math.abs(r.amount), 0));
@@ -579,7 +583,10 @@ if (BT?.months) {
           // No invoice to read lines from. A standalone AI-token upgrade is apitokens;
           // anything else keeps what the charge itself says.
           const d = String(r.desc || '');
-          const t = /allmoxy ai tokens|ai[_ ]?tokens/i.test(d) ? 'apitokens' : reTag(r);
+          // Operator tokens are sold as standalone charges with no invoice behind them,
+          // so the description is the only signal. API ACCESS IS A DIFFERENT PRODUCT and
+          // books as subscription (Beau, 2026-10-07) — do not let "api" match here.
+          const t = /allmoxy ai tokens|operator tokens|ai[_ ]?tokens/i.test(d) ? 'operatortokens' : reTag(r);
           if (t) byType[t] = (byType[t] || 0) + r.amount;
           else unsplit += r.amount;
         }
@@ -590,7 +597,7 @@ if (BT?.months) {
 
     const subGross = splitOn ? r2(byType.subscription - svcShift) : r2(reSub - svcShift);
     const svcGross = splitOn ? r2(byType.services + svcShift) : r2(reSvc + svcShift);
-    const apiGross = splitOn ? r2(byType.apitokens) : 0;
+    const tokGross = splitOn ? r2(byType.operatortokens) : 0;
     const domGross = splitOn ? r2(byType.customdomain) : 0;
     if (splitOn) reUnknown = unsplit;
     const rows = bm.rows || [];
@@ -647,7 +654,7 @@ if (BT?.months) {
     else line(A.stripe_clearing, -T.stripe_balance_change, 0, 'Stripe balance change (activity exceeded payouts)', 'cash');
     // A zero line renders as "$null" in the entry and means nothing to a bookkeeper.
     if (svcGross) line(A.services, 0, svcGross, 'Services charges', 'cash');
-    if (apiGross) line(A.apitokens, 0, apiGross, 'API & AI token charges', 'cash');
+    if (tokGross) line(A.operatortokens, 0, tokGross, 'Operator token charges', 'cash');
     if (domGross) line(A.customdomain, 0, domGross, 'Custom domain charges', 'cash');
     line(A.subscription, 0, restate ? r2(R + taxTotal) : subGross, restate ? 'Subscription revenue recognized (invoice basis, incl. sales tax)' : 'Subscription charges (gross, incl. sales tax)', 'cash');
     if (reSvcRef) line(A.services, reSvcRef, 0, 'Services refunds', 'cash');

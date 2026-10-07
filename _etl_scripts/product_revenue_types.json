@@ -1,10 +1,11 @@
 {
- "_comment": "Beau's Stripe product -> revenue type map (products.csv export, 2026-10-07). From Sep 2026 Allmoxy sells MULTIPLE LINE ITEMS on one subscription, so revenue is recognised per invoice LINE, not per charge. Edit here - no code change needed. Revenue types map to QB accounts in qb_accounts.json under revenue_accounts.",
+ "_comment": "Beau's Stripe product -> revenue type map (products.csv export, 2026-10-07). From Sep 2026 Allmoxy sells MULTIPLE LINE ITEMS on one subscription, so revenue is recognised per invoice LINE, not per charge. Edit here - no code change needed. Revenue types (subscription, services, operatortokens, customdomain) map to QB accounts in qb_accounts.json under revenue_accounts.",
  "updated_at": "2026-10-07",
  "products": {
   "prod_VHMb4oBFOAXoCV": {
    "name": "Allmoxy Add-on - API & sandbox",
-   "revenue_type": "apitokens"
+   "revenue_type": "subscription",
+   "_note": "Beau 2026-10-07: API & sandbox add-on is API access, so subscription \u2014 not operator tokens."
   },
   "prod_VHMbsjVdmePsB3": {
    "name": "Allmoxy Support - Plus",
@@ -57,7 +58,8 @@
   },
   "prod_TOlWPUpJmbKiE3": {
    "name": "API Access",
-   "revenue_type": "apitokens"
+   "revenue_type": "subscription",
+   "_note": "Beau 2026-10-07: API Access is recurring subscription revenue, NOT operator tokens. Different product."
   },
   "prod_T9O6GuAzRUDZAT": {
    "name": "Services",
