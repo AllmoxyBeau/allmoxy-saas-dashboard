@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-07T15:44:28.066Z",
+  "fetched_at": "2026-10-19T17:35:55.920Z",
   "total": 29,
   "passed": 26,
   "errors": 0,
@@ -190,14 +190,14 @@
       "name": "every paid Stripe invoice has a matching charge in the cash cache",
       "severity": "error",
       "passed": true,
-      "detail": "2852 paid invoices since 2025-08 all reconcile to a cached charge",
+      "detail": "2942 paid invoices since 2025-08 all reconcile to a cached charge",
       "examples": []
     },
     {
       "name": "customer base: MRR equals the sum of the counted members",
       "severity": "error",
       "passed": true,
-      "detail": "197 customers reconcile to $231,351 MRR (ARPA $1,174)",
+      "detail": "197 customers reconcile to $232,186 MRR (ARPA $1,179)",
       "examples": []
     },
     {
@@ -218,7 +218,7 @@
       "name": "customer base MRR reconciles to the accrual waterfall",
       "severity": "warn",
       "passed": true,
-      "detail": "$231,351 = waterfall $228,178 + $3,173 annual amortization",
+      "detail": "$232,186 = waterfall $229,013 + $3,173 annual amortization",
       "examples": []
     },
     {
