@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-10-19T17:35:51.253Z",
-  "jira_fetchedAt": "2026-10-19T17:35:11.083Z",
+  "fetchedAt": "2026-10-20T17:00:33.934Z",
+  "jira_fetchedAt": "2026-10-20T16:59:47.344Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4546,
+    "total_tickets": 4548,
     "open_tickets": 885,
-    "done_tickets": 3661,
+    "done_tickets": 3663,
     "tickets_with_matched_customer": 2280,
-    "open_mrr_at_stake": 2724360.75,
+    "open_mrr_at_stake": 2712913.75,
     "distinct_customers_tagged": 152,
     "unmatched_labels": [
       "2020",
@@ -219,7 +219,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -268,7 +268,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -379,7 +379,7 @@
       "active_customer_count": 25,
       "total_mrr": 62858.1,
       "total_arr": 754297.2,
-      "total_lifetime": 5216006.68,
+      "total_lifetime": 5217680.68,
       "unmatched_labels": [
         "DCDrawers",
         "DotCabinets",
@@ -455,7 +455,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -497,7 +497,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -559,7 +559,7 @@
       "active_customer_count": 19,
       "total_mrr": 54969.15,
       "total_arr": 659629.8,
-      "total_lifetime": 4455633.97,
+      "total_lifetime": 4457307.97,
       "unmatched_labels": [
         "CabinetParts",
         "Fryburg",
@@ -811,7 +811,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -880,7 +880,7 @@
       "active_customer_count": 15,
       "total_mrr": 48683.2,
       "total_arr": 584198.4,
-      "total_lifetime": 4174721.19,
+      "total_lifetime": 4174820.19,
       "unmatched_labels": [
         "DCDrawers",
         "brandenbergercustom",
@@ -946,7 +946,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -994,7 +994,7 @@
       "active_customer_count": 10,
       "total_mrr": 40657.15,
       "total_arr": 487885.8,
-      "total_lifetime": 3573649.86,
+      "total_lifetime": 3573748.86,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -1063,7 +1063,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -1098,7 +1098,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         },
         {
@@ -1139,7 +1139,7 @@
       "active_customer_count": 13,
       "total_mrr": 38788.05,
       "total_arr": 465456.6,
-      "total_lifetime": 2987536.28,
+      "total_lifetime": 2987905.28,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1206,7 +1206,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -1241,7 +1241,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         },
         {
@@ -1282,7 +1282,7 @@
       "active_customer_count": 13,
       "total_mrr": 38788.05,
       "total_arr": 465456.6,
-      "total_lifetime": 2987536.28,
+      "total_lifetime": 2987905.28,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1349,7 +1349,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -1384,7 +1384,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         },
         {
@@ -1425,7 +1425,7 @@
       "active_customer_count": 13,
       "total_mrr": 38788.05,
       "total_arr": 465456.6,
-      "total_lifetime": 2987536.28,
+      "total_lifetime": 2987905.28,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1492,7 +1492,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -1527,7 +1527,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         },
         {
@@ -1568,7 +1568,7 @@
       "active_customer_count": 13,
       "total_mrr": 38788.05,
       "total_arr": 465456.6,
-      "total_lifetime": 2987536.28,
+      "total_lifetime": 2987905.28,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1635,7 +1635,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -1670,7 +1670,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         },
         {
@@ -1711,7 +1711,7 @@
       "active_customer_count": 13,
       "total_mrr": 38788.05,
       "total_arr": 465456.6,
-      "total_lifetime": 2987536.28,
+      "total_lifetime": 2987905.28,
       "unmatched_labels": [
         "DotCabinets",
         "IslandCustomCabinets",
@@ -1785,7 +1785,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -1833,7 +1833,7 @@
       "active_customer_count": 11,
       "total_mrr": 37934.2,
       "total_arr": 455210.4,
-      "total_lifetime": 2806850.47,
+      "total_lifetime": 2808425.47,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -1907,7 +1907,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -1955,7 +1955,7 @@
       "active_customer_count": 11,
       "total_mrr": 37934.2,
       "total_arr": 455210.4,
-      "total_lifetime": 2806850.47,
+      "total_lifetime": 2808425.47,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -2029,7 +2029,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -2077,7 +2077,7 @@
       "active_customer_count": 11,
       "total_mrr": 37934.2,
       "total_arr": 455210.4,
-      "total_lifetime": 2806850.47,
+      "total_lifetime": 2808425.47,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -2151,7 +2151,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -2199,7 +2199,7 @@
       "active_customer_count": 11,
       "total_mrr": 37934.2,
       "total_arr": 455210.4,
-      "total_lifetime": 2806850.47,
+      "total_lifetime": 2808425.47,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -2273,7 +2273,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -2321,7 +2321,7 @@
       "active_customer_count": 11,
       "total_mrr": 37934.2,
       "total_arr": 455210.4,
-      "total_lifetime": 2806850.47,
+      "total_lifetime": 2808425.47,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -2395,7 +2395,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -2443,7 +2443,7 @@
       "active_customer_count": 11,
       "total_mrr": 37934.2,
       "total_arr": 455210.4,
-      "total_lifetime": 2806850.47,
+      "total_lifetime": 2808425.47,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -5448,7 +5448,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -5496,7 +5496,7 @@
       "active_customer_count": 9,
       "total_mrr": 34049.15,
       "total_arr": 408589.8,
-      "total_lifetime": 2767503.04,
+      "total_lifetime": 2767602.04,
       "unmatched_labels": [
         "Fryburg",
         "NYDoorandDrawer",
@@ -5659,7 +5659,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -5714,7 +5714,7 @@
       "active_customer_count": 9,
       "total_mrr": 28351.9,
       "total_arr": 340222.8,
-      "total_lifetime": 2199229.69,
+      "total_lifetime": 2199328.69,
       "unmatched_labels": [
         "IslandCustomCabinets",
         "Paragon",
@@ -5750,14 +5750,14 @@
           "allmoxy_customer_id": 2058,
           "name": "Fleetwoods",
           "mrr": 4200,
-          "lifetime": 31789.5,
+          "lifetime": 35989.5,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -5771,7 +5771,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -5805,7 +5805,7 @@
       "active_customer_count": 8,
       "total_mrr": 27510.2,
       "total_arr": 330122.4,
-      "total_lifetime": 1415229,
+      "total_lifetime": 1421103,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -6320,7 +6320,7 @@
           "allmoxy_customer_id": 329,
           "name": "Peterman Lumber",
           "mrr": 1756,
-          "lifetime": 153645.9,
+          "lifetime": 155401.9,
           "status": "active"
         }
       ],
@@ -6333,7 +6333,7 @@
       "active_customer_count": 6,
       "total_mrr": 26806.15,
       "total_arr": 321673.8,
-      "total_lifetime": 1989345.32,
+      "total_lifetime": 1991101.32,
       "unmatched_labels": [
         "DotCabinets",
         "DukeCustomKitchens",
@@ -6383,7 +6383,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         },
         {
@@ -6410,7 +6410,7 @@
       "active_customer_count": 7,
       "total_mrr": 26343.2,
       "total_arr": 316118.4,
-      "total_lifetime": 2195853.83,
+      "total_lifetime": 2195873.83,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "StanisciDesign",
@@ -6459,7 +6459,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -6479,7 +6479,7 @@
       "active_customer_count": 6,
       "total_mrr": 26012.15,
       "total_arr": 312145.8,
-      "total_lifetime": 2122913.3,
+      "total_lifetime": 2123012.3,
       "unmatched_labels": [
         "ciminos",
         "mykitch",
@@ -6617,7 +6617,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -6658,7 +6658,7 @@
       "active_customer_count": 7,
       "total_mrr": 25009,
       "total_arr": 300108,
-      "total_lifetime": 1680479,
+      "total_lifetime": 1680578,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -6703,7 +6703,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -6751,7 +6751,7 @@
       "active_customer_count": 7,
       "total_mrr": 23963,
       "total_arr": 287556,
-      "total_lifetime": 2407073.05,
+      "total_lifetime": 2407172.05,
       "unmatched_labels": [
         "Fryburg",
         "LifeSpanClosets",
@@ -6797,7 +6797,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -6845,7 +6845,7 @@
       "active_customer_count": 7,
       "total_mrr": 23963,
       "total_arr": 287556,
-      "total_lifetime": 2407073.05,
+      "total_lifetime": 2407172.05,
       "unmatched_labels": [
         "Fryburg",
         "LifeSpanClosets",
@@ -7024,7 +7024,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -7072,7 +7072,7 @@
       "active_customer_count": 7,
       "total_mrr": 23103.2,
       "total_arr": 277238.4,
-      "total_lifetime": 2304028.29,
+      "total_lifetime": 2304127.29,
       "unmatched_labels": [
         "Midwest",
         "amco",
@@ -7109,7 +7109,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -7157,7 +7157,7 @@
       "active_customer_count": 7,
       "total_mrr": 23103.2,
       "total_arr": 277238.4,
-      "total_lifetime": 2304028.29,
+      "total_lifetime": 2304127.29,
       "unmatched_labels": [
         "Midwest",
         "amco",
@@ -7208,7 +7208,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -7235,7 +7235,7 @@
       "active_customer_count": 6,
       "total_mrr": 23006.15,
       "total_arr": 276073.8,
-      "total_lifetime": 2403740.21,
+      "total_lifetime": 2405315.21,
       "unmatched_labels": [
         "amco"
       ]
@@ -7451,7 +7451,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -7499,7 +7499,7 @@
       "active_customer_count": 7,
       "total_mrr": 22245,
       "total_arr": 266940,
-      "total_lifetime": 1732841.05,
+      "total_lifetime": 1732940.05,
       "unmatched_labels": [
         "IdealDrawers",
         "SouthernStone",
@@ -7549,7 +7549,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -7590,7 +7590,7 @@
       "active_customer_count": 9,
       "total_mrr": 22118.2,
       "total_arr": 265418.4,
-      "total_lifetime": 1468289.53,
+      "total_lifetime": 1469864.53,
       "unmatched_labels": [
         "SouthernStone",
         "brandenbergercustom",
@@ -7633,7 +7633,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -7660,7 +7660,7 @@
       "active_customer_count": 6,
       "total_mrr": 21958,
       "total_arr": 263496,
-      "total_lifetime": 1953841.03,
+      "total_lifetime": 1953940.03,
       "unmatched_labels": [
         "Makellos",
         "m2m",
@@ -7776,7 +7776,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -7817,7 +7817,7 @@
       "active_customer_count": 6,
       "total_mrr": 21718,
       "total_arr": 260616,
-      "total_lifetime": 1814183.57,
+      "total_lifetime": 1814282.57,
       "unmatched_labels": [
         "Midwest",
         "mykitch",
@@ -7919,7 +7919,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -7933,7 +7933,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -7960,7 +7960,7 @@
       "active_customer_count": 7,
       "total_mrr": 21112.2,
       "total_arr": 253346.4,
-      "total_lifetime": 1742630.95,
+      "total_lifetime": 1744304.95,
       "unmatched_labels": [
         "IdealDrawers",
         "Midwest",
@@ -8479,7 +8479,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -8499,7 +8499,7 @@
       "active_customer_count": 5,
       "total_mrr": 20011.2,
       "total_arr": 240134.4,
-      "total_lifetime": 1628282.21,
+      "total_lifetime": 1629857.21,
       "unmatched_labels": [
         "dbs",
         "dcdrawers",
@@ -9007,7 +9007,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -9021,7 +9021,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -9069,7 +9069,7 @@
       "active_customer_count": 9,
       "total_mrr": 17891.15,
       "total_arr": 214693.8,
-      "total_lifetime": 1173691.91,
+      "total_lifetime": 1175365.91,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -9551,7 +9551,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -9564,7 +9564,7 @@
       "active_customer_count": 3,
       "total_mrr": 15400.2,
       "total_arr": 184802.4,
-      "total_lifetime": 978142.54,
+      "total_lifetime": 978241.54,
       "unmatched_labels": [
         "Midwest",
         "Prospective",
@@ -9591,7 +9591,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -9646,7 +9646,7 @@
       "active_customer_count": 7,
       "total_mrr": 15347.9,
       "total_arr": 184174.8,
-      "total_lifetime": 1196944.62,
+      "total_lifetime": 1197043.62,
       "unmatched_labels": [
         "ciminos",
         "ifccinc",
@@ -9749,7 +9749,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -9776,7 +9776,7 @@
       "active_customer_count": 6,
       "total_mrr": 15137.15,
       "total_arr": 181645.8,
-      "total_lifetime": 1389501.84,
+      "total_lifetime": 1391076.84,
       "unmatched_labels": [
         "DCDrawers",
         "SouthernStone",
@@ -10194,7 +10194,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         },
         {
@@ -10221,7 +10221,7 @@
       "active_customer_count": 4,
       "total_mrr": 14397.9,
       "total_arr": 172774.8,
-      "total_lifetime": 1541879.92,
+      "total_lifetime": 1542577.05,
       "unmatched_labels": [
         "thomascreekwoodworking"
       ]
@@ -10559,7 +10559,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -10572,7 +10572,7 @@
       "active_customer_count": 4,
       "total_mrr": 13725,
       "total_arr": 164700,
-      "total_lifetime": 1277111.6,
+      "total_lifetime": 1278686.6,
       "unmatched_labels": [
         "advancedcabinetsdoors",
         "netley"
@@ -10837,7 +10837,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -10850,7 +10850,7 @@
       "active_customer_count": 4,
       "total_mrr": 13412,
       "total_arr": 160944,
-      "total_lifetime": 1029057.25,
+      "total_lifetime": 1030632.25,
       "unmatched_labels": [
         "cuttingedge",
         "mykitch",
@@ -10877,7 +10877,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -10918,7 +10918,7 @@
       "active_customer_count": 5,
       "total_mrr": 13368,
       "total_arr": 160416,
-      "total_lifetime": 1073219.17,
+      "total_lifetime": 1073318.17,
       "unmatched_labels": [
         "Midwest",
         "cullmancabinet",
@@ -11150,7 +11150,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -11170,7 +11170,7 @@
       "active_customer_count": 3,
       "total_mrr": 12784,
       "total_arr": 153408,
-      "total_lifetime": 1010530.38,
+      "total_lifetime": 1010629.38,
       "unmatched_labels": [
         "NovaSouth",
         "PrecisionMillworks",
@@ -13052,8 +13052,8 @@
     {
       "key": "DEV-2100",
       "summary": "Order level settings available on invoice",
-      "status": "Backlog",
-      "stage_category": "To Do",
+      "status": "Resolved",
+      "stage_category": "Done",
       "issue_type": "Story",
       "priority": "Highest",
       "issue_score": 366,
@@ -13109,8 +13109,8 @@
         }
       ],
       "created": "2021-06-21",
-      "updated": "2026-10-16",
-      "resolved": null,
+      "updated": "2026-10-20",
+      "resolved": "2026-10-20",
       "url": "https://allmoxy.atlassian.net/browse/DEV-2100",
       "tag_count": 12,
       "customer_count": 7,
@@ -13146,7 +13146,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -13173,7 +13173,7 @@
       "active_customer_count": 4,
       "total_mrr": 11444,
       "total_arr": 137328,
-      "total_lifetime": 894766.39,
+      "total_lifetime": 894865.39,
       "unmatched_labels": [
         "netley"
       ]
@@ -13484,7 +13484,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -13525,7 +13525,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 669841.22,
+      "total_lifetime": 669940.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13551,7 +13551,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -13592,7 +13592,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 669841.22,
+      "total_lifetime": 669940.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13618,7 +13618,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -13659,7 +13659,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 669841.22,
+      "total_lifetime": 669940.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13685,7 +13685,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -13726,7 +13726,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 669841.22,
+      "total_lifetime": 669940.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13752,7 +13752,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -13793,7 +13793,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 669841.22,
+      "total_lifetime": 669940.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13819,7 +13819,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -13860,7 +13860,7 @@
       "active_customer_count": 4,
       "total_mrr": 10845.5,
       "total_arr": 130146,
-      "total_lifetime": 669841.22,
+      "total_lifetime": 669940.22,
       "unmatched_labels": [
         "PremierCustomMillwork",
         "StanisciDesign"
@@ -13931,7 +13931,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -13944,7 +13944,7 @@
       "active_customer_count": 3,
       "total_mrr": 10695,
       "total_arr": 128340,
-      "total_lifetime": 1093917.53,
+      "total_lifetime": 1094614.66,
       "unmatched_labels": []
     },
     {
@@ -14190,7 +14190,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -14217,7 +14217,7 @@
       "active_customer_count": 3,
       "total_mrr": 10269,
       "total_arr": 123228,
-      "total_lifetime": 939173.24,
+      "total_lifetime": 939272.24,
       "unmatched_labels": [
         "mykitch",
         "netley",
@@ -14768,7 +14768,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         },
         {
@@ -14802,7 +14802,7 @@
       "active_customer_count": 6,
       "total_mrr": 9644,
       "total_arr": 115728,
-      "total_lifetime": 1100907.66,
+      "total_lifetime": 1101604.79,
       "unmatched_labels": [
         "Midwest",
         "Services"
@@ -15184,7 +15184,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -15197,7 +15197,7 @@
       "active_customer_count": 2,
       "total_mrr": 9188,
       "total_arr": 110256,
-      "total_lifetime": 868193.37,
+      "total_lifetime": 868292.37,
       "unmatched_labels": []
     },
     {
@@ -15220,7 +15220,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -15233,7 +15233,7 @@
       "active_customer_count": 2,
       "total_mrr": 9169.2,
       "total_arr": 110030.4,
-      "total_lifetime": 715560.58,
+      "total_lifetime": 717135.58,
       "unmatched_labels": []
     },
     {
@@ -15256,7 +15256,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -15269,7 +15269,7 @@
       "active_customer_count": 2,
       "total_mrr": 9169.2,
       "total_arr": 110030.4,
-      "total_lifetime": 715560.58,
+      "total_lifetime": 717135.58,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -15294,7 +15294,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -15307,7 +15307,7 @@
       "active_customer_count": 2,
       "total_mrr": 9169.2,
       "total_arr": 110030.4,
-      "total_lifetime": 715560.58,
+      "total_lifetime": 717135.58,
       "unmatched_labels": []
     },
     {
@@ -15408,7 +15408,7 @@
           "allmoxy_customer_id": 329,
           "name": "Peterman Lumber",
           "mrr": 1756,
-          "lifetime": 153645.9,
+          "lifetime": 155401.9,
           "status": "active"
         },
         {
@@ -15428,7 +15428,7 @@
       "active_customer_count": 3,
       "total_mrr": 8906,
       "total_arr": 106872,
-      "total_lifetime": 835521.76,
+      "total_lifetime": 837277.76,
       "unmatched_labels": [
         "DoorMastersHouston",
         "DukeCustomKitchens",
@@ -15767,7 +15767,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -15794,7 +15794,7 @@
       "active_customer_count": 4,
       "total_mrr": 8753,
       "total_arr": 105036,
-      "total_lifetime": 485129.56,
+      "total_lifetime": 486704.56,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -16471,7 +16471,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         }
       ],
@@ -16484,7 +16484,7 @@
       "active_customer_count": 2,
       "total_mrr": 7844.2,
       "total_arr": 94130.4,
-      "total_lifetime": 612549.4,
+      "total_lifetime": 612819.4,
       "unmatched_labels": [
         "DCDrawers",
         "StanisciDesign"
@@ -16584,7 +16584,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -16597,7 +16597,7 @@
       "active_customer_count": 2,
       "total_mrr": 7806,
       "total_arr": 93672,
-      "total_lifetime": 379287.64,
+      "total_lifetime": 379386.64,
       "unmatched_labels": [
         "StanisciDesign"
       ]
@@ -17500,7 +17500,7 @@
         }
       ],
       "created": "2026-10-12",
-      "updated": "2026-10-15",
+      "updated": "2026-10-19",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-13905",
       "tag_count": 2,
@@ -17512,6 +17512,35 @@
       "unmatched_labels": [
         "ciminos"
       ]
+    },
+    {
+      "key": "DEV-6926",
+      "summary": "Purchase Orders report (React): add filters to hide deleted and received POs",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 237,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7594.2,
+          "lifetime": 598854.9,
+          "status": "active"
+        }
+      ],
+      "created": "2023-09-13",
+      "updated": "2026-10-19",
+      "resolved": "2026-10-12",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6926",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7594.2,
+      "total_arr": 91130.4,
+      "total_lifetime": 598854.9,
+      "unmatched_labels": []
     },
     {
       "key": "DEV-13927",
@@ -17543,35 +17572,6 @@
       "unmatched_labels": [
         "ciminos"
       ]
-    },
-    {
-      "key": "DEV-6926",
-      "summary": "Purchase Orders report (React): add filters to hide deleted and received POs",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 237,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7594.2,
-          "lifetime": 598854.9,
-          "status": "active"
-        }
-      ],
-      "created": "2023-09-13",
-      "updated": "2026-10-13",
-      "resolved": "2026-10-12",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6926",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7594.2,
-      "total_arr": 91130.4,
-      "total_lifetime": 598854.9,
-      "unmatched_labels": []
     },
     {
       "key": "DEV-1885",
@@ -30662,7 +30662,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         },
         {
@@ -30682,7 +30682,7 @@
       "active_customer_count": 3,
       "total_mrr": 7430,
       "total_arr": 89160,
-      "total_lifetime": 426249.74,
+      "total_lifetime": 426269.74,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -30859,7 +30859,7 @@
         }
       ],
       "created": "2018-10-02",
-      "updated": "2026-08-05",
+      "updated": "2026-10-20",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-273",
       "tag_count": 7,
@@ -38155,7 +38155,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -38169,7 +38169,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -38182,7 +38182,7 @@
       "active_customer_count": 3,
       "total_mrr": 6793,
       "total_arr": 81516,
-      "total_lifetime": 340619.94,
+      "total_lifetime": 342293.94,
       "unmatched_labels": [
         "DoorMastersHouston",
         "Fryburg",
@@ -38211,7 +38211,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -38238,7 +38238,7 @@
       "active_customer_count": 3,
       "total_mrr": 6767.95,
       "total_arr": 81215.4,
-      "total_lifetime": 685983.77,
+      "total_lifetime": 687558.77,
       "unmatched_labels": [
         "canary"
       ]
@@ -38263,7 +38263,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -38290,7 +38290,7 @@
       "active_customer_count": 4,
       "total_mrr": 6748.95,
       "total_arr": 80987.4,
-      "total_lifetime": 512638.23,
+      "total_lifetime": 514213.23,
       "unmatched_labels": [
         "DukeCustomKitchens",
         "mykitch"
@@ -38691,7 +38691,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -38725,7 +38725,7 @@
       "active_customer_count": 3,
       "total_mrr": 6490.95,
       "total_arr": 77891.4,
-      "total_lifetime": 736919.05,
+      "total_lifetime": 738494.05,
       "unmatched_labels": [
         "Fryburg",
         "bccdoors",
@@ -38822,7 +38822,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         },
         {
@@ -38849,7 +38849,7 @@
       "active_customer_count": 3,
       "total_mrr": 6142,
       "total_arr": 73704,
-      "total_lifetime": 437421.58,
+      "total_lifetime": 437441.58,
       "unmatched_labels": [
         "DrawerConnection",
         "LifeSpanClosets",
@@ -40813,7 +40813,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -40840,7 +40840,7 @@
       "active_customer_count": 4,
       "total_mrr": 5773,
       "total_arr": 69276,
-      "total_lifetime": 638761.63,
+      "total_lifetime": 640336.63,
       "unmatched_labels": [
         "DCDrawers"
       ]
@@ -41163,7 +41163,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         },
         {
@@ -41183,7 +41183,7 @@
       "active_customer_count": 2,
       "total_mrr": 5337,
       "total_arr": 64044,
-      "total_lifetime": 334540.63,
+      "total_lifetime": 335237.76,
       "unmatched_labels": []
     },
     {
@@ -43644,7 +43644,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         },
         {
@@ -43664,7 +43664,7 @@
       "active_customer_count": 3,
       "total_mrr": 4792,
       "total_arr": 57504,
-      "total_lifetime": 519415.04,
+      "total_lifetime": 520112.17,
       "unmatched_labels": [
         "IntermountainWood"
       ]
@@ -43682,14 +43682,14 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -43702,7 +43702,7 @@
       "active_customer_count": 2,
       "total_mrr": 4694,
       "total_arr": 56328,
-      "total_lifetime": 262600.01,
+      "total_lifetime": 264274.01,
       "unmatched_labels": []
     },
     {
@@ -47364,7 +47364,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -47384,7 +47384,7 @@
       "active_customer_count": 2,
       "total_mrr": 4341,
       "total_arr": 52092,
-      "total_lifetime": 272922.9,
+      "total_lifetime": 273021.9,
       "unmatched_labels": []
     },
     {
@@ -47474,7 +47474,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -47494,7 +47494,7 @@
       "active_customer_count": 2,
       "total_mrr": 4144,
       "total_arr": 49728,
-      "total_lifetime": 221624.73,
+      "total_lifetime": 221723.73,
       "unmatched_labels": []
     },
     {
@@ -47510,7 +47510,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -47530,7 +47530,7 @@
       "active_customer_count": 2,
       "total_mrr": 4119,
       "total_arr": 49428,
-      "total_lifetime": 248338.33,
+      "total_lifetime": 248437.33,
       "unmatched_labels": []
     },
     {
@@ -47932,7 +47932,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -47959,7 +47959,7 @@
       "active_customer_count": 3,
       "total_mrr": 3989.5,
       "total_arr": 47874,
-      "total_lifetime": 372066.65,
+      "total_lifetime": 373641.65,
       "unmatched_labels": [
         "Fryburg",
         "Midwest"
@@ -47985,7 +47985,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -47998,7 +47998,7 @@
       "active_customer_count": 2,
       "total_mrr": 3875,
       "total_arr": 46500,
-      "total_lifetime": 232155.17,
+      "total_lifetime": 233730.17,
       "unmatched_labels": [
         "DotCabinets",
         "advancedcabinetsdoors"
@@ -49978,7 +49978,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -49998,7 +49998,7 @@
       "active_customer_count": 2,
       "total_mrr": 3219,
       "total_arr": 38628,
-      "total_lifetime": 153838.68,
+      "total_lifetime": 153937.68,
       "unmatched_labels": []
     },
     {
@@ -50585,7 +50585,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         },
         {
@@ -50605,7 +50605,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 148811.93,
+      "total_lifetime": 148910.93,
       "unmatched_labels": []
     },
     {
@@ -50621,7 +50621,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50634,7 +50634,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50650,7 +50650,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50663,7 +50663,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50679,7 +50679,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50692,7 +50692,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50708,7 +50708,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50721,7 +50721,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50737,7 +50737,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50750,7 +50750,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50766,7 +50766,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50779,7 +50779,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50795,7 +50795,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50808,7 +50808,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50824,7 +50824,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50837,7 +50837,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50853,7 +50853,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50866,7 +50866,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50882,7 +50882,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50895,7 +50895,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50911,7 +50911,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50924,7 +50924,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50940,7 +50940,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50953,7 +50953,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50969,7 +50969,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -50982,7 +50982,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -50998,7 +50998,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -51011,7 +51011,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -51027,7 +51027,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -51040,7 +51040,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -51056,7 +51056,7 @@
           "allmoxy_customer_id": 130,
           "name": "Roy's Wood Products, Inc.",
           "mrr": 3119,
-          "lifetime": 145894.33,
+          "lifetime": 145993.33,
           "status": "active"
         }
       ],
@@ -51069,7 +51069,7 @@
       "active_customer_count": 1,
       "total_mrr": 3119,
       "total_arr": 37428,
-      "total_lifetime": 145894.33,
+      "total_lifetime": 145993.33,
       "unmatched_labels": []
     },
     {
@@ -51125,7 +51125,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -51145,7 +51145,7 @@
       "active_customer_count": 2,
       "total_mrr": 3074,
       "total_arr": 36888,
-      "total_lifetime": 240003.58,
+      "total_lifetime": 241578.58,
       "unmatched_labels": []
     },
     {
@@ -51197,7 +51197,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -51217,7 +51217,7 @@
       "active_customer_count": 2,
       "total_mrr": 2950,
       "total_arr": 35400,
-      "total_lifetime": 268411.05,
+      "total_lifetime": 269986.05,
       "unmatched_labels": [
         "Midwest"
       ]
@@ -51235,7 +51235,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -51255,7 +51255,7 @@
       "active_customer_count": 2,
       "total_mrr": 2950,
       "total_arr": 35400,
-      "total_lifetime": 268411.05,
+      "total_lifetime": 269986.05,
       "unmatched_labels": [
         "Midwest"
       ]
@@ -51418,7 +51418,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -51438,7 +51438,7 @@
       "active_customer_count": 2,
       "total_mrr": 2893,
       "total_arr": 34716,
-      "total_lifetime": 215523.98,
+      "total_lifetime": 217098.98,
       "unmatched_labels": [
         "cut2size"
       ]
@@ -52474,7 +52474,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -52494,7 +52494,7 @@
       "active_customer_count": 2,
       "total_mrr": 2674,
       "total_arr": 32088,
-      "total_lifetime": 188442.18,
+      "total_lifetime": 190017.18,
       "unmatched_labels": [
         "brandenbergercustom"
       ]
@@ -52512,7 +52512,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         },
         {
@@ -52532,7 +52532,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 237664.43,
+      "total_lifetime": 237684.43,
       "unmatched_labels": []
     },
     {
@@ -52548,7 +52548,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         }
       ],
@@ -52561,7 +52561,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 184912.08,
+      "total_lifetime": 184932.08,
       "unmatched_labels": []
     },
     {
@@ -52577,7 +52577,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         }
       ],
@@ -52590,7 +52590,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 184912.08,
+      "total_lifetime": 184932.08,
       "unmatched_labels": []
     },
     {
@@ -52606,7 +52606,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         }
       ],
@@ -52619,7 +52619,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 184912.08,
+      "total_lifetime": 184932.08,
       "unmatched_labels": []
     },
     {
@@ -52635,7 +52635,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         }
       ],
@@ -52648,7 +52648,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 184912.08,
+      "total_lifetime": 184932.08,
       "unmatched_labels": []
     },
     {
@@ -52664,7 +52664,7 @@
           "allmoxy_customer_id": 17,
           "name": "Closet City",
           "mrr": 2643,
-          "lifetime": 184912.08,
+          "lifetime": 184932.08,
           "status": "active"
         }
       ],
@@ -52677,7 +52677,7 @@
       "active_customer_count": 1,
       "total_mrr": 2643,
       "total_arr": 31716,
-      "total_lifetime": 184912.08,
+      "total_lifetime": 184932.08,
       "unmatched_labels": []
     },
     {
@@ -53580,7 +53580,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -53600,7 +53600,7 @@
       "active_customer_count": 2,
       "total_mrr": 2175,
       "total_arr": 26100,
-      "total_lifetime": 137136.68,
+      "total_lifetime": 138711.68,
       "unmatched_labels": []
     },
     {
@@ -55150,7 +55150,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -55170,7 +55170,7 @@
       "active_customer_count": 2,
       "total_mrr": 1675,
       "total_arr": 20100,
-      "total_lifetime": 124650.03,
+      "total_lifetime": 126225.03,
       "unmatched_labels": []
     },
     {
@@ -55970,7 +55970,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         },
         {
@@ -55990,7 +55990,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 159216.88,
+      "total_lifetime": 160791.88,
       "unmatched_labels": []
     },
     {
@@ -56006,7 +56006,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56019,7 +56019,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56035,7 +56035,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56048,7 +56048,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56064,7 +56064,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56077,7 +56077,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56093,7 +56093,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56106,7 +56106,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": [
         "dcdrawers"
       ]
@@ -56124,7 +56124,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56137,7 +56137,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56153,7 +56153,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56166,7 +56166,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56182,7 +56182,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56195,7 +56195,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": [
         "IMAB",
         "cullmancabinet",
@@ -56215,7 +56215,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56228,7 +56228,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56244,7 +56244,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56257,7 +56257,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56273,7 +56273,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56286,7 +56286,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56302,7 +56302,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56315,7 +56315,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": [
         "btjdoors"
       ]
@@ -56333,7 +56333,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56346,7 +56346,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56362,7 +56362,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56375,7 +56375,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": [
         "StanisciDesign"
       ]
@@ -56393,7 +56393,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56406,7 +56406,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56422,7 +56422,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56435,7 +56435,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56451,7 +56451,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56464,7 +56464,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": [
         "DukeCustomKitchens"
       ]
@@ -56482,7 +56482,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56495,7 +56495,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56511,7 +56511,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56524,7 +56524,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56540,7 +56540,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56553,7 +56553,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": [
         "DCDrawers"
       ]
@@ -56571,7 +56571,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56584,7 +56584,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56600,7 +56600,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56613,7 +56613,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56629,7 +56629,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56642,7 +56642,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56658,7 +56658,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56671,7 +56671,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56687,7 +56687,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56700,7 +56700,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56716,7 +56716,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56729,7 +56729,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56745,7 +56745,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56758,7 +56758,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": [
         "Fryburg"
       ]
@@ -56776,7 +56776,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56789,7 +56789,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56805,7 +56805,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56818,7 +56818,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": [
         "ciminos"
       ]
@@ -56836,7 +56836,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56849,7 +56849,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56865,7 +56865,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56878,7 +56878,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56894,7 +56894,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56907,7 +56907,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56923,7 +56923,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56936,7 +56936,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56952,7 +56952,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56965,7 +56965,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -56981,7 +56981,7 @@
           "allmoxy_customer_id": 20,
           "name": "Eldorado Plywood",
           "mrr": 1575,
-          "lifetime": 116705.68,
+          "lifetime": 118280.68,
           "status": "active"
         }
       ],
@@ -56994,7 +56994,7 @@
       "active_customer_count": 1,
       "total_mrr": 1575,
       "total_arr": 18900,
-      "total_lifetime": 116705.68,
+      "total_lifetime": 118280.68,
       "unmatched_labels": []
     },
     {
@@ -60693,7 +60693,7 @@
         }
       ],
       "created": "2026-03-23",
-      "updated": "2026-10-14",
+      "updated": "2026-10-19",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-11819",
       "tag_count": 3,
@@ -62154,7 +62154,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         },
         {
@@ -62174,7 +62174,7 @@
       "active_customer_count": 2,
       "total_mrr": 1050,
       "total_arr": 12600,
-      "total_lifetime": 74401.72,
+      "total_lifetime": 75098.85,
       "unmatched_labels": [
         "Midwest",
         "thomascreekwoodworking"
@@ -65760,7 +65760,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -65773,7 +65773,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -65789,7 +65789,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -65802,7 +65802,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -65818,7 +65818,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -65831,7 +65831,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -65847,7 +65847,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -65860,7 +65860,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -65876,7 +65876,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -65889,7 +65889,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -65905,7 +65905,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -65918,7 +65918,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -65934,7 +65934,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -65947,7 +65947,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -65963,7 +65963,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -65976,7 +65976,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -65992,7 +65992,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -66005,7 +66005,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -66021,7 +66021,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -66034,7 +66034,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": [
         "DoorMastersHouston"
       ]
@@ -66052,7 +66052,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -66065,7 +66065,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -66081,7 +66081,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -66094,7 +66094,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -66110,7 +66110,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -66123,7 +66123,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -66139,7 +66139,7 @@
           "allmoxy_customer_id": 19,
           "name": "Trimart",
           "mrr": 650,
-          "lifetime": 69126.22,
+          "lifetime": 69823.35,
           "status": "active"
         }
       ],
@@ -66152,7 +66152,7 @@
       "active_customer_count": 1,
       "total_mrr": 650,
       "total_arr": 7800,
-      "total_lifetime": 69126.22,
+      "total_lifetime": 69823.35,
       "unmatched_labels": []
     },
     {
@@ -67839,7 +67839,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         }
       ],
@@ -67852,7 +67852,7 @@
       "active_customer_count": 1,
       "total_mrr": 250,
       "total_arr": 3000,
-      "total_lifetime": 13694.5,
+      "total_lifetime": 13964.5,
       "unmatched_labels": []
     },
     {
@@ -67868,7 +67868,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         }
       ],
@@ -67881,7 +67881,7 @@
       "active_customer_count": 1,
       "total_mrr": 250,
       "total_arr": 3000,
-      "total_lifetime": 13694.5,
+      "total_lifetime": 13964.5,
       "unmatched_labels": []
     },
     {
@@ -67926,7 +67926,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         }
       ],
@@ -67939,7 +67939,7 @@
       "active_customer_count": 1,
       "total_mrr": 250,
       "total_arr": 3000,
-      "total_lifetime": 13694.5,
+      "total_lifetime": 13964.5,
       "unmatched_labels": []
     },
     {
@@ -67955,7 +67955,7 @@
           "allmoxy_customer_id": 539,
           "name": "Conquest Cabinetry",
           "mrr": 250,
-          "lifetime": 13694.5,
+          "lifetime": 13964.5,
           "status": "active"
         }
       ],
@@ -67968,7 +67968,7 @@
       "active_customer_count": 1,
       "total_mrr": 250,
       "total_arr": 3000,
-      "total_lifetime": 13694.5,
+      "total_lifetime": 13964.5,
       "unmatched_labels": []
     },
     {
@@ -69371,6 +69371,151 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-9164",
+      "summary": "On the invoice output page that shows folders, don't repeat order level setting attributes",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Low",
+      "issue_score": 79,
+      "customers": [
+        {
+          "allmoxy_customer_id": 333,
+          "name": "Quality Kitchens Inc.",
+          "mrr": 0,
+          "lifetime": 2917.6,
+          "status": "never_paid"
+        }
+      ],
+      "created": "2024-11-14",
+      "updated": "2026-10-20",
+      "resolved": "2024-11-27",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-9164",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 2917.6,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-7354",
+      "summary": "Having Order Level Settings Attributes show at the top of the output page once instead of as group attributes for each products",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Lowest",
+      "issue_score": 47,
+      "customers": [
+        {
+          "allmoxy_customer_id": 486,
+          "name": "Kingwood Cabinetry",
+          "mrr": 0,
+          "lifetime": 15175.18,
+          "status": "churned"
+        }
+      ],
+      "created": "2023-11-22",
+      "updated": "2026-10-20",
+      "resolved": "2024-01-08",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-7354",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 15175.18,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-8481",
+      "summary": "Display Job Presets (order-level settings) on Output Pages (Once)",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Billable Task",
+      "priority": "Medium",
+      "issue_score": 154,
+      "customers": [
+        {
+          "allmoxy_customer_id": 486,
+          "name": "Kingwood Cabinetry",
+          "mrr": 0,
+          "lifetime": 15175.18,
+          "status": "churned"
+        }
+      ],
+      "created": "2024-07-08",
+      "updated": "2026-10-20",
+      "resolved": "2024-08-20",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-8481",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 15175.18,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-13364",
+      "summary": "Settings › E-commerce › Order Settings",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 212,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-09-24",
+      "updated": "2026-10-19",
+      "resolved": "2026-09-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13364",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-13368",
+      "summary": "Settings › E-commerce › Theme",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "Task",
+      "priority": "Low",
+      "issue_score": 123,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-09-24",
+      "updated": "2026-10-19",
+      "resolved": "2026-09-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13368",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-2202",
       "summary": "More sorting options on the Orders Page",
       "status": "Backlog",
@@ -69623,35 +69768,6 @@
       "updated": "2026-10-12",
       "resolved": "2026-09-24",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13355",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-13364",
-      "summary": "Settings › E-commerce › Order Settings",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 212,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-09-24",
-      "updated": "2026-10-12",
-      "resolved": "2026-09-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13364",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -70292,35 +70408,6 @@
       "updated": "2026-10-09",
       "resolved": "2026-09-24",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13375",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-13368",
-      "summary": "Settings › E-commerce › Theme",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "Task",
-      "priority": "Low",
-      "issue_score": 123,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-09-24",
-      "updated": "2026-10-09",
-      "resolved": "2026-09-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13368",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -78559,35 +78646,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-9164",
-      "summary": "On the invoice output page that shows folders, don't repeat order level setting attributes",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Low",
-      "issue_score": 79,
-      "customers": [
-        {
-          "allmoxy_customer_id": 333,
-          "name": "Quality Kitchens Inc.",
-          "mrr": 0,
-          "lifetime": 2917.6,
-          "status": "never_paid"
-        }
-      ],
-      "created": "2024-11-14",
-      "updated": "2026-08-05",
-      "resolved": "2024-11-27",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-9164",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 2917.6,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-8170",
       "summary": "Company import issues",
       "status": "Resolved",
@@ -78882,35 +78940,6 @@
       "total_mrr": 0,
       "total_arr": 0,
       "total_lifetime": 114320.65,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-8481",
-      "summary": "Display Job Presets (order-level settings) on Output Pages (Once)",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Billable Task",
-      "priority": "Medium",
-      "issue_score": 154,
-      "customers": [
-        {
-          "allmoxy_customer_id": 486,
-          "name": "Kingwood Cabinetry",
-          "mrr": 0,
-          "lifetime": 15175.18,
-          "status": "churned"
-        }
-      ],
-      "created": "2024-07-08",
-      "updated": "2026-08-05",
-      "resolved": "2024-08-20",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-8481",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 15175.18,
       "unmatched_labels": []
     },
     {
@@ -79469,35 +79498,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-7354",
-      "summary": "Having Order Level Settings Attributes show at the top of the output page once instead of as group attributes for each products",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Lowest",
-      "issue_score": 47,
-      "customers": [
-        {
-          "allmoxy_customer_id": 486,
-          "name": "Kingwood Cabinetry",
-          "mrr": 0,
-          "lifetime": 15175.18,
-          "status": "churned"
-        }
-      ],
-      "created": "2023-11-22",
-      "updated": "2026-08-05",
-      "resolved": "2024-01-08",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-7354",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 15175.18,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-7361",
       "summary": "Installer Not updating for November Subsciptions",
       "status": "Resolved",
@@ -79709,16 +79709,85 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-7034",
+      "summary": "Show Folder Level Settings on Output page",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 250,
+      "customers": [],
+      "created": "2023-09-29",
+      "updated": "2026-10-20",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-7034",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-13739",
+      "summary": "Lewis Cabinet: new Sales by Export Class report shows 1 B2B order and 0 for \"B2B Sheminos\", legacy report shows 482 for September",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 685,
+      "customers": [],
+      "created": "2026-10-06",
+      "updated": "2026-10-20",
+      "resolved": "2026-10-15",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13739",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "lewiscabinet"
+      ]
+    },
+    {
+      "key": "DEV-14048",
+      "summary": "Canary Closets - AI Usage says no card on file while the billing portal lists three saved cards",
+      "status": "Dev Scope",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [],
+      "created": "2026-10-20",
+      "updated": "2026-10-20",
+      "resolved": "2026-10-20",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14048",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "canary"
+      ]
+    },
+    {
       "key": "DEV-14003",
       "summary": "Brushy Creek Custom Doors - 23 shipped orders with open shipping and tax show on A/R statements but can't be paid from the order page or company page",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": null,
+      "status": "Dev Scope",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
       "customers": [],
       "created": "2026-10-19",
-      "updated": "2026-10-19",
+      "updated": "2026-10-20",
       "resolved": "2026-10-19",
       "url": "https://allmoxy.atlassian.net/browse/DEV-14003",
       "tag_count": 1,
@@ -79732,6 +79801,29 @@
       ]
     },
     {
+      "key": "DEV-14005",
+      "summary": "DC Drawers - $65.00 charge on customer's card for \"Subscription template_db.allmoxy.com\" via a Stripe customer separate from their instance subscription",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Low",
+      "issue_score": null,
+      "customers": [],
+      "created": "2026-10-19",
+      "updated": "2026-10-20",
+      "resolved": "2026-10-19",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14005",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "dcdrawers"
+      ]
+    },
+    {
       "key": "DEV-13902",
       "summary": "DC Drawers - Shipped invoices 137376 and 140968 now show higher line prices than the copies printed after the last edit",
       "status": "Ready for Dev",
@@ -79741,7 +79833,7 @@
       "issue_score": 719,
       "customers": [],
       "created": "2026-10-12",
-      "updated": "2026-10-19",
+      "updated": "2026-10-20",
       "resolved": "2026-10-12",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13902",
       "tag_count": 1,
@@ -79752,6 +79844,167 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "dcdrawers"
+      ]
+    },
+    {
+      "key": "DEV-13989",
+      "summary": "Mullwoods - Sales by Product and Attribute (new version) times out with no results for Jan 1 to Oct 14, 2026 and attribute cg_panel_wood_type",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 630,
+      "customers": [],
+      "created": "2026-10-15",
+      "updated": "2026-10-20",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13989",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "fryburgdoor"
+      ]
+    },
+    {
+      "key": "DEV-13912",
+      "summary": "Reports - Restore legacy grand-total rows on report tables (Projection + 18 more)",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 630,
+      "customers": [],
+      "created": "2026-10-13",
+      "updated": "2026-10-19",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13912",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "lewiscabinet"
+      ]
+    },
+    {
+      "key": "DEV-13456",
+      "summary": "Availability by tags on 'edit override' crossing over to other products",
+      "status": "Ready To Release",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [],
+      "created": "2026-09-28",
+      "updated": "2026-10-19",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13456",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Fryburg"
+      ]
+    },
+    {
+      "key": "DEV-13496",
+      "summary": "Mullwoods - Add Show Buying History button to Individual account Orders section",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Low",
+      "issue_score": 139,
+      "customers": [],
+      "created": "2026-09-29",
+      "updated": "2026-10-19",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13496",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "fryburgdoor"
+      ]
+    },
+    {
+      "key": "DEV-320",
+      "summary": "Adding order custom fields and tags to the export of the Order Report",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 217,
+      "customers": [],
+      "created": "2018-10-02",
+      "updated": "2026-10-19",
+      "resolved": "2026-10-08",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-320",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Soelberg"
+      ]
+    },
+    {
+      "key": "DEV-13225",
+      "summary": "Shipping Report - Total Piece Count",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 181,
+      "customers": [],
+      "created": "2026-09-22",
+      "updated": "2026-10-19",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13225",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "panhandledooranddrawer"
+      ]
+    },
+    {
+      "key": "DEV-13738",
+      "summary": "Lewis Cabinet: Sales Tax Report state selector has no Select All, each state must be added individually",
+      "status": "Ready To Release",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 241,
+      "customers": [],
+      "created": "2026-10-06",
+      "updated": "2026-10-19",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13738",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "lewiscabinet"
       ]
     },
     {
@@ -79775,98 +80028,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-13912",
-      "summary": "Reports - Restore legacy grand-total rows on report tables (Projection + 18 more)",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 630,
-      "customers": [],
-      "created": "2026-10-13",
-      "updated": "2026-10-16",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13912",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "lewiscabinet"
-      ]
-    },
-    {
-      "key": "DEV-13496",
-      "summary": "Mullwoods - Add Show Buying History button to Individual account Orders section",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Low",
-      "issue_score": 139,
-      "customers": [],
-      "created": "2026-09-29",
-      "updated": "2026-10-16",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13496",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "fryburgdoor"
-      ]
-    },
-    {
-      "key": "DEV-13225",
-      "summary": "Shipping Report - Total Piece Count",
-      "status": "Passed QA",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 181,
-      "customers": [],
-      "created": "2026-09-22",
-      "updated": "2026-10-16",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13225",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "panhandledooranddrawer"
-      ]
-    },
-    {
-      "key": "DEV-13739",
-      "summary": "Lewis Cabinet: new Sales by Export Class report shows 1 B2B order and 0 for \"B2B Sheminos\", legacy report shows 482 for September",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 685,
-      "customers": [],
-      "created": "2026-10-06",
-      "updated": "2026-10-15",
-      "resolved": "2026-10-15",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13739",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "lewiscabinet"
       ]
     },
     {
@@ -79985,52 +80146,6 @@
       ]
     },
     {
-      "key": "DEV-13738",
-      "summary": "Lewis Cabinet: Sales Tax Report state selector has no Select All, each state must be added individually",
-      "status": "Ready To Release",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 241,
-      "customers": [],
-      "created": "2026-10-06",
-      "updated": "2026-10-15",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13738",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "lewiscabinet"
-      ]
-    },
-    {
-      "key": "DEV-320",
-      "summary": "Adding order custom fields and tags to the export of the Order Report",
-      "status": "Passed QA",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 217,
-      "customers": [],
-      "created": "2018-10-02",
-      "updated": "2026-10-15",
-      "resolved": "2026-10-08",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-320",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "Soelberg"
-      ]
-    },
-    {
       "key": "DEV-228",
       "summary": "Add a \"tags\" column to the Order Report export",
       "status": "Resolved",
@@ -80051,29 +80166,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "Soelberg"
-      ]
-    },
-    {
-      "key": "DEV-13989",
-      "summary": "Mullwoods - Sales by Product and Attribute (new version) times out with no results for Jan 1 to Oct 14, 2026 and attribute cg_panel_wood_type",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 630,
-      "customers": [],
-      "created": "2026-10-15",
-      "updated": "2026-10-15",
-      "resolved": "2026-10-15",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13989",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "fryburgdoor"
       ]
     },
     {
@@ -80189,29 +80281,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "lewiscabinet"
-      ]
-    },
-    {
-      "key": "DEV-13456",
-      "summary": "Availability by tags on 'edit override' crossing over to other products",
-      "status": "Ready To Release",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 706,
-      "customers": [],
-      "created": "2026-09-28",
-      "updated": "2026-10-13",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13456",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "Fryburg"
       ]
     },
     {
@@ -96974,29 +97043,6 @@
       "updated": "2026-08-05",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-7050",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-7034",
-      "summary": "Show Folder Level Settings on Output page",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 250,
-      "customers": [],
-      "created": "2023-09-29",
-      "updated": "2026-08-05",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-7034",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
