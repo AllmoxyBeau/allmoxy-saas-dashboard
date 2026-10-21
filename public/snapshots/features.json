@@ -1,11 +1,11 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-10-20T17:00:33.934Z",
-  "jira_fetchedAt": "2026-10-20T16:59:47.344Z",
+  "fetchedAt": "2026-10-21T14:30:44.760Z",
+  "jira_fetchedAt": "2026-10-21T14:30:00.077Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4548,
-    "open_tickets": 885,
+    "total_tickets": 4549,
+    "open_tickets": 886,
     "done_tickets": 3663,
     "tickets_with_matched_customer": 2280,
     "open_mrr_at_stake": 2712913.75,
@@ -14775,7 +14775,7 @@
           "allmoxy_customer_id": 83,
           "name": "CP&W",
           "mrr": 525,
-          "lifetime": 39628.9,
+          "lifetime": 40153.9,
           "status": "active"
         },
         {
@@ -14802,7 +14802,7 @@
       "active_customer_count": 6,
       "total_mrr": 9644,
       "total_arr": 115728,
-      "total_lifetime": 1101604.79,
+      "total_lifetime": 1102129.79,
       "unmatched_labels": [
         "Midwest",
         "Services"
@@ -17483,6 +17483,35 @@
       ]
     },
     {
+      "key": "DEV-6926",
+      "summary": "Purchase Orders report (React): add filters to hide deleted and received POs",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 237,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7594.2,
+          "lifetime": 598854.9,
+          "status": "active"
+        }
+      ],
+      "created": "2023-09-13",
+      "updated": "2026-10-20",
+      "resolved": "2026-10-12",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-6926",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7594.2,
+      "total_arr": 91130.4,
+      "total_lifetime": 598854.9,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-13905",
       "summary": "Skip all for no matches in Importer",
       "status": "Ready for Dev",
@@ -17512,35 +17541,6 @@
       "unmatched_labels": [
         "ciminos"
       ]
-    },
-    {
-      "key": "DEV-6926",
-      "summary": "Purchase Orders report (React): add filters to hide deleted and received POs",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 237,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7594.2,
-          "lifetime": 598854.9,
-          "status": "active"
-        }
-      ],
-      "created": "2023-09-13",
-      "updated": "2026-10-19",
-      "resolved": "2026-10-12",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-6926",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7594.2,
-      "total_arr": 91130.4,
-      "total_lifetime": 598854.9,
-      "unmatched_labels": []
     },
     {
       "key": "DEV-13927",
@@ -41287,7 +41287,7 @@
           "allmoxy_customer_id": 83,
           "name": "CP&W",
           "mrr": 525,
-          "lifetime": 39628.9,
+          "lifetime": 40153.9,
           "status": "active"
         }
       ],
@@ -41300,7 +41300,7 @@
       "active_customer_count": 2,
       "total_mrr": 5145,
       "total_arr": 61740,
-      "total_lifetime": 343874.3,
+      "total_lifetime": 344399.3,
       "unmatched_labels": []
     },
     {
@@ -43706,6 +43706,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-13875",
+      "summary": "AI tokens upgrade: card decline locks the purchase for 24h (Stripe idempotency key reused), retries 502",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 664,
+      "customers": [
+        {
+          "allmoxy_customer_id": 136,
+          "name": "Greyloch, LLC.",
+          "mrr": 4687,
+          "lifetime": 233393.31,
+          "status": "at_risk"
+        }
+      ],
+      "created": "2026-10-09",
+      "updated": "2026-10-20",
+      "resolved": "2026-10-09",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13875",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 4687,
+      "total_arr": 56244,
+      "total_lifetime": 233393.31,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-13921",
       "summary": "Greyloch - Resource Allocation report shows every Order # / Part # twice, with doubled quantities and totals",
       "status": "Ready To Release",
@@ -43726,35 +43755,6 @@
       "updated": "2026-10-15",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-13921",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 4687,
-      "total_arr": 56244,
-      "total_lifetime": 233393.31,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-13875",
-      "summary": "AI tokens upgrade: card decline locks the purchase for 24h (Stripe idempotency key reused), retries 502",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 664,
-      "customers": [
-        {
-          "allmoxy_customer_id": 136,
-          "name": "Greyloch, LLC.",
-          "mrr": 4687,
-          "lifetime": 233393.31,
-          "status": "at_risk"
-        }
-      ],
-      "created": "2026-10-09",
-      "updated": "2026-10-09",
-      "resolved": "2026-10-09",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13875",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -66593,7 +66593,7 @@
           "allmoxy_customer_id": 83,
           "name": "CP&W",
           "mrr": 525,
-          "lifetime": 39628.9,
+          "lifetime": 40153.9,
           "status": "active"
         }
       ],
@@ -66606,7 +66606,7 @@
       "active_customer_count": 1,
       "total_mrr": 525,
       "total_arr": 6300,
-      "total_lifetime": 39628.9,
+      "total_lifetime": 40153.9,
       "unmatched_labels": [
         "DotCabinets"
       ]
@@ -69371,6 +69371,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-13364",
+      "summary": "Settings › E-commerce › Order Settings",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 212,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-09-24",
+      "updated": "2026-10-20",
+      "resolved": "2026-09-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13364",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-9164",
       "summary": "On the invoice output page that shows folders, don't repeat order level setting attributes",
       "status": "Resolved",
@@ -69455,35 +69484,6 @@
       "total_mrr": 0,
       "total_arr": 0,
       "total_lifetime": 15175.18,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-13364",
-      "summary": "Settings › E-commerce › Order Settings",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 212,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-09-24",
-      "updated": "2026-10-19",
-      "resolved": "2026-09-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13364",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
       "unmatched_labels": []
     },
     {
@@ -79709,18 +79709,18 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-7034",
-      "summary": "Show Folder Level Settings on Output page",
-      "status": "Backlog",
-      "stage_category": "To Do",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 250,
+      "key": "DEV-14048",
+      "summary": "Canary Closets - AI Usage says no card on file while the billing portal lists three saved cards",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
       "customers": [],
-      "created": "2023-09-29",
-      "updated": "2026-10-20",
+      "created": "2026-10-20",
+      "updated": "2026-10-21",
       "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-7034",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14048",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -79728,7 +79728,53 @@
       "total_arr": 0,
       "total_lifetime": 0,
       "unmatched_labels": [
-        "ciminos"
+        "canary"
+      ]
+    },
+    {
+      "key": "DEV-13902",
+      "summary": "DC Drawers - Shipped invoices 137376 and 140968 now show higher line prices than the copies printed after the last edit",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [],
+      "created": "2026-10-12",
+      "updated": "2026-10-20",
+      "resolved": "2026-10-12",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13902",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "dcdrawers"
+      ]
+    },
+    {
+      "key": "DEV-13912",
+      "summary": "Reports - Restore legacy grand-total rows on report tables (Projection + 18 more)",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 630,
+      "customers": [],
+      "created": "2026-10-13",
+      "updated": "2026-10-20",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13912",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "lewiscabinet"
       ]
     },
     {
@@ -79755,18 +79801,18 @@
       ]
     },
     {
-      "key": "DEV-14048",
-      "summary": "Canary Closets - AI Usage says no card on file while the billing portal lists three saved cards",
-      "status": "Dev Scope",
+      "key": "DEV-13918",
+      "summary": "Ciminos - Hidden panel_profiles attribute stores unavailable option U Panel on a Drawer Front - Slab line and prints it on Panel List - Slabs",
+      "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
       "issue_score": 719,
       "customers": [],
-      "created": "2026-10-20",
+      "created": "2026-10-13",
       "updated": "2026-10-20",
-      "resolved": "2026-10-20",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-14048",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13918",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -79774,7 +79820,7 @@
       "total_arr": 0,
       "total_lifetime": 0,
       "unmatched_labels": [
-        "canary"
+        "ciminos"
       ]
     },
     {
@@ -79801,6 +79847,144 @@
       ]
     },
     {
+      "key": "DEV-11602",
+      "summary": "DEV - Order Total mismatch across pages",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 720,
+      "customers": [],
+      "created": "2026-02-16",
+      "updated": "2026-10-20",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11602",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-13738",
+      "summary": "Lewis Cabinet: Sales Tax Report state selector has no Select All, each state must be added individually",
+      "status": "Ready To Release",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 241,
+      "customers": [],
+      "created": "2026-10-06",
+      "updated": "2026-10-20",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13738",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "lewiscabinet"
+      ]
+    },
+    {
+      "key": "DEV-13225",
+      "summary": "Shipping Report - Total Piece Count",
+      "status": "Passed QA",
+      "stage_category": "Done",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 181,
+      "customers": [],
+      "created": "2026-09-22",
+      "updated": "2026-10-20",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13225",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "panhandledooranddrawer"
+      ]
+    },
+    {
+      "key": "DEV-13456",
+      "summary": "Availability by tags on 'edit override' crossing over to other products",
+      "status": "Ready To Release",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 706,
+      "customers": [],
+      "created": "2026-09-28",
+      "updated": "2026-10-20",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13456",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Fryburg"
+      ]
+    },
+    {
+      "key": "DEV-14055",
+      "summary": "Kitch: Delete order 260866 (remake with no products, customer cannot remove it)",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [],
+      "created": "2026-10-20",
+      "updated": "2026-10-20",
+      "resolved": "2026-10-20",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14055",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-7034",
+      "summary": "Show Folder Level Settings on Output page",
+      "status": "Backlog",
+      "stage_category": "To Do",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 250,
+      "customers": [],
+      "created": "2023-09-29",
+      "updated": "2026-10-20",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-7034",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-14005",
       "summary": "DC Drawers - $65.00 charge on customer's card for \"Subscription template_db.allmoxy.com\" via a Stripe customer separate from their instance subscription",
       "status": "New",
@@ -79813,29 +79997,6 @@
       "updated": "2026-10-20",
       "resolved": "2026-10-19",
       "url": "https://allmoxy.atlassian.net/browse/DEV-14005",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "dcdrawers"
-      ]
-    },
-    {
-      "key": "DEV-13902",
-      "summary": "DC Drawers - Shipped invoices 137376 and 140968 now show higher line prices than the copies printed after the last edit",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 719,
-      "customers": [],
-      "created": "2026-10-12",
-      "updated": "2026-10-20",
-      "resolved": "2026-10-12",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13902",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,
@@ -79867,52 +80028,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "fryburgdoor"
-      ]
-    },
-    {
-      "key": "DEV-13912",
-      "summary": "Reports - Restore legacy grand-total rows on report tables (Projection + 18 more)",
-      "status": "Passed QA",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 630,
-      "customers": [],
-      "created": "2026-10-13",
-      "updated": "2026-10-19",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13912",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "lewiscabinet"
-      ]
-    },
-    {
-      "key": "DEV-13456",
-      "summary": "Availability by tags on 'edit override' crossing over to other products",
-      "status": "Ready To Release",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 706,
-      "customers": [],
-      "created": "2026-09-28",
-      "updated": "2026-10-19",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13456",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "Fryburg"
       ]
     },
     {
@@ -79959,98 +80074,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "Soelberg"
-      ]
-    },
-    {
-      "key": "DEV-13225",
-      "summary": "Shipping Report - Total Piece Count",
-      "status": "Passed QA",
-      "stage_category": "Done",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 181,
-      "customers": [],
-      "created": "2026-09-22",
-      "updated": "2026-10-19",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13225",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "panhandledooranddrawer"
-      ]
-    },
-    {
-      "key": "DEV-13738",
-      "summary": "Lewis Cabinet: Sales Tax Report state selector has no Select All, each state must be added individually",
-      "status": "Ready To Release",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 241,
-      "customers": [],
-      "created": "2026-10-06",
-      "updated": "2026-10-19",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13738",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "lewiscabinet"
-      ]
-    },
-    {
-      "key": "DEV-13918",
-      "summary": "Ciminos - Hidden panel_profiles attribute stores unavailable option U Panel on a Drawer Front - Slab line and prints it on Panel List - Slabs",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 719,
-      "customers": [],
-      "created": "2026-10-13",
-      "updated": "2026-10-19",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13918",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-11602",
-      "summary": "DEV - Order Total mismatch across pages",
-      "status": "Passed QA",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 720,
-      "customers": [],
-      "created": "2026-02-16",
-      "updated": "2026-10-15",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11602",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
       ]
     },
     {
