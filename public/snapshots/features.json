@@ -1,14 +1,14 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-10-21T14:30:44.760Z",
-  "jira_fetchedAt": "2026-10-21T14:30:00.077Z",
+  "fetchedAt": "2026-10-22T13:47:35.213Z",
+  "jira_fetchedAt": "2026-10-22T13:46:14.367Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4549,
-    "open_tickets": 886,
+    "total_tickets": 4551,
+    "open_tickets": 888,
     "done_tickets": 3663,
-    "tickets_with_matched_customer": 2280,
-    "open_mrr_at_stake": 2712913.75,
+    "tickets_with_matched_customer": 2281,
+    "open_mrr_at_stake": 2713913.75,
     "distinct_customers_tagged": 152,
     "unmatched_labels": [
       "2020",
@@ -226,7 +226,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         },
         {
@@ -379,7 +379,7 @@
       "active_customer_count": 25,
       "total_mrr": 62858.1,
       "total_arr": 754297.2,
-      "total_lifetime": 5217680.68,
+      "total_lifetime": 5217899.68,
       "unmatched_labels": [
         "DCDrawers",
         "DotCabinets",
@@ -633,7 +633,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         },
         {
@@ -703,7 +703,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         },
         {
@@ -737,7 +737,7 @@
       "active_customer_count": 18,
       "total_mrr": 52195.1,
       "total_arr": 626341.2,
-      "total_lifetime": 4829884.86,
+      "total_lifetime": 4831237.86,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -860,14 +860,14 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         },
         {
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -880,7 +880,7 @@
       "active_customer_count": 15,
       "total_mrr": 48683.2,
       "total_arr": 584198.4,
-      "total_lifetime": 4174820.19,
+      "total_lifetime": 4177124.19,
       "unmatched_labels": [
         "DCDrawers",
         "brandenbergercustom",
@@ -6555,7 +6555,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         },
         {
@@ -6575,7 +6575,7 @@
       "active_customer_count": 9,
       "total_mrr": 25979.9,
       "total_arr": 311758.8,
-      "total_lifetime": 2246528.48,
+      "total_lifetime": 2247698.48,
       "unmatched_labels": [
         "DotCabinets",
         "m2m",
@@ -7947,7 +7947,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -7960,7 +7960,7 @@
       "active_customer_count": 7,
       "total_mrr": 21112.2,
       "total_arr": 253346.4,
-      "total_lifetime": 1744304.95,
+      "total_lifetime": 1745474.95,
       "unmatched_labels": [
         "IdealDrawers",
         "Midwest",
@@ -8703,7 +8703,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         },
         {
@@ -8737,7 +8737,7 @@
       "active_customer_count": 6,
       "total_mrr": 19400.2,
       "total_arr": 232802.4,
-      "total_lifetime": 1759373.74,
+      "total_lifetime": 1759592.74,
       "unmatched_labels": [
         "btjdoors",
         "ciminos"
@@ -8798,7 +8798,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -8811,7 +8811,7 @@
       "active_customer_count": 7,
       "total_mrr": 19374,
       "total_arr": 232488,
-      "total_lifetime": 947921.5,
+      "total_lifetime": 949091.5,
       "unmatched_labels": [
         "DoorMastersHouston",
         "IdealDrawers",
@@ -9056,7 +9056,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -9069,7 +9069,7 @@
       "active_customer_count": 9,
       "total_mrr": 17891.15,
       "total_arr": 214693.8,
-      "total_lifetime": 1175365.91,
+      "total_lifetime": 1176535.91,
       "unmatched_labels": [
         "DCDrawers",
         "DoorMastersHouston",
@@ -9626,7 +9626,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         },
         {
@@ -9646,7 +9646,7 @@
       "active_customer_count": 7,
       "total_mrr": 15347.9,
       "total_arr": 184174.8,
-      "total_lifetime": 1197043.62,
+      "total_lifetime": 1198213.62,
       "unmatched_labels": [
         "ciminos",
         "ifccinc",
@@ -12710,7 +12710,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         },
         {
@@ -12737,7 +12737,7 @@
       "active_customer_count": 4,
       "total_mrr": 12113.2,
       "total_arr": 145358.4,
-      "total_lifetime": 935392.4,
+      "total_lifetime": 935611.4,
       "unmatched_labels": [
         "btjdoors",
         "ciminos"
@@ -12871,7 +12871,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         },
         {
@@ -12898,7 +12898,7 @@
       "active_customer_count": 3,
       "total_mrr": 11793.15,
       "total_arr": 141517.8,
-      "total_lifetime": 922323.67,
+      "total_lifetime": 923457.67,
       "unmatched_labels": [
         "DiBosco",
         "RiseUp",
@@ -14672,7 +14672,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         },
         {
@@ -14692,7 +14692,7 @@
       "active_customer_count": 3,
       "total_mrr": 9669.2,
       "total_arr": 116030.4,
-      "total_lifetime": 748024.82,
+      "total_lifetime": 749158.82,
       "unmatched_labels": []
     },
     {
@@ -16349,7 +16349,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -16362,7 +16362,7 @@
       "active_customer_count": 4,
       "total_mrr": 8244,
       "total_arr": 98928,
-      "total_lifetime": 545937.7,
+      "total_lifetime": 547107.7,
       "unmatched_labels": [
         "NovaSouth",
         "mykitch"
@@ -16623,7 +16623,7 @@
           "name": "Quick Kitchens",
           "mrr": 200,
           "lifetime": 1200,
-          "status": "at_risk"
+          "status": "active"
         }
       ],
       "created": "2026-05-11",
@@ -17483,6 +17483,37 @@
       ]
     },
     {
+      "key": "DEV-13927",
+      "summary": "Ciminos login issues",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Low",
+      "issue_score": null,
+      "customers": [
+        {
+          "allmoxy_customer_id": 1,
+          "name": "Lewis Cabinet Specialties Group LLC",
+          "mrr": 7594.2,
+          "lifetime": 598854.9,
+          "status": "active"
+        }
+      ],
+      "created": "2026-10-13",
+      "updated": "2026-10-21",
+      "resolved": "2026-10-13",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13927",
+      "tag_count": 2,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 7594.2,
+      "total_arr": 91130.4,
+      "total_lifetime": 598854.9,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-6926",
       "summary": "Purchase Orders report (React): add filters to hide deleted and received POs",
       "status": "In QA",
@@ -17532,37 +17563,6 @@
       "updated": "2026-10-19",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-13905",
-      "tag_count": 2,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 7594.2,
-      "total_arr": 91130.4,
-      "total_lifetime": 598854.9,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-13927",
-      "summary": "Ciminos login issues",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Low",
-      "issue_score": null,
-      "customers": [
-        {
-          "allmoxy_customer_id": 1,
-          "name": "Lewis Cabinet Specialties Group LLC",
-          "mrr": 7594.2,
-          "lifetime": 598854.9,
-          "status": "active"
-        }
-      ],
-      "created": "2026-10-13",
-      "updated": "2026-10-15",
-      "resolved": "2026-10-13",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13927",
       "tag_count": 2,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -30620,7 +30620,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -30633,7 +30633,7 @@
       "active_customer_count": 3,
       "total_mrr": 7449,
       "total_arr": 89388,
-      "total_lifetime": 729470.67,
+      "total_lifetime": 730640.67,
       "unmatched_labels": [
         "DoorMastersHouston",
         "IdealDrawers",
@@ -40641,7 +40641,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         },
         {
@@ -40661,7 +40661,7 @@
       "active_customer_count": 3,
       "total_mrr": 6068.95,
       "total_arr": 72827.4,
-      "total_lifetime": 448672.75,
+      "total_lifetime": 448891.75,
       "unmatched_labels": [
         "m2m"
       ]
@@ -40865,7 +40865,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -40878,7 +40878,7 @@
       "active_customer_count": 2,
       "total_mrr": 5737,
       "total_arr": 68844,
-      "total_lifetime": 306832.83,
+      "total_lifetime": 307966.83,
       "unmatched_labels": [
         "mykitch"
       ]
@@ -40953,7 +40953,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -40966,7 +40966,7 @@
       "active_customer_count": 2,
       "total_mrr": 5670,
       "total_arr": 68040,
-      "total_lifetime": 377684.92,
+      "total_lifetime": 378818.92,
       "unmatched_labels": [
         "Fryburg"
       ]
@@ -40991,7 +40991,7 @@
           "allmoxy_customer_id": 2048,
           "name": "Graber Cabinets",
           "mrr": 580,
-          "lifetime": 12651,
+          "lifetime": 12888,
           "status": "active"
         }
       ],
@@ -41004,7 +41004,7 @@
       "active_customer_count": 2,
       "total_mrr": 5625,
       "total_arr": 67500,
-      "total_lifetime": 555994.65,
+      "total_lifetime": 556231.65,
       "unmatched_labels": []
     },
     {
@@ -41127,7 +41127,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -41140,7 +41140,7 @@
       "active_customer_count": 2,
       "total_mrr": 5344,
       "total_arr": 64128,
-      "total_lifetime": 593856.06,
+      "total_lifetime": 595026.06,
       "unmatched_labels": []
     },
     {
@@ -43630,7 +43630,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         },
         {
@@ -43664,7 +43664,7 @@
       "active_customer_count": 3,
       "total_mrr": 4792,
       "total_arr": 57504,
-      "total_lifetime": 520112.17,
+      "total_lifetime": 520331.17,
       "unmatched_labels": [
         "IntermountainWood"
       ]
@@ -47522,7 +47522,7 @@
         }
       ],
       "created": "2026-09-16",
-      "updated": "2026-10-01",
+      "updated": "2026-10-21",
       "resolved": "2026-09-16",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13161",
       "tag_count": 2,
@@ -49685,7 +49685,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         },
         {
@@ -49705,7 +49705,7 @@
       "active_customer_count": 2,
       "total_mrr": 3669,
       "total_arr": 44028,
-      "total_lifetime": 273374.89,
+      "total_lifetime": 273593.89,
       "unmatched_labels": []
     },
     {
@@ -50545,7 +50545,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         },
         {
@@ -50565,7 +50565,7 @@
       "active_customer_count": 2,
       "total_mrr": 3139,
       "total_arr": 37668,
-      "total_lifetime": 220558.6,
+      "total_lifetime": 220777.6,
       "unmatched_labels": [
         "Paragon",
         "btjdoors",
@@ -51273,7 +51273,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         }
       ],
@@ -51286,7 +51286,7 @@
       "active_customer_count": 1,
       "total_mrr": 2920,
       "total_arr": 35040,
-      "total_lifetime": 208939.6,
+      "total_lifetime": 209158.6,
       "unmatched_labels": []
     },
     {
@@ -51302,7 +51302,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         }
       ],
@@ -51315,7 +51315,7 @@
       "active_customer_count": 1,
       "total_mrr": 2920,
       "total_arr": 35040,
-      "total_lifetime": 208939.6,
+      "total_lifetime": 209158.6,
       "unmatched_labels": []
     },
     {
@@ -51331,7 +51331,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         }
       ],
@@ -51344,7 +51344,7 @@
       "active_customer_count": 1,
       "total_mrr": 2920,
       "total_arr": 35040,
-      "total_lifetime": 208939.6,
+      "total_lifetime": 209158.6,
       "unmatched_labels": []
     },
     {
@@ -51360,7 +51360,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         }
       ],
@@ -51373,7 +51373,7 @@
       "active_customer_count": 1,
       "total_mrr": 2920,
       "total_arr": 35040,
-      "total_lifetime": 208939.6,
+      "total_lifetime": 209158.6,
       "unmatched_labels": []
     },
     {
@@ -51389,7 +51389,7 @@
           "allmoxy_customer_id": 75,
           "name": "J&B Woodcrafts",
           "mrr": 2920,
-          "lifetime": 208939.6,
+          "lifetime": 209158.6,
           "status": "active"
         }
       ],
@@ -51402,7 +51402,7 @@
       "active_customer_count": 1,
       "total_mrr": 2920,
       "total_arr": 35040,
-      "total_lifetime": 208939.6,
+      "total_lifetime": 209158.6,
       "unmatched_labels": []
     },
     {
@@ -62193,7 +62193,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -62206,7 +62206,7 @@
       "active_customer_count": 1,
       "total_mrr": 1050,
       "total_arr": 12600,
-      "total_lifetime": 73439.52,
+      "total_lifetime": 74573.52,
       "unmatched_labels": [
         "brandenbergercustom"
       ]
@@ -62224,7 +62224,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -62237,7 +62237,7 @@
       "active_customer_count": 1,
       "total_mrr": 1050,
       "total_arr": 12600,
-      "total_lifetime": 73439.52,
+      "total_lifetime": 74573.52,
       "unmatched_labels": []
     },
     {
@@ -62253,7 +62253,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -62266,7 +62266,7 @@
       "active_customer_count": 1,
       "total_mrr": 1050,
       "total_arr": 12600,
-      "total_lifetime": 73439.52,
+      "total_lifetime": 74573.52,
       "unmatched_labels": []
     },
     {
@@ -62282,7 +62282,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -62295,7 +62295,7 @@
       "active_customer_count": 1,
       "total_mrr": 1050,
       "total_arr": 12600,
-      "total_lifetime": 73439.52,
+      "total_lifetime": 74573.52,
       "unmatched_labels": []
     },
     {
@@ -62311,7 +62311,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -62324,7 +62324,7 @@
       "active_customer_count": 1,
       "total_mrr": 1050,
       "total_arr": 12600,
-      "total_lifetime": 73439.52,
+      "total_lifetime": 74573.52,
       "unmatched_labels": []
     },
     {
@@ -62340,7 +62340,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -62353,7 +62353,7 @@
       "active_customer_count": 1,
       "total_mrr": 1050,
       "total_arr": 12600,
-      "total_lifetime": 73439.52,
+      "total_lifetime": 74573.52,
       "unmatched_labels": []
     },
     {
@@ -62369,7 +62369,7 @@
           "allmoxy_customer_id": 304,
           "name": "Nexis3",
           "mrr": 1050,
-          "lifetime": 73439.52,
+          "lifetime": 74573.52,
           "status": "active"
         }
       ],
@@ -62382,7 +62382,7 @@
       "active_customer_count": 1,
       "total_mrr": 1050,
       "total_arr": 12600,
-      "total_lifetime": 73439.52,
+      "total_lifetime": 74573.52,
       "unmatched_labels": []
     },
     {
@@ -64494,6 +64494,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-14060",
+      "summary": "My Door Factory - Signed-in user intermittently gets a sign-in prompt and \"Incorrect email or password\" opening Work Log in a new Edge tab; opens normally in InPrivate",
+      "status": "Dev Scope",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [
+        {
+          "allmoxy_customer_id": 42,
+          "name": "My Door Factory",
+          "mrr": 1000,
+          "lifetime": 102444,
+          "status": "active"
+        }
+      ],
+      "created": "2026-10-21",
+      "updated": "2026-10-21",
+      "resolved": "2026-10-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14060",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 1000,
+      "total_arr": 12000,
+      "total_lifetime": 102444,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-8204",
       "summary": "Changing Proxy Name breaks proxy without warning",
       "status": "Resolved",
@@ -65447,7 +65476,7 @@
           "allmoxy_customer_id": 2060,
           "name": "Formations",
           "mrr": 750,
-          "lifetime": 10021.5,
+          "lifetime": 10771.5,
           "status": "active"
         }
       ],
@@ -65460,7 +65489,7 @@
       "active_customer_count": 1,
       "total_mrr": 750,
       "total_arr": 9000,
-      "total_lifetime": 10021.5,
+      "total_lifetime": 10771.5,
       "unmatched_labels": [
         "dbs"
       ]
@@ -66284,7 +66313,7 @@
           "allmoxy_customer_id": 2048,
           "name": "Graber Cabinets",
           "mrr": 580,
-          "lifetime": 12651,
+          "lifetime": 12888,
           "status": "active"
         }
       ],
@@ -66297,7 +66326,7 @@
       "active_customer_count": 1,
       "total_mrr": 580,
       "total_arr": 6960,
-      "total_lifetime": 12651,
+      "total_lifetime": 12888,
       "unmatched_labels": []
     },
     {
@@ -67190,7 +67219,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67203,7 +67232,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67219,7 +67248,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67232,7 +67261,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67248,7 +67277,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67261,7 +67290,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67277,7 +67306,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67290,7 +67319,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67306,7 +67335,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67319,7 +67348,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67335,7 +67364,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67348,7 +67377,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67364,7 +67393,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67377,7 +67406,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67393,7 +67422,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67406,7 +67435,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67422,7 +67451,7 @@
           "allmoxy_customer_id": 106,
           "name": "GW Eurocase",
           "mrr": 299,
-          "lifetime": 50512.41,
+          "lifetime": 51682.41,
           "status": "active"
         }
       ],
@@ -67435,7 +67464,7 @@
       "active_customer_count": 1,
       "total_mrr": 299,
       "total_arr": 3588,
-      "total_lifetime": 50512.41,
+      "total_lifetime": 51682.41,
       "unmatched_labels": []
     },
     {
@@ -67480,7 +67509,7 @@
           "allmoxy_customer_id": 2056,
           "name": "Five Cabinetry",
           "mrr": 270,
-          "lifetime": 7203.5,
+          "lifetime": 7223.5,
           "status": "active"
         }
       ],
@@ -67493,7 +67522,7 @@
       "active_customer_count": 1,
       "total_mrr": 270,
       "total_arr": 3240,
-      "total_lifetime": 7203.5,
+      "total_lifetime": 7223.5,
       "unmatched_labels": []
     },
     {
@@ -67750,7 +67779,7 @@
           "allmoxy_customer_id": 2059,
           "name": "Top Design Closets",
           "mrr": 250,
-          "lifetime": 3410.5,
+          "lifetime": 3660.5,
           "status": "at_risk"
         }
       ],
@@ -67763,7 +67792,7 @@
       "active_customer_count": 1,
       "total_mrr": 250,
       "total_arr": 3000,
-      "total_lifetime": 3410.5,
+      "total_lifetime": 3660.5,
       "unmatched_labels": [
         "Services"
       ]
@@ -67781,7 +67810,7 @@
           "allmoxy_customer_id": 2059,
           "name": "Top Design Closets",
           "mrr": 250,
-          "lifetime": 3410.5,
+          "lifetime": 3660.5,
           "status": "at_risk"
         }
       ],
@@ -67794,7 +67823,7 @@
       "active_customer_count": 1,
       "total_mrr": 250,
       "total_arr": 3000,
-      "total_lifetime": 3410.5,
+      "total_lifetime": 3660.5,
       "unmatched_labels": []
     },
     {
@@ -68540,7 +68569,7 @@
           "name": "Quick Kitchens",
           "mrr": 200,
           "lifetime": 1200,
-          "status": "at_risk"
+          "status": "active"
         },
         {
           "allmoxy_customer_id": 4,
@@ -68576,7 +68605,7 @@
           "name": "Quick Kitchens",
           "mrr": 200,
           "lifetime": 1200,
-          "status": "at_risk"
+          "status": "active"
         }
       ],
       "created": "2026-05-11",
@@ -68607,7 +68636,7 @@
           "name": "Quick Kitchens",
           "mrr": 200,
           "lifetime": 1200,
-          "status": "at_risk"
+          "status": "active"
         }
       ],
       "created": "2026-03-17",
@@ -79709,6 +79738,52 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-13901",
+      "summary": "J&B Woodcrafts - Operator sends Josiah Kauffman to the login screen and does not sign him in; recurs after a working period in Chrome Incognito, Edge and Edge Private",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": null,
+      "customers": [],
+      "created": "2026-10-12",
+      "updated": "2026-10-21",
+      "resolved": "2026-10-12",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13901",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "jandbwoodcrafts"
+      ]
+    },
+    {
+      "key": "DEV-14061",
+      "summary": "Panhandle Door and Drawer: order 134692 won't save, \"height can't be blank\" fires on the last line of the first Vertical Grain drawer front section though heights are filled",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [],
+      "created": "2026-10-21",
+      "updated": "2026-10-21",
+      "resolved": "2026-10-21",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14061",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "panhandledooranddrawer"
+      ]
+    },
+    {
       "key": "DEV-14048",
       "summary": "Canary Closets - AI Usage says no card on file while the billing portal lists three saved cards",
       "status": "In Progress",
@@ -79729,6 +79804,76 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "canary"
+      ]
+    },
+    {
+      "key": "DEV-11557",
+      "summary": "Missing line Item Data - Order Page \"validation\"",
+      "status": "Resolved",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [],
+      "created": "2026-02-06",
+      "updated": "2026-10-21",
+      "resolved": "2026-02-11",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-11557",
+      "tag_count": 2,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "Fryburg",
+        "advancedcabinetsdoors"
+      ]
+    },
+    {
+      "key": "DEV-13918",
+      "summary": "Ciminos - Hidden panel_profiles attribute stores unavailable option U Panel on a Drawer Front - Slab line and prints it on Panel List - Slabs",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [],
+      "created": "2026-10-13",
+      "updated": "2026-10-21",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13918",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
+      "key": "DEV-13989",
+      "summary": "Mullwoods - Sales by Product and Attribute (new version) times out with no results for Jan 1 to Oct 14, 2026 and attribute cg_panel_wood_type",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 630,
+      "customers": [],
+      "created": "2026-10-15",
+      "updated": "2026-10-21",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13989",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "fryburgdoor"
       ]
     },
     {
@@ -79798,29 +79943,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "lewiscabinet"
-      ]
-    },
-    {
-      "key": "DEV-13918",
-      "summary": "Ciminos - Hidden panel_profiles attribute stores unavailable option U Panel on a Drawer Front - Slab line and prints it on Panel List - Slabs",
-      "status": "In QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 719,
-      "customers": [],
-      "created": "2026-10-13",
-      "updated": "2026-10-20",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13918",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
       ]
     },
     {
@@ -80008,29 +80130,6 @@
       ]
     },
     {
-      "key": "DEV-13989",
-      "summary": "Mullwoods - Sales by Product and Attribute (new version) times out with no results for Jan 1 to Oct 14, 2026 and attribute cg_panel_wood_type",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 630,
-      "customers": [],
-      "created": "2026-10-15",
-      "updated": "2026-10-20",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13989",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "fryburgdoor"
-      ]
-    },
-    {
       "key": "DEV-13496",
       "summary": "Mullwoods - Add Show Buying History button to Individual account Orders section",
       "status": "In Progress",
@@ -80120,29 +80219,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "dcdrawers"
-      ]
-    },
-    {
-      "key": "DEV-13901",
-      "summary": "J&B Woodcrafts - Operator sends Josiah Kauffman to the login screen and does not sign him in; recurs after a working period in Chrome Incognito, Edge and Edge Private",
-      "status": "New",
-      "stage_category": "To Do",
-      "issue_type": "Investigate",
-      "priority": "Medium",
-      "issue_score": null,
-      "customers": [],
-      "created": "2026-10-12",
-      "updated": "2026-10-15",
-      "resolved": "2026-10-12",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13901",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "jandbwoodcrafts"
       ]
     },
     {
@@ -101617,30 +101693,6 @@
       "total_lifetime": 0,
       "unmatched_labels": [
         "AWIHawaii"
-      ]
-    },
-    {
-      "key": "DEV-11557",
-      "summary": "Missing line Item Data - Order Page \"validation\"",
-      "status": "Resolved",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 719,
-      "customers": [],
-      "created": "2026-02-06",
-      "updated": "2026-08-05",
-      "resolved": "2026-02-11",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-11557",
-      "tag_count": 2,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "Fryburg",
-        "advancedcabinetsdoors"
       ]
     },
     {
