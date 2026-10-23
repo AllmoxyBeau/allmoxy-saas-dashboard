@@ -1,7 +1,7 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-10-22T13:30:08.517Z",
-  "cachedUntil": "2026-10-22T13:35:08.517Z",
+  "fetchedAt": "2026-10-23T14:19:07.080Z",
+  "cachedUntil": "2026-10-23T14:24:07.081Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
     "total_issues": 19,

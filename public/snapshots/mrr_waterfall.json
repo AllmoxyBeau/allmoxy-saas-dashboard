@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-10-22T13:30:05.117Z",
-  "cachedUntil": "2026-10-22T13:35:05.117Z",
+  "fetchedAt": "2026-10-23T14:19:02.738Z",
+  "cachedUntil": "2026-10-23T14:24:02.738Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -29,7 +29,7 @@
     "2026-07": 100.1,
     "2026-08": 102.4,
     "2026-09": 102.6,
-    "2026-10": 107
+    "2026-10": 106.9
   },
   "monthly": [
     {
@@ -22371,28 +22371,34 @@
       "partial": true,
       "starting_mrr": 231778.27,
       "new_mrr": 0,
-      "reactivated_mrr": 0,
+      "reactivated_mrr": 90,
       "expansion_mrr": 863,
-      "contraction_mrr": 4740.93,
+      "contraction_mrr": 4720.93,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 35904.37,
-      "ending_mrr": 191995.97,
-      "net_new_mrr": -39782.3,
+      "delinquent_mrr": 34355.37,
+      "ending_mrr": 193654.97,
+      "net_new_mrr": -38123.3,
       "new_logos": 0,
-      "reactivated_logos": 0,
+      "reactivated_logos": 1,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 41,
+      "delinquent_logos": 37,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0167,
+      "net_churn_rate_monthly": 0.0166,
       "expansion_rate_monthly": 0.0037,
-      "grr_monthly": 0.9795,
-      "nrr_monthly": 0.9833,
+      "grr_monthly": 0.9796,
+      "nrr_monthly": 0.9834,
       "quick_ratio": 0.18,
       "details": {
         "new": [],
-        "reactivated": [],
+        "reactivated": [
+          {
+            "name": "Canary Closets",
+            "id": 12,
+            "mrr": 90
+          }
+        ],
         "expansion": [
           {
             "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
@@ -22493,13 +22499,6 @@
             "prev_mrr": 2644,
             "new_mrr": 2599,
             "delta": 45
-          },
-          {
-            "name": "Corona Millworks",
-            "id": 300,
-            "prev_mrr": 4620,
-            "new_mrr": 4600,
-            "delta": 20
           }
         ],
         "churn": [],
@@ -22625,13 +22624,6 @@
             "pay_status": "Cancelled"
           },
           {
-            "name": "Hartley Group Coatings",
-            "id": 400,
-            "mrr": 749,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Ecodomo",
             "id": 2044,
             "mrr": 667,
@@ -22681,13 +22673,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Jim Chambers Architectural Products",
-            "id": 289,
-            "mrr": 300,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Elite Cabinets",
             "id": 360,
             "mrr": 288.75,
@@ -22730,25 +22715,11 @@
             "pay_status": "Active"
           },
           {
-            "name": "Capital Millwork",
-            "id": 550,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Prorustics",
             "id": 2020,
             "mrr": 250,
             "status": "active",
             "pay_status": "Active - Pause Granted"
-          },
-          {
-            "name": "Rise Up Labels",
-            "id": 2019,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Dimitrios & Company",
@@ -23412,6 +23383,11 @@
             "mrr": 400
           },
           {
+            "name": "Rise Up Labels",
+            "id": 2019,
+            "mrr": 250
+          },
+          {
             "name": "Hempston Home",
             "id": 2046,
             "mrr": 250
@@ -23419,11 +23395,6 @@
           {
             "name": "Dimitrios & Company",
             "id": 2045,
-            "mrr": 250
-          },
-          {
-            "name": "Rise Up Labels",
-            "id": 2019,
             "mrr": 250
           },
           {
@@ -24541,28 +24512,34 @@
       "month": "2026-10",
       "partial": true,
       "starting_mrr": 229013.27,
-      "new_mrr": 0,
+      "new_mrr": 90,
       "reactivated_mrr": 0,
       "expansion_mrr": 65,
-      "contraction_mrr": 4962.93,
+      "contraction_mrr": 4942.93,
       "churn_mrr": 0,
       "voided_mrr": 199,
-      "delinquent_mrr": 28805.37,
-      "ending_mrr": 195110.97,
-      "net_new_mrr": -33902.3,
-      "new_logos": 0,
+      "delinquent_mrr": 27256.37,
+      "ending_mrr": 196769.97,
+      "net_new_mrr": -32243.3,
+      "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 1,
-      "delinquent_logos": 39,
+      "delinquent_logos": 35,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0214,
+      "net_churn_rate_monthly": 0.0213,
       "expansion_rate_monthly": 0.0003,
-      "grr_monthly": 0.9783,
-      "nrr_monthly": 0.9786,
-      "quick_ratio": 0.01,
+      "grr_monthly": 0.9784,
+      "nrr_monthly": 0.9787,
+      "quick_ratio": 0.03,
       "details": {
-        "new": [],
+        "new": [
+          {
+            "name": "Canary Closets",
+            "id": 12,
+            "mrr": 90
+          }
+        ],
         "reactivated": [],
         "expansion": [
           {
@@ -24657,13 +24634,6 @@
             "prev_mrr": 2920,
             "new_mrr": 2875,
             "delta": 45
-          },
-          {
-            "name": "Corona Millworks",
-            "id": 300,
-            "prev_mrr": 4620,
-            "new_mrr": 4600,
-            "delta": 20
           }
         ],
         "churn": [],
@@ -24790,13 +24760,6 @@
             "pay_status": "Active - Card Failure"
           },
           {
-            "name": "Hartley Group Coatings",
-            "id": 400,
-            "mrr": 749,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Ecodomo",
             "id": 2044,
             "mrr": 667,
@@ -24835,13 +24798,6 @@
             "name": "Stolbek",
             "id": 2018,
             "mrr": 400,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Jim Chambers Architectural Products",
-            "id": 289,
-            "mrr": 300,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24900,20 +24856,6 @@
             "mrr": 250,
             "status": "active",
             "pay_status": "Cancelled"
-          },
-          {
-            "name": "Capital Millwork",
-            "id": 550,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Rise Up Labels",
-            "id": 2019,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Windsor Place",
