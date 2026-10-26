@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-10-23T14:19:02.738Z",
-  "cachedUntil": "2026-10-23T14:24:02.738Z",
+  "fetchedAt": "2026-10-26T14:27:41.048Z",
+  "cachedUntil": "2026-10-26T14:32:41.048Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -29,7 +29,7 @@
     "2026-07": 100.1,
     "2026-08": 102.4,
     "2026-09": 102.6,
-    "2026-10": 106.9
+    "2026-10": 105
   },
   "monthly": [
     {
@@ -22373,23 +22373,23 @@
       "new_mrr": 0,
       "reactivated_mrr": 90,
       "expansion_mrr": 863,
-      "contraction_mrr": 4720.93,
+      "contraction_mrr": 4999.93,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 34355.37,
-      "ending_mrr": 193654.97,
-      "net_new_mrr": -38123.3,
+      "delinquent_mrr": 13534.12,
+      "ending_mrr": 214197.22,
+      "net_new_mrr": -17581.05,
       "new_logos": 0,
       "reactivated_logos": 1,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 37,
+      "delinquent_logos": 21,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0166,
+      "net_churn_rate_monthly": 0.0178,
       "expansion_rate_monthly": 0.0037,
-      "grr_monthly": 0.9796,
-      "nrr_monthly": 0.9834,
-      "quick_ratio": 0.18,
+      "grr_monthly": 0.9784,
+      "nrr_monthly": 0.9822,
+      "quick_ratio": 0.17,
       "details": {
         "new": [],
         "reactivated": [
@@ -22424,11 +22424,11 @@
         ],
         "contraction": [
           {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "prev_mrr": 3119,
-            "new_mrr": 99,
-            "delta": 3020
+            "name": "Cabredo LLC",
+            "id": 164,
+            "prev_mrr": 6598,
+            "new_mrr": 3299,
+            "delta": 3299
           },
           {
             "name": "Bella Imc",
@@ -22505,20 +22505,6 @@
         "voided": [],
         "delinquent": [
           {
-            "name": "Cabredo LLC",
-            "id": 164,
-            "mrr": 6598,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Brushy Creek Custom Doors, LLC",
-            "id": 72,
-            "mrr": 3099,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Midwest Floor Coverings",
             "id": 211,
             "mrr": 2870.92,
@@ -22526,32 +22512,11 @@
             "pay_status": "Active"
           },
           {
-            "name": "Wizzwood DBA - Quality Kitchens Inc.",
-            "id": 330,
-            "mrr": 2650,
-            "status": "at_risk",
-            "pay_status": "Active - Card Failure"
-          },
-          {
             "name": "Vlux",
             "id": 543,
             "mrr": 1500,
             "status": "at_risk",
             "pay_status": "Active - Card Failure"
-          },
-          {
-            "name": "Quadro Cabinets",
-            "id": 84,
-            "mrr": 1305,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "NuDoors DBA - Spayce Integrated LLC",
-            "id": 440,
-            "mrr": 1100,
-            "status": "at_risk",
-            "pay_status": "Active"
           },
           {
             "name": "Drawer Works",
@@ -22572,28 +22537,7 @@
             "id": 2036,
             "mrr": 900,
             "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Phoenix-LLC",
-            "id": 475,
-            "mrr": 899,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Advanced Cabinet Doors",
-            "id": 131,
-            "mrr": 850,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Island Custom Cabinetry Ltd",
-            "id": 355,
-            "mrr": 849,
-            "status": "active",
-            "pay_status": "Active"
+            "pay_status": "Cancelled"
           },
           {
             "name": "Precision Millwork Utah",
@@ -22610,25 +22554,11 @@
             "pay_status": "Active"
           },
           {
-            "name": "Cascade Distribution Group",
-            "id": 387,
-            "mrr": 754,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Heritage Wood Mills",
             "id": 530,
             "mrr": 750,
             "status": "active",
             "pay_status": "Cancelled"
-          },
-          {
-            "name": "Ecodomo",
-            "id": 2044,
-            "mrr": 667,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Hogan's Cabinetry & Millwork",
@@ -22638,30 +22568,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Wurth LAC",
-            "id": 113,
-            "mrr": 536.25,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Fox Creek Cabinets",
             "id": 2092,
             "mrr": 475,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "RJM Cabinets",
-            "id": 339,
-            "mrr": 415,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Stolbek",
-            "id": 2018,
-            "mrr": 400,
             "status": "active",
             "pay_status": "Active"
           },
@@ -22701,13 +22610,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Santas Cabinets",
-            "id": 2026,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Cancelled"
-          },
-          {
             "name": "KOA Komponents",
             "id": 546,
             "mrr": 250,
@@ -22722,13 +22624,6 @@
             "pay_status": "Active - Pause Granted"
           },
           {
-            "name": "Dimitrios & Company",
-            "id": 2045,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Lane Industries",
             "id": 2037,
             "mrr": 250,
@@ -22741,13 +22636,6 @@
             "mrr": 250,
             "status": "active",
             "pay_status": "Cancelled"
-          },
-          {
-            "name": "Specialty Forest Products",
-            "id": 384,
-            "mrr": 199,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Criscott Properies",
@@ -23383,11 +23271,6 @@
             "mrr": 400
           },
           {
-            "name": "Rise Up Labels",
-            "id": 2019,
-            "mrr": 250
-          },
-          {
             "name": "Hempston Home",
             "id": 2046,
             "mrr": 250
@@ -23395,6 +23278,11 @@
           {
             "name": "Dimitrios & Company",
             "id": 2045,
+            "mrr": 250
+          },
+          {
+            "name": "Rise Up Labels",
+            "id": 2019,
             "mrr": 250
           },
           {
@@ -24515,23 +24403,23 @@
       "new_mrr": 90,
       "reactivated_mrr": 0,
       "expansion_mrr": 65,
-      "contraction_mrr": 4942.93,
+      "contraction_mrr": 1922.93,
       "churn_mrr": 0,
       "voided_mrr": 199,
-      "delinquent_mrr": 27256.37,
-      "ending_mrr": 196769.97,
-      "net_new_mrr": -32243.3,
+      "delinquent_mrr": 12384.12,
+      "ending_mrr": 214662.22,
+      "net_new_mrr": -14351.05,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 1,
-      "delinquent_logos": 35,
+      "delinquent_logos": 20,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0213,
+      "net_churn_rate_monthly": 0.0081,
       "expansion_rate_monthly": 0.0003,
-      "grr_monthly": 0.9784,
-      "nrr_monthly": 0.9787,
-      "quick_ratio": 0.03,
+      "grr_monthly": 0.9916,
+      "nrr_monthly": 0.9919,
+      "quick_ratio": 0.08,
       "details": {
         "new": [
           {
@@ -24558,13 +24446,6 @@
           }
         ],
         "contraction": [
-          {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "prev_mrr": 3119,
-            "new_mrr": 99,
-            "delta": 3020
-          },
           {
             "name": "Dot Custom Cabinets LLC",
             "id": 385,
@@ -24648,38 +24529,10 @@
         ],
         "delinquent": [
           {
-            "name": "Cabredo LLC",
-            "id": 164,
-            "mrr": 3299,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Brushy Creek Custom Doors, LLC",
-            "id": 72,
-            "mrr": 3099,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Midwest Floor Coverings",
             "id": 211,
             "mrr": 2870.92,
             "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Quadro Cabinets",
-            "id": 84,
-            "mrr": 1305,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "NuDoors DBA - Spayce Integrated LLC",
-            "id": 440,
-            "mrr": 1100,
-            "status": "at_risk",
             "pay_status": "Active"
           },
           {
@@ -24701,28 +24554,7 @@
             "id": 2036,
             "mrr": 900,
             "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Phoenix-LLC",
-            "id": 475,
-            "mrr": 899,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Advanced Cabinet Doors",
-            "id": 131,
-            "mrr": 850,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Island Custom Cabinetry Ltd",
-            "id": 355,
-            "mrr": 849,
-            "status": "active",
-            "pay_status": "Active"
+            "pay_status": "Cancelled"
           },
           {
             "name": "Precision Millwork Utah",
@@ -24736,13 +24568,6 @@
             "id": 514,
             "mrr": 799,
             "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Cascade Distribution Group",
-            "id": 387,
-            "mrr": 754,
-            "status": "active",
             "pay_status": "Active"
           },
           {
@@ -24760,13 +24585,6 @@
             "pay_status": "Active - Card Failure"
           },
           {
-            "name": "Ecodomo",
-            "id": 2044,
-            "mrr": 667,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Hogan's Cabinetry & Millwork",
             "id": 338,
             "mrr": 618,
@@ -24774,30 +24592,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Wurth LAC",
-            "id": 113,
-            "mrr": 536.25,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Fox Creek Cabinets",
             "id": 2092,
             "mrr": 475,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "RJM Cabinets",
-            "id": 339,
-            "mrr": 415,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Stolbek",
-            "id": 2018,
-            "mrr": 400,
             "status": "active",
             "pay_status": "Active"
           },
@@ -24844,20 +24641,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Dimitrios & Company",
-            "id": 2045,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Santas Cabinets",
-            "id": 2026,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Cancelled"
-          },
-          {
             "name": "Windsor Place",
             "id": 2064,
             "mrr": 250,
@@ -24870,13 +24653,6 @@
             "mrr": 250,
             "status": "active",
             "pay_status": "Active - Pause Granted"
-          },
-          {
-            "name": "Specialty Forest Products",
-            "id": 384,
-            "mrr": 199,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Criscott Properies",
