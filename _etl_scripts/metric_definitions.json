@@ -53,7 +53,9 @@
       ],
       "source_lineage": "Stripe invoices -> sync_stripe_invoices -> build_revenue_recognition (accrual_series) -> build_customer_base -> customer_base.json",
       "window": "Monthly, from 2025-08 (first month with reliable Stripe invoice coverage). The current partial month is excluded.",
-      "adjustments": "Annual payers added back at amortized MRR (they bill yearly, so they appear in no monthly invoice series but are real customers whose revenue is on the books at 4100). Duplicate/rebrand pairs counted once.",
+      "adjustments": [
+        "Annual payers added back at amortized MRR (they bill yearly, so they appear in no monthly invoice series but are real customers whose revenue is on the books at 4100). Duplicate/rebrand pairs counted once."
+      ],
       "displayed_on": [
         "North Star",
         "Customer Health",

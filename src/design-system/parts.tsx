@@ -5,7 +5,7 @@
  * compete for the DOM. A page assembles these; it does not style them.
  */
 import './styles';
-import { Children, createContext, isValidElement, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Children, Fragment, createContext, isValidElement, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useViewMode } from '../config/features';
 
@@ -202,7 +202,11 @@ const KpiRowSlots = createContext<{ tag: boolean; spark: boolean } | null>(null)
 /** A row of KPI cards. Use it instead of a bare am-grid: it fills the row (one column per card
  *  up to `max`, never an empty column) and lines every card's footer slots up. */
 export function KpiGrid({ children, max = 6, min = 200 }: { children: ReactNode; max?: number; min?: number }) {
-  const kids = Children.toArray(children).filter(isValidElement) as Array<React.ReactElement<{ tag?: string; spark?: number[] }>>;
+  // Count real cards: fragments (e.g. `{ready && <>…</>}`) are opened up, so the row gets one
+  // column per card rather than one per fragment.
+  const flatten = (nodes: ReactNode): React.ReactElement[] =>
+    Children.toArray(nodes).flatMap((n) => (isValidElement(n) && n.type === Fragment ? flatten((n.props as { children?: ReactNode }).children) : isValidElement(n) ? [n] : []));
+  const kids = flatten(children) as Array<React.ReactElement<{ tag?: string; spark?: number[] }>>;
   const slots = useMemo(() => ({ tag: kids.some((k) => !!k.props.tag), spark: kids.some((k) => !!k.props.spark) }), [kids]);
   const cols = Math.max(1, Math.min(max, kids.length));
   return (
@@ -322,7 +326,7 @@ export function SideSheet({ open, onClose, title, text, children }: { open: bool
           <button className="am-sidesheet__close" aria-label="Close" onClick={onClose}><Icon name="close" /></button>
         </div>
         {/* Content stacks with the system's block spacing, so sections never crowd. */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--am-space-block)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--am-space-block)', overflowX: 'auto', minWidth: 0 }}>
           {text && <p className="am-sidesheet__text">{text}</p>}
           {children}
         </div>
@@ -462,8 +466,8 @@ export function ColumnChart({ months, series, fmt, aria, stacked, grouped, label
 
 // ---------------------------------------------------------------- month range (presets + From / To)
 export type Preset = '12M' | '24M' | '60M' | 'ALL' | 'CUSTOM';
-export function useMonthRange(allMonths: string[]) {
-  const [preset, setPreset] = useState<Preset>('12M');
+export function useMonthRange(allMonths: string[], opts?: { defaultPreset?: Exclude<Preset, 'CUSTOM'> }) {
+  const [preset, setPreset] = useState<Preset>(opts?.defaultPreset ?? '12M');
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const first = allMonths[0], last = allMonths[allMonths.length - 1];

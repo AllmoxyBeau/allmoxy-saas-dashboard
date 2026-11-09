@@ -9,6 +9,24 @@ const RevenueWaterfallDS = lazy(() => import('./pages/RevenueWaterfallDS'));
 const LogoWaterfallDS = lazy(() => import('./pages/LogoWaterfallDS'));
 const NetRevenueRetentionDS = lazy(() => import('./pages/NetRevenueRetentionDS'));
 const CurrentMonthDS = lazy(() => import('./pages/CurrentMonthDS'));
+const ApiMigrationPlanDS = lazy(() => import('./pages/ApiMigrationPlanDS'));
+const BackendPlanDS = lazy(() => import('./pages/BackendPlanDS'));
+const PaymentsOpportunityDS = lazy(() => import('./pages/PaymentsOpportunityDS'));
+const SalesBudgetDS = lazy(() => import('./pages/SalesBudgetDS'));
+const InvariantTestsDS = lazy(() => import('./pages/InvariantTestsDS'));
+const DefinitionsDS = lazy(() => import('./pages/DefinitionsDS'));
+const AnnualAmortizationEvidenceDS = lazy(() => import('./pages/AnnualAmortizationEvidenceDS'));
+const AdjustmentsRegisterDS = lazy(() => import('./pages/AdjustmentsRegisterDS'));
+const BankerHandoffDS = lazy(() => import('./pages/BankerHandoffDS'));
+const CIMPacketDS = lazy(() => import('./pages/CIMPacketDS'));
+const MAReadinessDS = lazy(() => import('./pages/MAReadinessDS'));
+const StripeQBReconciliationDS = lazy(() => import('./pages/StripeQBReconciliationDS'));
+const EbitdaBridgeDS = lazy(() => import('./pages/EbitdaBridgeDS'));
+const ProfitLossDS = lazy(() => import('./pages/ProfitLossDS'));
+const SubSegmentBackfillDS = lazy(() => import('./pages/SubSegmentBackfillDS'));
+const SegmentsDS = lazy(() => import('./pages/SegmentsDS'));
+const EfficiencyDS = lazy(() => import('./pages/EfficiencyDS'));
+const UnitEconomicsDS = lazy(() => import('./pages/UnitEconomicsDS'));
 const DataCleanupDS = lazy(() => import('./pages/DataCleanupDS'));
 const ProjectCandidatesDS = lazy(() => import('./pages/ProjectCandidatesDS'));
 const BugReportDS = lazy(() => import('./pages/BugReportDS'));
@@ -112,6 +130,29 @@ export default function App() {
       <Route path="/logo-waterfall" element={<L><LogoWaterfallDS /></L>} />
       <Route path="/net-revenue-retention" element={<L><NetRevenueRetentionDS /></L>} />
       <Route path="/current-month" element={<L><CurrentMonthDS /></L>} />
+      <Route path="/api-migration-plan" element={<L><ApiMigrationPlanDS /></L>} />
+      <Route path="/backend-plan" element={<L><BackendPlanDS /></L>} />
+      <Route path="/payments-opportunity" element={<L><PaymentsOpportunityDS /></L>} />
+      <Route path="/sales-budget" element={<L><SalesBudgetDS /></L>} />
+      {/* Financial pages on the design system: same admin-only gate as the classic block. */}
+      {showFinancialTabs && (
+        <>
+          <Route path="/invariant-tests" element={<L><InvariantTestsDS /></L>} />
+          <Route path="/definitions" element={<L><DefinitionsDS /></L>} />
+          <Route path="/annual-amortization-evidence" element={<L><AnnualAmortizationEvidenceDS /></L>} />
+          <Route path="/adjustments-register" element={<L><AdjustmentsRegisterDS /></L>} />
+          <Route path="/banker-handoff" element={<L><BankerHandoffDS /></L>} />
+          <Route path="/cim-packet" element={<L><CIMPacketDS /></L>} />
+          <Route path="/scorecard" element={<L><MAReadinessDS /></L>} />
+          <Route path="/stripe-qb-reconciliation" element={<L><StripeQBReconciliationDS /></L>} />
+          <Route path="/ebitda-bridge" element={<L><EbitdaBridgeDS /></L>} />
+          <Route path="/profit-loss" element={<L><ProfitLossDS /></L>} />
+          <Route path="/sub-segment-backfill" element={<L><SubSegmentBackfillDS /></L>} />
+          <Route path="/segments" element={<L><SegmentsDS /></L>} />
+          <Route path="/efficiency" element={<L><EfficiencyDS /></L>} />
+          <Route path="/unit-economics" element={<L><UnitEconomicsDS /></L>} />
+        </>
+      )}
       <Route path="/data-cleanup" element={<L><DataCleanupDS /></L>} />
       <Route path="/project-candidates" element={<L><ProjectCandidatesDS /></L>} />
       <Route path="/bug-report" element={<L><BugReportDS /></L>} />
@@ -152,7 +193,7 @@ export default function App() {
         <Route path="service-tickets-classic" element={<L><ServiceTickets /></L>} />
         <Route path="activation-classic" element={<L><Activation /></L>} />
         <Route path="bug-report-classic" element={<L><BugReport /></L>} />
-        <Route path="sales-budget" element={<L><SalesBudget /></L>} />
+        <Route path="sales-budget-classic" element={<L><SalesBudget /></L>} />
         <Route path="churn-timeline-classic" element={<L><ChurnTimeline /></L>} />
         <Route path="churn-patterns-classic" element={<L><ChurnPatterns /></L>} />
         <Route path="churn-investigator-classic" element={<L><ChurnInvestigator /></L>} />
@@ -164,12 +205,12 @@ export default function App() {
         <Route path="project-candidates-classic" element={<L><ProjectCandidates /></L>} />
         <Route path="renewal-management-classic" element={<L><RenewalManagement /></L>} />
         <Route path="contracts-classic" element={<L><Contracts /></L>} />
-        <Route path="payments-opportunity" element={<L><PaymentsOpportunity /></L>} />
+        <Route path="payments-opportunity-classic" element={<L><PaymentsOpportunity /></L>} />
         <Route path="implementation-classic" element={<L><Implementation /></L>} />
         <Route path="implementation-schedule-classic" element={<L><ImplementationSchedule /></L>} />
         <Route path="data-cleanup-classic" element={<L><DataCleanup /></L>} />
-        <Route path="backend-plan" element={<L><BackendPlan /></L>} />
-        <Route path="api-migration-plan" element={<L><ApiMigrationPlan /></L>} />
+        <Route path="backend-plan-classic" element={<L><BackendPlan /></L>} />
+        <Route path="api-migration-plan-classic" element={<L><ApiMigrationPlan /></L>} />
         {/* Financial / QoE / diligence routes — registered only when the
             SHOW_FINANCIAL_TABS feature flag is on. In production (Vercel env
             var unset) typing these URLs falls through to the catch-all and
@@ -177,20 +218,20 @@ export default function App() {
         {showFinancialTabs && (
           <>
             {/* Unit Economics group — financial analytics, hidden from CS Rep / prod */}
-            <Route path="unit-economics" element={<L><UnitEconomics /></L>} />
-            <Route path="efficiency" element={<L><Efficiency /></L>} />
-            <Route path="segments" element={<L><Segments /></L>} />
-            <Route path="sub-segment-backfill" element={<L><SubSegmentBackfill /></L>} />
-            <Route path="profit-loss" element={<L><ProfitLoss /></L>} />
-            <Route path="ebitda-bridge" element={<L><EbitdaBridge /></L>} />
-            <Route path="scorecard" element={<L><MAReadiness /></L>} />
-            <Route path="cim-packet" element={<L><CIMPacket /></L>} />
-            <Route path="adjustments-register" element={<L><AdjustmentsRegister /></L>} />
-            <Route path="annual-amortization-evidence" element={<L><AnnualAmortizationEvidence /></L>} />
-            <Route path="invariant-tests" element={<L><InvariantTests /></L>} />
-            <Route path="definitions" element={<L><Definitions /></L>} />
-            <Route path="banker-handoff" element={<L><BankerHandoff /></L>} />
-            <Route path="stripe-qb-reconciliation" element={<L><StripeQBReconciliation /></L>} />
+            <Route path="unit-economics-classic" element={<L><UnitEconomics /></L>} />
+            <Route path="efficiency-classic" element={<L><Efficiency /></L>} />
+            <Route path="segments-classic" element={<L><Segments /></L>} />
+            <Route path="sub-segment-backfill-classic" element={<L><SubSegmentBackfill /></L>} />
+            <Route path="profit-loss-classic" element={<L><ProfitLoss /></L>} />
+            <Route path="ebitda-bridge-classic" element={<L><EbitdaBridge /></L>} />
+            <Route path="scorecard-classic" element={<L><MAReadiness /></L>} />
+            <Route path="cim-packet-classic" element={<L><CIMPacket /></L>} />
+            <Route path="adjustments-register-classic" element={<L><AdjustmentsRegister /></L>} />
+            <Route path="annual-amortization-evidence-classic" element={<L><AnnualAmortizationEvidence /></L>} />
+            <Route path="invariant-tests-classic" element={<L><InvariantTests /></L>} />
+            <Route path="definitions-classic" element={<L><Definitions /></L>} />
+            <Route path="banker-handoff-classic" element={<L><BankerHandoff /></L>} />
+            <Route path="stripe-qb-reconciliation-classic" element={<L><StripeQBReconciliation /></L>} />
           </>
         )}
         <Route path="customers-classic" element={<L><Customers /></L>} />
