@@ -1,0 +1,416 @@
+/* Allmoxy Design System: Charts (custom parts)
+ * Material 3 ships no chart component, so every chart is a house build. The color routing
+ * (which palette a chart reaches for, decided by the data) lives in read me rule 07; the
+ * values live in the --am-chart-* tokens. This file holds the shared chart chrome (frame,
+ * title, unit caption, series fills, legend, loading skeleton, empty state, and the
+ * screen-reader data table) plus the first shape: the stacked bar.
+ *
+ * Direct labels on the marks are the primary read, a legend as the fallback for marks too
+ * small to hold one. Hover tooltips are sanctioned chart behavior (ruled 2026-08-15,
+ * amending the v1 static-only build choice, which was never a ruling): a tooltip wears the
+ * certified tooltip part and adds exact figures, it never replaces the direct label on a
+ * house shape. Load failure is not a chart state; a page
+ * shows an inline alert. The chart's own states are loaded, loading (skeleton mirror), and
+ * empty (no data for the range).
+ *
+ * Token driven throughout. Series color lives in one place: the .am-series--* classes map a
+ * series index to its palette token, and marks (segments, slices, columns) and legend
+ * swatches all wear the same class, so a palette change cascades from one line.
+ */
+
+/* ---- shared frame ---- */
+.am-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md-sys-spacing-md);
+  color: var(--md-sys-color-on-surface);
+  /* The part is usually a <figure>, and a bare figure carries a browser default margin of 1em top
+     and bottom plus 40px each side. Every caller was cancelling that with an inline margin:0, which
+     is the part failing to own its own box: a caller that forgot got 40px of phantom indent, and
+     the inline write also outranked any stylesheet trying to space a chart from what sits above it
+     (that is how seven chart specimens stayed fused when the showroom's reading toggles hid the
+     paragraphs between them, 2026-08-12). Reset here once, so no caller writes it again. */
+  margin: 0;
+}
+.am-chart__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md-sys-spacing-2xs);
+}
+.am-chart__title {
+  font-size: var(--md-sys-typescale-title-medium-size);
+  line-height: var(--md-sys-typescale-title-medium-line-height);
+  font-weight: var(--md-sys-typescale-title-medium-weight);
+}
+.am-chart__caption {
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* ---- series color: index -> palette token, the single source for every mark ----
+ * Each class sets background (HTML marks: stacked segments, columns), fill and stroke
+ * (SVG marks: slices), and --am-series-on (the paired on-color for a label sitting on the
+ * mark). The five diverging stops are the aging / good-to-bad ramp; Other is the neutral
+ * gray a rollup collapses into, always last. Sequential and categorical fills join here
+ * when a shape that needs them is certified. */
+.am-series--div-1 { background: var(--am-chart-div-1); fill: var(--am-chart-div-1); stroke: var(--am-chart-div-1); --am-series-on: var(--am-on-chart-div-1); }
+.am-series--div-2 { background: var(--am-chart-div-2); fill: var(--am-chart-div-2); stroke: var(--am-chart-div-2); --am-series-on: var(--am-on-chart-div-2); }
+.am-series--div-3 { background: var(--am-chart-div-3); fill: var(--am-chart-div-3); stroke: var(--am-chart-div-3); --am-series-on: var(--am-on-chart-div-3); }
+.am-series--div-4 { background: var(--am-chart-div-4); fill: var(--am-chart-div-4); stroke: var(--am-chart-div-4); --am-series-on: var(--am-on-chart-div-4); }
+.am-series--div-5 { background: var(--am-chart-div-5); fill: var(--am-chart-div-5); stroke: var(--am-chart-div-5); --am-series-on: var(--am-on-chart-div-5); }
+.am-series--other { background: var(--md-sys-color-outline-variant); fill: var(--md-sys-color-outline-variant); stroke: var(--md-sys-color-outline-variant); --am-series-on: var(--md-sys-color-on-surface-variant); }
+/* Categorical fills: unordered categories where color separates, never ranks. */
+.am-series--cat-1 { background: var(--am-chart-cat-1); fill: var(--am-chart-cat-1); stroke: var(--am-chart-cat-1); --am-series-on: var(--am-on-chart-cat-1); }
+.am-series--cat-2 { background: var(--am-chart-cat-2); fill: var(--am-chart-cat-2); stroke: var(--am-chart-cat-2); --am-series-on: var(--am-on-chart-cat-2); }
+.am-series--cat-3 { background: var(--am-chart-cat-3); fill: var(--am-chart-cat-3); stroke: var(--am-chart-cat-3); --am-series-on: var(--am-on-chart-cat-3); }
+.am-series--cat-4 { background: var(--am-chart-cat-4); fill: var(--am-chart-cat-4); stroke: var(--am-chart-cat-4); --am-series-on: var(--am-on-chart-cat-4); }
+.am-series--cat-5 { background: var(--am-chart-cat-5); fill: var(--am-chart-cat-5); stroke: var(--am-chart-cat-5); --am-series-on: var(--am-on-chart-cat-5); }
+.am-series--cat-6 { background: var(--am-chart-cat-6); fill: var(--am-chart-cat-6); stroke: var(--am-chart-cat-6); --am-series-on: var(--am-on-chart-cat-6); }
+.am-series--cat-7 { background: var(--am-chart-cat-7); fill: var(--am-chart-cat-7); stroke: var(--am-chart-cat-7); --am-series-on: var(--am-on-chart-cat-7); }
+.am-series--cat-8 { background: var(--am-chart-cat-8); fill: var(--am-chart-cat-8); stroke: var(--am-chart-cat-8); --am-series-on: var(--am-on-chart-cat-8); }
+
+/* palette reference swatches (the Chart color doctrine card) */
+.am-chart__ramp { display: flex; flex-wrap: wrap; gap: var(--md-sys-spacing-xs); margin-top: var(--md-sys-spacing-sm); }
+.am-chart__ramp-chip { width: 40px; height: 40px; border-radius: var(--md-sys-shape-corner-small); }
+
+/* ---- legend ----
+ * A rounded-square swatch, its label, and the figure. Below the plot for a full-width
+ * horizontal bar (--below), beside it for a shape with vertical room like the donut
+ * (--right). */
+.am-chart__legend {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.am-chart__legend--below {
+  flex-wrap: wrap;
+  gap: var(--md-sys-spacing-xs) var(--md-sys-spacing-lg);
+}
+.am-chart__legend--right {
+  flex-direction: column;
+  gap: var(--md-sys-spacing-sm);
+}
+.am-chart__legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-xs);
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+  color: var(--md-sys-color-on-surface);
+}
+.am-chart__swatch {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--md-sys-shape-corner-extra-small);
+}
+.am-chart__legend-value {
+  color: var(--md-sys-color-on-surface-variant);
+  font-variant-numeric: tabular-nums;
+}
+/* right-legend rows split label and figure across the row */
+.am-chart__legend--right .am-chart__legend-item { gap: var(--md-sys-spacing-sm); }
+.am-chart__legend--right .am-chart__legend-label { flex: 1; }
+
+/* ---- stacked bar: one bar, parts to a whole, normalized to 100% ---- */
+.am-stacked-bar {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  border-radius: var(--am-chart-bar-radius);
+  overflow: hidden;
+}
+.am-stacked-bar__seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;            /* segment width is set per-datum as a percentage */
+  overflow: hidden;
+  color: var(--am-series-on);
+}
+.am-stacked-bar__label {
+  font-size: var(--md-sys-typescale-label-large-size);
+  line-height: var(--md-sys-typescale-label-large-line-height);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  white-space: nowrap;
+}
+
+/* ---- loading skeleton: the bar's own shape while data loads (rule 06 mirror) ----
+ * Composed with .am-skeleton for the shimmer; same height and radius as the real bar, so
+ * nothing shifts when data lands. */
+.am-chart__skeleton-bar {
+  height: 40px;
+  width: 100%;
+  border-radius: var(--am-chart-bar-radius);
+}
+
+/* ---- empty state: no data for the range ---- */
+.am-chart__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--md-sys-spacing-sm);
+  height: 120px;
+  border: 1px dashed var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-medium);
+  color: var(--md-sys-color-on-surface-variant);
+  text-align: center;
+}
+.am-chart__empty-icon {
+  width: 32px;
+  height: 32px;
+  fill: var(--md-sys-color-on-surface-variant);
+}
+.am-chart__empty-text {
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+}
+
+/* ---- accessibility: the numbers, reachable by a screen reader and by copy-paste ----
+ * The chart carries role="img" and a one-line aria summary; this table holds the data
+ * off-screen so it is announced and selectable without altering the visual. */
+.am-chart__data-table {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- column chart: one value per category, compared side by side ----
+ * SVG, not HTML: the axis, the faint gridlines, and bars that drop below a zero line all
+ * need exact placement that flex cannot give. Minimal axes (faint horizontal gridlines,
+ * a stronger zero line, no box, no vertical lines), the value sits above each bar, the
+ * category sits below. */
+.am-column-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.am-chart__gridline { stroke: var(--md-sys-color-outline-variant); stroke-width: 1px; }
+.am-chart__axis-line { stroke: var(--md-sys-color-outline); stroke-width: 1px; }
+.am-chart__tick,
+.am-chart__cat {
+  fill: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-label-small-size);
+}
+.am-chart__value {
+  fill: var(--md-sys-color-on-surface);
+  font-size: var(--md-sys-typescale-label-small-size);
+  font-weight: var(--md-sys-typescale-label-small-weight);
+}
+/* ---- pareto: ranked columns plus their running share, on two scales ----
+ * RULED 2026-09-29 (gap split-view--pareto-chart, card 99, option A), the first chart with a
+ * second scale. The columns run largest first against the left value scale; the cumulative
+ * share is a line with a marker per category against a right scale fixed at 0 to 100 percent,
+ * whose top sits level with the left scale's top gridline so both read off the same lines. The
+ * right scale draws its own vertical axis line (the left scale has none, per the column chart's
+ * minimal axes) so a reader can tell which numbers belong to which side. The point where the line
+ * first reaches 80 percent carries its value; one legend names both marks. Everything is the
+ * certified chart vocabulary (column, line, marker, ticks, axis line, gridline, legend, data
+ * table): the shape is the composition, and this class names it. A two-figure stack (option B)
+ * and a cumulative column in the data table (option C) were declined, because the reason to draw
+ * a pareto is reading the curve against the bars in one look. */
+.am-pareto-chart { overflow: visible; }
+
+/* ---- histogram: how one measure spreads across a continuous scale ----
+ * RULED 2026-09-29 (gap split-view--histogram-chart, card 100, option A). The column chart's
+ * geometry with two rules it does not have: the bars TOUCH, each one exactly a bin wide, and the
+ * labels sit on the bin EDGES with a short tick under each, so the axis reads as one continuous
+ * measure rather than a row of unrelated categories. No value label rides a bar, since a number
+ * over every touching bar is clutter; the counts live in the chart's data table. One series, one
+ * fill. Drawing bins as spaced categories on the plain column chart (option B) was declined
+ * because the eye then has to reassemble the curve; a median or mean marker (option C) is a
+ * separate decision and is not part of this shape. */
+.am-histogram { display: block; }
+
+/* ---- scatter / bubble: individual records on two numeric axes ----
+ * A house shape for placing one mark per record where both axes are continuous (money,
+ * counts, days), unlike the category/time charts above. Each dot is a
+ * <circle class="am-chart__dot am-series--cat-N"> positioned by the app; fill comes from the
+ * series class so the palette cascade still applies. Size is data driven per mark via the r
+ * attribute: equal r reads as a plain scatter, varied r reads as a bubble (an optional third
+ * measure the chart takes or leaves). Reuses the shared axis-line, gridline, tick, and
+ * screen-reader data table. Axis titles name the two measures. */
+.am-chart__dot { fill-opacity: 0.72; stroke: var(--md-sys-color-surface); stroke-width: 1.5px; }
+.am-chart__axis-title { fill: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-label-small-size); font-weight: var(--md-sys-typescale-label-small-weight); }
+.am-column { rx: var(--am-chart-bar-radius); }
+
+/* column loading skeleton: neutral bars standing on the baseline (rule 06 mirror) */
+.am-chart__skeleton-cols {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--md-sys-spacing-lg);
+  height: 182px;
+  padding: 0 var(--md-sys-spacing-sm);
+  border-bottom: 1px solid var(--md-sys-color-outline);
+}
+.am-chart__skeleton-cols .am-skeleton {
+  flex: 1;
+  border-radius: var(--am-chart-bar-radius);
+}
+
+/* ---- donut chart: parts of a whole with an emphasized headline in the hole ----
+ * SVG ring drawn from stroke dash lengths. Capped at six slices; a rollup of the rest
+ * sits last in neutral gray (--am-series--other). The hole carries the total; a right
+ * side legend names each slice with its figure, the sanctioned fallback for slices too
+ * thin to label on the ring itself. Butted slices, no gap. */
+.am-donut-body {
+  display: flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-xl);
+}
+.am-donut { flex: 0 0 auto; display: block; }
+.am-donut__slice { fill: none; stroke-width: 30px; }
+.am-donut__total {
+  fill: var(--md-sys-color-on-surface);
+  font-size: var(--md-sys-typescale-title-large-size);
+  font-weight: var(--md-sys-typescale-title-large-weight);
+}
+.am-donut__total-label {
+  fill: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-small-size);
+}
+/* donut loading skeleton: a gray disc holding the ring's footprint, plus legend lines */
+.am-chart__skeleton-donut { display: flex; align-items: center; gap: var(--md-sys-spacing-xl); }
+.am-chart__skeleton-donut .am-skeleton--circle { width: 128px; height: 128px; }
+.am-chart__skeleton-donut .am-skeleton-stack { flex: 1; max-width: 200px; }
+
+/* ---- line / area chart: a measure over time ----
+ * SVG paths. The line reads the trend; an area fill emphasizes magnitude of a single
+ * series and always anchors at a zero baseline. A line about trend fits its y-axis to the
+ * data. Straight segments (no invented values between points), medium stroke, the last
+ * point carries a marker and its value, and in a multi-series chart each line is named at
+ * its right end. Series wear the categorical palette. */
+.am-line-chart { display: block; width: 100%; height: auto; }
+.am-line {
+  fill: none;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.am-line__area { stroke: none; fill-opacity: 0.18; }
+.am-line__marker { stroke: none; }
+.am-line__series-label {
+  stroke: none;
+  font-size: var(--md-sys-typescale-label-small-size);
+  font-weight: var(--md-sys-typescale-label-small-weight);
+}
+/* line loading skeleton: a gray band holding the plot footprint (rule 06 mirror) */
+.am-chart__skeleton-line {
+  height: 120px;
+  width: 100%;
+  border-radius: var(--md-sys-shape-corner-small);
+}
+
+/* ---- sparkline: a tiny inline trend, no axes or labels ----
+ * The line shape shrunk to sit in a table cell or beside a KPI number. Reuses the line
+ * and area marks and the categorical fills; a last-point dot anchors the latest value,
+ * a single color throughout (direction is not encoded, context carries meaning). Sized
+ * per instance via the svg's own width and height. */
+.am-sparkline {
+  display: inline-block;
+  vertical-align: middle;
+  overflow: visible;
+}
+.am-sparkline .am-line { stroke-width: 2px; }
+
+/* ---- stat card: a KPI tile with its trend ----
+ * RULED 2026-08-15 (gap data--stat-sparkline-card, option B): stacked, over the inline value-
+ * beside-spark shape (A, no room for a change figure) and over extending the summary strip (C,
+ * one full-width row, not tiles a dashboard grid can mix). Label, then the value with its
+ * change figure, then a full-width area sparkline: the trend gets the card's whole width and
+ * each stat carries its change number, for one extra row of height.
+ * A standalone tile: sheet surface, hairline border, the card corner, drops into any dashboard
+ * grid. The delta pairs the trend glyph WITH the signed number, never color alone (direction is
+ * carried by glyph shape and sign; the glyph wears the same single series color the sparkline
+ * does, per the sparkline's one-color rule, so nothing here encodes good or bad in hue).
+ * A <figure>; margin reset here for the same reason the chart frame resets it. */
+.am-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md-sys-spacing-2xs);
+  margin: 0;
+  padding: var(--md-sys-spacing-md) var(--md-sys-spacing-lg);
+  background: var(--am-surface-sheet);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-medium);
+  color: var(--md-sys-color-on-surface);
+}
+.am-stat-card__label {
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  color: var(--md-sys-color-on-surface-variant);
+}
+.am-stat-card__value {
+  display: flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-sm);
+  margin: 0;
+  font-size: var(--md-sys-typescale-headline-small-size);
+  font-weight: var(--md-sys-typescale-headline-small-weight);
+  line-height: var(--md-sys-typescale-headline-small-line-height);
+}
+.am-stat-card__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-2xs);
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  color: var(--md-sys-color-on-surface-variant);
+}
+/* sizing-rule: 14px delta text -> 18. Ruled 2026-09-30, card 107. */
+.am-stat-card__delta .am-icon {
+  --am-icon-size: 18;
+  color: var(--am-chart-cat-1);
+}
+/* the trend runs the card's full width and sits on the tile's floor */
+.am-stat-card__spark {
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin-top: auto;
+}
+
+/* sequential fills for a magnitude scale (used by the heatmap). Sequential has no
+ * on-color token, so these carry color only and set no --am-series-on; cells that use
+ * them carry no text (color-only). Theme-aware via the sequential tokens. */
+.am-series--seq-1 { background: var(--am-chart-seq-1); fill: var(--am-chart-seq-1); stroke: var(--am-chart-seq-1); }
+.am-series--seq-2 { background: var(--am-chart-seq-2); fill: var(--am-chart-seq-2); stroke: var(--am-chart-seq-2); }
+.am-series--seq-3 { background: var(--am-chart-seq-3); fill: var(--am-chart-seq-3); stroke: var(--am-chart-seq-3); }
+.am-series--seq-4 { background: var(--am-chart-seq-4); fill: var(--am-chart-seq-4); stroke: var(--am-chart-seq-4); }
+.am-series--seq-5 { background: var(--am-chart-seq-5); fill: var(--am-chart-seq-5); stroke: var(--am-chart-seq-5); }
+
+/* ---- heatmap: a grid where color encodes intensity ----
+ * A matrix of cells; each cell's color is a bucket on a five-step scale (sequential for
+ * magnitude, diverging for deviation from a midpoint). Cells are contiguous: no gaps, no
+ * borders, no rounding, so the grid reads as a field. Color only, no in-cell numbers;
+ * the scale legend and the accessibility table carry exact values. Rows label the left,
+ * categories label the bottom, matching the other charts' category axis. */
+.am-heatmap { display: block; width: 100%; height: auto; shape-rendering: crispEdges; }
+.am-heatmap__cell { stroke: none; }
+/* stepped scale legend, low to high (or below to above), sits under the grid */
+.am-chart__scale {
+  display: flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-xs);
+  margin-top: var(--md-sys-spacing-sm);
+  font-size: var(--md-sys-typescale-label-small-size);
+  color: var(--md-sys-color-on-surface-variant);
+}
+.am-chart__scale-ramp { display: inline-flex; }
+.am-chart__scale-swatch { width: 24px; height: 12px; }
+/* heatmap loading skeleton: a gray block holding the grid footprint (rule 06 mirror) */
+.am-chart__skeleton-grid {
+  height: 150px;
+  width: 100%;
+  border-radius: var(--md-sys-shape-corner-small);
+}

@@ -1,0 +1,46 @@
+/* Page header: the page's identity row. Title (with optional subtitle) on the left,
+   page-level actions on the right, and the sole title-to-content gap below it (no first
+   content element stacks its own top spacing above this margin). One per page; it spans
+   the full content width, above the content, on every template. In a split view it heads
+   the main pane; only a conversation page carries it at the head of the rail instead. */
+.am-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--am-space-inline);
+  margin-bottom: var(--am-space-block);
+}
+
+/* DECISION (house call, shipped PR #249): the page title recedes on purpose. It is
+   wayfinding, not the focus; the data and the primary action carry the emphasis. So it
+   sits at title-large (an M3 app-bar title role), Regular weight, in the muted
+   on-surface-variant tone (M3-sanctioned lower-emphasis text). A field report asked to
+   embolden it and the ruling went the other way. Do not bolden, darken, or enlarge it
+   locally. */
+.am-page-header__title {
+  margin: 0;
+  font-size: var(--md-sys-typescale-title-large-size);
+  line-height: var(--md-sys-typescale-title-large-line-height);
+  font-weight: var(--md-sys-typescale-title-large-weight);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.am-page-header__titlewrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.am-page-header__subtitle {
+  margin: 0;
+  font-size: var(--md-sys-typescale-body-medium-size);
+  line-height: var(--md-sys-typescale-body-medium-line-height);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.am-page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--am-space-inline);
+}

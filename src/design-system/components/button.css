@@ -1,0 +1,359 @@
+/* Allmoxy Design System, Button family (STOCK Material 3)
+ * A certified part: our own token-driven CSS, built to Google's M3 button spec,
+ * wearing the seeded --md-sys-* tokens. No Allmoxy opinion yet.
+ * Spec values from Google's M3 token data pack v0.192:
+ *   height 40px, fully rounded, label-large type, disabled 12% container / 38% label.
+ */
+
+/* ---- common buttons ---- */
+.am-btn {
+  --_state-color: var(--md-sys-color-on-primary);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--md-sys-spacing-xs);
+  height: var(--am-density-button-height);
+  padding: 0 var(--md-sys-spacing-lg);
+  border: none;
+  border-radius: var(--md-sys-shape-corner-full);
+  font-family: var(--md-sys-typescale-font);
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  line-height: var(--md-sys-typescale-label-large-line-height);
+  letter-spacing: var(--md-sys-typescale-label-large-tracking);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: box-shadow var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+}
+/* state layer: an overlay tinted with the variant's content color, fading in on
+   hover / focus / press at Google's standard opacities */
+.am-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--_state-color);
+  opacity: 0;
+  transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+.am-btn:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-btn:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.am-btn:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+.am-btn:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+
+/* leading icon shifts the left padding in per spec */
+.am-btn:has(> .am-icon:first-child) { padding-left: var(--md-sys-spacing-md); }
+.am-btn .am-icon { --am-icon-size: 18; color: currentColor; }
+
+/* variants */
+.am-btn--filled {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  --_state-color: var(--md-sys-color-on-primary);
+}
+.am-btn--tonal {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  --_state-color: var(--md-sys-color-on-secondary-container);
+}
+/* Kept on M3 outline, not lightened to outline-variant. Evaluated in the edge pass
+   that lightened fields (#400) and chips (#412); on an outlined button the border is
+   the control's whole presence, so lightening reads as disabled rather than calm.
+   Deliberately unchanged. 2026-07-17. */
+.am-btn--outlined {
+  background: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
+  --_state-color: var(--md-sys-color-primary);
+}
+.am-btn--elevated {
+  background: var(--am-surface-sheet);
+  color: var(--md-sys-color-primary);
+  --_state-color: var(--md-sys-color-primary);
+  box-shadow: var(--am-shadow-level1);
+}
+.am-btn--elevated:hover { box-shadow: var(--am-shadow-level2); }
+.am-btn--text {
+  background: transparent;
+  color: var(--md-sys-color-primary);
+  padding: 0 var(--md-sys-spacing-sm);
+  --_state-color: var(--md-sys-color-primary);
+}
+.am-btn--text:has(> .am-icon:first-child) { padding-left: var(--md-sys-spacing-sm); padding-right: var(--md-sys-spacing-md); }
+
+/* ---- danger (destructive) ----
+   House ruling D7d, re-affirmed by Brady 2026-07-15 (option C): a destructive action reads in the
+   error color. Certified on two tiers only, by design: text is the quiet trigger out on the page,
+   filled is the loud commit reserved for the confirm dialog (the point of no return, already isolated
+   by the dialog). Outlined, tonal, and elevated danger are intentionally not certified yet; add a tier
+   on demand as a logged decision when a real spot needs it. Color and state layer only, so danger
+   composes with --classic (density) without any extra rule. Disabled stays the shared neutral M3
+   treatment (error color does not carry through a disabled control), which is correct.
+
+   ICON-ONLY DESTRUCTIVE CONTROLS ARE THE ONE EXCEPTION AND THEY ARE NEVER RED AT REST (ruled
+   2026-09-17, gap repeat--remove-saved-state-ink, card 90). Both certified tiers above carry a
+   word, so the red is a second signal beside the label; a bare glyph has no word, so a resting red
+   would be the only thing saying destructive, which is exactly the color-alone failure the house
+   rules against everywhere else. The glyph is the resting signal (a trash deletes stored data, a
+   close dismisses something nothing has stored yet) and the error color arrives on hover and on
+   keyboard focus, where the pointer or the focus ring has already singled the control out. The two
+   controls this governs are the icon-button danger tier below, plus two part-owned controls that
+   state the rule beside their own code (the table's icon row action and the repeatable group's
+   saved-row remove). */
+.am-btn--text.am-btn--danger {
+  color: var(--md-sys-color-error);
+  --_state-color: var(--md-sys-color-error);
+}
+.am-btn--filled.am-btn--danger {
+  background: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
+  --_state-color: var(--md-sys-color-on-error);
+}
+
+/* ---- admin identity ----
+   House decision (Brady 2026-07-15): admin-only controls carry a single identity, the admin color
+   plus the shield icon, always both (color for instant recognition, icon so it still reads without
+   color). The color is the loud legacy superadmin purple, kept in the unclamped vivid lane so it
+   stays loud. This is the button binding of that identity: a solid admin button, and the matching
+   admin icon button. The tag binding lives in tag.css. Any admin control pairs this with the shield
+   glyph. Custom, a deliberate departure from stock M3 (M3 has no permission-tier color). */
+.am-btn--admin {
+  background: var(--am-admin-vivid);
+  color: var(--am-on-admin-vivid);
+  --_state-color: var(--am-on-admin-vivid);
+}
+.am-icon-btn--admin {
+  background: var(--am-admin-vivid);
+  color: var(--am-on-admin-vivid);
+  --_state-color: var(--am-on-admin-vivid);
+}
+
+/* disabled (M3: container 12% on-surface, label 38% on-surface) */
+.am-btn:disabled { cursor: default; pointer-events: none; box-shadow: none; }
+.am-btn--filled:disabled,
+.am-btn--tonal:disabled,
+.am-btn--elevated:disabled {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+.am-btn--outlined:disabled {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+.am-btn--text:disabled {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+
+/* Classic modifier: the legacy app's small, crammed action button. A very short box at the
+   legacy text size, for the bridge look while we modernize. Box height 22px measured from the
+   legacy screenshots (the most common legacy button; note this is not the same as the 20px classic
+   field, each was measured to its own legacy element). Slated for retirement (grep --classic to list every instance to remove). Same
+   button underneath; provenance is unchanged: color, variants, states, focus ring, and behavior
+   are the modern part, only the box and type shrink to fit the legacy row. */
+.am-btn--classic {
+  --am-density-button-height: 20px;
+  gap: var(--md-sys-spacing-2xs);
+  padding: 0 var(--md-sys-spacing-md);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
+  letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+}
+.am-btn--classic.am-btn--text { padding: 0 var(--md-sys-spacing-sm); }
+.am-btn--classic:has(> .am-icon:first-child) { padding-left: var(--md-sys-spacing-sm); }
+.am-btn--classic.am-btn--text:has(> .am-icon:first-child) { padding-left: var(--md-sys-spacing-xs); padding-right: var(--md-sys-spacing-sm); }
+.am-btn--classic .am-icon { --am-icon-size: 14; }
+
+/* ---- working: the press landed and its work is still running ----
+   Card 220, ruled by Brady: on press the button takes the switched-off grey (so it no longer
+   looks pressable) and a turning ring replaces its words. The words stay in the button, painted
+   transparent, so the button keeps its resting width to the pixel and nothing beside it moves;
+   screen readers still hear its name. The ring takes the circular progress part's shape at the
+   button's own icon size, centred over the words, in the switched-off label grey. Unlike a
+   switched-off button it keeps keyboard focus (aria-disabled, never the disabled attribute), so
+   a keyboard user is not thrown back to the top of the form when a save starts. The behavior
+   layer adds the busy flags and refuses presses, so a page only toggles the class;
+   when the work finishes the page removes the class and the button is back at rest. What a
+   refused save shows is the failure state's job, not this one. */
+.am-btn.am-btn--working {
+  --_mark: 18px;
+  --_mark-weight: 2px;
+  --_state-color: transparent;
+  cursor: default;
+  box-shadow: none;
+  color: transparent;
+}
+.am-btn--filled.am-btn--working,
+.am-btn--tonal.am-btn--working,
+.am-btn--elevated.am-btn--working,
+.am-btn--admin.am-btn--working {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+.am-btn--outlined.am-btn--working {
+  border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+.am-btn--working .am-icon { color: transparent; }
+.am-btn--classic.am-btn--working { --_mark: 14px; }
+/* The ring is the button's own ::after (its ::before is the state layer), in the shape of the
+   circular progress part: about three quarters of a circle, 2px thick, turning once a second.
+   Drawn in CSS rather than injected as a vector, so a page gets it from the class alone. */
+.am-btn--working::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: var(--_mark);
+  height: var(--_mark);
+  border-radius: var(--md-sys-shape-corner-full);
+  background: conic-gradient(color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent) 0 72%, transparent 72%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--_mark-weight)), black calc(100% - var(--_mark-weight) + 0.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--_mark-weight)), black calc(100% - var(--_mark-weight) + 0.5px));
+  animation: am-btn-working-turn 1s linear infinite;
+}
+@keyframes am-btn-working-turn { to { transform: rotate(360deg); } }
+
+/* ---- icon buttons ---- */
+.am-icon-btn {
+  --_state-color: var(--md-sys-color-on-surface-variant);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* the container is a 40px circle (stock M3 standard icon button) holding a 24px glyph.
+     The box is the control; it never collapses to the glyph. Restored 2026-08-12 after the
+     icon conversion swapped these two lines for an --am-icon-size on the container, which
+     sizes nothing here (the child sets its own), so the box fell to glyph + browser default
+     button padding and every variant rendered as a squashed oval. */
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+}
+.am-icon-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--_state-color);
+  opacity: 0;
+  transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+.am-icon-btn:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-icon-btn:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.am-icon-btn:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+/* Toggle (selected) state, stock M3 standard toggle icon button: the button carries
+   aria-pressed, and when pressed the icon and its state layer move to primary. Off is the
+   normal muted ink. State lives in the attribute (assistive tech reads it for free); the
+   delegated behavior in behaviors.js flips it. Example use: the saved-search star
+   (star glyph + this state + the menu part for its recall panel). Ruled 2026-07-27:
+   selection reads in primary per M3; no separate accent color. */
+.am-icon-btn[aria-pressed="true"] {
+  color: var(--md-sys-color-primary);
+  --_state-color: var(--md-sys-color-primary);
+}
+.am-icon-btn:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+.am-icon-btn .am-icon { --am-icon-size: 24; flex: none; color: currentColor; }
+/* The icon button as an anchor: when the action is a real destination (the field trailing
+   jump, ruled 2026-08-13) it renders as an <a>, and the browser's link underline would strike
+   through the glyph. The class carries the affordance; the underline adds nothing here. */
+a.am-icon-btn { text-decoration: none; }
+
+/* The common button as an anchor: the button MAY be worn by an <a> in every emphasis, and the
+   browser's link underline is off when it is. Ruled 2026-09-24 (gap form--anchor-button-underline,
+   card 95, option A); stock M3, where a button is carried by a <button> or an <a> interchangeably.
+   Two live reasons the anchor is the right carrier sometimes: the action is a real destination, and
+   the legacy form checker (MoxForm.Go) is wired to link clicks, so an order-import Next that becomes
+   a real <button> silently drops its validation. Only the icon button was covered before this, so a
+   labelled anchor button rendered with body-text underline under it on pages already shipping the
+   shape (catalog export class, the order import steps). The class carries the affordance; the
+   underline adds nothing and reads as a rendering fault. A check holds it. */
+a.am-btn { text-decoration: none; }
+
+.am-icon-btn--filled {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  --_state-color: var(--md-sys-color-on-primary);
+}
+.am-icon-btn--tonal {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  --_state-color: var(--md-sys-color-on-secondary-container);
+}
+.am-icon-btn--outlined {
+  border: 1px solid var(--md-sys-color-outline);
+}
+/* danger (destructive), the icon-only tier. Added 2026-09-17 on demand (gap
+   repeat--remove-saved-state-ink, card 90) for the six delete glyphs already shipping on certified
+   icon buttons, which is the logged-decision escape the danger comment above reserves. It is the
+   only danger tier in the system with NO resting treatment, deliberately: the other two carry a
+   word, so their red sits beside a label, and this one has nothing but a glyph, so a resting red
+   would be the whole warning and would vanish for a reader who does not separate those colours.
+   The glyph is the resting signal and the error colour arrives on hover and on keyboard focus,
+   which is where the control has already been singled out. Ink and state layer only, so it
+   composes with --classic (density) with no extra rule, same as the worded tiers. Enforced by
+   scripts/destructive_icon_ink_check.mjs. */
+.am-icon-btn--danger:hover,
+.am-icon-btn--danger:focus-visible {
+  color: var(--md-sys-color-error);
+  --_state-color: var(--md-sys-color-error);
+}
+.am-icon-btn:disabled {
+  cursor: default; pointer-events: none;
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+.am-icon-btn--filled:disabled,
+.am-icon-btn--tonal:disabled {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+.am-icon-btn--outlined:disabled {
+  border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+
+/* Classic modifier: the legacy app's small icon-only action (the pencil, the trash X, the kebab
+   menu trigger) shrunk to a 20px square so it sits in the same cramped legacy rows as the classic
+   text button, at the same box height. Same icon button underneath; provenance is unchanged:
+   variants, state layer, focus ring, and disabled states are the modern part, only the box shrinks.
+   The glyph fills the control at 16px (flex: none so a tight grid column cannot squeeze it), rather
+   than shrinking to leave a state-layer margin, so the icon still reads at legacy density. Slated
+   for retirement (grep --classic to list every instance to remove). */
+.am-icon-btn--classic { width: 20px; height: 20px; }
+.am-icon-btn--classic .am-icon { --am-icon-size: 16; }
+
+/* Status line: a short line of words centered above a labeled button, saying which of two
+   states the person is in (Clocked in, Not clocked in) while the button names what happens
+   next. It pairs with the state being carried by the emphasis the page picks for each state
+   (for clock in and out, tonal while out and filled while in) and a leading glyph per state.
+   The line is never wider than the button beneath it: it takes zero width of its own and
+   stretches to the button, so a long status wraps instead of widening the control, and the
+   page owns short wording. Whatever row holds a status button lines its items up on their
+   bottom edge, so the neighbouring buttons stay level with this one rather than centring on
+   the taller stack. */
+.am-btn-status {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--md-sys-spacing-2xs);
+  vertical-align: bottom;
+}
+.am-btn-status__text {
+  width: 0;
+  min-width: 100%;
+  text-align: center;
+  font-family: var(--md-sys-typescale-font);
+  font-size: var(--md-sys-typescale-body-small-size);
+  font-weight: var(--md-sys-typescale-body-small-weight);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+  letter-spacing: var(--md-sys-typescale-body-small-tracking);
+  color: var(--md-sys-color-on-surface-variant);
+}
+:where(*):has(> .am-btn-status > .am-btn-status__text) { align-items: flex-end; }

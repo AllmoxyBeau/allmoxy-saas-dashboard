@@ -1,0 +1,149 @@
+/* Allmoxy Design System, App navigation (HOUSE composition on the M3 top app bar)
+ * The application's real top chrome, promoted out of the template frame into a
+ * certified part. Leading quick actions, the primary section nav (some sections
+ * open a menu), a spacer, then the trailing tools (Operator, search, announcements,
+ * tutorials, settings, account). Appearance and states live here; the shell template
+ * owns only that it sits full width at the top. Active section carries aria-current;
+ * the wiring lives in behaviors.js, never inline. v0.1.
+ *
+ * Left end, at every width (Brady, 2026-10-15): the Favorites star first (or the shop's logo,
+ * when the shop has uploaded both its light and dark versions), then the plus, then, only when
+ * the window is too narrow for the sections, the menu button that holds them.
+ */
+.am-appnav { flex: 0 0 auto; display: flex; align-items: center; gap: var(--md-sys-spacing-2xs);
+    height: 64px; padding: var(--md-sys-spacing-xs) var(--md-sys-spacing-sm);
+    background: var(--am-surface-chrome); color: var(--md-sys-color-on-surface);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant); font-family: var(--md-sys-typescale-font); }
+/* Environment signal (gap chrome--environment-signal, option A): a bar operating in a
+ * non-default environment or identity (admin impersonation, sandbox) wears the tint AND
+ * a worded badge, always both. The tint is the admin vivid at 14% over the chrome tone;
+ * the word is the certified admin tag (shield plus environment name) sitting in the bar,
+ * because tint alone is invisible to color-blind users and ambiguous across themes. The
+ * same identity ruling every admin control follows: color and glyph-plus-word, never
+ * color alone. A bar carrying this class without the worded tag fails env_signal_check. */
+.am-appnav--env { background: color-mix(in srgb, var(--am-admin-vivid) 14%, var(--am-surface-chrome)); }
+.am-appnav__group { display: inline-flex; align-items: center; gap: 2px; }
+/* CLEAR SPACE IN A BAR, and why the group gap above is allowed to be 2px.
+ * A bar is spaced by what a person can SEE, not by the edges of the click targets. A bare glyph
+ * button paints nothing: it is a 48px target around a 24px glyph, so it already carries 12px of its
+ * own air on each side, and a 2px gap between two of those targets reads as 26px of clear space.
+ * That is the rhythm of this bar and it is correct.
+ * A control that paints a background has no such air: the target edge IS a visible edge, so the same
+ * 2px reads as touching. That is the bug this fixes. The Operator button and the search field are
+ * both painted, sat 2px apart, and looked joined. It was always wrong; the Operator button going from
+ * a pale tint to the brand blue only made it loud.
+ * So: a painted control in this bar carries its own clear space, --am-space-inline-tight (8), the
+ * system's named tight horizontal control gap. Painted edge to painted edge becomes 8 + 2 + 8 = 18,
+ * and painted edge to a neighbouring glyph becomes 8 + 2 + 12 = 22, both comfortably clear.
+ * Why the tight rung and not --am-space-inline (12, the default control gap): 12 was rendered too and
+ * gives 26 clear, which matches the bare-glyph rhythm on paper but reads loose inside a 64px bar and
+ * pushes the trailing tools visibly inward. Dense chrome takes the tight rung. Brady saw both.
+ * HELD BY scripts/bar_gap_check.mjs, which measures the rendered bars and fails on any two painted
+ * neighbours closer than 8. Every bar in the system (this, the top app bar, the bottom app bar, the
+ * toolbar) uses a 2px-class group gap, so all four inherit this trap the moment someone paints a
+ * control in one; the check covers all of them, not just this part. */
+.am-appnav__operator, .am-appnav__search { margin-inline: var(--am-space-inline-tight); }
+.am-appnav__spacer { flex: 1 1 0; min-width: 0; }
+.am-appnav__divider { width: 1px; height: 28px; background: color-mix(in srgb, currentColor 24%, transparent); margin: 0 var(--md-sys-spacing-2xs); flex: 0 0 auto; }
+
+.am-appnav__btn { background: none; border: 0; cursor: pointer; color: inherit; text-decoration: none;
+    display: inline-flex; align-items: center; gap: var(--md-sys-spacing-xs); height: 48px;
+    padding: 0 var(--md-sys-spacing-sm); border-radius: var(--md-sys-shape-corner-full);
+    font-family: inherit; font-size: var(--md-sys-typescale-label-large-size); font-weight: var(--md-sys-typescale-label-large-weight);
+    white-space: nowrap; position: relative; isolation: isolate; }
+/* icon size: branch 2: 14px label, 18px rung */
+.am-appnav__btn .am-icon { --am-icon-size: 18; color: currentColor; flex: 0 0 auto; }
+.am-appnav__caret { width: 18px; height: 18px; opacity: .75; }
+
+/* state layer: hover, pressed, keyboard focus */
+.am-appnav__btn::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+    background: currentColor; opacity: 0; transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard); }
+.am-appnav__btn:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-appnav__btn:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+.am-appnav__btn:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.am-appnav__btn:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+
+/* active section */
+.am-appnav__btn[aria-current="page"] { background: var(--md-sys-color-surface-container-highest); color: var(--md-sys-color-on-surface); }
+.am-appnav__btn[aria-current="page"]::before { opacity: 0; }
+
+/* icon-only button (leading quick actions and trailing tools) */
+.am-appnav__btn--icon { width: 48px; height: 48px; padding: 0; justify-content: center; flex: 0 0 auto; }
+.am-appnav__btn--icon .am-icon { --am-icon-size: 24; }
+
+/* Operator: the one tinted call-to-attention tool, icon only. Filled in the brand blue, held at the
+ * same value in both schemes. Was secondary-container (M3's quietest tinted emphasis) and read as
+ * unimportant for a product carrying a launch. The mode lock is a logged house departure: see the
+ * --am-operator-accent note in tokens/allmoxy-tokens.css for why a literal and not the primary role,
+ * what it costs, and why the ink is white rather than on-primary. Brady's call, 2026-08-12, on
+ * renders of both options side by side. */
+.am-appnav__operator { background: var(--am-operator-accent); color: var(--am-on-operator-accent); }
+.am-appnav__operator::before { background: var(--am-on-operator-accent); }
+
+/* inline search field */
+.am-appnav__search { display: flex; align-items: center; gap: var(--md-sys-spacing-sm);
+    background: var(--md-sys-color-surface-container-highest); border-radius: var(--md-sys-shape-corner-full);
+    padding: 0 var(--md-sys-spacing-md); flex: 0 1 220px; min-width: 140px; height: 48px; color: inherit; }
+/* icon size: branch 2: 14px input text, 18px rung */
+.am-appnav__search .am-icon { --am-icon-size: 18; color: var(--md-sys-color-on-surface-variant); flex: 0 0 auto; }
+.am-appnav__search input { background: none; border: 0; outline: none; color: inherit; font-family: inherit;
+    font-size: var(--md-sys-typescale-body-medium-size); flex: 1; min-width: 0; }
+.am-appnav__search input::placeholder { color: var(--md-sys-color-on-surface-variant); }
+
+/* count badge on a trailing tool (announcements) */
+.am-appnav__badged { position: relative; }
+.am-appnav__badge { position: absolute; top: var(--md-sys-spacing-xs); right: var(--md-sys-spacing-xs); background: var(--md-sys-color-error); color: var(--md-sys-color-on-error);
+    font-size: var(--md-sys-typescale-label-small-size); font-weight: var(--md-sys-typescale-label-small-weight); line-height: 1; padding: 0 var(--md-sys-spacing-2xs); height: 16px; min-width: 16px;
+    border-radius: var(--md-sys-shape-corner-full); display: inline-flex; align-items: center; justify-content: center; }
+
+/* account avatar button */
+.am-appnav__avatar { width: 48px; height: 48px; border-radius: var(--md-sys-shape-corner-full); border: 0; cursor: pointer; background: none;
+    color: inherit; display: inline-flex; align-items: center; justify-content: center; padding: 0; flex: 0 0 auto; position: relative; isolation: isolate; }
+.am-appnav__avatar::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: currentColor; opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard); }
+.am-appnav__avatar:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-appnav__avatar:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+
+/* ---- the shop's logo in the star's place (gap app-navigation--shop-header-banner, rulings
+   159 and 165, Brady 2026-10-15) ----
+   A shop that has uploaded BOTH its light and dark logos sees its logo where the Favorites star
+   sits; with no logo, or only one version, the star stays (a one-version logo never gets a plate
+   up here). The logo is at most 32 tall and 200 wide, never forced square, and carries the bar's
+   small down arrow like Orders and Contacts. It is the Favorites button: it opens what the star
+   opens and never links out. Each version shows on its own theme; the theme decides through two
+   tokens the dark blocks swap, never the page. */
+.am-appnav__logo { padding-inline: var(--md-sys-spacing-xs); }
+.am-appnav__logo-img { width: auto; height: auto; max-height: 32px; max-width: 200px; flex: 0 0 auto; }
+.am-appnav__logo-img--light { display: var(--am-appnav-logo-light-display); }
+.am-appnav__logo-img--dark { display: var(--am-appnav-logo-dark-display); }
+
+/* ---- when the window runs out of room (gap app-navigation--laptop-width-overflow, rulings 163
+   and 167; gap app-navigation--narrow-window-folded-bar, ruling 164; Brady 2026-10-15) ----
+   Three steps, in order, each taken only when the one before still does not fit, measured on the
+   bar by behaviors.js whenever its width changes, never at a fixed width:
+     1. The search box shrinks to the smallest size it already allows (its group no longer holds
+        it at full size).
+     2. Every section drops to its icon alone, the current one included: the name stays the
+        button's name for a screen reader and shows in a tooltip on hover and keyboard focus, and
+        each section still opens its own menu.
+     3. Only the sections fold into the menu button at the left; the quick actions and the tools
+        stay in the bar.
+   Section icons: Home home, Orders shopping_cart, Contacts group, Supplies inventory_2,
+   Financial attach_money, Reports insert_chart. */
+.am-appnav__group:has(> .am-appnav__search) { min-width: 0; }
+.am-appnav__section-icon { display: none; }
+.am-appnav__sections .am-tooltip { display: inline-flex; }
+.am-appnav:not(.am-appnav--icons) .am-appnav__sections .am-tooltip__tip { display: none; }
+/* the name tip paints nothing until it is wanted, so it is never part of the bar's clear space */
+.am-appnav__sections .am-tooltip__tip { visibility: hidden; }
+.am-appnav--icons .am-appnav__sections .am-tooltip:hover .am-tooltip__tip,
+.am-appnav--icons .am-appnav__sections .am-tooltip:focus-within .am-tooltip__tip { visibility: visible; }
+.am-appnav--icons .am-appnav__sections .am-appnav__btn { width: 48px; padding: 0; justify-content: center; gap: 0; }
+.am-appnav--icons .am-appnav__sections .am-appnav__btn .am-icon { --am-icon-size: 24; }
+.am-appnav--icons .am-appnav__section-icon { display: inline-block; }
+.am-appnav--icons .am-appnav__sections .am-appnav__caret { display: none; }
+/* the word goes; the name stays on the button itself (its aria-label), so a screen reader still says it */
+.am-appnav--icons .am-appnav__label { display: none; }
+.am-appnav__fold { display: none; }
+.am-appnav--folded .am-appnav__fold { display: inline-flex; }
+.am-appnav--folded .am-appnav__sections { display: none; }

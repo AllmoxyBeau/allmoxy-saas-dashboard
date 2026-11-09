@@ -1,0 +1,229 @@
+/* Icon. The one certified way a part draws a glyph.
+ *
+ * WHAT THIS PART IS FOR. Correct icon drawing is not a pure scale. As a glyph gets smaller
+ * its strokes must get proportionally thicker or it turns to mush; as it gets larger they
+ * must get proportionally thinner or it turns clumsy. The font carries a dial for that
+ * (optical size), and the whole point of storing the font (tokens/allmoxy-tokens.css,
+ * family 'AM Icons', ruled 2026-08-11) was to be able to turn it.
+ *
+ * A dial can be set wrong. This part is what makes that impossible: ONE number sets both
+ * the pixel size and the dial, so they physically cannot disagree. A part that wants an
+ * 18px icon sets --am-icon-size to 18 and gets 18px of glyph drawn at the weight 18px
+ * wants. There is no second knob to forget.
+ *
+ *     --am-icon-size: 20;      unitless on purpose, it feeds both properties below
+ *
+ * Out-of-range values need no guard. The axis spans 20 to 48 and the browser clamps to it,
+ * so the 16px and 18px cases (below the floor) draw at the floor, which is the closest
+ * correct weight that exists. Nothing to catch, nothing to special-case.
+ *
+ * SIZE STILL COMES FROM CONTEXT, NOT FROM HERE. docs/icon-sizing.md governs what number to
+ * use, and it is unchanged by this part: a glyph alone in its own container is 24, a glyph
+ * beside text takes the rung its container's type size derives, a very dense glyph drops
+ * one rung. This part only guarantees that whatever number is chosen is applied to both
+ * things at once.
+ *
+ * The name mapping below is generated from tokens/am-icons.manifest.json by
+ * scripts/build_icon_rules.py and gated by integrity_check.py. Never hand edit it. */
+
+.am-icon {
+  --am-icon-size: 24;
+
+  display: inline-block;
+  flex: none;
+  width: calc(var(--am-icon-size) * 1px);
+  height: calc(var(--am-icon-size) * 1px);
+  font-family: 'AM Icons';
+  font-size: calc(var(--am-icon-size) * 1px);
+  /* the same number again, and this is the only place it is written twice */
+  font-variation-settings: 'opsz' var(--am-icon-size);
+  /* weight-ruling: not typographic weight. Stroke weight is baked into the font at 400
+     (ruled 2026-08-11, down from the 700 of the July pin), so this asks the browser for
+     the face as drawn and stops it synthesising a bolder one when an icon sits inside
+     bold text. A weight token here would mean a type role governs the glyph's strokes,
+     which is the opposite of true. */
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  color: currentColor;
+  /* a glyph is an image, not text: never selected, never wrapped, never ligature-joined */
+  user-select: none;
+  white-space: nowrap;
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.am-icon::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* GENERATED: one rule per icon, written by scripts/build_icon_rules.py. Do not hand edit. */
+.am-icon[data-icon="account_tree"]::before { content: "\e97a"; }
+.am-icon[data-icon="add"]::before { content: "\e145"; }
+.am-icon[data-icon="alt_route"]::before { content: "\f184"; }
+.am-icon[data-icon="analytics"]::before { content: "\ef3e"; }
+.am-icon[data-icon="archive"]::before { content: "\e149"; }
+.am-icon[data-icon="arrow_back"]::before { content: "\e5c4"; }
+.am-icon[data-icon="arrow_downward"]::before { content: "\e5db"; }
+.am-icon[data-icon="arrow_drop_down"]::before { content: "\e5c5"; }
+.am-icon[data-icon="arrow_forward"]::before { content: "\e5c8"; }
+.am-icon[data-icon="arrow_right"]::before { content: "\e5df"; }
+.am-icon[data-icon="arrow_upward"]::before { content: "\e5d8"; }
+.am-icon[data-icon="attach_file"]::before { content: "\e226"; }
+.am-icon[data-icon="attach_money"]::before { content: "\e227"; }
+.am-icon[data-icon="auto_awesome"]::before { content: "\e65f"; }
+.am-icon[data-icon="badge"]::before { content: "\ea67"; }
+.am-icon[data-icon="bar_chart"]::before { content: "\e26b"; }
+.am-icon[data-icon="block"]::before { content: "\f08c"; }
+.am-icon[data-icon="bolt"]::before { content: "\ea0b"; }
+.am-icon[data-icon="bubble_chart"]::before { content: "\e6dd"; }
+.am-icon[data-icon="bug_report"]::before { content: "\e868"; }
+.am-icon[data-icon="calculate"]::before { content: "\ea5f"; }
+.am-icon[data-icon="calendar_today"]::before { content: "\e935"; }
+.am-icon[data-icon="call"]::before { content: "\f0d4"; }
+.am-icon[data-icon="campaign"]::before { content: "\ef49"; }
+.am-icon[data-icon="cancel"]::before { content: "\e888"; }
+.am-icon[data-icon="chat"]::before { content: "\e0c9"; }
+.am-icon[data-icon="check"]::before { content: "\e668"; }
+.am-icon[data-icon="check_circle"]::before { content: "\f0be"; }
+.am-icon[data-icon="chevron_forward"]::before { content: "\f46a"; }
+.am-icon[data-icon="chevron_left"]::before { content: "\e5cb"; }
+.am-icon[data-icon="chevron_right"]::before { content: "\e5cc"; }
+.am-icon[data-icon="close"]::before { content: "\e5cd"; }
+.am-icon[data-icon="cloud_off"]::before { content: "\e2c1"; }
+.am-icon[data-icon="code"]::before { content: "\e86f"; }
+.am-icon[data-icon="colorize"]::before { content: "\e3b8"; }
+.am-icon[data-icon="comment"]::before { content: "\e24c"; }
+.am-icon[data-icon="construction"]::before { content: "\ea3c"; }
+.am-icon[data-icon="content_copy"]::before { content: "\e14d"; }
+.am-icon[data-icon="content_paste"]::before { content: "\e14f"; }
+.am-icon[data-icon="credit_card"]::before { content: "\e8a1"; }
+.am-icon[data-icon="csv"]::before { content: "\e6cf"; }
+.am-icon[data-icon="dark_mode"]::before { content: "\e51c"; }
+.am-icon[data-icon="dashboard"]::before { content: "\e871"; }
+.am-icon[data-icon="delete"]::before { content: "\e92e"; }
+.am-icon[data-icon="diamond"]::before { content: "\ead5"; }
+.am-icon[data-icon="domain"]::before { content: "\e7ee"; }
+.am-icon[data-icon="done_all"]::before { content: "\e877"; }
+.am-icon[data-icon="donut_large"]::before { content: "\e917"; }
+.am-icon[data-icon="download"]::before { content: "\f090"; }
+.am-icon[data-icon="draft"]::before { content: "\e66d"; }
+.am-icon[data-icon="drag_indicator"]::before { content: "\e945"; }
+.am-icon[data-icon="edit"]::before { content: "\f097"; }
+.am-icon[data-icon="error"]::before { content: "\f8b6"; }
+.am-icon[data-icon="factory"]::before { content: "\ebbc"; }
+.am-icon[data-icon="favorite"]::before { content: "\e87e"; }
+.am-icon[data-icon="file_export"]::before { content: "\f3b2"; }
+.am-icon[data-icon="filter_list"]::before { content: "\e152"; }
+.am-icon[data-icon="first_page"]::before { content: "\e5dc"; }
+.am-icon[data-icon="flag"]::before { content: "\f0c6"; }
+.am-icon[data-icon="folder"]::before { content: "\e2c7"; }
+.am-icon[data-icon="format_align_center"]::before { content: "\e234"; }
+.am-icon[data-icon="format_align_left"]::before { content: "\e236"; }
+.am-icon[data-icon="format_align_right"]::before { content: "\e237"; }
+.am-icon[data-icon="format_bold"]::before { content: "\e238"; }
+.am-icon[data-icon="format_italic"]::before { content: "\e23f"; }
+.am-icon[data-icon="forum"]::before { content: "\e8af"; }
+.am-icon[data-icon="forward"]::before { content: "\f57a"; }
+.am-icon[data-icon="fullscreen"]::before { content: "\e5d0"; }
+.am-icon[data-icon="fullscreen_exit"]::before { content: "\e5d1"; }
+.am-icon[data-icon="functions"]::before { content: "\e24a"; }
+.am-icon[data-icon="grid_on"]::before { content: "\e3ec"; }
+.am-icon[data-icon="group"]::before { content: "\ea21"; }
+.am-icon[data-icon="help"]::before { content: "\e8fd"; }
+.am-icon[data-icon="history"]::before { content: "\e8b3"; }
+.am-icon[data-icon="home"]::before { content: "\e9b2"; }
+.am-icon[data-icon="image"]::before { content: "\e3f4"; }
+.am-icon[data-icon="info"]::before { content: "\e88e"; }
+.am-icon[data-icon="insert_chart"]::before { content: "\f0cc"; }
+.am-icon[data-icon="inventory_2"]::before { content: "\e1a1"; }
+.am-icon[data-icon="keep"]::before { content: "\f027"; }
+.am-icon[data-icon="keep_off"]::before { content: "\e6f9"; }
+.am-icon[data-icon="key"]::before { content: "\e73c"; }
+.am-icon[data-icon="keyboard_double_arrow_down"]::before { content: "\ead0"; }
+.am-icon[data-icon="label"]::before { content: "\e893"; }
+.am-icon[data-icon="last_page"]::before { content: "\e5dd"; }
+.am-icon[data-icon="left_panel_close"]::before { content: "\f717"; }
+.am-icon[data-icon="left_panel_open"]::before { content: "\f716"; }
+.am-icon[data-icon="library_books"]::before { content: "\e02f"; }
+.am-icon[data-icon="light_mode"]::before { content: "\e518"; }
+.am-icon[data-icon="lightbulb"]::before { content: "\e90f"; }
+.am-icon[data-icon="link"]::before { content: "\e250"; }
+.am-icon[data-icon="link_off"]::before { content: "\e16f"; }
+.am-icon[data-icon="list_alt"]::before { content: "\e0ee"; }
+.am-icon[data-icon="local_shipping"]::before { content: "\e558"; }
+.am-icon[data-icon="location_on"]::before { content: "\f1db"; }
+.am-icon[data-icon="lock"]::before { content: "\e899"; }
+.am-icon[data-icon="lock_open"]::before { content: "\e898"; }
+.am-icon[data-icon="logout"]::before { content: "\e9ba"; }
+.am-icon[data-icon="mail"]::before { content: "\e159"; }
+.am-icon[data-icon="memory"]::before { content: "\e322"; }
+.am-icon[data-icon="menu"]::before { content: "\e5d2"; }
+.am-icon[data-icon="menu_book"]::before { content: "\ea19"; }
+.am-icon[data-icon="mic"]::before { content: "\e31d"; }
+.am-icon[data-icon="monitoring"]::before { content: "\f190"; }
+.am-icon[data-icon="more_vert"]::before { content: "\e5d4"; }
+.am-icon[data-icon="notifications"]::before { content: "\e7f5"; }
+.am-icon[data-icon="notifications_off"]::before { content: "\e7f6"; }
+.am-icon[data-icon="open_in_new"]::before { content: "\e89e"; }
+.am-icon[data-icon="palette"]::before { content: "\e40a"; }
+.am-icon[data-icon="pause"]::before { content: "\e034"; }
+.am-icon[data-icon="pause_circle"]::before { content: "\e1a2"; }
+.am-icon[data-icon="payments"]::before { content: "\ef63"; }
+.am-icon[data-icon="pending"]::before { content: "\ef64"; }
+.am-icon[data-icon="percent"]::before { content: "\eb58"; }
+.am-icon[data-icon="person"]::before { content: "\f0d3"; }
+.am-icon[data-icon="person_off"]::before { content: "\e510"; }
+.am-icon[data-icon="picture_as_pdf"]::before { content: "\e415"; }
+.am-icon[data-icon="pie_chart"]::before { content: "\f0da"; }
+.am-icon[data-icon="play_arrow"]::before { content: "\e037"; }
+.am-icon[data-icon="print"]::before { content: "\e8ad"; }
+.am-icon[data-icon="receipt_long"]::before { content: "\ef6e"; }
+.am-icon[data-icon="record_voice_over"]::before { content: "\e91f"; }
+.am-icon[data-icon="redo"]::before { content: "\e15a"; }
+.am-icon[data-icon="refresh"]::before { content: "\e5d5"; }
+.am-icon[data-icon="remove"]::before { content: "\e15b"; }
+.am-icon[data-icon="reply"]::before { content: "\e15e"; }
+.am-icon[data-icon="request_quote"]::before { content: "\f1b6"; }
+.am-icon[data-icon="save"]::before { content: "\e161"; }
+.am-icon[data-icon="scatter_plot"]::before { content: "\e268"; }
+.am-icon[data-icon="schedule"]::before { content: "\efd6"; }
+.am-icon[data-icon="search"]::before { content: "\ef7a"; }
+.am-icon[data-icon="settings"]::before { content: "\e8b8"; }
+.am-icon[data-icon="share"]::before { content: "\e80d"; }
+.am-icon[data-icon="shield"]::before { content: "\e9e0"; }
+.am-icon[data-icon="shopping_cart"]::before { content: "\e8cc"; }
+.am-icon[data-icon="show_chart"]::before { content: "\e6e1"; }
+.am-icon[data-icon="skip_next"]::before { content: "\e044"; }
+.am-icon[data-icon="skip_previous"]::before { content: "\e045"; }
+.am-icon[data-icon="sort"]::before { content: "\e164"; }
+.am-icon[data-icon="stacked_bar_chart"]::before { content: "\e9e6"; }
+.am-icon[data-icon="star"]::before { content: "\f09a"; }
+.am-icon[data-icon="stop"]::before { content: "\e047"; }
+.am-icon[data-icon="storefront"]::before { content: "\ea12"; }
+.am-icon[data-icon="swap_horiz"]::before { content: "\e8d4"; }
+.am-icon[data-icon="sync"]::before { content: "\e627"; }
+.am-icon[data-icon="table_rows"]::before { content: "\f101"; }
+.am-icon[data-icon="timeline"]::before { content: "\e922"; }
+.am-icon[data-icon="trending_down"]::before { content: "\e8e3"; }
+.am-icon[data-icon="trending_up"]::before { content: "\e8e5"; }
+.am-icon[data-icon="tune"]::before { content: "\e429"; }
+.am-icon[data-icon="undo"]::before { content: "\e166"; }
+.am-icon[data-icon="unfold_less"]::before { content: "\e5d6"; }
+.am-icon[data-icon="unfold_more"]::before { content: "\e5d7"; }
+.am-icon[data-icon="upload"]::before { content: "\f09b"; }
+.am-icon[data-icon="verified"]::before { content: "\ef76"; }
+.am-icon[data-icon="view_column"]::before { content: "\e8ec"; }
+.am-icon[data-icon="visibility"]::before { content: "\e8f4"; }
+.am-icon[data-icon="visibility_off"]::before { content: "\e8f5"; }
+.am-icon[data-icon="volume_off"]::before { content: "\e04f"; }
+.am-icon[data-icon="volume_up"]::before { content: "\e050"; }
+.am-icon[data-icon="wand_stars"]::before { content: "\f31e"; }
+.am-icon[data-icon="warning"]::before { content: "\f083"; }
+.am-icon[data-icon="webhook"]::before { content: "\eb92"; }
+.am-icon[data-icon="zoom_in"]::before { content: "\e8ff"; }
+.am-icon[data-icon="zoom_out"]::before { content: "\e900"; }
+/* END GENERATED */

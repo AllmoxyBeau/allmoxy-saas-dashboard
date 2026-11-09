@@ -1,0 +1,632 @@
+/* Allmoxy Design System, Text fields (STOCK Material 3)
+ * Filled and outlined variants, token-driven, built to M3 spec.
+ * Spec from Google's token data pack v0.192: height 56, active indicator 1px / 2px on
+ * focus, outline 1px / 2px on focus, disabled text 38% (filled container 4%, outline 12%).
+ * The floating label uses the standard CSS pattern: the input carries a single-space
+ * placeholder, so the label floats whenever the field is focused or has a value.
+ */
+
+.am-field {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 240px;
+  height: var(--am-density-field-height);
+  font-family: var(--md-sys-typescale-font);
+  /* Label geometry, as variables so the resting label's truncation (below) can do its own
+     arithmetic instead of every variant repeating a left offset. The inset is where the label
+     starts; the reserve is how much of the right end belongs to whatever sits in the trail. */
+  --am-field-label-inset: var(--md-sys-spacing-md);
+  --am-field-label-reserve: var(--md-sys-spacing-md);
+  --am-field-label-pad: 0px;
+}
+.am-field__input {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--md-sys-color-on-surface);
+  font-family: inherit;
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
+}
+.am-field__input::placeholder { color: transparent; }
+/* Resting prompt (house tweak, logged): while the field is EMPTY and unfocused
+   the label is acting as a placeholder, so it dims to the outline token,
+   subtler than a real label. The moment it floats (value or focus) it returns
+   to on-surface-variant / primary via the state rules below, so filled-in
+   forms keep full label contrast. */
+.am-field__input:placeholder-shown:not(:focus) ~ .am-field__label { color: var(--md-sys-color-outline); }
+.am-field__label {
+  position: absolute;
+  left: var(--am-field-label-inset);
+  pointer-events: none;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: 1;
+  transition: top var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+              font-size var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+              color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+/* Supporting text (gap field--support-slot-layout, ruled 2026-08-18, option A: the M3 baseline).
+   It used to hang in an absolute slot 20px below the box, which meant it took no layout space:
+   the field's neighbours had to leave a line of margin for it by convention, and a hint longer
+   than one line ran straight through whatever sat underneath. It now sits IN FLOW under the
+   field, so the field owns its own full height and nothing can collide with the hint. The cost,
+   accepted with the ruling: a row grows when support appears.
+   Mechanics: a field carrying support becomes a two-row grid, the control row at the field's own
+   density height and the support line under it. The label, outline, and the lead and trail slots
+   are absolutely positioned against the whole field, so each one is re-anchored to the control
+   row rather than to the taller box. */
+.am-field:has(.am-field__support) {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+  height: auto;
+  align-items: start;
+}
+.am-field:has(.am-field__support) .am-field__input { height: var(--am-density-field-height); }
+/* the outline stops at the foot of the control row, not the foot of the field */
+.am-field:has(.am-field__support) .am-field__box { bottom: auto; height: var(--am-density-field-height); }
+/* anything centred on the control row centres on that row's height instead of 50% of the field */
+.am-field:has(.am-field__support) .am-field__lead,
+.am-field:has(.am-field__support) .am-field__trail,
+.am-field--outlined:has(.am-field__support) .am-field__label,
+.am-field--filled:has(.am-field__support) .am-field__label {
+  top: calc(var(--am-density-field-height) / 2);
+}
+.am-field__support {
+  grid-row: 2;
+  /* the hint must not widen the field: zero intrinsic width, then filled back out to the
+     field's own width, so a long hint wraps inside the field instead of stretching it */
+  width: 0;
+  min-width: 100%;
+  padding: var(--md-sys-spacing-2xs) var(--md-sys-spacing-md) 0;
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+  color: var(--md-sys-color-on-surface-variant);
+}
+/* Required indicator (stock M3, decided 2026-07-24, gap am-field--required-indicator from Mack).
+   An asterisk appended to the label, in the label's own color, so it inherits every label state
+   (resting dim, floated, focus primary, error) and stays a shape signal, never color-only.
+   Automatic whenever the inner input or textarea carries the required attribute; the explicit
+   am-field--required modifier is the fallback for composed fields whose input cannot carry it
+   (a readonly select input, a picker). */
+.am-field:has(.am-field__input:required) .am-field__label::after,
+.am-field--required .am-field__label::after { content: "\00a0*"; }
+/* The notch has to grow with it (RULED 2026-09-17, gap card 89, option A). The outline's gap
+   segment sizes itself from a hidden copy of the label TEXT, and the asterisk above is not text,
+   so on every required field the floated label ran 8.2px past the notch opening and the star
+   sat on the resuming stroke. Mirror the same indicator onto the hidden copy: it paints in the
+   copy's transparent colour and adds exactly the width the visible star takes, at every density,
+   because it is the same glyph in the same font. Measured: overhang 8.2px to 0.0px. Rejected:
+   typing the star into the name (kills the automatic indicator, so a missed field silently stops
+   saying it is required) and leaving the collision. MRP already shipped this as a bridge.
+   GUARDED BY field_notch_check.mjs (floated label must end inside the notch opening). */
+.am-field:has(.am-field__input:required) .am-field__gap::after,
+.am-field--required .am-field__gap::after { content: "\00a0*"; }
+.am-field .am-icon { --am-icon-size: var(--am-field-icon-size); color: var(--md-sys-color-on-surface-variant); flex: none; }
+/* leading and trailing icons sit inside the field, pinned to the edge and vertically centered (a trailing caret is the select control) */
+.am-field__lead, .am-field__trail { position: absolute; top: 50%; transform: translateY(-50%); margin: 0; }
+.am-field__lead { left: var(--md-sys-spacing-md); }
+.am-field__trail { right: var(--md-sys-spacing-md); }
+.am-field:has(.am-field__lead) .am-field__input { padding-left: calc(var(--md-sys-spacing-md) + calc(var(--am-field-icon-size) * 1px) + var(--md-sys-spacing-2xs)); }
+.am-field:has(.am-field__trail) .am-field__input { padding-right: calc(var(--md-sys-spacing-md) + calc(var(--am-field-icon-size) * 1px) + var(--md-sys-spacing-2xs)); }
+.am-field:has(.am-field__lead) { --am-field-label-inset: calc(var(--md-sys-spacing-md) + calc(var(--am-field-icon-size) * 1px) + var(--md-sys-spacing-2xs)); }
+/* a passive trailing glyph owns the right inset plus its own width; the label's reserve stops
+   at the glyph's left edge, and the 8px of air is added by the truncation rule below */
+.am-field:has(.am-field__trail) { --am-field-label-reserve: calc(var(--md-sys-spacing-md) + calc(var(--am-field-icon-size) * 1px)); }
+/* Trailing action (gap field--label-is-an-action, ruled 2026-08-13): when a field's label
+   would also be a jump ("Contact" that opens the contact's page), the label stays plain text
+   and the jump rides INSIDE the field as a trailing icon button: the certified am-icon-btn in
+   the trail slot, the affordance M3 already blesses for trailing icons (clear, visibility).
+   The floating label is never a link and never gains a link state; that contract holds
+   system-wide. The 40px button (its own certified size) pulls in to an 8px inset so its 24px
+   glyph lands exactly where a passive trailing icon sits (16px from the edge), and the input
+   clears the whole button, not just the glyph. Rendered as an <a> when the jump is a real
+   destination; button.css strips the anchor underline from the icon button. */
+.am-field .am-icon-btn.am-field__trail { right: var(--md-sys-spacing-xs); }
+.am-field:has(.am-icon-btn.am-field__trail) .am-field__input { padding-right: calc(var(--md-sys-spacing-xs) + 40px + var(--md-sys-spacing-2xs)); }
+/* a trailing icon BUTTON reserves the whole 40px button, not just its glyph: the button paints a
+   state layer on hover, so a label tucked into the button's own padding would sit inside a
+   surface that lights up */
+.am-field:has(.am-icon-btn.am-field__trail) { --am-field-label-reserve: calc(var(--md-sys-spacing-xs) + 40px); }
+
+/* The same trailing action at classic-tall scale (gap field--classic-tall-label-reserve,
+   card 80, ruled 2026-08-21, option A: certify the values the MRP conversion minted).
+   The rule above is the full-size arm and it assumes full-size trail geometry, a 40px button
+   pulled to the 8px inset. Applied raw to the 34px classic-tall box that button is a 40px
+   circle on a 34px field, 3px past the top and bottom edges, carrying a 24px glyph beside
+   12px input text, and the label reserves 48px for it. That is the reported state (DEV-12524).
+   The classic arm is the second set of numbers: a 20px button at the 13px inset. Neither is a
+   token value and neither is meant to be. Both were measured on the live converted page and
+   QA-passed, and they are legacy geometry that retires with the bridge, the same standing as
+   the 34px box, the 20px classic box and the 10px floated label above.
+   The FIELD sets the button's size rather than trusting the author to reach for the classic
+   icon button, because the failure this arm exists to prevent is exactly a full-size button
+   landing in a classic-tall field, and a size the field owns cannot be forgotten. 20px is not
+   a third number: it is the certified classic icon button's own box.
+   The glyph takes the field's dense rung, the same 18px the classic-tall caret and the
+   classic-tall date field already draw at. Written explicitly rather than left to win on
+   stylesheet order against the icon button's own 24px default, since order is not a rule. */
+.am-field--classic-tall .am-icon-btn.am-field__trail {
+  width: 20px;
+  height: 20px;
+  right: 13px; /* legacy-measured, see block comment */
+}
+.am-field--classic-tall .am-icon-btn.am-field__trail .am-icon { --am-icon-size: var(--am-field-icon-size); }
+.am-field--classic-tall:has(.am-icon-btn.am-field__trail) .am-field__input {
+  padding-right: calc(13px + 20px + var(--md-sys-spacing-2xs));
+}
+.am-field--classic-tall:has(.am-icon-btn.am-field__trail) { --am-field-label-reserve: calc(13px + 20px); }
+
+/* Long resting label (gap field--long-label-trail-overlap, ruled 2026-08-18, option A).
+   The resting label doubles as the placeholder, so it lives on the same line as the trailing
+   glyph, and it had no right bound at all: a label longer than its field ran under the glyph and
+   kept going past the outline. It now stops 8px short of whatever sits in the trail, with an
+   ellipsis carrying the cut. Precedent applied, not invented: a long chip label truncates rather
+   than sliding under its own remove icon.
+   Resting only, on purpose. Once the label floats (focus or a value) it rises to the outline,
+   clear of the trail row, and shows whole, which is where the hidden tail becomes readable again.
+   The notch's hidden copy of the label text is never truncated either, so the outline opening
+   still sizes to the full floated label.
+   Side effect of the same cut: a required field's asterisk is part of the label, so a truncated
+   long label hides it until the label floats. */
+.am-field__input:placeholder-shown:not(:focus) ~ .am-field__label {
+  /* left + right on an absolute label decides the width; the label's own side padding is inside
+     that box, so it is subtracted here to put the 8px of air between the TEXT and the trail */
+  right: calc(var(--am-field-label-reserve) + var(--md-sys-spacing-xs) - var(--am-field-label-pad));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* with nothing in the trail there is nothing to clear, so the label runs to the input's own
+   text inset and truncates there instead of wasting 8px */
+.am-field:not(:has(.am-field__trail)) .am-field__input:placeholder-shown:not(:focus) ~ .am-field__label {
+  right: calc(var(--am-field-label-reserve) - var(--am-field-label-pad));
+}
+/* hold the inset steady when the 2px focus border lands (1px is the border-width delta) */
+/* (focus padding compensation retired: the 2px stroke lives on the absolute box, zero shift) */
+
+/* ---- outlined ---- */
+.am-field--outlined .am-field__input {
+  padding: 0 var(--md-sys-spacing-md);
+  border: none;
+  border-radius: var(--md-sys-shape-corner-extra-small);
+}
+/* The outline box: three segments (lead, gap, tail) drawn by an aria-hidden span so the
+   floated label sits in a REAL gap in the border. The old construction faked the gap by
+   painting the label with a surface-matching fill (--am-field-notch-bg), which broke on any
+   host that painted its own background and was never retargeted. Segments end that class of
+   bug: no fill, no retargeting, correct on any background. Same construction Material's own
+   web components use. The gap segment holds a hidden copy of the label text (body-small, the
+   floated size) so the gap self-sizes; it opens from 0 with the label's own motion tokens.
+   House departure from M3 preserved: the resting stroke is outline-variant, not M3's outline.
+   On dense rails (fields stacked 20+ deep) the full M3 outline reads as a wall of hard boxes;
+   the lighter outline-variant quiets the resting form while staying clearly darker than the
+   disabled border (on-surface 12%). Hover (on-surface) and focus (2px primary) unchanged.
+   Logged 2026-07-17; segmented construction logged 2026-07-27. */
+.am-field__box {
+  position: absolute; inset: 0; display: flex; pointer-events: none;
+  --am-field-stroke: var(--md-sys-color-outline-variant);
+  --am-field-stroke-w: 1px;
+}
+.am-field__box i {
+  display: block; border: var(--am-field-stroke-w) solid var(--am-field-stroke);
+}
+.am-field__box i:first-child {
+  width: var(--md-sys-spacing-md); flex: none; border-right: none;
+  border-radius: var(--md-sys-shape-corner-extra-small) 0 0 var(--md-sys-shape-corner-extra-small);
+}
+.am-field__box i:last-child {
+  flex: 1; border-left: none;
+  border-radius: 0 var(--md-sys-shape-corner-extra-small) var(--md-sys-shape-corner-extra-small) 0;
+}
+/* the gap segment: hidden label text sizes it; the top stroke opens when the label floats.
+   The open condition requires a label to actually be present (:has(.am-field__label)), not
+   merely a value in the input. Value was a stand-in for "the label has floated" and the two
+   came apart on the select, which carries no label on purpose and always has a value: every
+   select opened an 8px notch holding air, a nick in the top outline exactly where a missing
+   label would leave one (2026-08-05). A notch is a hole cut for a label; no label, no hole.
+   field_notch_check.mjs measures both directions so neither can regress. */
+.am-field__gap {
+  /* The room at the END of the notch is a value, not a literal, because something riding the
+     label (an information hint) needs more of it and the open-state rule below is the one place
+     the padding is written. Two :has() tests make that rule more specific than any single-test
+     override could be, so a rule trying to widen the padding directly LOSES to it, silently,
+     while matching perfectly. Found the hard way 2026-08-17. A property the open rule reads
+     sidesteps the specificity fight entirely: only one rule ever sets it. */
+  --am-field-gap-end: var(--md-sys-spacing-2xs);
+  flex: none; max-width: 0; overflow: hidden; white-space: nowrap;
+  border-left: none !important; border-right: none !important;
+  padding: 0; font-size: var(--md-sys-typescale-body-small-size); line-height: 1;
+  color: transparent; font-style: normal; user-select: none;
+  transition: max-width var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+.am-field--outlined:has(.am-field__label):has(.am-field__input:focus) .am-field__gap,
+.am-field--outlined:has(.am-field__label):has(.am-field__input:not(:placeholder-shown)) .am-field__gap,
+/* a field carrying fixed text keeps its name floated at all times (see the affix block), so the
+   hole in the outline it sits in is open at all times too */
+.am-field--outlined:has(.am-field__label):has(.am-field__affix) .am-field__gap {
+  max-width: 100%; padding: 0 var(--am-field-gap-end) 0 var(--md-sys-spacing-2xs); border-top-color: transparent;
+}
+/* A name that hosts an information hint (gap field--name-info-hint, ruled 2026-08-17). Three
+   things the field owns, not the hint:
+
+   The name is left as an inline line, deliberately. Making it a flex row was the first attempt
+   and it silently destroyed the alignment: a flex item has no baseline for the hint to sit on,
+   so the glyph centred on the row instead of on the text and sat visibly low. The hint aligns
+   itself against the text baseline (see hint.css); the name must not take that baseline away.
+
+   1. The name stays pointer-transparent so a click on it still reaches the input; hint.css
+      takes pointer events back for the glyph alone.
+   2. The notch has to grow. The gap segment self-sizes from a hidden copy of the label text,
+      and that copy is text only: a hint added to the name would overhang the top stroke and
+      the outline would cut through the glyph. The extra room is the glyph plus its own margin,
+      both already fixed values, so this is derived rather than eyeballed. The copy stays text
+      only on purpose: a second glyph in the sizing copy is a real glyph that has to be hidden
+      by hand, which is exactly the kind of invisible bookkeeping a page gets wrong. The extra
+      room is the glyph (16px) plus the margin the hint carries (4px), written as the two
+      spacing rungs that hold those values so no number is typed here.
+
+   No clearance rule is needed for the input: the name only sits on the input's line while the
+   field is empty, and it has floated into the notch by the time there is a value to collide
+   with. */
+.am-field:has(.am-field__label .am-hint) .am-field__gap {
+  --am-field-gap-end: calc(var(--md-sys-spacing-md) + var(--md-sys-spacing-2xs) + var(--md-sys-spacing-2xs));
+}
+/* the gap tracks the label when a leading icon shifts it */
+.am-field:has(.am-field__lead) .am-field__box i:first-child { width: calc(var(--md-sys-spacing-md) + calc(var(--am-field-icon-size) * 1px) + var(--md-sys-spacing-2xs)); }
+/* interaction states live on the box now; the absolute box means the 2px focus stroke
+   causes zero layout shift (the old construction nudged input padding to compensate) */
+.am-field--outlined:has(.am-field__input:hover:not(:focus):not(:disabled)) .am-field__box { --am-field-stroke: var(--md-sys-color-on-surface); }
+.am-field--outlined:has(.am-field__input:focus) .am-field__box { --am-field-stroke: var(--md-sys-color-primary); --am-field-stroke-w: 2px; }
+.am-field--outlined .am-field__label {
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 var(--md-sys-spacing-2xs);
+}
+/* the outlined label carries side padding (clearance around the floated text in the notch), and
+   the truncation rule needs to know it to place the text edge rather than the box edge */
+.am-field--outlined { --am-field-label-pad: var(--md-sys-spacing-2xs); }
+/* hover (M3): the outline darkens from the resting outline token to on-surface.
+   Scoped so a focused field keeps its 2px primary border, and a disabled field
+   keeps its dimmed border, when also hovered. */
+
+.am-field--outlined .am-field__input:focus ~ .am-field__label,
+.am-field--outlined .am-field__input:not(:placeholder-shown) ~ .am-field__label {
+  top: 0;
+  font-size: var(--md-sys-typescale-body-small-size);
+  /* the floated label sits in a REAL gap in the outline (see .am-field__box);
+     no fill, transparent over any host background */
+}
+.am-field--outlined .am-field__input:focus ~ .am-field__label { color: var(--md-sys-color-primary); }
+
+/* ---- fixed text inside the field: the affix slot ----
+   Gap login--url-affix-field (card 88, ruled 2026-09-16, option A). The sign-up page asks for a
+   site name inside a fixed web address, https:// before the box and .allmoxy.com after it. The
+   field had no slot for text it does not own, so the whole address was demoted to the support
+   line under the box and the user typed a name with no sight of what it became. M3 ships this
+   anatomy (prefix and suffix text), so this is the stock part arriving, not a house invention.
+
+   The affix is fixed text, never a value: it is not in the tab order, not selectable, and
+   pointer-transparent so a click anywhere on the field still lands in the input. It carries
+   on-surface-variant, the same quiet ink the support line uses, so the part the user is
+   completing is the only full-strength text on the line.
+
+   ONE house call, and the reason this PR is a DECISION: a field carrying an affix keeps its
+   name FLOATED at all times, and its outline notch stays open. M3 reveals the affix only once
+   the field is focused or filled, because M3's resting name sits on the text line and the two
+   would collide. That reveal is exactly the affordance this gap was filed about: an empty field
+   would again say nothing about the address until you touched it, which is what the support line
+   already failed at. Floating the name permanently clears the text line for the fixed text, so
+   the whole address reads before the first keystroke. The field is never really empty; it always
+   holds the parts the system supplies.
+
+   The input gives up its own text inset on whichever side an affix sits, so the fixed text and
+   the typed value read as one string rather than as two boxed-off halves. No classic arm: the
+   bridge densities get one when a converted page actually asks for it, rather than minting
+   legacy numbers nothing renders. */
+.am-field__affix {
+  flex: none;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.am-field--outlined .am-field__affix--lead { padding-left: var(--md-sys-spacing-md); }
+.am-field--outlined .am-field__affix--trail { padding-right: var(--md-sys-spacing-md); }
+.am-field--outlined:has(.am-field__affix--lead) .am-field__input { padding-left: var(--md-sys-spacing-2xs); }
+.am-field--outlined:has(.am-field__affix--trail) .am-field__input { padding-right: var(--md-sys-spacing-2xs); }
+/* the name floats and stays floated, whatever the input holds */
+.am-field--outlined:has(.am-field__affix) .am-field__label {
+  top: 0;
+  font-size: var(--md-sys-typescale-body-small-size);
+}
+/* an empty unfocused field would otherwise dim its name to the resting prompt ink and bound it
+   against the trailing reserve, both of which belong to a name sitting ON the text line; this one
+   is up in the outline, so it reads as a name and runs its full length */
+.am-field:has(.am-field__affix) .am-field__input:placeholder-shown:not(:focus) ~ .am-field__label {
+  color: var(--md-sys-color-on-surface-variant);
+  right: auto;
+  overflow: visible;
+  text-overflow: clip;
+}
+.am-field--disabled .am-field__affix {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--am-state-disabled-content-opacity) * 100%), transparent);
+}
+
+/* ---- filled ---- */
+.am-field--filled .am-field__input {
+  padding: 22px var(--md-sys-spacing-md) var(--md-sys-spacing-xs);
+  background: var(--md-sys-color-surface-container-highest);
+  border-radius: var(--md-sys-shape-corner-extra-small) var(--md-sys-shape-corner-extra-small) 0 0;
+  border-bottom: 1px solid var(--md-sys-color-on-surface-variant);
+}
+.am-field--filled .am-field__label { top: 50%; transform: translateY(-50%); }
+/* hover (M3): the fill carries the 8% hover state layer (same token the buttons use)
+   and the activation indicator darkens from on-surface-variant to on-surface. Scoped
+   so focus keeps the 2px primary indicator and disabled keeps its dimmed fill. */
+.am-field--filled .am-field__input:hover:not(:focus):not(:disabled) {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-hover-state-layer-opacity) * 100%), var(--md-sys-color-surface-container-highest));
+  border-bottom-color: var(--md-sys-color-on-surface);
+}
+.am-field--filled .am-field__input:focus,
+.am-field--filled .am-field__input:focus-visible { border-bottom: 2px solid var(--md-sys-color-primary); padding-bottom: 7px; }
+.am-field--filled .am-field__input:focus ~ .am-field__label,
+.am-field--filled .am-field__input:not(:placeholder-shown) ~ .am-field__label {
+  top: var(--md-sys-spacing-xs);
+  transform: none;
+  font-size: var(--md-sys-typescale-body-small-size);
+}
+.am-field--filled .am-field__input:focus ~ .am-field__label { color: var(--md-sys-color-primary); }
+
+/* ---- multiline (the paragraph field): an outlined text field that holds several lines ----
+   The container stops being a fixed-height single line and grows; the input is a textarea.
+   The label rests on the first line (not centered in the tall box) and floats to the outline
+   notch on focus or value, exactly like the single-line field. Vertical resize is allowed. */
+/* No smallest width of its own: the paragraph field takes whatever its holder gives it, so a narrow
+   side panel on a phone (286 of content) holds it instead of the box running out through the panel's
+   edge. Ruled 2026-10-27 (gap card 212, option B), the M3 and peer practice; the single-line field's
+   240 floor does not carry over either. paragraph_fit_check.mjs holds it. */
+.am-field--multiline { height: auto; align-items: stretch; min-width: 0; }
+.am-field--multiline .am-field__input {
+  height: auto;
+  min-height: calc(var(--md-sys-typescale-body-large-line-height) * 3 + var(--md-sys-spacing-sm) * 2);
+  padding-top: var(--md-sys-spacing-sm);
+  padding-bottom: var(--md-sys-spacing-sm);
+  resize: vertical;
+}
+.am-field--multiline .am-field__label { top: var(--md-sys-spacing-sm); transform: none; }
+/* A paragraph field carrying a help line keeps its own height. The supporting text rule above pins
+   a field with a help line to the single line control height, which is right for a one line box
+   and wrong for this one: the outline wrapped the first line only and the rest of the box spilled
+   out under it. Here the box keeps its paragraph height and the outline is placed in the grid's
+   first row (named as an explicit row, since a positioned piece can only be placed on one), so it ends at the foot of the box whatever height the box has or is dragged to, and
+   the help line sits under it. The resting label goes back to the first line. */
+.am-field--multiline:has(.am-field__support) { grid-template-rows: auto auto; }
+.am-field--multiline:has(.am-field__support) .am-field__input { height: auto; }
+.am-field--multiline:has(.am-field__support) .am-field__box { grid-row: 1 / 2; grid-column: 1; top: 0; bottom: 0; height: auto; }
+.am-field--outlined.am-field--multiline:has(.am-field__support) .am-field__input:placeholder-shown:not(:focus) ~ .am-field__label { top: var(--md-sys-spacing-sm); }
+.am-field--multiline .am-field__input:focus ~ .am-field__label,
+.am-field--multiline .am-field__input:not(:placeholder-shown) ~ .am-field__label { top: 0; transform: translateY(-50%); }
+
+/* Paragraph field at classic-tall density. The two modifiers already compose; the one thing
+   that does not carry over is the three-line floor, which the rule above measures in
+   body-large. At this density the text is body-small, so that floor came out 96px tall
+   holding 12px text: roughly six lines of room for a three-line minimum, and tall enough to
+   swamp the single-line fields it stacks with in a converted rail. Measure the floor at the
+   size actually in play, and take the 8px inset the rest of the classic family uses at this
+   height rather than the full-size field's 12px. Lands at 64px. */
+.am-field--multiline.am-field--classic-tall .am-field__input {
+  min-height: calc(var(--md-sys-typescale-body-small-line-height) * 3 + var(--md-sys-spacing-xs) * 2);
+  padding-top: var(--md-sys-spacing-xs);
+  padding-bottom: var(--md-sys-spacing-xs);
+}
+.am-field--multiline.am-field--classic-tall .am-field__label { top: var(--md-sys-spacing-xs); }
+.am-field--outlined.am-field--multiline.am-field--classic-tall:has(.am-field__support) .am-field__input:placeholder-shown:not(:focus) ~ .am-field__label { top: var(--md-sys-spacing-xs); }
+
+/* ---- code (the paragraph field holding typed or pasted code) ----
+   Add --code to a --multiline field when what goes in it is code: an export header, a script,
+   a template. Two things change and nothing else. Every character is the same width, in the
+   house fixed width face (the one mono token, never a typed stack), so indents line up and a
+   one, a lower case L and a capital I cannot be confused. And every line stays whole: a line
+   longer than the box keeps going and the box scrolls sideways with its ordinary scroll bar,
+   because a folded line of code reads as a new line and lies about where the line ends (the
+   same reason the code sample block holds its lines). Size, label, outline, focus and error
+   are the paragraph field's own. Held by scripts/code_field_check.mjs. */
+.am-field--multiline.am-field--code .am-field__input {
+  font-family: var(--md-sys-typescale-font-mono);
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+  /* the bar that says a line runs past the box is the system's always-showing one, lying inside
+     the box's own bottom padding (components/scroll-bar.css, wired by the behavior layer); the
+     computer's own is hidden */
+  scrollbar-width: none;
+  --am-scrollbar-inset: var(--md-sys-spacing-2xs);
+}
+.am-field--multiline.am-field--code .am-field__input::-webkit-scrollbar { display: none; }
+
+/* ---- error ---- */
+.am-field--error.am-field--filled .am-field__input { border-color: var(--md-sys-color-error); }
+.am-field--error.am-field--outlined .am-field__box { --am-field-stroke: var(--md-sys-color-error); }
+.am-field--error.am-field--outlined:has(.am-field__input:focus) .am-field__box { --am-field-stroke: var(--md-sys-color-error); }
+.am-field--error .am-field__label,
+.am-field--error .am-field__input:focus ~ .am-field__label { color: var(--md-sys-color-error); }
+.am-field--error .am-field__support { color: var(--md-sys-color-error); }
+
+/* ---- disabled ---- */
+.am-field--disabled { opacity: 1; }
+.am-field--disabled .am-field__input { color: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--am-state-disabled-content-opacity) * 100%), transparent); }
+.am-field--disabled .am-field__label { color: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--am-state-disabled-content-opacity) * 100%), transparent); }
+.am-field--disabled.am-field--outlined .am-field__box { --am-field-stroke: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--am-state-disabled-container-opacity) * 100%), transparent); }
+.am-field--disabled.am-field--filled .am-field__input { background: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent); }
+
+/* Classic tall modifier: a 34px classic field for legacy rows where the label sits ABOVE the field
+   instead of on the left. Same intent as --classic (converting existing pages only), but taller: at 34px there
+   is room to keep the field's own floating label (the 20px --classic cannot, which is why it takes
+   an external left label). Height ruling (2026-07-24): the box is 34px, not 37px. The full field
+   footprint is measured top-of-label to bottom-of-box, and the floated label straddles the top border
+   sitting ~6px above the box, so footprint = box + 6. Legacy's stacked label-above footprint measures
+   ~40px (demo.allmoxy.com), so a 34px box gives a ~40px footprint that matches it. The earlier 37px box
+   rendered a ~43px footprint and read ~3-5px taller than the live app, which defeated the whole point
+   of the bridge. Below the 48px M3 touch floor, so it carries the same rule as the rest of classic: use it only when converting an existing legacy page, never on a new one, and the page-builder refuses it on new pages while the auditor flags it there, and it retires with the region
+   it bridges (grep --classic lists every instance, this one included). Keeps every color, state, and
+   behavior of the full field. Provenance unchanged (still a tuned M3 field). */
+.am-field--classic-tall {
+  --am-density-field-height: 34px;
+  /* the glyph drops to the dense rung with the box. Left unset, a 34px field inherited the
+     family's nominal 24px arrow, which filled 70% of the box: the state the deleted 34px
+     dropdown demo shipped in (found 2026-08-05). 18px is not a new number, it is the same
+     --am-field-icon-size-dense the date-picker field already runs on at this height, and the
+     date picker calls itself the twin of this variant. The classic-tall dropdown (Select,
+     restored 2026-08-06) is the first variant to carry an icon at 34px and takes its caret
+     from this rung; anything added later inherits the same number instead of 24. */
+  --am-field-icon-size: var(--am-field-icon-size-dense);
+}
+/* Text size ruling (2026-07-28): the input drops to body-small (12px), the same size the 20px
+   --classic runs, so both classic densities carry one text size and the 34px box stops hauling
+   the full field's 16px text (which read as crowded and out of proportion). The resting label
+   doubles as the placeholder inside the box, so it matches the input at 12px. The FLOATED label
+   matches the legacy app it bridges: 10px, weight 400, MEASURED off demo.allmoxy.com stacked
+   label-above form rows (orders filter form, 2026-07-28: labels 10px/400 over 12px inputs).
+   10px exists nowhere in the type scale on purpose; it is legacy's number, not ours, and it
+   retires with the bridge. The 2px gap under the 12px value keeps label and value distinct
+   without weight tricks. The gap sizer below mirrors the floated label exactly so the outline
+   opening stays sized to it. */
+.am-field--classic-tall .am-field__input {
+  font-size: var(--md-sys-typescale-body-small-size);
+  font-weight: var(--md-sys-typescale-body-small-weight);
+}
+/* The 34px classic density takes the same 2px inset as the 20px one above, so both classic
+   densities put text in the same place and a converted row reads as one family. The floating
+   label cannot follow it all the way: the gap it sits in has to clear the rounded corner, so the
+   outline's lead segment and the label inset drop to the smallest spacing step instead (ruled
+   2026-09-15, option B of two rendered). That leaves the resting prompt and the first typed
+   character 6px apart rather than the 15px they sat at when the label stayed at 16px, which read
+   as a jump on every empty field.
+   The trailing-action arm above is more specific than this shorthand and sets padding-right on
+   its own, so a classic-tall field carrying a trailing button keeps its reserved clearance and
+   only its left inset moves. */
+.am-field--outlined.am-field--classic-tall .am-field__input { padding: 0 2px; }
+.am-field--classic-tall { --am-field-label-inset: var(--md-sys-spacing-2xs); }
+.am-field--classic-tall .am-field__box i:first-child { width: var(--md-sys-spacing-2xs); }
+/* THE RESTING PROMPT STARTS WHERE TYPING STARTS (Brady, 2026-09-16). Before it floats, the
+   label doubles as the field's prompt and sits INSIDE the box, so it is read as placeholder
+   text, not as a label. The inset above moves the label's BOX; the label also carries side
+   padding of its own for the notch it will later sit in, so its TEXT landed 4px further in than
+   the box, prompting at 8px while the first typed character landed at 2px. On an empty form
+   that reads as the value jumping left the moment you type.
+   Subtracting the label's own padding from the resting position puts the prompt text on the
+   input's text inset exactly, so nothing moves when the field fills. Only the RESTING label
+   moves: once floated it leaves the text line for the outline, where the 4px box inset is what
+   keeps it clear of the corner radius.
+   Scoped to classic-tall, the only density with a label inside the box: the 20px classic field
+   wears its label outside on the left, so it has no resting prompt to place, and a rule written
+   for it here would be a rule no specimen exercises.
+   The house density carries the same 4px offset (prompt at 20px, typed text at 16px) and is
+   deliberately left alone pending a ruling. It is not the same call: 16px is M3's own inset and
+   a net-new form is M3's to lay out, so closing that gap is a house-wide visual change rather
+   than the legacy-fidelity fix this is. */
+.am-field--outlined.am-field--classic-tall .am-field__input:placeholder-shown:not(:focus) ~ .am-field__label {
+  left: calc(2px - var(--am-field-label-pad));
+}
+.am-field--classic-tall .am-field__label {
+  font-size: var(--md-sys-typescale-body-small-size);
+}
+.am-field--classic-tall .am-field__input:focus ~ .am-field__label,
+.am-field--classic-tall .am-field__input:not(:placeholder-shown) ~ .am-field__label {
+  font-size: 10px; /* legacy-measured, see block comment */
+  /* weight-ruling: legacy fidelity. The legacy configurator's label is small and
+     NON-BOLD; the label-medium role would make it 500. Recorded in commits fce6947 and
+     0356a98. Do not point this at a role token: a token change must not silently re-bold
+     a legacy-fidelity ruling. */
+  font-weight: 400;
+}
+.am-field--classic-tall .am-field__gap {
+  font-size: 10px; /* mirrors the floated label */
+  /* weight-ruling: mirrors the floated classic label above. */
+  font-weight: 400;
+}
+
+/* Classic modifier: the legacy app's dense field box, kept as a legacy-look copy, for converting existing pages only, so we can modernize the app one region at a time instead of forcing every field to the 48px floor
+   at once. 20px is the real legacy density, not a guess: the 2026-07-10 classic sweep found the
+   dense field band clustered at 20-23px across ~560 fields, and 20px was measured off the legacy
+   configurator (39 raw px at 2x). Keeps every color, state, and behavior of the full field;
+   sacrifices only height and text size to fit legacy boxes. It sits below the 48px M3 touch floor,
+   so it cannot carry the floating label (no room for the outline gap); it takes an external label
+   instead, on the left, via .am-field-labeled--classic. Use it only when converting an existing legacy page, never on a new one (the page-builder refuses it on new pages, the auditor flags it there). Retires when the region it bridges is fully modern;
+   grep --classic to list every instance. Provenance unchanged (still a tuned M3 field). */
+.am-field--classic {
+  --am-density-field-height: 20px;
+  --am-field-icon-size: 14;
+}
+.am-field--classic .am-field__input {
+  box-sizing: border-box;
+  font-size: var(--md-sys-typescale-body-small-size);
+  font-weight: var(--md-sys-typescale-body-small-weight);
+  line-height: 1;
+  /* Side padding ruling (Brady, 2026-09-15): 2px, not the field family's 16px. The legacy box
+     this bridges ran `padding: 0` inside its own 1px border, so its text stopped one pixel inside
+     the line; here the outline is painted by a separate layer over the input's edge, so zero puts
+     ink on the stroke. Reconstructed from a customer screenshot of the legacy order page: a 36px
+     quantity box (3em at 12px) holding five digits. At 16px a 36px classic box has 4px of room
+     and clips a two-digit value, which is the bug that surfaced this. 1px matches legacy geometry
+     exactly and was built and rejected on sight: a digit carries side bearing of its own and
+     looked right, a letter carries almost none at 12px and its ink landed against the stroke.
+     2px is the smallest inset that clears every glyph, and costs 2px of box width (five digits
+     now need 38px). Lead and trail slot rules are more specific and win over this shorthand, so
+     an iconed classic field keeps the clearance its own rule reserves. */
+  padding: 0 2px;
+}
+
+/* Classic labeled row: the legacy dense form row, an external label on the LEFT paired with a
+   classic field on one line. This is how a classic field carries its name: the field itself has no
+   floating label at 20px, so the label sits beside it (label first, field fills the rest), matching
+   how the legacy app packs dense forms. Layout only; the label keeps its own classic type, the field
+   keeps its own states. Tight gap for legacy density. Pair with .am-field-label--classic. */
+.am-field-labeled--classic {
+  display: flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-xs);
+}
+.am-field-labeled--classic > .am-field { flex: 1; min-width: 0; }
+.am-field-labeled--classic > .am-field-label--classic { flex: none; margin: 0; }
+
+/* Credential field: a secret (an API key, a token, a password) shown as dots with a reveal
+   control, and a copy control BESIDE the field rather than in it.
+   Ruled 2026-08-14, gap field--masked-credential, option B, which did NOT ratify the shipped
+   shape. The shipped field carried two clickable controls in one trailing slot; the ruling
+   holds the field to the stock M3 password pattern of ONE trailing control (the reveal
+   toggle, riding the trail slot as the certified icon button, the same contract the trailing
+   jump uses) and moves copy out to its own certified icon button on the line.
+
+   Why the row exists rather than a page writing its own flex: once copy sits outside the
+   field, every credential field in the app needs the same line, and a line hand-written per
+   page is how two credential fields end up with different gaps and different alignment. The
+   field takes the remaining width, each action keeps its own 40px box, and both actions
+   center on the field.
+
+   Masking itself is the input's own type, not a look: type="password" draws the dots, and the
+   reveal toggle swaps the type. So there is no masked MODIFIER to forget, and a field with the
+   toggle and no masking is impossible to build by mistake. The toggle's glyph names the ACTION,
+   matching its spoken label and the M3 password toggle: an open eye while the value is masked
+   (press to reveal), a struck eye once it is showing (press to hide). Shape carries it, never
+   colour alone. It shipped inverted (glyph as state, label as action) and was corrected the same
+   day: a masked field wearing a struck eye announces that hiding is on and offers nothing, which
+   is the opposite of the one thing the button exists to do, and the two halves of a single control
+   were contradicting each other. Whichever convention a system picks, the glyph and the label pick
+   the same one.
+   Wiring is in the shared behavior file. */
+.am-field-row {
+  display: flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-xs);
+}
+.am-field-row > .am-field { flex: 1 1 auto; min-width: 0; }
+.am-field-row > .am-icon-btn { flex: none; }

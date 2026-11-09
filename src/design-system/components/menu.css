@@ -1,0 +1,335 @@
+/* Allmoxy Design System, Menu (STOCK Material 3)
+ * The floating dropdown list of choices. Used standalone and inside the split button.
+ * Spec v0.192: corner-extra-small (4px), elevation level2. Items: 48px tall one-line
+ * list items, label-large, leading/trailing icon 24px.
+ * Container: surface-container-high, NOT the spec's surface-container, the Allmoxy
+ * page floor (--am-surface-floor) already sits on surface-container, so a stock menu
+ * is the exact page color and reads as detached from its field. container-high is the
+ * tier the date/time picker panels float on; menus match them.
+ * CONVERSION DOCTRINE (RULED 2026-08-15, gap doctrine--menu-element-adaptation, option B):
+ * a legacy menu converts FULLY, every time. Legacy items built as link tags with Font Awesome
+ * glyphs become the certified menu item carrying certified inventory glyphs; there is no blessed
+ * element swap and no migration bridge, because a bridge keeps two icon systems live with no
+ * natural end, and an exception to canon markup is a rule every port has to re-learn. A
+ * navigating item that needs native link behavior re-implements it on the certified item; that
+ * cost was weighed in the ruling and accepted. Font Awesome cannot enter this repo (the icon
+ * inventory gates enforce that); on app pages the auditor's uncertified_icons finding is the
+ * fence.
+ * Ruling (gap menu--upward-auto-flip, option B): a menu that will not fit below its
+ * anchor opens UPWARD instead, decided at open time by the shared behavior layer
+ * measuring the space under the anchor (the M3 baseline: menus reposition to stay in
+ * the viewport). The am-menu--up class below is the mechanism the behavior applies;
+ * a page never hand-picks it, because anchor position depends on scroll and only a
+ * measure-at-open decision is correct everywhere. Guarded by menu_flip_check.
+ */
+.am-menu-anchor { position: relative; display: inline-flex; }
+
+.am-menu {
+  position: absolute;
+  top: calc(100% + var(--md-sys-spacing-2xs));
+  left: 0;
+  z-index: 30;
+  min-width: 180px;
+  padding: var(--md-sys-spacing-xs) 0;
+  margin: 0;
+  background: var(--am-surface-popover);
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  box-shadow: var(--am-shadow-level2);
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+              transform var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+              visibility 0s linear var(--md-sys-motion-duration-short3);
+}
+.am-menu--right { left: auto; right: 0; }
+/* applied by the behavior layer when the menu will not fit below the anchor */
+.am-menu--up { top: auto; bottom: calc(100% + var(--md-sys-spacing-2xs)); transform: translateY(4px); }
+.am-menu-anchor.is-open .am-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+              transform var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-emphasized);
+}
+/* A menu opened from inside another menu (a row's three dots, card 176) stays closed until its OWN
+   anchor opens: the outer menu's open state must not reach down and open it too. */
+.am-menu .am-menu-anchor:not(.is-open) > .am-menu { opacity: 0; visibility: hidden; transform: translateY(-4px); }
+
+/* A MENU THAT OPENS FROM A FIELD (ruled 2026-09-24, gap form--select-menu-trigger-width,
+   card 94, option B, rebuilt the same day as one shared rule).
+   Any menu whose anchor's trigger is a field, which covers the plain select at every density
+   and the searchable dropdown, is NEVER NARROWER THAN THE FIELD, grows to its longest option
+   past that, and stops at the smaller of 480px and 90% of the viewport. Past the cap an option
+   ends in an ellipsis. This is the majority practice across mature systems and matches the
+   native dropdown customers already use.
+   Found by function, not by class: the rule keys on the field sitting in the anchor, so a
+   dropdown built later inherits it without anyone remembering to opt in, and there is exactly
+   one home for it. Menus opening from a button (the three-dot menu, a split button, a tab
+   menu) have no field to match and keep the 180px floor above.
+   Do not pin the list to the field's exact width and do not restore the flat floor here: a
+   list narrower than its field was the reported bug (a 410px select opening a 180px list), and
+   an exact match was the option that lost. Enforced by scripts/field_menu_width_check.mjs. */
+.am-menu-anchor:has(> .am-field) > .am-menu {
+  left: 0;
+  right: auto;
+  width: max-content;
+  min-width: 100%;
+  max-width: min(480px, 90vw);
+}
+.am-menu-anchor:has(> .am-field) > .am-menu .am-menu__item { min-width: 0; }
+
+/* THE OPTION LABEL. An option's words sit in their own element so they can end in an ellipsis
+   at the cap; bare text inside a row cannot, because the row lays out as a flex box and an
+   ellipsis only applies to the text's own box. It also keeps a trailing check visible, since
+   the words shrink and the icon does not. am-combobox__label is the searchable dropdown's
+   older name for the same element, honored here so pages built on it keep truncating. */
+.am-menu__label,
+.am-combobox__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.am-menu__item {
+  --_state-color: var(--md-sys-color-on-surface);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-sm);
+  width: 100%;
+  height: 48px;
+  padding: 0 var(--md-sys-spacing-sm);
+  border: none;
+  background: transparent;
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--md-sys-typescale-font);
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  letter-spacing: var(--md-sys-typescale-label-large-tracking);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.am-menu__item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--_state-color);
+  opacity: 0;
+  transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+.am-menu__item:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-menu__item:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.am-menu__item:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+/* sizing-rule: a glyph beside text takes its text's rung (docs/icon-sizing.md, branch 2). 14px menu label -> 18. House departure from M3's 24 (a touch-first default carried in with the part on 2026-06-27 and never brought onto the 2026-07-31 rule); ruled 2026-09-30, card 107. */
+.am-menu__item .am-icon { --am-icon-size: 18; color: var(--md-sys-color-on-surface-variant); flex: none; }
+.am-menu__item--danger { color: var(--md-sys-color-error); --_state-color: var(--md-sys-color-error); }
+.am-menu__item--danger .am-icon { color: var(--md-sys-color-error); }
+
+/* ---- THE PAGE YOU ARE ON (gap card 152, ruled 2026-10-16, option C). A menu item that opens the
+   page already open wears the selected fill, the same fill the table's current page button wears,
+   so every menu in the app that lists pages says where you are. The mark keys on
+   aria-current="page" and nothing else: the one attribute that draws the fill is the one a screen
+   reader announces, so the mark can never be seen without being heard, or heard without being
+   seen. Do not add a class for it.
+   Pages that share one menu group (the four Services Tools) carry no path to each other on the
+   page itself; the menu is the path. A page gets an on-page path to a sibling only when the two
+   form a real workflow. Guarded by menu_current_page_check. */
+.am-menu__item[aria-current="page"] {
+  --_state-color: var(--md-sys-color-on-secondary-container);
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+.am-menu__item[aria-current="page"] .am-icon { color: var(--md-sys-color-on-secondary-container); }
+
+/* keyboard focus ring, inset (menu items sit full bleed in the menu surface) */
+.am-menu__item:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: calc(-1 * var(--am-focus-ring-width)); }
+
+/* ---- trailing action (RULED: gap menu--item-trailing-action, card 125, option D; gap
+   menu--trailing-action-on-touch, card 176, Brady 2026-10-08). A row that does two things: the
+   row itself is the choice, and a control at its right end acts on that row (delete a saved
+   search). The row wrapper holds the item and the action side by side, because a control that
+   takes focus cannot sit inside a button; the item still spans the whole row and its fill runs
+   under the action, so the row reads as one object.
+   Where the device can hover (a mouse or trackpad), the action shows only on the row under the
+   pointer or holding keyboard focus. Hidden means hidden: it cannot be clicked or tapped, so a
+   finger on a touchscreen laptop lands on the row, never on an invisible delete. On a touch-only
+   device the action shows on every row. One action shows its own glyph (delete is the danger
+   icon button); two or more sit behind more_vert, which opens them. Guarded by
+   menu_trailing_action_check. */
+.am-menu__row { position: relative; display: block; }
+.am-menu__row > .am-menu__item { padding-right: calc(var(--md-sys-spacing-xs) + 40px + var(--md-sys-spacing-xs)); }
+.am-menu__row:hover > .am-menu__item::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-menu__item-action {
+  position: absolute;
+  top: 50%;
+  right: var(--md-sys-spacing-xs);
+  translate: 0 -50%;
+  z-index: 1;
+}
+/* sizing-rule: the glyph sits beside a 14px menu label, so it takes that label's rung (18), same as the leading icon. */
+.am-menu__item-action .am-icon { --am-icon-size: 18; }
+@media (hover: hover) and (pointer: fine) {
+  .am-menu__item-action {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+                visibility 0s linear var(--md-sys-motion-duration-short2);
+  }
+  .am-menu__row:hover > .am-menu__item-action,
+  .am-menu__row:focus-within > .am-menu__item-action {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard), visibility 0s;
+  }
+}
+
+/* ---- group header row (RULED 2026-08-20, gap menu--group-header-row, option D): the group's
+   name sits ON the line that starts the group, so the boundary and the name are one object.
+   Grouped menus already exist in the product (the sales-tax state list groups by country) and
+   had nothing to copy, so pages were shipping the name as a quiet non-interactive item row,
+   which wears the exact look of a DISABLED item and is distinguishable only by ink.
+   Two rejected shapes, both of which were a full-width row of words like the interim: item
+   voice at the variant ink (the interim itself), and a smaller uppercase header. Both ask the
+   eye to read a type contrast and infer "not a choice". The rule states it instead.
+   The name is label-medium at the variant ink, one rung under the item's label-large, on a 32px
+   row against the item's 48px.
+   THE PART DRAWS THE RULE, the page never writes one: a header whose line is left off is
+   exactly the rejected interim, renders perfectly, and would pass every other gate, so there
+   is deliberately nothing here for an author to omit. Guarded by menu_group_head_check.
+   Not a menu item and never given that class: the shared behavior layer keys every menu
+   action off .am-menu__item, so a head outside that class is inert, unfocusable and unpickable
+   for free rather than by suppression.
+   Its items are wrapped in a role="group" the head labels, which is how a screen reader hears
+   the grouping the line draws. */
+.am-menu__group-head {
+  display: flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-xs);
+  height: 32px;
+  padding: 0 var(--md-sys-spacing-sm);
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--md-sys-typescale-font);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+  white-space: nowrap;
+  cursor: default;
+}
+.am-menu__group-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--am-divider);
+}
+
+/* ---- FIELD SLOT (gap card 101, ruled 2026-09-29, shape D1): a menu whose choices need one
+   typed value ahead of them carries that field at the top of the menu, above the items, and the
+   items still ACT. The driving case is export, where the ruled control (2026-07-24) is a menu
+   that picks a format and closes: naming the file is a second, separate question that the
+   control itself does not have to change to answer, so the button, the menu and the item rows
+   are all untouched and only a name is added. Picking a format is still one click.
+   THE PART OWNS THE SPACING, the page never writes one: the slot sits on the menu's own rhythm,
+   the item inset (spacing-sm) across, and the menu's own top padding (spacing-xs) repeated above
+   the field, below it, and again under the rule before the first item, so the field lines up
+   with the item labels' leading edge and every gap in the menu is the same value. The first
+   build of this hand-typed three different paddings onto the page and Brady rejected it on
+   sight; a slot a page has to space itself is that mistake waiting on every surface.
+   The separating rule is drawn here rather than by a divider element in the markup, same reason
+   the group head draws its own line: a slot whose boundary is optional renders perfectly without
+   it and the typed value then reads as the first choice in the list.
+   The floor is the certified list width (280px) rather than the menu's 180px button floor, a
+   reuse and not a new number: 180px holds a word like CSV and cannot hold a file name. A menu
+   opening from a FIELD is already sized by the card 94 rule above and keeps it. */
+.am-menu:has(> .am-menu__field) { min-width: 280px; }
+.am-menu__field {
+  display: block;
+  /* The top gap is measured to the INK, not to the field's box. An outlined field's name rides
+     ON the outline, half its own text size above the box, since the floated name sets its line height to 1, so the menu's 8px of top padding left only
+     2px of air over the name and the menu read ragged at the top while every box below it was
+     correct. The reservation is DERIVED from the type scale rather than typed, so a change to
+     the small text size cannot silently put the name back on the menu's edge. */
+  padding-top: calc(var(--md-sys-typescale-body-small-size) / 2);
+  padding-inline: var(--md-sys-spacing-sm);
+  padding-bottom: var(--md-sys-spacing-xs);
+  border-bottom: 1px solid var(--am-divider);
+  margin-bottom: var(--md-sys-spacing-xs);
+}
+.am-menu__field > .am-field { width: 100%; }
+
+/* ---- CONTROL SLOT (gap card 60, ruled A, 2026-08-14 and three times since): a menu may carry
+   ONE row holding a segmented control when a setting has a few peer states that should all be
+   visible at once and change with one tap. The driving case is the colour mode choice in the
+   account menu: Light, Dark, and the state that follows the company's own setting, which is
+   called Default (Auto would promise it follows the operating system, and Instance default does
+   not fit in a segment). This is what shipped in the app (DEV-12394) and it is now canon.
+   The row is named by the certified field label, because the label names a group of segments,
+   never one control; the slot is a role="group" the label names, so a screen reader hears it.
+   THE PART OWNS THE SPACING, the page never writes one: the same item inset across and the
+   same spacing-xs rhythm the field slot uses, between the name and the segments too, and the
+   slot draws its own dividing rules so the row never reads as one more choice in the list
+   (above it unless it opens the menu, below it unless it closes the menu).
+   The segments fill the row, so the three states share the width evenly and the selected one
+   is the only thing that differs. The floor is the certified list width (280px), the same reuse
+   the field slot makes; the menu still grows past it if its labels need more.
+   Using a segment does NOT close the menu (the shared behaviour stops the click at the slot),
+   because the person changing a mode wants to see it take effect while the menu is still open. */
+.am-menu:has(> .am-menu__control) { min-width: 280px; }
+.am-menu__control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md-sys-spacing-xs);
+  padding: var(--md-sys-spacing-xs) var(--md-sys-spacing-sm);
+}
+.am-menu__control:not(:first-child) { border-top: 1px solid var(--am-divider); margin-top: var(--md-sys-spacing-xs); }
+.am-menu__control:not(:last-child) { border-bottom: 1px solid var(--am-divider); margin-bottom: var(--md-sys-spacing-xs); }
+.am-menu__control > .am-segmented { display: flex; width: 100%; }
+.am-menu__control > .am-segmented > .am-segmented__seg { flex: 1 1 0; white-space: nowrap; }
+
+/* Classic modifier: the legacy app's dense dropdown list, the partner to the classic select, for converting existing pages only. When a classic (20px) select opens, its list opens dense too, so the options
+   sit in the packed legacy form instead of towering over it in the full 48px comfortable rows.
+   20px rows at the legacy text size: chosen to equal the classic trigger height and to land in the
+   band desktop browsers already draw for a native select at the legacy 11-12px font (measured
+   Chromium ~15-18px, Firefox ~18-22px, Safari/macOS ~20px), so an open classic select reads as the
+   native dense dropdown customers already use. Keeps every menu state, selection, danger, and focus
+   behavior; sacrifices only row height, text size, and icon size. Use it only when converting an existing legacy page, never on a new one (the page-builder refuses it on new pages, the auditor flags it there). Retires with the region it bridges;
+   grep --classic to list every instance.
+   SCOPE RULING (Brady, 2026-08-15, gap classic--popover-menu-density, option A): the classic menu
+   pairs with the classic SELECT only. Row-action popup menus on classic (dense) tables hold the
+   full-size menu: a popover floats OVER the page and carries its own rhythm, so it does not
+   inherit the density of the surface beneath it. The 48px-over-25px contrast on dense legacy
+   tables is correct and intended, per the M3 baseline. Do not open the classic menu there. */
+.am-menu--classic { min-width: 120px; padding: var(--md-sys-spacing-2xs) 0; }
+.am-menu--classic .am-menu__item {
+  height: 20px;
+  padding: 0 var(--md-sys-spacing-xs);
+  gap: var(--md-sys-spacing-2xs);
+  font-size: var(--md-sys-typescale-body-small-size);
+  font-weight: var(--md-sys-typescale-body-small-weight);
+}
+.am-menu--classic .am-menu__item .am-icon { --am-icon-size: 14; }
+/* The classic group head: the same ruling at legacy density, added 2026-08-20 with the head itself
+   because the grouped list that drove the gap (the sales-tax states by country) lives on a legacy
+   page, so shipping only the full-size head would have left the one real consumer with nothing to
+   copy and the interim still in place.
+   Shrinks the same three things the classic menu shrinks and nothing else: row height 32 to 16,
+   text one rung down again (label-small, the only rung under the classic item's body-small, so the
+   head still reads as subordinate at a density where 2px is a whole step), and the horizontal
+   inset to the classic item's. The rule, the ink, and the not-a-choice contract are untouched, so
+   a grouped legacy dropdown and a grouped modern menu are the same object at two sizes.
+   Classic doctrine applies: migration-only, the builder refuses it on new pages, retires with the
+   bridge. The head is not an interactive control, so it sits outside the 48px touch floor rather
+   than under it. */
+.am-menu--classic .am-menu__group-head {
+  height: 16px;
+  padding: 0 var(--md-sys-spacing-xs);
+  gap: var(--md-sys-spacing-2xs);
+  font-size: var(--md-sys-typescale-label-small-size);
+  font-weight: var(--md-sys-typescale-label-small-weight);
+  letter-spacing: var(--md-sys-typescale-label-small-tracking);
+}

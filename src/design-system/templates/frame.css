@@ -1,0 +1,321 @@
+/* Allmoxy Design System, Template frame (the one frame stylesheet)
+ * Layout scaffolding every built page links: the shell, the shared top app bar,
+ * page headers, rails, sections, and the chat frame. Layout and typography roles
+ * only, all token driven. Appearance lives in components; a rule that styles a
+ * repeating interactive thing does not belong here, it belongs in a part.
+ * Pages link this file; the showroom links this file; nothing embeds copies.
+ *
+ * SDK MAPPING (Brady's ruling, 2026-08-15, gap regular--page-frame-shell, option A): the SDK's
+ * AM_PageFrame component IS this frame, not a sixth template. Its mapping: AM_PageFrame's shell
+ * wrapper = .tpl-shell, its content column = .tpl-main, its page surface = .tpl-page, and it
+ * links this stylesheet instead of carrying inline copies of these rules. Dev-side follow-up on
+ * the dev team's schedule: refactor AM_PageFrame from inline styles to these classes. Until
+ * then this comment is the record that the mapping is ruled and the frame is the single source.
+ */
+* { box-sizing: border-box; }
+
+/* HIDDEN MEANS HIDDEN. The browser ships `[hidden] { display: none }` in its default
+   stylesheet, and a default stylesheet loses to ANY author rule whatever its specificity.
+   Nearly every part sets its own display (227 class selectors do), so on those parts the
+   attribute quietly stopped working: a picked tag's pill stayed in the suggestion panel,
+   tinted and still clickable, because `.am-chip { display: inline-flex }` outranked it
+   (2026-08-12). Three parts had already hit this and patched only themselves, which is the
+   tell that the rule belongs one level up.
+
+   It lives here because the stylesheet-order rule loads this file LAST on every built page
+   and in the showroom, so it wins on order and needs no !important. Enforced by
+   scripts/hidden_check.mjs. A part that must paint something marked hidden is a decision,
+   not a workaround. */
+[hidden] { display: none; }
+
+/* CONTROLS STAY OFF THE PAPER (Brady, gap card 163, option A). Printing a page from the
+   browser used to send the screen to the printer, the app navigation and every button
+   included. The app navigation, the docked action bar and every button part never print;
+   the page itself prints as it stands, in whichever theme it is in (the card weighed
+   turning a dark page light on paper and did not pick it). It lives here, beside the
+   hidden rule, because this frame is the one stylesheet every built page links and it
+   loads last, so one rule covers every page without !important. */
+@media print {
+  .am-appnav,
+  .am-action-bar,
+  .am-btn,
+  .am-icon-btn,
+  .am-split,
+  .am-fab,
+  .am-fab-menu { display: none; }
+}
+
+/* Base page surface. Every built page links this frame, so the plain typeface,
+   the surface background, and the on-surface text color live here (not in the
+   showroom's own stylesheet, which built pages never load). Without this a
+   built page falls back to the browser default serif and default black text,
+   which reads as an unstyled title and breaks in dark mode. */
+html, body { margin: 0; font-family: var(--md-sys-typescale-font); background: var(--md-sys-color-surface); color: var(--md-sys-color-on-surface); }
+
+.tpl-shell { display: flex; flex-direction: column; min-height: 100dvh; }
+/* Column layout so a trailing docked action bar can claim the foot on short pages.
+   A page-inset gutter surrounds the content; the action bar below cancels the side and
+   bottom insets (both its flow margin and its sticky offset) so it stays full-bleed and
+   flush to the foot instead of sticking to the padding edge. */
+.tpl-main { flex: 1; min-height: 0; overflow-y: auto; padding: var(--am-space-inset-page); background: var(--am-surface-floor); display: flex; flex-direction: column; }
+.tpl-main > .am-action-bar { margin-top: auto; margin-inline: calc(-1 * var(--am-space-inset-page)); margin-bottom: calc(-1 * var(--am-space-inset-page)); bottom: calc(-1 * var(--am-space-inset-page)); }
+.tpl-page { width: 100%; max-width: var(--am-content-max); margin-inline: auto; }
+/* FLOOD on a Regular page (Brady, 2026-09-24). A filtered work surface can live on either template,
+   so Regular carries the same flood lane split view does: a page holding a flooded row drops the reading cap, and the row takes the
+   width its content needs, centers in its column, and stops at the column's edge. Everything else
+   on such a page spans with it, the same way the docked action bar follows its page. */
+.tpl-page:has(.tpl-flood) { max-width: none; }
+.tpl-page .tpl-flood { width: max-content; max-width: 100%; margin-inline: auto; }
+/* A kanban board in the flood fills it rather than taking its content's width (gap card 205,
+   2026-10-26): its columns are equal shares of the row, so a short board spreads across the page
+   like the page header above it, and a long one still stops at the column's edge and scrolls. */
+.tpl-page .tpl-flood:has(> .am-kanban) { width: 100%; }
+/* Classic modifier: the order screens' content lane shrunk to the legacy fixed box
+   (--am-content-max-classic). Same frame underneath; use it only when converting an existing page, never on a new one. grep --classic. */
+.tpl-page--classic { max-width: var(--am-content-max-classic); }
+/* FORM PAGES (Brady, 2026-10-26, from the contact edit page). A form on this template is one of
+   two sizes: a half (--am-form-max, half the house cap less one block gap) or the whole page
+   (.tpl-wide, a table, a row of tags, a configurator). Nothing in between and nothing custom.
+   Halves that belong side by side sit in .tpl-cols, two .tpl-col columns that each stack their
+   own forms with no regard for the other, so the bottoms come out uneven and nothing waits for
+   its neighbour. A half on its own centres, as a form did before. A whole-width form, or a new
+   pair of columns, starts below both columns of the pair above it. Below the expanded boundary
+   the two columns become one, left column first. Blocks sit one block gap apart, and the page
+   header's own gap gives way to it. The docked action bar's controls measure to the widest block
+   on screen, so the bar follows its page and no page states a measure.
+   Template law lives here so every built form page inherits it by linking this file. */
+.tpl-page--form { display: flex; flex-direction: column; row-gap: var(--am-space-block); }
+.tpl-page--form > * { width: 100%; max-width: var(--am-form-max); margin-inline: auto; }
+.tpl-page--form > .am-page-header { margin-bottom: 0; }
+.tpl-page--form > .tpl-wide,
+.tpl-page--form > .tpl-cols { max-width: var(--am-content-max); }
+.tpl-page--form > .tpl-cols:not([hidden]) { display: flex; gap: var(--am-space-block); align-items: flex-start; }
+.tpl-cols > .tpl-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--am-space-block); }
+.tpl-cols > .tpl-col:only-child { flex: 0 1 var(--am-form-max); margin-inline: auto; }
+.tpl-shell--form { --am-action-bar-measure: var(--am-form-max); }
+/* Only a block on screen widens the bar: a wide tab page that is hidden does not push Save away
+   from the narrow page in front of you (Save sits at the right edge of THIS page's content). */
+.tpl-shell--form:has(.tpl-wide:not([hidden], [hidden] *)),
+.tpl-shell--form:has(.tpl-cols:not([hidden], [hidden] *) > .tpl-col + .tpl-col) { --am-action-bar-measure: var(--am-content-max); }
+@media (max-width: 840px) { /* --am-breakpoint-expanded */
+  .tpl-page--form > .tpl-cols:not([hidden]) { flex-direction: column; align-items: stretch; }
+  .tpl-cols > .tpl-col, .tpl-cols > .tpl-col:only-child { flex: 0 0 auto; width: 100%; margin-inline: 0; }
+}
+/* RECORD TAB ROW (Brady, 2026-10-06). A tab row placed as a block on a form page switches between
+   the pages of one record. It is never full page width by default, and it never moves when you
+   switch tabs, so its width comes from its tabs and the content width it is told, never from the
+   page currently under it. Every page under it the same width (the default, a half): the
+   row is at least that wide, so a few tabs line up with the content's left edge, and once the
+   tabs need more room the row grows to fit them and centres over the content. Every page wide:
+   the row wears tpl-wide and its floor is the wide measure. Pages of different widths: the row
+   wears tpl-mixed, drops the floor and centres at the width its tabs need. The page's builder
+   knows the widths and picks the case. Each tab page keeps its own width and centres, as every
+   block on this template does. Guarded by record_tab_row_check. */
+.tpl-page--form > .am-tabs { width: max-content; min-width: min(100%, var(--am-form-max)); max-width: 100%; }
+.tpl-page--form > .am-tabs.tpl-wide { min-width: min(100%, var(--am-content-max)); }
+.tpl-page--form > .am-tabs.tpl-mixed { min-width: 0; }
+/* The page header (title, subtitle, actions, title-to-content gap) is a certified part:
+   components/page-header.css (am-page-header). An appearance lives in a component; the
+   frame owns geometry only. */
+.tpl-railmain { display: grid; grid-template-columns: var(--am-rail-width) 1fr; gap: var(--am-space-section); align-items: start; }
+.tpl-regular-body { display: flex; flex-direction: column; gap: var(--am-space-block); }
+.tpl-rail { padding: 0; }
+.tpl-rail-group { margin-bottom: var(--am-space-block); }
+.tpl-rail-group:last-child { margin-bottom: 0; }
+.tpl-rail-group__head { font-size: var(--md-sys-typescale-title-small-size); font-weight: var(--md-sys-typescale-title-small-weight); color: var(--md-sys-color-on-surface-variant); margin-bottom: var(--am-space-related); }
+.tpl-rail .am-field { min-width: 0; width: 100%; box-sizing: border-box; }
+.tpl-rail-row { display: flex; align-items: center; justify-content: space-between; gap: var(--am-space-inline); padding: var(--am-space-tight) 0; font-size: var(--md-sys-typescale-body-medium-size); }
+.tpl-rail-action { width: 100%; justify-content: center; margin-top: var(--am-space-section); }
+.tpl-section { margin-top: var(--am-space-section); padding: 0; overflow: hidden; }
+.tpl-section__head { padding: var(--am-space-inset-card); font-size: var(--md-sys-typescale-title-medium-size); font-weight: var(--md-sys-typescale-title-medium-weight); border-bottom: 1px solid var(--md-sys-color-outline-variant); }
+.tpl-section__body { padding: var(--am-space-inset-card); }
+.tpl-binder-tabs { margin-bottom: var(--am-space-block); }
+/* THE SPLIT-VIEW RAIL IS A UTILITY, NOT AN EXAMPLE. (Ruled 2026-07-27.)
+   The rail pane below is the app sidebar: full height, sidebar surface
+   (surface-container), hairline edge, collapsible. Pages NEST their rail content inside
+   it, whatever the page needs beside its work: a navigator (a category tree, a nav list,
+   chat history), the page's filter rail, a column of details about the record (folding
+   panels in their flush form), or anything else; these are examples, never the limit
+   (Brady, 2026-11-09, gap card 236).
+   Do not rebuild a sidebar surface on a page. Filters have two homes BY INTENT (Brady,
+   2026-09-24): filter first, then concentrate on the data, they sit here, away from the
+   data; filtering while reading, they sit in the page body on the Regular template
+   (.am-filter-layout), level with the table and scrolling with it. These
+   classes were born as tpl-chat-* during the Operator build; renamed to tpl-split-*
+   because the chat name hid the utility from every non-chat page. The old tpl-chat-*
+   names are GONE (a working alias would read as a second template defining the same
+   page, which the integrity gate rightly refuses); in-flight branches grep tpl-chat
+   and rename. */
+.tpl-split { display: grid; grid-template-columns: var(--am-rail-width) 1fr; flex: 1; min-height: 0; transition: grid-template-columns var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized); }
+.tpl-split-rail { border-right: 1px solid var(--md-sys-color-outline-variant); padding: var(--am-space-inset-page) var(--am-space-inset-card) var(--am-space-inset-card); overflow-y: auto; background: var(--md-sys-color-surface-container); display: flex; flex-direction: column; gap: var(--am-space-tight); }
+.tpl-split-rail__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--am-space-related); }
+/* The rail's page-title slot is for a CONVERSATION page only (Operator). Everywhere else the page
+   header heads the main pane, above the content, exactly where it sits on every other template, so
+   a user never has to hunt for the title. A conversation keeps the title in the rail so the exchange
+   gets the full height. The certified-assembly scan refuses this slot, or any page header inside
+   the rail, on a page that holds no conversation. */
+.tpl-split-rail__page { margin: 0 0 var(--am-space-related); padding-bottom: var(--am-space-related); border-bottom: 1px solid var(--md-sys-color-outline-variant); }
+.tpl-split-rail__title { font-size: var(--md-sys-typescale-title-small-size); font-weight: var(--md-sys-typescale-title-small-weight); }
+.tpl-split-rail .am-field { min-width: 0; width: 100%; box-sizing: border-box; }
+/* the reopen tab shows only when the rail is collapsed; hidden while the rail is open */
+.tpl-rail-reopen { display: none; align-self: center; }
+/* split-view rail collapse: the rail shrinks to a thin edge strip holding only the reopen
+   tab, and the content pane reflows to full width. A capability of the split view, applied
+   per page, never on by default (whether a page opens collapsed is app state, not a part). */
+.tpl-split.is-rail-collapsed { grid-template-columns: var(--am-rail-collapsed-width) 1fr; }
+.tpl-split.is-rail-collapsed .tpl-split-rail { padding: var(--am-space-inset-page) 0; align-items: center; overflow: hidden; }
+.tpl-split.is-rail-collapsed .tpl-split-rail > :not(.tpl-rail-reopen) { display: none; }
+.tpl-split.is-rail-collapsed .tpl-rail-reopen { display: inline-flex; }
+/* The page is one shade on every template. The split view used to paint the lighter surface
+ * here while every other template used the floor, so "the page colour" was two different
+ * things depending on the screen. Unified on the floor. The rail beside it keeps the same
+ * shade and is separated by its right divider alone, which is the same one-surface-plus-a-line
+ * answer taken for the settings dialog. */
+.tpl-split-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: var(--am-surface-floor); }
+.tpl-split-log { flex: 1; min-height: 0; overflow-y: auto; padding: var(--am-space-inset-page); display: flex; flex-direction: column; gap: var(--am-space-block); }
+/* every log row centers at the house content cap (canon D2h: every page caps at 1440).
+   a conversation narrows itself: the conversation component owns the reading lane
+   (720 msgs, 1120 wide), so chat surfaces get the lane by using the part, not a modifier. */
+.tpl-split-log > * { width: 100%; max-width: var(--am-content-max); margin-inline: auto; flex-shrink: 0; }
+/* the page header leads the log; the log's own row gap is the title-to-content gap, so the
+   header's bottom margin would double it here. Its row height is fixed so a filter rail beside it
+   can start level with the data. */
+.tpl-split-log > .am-page-header { margin-bottom: 0; min-height: var(--am-page-header-height); }
+.tpl-split-log > .am-page-header:has(.am-page-header__subtitle) { min-height: var(--am-page-header-height-subtitled); }
+
+/* FILTERS START LEVEL WITH THE DATA (Brady, 2026-09-24). On a split view whose rail holds the page's
+   filters, the filters begin on the top line of the data they filter, below the page title, never
+   above it: the title names the page, the data is the subject, the filters serve it. The rail's
+   surface still runs full height; only its content steps down by the header row plus the
+   title-to-content gap. A navigator (a tree, chat history) is not filtering and keeps the top.
+   A row of steps above the content counts the same way the page title does (Brady, gap card 160):
+   on a guided flow the filters still start where the list starts, below the steps and the title.
+   The row of steps has no fixed height (its labels wrap on a narrower window), so the shared
+   behavior layer measures it and hands its height over as --am-split-band-height; with no row of
+   steps the term is zero. The rule is the list's line, never a fixed number. */
+.tpl-split:has(> .tpl-split-rail > .am-filter-rail):has(> .tpl-split-main > .tpl-split-log > .am-page-header) > .tpl-split-rail {
+  padding-top: calc(var(--am-space-inset-page) + var(--am-split-band-height, 0px) + var(--am-page-header-height) + var(--am-space-block));
+}
+.tpl-split:has(> .tpl-split-rail > .am-filter-rail):has(> .tpl-split-main > .tpl-split-log > .am-page-header .am-page-header__subtitle) > .tpl-split-rail {
+  padding-top: calc(var(--am-space-inset-page) + var(--am-split-band-height, 0px) + var(--am-page-header-height-subtitled) + var(--am-space-block));
+}
+
+/* FLOOD LANE (DECISION, Brady 2026-07-28). Work-surface pages (mass-edit grids,
+   spreadsheet-class screens) are not reading surfaces, so the 1440 reading cap
+   (canon D2h) does not serve them. A flooded row takes exactly the width its
+   content needs, centers itself, and stops at the viewport: a 1000px grid sits
+   centered with air; a 2050px grid uses the whole screen and scrolls inside its
+   own scroller past that. Opt-in per row, never the default; D2h stays the rule
+   everywhere else. The docked action bar on a flooded page spans WITH the flood
+   (ruled: it follows its page, not the reading cap). */
+.tpl-split-log > .tpl-flood { width: max-content; max-width: 100%; margin-inline: auto; }
+.tpl-flood { --am-action-bar-measure: 100%; }
+
+/* Classic modifier: split-view order screen (Discover) shrunk to the legacy box. */
+.tpl-split-log--classic > * { max-width: var(--am-content-max-classic); }
+/* The app navigation bar is a certified component (components/app-navigation.css),
+   composed into the shell by the showroom/page builder. The frame only hosts it:
+   it sits as the first child of .tpl-shell and carries its own height and full-bleed
+   background. No appbar appearance lives here. */
+.tpl-table-card { padding: 0; overflow: hidden; }
+
+/* a shell hosting the chat frame is viewport bound so the log scrolls internally;
+   every other shell grows with its page and scrolls as a whole. The second selector
+   covers the page-builder's multi-view wrapper (.view.is-active), whose extra layer
+   otherwise hides the split from the frame and lets the whole page scroll
+   (ruled 2026-08-13, gap split-view--multi-view-viewport-binding, option A). */
+.tpl-shell:has(> .tpl-split),
+.tpl-shell:has(> .view.is-active > .tpl-split) { height: 100dvh; }
+
+/* Guided-flow stepper band. On a split view it lives INSIDE the content column
+   (.tpl-split-main), above the main content and to the right of the rail, so the rail
+   owns the full height: it tucks under the nav and runs down to the docked bar (or the
+   viewport foot when no bar is present). The rail and this band begin on one top line
+   under the nav; pane_baseline_check guards that. On a page with no rail, the band is a
+   full-width strip under the nav at the normal page inset. It sits at the top of its
+   column by living there, so no rail-width offset is needed and none is set. The band
+   never grows or shrinks. */
+.tpl-stepper-band { flex: 0 0 auto; margin: 0; padding: var(--am-space-block) var(--am-space-inset-page); background: var(--md-sys-color-surface); border-bottom: 1px solid var(--md-sys-color-outline-variant); }
+
+/* THE SHOP'S HEADER BAND (Brady, gap app-navigation--shop-header-banner, rulings 159 and 165,
+   2026-10-15). A slot for the shop's own uploaded header picture or header content. It is a frame
+   slot, so this file decides only where it sits; what fills it is the app's, and the slot sets no
+   height and clips nothing, so the picture shows at its full uploaded height and is never trimmed.
+   On a page with no side panel (Regular, Form) it is the first thing in the content column: it
+   runs directly under the app navigation bar across the whole page, the page header and every
+   other part sit under it, and it scrolls away with the page. A filter rail that lives inside the
+   page (.tpl-railmain) sits under it like everything else.
+   On a split view (a full-height rail beside the content pane) it does NOT span both panes: it
+   sits over the content pane only, as the app does today; the rail runs full height beside it,
+   and it scrolls away with the content pane because it is the first row of that pane's scroller.
+   A row of steps on a split view stays pinned above the scroller, so the band sits under it there.
+   Guarded by shop_band_check.mjs. */
+.tpl-shop-band { flex: 0 0 auto; display: block; min-width: 0; }
+.tpl-main > .tpl-shop-band { margin: calc(-1 * var(--am-space-inset-page)) calc(-1 * var(--am-space-inset-page)) var(--am-space-inset-page); }
+.tpl-split-log > .tpl-shop-band { width: auto; max-width: none; margin: calc(-1 * var(--am-space-inset-page)) calc(-1 * var(--am-space-inset-page)) calc(var(--am-space-inset-page) - var(--am-space-block)); }
+
+/* A SPLIT VIEW ON A NARROW SCREEN (Brady, gap card 103, ruled 2026-09-29). Until this
+   ruling this file held no width rule at all, so the 280px rail kept its column at every
+   width: measured at 390px it left the content column 108px and the table inside it 60px
+   with its headers cut mid-word. Below the house medium boundary the two panes stop sitting
+   side by side. The grid becomes one column, the rail stacks ABOVE the content in reading
+   order (it is already first in the DOM, so nothing reorders), and the rail's sidebar chrome
+   comes off: a band across the top of a page is not a sidebar, so the container surface and
+   the right hairline go, and a single bottom hairline separates it from the content instead.
+   The rail's filters fold themselves into a closed panel. That is the filter rail's own rule
+   and lives in its own file; this file moves panes and never styles the fold.
+
+   SCOPED TO A RAIL HOLDING THE PAGE'S FILTERS, deliberately. A rail holding a navigator (a
+   category tree, chat history) has the same geometry and a different answer, since a folded
+   panel is a filter shape and a navigator on a phone is a navigation-drawer question. No card
+   has ruled that one, so it is left alone here rather than folded by analogy.
+
+   States 600px because a media query cannot read --am-breakpoint-md, which is where the
+   boundary is decided; split_narrow_check.mjs measures the two against each other so the
+   number here cannot drift from the token. */
+/* ---- dock: content beside a panel that stays open (ruled 2026-10-13, gap card 166, option B).
+       The same shape as the split template with its region on the other side: the content takes
+       what is left and the docked side sheet (components/side-sheet.css) sits on the right behind
+       its own hairline. When the panel is closed (hidden) the content takes the whole width, so
+       nothing ever sits under the panel. Internal tools only; the customer app keeps the modal sheet.
+       How wide (gap card 197, Brady 2026-10-14): the panel takes the narrow or the medium step
+       whole, its hairline and padding inside, picked by the medium modifier on the sheet; never
+       wide. The page beside it keeps at least --am-sidesheet-page-min, counting the gap before the
+       panel's divider, so narrow needs 1080 of region and medium 1200. Short of that the shared
+       behavior layer marks
+       the region is-overlay and the panel opens as the modal panel instead: over the page from
+       the side opposite the toolbar, the page dimmed behind it and still scrollable, the strip
+       of page tapping it closed. Measured on the region, never the window, because the region
+       is what the page actually gets. That switch replaces the phone stack this region had. ---- */
+.tpl-dock { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--am-space-section); align-items: start; }
+.tpl-dock__panel { box-sizing: border-box; width: var(--am-sidesheet-width-narrow); max-width: 100%;
+  border-left: 1px solid var(--md-sys-color-outline-variant); padding-left: var(--am-space-section); align-self: stretch; }
+.tpl-dock__panel:has(> .am-sidesheet--medium) { width: var(--am-sidesheet-width-medium); }
+.tpl-dock:has(> .tpl-dock__panel[hidden]) { grid-template-columns: minmax(0, 1fr); }
+.tpl-dock.is-overlay { grid-template-columns: minmax(0, 1fr); }
+.tpl-dock.is-overlay > .tpl-dock__panel { position: fixed; top: 0; right: 0; height: 100%; z-index: 101; overflow-y: auto;
+  width: min(var(--am-sidesheet-width-narrow), calc(100vw - var(--am-sidesheet-page-strip)));
+  border-left: none; padding: 20px var(--md-sys-spacing-lg); background: var(--am-surface-modal);
+  box-shadow: var(--am-shadow-level1); border-radius: var(--md-sys-shape-corner-large) 0 0 var(--md-sys-shape-corner-large); }
+.tpl-dock.is-overlay > .tpl-dock__panel:has(> .am-sidesheet--medium) { width: min(var(--am-sidesheet-width-medium), calc(100vw - var(--am-sidesheet-page-strip))); }
+[data-toolbar-side="end"] .tpl-dock.is-overlay > .tpl-dock__panel { right: auto; left: 0;
+  border-radius: 0 var(--md-sys-shape-corner-large) var(--md-sys-shape-corner-large) 0; }
+
+@media (max-width: 600px) {
+  .tpl-dock.is-overlay > .tpl-dock__panel,
+  .tpl-dock.is-overlay > .tpl-dock__panel:has(> .am-sidesheet--medium) { width: calc(100vw - var(--am-sidesheet-page-strip)); }
+  .tpl-split:has(> .tpl-split-rail > .am-filter-rail) { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .tpl-split:has(> .tpl-split-rail > .am-filter-rail) > .tpl-split-rail {
+    background: var(--am-surface-floor);
+    border-right: none;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    overflow: visible;
+    padding: var(--am-space-inset-page) var(--am-space-inset-page) 0;
+  }
+  /* the level-with-the-data offset is a two-pane rule: stacked, there is no header beside
+     the rail to start level with, so it is cancelled at the same specificity that set it */
+  .tpl-split:has(> .tpl-split-rail > .am-filter-rail):has(> .tpl-split-main > .tpl-split-log > .am-page-header) > .tpl-split-rail,
+  .tpl-split:has(> .tpl-split-rail > .am-filter-rail):has(> .tpl-split-main > .tpl-split-log > .am-page-header .am-page-header__subtitle) > .tpl-split-rail {
+    padding-top: var(--am-space-inset-page);
+  }
+}

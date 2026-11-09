@@ -1,0 +1,856 @@
+/* Allmoxy Design System, Data table (dense, custom part)
+ * Material 3 ships no data table, so this is Allmoxy's custom dense part. All values
+ * are token-driven. Decisions ported from prior rulings (dates noted) into M3 tokens:
+ *   density 40        , single Compact density, 40px row + header (chosen 2026-06-28; supersedes the old 52/44 comfortable/compact toggle)
+ *   zebra OFF         , dividers + hover, never alternating fills (locked 2026-06-03;
+ *                        .am-table--undivided is the sanctioned no-divider opt-out for
+ *                        dense component-carrying tables, ruled 2026-09-10)
+ *   header C1         , label-large 14px weight 600, on-surface, no fill at rest;
+ *                        surface-container fill only when the header is stuck on scroll
+ *   row action 28px   , in-row buttons sit at 28px, not M3's 40px (locked 2026-06-19)
+ *   column chooser    , outlined 40px icon button opens a 264px menu (locked 2026-06-19)
+ * Sort-arrow affordance is PROVISIONAL (one open pick); marked below.
+ * Backward compatible: keeps .am-table, .am-table__num, .am-table__status from the basic table.
+ */
+
+/* ---- row/header height come from the single global density (no toggle) ---- */
+/* The table's own button height, shared by its rows and its title strip. A labelled tool in the
+   title strip (Expand all on a grouped report, say) is this same button, not the page's full size
+   button: at 28 inside the 40 row it keeps 6 above and 6 below, the same as in a row, so the strip
+   keeps its one row height (card 158) and nothing new is invented. Gap card 233, Brady 2026-11-05:
+   "this is just about spacing in the strip and in the button", the part already existed. */
+.am-table, .am-table__toolbar {
+  --_action-h: 28px;        /* in-row and in-strip action button height */
+}
+.am-table {
+  --_row-h: var(--am-density-table-row-height);
+  --_header-h: var(--am-density-table-header-height);
+  width: 100%; border-collapse: collapse;
+  font-family: var(--md-sys-typescale-font);
+  color: var(--md-sys-color-on-surface);
+  /* The table paints the content sheet, and the shell matches it. Was a raw
+     surface-container-lowest, i.e. "pure white", which is a light-mode-only thought: the same
+     role is the DARKEST tone in dark, so the table sat 7.9 BELOW the page and read as a hole
+     punched into it. The named setting is per-scheme and gets both right.
+     The page sits on --md-sys-color-surface, so the white card lifts off it (ported "lift to card bg"). */
+  background: var(--am-surface-sheet);
+}
+
+/* ---- shell + toolbar (table title row + column-chooser slot) ---- */
+.am-table-shell {
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-medium);
+  overflow: hidden; background: var(--am-surface-sheet);
+  /* Own the part's typeface: the toolbar and footer are the table element's
+     siblings inside this shell, so they don't inherit .am-table's font,
+     without this they pick up whatever the host page has (own our look,
+     never depend on a page reset). */
+  font-family: var(--md-sys-typescale-font);
+}
+.am-table__toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  /* one table row tall whatever it holds (title, tools, or both): no air above or
+     below its contents, the row height plus its 1px bottom line. A table with no
+     title and no tools renders no strip at all (the page leaves the element out). */
+  padding: 0 var(--md-sys-spacing-md);
+  box-sizing: border-box;
+  min-height: calc(var(--am-density-table-row-height) + 1px);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+.am-table__title { font-size: var(--md-sys-typescale-title-small-size); font-weight: var(--md-sys-typescale-title-small-weight); }
+/* tools ride the right edge with or without a title: a table that is the page's subject shows
+   no title of its own (the page title names it), and its column chooser must not slide left */
+.am-table__tools { display: inline-flex; gap: var(--md-sys-spacing-2xs); align-items: center; margin-left: auto; }
+.am-table__colmenu { width: 264px; }   /* column-chooser menu width (locked Option A) */
+
+/* ---- header (C1): emphasized label, no fill at rest ---- */
+.am-table thead th {
+  height: var(--_header-h);
+  text-align: left; white-space: normal; line-height: 1.25; vertical-align: middle;
+  padding: 0 var(--md-sys-spacing-md);
+  color: var(--md-sys-color-on-surface);
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  letter-spacing: var(--md-sys-typescale-label-large-tracking);
+  background: transparent;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+/* A heading longer than its column (gap card 232, ruled by Brady 2026-11-02, the picker tile rule
+   of card 68 reused). Every column heading, system wide, wraps, stops at two lines, and anything
+   past that is cut with an ellipsis; the full words show in the certified tooltip on hover or
+   keyboard focus, and on a touch screen a tap on the words shows them. The run of days follows the
+   same rule. behaviors.js wraps a heading's words in .am-table__words (a page may write it
+   itself) and adds the tooltip, which only opens while the words are cut (.is-cut). */
+.am-table__words {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: inherit;
+}
+.am-table__wordtip { max-width: 100%; }
+.am-table__wordtip:not(.is-cut) > .am-tooltip__tip { display: none; }
+.am-table__wordtip.is-cut > .am-table__words:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+/* sticky header: fill appears ONLY when stuck on scroll (set .is-stuck via JS in app) */
+.am-table--sticky thead th { position: sticky; top: 0; z-index: 1; }
+/* Stuck fill is container-high, the same tone the group tag uses on this surface: -8.1 against
+   the table in light, +5.2 in dark. Was surface-container, which became the content tone in
+   dark, so a stuck header was indistinguishable from the rows scrolling under it. */
+.am-table--sticky.is-stuck thead th { background: var(--md-sys-color-surface-container-high); }
+
+/* ---- body rows + internal dividers (avoid the doubled-divider trap: header owns the top rule,
+       rows own a bottom rule, last row has none so the shell edge isn't doubled) ---- */
+.am-table tbody td {
+  /* border-box + vertical padding, together: the 40px density row assumed
+     single-line cells, so it carried no vertical padding, wrapped text sat
+     flush against the row dividers. With border-box the specified height
+     absorbs the padding, so a single-line row still renders exactly
+     var(--_row-h) tall (own our height, never depend on a page reset);
+     only cells whose text wraps grow, and the padding keeps that text
+     clear of the dividers. */
+  box-sizing: border-box;
+  height: var(--_row-h);
+  padding: var(--md-sys-spacing-xs) var(--md-sys-spacing-md);
+  vertical-align: middle;
+  font-size: var(--md-sys-typescale-body-medium-size);
+  color: var(--md-sys-color-on-surface);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+.am-table tbody tr:last-child td { border-bottom: none; }
+/* ---- undivided variant: no lines between body rows ----
+   For a dense table whose cells carry strong parts (status pills, fields,
+   buttons): the parts hold each row's line and whitespace does the
+   separating, so the row dividers come out. The header's rule, group-row
+   rules, and hover stay. Rows must be uniform height; a mostly-text table
+   keeps its dividers. House ruling 2026-09-10, amending the divider half of
+   the zebra lock in the header: dividers stay the default, this is the
+   sanctioned opt-out. Amended 2026-10-06 (card 128): a read table with editable
+   values shows them as plain text, so the lines are the page's call by layout,
+   kept when the eye has far to travel across many columns, droppable on a short
+   table of a few columns. */
+.am-table--undivided tbody td { border-bottom: none; }
+.am-table tbody tr {
+  transition: background var(--md-sys-motion-duration-short2, 100ms) var(--md-sys-motion-easing-standard, ease);
+}
+.am-table tbody tr:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
+/* Click target is contextual (decided per page): a specific link cell, or opt the whole row
+   in with .is-link where the row navigates to the record. */
+.am-table tbody tr.is-link { cursor: pointer; }
+.am-table tbody tr:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: calc(-1 * var(--am-focus-ring-width)); }
+/* No row-selection styling by default: Allmoxy is filter-then-act, not select-then-act.
+   Row checkboxes / selection only on a specific page that genuinely needs bulk edit. */
+
+/* ---- opt-in row selection (the sanctioned exception to filter-then-act above): a leading
+       checkbox column, a select-all in the header, and a selected-row tint. Only on a page that
+       genuinely runs a bulk action (an export queue, a batch). The header/row checkbox state and
+       the paired selection action bar are driven in components/behaviors.js. ---- */
+.am-table__select { width: 44px; text-align: center; }
+.am-table__select .am-checkbox { gap: 0; }
+.am-table tbody tr.am-table__row--selected > td { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+.am-table tbody tr.am-table__row--selected:hover > td { background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container)); }
+
+/* zebra is OFF by doctrine (locked 2026-06-03). Optional escape hatch for one unusually dense view only. */
+.am-table--zebra tbody tr:nth-child(even):not(:hover) { background: var(--am-table-zebra); }
+
+/* ---- numeric + money columns ---- */
+.am-table__num { text-align: right; font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+.am-table thead th.am-table__num { text-align: right; }
+/* money carries no extra weight of its own: right alignment and tabular figures do the work.
+   Declared, not omitted: a money value can land in a th (a grouped heading row), and a th
+   carries a browser default of bold, so omitting the declaration makes the cell HEAVIER
+   instead of plainer. Ruled 2026-08-10, the same call as the order line subtotal. */
+.am-table__num--money { font-weight: var(--md-sys-typescale-body-medium-weight); }
+.am-table__muted { color: var(--md-sys-color-on-surface-variant); }
+
+/* a numeric cell with no value carries a muted None, never nothing (ruled 2026-08-18, gap
+   table--empty-money-cell-placeholder, option A). Blank is ambiguous exactly where it costs most:
+   in a money column a missing figure reads as a broken row rather than a deliberate absence, and
+   the reader cannot tell the two apart. The mark says "no value, on purpose".
+   Scoped to numeric cells deliberately: a blank text cell carries no such reading, and the empty
+   ROW case (nothing matched at all) is already ruled and belongs to the colspan empty state.
+   The mark is a span, not generated content on an :empty cell: server templates emit whitespace
+   inside a td, which defeats :empty silently, so the rule would appear to hold while not holding.
+   The ink is on-surface-variant and never the body ink, so the mark stays quieter than the figures
+   beside it. THE MARK IS THE WORD None (gap copy--dash-in-ui-text-rule, card 102, option B, ruled
+   2026-09-29): the no-dashes house rule reaches every character the app draws, so the em dash this
+   cell first carried was replaced by the word. A check keeps builds from shipping the blank cell. */
+.am-table__novalue { color: var(--md-sys-color-on-surface-variant); }
+
+/* ---- a long value never moves the columns (ruled 2026-10-13, gap card 165, option C, gap
+       split-view--table-body-long-token-wrap). A plain text cell keeps one line and stops at the
+       text column cap; a value longer than that is cut with an ellipsis, and the whole value
+       shows in the certified plain tooltip when the pointer rests on the cell or a tap or Tab
+       lands on it (behaviors.js marks a cut cell and makes it focusable, so touch reaches it the
+       same way the pointer does). Measured on the card: between a page of short values and a
+       page where one long address arrives, column starts move by at most 16px and the table
+       keeps its height, against up to 118px and a taller table with no rule at all.
+       Why a cap and not a fixed width: the page owns which columns a table has and roughly how
+       wide each is, so a short column still sizes to what it holds; the cap only says no single
+       value may claim more than this. A page that wants a different cap sets
+       --am-table-text-max on the table. 240px is the value the ruled card drew, the same as the
+       field family's resting width.
+       Plain text cells only, decided by content rather than a class: a cell holding any part (a
+       status pill, a field, a link, a stacked pair) is left alone, since cutting it would clip
+       a control, and numeric cells are never cut, because a cut figure reads as a different
+       number. The tip the behavior adds is the one child a cut cell may carry. ---- */
+.am-table { --am-table-text-max: 240px; }
+.am-table tbody td:not(.am-table__num):not(:has(> :not(.am-table__cut-tip))) {
+  max-width: var(--am-table-text-max);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* a cut cell wears the tooltip anchor class so the shared placement script finds it, but stays
+   a table cell: the anchor class would otherwise make it an inline flex box and break the row */
+.am-table tbody td.am-tooltip { display: table-cell; }
+.am-table tbody td.am-table__cut:focus-visible {
+  outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color);
+  outline-offset: calc(-1 * var(--am-focus-ring-width));
+}
+
+/* ---- a state with its mark (ruled 2026-10-13, gap card 188, option C, gap icon--pause-circle).
+       Where a row says whether something is running or paused, the state is its word with a small
+       mark in front, on the word's own rung (18 beside body-medium): the clock for active, the
+       circled pause for paused. The word always carries the meaning, the mark only helps the eye.
+       The circled pause marks a STATE; the plain pause stays the button that pauses something,
+       so the two never mean the same thing (Brady, 2026-10-13). Reported by Braden Cook on
+       Operator's scheduled tasks list (DEV-13100). ---- */
+.am-table__state { display: inline-flex; align-items: center; gap: var(--md-sys-spacing-xs); }
+.am-table__state .am-icon { --am-icon-size: 18; color: var(--md-sys-color-on-surface-variant); }
+.am-table__state-word { font-size: var(--md-sys-typescale-body-medium-size); }
+
+/* ---- multi-value text column (stacked primary + muted secondary) ---- */
+.am-table__multi { display: flex; flex-direction: column; gap: 2px; line-height: 1.25; }
+.am-table__multi .am-table__muted { font-size: var(--md-sys-typescale-label-medium-size); }
+
+/* ---- type column: bare lowercase mono text, no pill (F3 ruling 2026-06-16) ---- */
+.am-table__type {
+  font-family: var(--md-sys-typescale-font-mono);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  text-transform: lowercase;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* ---- in-row status treatment (24px pill; status read inside a row). Shape stays here so a table
+       renders from table.css alone; the tone COLORS come from the shared --am-emphasis-* tokens, the
+       same source the tag uses, so the table pill and the tag can never show different colors.
+       A pill carries a STATUS, never an entity name (ruled 2026-08-13): supplier, company, customer,
+       and other names are record data and render as plain text cells. Legacy B2B columns put names
+       in tone-colored pills, borrowing status colors that mean nothing (green read as success) and
+       wrapping long names inside the pill; that is deliberately dropped, do not carry it forward
+       during migration. ---- */
+.am-table__status {
+  display: inline-flex; align-items: center;
+  height: 24px; padding: 0 var(--md-sys-spacing-sm); border-radius: var(--md-sys-shape-corner-full);
+  font-size: var(--md-sys-typescale-label-medium-size); font-weight: var(--md-sys-typescale-label-medium-weight);
+  white-space: nowrap;
+}
+/* No leading dot: the text label is the second channel that keeps state off color-alone
+   (Decision 6d). A same-color dot adds no signal. */
+.am-table__status--neutral { background: var(--am-emphasis-neutral-bg); color: var(--am-emphasis-neutral-fg); }
+.am-table__status--info    { background: var(--am-emphasis-info-bg);    color: var(--am-emphasis-info-fg); }
+.am-table__status--success { background: var(--am-emphasis-success-bg); color: var(--am-emphasis-success-fg); }
+.am-table__status--warning { background: var(--am-emphasis-warning-bg); color: var(--am-emphasis-warning-fg); }
+.am-table__status--error   { background: var(--am-emphasis-error-bg);   color: var(--am-emphasis-error-fg); }
+/* attention (gap regular--import-status-palette): a calmer attention tone on the tertiary role,
+   distinct from warning. The color source is shared with the tag via --am-emphasis-attention-*. */
+.am-table__status--attention { background: var(--am-emphasis-attention-bg); color: var(--am-emphasis-attention-fg); }
+/* admin (gap card 133, option D): an identity, not a status, so it takes the loud admin vivid pair the
+   tag's admin tone already uses rather than a calm emphasis lane tone. Same pair as .am-tag--admin, so
+   the pill and the tag are identical by construction. */
+.am-table__status--admin { background: var(--am-admin-vivid); color: var(--am-on-admin-vivid); }
+/* SECONDARY STATUS TIER: dot + label (gap table--status-dot-secondary, ruled 2026-08-13).
+   A lighter weight than the filled pill, for a SECONDARY status, the usual case being a second
+   status column when a pill column already carries the primary one. This is NOT a dot on the pill:
+   Decision 6d still stands and the pill keeps no leading dot. This is the dot INSTEAD of the pill,
+   with the text label in plain ink so the word stays the signal and the dot is only a scannable
+   color accent in the same tone language as the pills. The dot never rides alone, a label is always
+   beside it, held by status_dot_label_check.mjs. Source order: this follows the tone fills above so
+   --dot wins background/color/padding at equal specificity. */
+.am-table__status--dot {
+  background: none; padding: 0; height: auto;
+  color: var(--md-sys-color-on-surface); gap: var(--md-sys-spacing-2xs);
+}
+.am-table__status--dot::before {
+  content: ""; flex: 0 0 auto; width: 8px; height: 8px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-on-surface-variant);
+}
+.am-table__status--neutral.am-table__status--dot::before   { background: var(--md-sys-color-on-surface-variant); }
+.am-table__status--info.am-table__status--dot::before      { background: var(--md-sys-color-primary); }
+.am-table__status--success.am-table__status--dot::before   { background: var(--md-sys-color-success); }
+.am-table__status--warning.am-table__status--dot::before   { background: var(--md-sys-color-warning); }
+.am-table__status--error.am-table__status--dot::before     { background: var(--md-sys-color-error); }
+.am-table__status--attention.am-table__status--dot::before { background: var(--md-sys-color-tertiary); }
+
+/* deprecated aliases kept so older pages don't break: */
+.am-table__status--ok   { background: var(--am-emphasis-success-bg); color: var(--am-emphasis-success-fg); }
+.am-table__status--done { background: var(--am-emphasis-success-bg); color: var(--am-emphasis-success-fg); }
+.am-table__status--warn { background: var(--am-emphasis-warning-bg); color: var(--am-emphasis-warning-fg); }
+.am-table__status--risk { background: var(--am-emphasis-error-bg);   color: var(--am-emphasis-error-fg); }
+
+/* ---- leading media column (item thumbnail; ruled 2026-08-13, inset over legacy flush).
+       Eleven legacy list pages (supplies, companies, products, components, categories,
+       attributes, contacts, people, export classes, schedules, schedule items) open the
+       table with an item thumbnail when "show images" is on. Legacy collapsed the column
+       and ran the image flush to the card edge; the ruling is the thumbnail is CONTENT
+       inside the card, never bleeding to its edge: one row tall (the table density token)
+       with its own small corner radius, inset one xs step from the card edge. The row
+       grows by the two 2xs vertical insets, 6px over the flush form, and the card's
+       rounded corner never clips the last row's image. ---- */
+.am-table .am-table__media {
+  width: calc(var(--am-density-table-row-height) + 2 * var(--md-sys-spacing-xs));
+  padding: var(--md-sys-spacing-2xs) var(--md-sys-spacing-xs);
+}
+.am-table__thumb {
+  position: relative;
+  display: block;
+  width: var(--am-density-table-row-height);
+  height: var(--am-density-table-row-height);
+  border-radius: var(--md-sys-shape-corner-small);
+  overflow: hidden;
+}
+.am-table__thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Empty state (ruled 2026-08-13, gap table--leading-media-empty-collapse, option A):
+   when a screen has no images to show ("show images" off), the media column is simply
+   NOT RENDERED, header cell and body cells both. It then reserves no width and leaves no
+   gutter, so the first data column starts at the card edge like any plain data-first
+   table. There is deliberately NO reserved-empty modifier: absence is the empty state.
+   The columns do shift the moment the filter is toggled, but that shift lands on the
+   reader's own click; a permanently reserved empty gutter (the rejected option) would
+   instead cost every reader on every visit. */
+
+/* ---- row actions (28px; overflow icon, or inline text action like Continue/View/Open) ---- */
+.am-table__rowaction { width: 44px; text-align: center; }
+.am-table__actionbtn {
+  height: var(--_action-h); min-width: var(--_action-h);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--md-sys-spacing-2xs);
+  padding: 0 var(--md-sys-spacing-xs); border: none; background: transparent;
+  border-radius: var(--md-sys-shape-corner-full);
+  color: var(--md-sys-color-on-surface-variant); cursor: pointer;
+  font-size: var(--md-sys-typescale-label-large-size); line-height: 1;
+}
+.am-table__actionbtn--icon { padding: 0; width: var(--_action-h); }
+/* Glyph size is not a taste pick: the icon-sizing rule (docs/icon-sizing.md, branch 1)
+   makes a glyph alone in its own button a standalone control at 24, stepping down when the
+   button is smaller than the standard 40px icon button. This row-action button is 28px, a
+   reduced-emphasis control, so it steps one rung down to 20. Not 18: 18 is below the icon
+   font's optical floor of 20, so an 18 box borrows the 20 stroke weight instead of drawing
+   its own. 20 is the smallest size the font draws honestly and the rung the rule lands on.
+   Locked here so builds stop drifting between the SDK 24 default and MRP's local 18 (ruled
+   2026-08-13, gap table--icon-action-glyph-size, option B). Enforced by
+   scripts/row_action_glyph_check.mjs. */
+/* A glyph beside the button's words (Expand all, say) is branch 2 of the same rule: it sits beside
+   14px label text, so it takes the 18 rung, the same as the full size button's glyph. Card 233. */
+.am-table__actionbtn .am-icon { --am-icon-size: 18; }
+.am-table__actionbtn--icon .am-icon { --am-icon-size: 20; }
+/* Kept on M3 outline, not lightened: same call as the outlined button, the edge is
+   this control's presence. Edge pass fields #400 / chips #412. 2026-07-17. */
+.am-table__actionbtn--outlined { border: 1px solid var(--md-sys-color-outline); color: var(--md-sys-color-on-surface); }
+.am-table__actionbtn:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); color: var(--md-sys-color-on-surface); }
+.am-table__actionbtn:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: 1px; }
+.am-table__actionbtn:disabled { opacity: var(--am-state-disabled-content-opacity); cursor: default; }
+/* row-action weights (D7f / D6f): Continue=tonal (the resume CTA), View=text primary tint,
+   Details=text error tint. No icon (A3). Status reads quieter than the action. */
+.am-table__actionbtn--tonal { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); padding: 0 var(--md-sys-spacing-sm); }
+.am-table__actionbtn--tonal:hover { background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container)); color: var(--md-sys-color-on-secondary-container); }
+.am-table__actionbtn--primary { color: var(--md-sys-color-primary); }
+.am-table__actionbtn--primary:hover { background: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent); color: var(--md-sys-color-primary); }
+.am-table__actionbtn--danger { color: var(--md-sys-color-error); }
+.am-table__actionbtn--danger:hover { background: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent); color: var(--md-sys-color-error); }
+/* An ICON-ONLY destructive row action is quiet at rest and only takes the error color under a
+   pointer or the keyboard. Ruled 2026-09-17 (gap repeat--remove-saved-state-ink, card 90): the
+   labelled tiers above keep their resting red because words sit beside the color, but a bare glyph
+   has no words, so a resting red would be the only thing saying destructive and a reader who cannot
+   separate those colors gets nothing. The glyph carries the meaning at rest (delete is the trash,
+   dismiss is the close), and the red arrives on the state where the pointer is actually on the
+   control. This is also what the repeatable group's saved-row remove does, so the two destructive
+   glyphs in the product finally say the same thing. Enforced by
+   scripts/destructive_icon_ink_check.mjs. */
+.am-table__actionbtn--icon.am-table__actionbtn--danger { color: var(--md-sys-color-on-surface-variant); }
+.am-table__actionbtn--icon.am-table__actionbtn--danger:hover,
+.am-table__actionbtn--icon.am-table__actionbtn--danger:focus-visible { background: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent); color: var(--md-sys-color-error); }
+.am-table__actionbtn--icon.am-table__actionbtn--danger:disabled,
+.am-table__actionbtn--icon.am-table__actionbtn--danger:disabled:hover { background: transparent; color: var(--md-sys-color-on-surface-variant); }
+
+/* A control that repeats on every row is not drawn until the pointer or the keyboard reaches its
+   row. Ruled by Brady 2026-10-27 (gap regular--row-controls-reveal-on-hover, card 206, option C):
+   the table reads as names and numbers, and the icon-only row buttons (the row menu, an info mark,
+   an icon delete) arrive on the row you are on. Opacity, never visibility or display: the control
+   keeps its space, so nothing jumps when it appears, and it stays focusable, so Tab reaches it and
+   :focus-within brings the row's controls back. Only where a mouse or trackpad can hover; on a
+   touch-only screen there is no pointer to bring anything back, so the controls stay drawn at full
+   strength (the card's recommended answer, called out on the pull request). A labelled row action
+   (Continue, View) carries words and is never hidden. Enforced by
+   scripts/row_controls_reveal_check.mjs. */
+@media (hover: hover) and (pointer: fine) {
+  .am-table tbody tr .am-table__actionbtn--icon { opacity: 0; }
+  .am-table tbody tr:hover .am-table__actionbtn--icon,
+  .am-table tbody tr:focus-within .am-table__actionbtn--icon { opacity: 1; }
+  .am-table tbody tr .am-table__actionbtn--icon:disabled { opacity: 0; }
+  .am-table tbody tr:hover .am-table__actionbtn--icon:disabled,
+  .am-table tbody tr:focus-within .am-table__actionbtn--icon:disabled { opacity: var(--am-state-disabled-content-opacity); }
+}
+
+/* ---- column-chooser trigger: outlined 40px icon button (locked Option A) ---- */
+/* Column chooser uses the certified standard icon button (am-icon-btn, no modifier). */
+
+/* ---- sortable header (M3-nearest, Option A): every column is sortable. The active column
+       shows a solid colored arrow with direction; other sortable columns reveal a faint arrow
+       only on hover, so the resting header stays quiet. ---- */
+.am-table__sort { cursor: pointer; display: inline-flex; align-items: center; gap: var(--md-sys-spacing-2xs); user-select: none; }
+.am-table__sortarrow { font-size: 10px; line-height: 1; color: var(--md-sys-color-outline); opacity: 0; transition: opacity var(--md-sys-motion-duration-short2) ease, color var(--md-sys-motion-duration-short2) ease; }
+.am-table__sort:hover .am-table__sortarrow { opacity: .6; }
+/* Touch screens (card 232): sorting happens on the sort arrow only, never on the words, so the
+   arrow shows at rest and carries a full finger-size tap area; a tap on the words shows them in
+   full instead. A mouse is unchanged. */
+@media (hover: none) {
+  .am-table__sortarrow { position: relative; opacity: .6; }
+  .am-table__sortarrow::before {
+    content: ""; position: absolute; left: 50%; top: 50%;
+    width: var(--md-sys-spacing-2xl); height: var(--md-sys-spacing-2xl);
+    transform: translate(-50%, -50%);
+  }
+}
+.am-table th[aria-sort="ascending"] .am-table__sortarrow,
+.am-table th[aria-sort="descending"] .am-table__sortarrow { color: var(--md-sys-color-primary); opacity: 1; }
+
+/* ---- empty states (D19a) ----
+   The anatomy moved to components/empty-state.css on 2026-08-14 (gap
+   regular--empty-state-placeholder, option C): it was the right shape in the wrong place, private
+   to this part, which is why an audit of the import tool reported that nothing certified covered
+   an empty region. The .am-table__empty* class names still work and are declared there on the same
+   rules as .am-empty, so pages already built on them are untouched. Use .am-empty on new work. */
+
+/* ---- add-row slot (ruled 2026-08-13, gap table--tfoot-add-row-slot). Two add modes; the
+       placement follows what the click does. INLINE add (the new row appears in place and you
+       start typing): a plain text add button in this slot at the bottom-left, between the last
+       row and the pager; data entry lives with the rows, the pager is view chrome. Same plain
+       add action the item entry grid uses; never a dashed box (dropzones own dashed). DIALOG
+       add (the click opens a dialog or a bigger surface): no foot slot; the affordance is an
+       outlined icon button (add glyph) at the top right of the section or card, across from
+       its header, which for a table is the toolbar. ---- */
+.am-table__addbar {
+  display: flex;
+  padding: var(--md-sys-spacing-2xs) var(--md-sys-spacing-xs);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+.am-table__add {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-2xs);
+  padding: var(--md-sys-spacing-2xs) var(--md-sys-spacing-xs);
+  border: none;
+  background: transparent;
+  color: var(--md-sys-color-primary);
+  font: inherit;
+  font-size: var(--md-sys-typescale-label-large-size);
+  cursor: pointer;
+  border-radius: var(--md-sys-shape-corner-small);
+}
+.am-table__add .am-icon { --am-icon-size: 18;
+  color: currentColor;
+}
+.am-table__add:hover {
+  background: var(--md-sys-color-surface-container-high);
+}
+.am-table__add:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: -2px;
+}
+
+/* ---- footer: full pager (D17a). Per page on the LEFT; range + First/Prev/numbers/Next/Last
+       on the RIGHT. Buttons 28px. Paging logic is app-side. ---- */
+.am-table__footer { display: flex; align-items: center; justify-content: space-between; gap: var(--md-sys-spacing-md);
+  padding: var(--md-sys-spacing-xs) var(--md-sys-spacing-md); border-top: 1px solid var(--md-sys-color-outline-variant);
+  font-size: var(--md-sys-typescale-label-medium-size); color: var(--md-sys-color-on-surface-variant); }
+.am-table__footer-right { display: inline-flex; align-items: center; gap: var(--md-sys-spacing-lg); }
+.am-table__rpp { display: inline-flex; align-items: center; gap: var(--md-sys-spacing-2xs); }
+.am-table__rpp select { font: inherit; color: var(--md-sys-color-on-surface); background: transparent;
+  border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-extra-small); padding: 2px 6px; cursor: pointer; }
+.am-table__pageinfo { font-variant-numeric: tabular-nums; }
+.am-table__pagenav { display: inline-flex; align-items: center; gap: var(--md-sys-spacing-2xs); }
+.am-table__pagebtn { height: 28px; min-width: 28px; padding: 0; border: none; background: transparent; border-radius: var(--md-sys-shape-corner-full);
+  color: var(--md-sys-color-on-surface-variant); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  font: inherit; font-variant-numeric: tabular-nums; }
+.am-table__pagebtn--num { padding: 0 var(--md-sys-spacing-xs); }
+.am-table__pagebtn:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
+.am-table__pagebtn[aria-current="page"] { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+.am-table__pagebtn:disabled { opacity: var(--am-state-disabled-content-opacity); cursor: default; }
+.am-table__pagebtn .am-icon { --am-icon-size: 18; color: currentColor; }
+.am-table__pageellipsis { padding: 0 var(--md-sys-spacing-2xs); color: var(--md-sys-color-on-surface-variant); }
+
+/* keyboard focus for the pager and the sort headers, completing the table's matrix */
+.am-table__pagebtn:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+th .am-table__sort:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+
+/* ---- group header rows (report grouping, gap regular--table-group-sections): a white row that
+       names a group (a shipping method, a customer, a day, an export class) with a neutral,
+       squared tag, with its numbers in words right beside the name (a group nested inside it
+       drops the tag and steps in). The older muted group figure in the summed column still
+       paints for pages built on it. No fill and no band: the tag
+       carries the name, air above sets the group off, and the muted figure keeps subtotals from
+       competing with the bold row totals. The tag is neutral and squared on purpose, so it is not
+       read as a chip (chips here are interactive), and nothing on the row looks clickable.
+       Grouping is produced app-side. */
+.am-table__group th {
+  padding: var(--md-sys-spacing-md) var(--md-sys-spacing-md) var(--md-sys-spacing-xs);
+  vertical-align: middle;
+  text-align: left;
+  background: transparent;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  border-bottom: none;
+}
+.am-table__group:hover th { background: transparent; }
+.am-table__group-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--md-sys-spacing-sm);
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  white-space: nowrap;
+}
+/* the group's numbers sit beside its name, in words ("12 stops, $4,120.00 total due"), so a
+   subtotal reads at rest on a table wider than the screen, and the words say what each number
+   is now that no column heading covers it. Muted and one step smaller, so it never competes
+   with the name or with the bold totals row. One line: the name keeps its full width. */
+.am-table__group-sum {
+  margin-left: var(--md-sys-spacing-sm);
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+  letter-spacing: var(--md-sys-typescale-body-small-tracking);
+  font-weight: var(--md-sys-typescale-body-small-weight);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+/* second level (a customer inside a shipping method): no fill and no tag, so it can never read
+   as the level above it. The name is set in the title-small role and starts one xs step inside
+   where the parent tag's words start, so the step in reads as belonging to that parent. No
+   rule above it: it opens its parent's section rather than starting a new one. The level is
+   also stated in the markup, never only in the paint: each group name is a heading whose level
+   sits under the page's own headings, the nested group one level deeper. */
+.am-table__group--sub th {
+  padding: var(--md-sys-spacing-sm) var(--md-sys-spacing-md) var(--md-sys-spacing-xs)
+           calc(var(--md-sys-spacing-md) + var(--md-sys-spacing-sm) + var(--md-sys-spacing-xs));
+  border-top: none;
+}
+.am-table__group-name {
+  color: var(--md-sys-color-on-surface);
+  font-size: var(--md-sys-typescale-title-small-size);
+  line-height: var(--md-sys-typescale-title-small-line-height);
+  letter-spacing: var(--md-sys-typescale-title-small-tracking);
+  font-weight: var(--md-sys-typescale-title-small-weight);
+}
+.am-table__group th.am-table__group-figure {
+  text-align: right;
+  color: var(--md-sys-color-on-surface-variant);
+  /* the group figure keeps the table's body role, same call as money cells (ruled
+     2026-08-10). Declared rather than omitted: this is a th, whose browser default is bold. */
+  font-weight: var(--md-sys-typescale-body-medium-weight);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ---- totals row (gap split-view--table-totals-row): the grand-total row carried in tfoot, so
+       the browser and the app keep it out of body sort and paging. Emphasis is M3 style, tone and
+       weight, never a hard rule: no fill, the heaviest weight on the table, and the same
+       low-emphasis 1px divider used between rows. */
+.am-table tfoot td {
+  height: var(--_row-h);
+  padding: 0 var(--md-sys-spacing-md);
+  vertical-align: middle;
+  /* The totals row is promoted to the title-small role rather than bolded inside the body
+     role: same 0.875rem size as the rows above (so no geometry moves) at that role's own
+     weight, which is the standard's way to add emphasis. It carries the low-emphasis divider
+     above it as well. Ruled by Brady 2026-08-10 after seeing plain, this, and the old weight
+     rendered side by side: a total row must not read as an ordinary data row, and the old
+     weight was a number the type scale does not define, so it could only have survived as a
+     written exception. Supersedes the 2026-07-07 "heaviest weight" note, which was picked on
+     feel and recorded no rule. */
+  font-size: var(--md-sys-typescale-title-small-size);
+  font-weight: var(--md-sys-typescale-title-small-weight);
+  color: var(--md-sys-color-on-surface);
+  background: transparent;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* ---- Classic modifier: the legacy app's dense record row, a legacy-look copy, for converting existing pages only, so we can
+   modernize list and report pages one at a time instead of forcing every legacy table to the 40px
+   modern row at once. 24px is the real legacy density, not a guess: the 2026-07-10 classic sweep
+   found the dense legacy rows that overshoot clustered at a 22-24px band (24px dominant, 47 of 52
+   overshoot instances, on M3's 4dp grid), the full-size 40px row overrunning the legacy row rhythm
+   by 16-18px on those pages (the breaker). The vast majority of legacy tables already sit at or
+   above 40px and need no classic row; this bridges only the genuinely dense ones. Keeps every
+   color, divider, hover, focus ring, sort, selection, and behavior of the full table; sacrifices
+   only row height, header height, cell text size, cell padding, and the two things that live in a
+   row and would break the height (the in-row action button and the in-row status pill). It sits
+   below the 48px M3 touch floor, so use it only when converting an existing legacy page, never on a new one (the page-builder refuses it on new pages, the auditor flags it there); it retires when the list or report it bridges is fully modern.
+   grep --classic to list every instance. The breaker is height (40 to 24px), so height is sized to
+   the sweep's measured band; text size did not break anything, so it is a free choice and matches
+   the classic field and classic search at 12px (body-small) for one shared classic density across
+   the family, rather than the legacy table's own 11-12px. Classic rows are single-line by nature
+   (legacy dense rows are single-line); the stacked multi-value cell is not used at this density.
+   Provenance unchanged (still the same custom dense table, shrunk). */
+.am-table--classic {
+  --_row-h: 24px;
+  --_header-h: 24px;
+  --_action-h: 18px;        /* the status pill treatment: painted in-row controls sit at 18px */
+}
+/* The in-row action button takes the same shrink the status pill does: 18px tall at
+   label-small text, so the two painted things a classic row carries match, each with
+   3px of air in the 24px row. Ruled by Brady 2026-08-12 on rendered options: the prior
+   22px height kept the full table's 14px label text, so a painted action (Continue,
+   tonal) outweighed the row's own 12px text and sat 1px off the dividers, reading as
+   too tall. Height alone was not the problem; the oversized text was half of it. */
+.am-table--classic .am-table__actionbtn {
+  font-size: var(--md-sys-typescale-label-small-size);
+}
+.am-table--classic thead th,
+.am-table--classic tbody td,
+.am-table--classic tfoot td {
+  font-size: var(--md-sys-typescale-body-small-size);
+  padding: 0 var(--md-sys-spacing-sm);
+}
+/* Vertical padding must be zero at this density. The full table's vertical padding
+   (added so wrapped text keeps clear of the dividers) is dead weight here: classic
+   rows are single-line by definition (see the density note above), and a table cell
+   treats height as a minimum, so any vertical padding around the in-row action
+   button (22px at the time, 18px since the 2026-08-12 ruling above) forced every row
+   to 38px and silently defeated the certified 24px. Caught by note_claim_check
+   (2026-07-27): the showroom note claimed 24px while rows rendered 39px. Zero
+   vertical padding lets the action button sit inside the 24px row. */
+/* in-row status pill shrinks to sit inside the 24px row with breathing room, at the classic text */
+.am-table--classic .am-table__status {
+  height: 18px;
+  padding: 0 var(--md-sys-spacing-xs);
+  font-size: var(--md-sys-typescale-label-small-size);
+}
+
+/* ---- edit one value in place (card 128, ruled 2026-10-06) ----
+   Two different needs, never either/or. A page whose point is editing many values is the
+   mass-edit grid: every value in a box, the box is how a person knows it is editable. A table
+   people READ, with a value here and there that can be changed, stays a table, and the editable
+   value reads as plain text at rest, so a ten column table with one editable column is not a
+   column of boxes. The signifier is the field's own box, one at a time: it appears only under the
+   pointer (or keyboard focus), and a click opens the field in exactly that box, so nothing moves.
+   No save or cancel buttons: click in, change it, click out. Leaving the field saves, Enter saves,
+   Escape puts the old value back. One value is open per table.
+   Row lines here are the page's call, not this part's: a table whose editable values sit far
+   apart across many columns keeps them (the eye needs the rail to travel); a short table of a
+   few columns may drop them with .am-table--undivided. No touch hover: a tap opens the value
+   directly. Behaviour in behaviors.js; enforced by scripts/table_edit_value_check.mjs. */
+.am-table__editvalue {
+  box-sizing: border-box;
+  display: flex; align-items: center;
+  width: calc(100% + var(--md-sys-spacing-sm) + 1px); min-width: 0;
+  height: var(--_action-h);
+  margin-inline-start: calc(-1 * var(--md-sys-spacing-sm) - 1px);
+  padding: 0 var(--md-sys-spacing-sm);
+  border: 1px solid transparent;
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  background: transparent; color: inherit;
+  font: inherit; text-align: left; cursor: text; white-space: nowrap;
+}
+.am-table__editvalue:hover { border-color: var(--md-sys-color-on-surface); }
+.am-table__editvalue:focus-visible {
+  border-color: var(--md-sys-color-on-surface);
+  outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: 1px;
+}
+.am-table__editor .am-lineitems__cell {
+  box-sizing: border-box; display: block;
+  width: calc(100% + var(--md-sys-spacing-sm) + 1px); min-width: 0;
+  margin-inline-start: calc(-1 * var(--md-sys-spacing-sm) - 1px);
+  height: var(--_action-h); padding-block: 0;
+}
+
+/* ---- stops at a set number of rows, and scrolls in place ----
+   Ruled by Brady 2026-10-16 (gap scroll-area--bar-shows-when-more, decision 2, option A). A table
+   may stop at a number of rows the page chooses and scroll inside the page: the header row stays
+   pinned at the top while the rows scroll under it, the system's always-showing scroll bar shows
+   from the start whenever there are more rows than fit (components/scroll-bar.css, wired by the
+   behavior layer), and once the table runs out of rows the page carries on scrolling. Chosen over
+   a Show all button, which grows the page. Markup: an .am-table__cap wrapping the .am-table inside
+   its shell, with --am-table-cap set to the number of rows (ten unless the page says otherwise).
+   The cap is exactly that many rows under the header, so the last row showing is never cut (a
+   body row is its height plus the 1px line under it, since the lines collapse into the rows).
+   The pinned header paints the sheet so rows never show through it, and once scrolled it takes
+   the same stuck fill the sticky header does; its line is drawn by the cell itself because a
+   sticky cell in a collapsed-border table leaves its border behind when it scrolls. */
+.am-table__cap {
+  --am-table-cap: 10;
+  max-height: calc(var(--am-density-table-header-height) + var(--am-table-cap) * (var(--am-density-table-row-height) + 1px));
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.am-table__cap::-webkit-scrollbar { display: none; }
+.am-table__cap .am-table thead th {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--am-surface-sheet);
+}
+.am-table__cap .am-table thead th::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+  background: var(--md-sys-color-outline-variant);
+}
+.am-table__cap.is-stuck .am-table thead th { background: var(--md-sys-color-surface-container-high); }
+
+/* ---- a table wider than its window: the first column holds, the rest scrolls ----
+   Ruled by Brady 2026-10-14 (gap card 156, option D) for a phone, and widened to every width on
+   2026-10-30 (gap card 224, option B). A table never cuts columns off in silence. Whenever the
+   table inside the zone runs past the zone, at any window width, it scrolls sideways inside the
+   zone with the first column held still so the row's name never leaves the screen, a hairline
+   down the held column's right side marking where the held part stops, and a scroll bar showing
+   above and below, the mass-edit grid's own scroll assembly reused exactly as it stands (its
+   scroller, its two bars, and the bar wiring in behaviors.js). behaviors.js measures the zone and
+   marks it .is-wide while its table runs past it; a zone whose table fits looks exactly like the
+   table with no zone.
+   On a phone the page may also name the columns a phone can do without by giving each of their
+   cells (header and body) .am-table__phone-hide, and those leave the table below 600. Below 600
+   the zone always scrolls and always shows its bars, as card 156 ruled. A page that names no
+   columns gets the same scroll with every column kept.
+   Markup: .am-table__zone[data-am-xscroll] holding a bar (the system's scroll bar,
+   .am-scrollbar.am-scrollbar--x, wearing .am-massgrid__xbar), an .am-massgrid__scroller wrapping
+   the .am-table-shell, and a second bar the same. Enforced by scripts/table_phone_check.mjs. */
+.am-table__zone .am-massgrid__xbar { display: none; }
+.am-table__zone .am-massgrid__scroller {
+  overflow: visible; width: auto; max-width: none;
+  border: 0; border-radius: 0; background: none;
+}
+/* the shell grows with its table so the zone can tell when the table runs past it, and so the
+   row lines run the table's whole width once it scrolls; a table that fits spans the zone */
+.am-table__zone .am-table-shell { width: max-content; min-width: 100%; box-sizing: border-box; }
+.am-table__zone.is-wide .am-massgrid__xbar { display: block; }
+.am-table__zone.is-wide .am-massgrid__scroller {
+  overflow-x: scroll;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-medium);
+  background: var(--am-surface-sheet);
+}
+.am-table__zone.is-wide .am-table-shell { border: 0; border-radius: 0; overflow: visible; }
+/* the held first column paints the sheet so the columns sliding under it do not show through,
+   and draws its hairline as an inset shadow, which travels with the held cell where a collapsed
+   border would stay behind. Written above the header rule's strength: that rule paints no
+   background and outranks a single class, which let the next header print through a held
+   header cell. */
+.am-table__zone.is-wide .am-table thead th:first-child,
+.am-table__zone.is-wide .am-table tbody td:first-child,
+.am-table__zone.is-wide .am-table tfoot td:first-child {
+  position: sticky; left: 0; z-index: 2;
+  background: var(--am-surface-sheet);
+  box-shadow: inset -1px 0 0 var(--md-sys-color-outline-variant);
+}
+.am-table__zone.is-wide .am-table tbody tr:hover > td:first-child {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, var(--am-surface-sheet));
+}
+.am-table__zone.is-wide .am-table tbody tr.am-table__row--selected > td:first-child { background: var(--md-sys-color-secondary-container); }
+@media (max-width: 600px) { /* --am-breakpoint-md */
+  .am-table .am-table__phone-hide { display: none; }
+  .am-table__zone .am-massgrid__xbar { display: block; }
+  .am-table__zone .am-massgrid__scroller {
+    overflow-x: scroll;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-medium);
+    background: var(--am-surface-sheet);
+  }
+  .am-table__zone .am-table-shell { border: 0; border-radius: 0; overflow: visible; }
+  .am-table__zone .am-table thead th:first-child,
+  .am-table__zone .am-table tbody td:first-child,
+  .am-table__zone .am-table tfoot td:first-child {
+    position: sticky; left: 0; z-index: 2;
+    background: var(--am-surface-sheet);
+    box-shadow: inset -1px 0 0 var(--md-sys-color-outline-variant);
+  }
+  .am-table__zone .am-table tbody tr:hover > td:first-child {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, var(--am-surface-sheet));
+  }
+  .am-table__zone .am-table tbody tr.am-table__row--selected > td:first-child { background: var(--md-sys-color-secondary-container); }
+}
+
+/* ---- a run of days as one strip (ruled by Brady 2026-10-27, gap card 210, option B, gap
+   regular--multi-variant-placement-window) ----
+   When a table's columns are days to choose between (which day a piece of work starts, each
+   with the load it would leave), the days read as one run, not as separate choices: equal
+   cells touching each other, centred, a thicker line where the weekend falls, a check on the
+   heading of the latest day the work can start, and the days that are too late left in place
+   but quiet. The table carries .am-table--days; the page marks the day after a weekend with
+   .am-table__day--break, the latest start with .am-table__day--latest (its heading carries the
+   certified check glyph), and every too-late day with .am-table__day--late, on its heading and
+   its cell alike. A cell holds the condensed capacity meter and its figure under it
+   (.am-table__day-figure).
+   Below the 600 line seven days do not fit a phone, so the strip stacks: one day per line,
+   heading on the left and its load on the right, each day its own outlined box, the weekend
+   break becoming a larger space above the day after it. The page writes the number of days
+   once, as --am-table-days on the table, so the stack can pair each heading with its cell.
+   Enforced by scripts/day_strip_check.mjs. */
+.am-table--days { table-layout: fixed; }
+.am-table--days thead th,
+.am-table--days tbody td { text-align: center; padding: var(--md-sys-spacing-xs) var(--md-sys-spacing-sm); }
+.am-table--days thead th { white-space: normal; line-height: 1.25; }
+.am-table--days .am-table__day--break { border-left: 2px solid var(--md-sys-color-outline); }
+.am-table--days .am-table__day--late { opacity: .55; }
+.am-table--days .am-table__day--latest .am-icon { --am-icon-size: 18; vertical-align: -3px; }
+.am-table__day-figure {
+  display: block;
+  margin-top: var(--md-sys-spacing-2xs);
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 600px) { /* --am-breakpoint-md */
+  .am-table--days {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(var(--am-table-days, 7), auto);
+    grid-template-columns: max-content 1fr;
+    row-gap: var(--md-sys-spacing-sm);
+    background: none;
+  }
+  .am-table--days thead, .am-table--days tbody, .am-table--days tr { display: contents; }
+  .am-table--days thead th,
+  .am-table--days tbody td {
+    display: flex; flex-direction: column; justify-content: center;
+    height: auto; padding: var(--md-sys-spacing-sm) var(--md-sys-spacing-md);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    background: var(--am-surface-sheet);
+  }
+  .am-table--days thead th {
+    display: block; text-align: left; border-right: 0;
+    border-radius: var(--md-sys-shape-corner-medium) 0 0 var(--md-sys-shape-corner-medium);
+  }
+  .am-table--days tbody td {
+    text-align: left; border-left: 0;
+    border-radius: 0 var(--md-sys-shape-corner-medium) var(--md-sys-shape-corner-medium) 0;
+  }
+  .am-table--days tbody tr:last-child td { border-bottom: 1px solid var(--md-sys-color-outline-variant); }
+  .am-table--days thead th.am-table__day--break,
+  .am-table--days tbody td.am-table__day--break { border-left-width: 0; margin-top: var(--md-sys-spacing-md); }
+  .am-table--days thead th.am-table__day--break { border-left: 1px solid var(--md-sys-color-outline-variant); }
+  .am-table-shell:has(> .am-table--days) { border: 0; background: none; overflow: visible; }
+}
+
+/* ---- what a day column means (ruled by Brady 2026-10-27, gap card 211, option B, gap
+   regular--stacked-capacity-grid) ----
+   In a grid whose columns are days, three different things are marked three different ways, and
+   none of them fills a whole column with a colour: a day the shop is closed is a quiet tint down
+   its column (.am-table__day--weekend on its heading and every cell); today is marked on its
+   heading only, in the accent ink alone, with no word added (Brady 2026-11-04, card 232: the word
+   made a third line that the two-line heading rule cut, hiding today's date; the colour already
+   says today) (.am-table__day--today); the day an order ships is a line under that one cell
+   (.am-table__cell--ship). A day column centres its contents (.am-table__day). The accent never
+   fills a column, so a chosen cell and today can never be the same blue.
+   Enforced by scripts/day_column_check.mjs. */
+.am-table .am-table__day { text-align: center; }
+.am-table .am-table__day--weekend { background: var(--md-sys-color-surface-container-high); }
+.am-table thead th.am-table__day--weekend { color: var(--md-sys-color-on-surface-variant); }
+.am-table thead th.am-table__day--today { color: var(--md-sys-color-primary); }
+.am-table .am-table__cell--ship { box-shadow: inset 0 -3px 0 var(--md-sys-color-primary); }

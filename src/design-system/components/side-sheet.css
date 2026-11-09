@@ -1,0 +1,100 @@
+/* Allmoxy Design System, Side sheet (STOCK Material 3, modal)
+ * Slides in from the right, full height, over a 32% scrim. Surface is --am-surface-modal,
+ * shared with every other scrim-backed surface (it used to paint surface-container-low, which
+ * sat darker than the page in light),
+ * leading corners rounded. Header with a close button. Reuses .am-scrim.
+ * Docked variant (ruled 2026-10-13, gap card 166, option B): a panel that stays open while
+ * the person keeps working is a region of the page, not an overlay. See .am-sidesheet--docked.
+ */
+.am-sidesheet { --am-sidesheet-width: var(--am-sidesheet-width-narrow);
+  position: fixed; right: 0; top: 0; height: 100%;
+  width: min(var(--am-sidesheet-width), calc(100vw - var(--am-sidesheet-page-strip))); transform: translateX(100%);
+  background: var(--am-surface-modal); color: var(--md-sys-color-on-surface); z-index: 101;
+  box-shadow: var(--am-shadow-level1); padding: 20px var(--md-sys-spacing-lg); box-sizing: border-box;
+  border-radius: var(--md-sys-shape-corner-large) 0 0 var(--md-sys-shape-corner-large);
+  font-family: var(--md-sys-typescale-font); display: flex; flex-direction: column; visibility: hidden;
+  transition: transform var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized), visibility 0s linear var(--md-sys-motion-duration-medium2); }
+.am-sidesheet__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--am-space-block); }
+.am-sidesheet__title { font-size: var(--md-sys-typescale-title-large-size); margin: 0; }
+.am-sidesheet__close { width: 40px; height: 40px; border: none; background: transparent; border-radius: var(--md-sys-shape-corner-full);
+  color: var(--md-sys-color-on-surface-variant); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.am-sidesheet__close .am-icon { --am-icon-size: 24; color: currentColor; }
+.am-sidesheet__text { font-size: var(--md-sys-typescale-body-medium-size); color: var(--md-sys-color-on-surface-variant); margin: 0; }
+.am-sheet-host.is-open .am-sidesheet { transform: translateX(0); visibility: visible;
+  transition: transform var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized); }
+/* A closed sheet is parked just past the screen edge, and hidden there: its shadow otherwise
+   reaches a few pixels back onto the page, a faint line that grows darker with every closed
+   sheet on the page, and its controls stay reachable by Tab while nobody can see them. */
+
+/* ---- which side (folded into gap card 166, Brady 2026-10-13, from the on-page Operator scope).
+       A side panel opens on the side OPPOSITE the toolbar, so the panel never lands on top of the
+       controls a person was just using. The page shell says where its toolbar is with
+       data-toolbar-side="start" or "end" (start is the default, so the panel opens on the right as
+       it always has). With the toolbar on the end side, the panel comes in from the start side and
+       its rounded corners turn to face the page. */
+[data-toolbar-side="end"] .am-sidesheet:not(.am-sidesheet--docked) { right: auto; left: 0; transform: translateX(-100%);
+  border-radius: 0 var(--md-sys-shape-corner-large) var(--md-sys-shape-corner-large) 0; }
+[data-toolbar-side="end"] .am-sheet-host.is-open .am-sidesheet:not(.am-sidesheet--docked) { transform: translateX(0); }
+
+/* ---- the page behind stays readable (same ruling). The modal panel blocks every click on the
+       page behind it, but never its scrolling: the page stays dimmed and can still be scrolled in
+       every direction to reference it while the panel decides. The scrim catches the click; the
+       shared behavior layer hands the wheel through to whatever scrolls under the pointer, so an
+       inner scrolling region (a wide table) moves too, not only the page. Nothing here locks the
+       page's own scroll, and nothing may: a scroll lock is the thing this rule forbids. */
+
+/* ---- how wide (gap card 197, Brady 2026-10-14). Three set widths, the whole panel each,
+       padding inside: narrow (the default), medium and wide. The content picks the step when the
+       panel is built: narrow for details and short forms, medium for long lines, code or a small
+       table, wide for a wide table or two things compared. The panel always leaves a strip of
+       the page showing, so on any screen too small for its step it shrinks to the screen minus
+       that strip. On a phone the steps stop applying and every panel is the screen minus the
+       strip. A docked panel takes narrow or medium only; wide would crush the page beside it. */
+.am-sidesheet--medium { --am-sidesheet-width: var(--am-sidesheet-width-medium); }
+.am-sidesheet--wide:not(.am-sidesheet--docked) { --am-sidesheet-width: var(--am-sidesheet-width-wide); }
+@media (max-width: 600px) { /* --am-breakpoint-md */
+  .am-sidesheet:not(.am-sidesheet--docked) { width: calc(100vw - var(--am-sidesheet-page-strip)); }
+}
+
+/* ---- a panel longer than its window (gap card 204, Brady 2026-10-20, option C with his addition).
+       The title and the close hold still at the top, the buttons that act on the panel hold still at
+       the foot, and only what sits between them scrolls, the same shape as the dialog. So at every
+       scroll position a person can see what the panel is, close it, and press what they opened it
+       for. Everything between the title and the buttons belongs in .am-sidesheet__body, and the
+       buttons in .am-sidesheet__actions; a panel built without a body still scrolls whole.
+       Scroll bar: whenever the body holds more than fits, the system's always-showing scroll bar
+       (components/scroll-bar.css, drawn and driven by the behavior layer) shows in the panel's
+       right margin from the moment it opens, never only once scrolling starts, because a long
+       panel can end cleanly at a line and look complete. A panel that fits shows none. The body's
+       inset below pushes the bar out past its edge into the margin, 8px from the panel's edge. */
+.am-sidesheet > .am-sidesheet__head,
+.am-sidesheet > .am-sidesheet__actions { flex: none; }
+.am-sidesheet__body { flex: 1 1 auto; min-height: 0; --am-scrollbar-inset: calc(var(--md-sys-spacing-xs) - var(--md-sys-spacing-lg)); }
+.am-sidesheet__body > :last-child { margin-bottom: 0; }
+.am-sidesheet__actions { display: flex; flex-wrap: wrap; gap: var(--am-space-inline-tight); }
+.am-sidesheet__body + .am-sidesheet__actions { margin-top: var(--am-space-block); }
+.am-sidesheet:not(.is-fit-wired) > .am-sidesheet__body { overflow-y: auto; }
+.am-sidesheet:not(.am-sidesheet--docked):not(:has(> .am-sidesheet__body)) { overflow-y: auto; }
+.am-sidesheet.is-scrolling > .am-sidesheet__body { overflow-y: auto; scrollbar-width: none; }
+.am-sidesheet.is-scrolling > .am-sidesheet__body::-webkit-scrollbar { display: none; }
+
+/* keyboard focus */
+.am-sidesheet__close:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+
+/* ---- docked: the panel is a region of the page (ruled 2026-10-13, gap card 166, option B,
+       gap split-view--persistent-side-sheet). When a panel has to stay open while the person
+       keeps working behind it (picking one item after another with the details open), it stops
+       being an overlay: no scrim, no slide, no shadow, no rounded leading corners. It sits in the
+       page's dock region (templates/frame.css, .tpl-dock) and the content lays itself out in the
+       room that is left, so nothing is covered or dimmed. All six peer systems build the panel
+       that stays open this way; laying the modal sheet over the page with the dimming taken
+       away was rejected, because the two nearest items stay covered, live but invisible.
+       Which to reach for: the modal sheet when the panel must be dealt with before the page,
+       this one when the person keeps working behind it. INTERNAL TOOLS ONLY: the customer app
+       keeps the modal sheet, and the gallery fences this variant the way it fences classics
+       (integrity_check.py, internal-fence). Its width is the dock region's (templates/frame.css,
+       .tpl-dock__panel), which takes the narrow or medium step whole, its divider and padding
+       inside. When the page region is too narrow to keep the page's minimum beside it, the
+       region switches the panel to the modal panel (gap card 197). ---- */
+.am-sidesheet--docked { position: static; transform: none; visibility: visible; height: auto; width: auto; max-width: 100%; z-index: auto;
+  background: transparent; box-shadow: none; border-radius: 0; padding: 0; transition: none; }

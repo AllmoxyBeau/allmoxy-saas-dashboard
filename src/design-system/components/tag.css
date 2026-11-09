@@ -1,0 +1,51 @@
+/* Allmoxy Design System, Tag (CUSTOM Allmoxy)
+ * A non-interactive pill for emphasized or categorical data: a value you want to stand out or read as
+ * a category, stamped inline (in a table cell, beside a heading, on a card). It is NOT a control: no
+ * hover, no focus, no click, and it never sits in the tab order. That is what separates it from the
+ * chip (clickable, selectable, removable) and from the badge (a corner marker on something else).
+ * Tones are emphasis colors, not fixed meanings; a screen chooses which tone maps to which category
+ * or state. Same shape and color set as the table's in-row status treatment, so the two read as one
+ * system. Full size 24px, plus a classic 20px migration bridge. v0.194.
+ */
+.am-tag {
+  display: inline-flex; align-items: center; gap: var(--md-sys-spacing-2xs);
+  height: 24px; padding: 0 var(--md-sys-spacing-sm);
+  border-radius: var(--md-sys-shape-corner-full);
+  font-size: var(--md-sys-typescale-label-medium-size); font-weight: var(--md-sys-typescale-label-medium-weight);
+  white-space: nowrap; cursor: default;
+  background: var(--am-emphasis-neutral-bg); color: var(--am-emphasis-neutral-fg);
+}
+/* Emphasis tones, shared with the table's in-row status pill through the --am-emphasis-* tokens
+   (defined once in the tokens file) so the two parts can never show different colors. Bare .am-tag is
+   neutral; a modifier picks a stronger tone. */
+.am-tag--neutral   { background: var(--am-emphasis-neutral-bg);   color: var(--am-emphasis-neutral-fg); }
+.am-tag--info      { background: var(--am-emphasis-info-bg);      color: var(--am-emphasis-info-fg); }
+.am-tag--success   { background: var(--am-emphasis-success-bg);   color: var(--am-emphasis-success-fg); }
+.am-tag--warning   { background: var(--am-emphasis-warning-bg);   color: var(--am-emphasis-warning-fg); }
+.am-tag--error     { background: var(--am-emphasis-error-bg);     color: var(--am-emphasis-error-fg); }
+.am-tag--attention { background: var(--am-emphasis-attention-bg); color: var(--am-emphasis-attention-fg); }
+/* admin identity tag: intentionally the loud vivid admin color, not the calm emphasis lane the
+   status tones use, because admin is an identity meant to stand apart. Pair with the shield glyph. */
+.am-tag--admin     { background: var(--am-admin-vivid);           color: var(--am-on-admin-vivid); }
+
+/* Leading glyph. The tag owns this, because the one place that ever needed it (the admin tag's
+   shield) hand-drew it in the showroom with a width and a height, which is how icons were sized
+   back when they were drawings. They are a font now, so a box size sets no glyph size: the shield
+   fell back to the system default of 24 and painted over its own label until 2026-08-12. Sizing
+   lives here, in the part, where a demo cannot get it wrong.
+   16 is the derived rung for the tag's 12px label (docs/icon-sizing.md, branch 2). The left side
+   tightens to 8px when a glyph actually leads, so the visible air around the glyph matches the air
+   around the text instead of sitting a glyph-width deeper. */
+.am-tag .am-icon { --am-icon-size: 16; flex: none; color: currentColor; }
+.am-tag:has(> .am-icon:first-child) { padding-left: var(--md-sys-spacing-xs); }
+
+/* Classic modifier: the dense legacy-row tag, a legacy-look copy for converting existing pages one region at a time, never for a new page. Sized to 20px, the uniform classic height the rest of the classic family now uses
+   (field, search, switch, button, chip), so an emphasized value lines up level inside a converted
+   legacy row instead of standing taller than the controls around it. A tag is not a touch target
+   (not interactive), so the 48px M3 touch floor does not bear on it the way it does on a control; it is still fenced to conversion work only, never a new page, so it retires with the legacy pages. Keeps every tone and the pill
+   shape of the full tag. Add --classic. Slated for retirement (grep --classic to list every instance
+   to remove). */
+.am-tag--classic {
+  height: 20px; padding: 0 var(--md-sys-spacing-xs);
+  font-size: var(--md-sys-typescale-label-small-size);
+}

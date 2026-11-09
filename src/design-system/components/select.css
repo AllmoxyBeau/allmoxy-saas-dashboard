@@ -1,0 +1,54 @@
+/* Select: a label-less dropdown. An outlined field showing the current value with a
+   trailing caret that opens a menu. The caret is the filled triangle (arrow_drop_down), the
+   one glyph in this system that means opens downward. Label-less on purpose: the caller supplies its own
+   label (am-field-label) so the label can sit anywhere, above or below a preview in a
+   catalog selector. Built on the outlined field and the menu, not a new frame. Carries
+   am-menu-anchor for positioning and the menu behavior; fills its container so it does
+   not keep its intrinsic width and overflow a column. */
+.am-menu-anchor.am-select {
+  display: block;
+  width: 100%;
+}
+.am-select .am-field {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.am-select .am-field__input {
+  min-width: 0;
+}
+
+/* In-row select: the dropdown that sits inside a table row on a new screen. Ruled 2026-09-30
+   (gap tokens--in-row-control-size, card 169, option A) after card 106 needed a choice per
+   file in the import queue and found none: the full 48px select grows a 40px row to 64px, the
+   line-item grid's 28px cell was never a dropdown (sized by padding, no list), and the 34px
+   classic is a conversion bridge that retires. 32px is the number every peer that publishes
+   control sizes shares for this job (Carbon small, Primer and Ant default, Fluent medium,
+   Atlassian compact). House departure from M3, logged here: the DRAWN box is 32px but the
+   CLICKABLE area stays 48px, M3's own density rule, carried by an invisible target around the
+   box rather than by the box. That is why this variant is not in the classic family: the touch
+   floor is a floor on the target, and the target still meets it. A check measures both halves.
+   The column header is the label, so the variant is label-less like every select; an empty one
+   shows its prompt as placeholder text, which the base field hides because its own label is the
+   prompt there. Same field, same menu, same behavior: picking an item writes the value. */
+.am-select--row .am-field {
+  --am-density-field-height: 32px;
+  --am-field-icon-size: var(--am-field-icon-size-dense);
+}
+.am-select--row .am-field__input {
+  font-size: var(--md-sys-typescale-body-medium-size);
+  font-weight: var(--md-sys-typescale-body-medium-weight);
+}
+.am-select--row .am-field__input::placeholder {
+  color: var(--md-sys-color-on-surface-variant);
+}
+/* the 48px target: centred on the 32px box, full width, paints nothing */
+.am-select--row .am-field::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 48px;
+  transform: translateY(-50%);
+}

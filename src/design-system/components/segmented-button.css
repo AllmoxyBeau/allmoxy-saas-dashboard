@@ -1,0 +1,53 @@
+/* Allmoxy Design System, Segmented buttons (STOCK Material 3)
+ * A connected row of segments; selected segment fills with secondary-container and
+ * shows a check. Spec v0.192: height 40, outline 1px, icon 18.
+ */
+.am-segmented { display: inline-flex; height: 40px; border-radius: var(--md-sys-shape-corner-full); }
+.am-segmented__seg {
+  --_state-color: var(--md-sys-color-on-surface);
+  position: relative; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--md-sys-spacing-xs);
+  padding: 0 var(--md-sys-spacing-sm); min-width: 48px;
+  /* Kept on M3 outline, not lightened: the segment edge also draws the internal
+     dividers, so lightening blurs the cells together. Same keep call as buttons.
+     Edge pass fields #400 / chips #412. 2026-07-17. */
+  border: 1px solid var(--md-sys-color-outline); background: transparent;
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--md-sys-typescale-font);
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  letter-spacing: var(--md-sys-typescale-label-large-tracking);
+  cursor: pointer;
+}
+.am-segmented__seg + .am-segmented__seg { border-left: none; }
+.am-segmented__seg:first-child { border-top-left-radius: var(--md-sys-shape-corner-full); border-bottom-left-radius: var(--md-sys-shape-corner-full); padding-left: var(--md-sys-spacing-md); }
+.am-segmented__seg:last-child { border-top-right-radius: var(--md-sys-shape-corner-full); border-bottom-right-radius: var(--md-sys-shape-corner-full); padding-right: var(--md-sys-spacing-md); }
+.am-segmented__seg::before { content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit; background:var(--_state-color); opacity:0; transition:opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard); }
+.am-segmented__seg:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-segmented__seg:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+.am-segmented__seg[aria-pressed="true"] {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  --_state-color: var(--md-sys-color-on-secondary-container);
+}
+.am-segmented__seg .am-icon { --am-icon-size: 18; color: currentColor; }
+.am-segmented__seg .am-seg-check { display: none; }
+.am-segmented__seg[aria-pressed="true"] .am-seg-check { display: inline-block; }
+
+/* Marks only (am-segmented--marks): every segment carries one mark and no word, the word riding
+   in the segment's own tooltip and its accessible name. Column text alignment is the case it is
+   built for (left, centre and right alignment marks). The chosen segment shows NO check: the fill
+   alone marks the choice and the mark sits centred with nothing beside it, because a check beside
+   a mark is two marks in one segment with no word to tell them apart. Ruled by Brady 2026-10-16
+   (gap card 173, option B). Only this variant drops the check; a chooser whose segments carry
+   words keeps it, and how those mark their choice is a separate open question. A check keeps both
+   halves from drifting. */
+.am-segmented--marks .am-segmented__seg[aria-pressed] .am-seg-check { display: none; }
+/* Even padding on every segment, the end ones included, so each mark sits on its segment's centre
+   rather than nudged in by the wider end padding a word needs to clear the rounded end. */
+.am-segmented--marks .am-segmented__seg { padding: 0 var(--md-sys-spacing-md); }
+
+/* keyboard focus and disabled. Segments sit joined, so the ring goes inset. */
+.am-segmented__seg:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.am-segmented__seg:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: calc(-1 * var(--am-focus-ring-width)); }
+.am-segmented__seg:disabled { opacity: var(--am-state-disabled-content-opacity); cursor: default; }

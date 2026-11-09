@@ -1,0 +1,58 @@
+/* Allmoxy Design System, Tooltip (STOCK Material 3)
+ * Plain: inverse-surface, 4px corners, small text, appears on hover/focus.
+ * Rich: surface-container, wider, with optional title. v0.192.
+ */
+.am-tooltip { position: relative; display: inline-flex; }
+/* The tip is FIXED, not absolute (ruled 2026-07-28). Absolute positioning parents the tip to
+   the anchor, so any ancestor that clips overflow, which every card, table shell and template
+   section does for its rounded corners, sliced the tip to nothing: a tooltip inside a card was
+   simply invisible, and pages worked around it with the native title attribute. Fixed takes the
+   tip out of that clipping chain entirely; behaviors.js places it against the anchor and clamps
+   it on screen, repositioning on scroll and resize while it is open. The same approach Jake
+   proved in the MRP port. Placement is a data attribute the script sets, never a hand-tuned
+   offset in a page. */
+.am-tooltip__tip { position: fixed; top: 0; left: 0; transform: translate(-50%, -100%) scale(.9); transform-origin: bottom center;
+  background: var(--md-sys-color-inverse-surface); color: var(--md-sys-color-inverse-on-surface);
+  padding: var(--md-sys-spacing-2xs) var(--md-sys-spacing-xs); border-radius: var(--md-sys-shape-corner-extra-small);
+  font-family: var(--md-sys-typescale-font); font-size: var(--md-sys-typescale-body-small-size); line-height: 1.3; white-space: nowrap;
+  opacity: 0; pointer-events: none; z-index: 40;
+  transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard), transform var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-emphasized); }
+.am-tooltip:hover .am-tooltip__tip, .am-tooltip:focus-within .am-tooltip__tip { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+/* flipped below the anchor when there is no room above */
+.am-tooltip__tip[data-am-tip-place="below"] { transform: translate(-50%, 0) scale(.9); transform-origin: top center; }
+.am-tooltip:hover .am-tooltip__tip[data-am-tip-place="below"],
+.am-tooltip:focus-within .am-tooltip__tip[data-am-tip-place="below"] { transform: translate(-50%, 0) scale(1); }
+/* Rich tooltip width, ruled 2026-08-15 (gap interpreted--1783550139.580639, from the app-wide M3
+   tooltip migration DEV-12307, Jake Astle). The tip is capped by a READING MEASURE, not sized to a
+   picked pixel width, and there is no width scale.
+
+   The card asked whether to sanction a second, wider width, because page-title explanations ran as a
+   skinny column at the old 220 and pages had already grown local 300px variants. Measuring it turned
+   the question around. The old rule was `width`, a FIXED width, which is what forced the second step:
+   with a fixed width a five-word tip is padded out to the same box as a paragraph (measured: "Not yet
+   sent to the customer" occupied a 244px box with dead space to the right), so the only way to get a
+   second shape was to sanction a second number, and the only way to pick between them was per page,
+   which is exactly how the local 300s appeared. A ceiling removes the choice: short copy shrinks to
+   its content (measured 178px), long copy wraps at the measure, and no page picks anything.
+
+   Why a character count and not a pixel number. The empty state already caps its message at 42ch, so
+   the house has settled this shape of problem once; a measure stated in characters survives a
+   type-size change, where a pixel width silently gets narrower in characters. 45ch is the bottom of
+   the comfortable prose band (roughly 45 to 75); it computes to about 327px at today's body-small, so
+   the box lands where a flat 320 would while being derived rather than chosen. The old 220 was 33
+   characters, well under the band, which is the actual defect the card photographed as "a skinny
+   column".
+
+   Not 300, the width the app's local variants already used: 300 and 320 render identically here (44
+   vs 47 characters, same three lines, same height), so nothing measurable separates them and 300's
+   only claim is that legacy CSS happened to pick it. This system carries exactly one off-grid number
+   (the 34px classic-tall field) and it had to earn that with measurements.
+
+   box-sizing is set because it was not: the padding sat OUTSIDE the old 220, so the part rendered at
+   244 and every width discussed on the card, 220, 300 and 320 alike, was 24px wider on screen than it
+   said. Now the number means what it says. */
+.am-tooltip__tip--rich { background: var(--am-surface-popover); color: var(--md-sys-color-on-surface-variant);
+  padding: var(--md-sys-spacing-sm); border-radius: var(--md-sys-shape-corner-medium); white-space: normal;
+  box-sizing: border-box; width: max-content; max-width: calc(45ch + 2 * var(--md-sys-spacing-sm)); text-align: left;
+  box-shadow: var(--am-shadow-level2); }
+.am-tooltip__tip--rich b { color: var(--md-sys-color-on-surface); display: block; margin-bottom: var(--md-sys-spacing-2xs); font-size: var(--md-sys-typescale-title-small-size); font-weight: var(--md-sys-typescale-title-small-weight); }

@@ -1,0 +1,26 @@
+/* Summary strip: a card of key figures (value over label), split into equal cells
+   by vertical rules. Sits at the top of a record (Detail) or on an analytics surface.
+   One definition, pointed at by any page that shows a record's headline numbers. */
+.am-summary {
+  display: flex;
+  background: var(--am-surface-sheet);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-medium);
+  overflow: hidden;
+}
+.am-summary__stat {
+  flex: 1;
+  padding: var(--md-sys-spacing-lg);
+}
+.am-summary__stat + .am-summary__stat {
+  border-left: 1px solid var(--md-sys-color-outline-variant);
+}
+.am-summary__value {
+  font-size: var(--md-sys-typescale-headline-small-size);
+  font-weight: var(--md-sys-typescale-headline-small-weight);
+}
+.am-summary__label {
+  font-size: var(--md-sys-typescale-label-large-size);
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: var(--md-sys-spacing-2xs);
+}

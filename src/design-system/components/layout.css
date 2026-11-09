@@ -1,0 +1,33 @@
+/* Layout holders: the space BETWEEN parts.
+ *
+ * Every part spaces its own insides. Until 2026-10-06 nothing spaced parts from each other
+ * except the five page layouts and three holders welded to one kind of content (chips, cards,
+ * catalog tiles), so everywhere else developers hand-wrote it (1,160 of 3,465 layout spots in
+ * the app). Brady ruled gap card 122 (D, with the designer-pass fix): the system provides
+ * general holders, each shape exists once, and spacing follows how related things are, never
+ * the layout.
+ *
+ *   16 (block)        between separate blocks          stack, grid
+ *   12 (inline)       between separate items            row
+ *    8 (inline-tight) inside one set, such as tags      row, set to tight
+ *
+ * Wrap only wraps; it never changes the spacing (the first drawing of D tightened buttons from
+ * 12 to 8 the moment they wrapped on a phone, which says "these belong together" about things
+ * that do not). A row pushed apart stops pushing apart once it wraps; in plain styling a row
+ * cannot know when it has wrapped, so a row allowed to wrap never pushes apart. The grid owns
+ * its children's width (see card-grid.css). Its smallest slot is a page setting, --am-grid-min,
+ * starting at 180 only so a grid that sets none still works; and no slot is ever wider than the
+ * grid's holder, so in a space narrower than the minimum the one slot shrinks to the space
+ * instead of running past it (gap card 195, 2026-10-13, option A).
+ *
+ * Names are working names: Jake and Mack own them for the developer toolkit, under one rule,
+ * each shape exists once. Folding the chip set, card grid, catalog grid and rail row into these
+ * is the next change, not this one. Guarded by scripts/layout_holder_check.mjs. */
+.am-stack { display: flex; flex-direction: column; gap: var(--am-space-block); }
+.am-row { display: flex; align-items: center; gap: var(--am-space-inline); }
+.am-row--tight { gap: var(--am-space-inline-tight); }
+.am-row--wrap { flex-wrap: wrap; }
+.am-row--spread { justify-content: space-between; }
+.am-row--wrap.am-row--spread { justify-content: flex-start; }
+.am-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(var(--am-grid-min, 180px), 100%), 1fr)); gap: var(--am-space-block); }
+.am-grid > * { min-width: 0; }

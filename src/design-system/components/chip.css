@@ -1,0 +1,214 @@
+/* Allmoxy Design System, Chips (Material 3 baseline, house-tuned spacing)
+ * Assist, filter, input, and suggestion chips. Token-driven.
+ * Base is stock M3 (corner small 8px, outline 1px, label-large type, icon 18px,
+ * disabled label 38%). Two logged house choices live in this part:
+ *  1. Spacing is tuned for our 28px chip density (sides 8, icon side and gap 4) so the
+ *     visible gaps read even, near 8px everywhere. M3's 16/8/8 assumes a 32px chip.
+ *  2. A chip caps at its container width and its label truncates with an ellipsis on one
+ *     line, so a long tag never slides under the remove icon. M3 leaves chip width open;
+ *     this is the house rule that closes it.
+ *
+ * HOW A FILTER CHIP HOLDS ITS SELECTION (DECISION, Brady 2026-08-12).
+ * A filter chip is a <label> wrapping a real checkbox, hidden, with the pill painted on top.
+ * That is the same construction the checkbox, radio and switch parts already use, so this is
+ * the chip rejoining the family rather than a new pattern. It was reported by Jake Astle
+ * (DEV-12500 series), who hit it converting server-rendered filter pages: the old chip was a
+ * <button> whose selected state existed only as a class that script added, so with no script
+ * the chip could not light up and the page had no value to post. He shipped the label form
+ * locally; Brady ruled it becomes the ONLY form, not a second option, because it is a superset:
+ * it works with script and without, it posts with the form, and the browser gives correct
+ * keyboard and screen-reader behaviour for free (a button flipping a class gives none, which is
+ * why ten hand-written accessibility attributes had accumulated on chips in the gallery).
+ * Use radio inputs instead of checkboxes for a row where only one filter can be on at a time.
+ * Every selected rule below therefore fires two ways: the hidden control being checked, and the
+ * --selected class. The class is the RETIRING form, kept only so pages already converted to the
+ * old button chip keep working until they are touched again. New pages use the label form; the
+ * filter_chip_form_check backstop holds that line, and the class support comes out when the
+ * last button chip is gone.
+ */
+
+.am-chip {
+  --_state-color: var(--md-sys-color-on-surface-variant);
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;              /* own our height, never depend on a page reset */
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;                        /* allow the chip to shrink so its label can clip */
+  max-width: 100%;                     /* never exceed the container */
+  gap: var(--md-sys-spacing-2xs);
+  height: var(--am-density-chip-height);
+  padding: 0 var(--md-sys-spacing-xs);
+  /* House departure from M3: resting edge is outline-variant, not M3's outline.
+     Chips cluster in filter and attribute rows, so the full outline reads as a wall
+     of hard pills; the lighter edge quiets the group while staying clearly darker
+     than the disabled border. Matches the field decision (#400). Selected, hover,
+     and focus states are unchanged. Logged 2026-07-17. */
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-small);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--md-sys-typescale-font);
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  line-height: var(--md-sys-typescale-label-large-line-height);
+  letter-spacing: var(--md-sys-typescale-label-large-tracking);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  white-space: nowrap;
+}
+.am-chip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--_state-color);
+  opacity: 0;
+  transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+.am-chip:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-chip:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.am-chip:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+.am-chip:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+
+/* The real control, hidden. Same declaration the checkbox, radio and switch parts use. Focus
+   lands on it rather than on the pill, so the ring and the focus state layer are forwarded to
+   the pill; without this a keyboard user sees nothing at all. */
+.am-chip input { position: absolute; opacity: 0; width: 0; height: 0; }
+.am-chip:has(input:focus-visible)::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.am-chip:has(input:focus-visible) { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+
+.am-chip .am-icon { --am-icon-size: 18; color: currentColor; flex: none; }
+
+/* the label rides in its own box so it can truncate to one line with an ellipsis */
+.am-chip__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+/* a truncated chip reveals its full label on hover via the certified tooltip (wired in
+   behaviors.js); lift the hovered chip so its tip paints above neighbouring chips */
+.am-chip.am-tooltip:hover { z-index: 40; }
+
+/* a leading icon tightens the left side, but only when it is actually shown: an
+   unselected filter chip carries a hidden check, which must not shift the label */
+.am-chip:has(> svg:first-child:not(.am-chip__check)),
+.am-chip--selected,
+.am-chip:has(input:checked) { padding-left: var(--md-sys-spacing-2xs); }
+
+/* a trailing remove icon tightens the right side and holds its own space (never overlapped).
+   inline-flex centers the glyph: without it the svg inside the span sits on the text
+   baseline and rides visibly high in the chip. */
+.am-chip__remove { flex: none; cursor: pointer; display: inline-flex; align-items: center; }
+.am-chip:has(.am-chip__remove) { padding-right: var(--md-sys-spacing-2xs); }
+
+/* assist chip: leading icon in primary color (per M3) */
+.am-chip--assist .am-icon:first-child { color: var(--md-sys-color-primary); }
+
+/* A piece of work on a day (the work on a grid of days, card 225, ruled by Brady 2026-11-02):
+   its state is said by colour alone, as a filled chip in the house status pair, the same pair the
+   tag and the table status pill wear. Late is the error pair, work a person placed by hand is the
+   info pair, work that cannot be made in time is the warning pair. No state symbol, no colour on
+   the order's name, and the chip keeps its ordinary width. This is the one place a control carries
+   a status colour: everywhere else status colour stays in the tag, the table status and the alert.
+   The state is still spoken to a screen reader through a hidden word inside the chip
+   (.am-chip__state), so nothing is lost without the colour and nothing is added to the eye. */
+.am-chip--late,
+.am-chip--placed,
+.am-chip--cannot-make { border-color: transparent; }
+.am-chip--late        { background: var(--am-emphasis-error-bg);   color: var(--am-emphasis-error-fg);   --_state-color: var(--am-emphasis-error-fg); }
+.am-chip--placed      { background: var(--am-emphasis-info-bg);    color: var(--am-emphasis-info-fg);    --_state-color: var(--am-emphasis-info-fg); }
+.am-chip--cannot-make { background: var(--am-emphasis-warning-bg); color: var(--am-emphasis-warning-fg); --_state-color: var(--am-emphasis-warning-fg); }
+.am-chip--late .am-icon,
+.am-chip--placed .am-icon,
+.am-chip--cannot-make .am-icon { color: currentColor; }
+.am-chip__state {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* selected (filter chips): filled secondary-container, no outline, check icon */
+.am-chip--selected,
+.am-chip:has(input:checked) {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-color: transparent;
+  --_state-color: var(--md-sys-color-on-secondary-container);
+}
+.am-chip--selected .am-icon,
+.am-chip:has(input:checked) .am-icon { color: currentColor; }
+.am-chip__check { display: none; }
+.am-chip--selected .am-chip__check,
+.am-chip:has(input:checked) .am-chip__check { display: inline-block; }
+
+/* disabled */
+.am-chip:disabled,
+.am-chip:has(input:disabled),
+.am-chip[aria-disabled="true"] {
+  cursor: default;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+.am-chip:disabled .am-icon,
+.am-chip:has(input:disabled) .am-icon { color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent); }
+
+/* ---- admin identity ----
+   The chip binding of the house admin identity (Brady 2026-07-15): an admin-only control carries the
+   admin color AND the shield glyph, always both, so it still reads without color. The button and icon
+   button bindings live in button.css, the read-only stamp binding in tag.css, this is the filter-chip
+   binding. Reported by Jake, who shipped a shield-less version on an admin filter row; Brady ruled
+   2026-07-31 that the pairing holds for chips too rather than becoming a chip-only exception. Resting
+   is admin ink on an admin edge, selected is a solid admin fill; the shield sits in the leading icon
+   slot in both states, so selection is carried by the fill and the tick is not used (a shield plus a
+   tick plus a label crowds a filter row, and the shield must not be the thing that drops). Custom, a
+   deliberate departure from stock M3 (M3 has no permission-tier color). */
+.am-chip--admin {
+  color: var(--am-admin-vivid);
+  border-color: var(--am-admin-vivid);
+  --_state-color: var(--am-admin-vivid);
+}
+.am-chip--admin.am-chip--selected,
+.am-chip--admin:has(input:checked) {
+  background: var(--am-admin-vivid);
+  color: var(--am-on-admin-vivid);
+  border-color: transparent;
+  --_state-color: var(--am-on-admin-vivid);
+}
+.am-chip--admin.am-chip--selected .am-chip__check,
+.am-chip--admin:has(input:checked) .am-chip__check { display: none; }
+
+/* Chip set: the certified container for a labeled group of chips (an Abilities block, an
+   applied-attributes row). Chips wrap at the house chip gap.
+   FOLD RULE (DECISION, Brady 2026-08-13, gap split-view--chip-group-overflow): a set of
+   THREE ROWS OR FEWER shows every chip. Past three rows, the first three rows stay visible
+   and the remainder folds behind a "+ N more" toggle, a certified text button the behavior
+   layer injects, which expands the set in place and then reads "Show less". The threshold
+   is a measured fact (row count depends on width), so the rule lives in behaviors.js and
+   re-checks on resize; the behavior backstop drives both sides of it. House departure from
+   M3, which has no fold affordance for chips (its baseline wraps everything): ruled where
+   wrapped sets tax card height (the Operator home Abilities block, ten chips). Not for
+   filter bars or tag fields, which own their rows and never wear this class. */
+.am-chip-set { display: flex; flex-wrap: wrap; gap: var(--md-sys-spacing-xs); }
+/* The toggle's own row: full measure so the button never shares a line with chips. */
+.am-chip-set__foot { flex-basis: 100%; }
+
+/* Classic modifier: the dense legacy-row chip, a legacy-look copy, for converting existing pages only, so we can convert legacy
+   pages one region at a time instead of forcing every chip to the 28px floor at once. On its own the
+   legacy chip is NOT the breaker: the 2026-07-10 classic sweep measured standalone legacy chips near
+   27px (26.6px, font 12.8), inside the 3px sibling tolerance of the modern 28px chip. The breaker is
+   row rhythm: a 28px chip towers over a dense classic row, so on a converted legacy row a chip comes
+   down to the shared classic density. Sized to 20px, the same locked classic height as the classic
+   field, search, and switch, so a chip lines up level with them on one legacy row; text drops to 12px
+   for one shared classic density; icons shrink 18 to 14 to match the classic field. Below the 48px M3
+   touch floor, so use it only when converting an existing legacy page, never on a new one (the page-builder refuses it on new pages, the auditor flags it there). Keeps every color, variant, state, focus ring, truncation, and behavior of the full chip.
+   Slated for retirement (grep --classic to list every instance to remove). */
+.am-chip--classic {
+  --am-density-chip-height: 20px;
+  font-size: var(--md-sys-typescale-body-small-size);
+  font-weight: var(--md-sys-typescale-body-small-weight);
+  line-height: 1;
+}
+.am-chip--classic .am-icon { --am-icon-size: 14; }

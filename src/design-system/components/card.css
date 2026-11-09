@@ -1,0 +1,69 @@
+/* Allmoxy Design System, Card (STOCK Material 3)
+ * Elevated, filled, outlined. corner-medium (12px). v0.192 colors.
+ */
+.am-card { box-sizing: border-box;              /* own our size, never depend on a page reset */
+  border-radius: var(--md-sys-shape-corner-medium); padding: var(--md-sys-spacing-md); color: var(--md-sys-color-on-surface);
+  font-family: var(--md-sys-typescale-font); }
+/* No width of its own, on purpose. A card does not know where it sits (a grid, a rail, a dialog),
+ * so whatever holds it decides how wide it is. The card used to carry a 200px floor that nothing
+ * explained; inside the card grid, whose columns go down to 180px, that floor pushed each card
+ * past its column, ate the gap, and overlapped its neighbour at roughly one container width in
+ * five. Two parts each deciding one width is the bug, so the card stopped deciding. A check holds
+ * every grid's children inside their slots across a sweep of widths. */
+/* Elevated: the shadow does the lifting, so the fill is the sheet tone like the outlined card.
+ * It used to sit one step DOWN from the outlined card while claiming to be raised. */
+.am-card--elevated { background: var(--am-surface-sheet); box-shadow: var(--am-shadow-level1); }
+/* Filled: DELIBERATELY the one content surface that sits BEHIND the page rather than in front of
+ * it. Every other content surface follows the house rule (never darker than what it sits on) and
+ * this one does not, so the exception is recorded here rather than being rediscovered as a bug.
+ * Brady's call, 2026-08-06, having seen it rendered next to the alternatives: it is a deliberately
+ * quiet card, nothing in the system had been retired at that point, and there was no cost to
+ * leaving it. The alternative offered was to make it the sheet tone, which would have left it as a
+ * card with neither an outline nor a shadow, i.e. a worse version of its two siblings.
+ * If this is revisited: outlined carries the work (29 uses in the showroom against this one's 1,
+ * and that 1 is its own demo), so retiring it is the likelier answer than recolouring it. Do not
+ * "correct" the tone in passing. */
+.am-card--filled { background: var(--md-sys-color-surface-container-highest); }
+.am-card--outlined { background: var(--am-surface-sheet); border: 1px solid var(--md-sys-color-outline-variant); }
+.am-card__title { font-size: var(--md-sys-typescale-title-medium-size); font-weight: var(--md-sys-typescale-title-medium-weight); margin: 0 0 var(--md-sys-spacing-2xs); }
+.am-card__text { font-size: var(--md-sys-typescale-body-medium-size); color: var(--md-sys-color-on-surface-variant); margin: 0; }
+
+/* Media variant: an image-led card. The image runs full bleed across the top and both sides to the
+ * card edge, and the body sits below for text. The media box PINS the image with an absolute fill so
+ * an oversized upload can never stretch the card. Default handling is fill (object-fit cover, centered):
+ * mixed, uncropped, or wrong-ratio user uploads still read as one uniform tile, and a background baked
+ * into the source fills the frame instead of showing as a box. This is a deliberate house default chosen
+ * for worst-case user imagery, not an M3 rule; a per-image fit belongs to an app-level crop setting. */
+.am-card--media { padding: var(--md-sys-spacing-none); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.am-card__media { position: relative; display: block; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: transparent; }
+.am-card__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+/* Contain fit: the media letterboxes instead of cropping. RULED 2026-08-15 (gap
+ * interpreted--1783564619.034099, option A, from the first live card grid, the B2B supplier
+ * browse wall, DEV-12303): logo art must never crop, a cover fit beheads wordmarks. Blesses the
+ * documented local variant that surface shipped. Cover stays the default (photos want it);
+ * write --contain per card where the art is a logo or diagram. Inset padding keeps a
+ * full-bleed logo off the card edge. */
+.am-card__media--contain img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: var(--md-sys-spacing-xs); box-sizing: border-box; }
+.am-card__body { padding: var(--md-sys-spacing-md); display: flex; flex-direction: column; }
+/* Interactive card: the whole card is a link or button. Stock M3 state layer (hover 8, focus 12,
+ * press 12) plus the focus-visible outline. The layer sits above the media and clips to the card. */
+.am-card--interactive { position: relative; cursor: pointer; text-decoration: none; color: var(--md-sys-color-on-surface); }
+.am-card--interactive::after { content: ""; position: absolute; inset: 0; background: var(--md-sys-color-on-surface); opacity: 0; pointer-events: none; transition: opacity var(--md-sys-motion-duration-short3); }
+.am-card--interactive:hover::after { opacity: 0.08; }
+.am-card--interactive:focus-visible::after { opacity: 0.12; }
+.am-card--interactive:active::after { opacity: 0.12; }
+.am-card--interactive:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+/* Selected state: a card acting as a persistent toggle (a filter that is on) or the chosen item
+ * in a selectable set. Secondary-container fill plus a primary outline reads clearly as on, and
+ * the dark-on-light content stays legible without recoloring the parts placed inside. Mark it
+ * with aria-pressed for a toggle, aria-selected for a single choice, or the --selected modifier. */
+.am-card[aria-pressed="true"],
+.am-card[aria-selected="true"],
+.am-card--selected { background: var(--md-sys-color-secondary-container); border-color: var(--md-sys-color-primary); }
+
+/* A movable card (the drag and drop part, gap card 223): an elevated card already rests one step
+   up, so under the pointer it goes to two, Material's hover step for that card. */
+@media (hover: hover) {
+  .am-card--elevated.am-movable:hover { box-shadow: var(--am-shadow-level2); }
+}
+.am-card--elevated.am-movable:focus-visible { box-shadow: var(--am-shadow-level2); }
