@@ -1,0 +1,77 @@
+/* Allmoxy Design System, Switch (STOCK Material 3)
+ * Track 52x32 fully rounded. Off: small 16px handle on outline track. On: 24px handle,
+ * primary track, with a check. Real <input type="checkbox"> underneath.
+ */
+.am-switch { position: relative; display: inline-flex; align-items: center; gap: var(--md-sys-spacing-xs); cursor: pointer;
+  font-family: var(--md-sys-typescale-font); font-size: var(--md-sys-typescale-body-large-size);
+  color: var(--md-sys-color-on-surface); user-select: none; -webkit-user-select: none; }
+.am-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+/* position: relative above anchors this hidden input to its own control. Without it the input
+   is placed against the nearest positioned ancestor, stays put when a scroll area around it
+   scrolls, and focusing it on click scrolls that ancestor (even an overflow:hidden one) to it */
+.am-switch__track { position: relative; width: 52px; height: 32px; border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-surface-container-highest); border: 2px solid var(--md-sys-color-outline);
+  transition: background var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+              border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard); }
+.am-switch__handle { position: absolute; top: 50%; left: 6px; transform: translateY(-50%);
+  width: 16px; height: 16px; border-radius: 50%; background: var(--md-sys-color-outline);
+  display: flex; align-items: center; justify-content: center;
+  transition: left var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-emphasized),
+              width var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-emphasized),
+              height var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-emphasized),
+              background var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard); }
+.am-switch__handle .am-icon { --am-icon-size: 16; color: var(--md-sys-color-on-primary-container); opacity: 0; }
+.am-switch input:checked ~ .am-switch__track { background: var(--md-sys-color-primary); border-color: var(--md-sys-color-primary); }
+.am-switch input:checked ~ .am-switch__track .am-switch__handle { left: 22px; width: 24px; height: 24px; background: var(--md-sys-color-on-primary); }
+.am-switch input:checked ~ .am-switch__track .am-switch__handle .am-icon { opacity: 1; }
+.am-switch:has(input:disabled) { cursor: default; color: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--am-state-disabled-content-opacity) * 100%), transparent); }
+.am-switch input:disabled ~ .am-switch__track { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); border-color: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--am-state-disabled-container-opacity) * 100%), transparent); }
+
+/* keyboard focus: ring on the drawn track (the real input is hidden) */
+.am-switch input:focus-visible ~ .am-switch__track { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+
+/* ---- admin identity ----
+   House decision (Brady 2026-07-15, extended to the switch 2026-08-14): an admin-only control
+   carries one identity, the admin color plus the shield, always both (color for instant
+   recognition, shield so it still reads with no color at all). The button and icon-button
+   bindings live in button.css, the tag in tag.css, the chip in chip.css; this is the switch
+   binding of the same identity, for an admin-only toggle sitting in a table of ordinary
+   customer settings. Resting is admin ink on an admin edge (the chip's resting treatment), on
+   is a solid admin fill with the tick in admin ink on the light handle, and the shield leads
+   the label in both states, so nothing about the marking depends on which way the toggle sits.
+   The glyph is 20, the rung the switch's 16px label derives. Custom, a deliberate departure
+   from stock M3 (M3 has no permission-tier color). */
+.am-switch--admin > .am-icon:first-child { --am-icon-size: 20; flex: none; color: var(--am-admin-vivid); }
+.am-switch--admin .am-switch__track { border-color: var(--am-admin-vivid); }
+.am-switch--admin .am-switch__handle { background: var(--am-admin-vivid); }
+.am-switch--admin input:checked ~ .am-switch__track {
+  background: var(--am-admin-vivid);
+  border-color: var(--am-admin-vivid);
+}
+.am-switch--admin input:checked ~ .am-switch__track .am-switch__handle { background: var(--am-on-admin-vivid); }
+.am-switch--admin input:checked ~ .am-switch__track .am-switch__handle .am-icon { color: var(--am-admin-vivid); }
+.am-switch--admin input:disabled ~ .am-switch__track {
+  /* the checked fill above outranks the base part's disabled rule, so the disabled state has to
+     restate it: a disabled admin toggle must not shout in the loud identity color */
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+  border-color: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--am-state-disabled-container-opacity) * 100%), transparent);
+}
+.am-switch--admin input:disabled ~ .am-switch__track .am-switch__handle { background: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent); }
+.am-switch--admin:has(input:disabled) > .am-icon:first-child { color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent); }
+
+/* Classic switch: the legacy dense on/off toggle, shrunk to sit in cramped legacy settings rows.
+   The full switch is a fixed 52x32 mechanism (track, sliding handle, travel, check), so classic is
+   not a one-line height change: the whole mechanism scales down together (track 33x20, handle 10px
+   off / 15px on, travel and border scaled, check 10px) so it still reads and animates as a switch.
+   Sized to 20px, the shared classic density: it matches the classic text field and search so a
+   switch lines up level beside them on the same legacy row. Text matches the classic field at 12px.
+   The 2026-07-10 sweep measured the legacy toggle in its dense rows near 18-20px (the huge stamped
+   55px rows in that run are placeholder noise, not measured, so they are ignored); 20px lands on
+   M3's 4dp grid and holds the family together. Below the 48px M3 touch floor, so use it only when converting an existing legacy page, never on a new one: the page-builder refuses it on new pages and the auditor flags it there. Keeps every color,
+   state, focus ring, and behavior of the full switch; only the box and text shrink. Slated for
+   retirement (grep --classic to list every instance to remove). */
+.am-switch--classic { font-size: var(--md-sys-typescale-body-small-size); gap: var(--md-sys-spacing-2xs); }
+.am-switch--classic .am-switch__track { box-sizing: border-box; width: 33px; height: 20px; border-width: 1.5px; }
+.am-switch--classic .am-switch__handle { left: 3px; width: 10px; height: 10px; }
+.am-switch--classic .am-switch__handle .am-icon { --am-icon-size: 10; }
+.am-switch--classic input:checked ~ .am-switch__track .am-switch__handle { left: 15px; width: 15px; height: 15px; }
