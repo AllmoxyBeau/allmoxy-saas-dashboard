@@ -122,8 +122,13 @@ export function Sparkline({ values, tone = 'cat-1' }: { values: number[]; tone?:
   );
 }
 
-/** KPI tile. Interactive (opens its detail) when `onOpen` is given. The trend, when present,
- *  is pinned to the card's foot so every tile in a row shares one baseline. */
+/** KPI tile. Interactive (opens its detail) when `onOpen` is given.
+ *
+ *  ALIGNMENT RULE (Beau, 2026-11-09, applies app-wide): every slot lines up across a row of
+ *  tiles. Label, value and hint stack from the top; the status tag and the trend are pinned
+ *  to the card's foot, tag above trend. Tiles in a grid row are equal height, so tags share
+ *  one line and trends share one baseline whatever the hint's length or whether a neighbour
+ *  carries a tag. Pages never place a tag or trend inside the hint; they pass it here. */
 export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, onOpen }: { label: string; value: string; hint?: string; tag?: string; tagTone?: 'success' | 'warning' | 'error' | 'info' | 'neutral'; spark?: number[]; sparkTone?: string; onOpen?: () => void }) {
   const interactive = !!onOpen;
   return (
@@ -132,13 +137,13 @@ export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, on
       style={{ display: 'flex', flexDirection: 'column' }}>
       <span className="am-card__text">{label}</span>
       <p className="am-summary__value">{value}</p>
-      {(hint || tag) && (
-        <div className="am-row am-row--wrap">
-          {hint && <span className="am-card__text">{hint}</span>}
-          {tag && <span className={`am-tag${tagTone ? ` am-tag--${tagTone}` : ''}`}>{tag}</span>}
+      {hint && <p className="am-card__text">{hint}</p>}
+      {(tag || spark) && (
+        <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+          {tag && <div className="am-row"><span className={`am-tag${tagTone ? ` am-tag--${tagTone}` : ''}`}>{tag}</span></div>}
+          {spark && <Sparkline values={spark} tone={sparkTone} />}
         </div>
       )}
-      {spark && <div style={{ marginTop: 'auto', paddingTop: 8 }}><Sparkline values={spark} tone={sparkTone} /></div>}
     </div>
   );
 }
