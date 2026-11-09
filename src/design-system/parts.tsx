@@ -106,7 +106,7 @@ export function FilterChip({ checked, onChange, children }: { checked: boolean; 
   );
 }
 
-export function Sparkline({ values }: { values: number[] }) {
+export function Sparkline({ values, tone = 'cat-1' }: { values: number[]; tone?: string }) {
   if (values.length < 2) return null;
   const lo = Math.min(...values), hi = Math.max(...values), rng = hi - lo || 1;
   const pts = values.map((v, i) => [2 + (i * 96) / (values.length - 1), 22 - ((v - lo) / rng) * 16]);
@@ -115,16 +115,16 @@ export function Sparkline({ values }: { values: number[] }) {
   const trend = values[values.length - 1] > values[0] ? 'rising' : values[values.length - 1] < values[0] ? 'easing down' : 'flat';
   return (
     <svg className="am-sparkline" viewBox="0 0 100 26" preserveAspectRatio="none" role="img" aria-label={`Trend, ${trend}.`} style={{ width: '100%', height: 40 }}>
-      <polygon className="am-line__area am-series--cat-1" points={`${p} 98,24 2,24`} />
-      <polyline className="am-line am-series--cat-1" points={p} vectorEffect="non-scaling-stroke" />
-      <circle className="am-line__marker am-series--cat-1" cx={lx} cy={ly} r={2.4} />
+      <polygon className={`am-line__area am-series--${tone}`} points={`${p} 98,24 2,24`} />
+      <polyline className={`am-line am-series--${tone}`} points={p} vectorEffect="non-scaling-stroke" />
+      <circle className={`am-line__marker am-series--${tone}`} cx={lx} cy={ly} r={2.4} />
     </svg>
   );
 }
 
 /** KPI tile. Interactive (opens its detail) when `onOpen` is given. The trend, when present,
  *  is pinned to the card's foot so every tile in a row shares one baseline. */
-export function KpiCard({ label, value, hint, tag, tagTone, spark, onOpen }: { label: string; value: string; hint?: string; tag?: string; tagTone?: 'success' | 'warning' | 'error' | 'info' | 'neutral'; spark?: number[]; onOpen?: () => void }) {
+export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, onOpen }: { label: string; value: string; hint?: string; tag?: string; tagTone?: 'success' | 'warning' | 'error' | 'info' | 'neutral'; spark?: number[]; sparkTone?: string; onOpen?: () => void }) {
   const interactive = !!onOpen;
   return (
     <div className={`am-card am-card--outlined${interactive ? ' am-card--interactive' : ''}`}
@@ -138,7 +138,7 @@ export function KpiCard({ label, value, hint, tag, tagTone, spark, onOpen }: { l
           {tag && <span className={`am-tag${tagTone ? ` am-tag--${tagTone}` : ''}`}>{tag}</span>}
         </div>
       )}
-      {spark && <div style={{ marginTop: 'auto', paddingTop: 8 }}><Sparkline values={spark} /></div>}
+      {spark && <div style={{ marginTop: 'auto', paddingTop: 8 }}><Sparkline values={spark} tone={sparkTone} /></div>}
     </div>
   );
 }

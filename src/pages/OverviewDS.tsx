@@ -6,6 +6,11 @@
  * figures from customer_base (canonical), stream series from mrr_by_month with the Services /
  * Connect tab totals overriding the stale stacked rows, and the subscription and customer
  * series on the canonical base wherever its accrual window covers the month.
+ *
+ * Colors (Beau, 2026-11-09): matched to the Revenue Waterfall using only its gain end, so no
+ * color means "losing revenue" here: single series and trends wear the waterfall's blue
+ * (div-1); the streams are Subscription blue, Connect green (div-2), Services neutral (other).
+ * A deliberate departure from the categorical palette that rule 07 gives unordered streams.
  */
 import { useMemo, useState } from 'react';
 import { useSheetTab } from '../hooks/useSheetTab';
@@ -77,9 +82,9 @@ export default function OverviewDS() {
   } : {};
 
   const revSeries = [
-    { key: 'Subscription', label: 'Subscription', values: revRange.months.map(subAt), tone: 'cat-1' },
-    { key: 'Connect', label: 'Connect', values: revRange.months.map(conAt), tone: 'cat-2' },
-    { key: 'Services', label: 'Services', values: revRange.months.map(svcAt), tone: 'cat-3' },
+    { key: 'Subscription', label: 'Subscription', values: revRange.months.map(subAt), tone: 'div-1' },
+    { key: 'Connect', label: 'Connect', values: revRange.months.map(conAt), tone: 'div-2' },
+    { key: 'Services', label: 'Services', values: revRange.months.map(svcAt), tone: 'other' },
   ].filter((s) => streams[s.key as keyof typeof streams]);
 
   return (
@@ -97,17 +102,17 @@ export default function OverviewDS() {
       {error ? <p className="am-card__text">Could not load the monthly data: {String(error)}</p> : null}
       <div className="am-grid" style={{ ['--am-grid-min' as string]: '240px' }}>
         {ready && <>
-          <KpiCard label="Active paying customers" value={base!.customers.toLocaleString()} hint={change(base!.customers, customersAt(prev!), false)} spark={spark12.map(customersAt)} onOpen={() => setOpenSheet('customers')} />
-          <KpiCard label="Subscription MRR" value={usd(base!.mrr)} hint={change(base!.mrr, subAt(prev!))} tag={annualAmort > 0 ? `incl. ${usd(annualAmort)} annual` : undefined} spark={spark12.map(subAt)} onOpen={() => setOpenSheet('subscription')} />
-          <KpiCard label="Services revenue" value={usd(svcAt(asOf!))} hint={change(svcAt(asOf!), svcAt(prev!))} tag="Not recurring" spark={spark12.map(svcAt)} onOpen={() => setOpenSheet('services')} />
-          <KpiCard label="Connect revenue" value={usd(conAt(asOf!))} hint={change(conAt(asOf!), conAt(prev!))} spark={spark12.map(conAt)} onOpen={() => setOpenSheet('connect')} />
-          <KpiCard label="Total monthly revenue" value={usd(total)} hint={change(total, totalAt(prev!))} spark={spark12.map(totalAt)} onOpen={() => setOpenSheet('total')} />
+          <KpiCard label="Active paying customers" value={base!.customers.toLocaleString()} hint={change(base!.customers, customersAt(prev!), false)} sparkTone="div-1" spark={spark12.map(customersAt)} onOpen={() => setOpenSheet('customers')} />
+          <KpiCard label="Subscription MRR" value={usd(base!.mrr)} hint={change(base!.mrr, subAt(prev!))} tag={annualAmort > 0 ? `incl. ${usd(annualAmort)} annual` : undefined} sparkTone="div-1" spark={spark12.map(subAt)} onOpen={() => setOpenSheet('subscription')} />
+          <KpiCard label="Services revenue" value={usd(svcAt(asOf!))} hint={change(svcAt(asOf!), svcAt(prev!))} tag="Not recurring" sparkTone="div-1" spark={spark12.map(svcAt)} onOpen={() => setOpenSheet('services')} />
+          <KpiCard label="Connect revenue" value={usd(conAt(asOf!))} hint={change(conAt(asOf!), conAt(prev!))} sparkTone="div-1" spark={spark12.map(conAt)} onOpen={() => setOpenSheet('connect')} />
+          <KpiCard label="Total monthly revenue" value={usd(total)} hint={change(total, totalAt(prev!))} sparkTone="div-1" spark={spark12.map(totalAt)} onOpen={() => setOpenSheet('total')} />
         </>}
       </div>
 
       <ChartCard title="Active paying customers" caption={`Customers billed for a subscription each month · ${custRange.rangeText}`}>
         {custRange.controls}
-        <ColumnChart months={custRange.months} series={[{ key: 'c', label: 'Customers', values: custRange.months.map(customersAt), tone: 'cat-1' }]}
+        <ColumnChart months={custRange.months} series={[{ key: 'c', label: 'Customers', values: custRange.months.map(customersAt), tone: 'div-1' }]}
           fmt={(v) => Math.round(v).toLocaleString()} aria={`Active paying customers by month, ${custRange.rangeText}.`} />
       </ChartCard>
 
