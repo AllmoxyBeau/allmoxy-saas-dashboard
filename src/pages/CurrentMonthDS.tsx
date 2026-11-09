@@ -44,6 +44,8 @@ const STATES: Array<{ key: string; label: string; tone: 'error' | 'warning' | 'i
   { key: 'annual_amortized', label: 'Annual (amortized)', tone: 'neutral', help: 'Annual prepay carried at its monthly amortization; never billed monthly.' },
 ];
 const stateOf = (k: string) => STATES.find((s) => s.key === k);
+// At risk = the two states worth acting on today. One definition, used by the card and the list.
+const RISK = ['nothing_scheduled', 'failing'];
 
 const CATS: Array<{ k: VarianceCategory; label: string }> = [
   { k: 'new_sub', label: 'New' }, { k: 'reactivated', label: 'Reactivated' }, { k: 'reconnected', label: 'Reconnected' },
@@ -83,6 +85,7 @@ export default function CurrentMonthDS() {
 
   const shownCustomers = useMemo(() => {
     const all = cm?.customers ?? [];
+    if (focus === '__risk') return all.filter((c) => RISK.includes(c.billing_state));
     if (focus) return all.filter((c) => c.billing_state === focus);
     return all.filter((c) => c.movement !== 'flat');
   }, [cm, focus]);
@@ -93,7 +96,8 @@ export default function CurrentMonthDS() {
 
   const dataThrough = new Date(`${view.asOf}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   const m = cm?.mrr;
-  const atRisk = cm ? cm.billing.nothing_scheduled.amount + cm.billing.failing.amount : 0;
+  const atRisk = cm ? RISK.reduce((a, k) => a + (cm.billing[k]?.amount ?? 0), 0) : 0;
+  const atRiskN = cm ? RISK.reduce((a, k) => a + (cm.billing[k]?.customers ?? 0), 0) : 0;
   const pctBilled = m && m.billed_so_far + m.still_to_bill > 0 ? (m.billed_so_far / (m.billed_so_far + m.still_to_bill)) * 100 : 0;
 
   // cash projections, exactly as the classic cards
@@ -125,8 +129,9 @@ export default function CurrentMonthDS() {
           <KpiCard label="Net change" value={signed(m.net_change)} hint={m.net_change_pct != null ? `${pctTxt(m.net_change_pct)} on starting MRR` : undefined}
             tag={m.net_change >= 0 ? 'Growing' : 'Shrinking'} tagTone={m.net_change >= 0 ? 'success' : 'warning'} />
           <KpiCard label="Billed so far" value={usd(m.billed_so_far)} hint={`${usd(m.still_to_bill)} still to bill · ${Math.round(pctBilled)}% issued at ${Math.round(cm.elapsed_pct * 100)}% of the month`} />
-          <KpiCard label="At risk" value={usd(atRisk)} hint="Nothing scheduled + payment failing"
-            tag={atRisk > 0 ? 'Needs action' : 'Clear'} tagTone={atRisk > 0 ? 'error' : 'success'} onOpen={atRisk > 0 ? () => setFocus('nothing_scheduled') : undefined} />
+          <KpiCard label="At risk" value={usd(atRisk)}
+            hint={`Nothing scheduled ${usd(cm.billing.nothing_scheduled?.amount ?? 0)} + payment failing ${usd(cm.billing.failing?.amount ?? 0)} · ${atRiskN} customers`}
+            tag={atRisk > 0 ? 'Needs action' : 'Clear'} tagTone={atRisk > 0 ? 'error' : 'success'} onOpen={atRisk > 0 ? () => { setFocus('__risk'); setShowAllCust(true); } : undefined} />
         </>}
       </div>
 
@@ -158,8 +163,8 @@ export default function CurrentMonthDS() {
         <section className="am-card am-card--outlined">
           <div className="am-row am-row--spread">
             <div className="am-chart__head">
-              <span className="am-chart__title">{focus === '__all' ? `All customers · ${cm.customers.length}` : focus ? `${stateOf(focus)?.label} · ${shownCustomers.length}` : `Customers that moved · ${shownCustomers.length}`}</span>
-              <span className="am-chart__caption">{focus ? 'Filtered by billing state' : 'Every customer whose billing changed against last month'}</span>
+              <span className="am-chart__title">{focus === '__all' ? `All customers · ${cm.customers.length}` : focus === '__risk' ? `At risk · ${shownCustomers.length} customers · ${usd(atRisk)}` : focus ? `${stateOf(focus)?.label} · ${shownCustomers.length}` : `Customers that moved · ${shownCustomers.length}`}</span>
+              <span className="am-chart__caption">{focus === '__risk' ? 'Nothing scheduled + payment failing: the same customers as the At risk card' : focus ? 'Filtered by billing state' : 'Every customer whose billing changed against last month'}</span>
             </div>
             <div className="am-row">
               {focus && <button className="am-btn am-btn--text" onClick={() => setFocus(null)}>Clear filter</button>}
