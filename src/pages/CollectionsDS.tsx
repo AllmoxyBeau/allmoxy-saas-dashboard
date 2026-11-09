@@ -11,7 +11,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSheetTab } from '../hooks/useSheetTab';
-import { DataTable, DsPage, Icon, KpiCard, Select, SideSheet, downloadCsv, mlabel, usd } from '../design-system/parts';
+import { DataTable, DsPage, Icon, KpiCard, Segmented, Select, SideSheet, downloadCsv, mlabel, usd } from '../design-system/parts';
 
 type ArRow = {
   allmoxy_customer_id: number | null; name: string; invoice_id: string | null; invoice_date: string;
@@ -273,7 +273,7 @@ export default function CollectionsDS() {
         {isLoading ? <p className="am-card__text">Loading invoices…</p> : (
           <div style={{ overflowX: 'auto' }}>
             <DataTable label="Open invoices"
-              cols={[['Customer', false], ['Invoice', false], ['Amount', true], ['Age', true], ['Customer state', false], ['Instance owner', false], ['Decision', false]]}
+              cols={[['Customer', false], ['Invoice', false], ['Amount', true], ['Age', true], ['Customer state', false], ['Instance owner', false], ['Source', false], ['Decision', false]]}
               rows={list.map((r) => {
                 const off = r.effective === 'uncollectible';
                 const old = r.age_days > (threshold ?? 90);
@@ -293,11 +293,16 @@ export default function CollectionsDS() {
                   r.owner
                     ? (r.owner_email ? <a key="o" className="am-btn am-btn--text" href={`mailto:${r.owner_email}`} title={r.owner_email}>{r.owner}</a> : r.owner)
                     : <span key="o" className="am-tag am-tag--neutral">Unassigned</span>,
-                  <span key="d" className="am-row am-row--tight" style={{ flexWrap: 'nowrap' }}>
+                  // Source sits in its own column so the decision control starts on the same
+                  // line in every row, whatever the tag's width.
+                  <span key="s" className="am-row am-row--tight" style={{ flexWrap: 'nowrap' }}>
                     <span className="am-tooltip"><span className={`am-tag am-tag--${SOURCE[r.source].tone}`}>{SOURCE[r.source].label}</span><span className="am-tooltip__tip">{SOURCE[r.source].help}</span></span>
                     {r.effective === 'collected_manually' && <span className={`am-tag am-tag--${EFFECTIVE[r.effective].tone}`}>{EFFECTIVE[r.effective].label}</span>}
-                    <button className={`am-btn ${r.effective === 'collectible' ? 'am-btn--filled' : 'am-btn--outlined'}`} aria-pressed={r.effective === 'collectible'} onClick={() => setDecision(r.invoice_id, 'collectible')}>Chase</button>
-                    <button className={`am-btn ${off ? 'am-btn--filled' : 'am-btn--outlined'}`} aria-pressed={off} onClick={() => setDecision(r.invoice_id, 'uncollectible')}>Write off</button>
+                  </span>,
+                  // Chase or Write off: one choice of two, so the certified segmented buttons.
+                  <span key="d" className="am-row am-row--tight" style={{ flexWrap: 'nowrap' }}>
+                    <Segmented label={`Decision for ${r.name}`} value={off ? 'uncollectible' : r.effective === 'collectible' ? 'collectible' : null}
+                      onChange={(v) => setDecision(r.invoice_id, v)} options={[['collectible', 'Chase'], ['uncollectible', 'Write off']]} />
                     {r.source === 'pending' && <button className="am-btn am-btn--text" onClick={() => setDecision(r.invoice_id, null)}>Undo</button>}
                   </span>,
                 ];
@@ -307,7 +312,7 @@ export default function CollectionsDS() {
                 const r = list[i];
                 navigate(r.allmoxy_customer_id != null ? `/customer-detail?id=${encodeURIComponent(String(r.allmoxy_customer_id))}` : `/customer-detail?name=${encodeURIComponent(r.name)}`);
               }}
-              foot={[`Total · ${shown.length} invoices`, '', USD2.format(shownTotal), '', '', '', '']}
+              foot={[`Total · ${shown.length} invoices`, '', USD2.format(shownTotal), '', '', '', '', '']}
               onFoot={() => setShowAll(true)} footClickable={(c) => (c === 0 || c === 2) && !showAll && shown.length > LIMIT} />
           </div>
         )}
