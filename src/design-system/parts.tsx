@@ -207,16 +207,16 @@ export type ColumnSeries = { key: string; label: string; values: number[]; tone:
  *  signed (gains stack up from zero, losses stack down). Columns anchor at zero. A label sits
  *  above each column while there is room (24 months or fewer); hover or focus reveals the
  *  month's exact figures in the certified rich tooltip (chart hover ruled 2026-08-15). */
-export function ColumnChart({ months, series, fmt, aria, stacked, labelFor, tipRows, onSegment, legend }: {
-  months: string[]; series: ColumnSeries[]; fmt: (v: number) => string; aria: string; stacked?: boolean;
+export function ColumnChart({ months, series, fmt, aria, stacked, grouped, labelFor, tipRows, onSegment, legend }: {
+  months: string[]; series: ColumnSeries[]; fmt: (v: number) => string; aria: string; stacked?: boolean; grouped?: boolean;
   labelFor?: (i: number) => string | null; tipRows?: (i: number) => Array<[string, string]>;
   onSegment?: (i: number, key: string) => void; legend?: boolean;
 }) {
   const [tip, setTip] = useState<{ i: number; left: number; top: number } | null>(null);
   if (!months.length || !series.length) return <p className="am-card__text">No data for this range.</p>;
   const W = 1200, H = 290, L = 70, R = 16, T = 26;
-  const pos = months.map((_, i) => series.reduce((s, x) => s + Math.max(0, stacked ? x.values[i] : 0), 0) || (stacked ? 0 : Math.max(0, series[0].values[i])));
-  const neg = months.map((_, i) => series.reduce((s, x) => s + Math.min(0, stacked ? x.values[i] : 0), 0) || (stacked ? 0 : Math.min(0, series[0].values[i])));
+  const pos = months.map((_, i) => grouped ? Math.max(0, ...series.map((x) => x.values[i])) : series.reduce((s, x) => s + Math.max(0, stacked ? x.values[i] : 0), 0) || (stacked ? 0 : Math.max(0, series[0].values[i])));
+  const neg = months.map((_, i) => grouped ? Math.min(0, ...series.map((x) => x.values[i])) : series.reduce((s, x) => s + Math.min(0, stacked ? x.values[i] : 0), 0) || (stacked ? 0 : Math.min(0, series[0].values[i])));
   const maxV = Math.max(0, ...pos), minV = Math.min(0, ...neg);
   const rough = (maxV - minV || 1) / 4;
   const p10 = Math.pow(10, Math.floor(Math.log10(rough)));
@@ -233,7 +233,7 @@ export function ColumnChart({ months, series, fmt, aria, stacked, labelFor, tipR
   const showLabels = months.length <= 24;
   const catStep = Math.max(1, Math.ceil(months.length / 12));
   const longRange = months.length > 14;
-  const label = (i: number) => (labelFor ? labelFor(i) : fmt(stacked ? pos[i] + neg[i] : series[0].values[i]));
+  const label = (i: number) => (labelFor ? labelFor(i) : grouped ? null : fmt(stacked ? pos[i] + neg[i] : series[0].values[i]));
   const rowsFor = (i: number): Array<[string, string]> =>
     tipRows ? tipRows(i) : series.map((s) => [s.label, fmt(s.values[i])] as [string, string]);
   const show = (i: number, el: SVGRectElement) => {
@@ -252,7 +252,13 @@ export function ColumnChart({ months, series, fmt, aria, stacked, labelFor, tipR
           ))}
           {months.map((m, i) => {
             let up = 0, down = 0;
-            const segs = (stacked ? series : [series[0]]).map((s) => {
+            // Grouped: the series sit side by side in the month's slot, each from zero.
+            const segs = grouped ? series.map((s, k) => {
+              const v = s.values[i], w = bw / series.length;
+              const y0 = Y(Math.max(0, v)), h = Math.abs(Y(v) - Y(0));
+              return h > 0 ? <rect key={s.key} className={`am-column am-series--${s.tone}`} x={cx(i) - bw / 2 + k * w + 1} y={y0} width={w - 2} height={h}
+                style={onSegment ? { cursor: 'pointer' } : undefined} onClick={onSegment ? () => onSegment(i, s.key) : undefined} /> : null;
+            }) : (stacked ? series : [series[0]]).map((s) => {
               const v = s.values[i];
               let y0, y1;
               if (v >= 0) { y0 = Y(up + v); y1 = Y(up); up += v; } else { y0 = Y(down); y1 = Y(down + v); down += v; }

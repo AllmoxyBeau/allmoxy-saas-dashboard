@@ -19,7 +19,7 @@ import {
 type Named = { name: string; id?: number | null; mrr: number; status?: string | null; pay_status?: string | null };
 type Change = { name: string; id?: number | null; prev_mrr: number; new_mrr: number; delta: number };
 type Row = {
-  month: string; partial?: boolean;
+  month: string; partial?: boolean; cashBackfill?: boolean;
   starting_mrr: number; ending_mrr: number; net_new_mrr: number;
   new_mrr: number; reactivated_mrr?: number; recovered_mrr?: number; expansion_mrr: number;
   contraction_mrr: number; churn_mrr: number; delinquent_mrr?: number; voided_mrr?: number; paused_mrr?: number;
@@ -61,10 +61,16 @@ export default function RevenueWaterfallDS() {
   const { data: txnData, isLoading: txnLoading, error: txnError } = useSheetTab('mrr_waterfall_txns');
   const qb = qbData as unknown as Snap | undefined;
   const txn = txnData as unknown as Snap | undefined;
+  // Accrual history only starts when Stripe invoicing reached full coverage (Aug 2025). So the
+  // chart and table reach back to the earliest data, months before the first accrual month
+  // come from the cash series, marked as such. Cards never reach back that far.
+  const firstAccrual = qb?.monthly_accrual?.[0]?.month;
   const all: Row[] = useMemo(() => {
     if (source === 'txns') return txn?.monthly ?? [];
-    return basis === 'accrual' && qb?.monthly_accrual?.length ? qb.monthly_accrual : qb?.monthly ?? [];
-  }, [source, basis, qb, txn]);
+    if (basis !== 'accrual' || !qb?.monthly_accrual?.length) return qb?.monthly ?? [];
+    const earlier = (qb.monthly ?? []).filter((r) => firstAccrual && r.month < firstAccrual).map((r) => ({ ...r, cashBackfill: true }));
+    return [...earlier, ...qb.monthly_accrual];
+  }, [source, basis, qb, txn, firstAccrual]);
   const isLoading = source === 'txns' ? txnLoading : qbLoading;
   const error = source === 'txns' ? txnError : qbError;
 
@@ -180,7 +186,7 @@ export default function RevenueWaterfallDS() {
       </div>
       <p className="am-card__text">Rates are annualized from the monthly average, so 3, 6 and 12 month views compare. Cards never include the month in progress.</p>
 
-      <ChartCard title="Monthly MRR movement" caption={`Gains above zero, losses below · the figure on each month is its net new MRR · ${range.rangeText}`}>
+      <ChartCard title="Monthly MRR movement" caption={`Gains above zero, losses below · the figure on each month is its net new MRR · ${range.rangeText}${source === 'qb' && basis === 'accrual' && firstAccrual && range.months[0] && range.months[0] < firstAccrual ? ` · months before ${mlabel(firstAccrual)} are cash (cleared): invoicing data is complete only from then` : ''}`}>
         <div className="am-row am-row--wrap">
           {range.controls}
           {partialRow && <Switch checked={includePartial} onChange={setIncludePartial}>Include {mlabel(partialRow.month)} (in progress)</Switch>}
@@ -189,7 +195,7 @@ export default function RevenueWaterfallDS() {
           labelFor={(i) => { const r = visible[i]; return r ? `${r.net_new_mrr >= 0 ? '+' : '−'}${usdk(Math.abs(r.net_new_mrr)).replace('−', '')}` : null; }}
           tipRows={(i) => {
             const r = visible[i];
-            return r ? [...BUCKETS.filter((b) => val(r, b.k) !== 0).map((b) => [b.label, signed(b.sign * val(r, b.k))] as [string, string]), ['Net new', signed(r.net_new_mrr)], ['Ending MRR', usd(r.ending_mrr)]] : [];
+            return r ? [...BUCKETS.filter((b) => val(r, b.k) !== 0).map((b) => [b.label, signed(b.sign * val(r, b.k))] as [string, string]), ['Net new', signed(r.net_new_mrr)], ['Ending MRR', usd(r.ending_mrr)], ...(r.cashBackfill ? [['Basis', 'cash (before invoicing coverage)'] as [string, string]] : [])] : [];
           }}
           onSegment={(i, key) => { const st = STACKS.find((s) => s.key === key)!; open(range.months[i], st.parts, st.label); }}
           aria={`Monthly MRR movement, ${range.rangeText}.`} />
@@ -203,7 +209,7 @@ export default function RevenueWaterfallDS() {
         <div style={{ overflowX: 'auto' }}>
           <DataTable label="Month-by-month MRR movement" cols={cols}
             rows={tableRows.map((r) => [
-              mlabel(r.month) + (isPartial(r) ? ' (in progress)' : ''), usd(r.starting_mrr),
+              mlabel(r.month) + (isPartial(r) ? ' (in progress)' : '') + (r.cashBackfill ? ' (cash)' : ''), usd(r.starting_mrr),
               ...BUCKETS.map((b) => (val(r, b.k) ? signed(b.sign * val(r, b.k)) : '—')),
               signed(r.net_new_mrr), usd(r.ending_mrr), pct(r.nrr_monthly, 2), r.quick_ratio == null ? '—' : `${r.quick_ratio.toFixed(2)}x`,
             ])}

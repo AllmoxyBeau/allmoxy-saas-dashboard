@@ -7,6 +7,7 @@ import NorthStar from './pages/NorthStar';
 const OverviewDS = lazy(() => import('./pages/OverviewDS'));
 const RevenueWaterfallDS = lazy(() => import('./pages/RevenueWaterfallDS'));
 const LogoWaterfallDS = lazy(() => import('./pages/LogoWaterfallDS'));
+const NetRevenueRetentionDS = lazy(() => import('./pages/NetRevenueRetentionDS'));
 const ServiceTickets = lazy(() => import('./pages/ServiceTickets'));
 const ChurnTimeline = lazy(() => import('./pages/ChurnTimeline'));
 const Activation = lazy(() => import('./pages/Activation'));
@@ -82,6 +83,7 @@ export default function App() {
       <Route path="/overview" element={<L><OverviewDS /></L>} />
       <Route path="/revenue-waterfall" element={<L><RevenueWaterfallDS /></L>} />
       <Route path="/logo-waterfall" element={<L><LogoWaterfallDS /></L>} />
+      <Route path="/net-revenue-retention" element={<L><NetRevenueRetentionDS /></L>} />
       <Route path="/" element={<AppShell />}>
         <Route index element={<Navigate to="/overview" replace />} />
         <Route path="overview-classic" element={<NorthStar />} />
@@ -91,7 +93,7 @@ export default function App() {
         <Route path="collections" element={<L><Collections /></L>} />
         <Route path="logo-waterfall-classic" element={<L><LogoWaterfall /></L>} />
         <Route path="cohort-retention" element={<L><CohortRetention /></L>} />
-        <Route path="net-revenue-retention" element={<L><NetRevenueRetention /></L>} />
+        <Route path="net-revenue-retention-classic" element={<L><NetRevenueRetention /></L>} />
         <Route path="customer-health" element={<L><CustomerHealth /></L>} />
         <Route path="service-tickets" element={<L><ServiceTickets /></L>} />
         <Route path="activation" element={<L><Activation /></L>} />
