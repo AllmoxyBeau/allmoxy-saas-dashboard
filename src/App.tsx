@@ -9,6 +9,10 @@ const RevenueWaterfallDS = lazy(() => import('./pages/RevenueWaterfallDS'));
 const LogoWaterfallDS = lazy(() => import('./pages/LogoWaterfallDS'));
 const NetRevenueRetentionDS = lazy(() => import('./pages/NetRevenueRetentionDS'));
 const CurrentMonthDS = lazy(() => import('./pages/CurrentMonthDS'));
+const ServicesDS = lazy(() => import('./pages/ServicesDS'));
+const StripeConnectRevenueDS = lazy(() => import('./pages/StripeConnectRevenueDS'));
+const CollectionsDS = lazy(() => import('./pages/CollectionsDS'));
+const RevenueRecognitionDS = lazy(() => import('./pages/RevenueRecognitionDS'));
 const ServiceTickets = lazy(() => import('./pages/ServiceTickets'));
 const ChurnTimeline = lazy(() => import('./pages/ChurnTimeline'));
 const Activation = lazy(() => import('./pages/Activation'));
@@ -86,13 +90,17 @@ export default function App() {
       <Route path="/logo-waterfall" element={<L><LogoWaterfallDS /></L>} />
       <Route path="/net-revenue-retention" element={<L><NetRevenueRetentionDS /></L>} />
       <Route path="/current-month" element={<L><CurrentMonthDS /></L>} />
+      <Route path="/services" element={<L><ServicesDS /></L>} />
+      <Route path="/stripe-connect-revenue" element={<L><StripeConnectRevenueDS /></L>} />
+      <Route path="/collections" element={<L><CollectionsDS /></L>} />
+      <Route path="/revenue-recognition" element={<L><RevenueRecognitionDS /></L>} />
       <Route path="/" element={<AppShell />}>
         <Route index element={<Navigate to="/overview" replace />} />
         <Route path="overview-classic" element={<NorthStar />} />
         <Route path="current-month-classic" element={<L><CurrentMonth /></L>} />
         <Route path="revenue-waterfall-classic" element={<L><RevenueWaterfall /></L>} />
-        <Route path="revenue-recognition" element={<L><RevenueRecognition /></L>} />
-        <Route path="collections" element={<L><Collections /></L>} />
+        <Route path="revenue-recognition-classic" element={<L><RevenueRecognition /></L>} />
+        <Route path="collections-classic" element={<L><Collections /></L>} />
         <Route path="logo-waterfall-classic" element={<L><LogoWaterfall /></L>} />
         <Route path="cohort-retention" element={<L><CohortRetention /></L>} />
         <Route path="net-revenue-retention-classic" element={<L><NetRevenueRetention /></L>} />
@@ -107,8 +115,8 @@ export default function App() {
         <Route path="churn-risk-matrix" element={<L><ChurnRiskMatrix /></L>} />
         <Route path="time-to-value" element={<L><TimeToValue /></L>} />
         <Route path="orders-verified" element={<L><OrdersVerified /></L>} />
-        <Route path="stripe-connect-revenue" element={<L><StripeConnectRevenue /></L>} />
-        <Route path="services" element={<L><Services /></L>} />
+        <Route path="stripe-connect-revenue-classic" element={<L><StripeConnectRevenue /></L>} />
+        <Route path="services-classic" element={<L><Services /></L>} />
         <Route path="project-candidates" element={<L><ProjectCandidates /></L>} />
         <Route path="renewal-management" element={<L><RenewalManagement /></L>} />
         <Route path="contracts" element={<L><Contracts /></L>} />

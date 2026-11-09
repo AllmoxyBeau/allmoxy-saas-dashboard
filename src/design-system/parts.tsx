@@ -5,7 +5,7 @@
  * compete for the DOM. A page assembles these; it does not style them.
  */
 import './styles';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { Children, createContext, isValidElement, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useViewMode } from '../config/features';
 
@@ -129,8 +129,27 @@ export function Sparkline({ values, tone = 'cat-1' }: { values: number[]; tone?:
  *  to the card's foot, tag above trend. Tiles in a grid row are equal height, so tags share
  *  one line and trends share one baseline whatever the hint's length or whether a neighbour
  *  carries a tag. Pages never place a tag or trend inside the hint; they pass it here. */
+/** Which footer slots any card in this row uses. A card without one reserves the space, so a
+ *  tag-only card's tag sits on the same line as a neighbour's tag-above-trend. */
+const KpiRowSlots = createContext<{ tag: boolean; spark: boolean } | null>(null);
+
+/** A row of KPI cards. Use it instead of a bare am-grid: it fills the row (one column per card
+ *  up to `max`, never an empty column) and lines every card's footer slots up. */
+export function KpiGrid({ children, max = 6, min = 200 }: { children: ReactNode; max?: number; min?: number }) {
+  const kids = Children.toArray(children).filter(isValidElement) as Array<React.ReactElement<{ tag?: string; spark?: number[] }>>;
+  const slots = useMemo(() => ({ tag: kids.some((k) => !!k.props.tag), spark: kids.some((k) => !!k.props.spark) }), [kids]);
+  const cols = Math.max(1, Math.min(max, kids.length));
+  return (
+    <KpiRowSlots.Provider value={slots}>
+      <div className="am-grid" style={{ ['--am-grid-min' as string]: `max(${min}px, calc((100% - ${cols - 1} * var(--am-space-block)) / ${cols}))` }}>{children}</div>
+    </KpiRowSlots.Provider>
+  );
+}
+
 export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, onOpen }: { label: string; value: string; hint?: string; tag?: string; tagTone?: 'success' | 'warning' | 'error' | 'info' | 'neutral'; spark?: number[]; sparkTone?: string; onOpen?: () => void }) {
   const interactive = !!onOpen;
+  const row = useContext(KpiRowSlots);
+  const wantTag = !!tag || !!row?.tag, wantSpark = !!spark || !!row?.spark;
   return (
     <div className={`am-card am-card--outlined${interactive ? ' am-card--interactive' : ''}`}
       {...(interactive ? { role: 'button', tabIndex: 0, 'aria-label': `${label}: open the detail`, onClick: onOpen, onKeyDown: (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen!(); } } } : {})}
@@ -138,10 +157,10 @@ export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, on
       <span className="am-card__text">{label}</span>
       <p className="am-summary__value">{value}</p>
       {hint && <p className="am-card__text">{hint}</p>}
-      {(tag || spark) && (
+      {(wantTag || wantSpark) && (
         <div style={{ marginTop: 'auto', paddingTop: 8 }}>
-          {tag && <div className="am-row"><span className={`am-tag${tagTone ? ` am-tag--${tagTone}` : ''}`}>{tag}</span></div>}
-          {spark && <Sparkline values={spark} tone={sparkTone} />}
+          {wantTag && <div className="am-row" style={tag ? undefined : { visibility: 'hidden' }} aria-hidden={!tag}><span className={`am-tag${tagTone ? ` am-tag--${tagTone}` : ''}`}>{tag || 'placeholder'}</span></div>}
+          {spark ? <Sparkline values={spark} tone={sparkTone} /> : wantSpark ? <div style={{ height: 40 }} aria-hidden="true" /> : null}
         </div>
       )}
     </div>
@@ -151,21 +170,51 @@ export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, on
 /** Data table. `foot` adds the certified totals row (tfoot, title-small weight, out of the body);
  *  with `onFoot`, a total is selectable and opens everything it sums (Beau, 2026-11-09: every
  *  table with movement columns ends in a Total row that opens all of its data). */
-export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable }: {
+/*  Sorting: pass `sortValues` (one raw number/string per cell, same shape as `rows`) and every
+ *  header becomes a sort control (the design system's rule: every column sorts). `onCell` always
+ *  receives the ORIGINAL row index, so callers never see the sorted order. `clickable(col, row)`
+ *  may decide per row. */
+export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable, sortValues, defaultSort }: {
   cols: Array<[string, boolean]>; rows: Array<Array<ReactNode>>; label: string;
-  onCell?: (row: number, col: number) => void; clickable?: (col: number) => boolean;
+  onCell?: (row: number, col: number) => void; clickable?: (col: number, row: number) => boolean;
   foot?: Array<ReactNode>; onFoot?: (col: number) => void; footClickable?: (col: number) => boolean;
+  sortValues?: Array<Array<number | string | null | undefined>>; defaultSort?: { col: number; dir: 'asc' | 'desc' };
 }) {
+  const [sort, setSort] = useState<{ col: number; dir: 'asc' | 'desc' } | null>(defaultSort ?? null);
+  const order = useMemo(() => {
+    const idx = rows.map((_, i) => i);
+    if (!sort || !sortValues) return idx;
+    const val = (i: number) => sortValues[i]?.[sort.col];
+    return idx.sort((a, b) => {
+      const x = val(a), y = val(b);
+      if (x == null && y == null) return 0;
+      if (x == null) return 1;
+      if (y == null) return -1;
+      const c = typeof x === 'number' && typeof y === 'number' ? x - y : String(x).localeCompare(String(y));
+      return sort.dir === 'asc' ? c : -c;
+    });
+  }, [rows, sortValues, sort]);
+  const clickSort = (j: number) => setSort((s) => (s && s.col === j ? { col: j, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { col: j, dir: cols[j][1] ? 'desc' : 'asc' }));
   return (
     <table className="am-table" aria-label={label}>
-      <thead><tr>{cols.map(([c, n]) => <th key={c} className={n ? 'am-table__num' : undefined} style={{ whiteSpace: 'nowrap' }}>{c}</th>)}</tr></thead>
-      <tbody>{rows.map((r, i) => (
+      <thead><tr>{cols.map(([c, n], j) => (
+        <th key={c} className={n ? 'am-table__num' : undefined} style={{ whiteSpace: 'nowrap' }}
+          aria-sort={sort?.col === j ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}>
+          {sortValues ? (
+            <span className="am-table__sort" role="button" tabIndex={0} onClick={() => clickSort(j)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); clickSort(j); } }}>
+              {c}<span className="am-table__sortarrow" aria-hidden="true">{sort?.col === j && sort.dir === 'asc' ? '▲' : '▼'}</span>
+            </span>
+          ) : c}
+        </th>
+      ))}</tr></thead>
+      <tbody>{order.map((i) => { const r = rows[i]; return (
         <tr key={i}>{r.map((v, j) => (
           <td key={j} className={cols[j][1] ? 'am-table__num' : undefined} style={cols[j][1] ? { whiteSpace: 'nowrap' } : undefined}>
-            {onCell && (clickable ? clickable(j) : j > 0) && v !== '—' ? <button className="am-btn am-btn--text" onClick={() => onCell(i, j)}>{v}</button> : v}
+            {onCell && (clickable ? clickable(j, i) : j > 0) && v !== '—' ? <button className="am-btn am-btn--text" onClick={() => onCell(i, j)}>{v}</button> : v}
           </td>
         ))}</tr>
-      ))}</tbody>
+      ); })}</tbody>
       {foot && (
         <tfoot><tr>{foot.map((v, j) => (
           <td key={j} className={cols[j]?.[1] ? 'am-table__num' : undefined} style={{ whiteSpace: 'nowrap' }}>
@@ -221,8 +270,11 @@ export type ColumnSeries = { key: string; label: string; values: number[]; tone:
  *  signed (gains stack up from zero, losses stack down). Columns anchor at zero. A label sits
  *  above each column while there is room (24 months or fewer); hover or focus reveals the
  *  month's exact figures in the certified rich tooltip (chart hover ruled 2026-08-15). */
-export function ColumnChart({ months, series, fmt, aria, stacked, grouped, labelFor, tipRows, onSegment, legend }: {
+/*  `months` are category keys. They render as months unless `catLabel` (axis text) and
+ *  `catTitle` (tooltip / screen-reader title) are given, e.g. years or segments. */
+export function ColumnChart({ months, series, fmt, aria, stacked, grouped, labelFor, tipRows, onSegment, legend, catLabel, catTitle }: {
   months: string[]; series: ColumnSeries[]; fmt: (v: number) => string; aria: string; stacked?: boolean; grouped?: boolean;
+  catLabel?: (key: string, i: number) => string; catTitle?: (key: string) => string;
   labelFor?: (i: number) => string | null; tipRows?: (i: number) => Array<[string, string]>;
   onSegment?: (i: number, key: string) => void; legend?: boolean;
 }) {
@@ -247,6 +299,7 @@ export function ColumnChart({ months, series, fmt, aria, stacked, grouped, label
   const showLabels = months.length <= 24;
   const catStep = Math.max(1, Math.ceil(months.length / 12));
   const longRange = months.length > 14;
+  const title = (m: string) => (catTitle ? catTitle(m) : mlabel(m));
   const label = (i: number) => (labelFor ? labelFor(i) : grouped ? null : fmt(stacked ? pos[i] + neg[i] : series[0].values[i]));
   const rowsFor = (i: number): Array<[string, string]> =>
     tipRows ? tipRows(i) : series.map((s) => [s.label, fmt(s.values[i])] as [string, string]);
@@ -287,12 +340,12 @@ export function ColumnChart({ months, series, fmt, aria, stacked, grouped, label
               <g key={m}>
                 {/* hover / focus zone first, so the segments above it stay clickable */}
                 <rect x={L + slot * i} y={T} width={slot} height={B - T} fillOpacity={0} tabIndex={0}
-                  aria-label={`${mlabel(m)}: ${rowsFor(i).map(([a, b]) => `${a} ${b}`).join(', ')}`}
+                  aria-label={`${title(m)}: ${rowsFor(i).map(([a, b]) => `${a} ${b}`).join(', ')}`}
                   onMouseEnter={(e) => show(i, e.currentTarget)} onFocus={(e) => show(i, e.currentTarget)} onBlur={() => setTip(null)} />
                 <g onMouseEnter={(e) => show(i, (e.currentTarget.previousSibling as SVGRectElement))}>{segs}</g>
                 {lab && <text className="am-chart__value" x={cx(i)} y={Y(pos[i]) - 6} textAnchor="middle">{lab}</text>}
                 {(i % catStep === 0 || i === months.length - 1) && (
-                  <text className="am-chart__cat" x={cx(i)} y={B + 18} textAnchor="middle">{longRange ? MSY.format(toDate(m)) : mshort(m)}</text>
+                  <text className="am-chart__cat" x={cx(i)} y={B + 18} textAnchor="middle">{catLabel ? catLabel(m, i) : longRange ? MSY.format(toDate(m)) : mshort(m)}</text>
                 )}
               </g>
             );
@@ -300,7 +353,7 @@ export function ColumnChart({ months, series, fmt, aria, stacked, grouped, label
         </svg>
         {tip && (
           <span className="am-tooltip__tip am-tooltip__tip--rich" role="tooltip" style={{ left: tip.left, top: tip.top }}>
-            <b>{mlabel(months[tip.i])}</b>
+            <b>{title(months[tip.i])}</b>
             {rowsFor(tip.i).map(([a, b]) => <span key={a} style={{ display: 'block' }}>{a}: {b}</span>)}
           </span>
         )}
@@ -314,8 +367,8 @@ export function ColumnChart({ months, series, fmt, aria, stacked, grouped, label
       )}
       <table className="am-chart__data-table">
         <caption>{aria}</caption>
-        <thead><tr><th>Month</th>{series.map((s) => <th key={s.key}>{s.label}</th>)}</tr></thead>
-        <tbody>{months.map((m, i) => <tr key={m}><td>{mlabel(m)}</td>{series.map((s) => <td key={s.key}>{fmt(s.values[i])}</td>)}</tr>)}</tbody>
+        <thead><tr><th>{catTitle ? 'Category' : 'Month'}</th>{series.map((s) => <th key={s.key}>{s.label}</th>)}</tr></thead>
+        <tbody>{months.map((m, i) => <tr key={m}><td>{title(m)}</td>{series.map((s) => <td key={s.key}>{fmt(s.values[i])}</td>)}</tr>)}</tbody>
       </table>
     </>
   );
