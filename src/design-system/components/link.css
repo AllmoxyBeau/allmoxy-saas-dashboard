@@ -1,0 +1,57 @@
+/* Link (am-link) -- Material 3 standard text link.
+ *
+ * Accent color plus a persistent underline. The underline is not decoration: it carries the
+ * link's distinction without relying on color, so the link stays identifiable for users with
+ * color vision deficiency. Interaction feedback is the standard state layer at Google's
+ * opacities via the same ::before overlay every other part uses, never a hover color shift
+ * (shifting text color on a surface changes its contrast; that mismatch was the SDK bug this
+ * part replaces). Keyboard focus also gets the shared focus ring. Visited is left at the
+ * default color on purpose: in-app links are navigation, not browsed web content, so a
+ * distinct visited color would mislead. */
+.am-link {
+  position: relative;
+  z-index: 0;
+  color: var(--md-sys-color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  cursor: pointer;
+  --_state-color: var(--md-sys-color-primary);
+}
+.am-link::before {
+  content: "";
+  position: absolute;
+  inset: -1px -3px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--_state-color);
+  opacity: 0;
+  transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+.am-link:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+.am-link:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.am-link:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+.am-link:focus-visible { outline: var(--am-focus-ring-width) solid var(--am-focus-ring-color); outline-offset: var(--am-focus-ring-offset); }
+.am-link:visited { color: var(--md-sys-color-primary); }
+
+/* Quiet link (am-link--quiet), the link inside a data table cell. Ruled 2026-08-21 (option C).
+ *
+ * The persistent underline above is correct in running text, where a link is one phrase inside a
+ * paragraph and has nothing else to distinguish it. A table is the opposite case: a link column is
+ * every row of one column, so the underline stops marking individual links and becomes a texture
+ * running down the table, and the row it is trying to help scan is the thing it makes harder to read.
+ *
+ * So the underline is deferred, not dropped: gone at rest, back the instant a pointer lands on the
+ * link or the keyboard tabs to it. The color-independence the underline exists for is carried at rest
+ * by POSITION instead: the first column of the row is always a link when any cell in that row is,
+ * so a reader who cannot separate the link color from the ink still has a learnable, reliable place
+ * to find the link. That position rule is half the ruling, not a style preference, and
+ * table_link_check.mjs enforces both halves. Dropping either one leaves color alone carrying the
+ * link, which is the shape this system does not ship.
+ *
+ * Table cells only. In running text there is no column to anchor to, so a quiet link there IS the
+ * color-alone failure; the check refuses it. */
+.am-link--quiet { text-decoration: none; }
+.am-link--quiet:hover,
+.am-link--quiet:focus-visible { text-decoration: underline; }

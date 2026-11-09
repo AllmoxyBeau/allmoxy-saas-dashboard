@@ -9,6 +9,18 @@ const RevenueWaterfallDS = lazy(() => import('./pages/RevenueWaterfallDS'));
 const LogoWaterfallDS = lazy(() => import('./pages/LogoWaterfallDS'));
 const NetRevenueRetentionDS = lazy(() => import('./pages/NetRevenueRetentionDS'));
 const CurrentMonthDS = lazy(() => import('./pages/CurrentMonthDS'));
+const DataCleanupDS = lazy(() => import('./pages/DataCleanupDS'));
+const ProjectCandidatesDS = lazy(() => import('./pages/ProjectCandidatesDS'));
+const BugReportDS = lazy(() => import('./pages/BugReportDS'));
+const FeaturesDS = lazy(() => import('./pages/FeaturesDS'));
+const OrdersVerifiedDS = lazy(() => import('./pages/OrdersVerifiedDS'));
+const ServiceTicketsDS = lazy(() => import('./pages/ServiceTicketsDS'));
+const ImplementationScheduleDS = lazy(() => import('./pages/ImplementationScheduleDS'));
+const ImplementationDS = lazy(() => import('./pages/ImplementationDS'));
+const RepDashboardDS = lazy(() => import('./pages/RepDashboardDS'));
+const ActivationDS = lazy(() => import('./pages/ActivationDS'));
+const TimeToValueDS = lazy(() => import('./pages/TimeToValueDS'));
+const CustomerDetailDS = lazy(() => import('./pages/CustomerDetailDS'));
 const CustomReportDS = lazy(() => import('./pages/CustomReportDS'));
 const CustomersDS = lazy(() => import('./pages/CustomersDS'));
 const ContractsDS = lazy(() => import('./pages/ContractsDS'));
@@ -100,6 +112,18 @@ export default function App() {
       <Route path="/logo-waterfall" element={<L><LogoWaterfallDS /></L>} />
       <Route path="/net-revenue-retention" element={<L><NetRevenueRetentionDS /></L>} />
       <Route path="/current-month" element={<L><CurrentMonthDS /></L>} />
+      <Route path="/data-cleanup" element={<L><DataCleanupDS /></L>} />
+      <Route path="/project-candidates" element={<L><ProjectCandidatesDS /></L>} />
+      <Route path="/bug-report" element={<L><BugReportDS /></L>} />
+      <Route path="/features" element={<L><FeaturesDS /></L>} />
+      <Route path="/orders-verified" element={<L><OrdersVerifiedDS /></L>} />
+      <Route path="/service-tickets" element={<L><ServiceTicketsDS /></L>} />
+      <Route path="/implementation-schedule" element={<L><ImplementationScheduleDS /></L>} />
+      <Route path="/implementation" element={<L><ImplementationDS /></L>} />
+      <Route path="/rep-dashboard" element={<L><RepDashboardDS /></L>} />
+      <Route path="/activation" element={<L><ActivationDS /></L>} />
+      <Route path="/time-to-value" element={<L><TimeToValueDS /></L>} />
+      <Route path="/customer-detail" element={<L><CustomerDetailDS /></L>} />
       <Route path="/custom-report" element={<L><CustomReportDS /></L>} />
       <Route path="/customers" element={<L><CustomersDS /></L>} />
       <Route path="/contracts" element={<L><ContractsDS /></L>} />
@@ -125,25 +149,25 @@ export default function App() {
         <Route path="cohort-retention-classic" element={<L><CohortRetention /></L>} />
         <Route path="net-revenue-retention-classic" element={<L><NetRevenueRetention /></L>} />
         <Route path="customer-health-classic" element={<L><CustomerHealth /></L>} />
-        <Route path="service-tickets" element={<L><ServiceTickets /></L>} />
-        <Route path="activation" element={<L><Activation /></L>} />
-        <Route path="bug-report" element={<L><BugReport /></L>} />
+        <Route path="service-tickets-classic" element={<L><ServiceTickets /></L>} />
+        <Route path="activation-classic" element={<L><Activation /></L>} />
+        <Route path="bug-report-classic" element={<L><BugReport /></L>} />
         <Route path="sales-budget" element={<L><SalesBudget /></L>} />
         <Route path="churn-timeline-classic" element={<L><ChurnTimeline /></L>} />
         <Route path="churn-patterns-classic" element={<L><ChurnPatterns /></L>} />
         <Route path="churn-investigator-classic" element={<L><ChurnInvestigator /></L>} />
         <Route path="churn-risk-matrix-classic" element={<L><ChurnRiskMatrix /></L>} />
-        <Route path="time-to-value" element={<L><TimeToValue /></L>} />
-        <Route path="orders-verified" element={<L><OrdersVerified /></L>} />
+        <Route path="time-to-value-classic" element={<L><TimeToValue /></L>} />
+        <Route path="orders-verified-classic" element={<L><OrdersVerified /></L>} />
         <Route path="stripe-connect-revenue-classic" element={<L><StripeConnectRevenue /></L>} />
         <Route path="services-classic" element={<L><Services /></L>} />
-        <Route path="project-candidates" element={<L><ProjectCandidates /></L>} />
+        <Route path="project-candidates-classic" element={<L><ProjectCandidates /></L>} />
         <Route path="renewal-management-classic" element={<L><RenewalManagement /></L>} />
         <Route path="contracts-classic" element={<L><Contracts /></L>} />
         <Route path="payments-opportunity" element={<L><PaymentsOpportunity /></L>} />
-        <Route path="implementation" element={<L><Implementation /></L>} />
-        <Route path="implementation-schedule" element={<L><ImplementationSchedule /></L>} />
-        <Route path="data-cleanup" element={<L><DataCleanup /></L>} />
+        <Route path="implementation-classic" element={<L><Implementation /></L>} />
+        <Route path="implementation-schedule-classic" element={<L><ImplementationSchedule /></L>} />
+        <Route path="data-cleanup-classic" element={<L><DataCleanup /></L>} />
         <Route path="backend-plan" element={<L><BackendPlan /></L>} />
         <Route path="api-migration-plan" element={<L><ApiMigrationPlan /></L>} />
         {/* Financial / QoE / diligence routes — registered only when the
@@ -170,9 +194,9 @@ export default function App() {
           </>
         )}
         <Route path="customers-classic" element={<L><Customers /></L>} />
-        <Route path="rep-dashboard" element={<L><RepDashboard /></L>} />
-        <Route path="features" element={<L><Features /></L>} />
-        <Route path="customer-detail" element={<L><CustomerDetail /></L>} />
+        <Route path="rep-dashboard-classic" element={<L><RepDashboard /></L>} />
+        <Route path="features-classic" element={<L><Features /></L>} />
+        <Route path="customer-detail-classic" element={<L><CustomerDetail /></L>} />
         <Route path="custom-report-classic" element={<L><CustomReport /></L>} />
         <Route path="*" element={<Navigate to="/overview" replace />} />
       </Route>

@@ -10,6 +10,7 @@ import './components/text-field.css';
 import './components/chip.css';
 import './components/tag.css';
 import './components/switch.css';
+import './components/link.css';
 import './components/card.css';
 import './components/layout.css';
 import './components/page-header.css';

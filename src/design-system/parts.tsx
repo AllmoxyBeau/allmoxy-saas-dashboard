@@ -17,7 +17,8 @@ export const usdk = (v: number) => {
   if (a < 0.5) return '$0';
   if (a < 1000) return `${sign}$${Math.round(a)}`;
   if (a < 1e6) return `${sign}$${Math.round(a / 1000).toLocaleString()}k`;
-  return `${sign}$${(a / 1e6).toFixed(2)}M`;
+  if (a < 1e9) return `${sign}$${(a / 1e6).toFixed(2)}M`;
+  return `${sign}$${(a / 1e9).toFixed(2)}B`;
 };
 export const pct = (v: number | null | undefined, d = 1) => (v == null ? '—' : `${(v * 100).toFixed(d)}%`);
 const ML = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' });
@@ -82,6 +83,23 @@ export function Select({ value, options, onPick, label, width = 150 }: { value: 
       </div>
     </div>
   );
+}
+
+/** Link: the certified inline text link (navigation inside text or a table cell). In-app paths
+ *  route without a reload; external URLs open in a new tab. Ctrl/Cmd-click keeps browser habits. */
+export function Link({ to, href, children, quiet }: { to?: string; href?: string; children: ReactNode; quiet?: boolean }) {
+  const navigate = useNavigate();
+  const cls = `am-link${quiet ? ' am-link--quiet' : ''}`;
+  if (href) return <a className={cls} href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
+  return (
+    <a className={cls} href={to} onClick={(e) => { if (!to || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; e.preventDefault(); navigate(to); }}>{children}</a>
+  );
+}
+
+/** A customer's name linking to their detail page (by id when known, else by name). */
+export function CustomerLink({ id, name }: { id?: number | null; name: string }) {
+  const to = id != null ? `/customer-detail?id=${encodeURIComponent(String(id))}` : `/customer-detail?name=${encodeURIComponent(name)}`;
+  return <Link to={to}>{name}</Link>;
 }
 
 /** Multi-select: several values from a known set; the certified field + menu, with a check on
@@ -246,7 +264,15 @@ export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, 
       return sort.dir === 'asc' ? c : -c;
     });
   }, [rows, sortValues, sort]);
-  useEffect(() => { onSortChange?.(order, sort); }, [order]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Only report a genuinely new order: a page that rebuilds `rows` every render would otherwise
+  // get a fresh callback each render and loop if it stores the order in state.
+  const lastOrder = useRef('');
+  useEffect(() => {
+    const key = `${sort?.col ?? ''}:${sort?.dir ?? ''}:${order.join(',')}`;
+    if (key === lastOrder.current) return;
+    lastOrder.current = key;
+    onSortChange?.(order, sort);
+  }, [order, sort]); // eslint-disable-line react-hooks/exhaustive-deps
   const shownOrder = limit != null ? order.slice(0, limit) : order;
   const clickSort = (j: number) => setSort((s) => (s && s.col === j ? { col: j, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { col: j, dir: cols[j][1] ? 'desc' : 'asc' }));
   return (
