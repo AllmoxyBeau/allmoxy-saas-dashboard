@@ -84,6 +84,54 @@ export function Select({ value, options, onPick, label, width = 150 }: { value: 
   );
 }
 
+/** Multi-select: several values from a known set; the certified field + menu, with a check on
+ *  each chosen item, staying open while picking. Empty selection means "all". */
+export function MultiSelect({ label, allText = 'All', options, value, onChange, width = 240 }: {
+  label: string; allText?: string; options: Array<[string, string]>; value: string[]; onChange: (v: string[]) => void; width?: number;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useDismiss(open, () => setOpen(false));
+  if (!options.length) return null;
+  const shown = value.length === 0 ? allText : value.length === 1 ? (options.find(([k]) => k === value[0])?.[1] ?? value[0]) : `${value.length} selected`;
+  return (
+    <div ref={ref} className={`am-menu-anchor am-select${open ? ' is-open' : ''}`} style={{ width }}>
+      <label className="am-field am-field--outlined" style={{ width: '100%', minWidth: 0 }} onClick={() => setOpen(!open)}>
+        <input className="am-field__input" placeholder=" " value={shown} readOnly aria-label={label} />
+        <span className="am-field__label">{label}</span>
+        <Icon name="arrow_drop_down" className="am-field__trail" />
+        <span className="am-field__box" aria-hidden="true"><i /><i className="am-field__gap" /><i /></span>
+      </label>
+      <div className="am-menu" role="menu" style={{ maxHeight: 320, overflowY: 'auto' }}>
+        {value.length > 0 && (
+          <button className="am-menu__item" role="menuitem" onClick={() => onChange([])}><span className="am-menu__label">{allText}</span></button>
+        )}
+        {options.map(([k, l]) => {
+          const on = value.includes(k);
+          return (
+            <button key={k} className="am-menu__item" role="menuitemcheckbox" aria-checked={on} aria-selected={on}
+              onClick={() => onChange(on ? value.filter((x) => x !== k) : [...value, k])}>
+              <span style={on ? undefined : { visibility: 'hidden' }}><Icon name="check" /></span>
+              <span className="am-menu__label">{l}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/** Search field: the certified outlined field with a leading search icon. */
+export function SearchField({ value, onChange, label = 'Search', width = 280 }: { value: string; onChange: (v: string) => void; label?: string; width?: number }) {
+  return (
+    <label className="am-field am-field--outlined" style={{ width }}>
+      <Icon name="search" className="am-field__lead" />
+      <input className="am-field__input" placeholder=" " value={value} aria-label={label} onChange={(e) => onChange(e.target.value)} />
+      <span className="am-field__label">{label}</span>
+      <span className="am-field__box" aria-hidden="true"><i /><i className="am-field__gap">{label}</i><i /></span>
+    </label>
+  );
+}
+
 /** Switch: a single setting that takes effect immediately. */
 export function Switch({ checked, onChange, children }: { checked: boolean; onChange: (v: boolean) => void; children: ReactNode }) {
   return (
@@ -174,11 +222,15 @@ export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, on
  *  header becomes a sort control (the design system's rule: every column sorts). `onCell` always
  *  receives the ORIGINAL row index, so callers never see the sorted order. `clickable(col, row)`
  *  may decide per row. */
-export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable, sortValues, defaultSort }: {
+export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable, sortValues, defaultSort, limit, onSortChange }: {
   cols: Array<[string, boolean]>; rows: Array<Array<ReactNode>>; label: string;
   onCell?: (row: number, col: number) => void; clickable?: (col: number, row: number) => boolean;
   foot?: Array<ReactNode>; onFoot?: (col: number) => void; footClickable?: (col: number) => boolean;
   sortValues?: Array<Array<number | string | null | undefined>>; defaultSort?: { col: number; dir: 'asc' | 'desc' };
+  /** Show only the first N rows AFTER sorting the full list (pass every row, not a slice). */
+  limit?: number;
+  /** Told the sorted order (original indices) whenever it changes, so a CSV can follow it. */
+  onSortChange?: (order: number[], sort: { col: number; dir: 'asc' | 'desc' } | null) => void;
 }) {
   const [sort, setSort] = useState<{ col: number; dir: 'asc' | 'desc' } | null>(defaultSort ?? null);
   const order = useMemo(() => {
@@ -194,6 +246,8 @@ export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, 
       return sort.dir === 'asc' ? c : -c;
     });
   }, [rows, sortValues, sort]);
+  useEffect(() => { onSortChange?.(order, sort); }, [order]); // eslint-disable-line react-hooks/exhaustive-deps
+  const shownOrder = limit != null ? order.slice(0, limit) : order;
   const clickSort = (j: number) => setSort((s) => (s && s.col === j ? { col: j, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { col: j, dir: cols[j][1] ? 'desc' : 'asc' }));
   return (
     <table className="am-table" aria-label={label}>
@@ -208,7 +262,7 @@ export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, 
           ) : c}
         </th>
       ))}</tr></thead>
-      <tbody>{order.map((i) => { const r = rows[i]; return (
+      <tbody>{shownOrder.map((i) => { const r = rows[i]; return (
         <tr key={i}>{r.map((v, j) => (
           <td key={j} className={cols[j][1] ? 'am-table__num' : undefined} style={cols[j][1] ? { whiteSpace: 'nowrap' } : undefined}>
             {onCell && (clickable ? clickable(j, i) : j > 0) && v !== '—' ? <button className="am-btn am-btn--text" onClick={() => onCell(i, j)}>{v}</button> : v}
@@ -241,8 +295,11 @@ export function SideSheet({ open, onClose, title, text, children }: { open: bool
           <h2 className="am-sidesheet__title">{title}</h2>
           <button className="am-sidesheet__close" aria-label="Close" onClick={onClose}><Icon name="close" /></button>
         </div>
-        {text && <p className="am-sidesheet__text">{text}</p>}
-        {children}
+        {/* Content stacks with the system's block spacing, so sections never crowd. */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--am-space-block)' }}>
+          {text && <p className="am-sidesheet__text">{text}</p>}
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -305,7 +362,10 @@ export function ColumnChart({ months, series, fmt, aria, stacked, grouped, label
     tipRows ? tipRows(i) : series.map((s) => [s.label, fmt(s.values[i])] as [string, string]);
   const show = (i: number, el: SVGRectElement) => {
     const r = el.getBoundingClientRect();
-    setTip({ i, left: r.left + r.width / 2, top: r.top + ((Y(pos[i]) - T) / (B - T)) * r.height - 28 });
+    // Keep the tip on screen: a column near either edge (or inside a side sheet) would
+    // otherwise push half the tip past the viewport.
+    const half = 170;
+    setTip({ i, left: Math.min(Math.max(r.left + r.width / 2, half), window.innerWidth - half), top: r.top + ((Y(pos[i]) - T) / (B - T)) * r.height - 28 });
   };
   return (
     <>

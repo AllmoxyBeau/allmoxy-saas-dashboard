@@ -1,7 +1,7 @@
 {
-  "fetchedAt": "2026-11-09T21:08:10.912Z",
-  "jira_fetchedAt": "2026-11-09T21:07:27.920Z",
-  "harvest_fetchedAt": "2026-11-09T21:08:10.800Z",
+  "fetchedAt": "2026-11-09T22:51:43.682Z",
+  "jira_fetchedAt": "2026-11-09T22:51:08.413Z",
+  "harvest_fetchedAt": "2026-11-09T22:51:43.602Z",
   "note": "Implementation projects = services revenue. JIRA (IPA epics) supplies stage; Harvest supplies hours + billable $. Join: harvest_id==client_id (exact); JIRA by epic-summary name-match (+ overrides).",
   "aggregates": {
     "total_customers": 110,
@@ -4930,7 +4930,7 @@
     {
       "allmoxy_customer_id": 418,
       "name": "Evolve Elements",
-      "customer_status": "active",
+      "customer_status": "paused",
       "account_rep": "Bobby Lewis",
       "harvest_id": "13025471",
       "sign_up_date": "2019-04-01",

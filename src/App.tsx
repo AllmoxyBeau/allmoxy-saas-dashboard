@@ -9,6 +9,16 @@ const RevenueWaterfallDS = lazy(() => import('./pages/RevenueWaterfallDS'));
 const LogoWaterfallDS = lazy(() => import('./pages/LogoWaterfallDS'));
 const NetRevenueRetentionDS = lazy(() => import('./pages/NetRevenueRetentionDS'));
 const CurrentMonthDS = lazy(() => import('./pages/CurrentMonthDS'));
+const CustomReportDS = lazy(() => import('./pages/CustomReportDS'));
+const CustomersDS = lazy(() => import('./pages/CustomersDS'));
+const ContractsDS = lazy(() => import('./pages/ContractsDS'));
+const RenewalManagementDS = lazy(() => import('./pages/RenewalManagementDS'));
+const CustomerHealthDS = lazy(() => import('./pages/CustomerHealthDS'));
+const ChurnRiskMatrixDS = lazy(() => import('./pages/ChurnRiskMatrixDS'));
+const ChurnInvestigatorDS = lazy(() => import('./pages/ChurnInvestigatorDS'));
+const ChurnPatternsDS = lazy(() => import('./pages/ChurnPatternsDS'));
+const ChurnTimelineDS = lazy(() => import('./pages/ChurnTimelineDS'));
+const CohortRetentionDS = lazy(() => import('./pages/CohortRetentionDS'));
 const ServicesDS = lazy(() => import('./pages/ServicesDS'));
 const StripeConnectRevenueDS = lazy(() => import('./pages/StripeConnectRevenueDS'));
 const CollectionsDS = lazy(() => import('./pages/CollectionsDS'));
@@ -90,6 +100,16 @@ export default function App() {
       <Route path="/logo-waterfall" element={<L><LogoWaterfallDS /></L>} />
       <Route path="/net-revenue-retention" element={<L><NetRevenueRetentionDS /></L>} />
       <Route path="/current-month" element={<L><CurrentMonthDS /></L>} />
+      <Route path="/custom-report" element={<L><CustomReportDS /></L>} />
+      <Route path="/customers" element={<L><CustomersDS /></L>} />
+      <Route path="/contracts" element={<L><ContractsDS /></L>} />
+      <Route path="/renewal-management" element={<L><RenewalManagementDS /></L>} />
+      <Route path="/customer-health" element={<L><CustomerHealthDS /></L>} />
+      <Route path="/churn-risk-matrix" element={<L><ChurnRiskMatrixDS /></L>} />
+      <Route path="/churn-investigator" element={<L><ChurnInvestigatorDS /></L>} />
+      <Route path="/churn-patterns" element={<L><ChurnPatternsDS /></L>} />
+      <Route path="/churn-timeline" element={<L><ChurnTimelineDS /></L>} />
+      <Route path="/cohort-retention" element={<L><CohortRetentionDS /></L>} />
       <Route path="/services" element={<L><ServicesDS /></L>} />
       <Route path="/stripe-connect-revenue" element={<L><StripeConnectRevenueDS /></L>} />
       <Route path="/collections" element={<L><CollectionsDS /></L>} />
@@ -102,24 +122,24 @@ export default function App() {
         <Route path="revenue-recognition-classic" element={<L><RevenueRecognition /></L>} />
         <Route path="collections-classic" element={<L><Collections /></L>} />
         <Route path="logo-waterfall-classic" element={<L><LogoWaterfall /></L>} />
-        <Route path="cohort-retention" element={<L><CohortRetention /></L>} />
+        <Route path="cohort-retention-classic" element={<L><CohortRetention /></L>} />
         <Route path="net-revenue-retention-classic" element={<L><NetRevenueRetention /></L>} />
-        <Route path="customer-health" element={<L><CustomerHealth /></L>} />
+        <Route path="customer-health-classic" element={<L><CustomerHealth /></L>} />
         <Route path="service-tickets" element={<L><ServiceTickets /></L>} />
         <Route path="activation" element={<L><Activation /></L>} />
         <Route path="bug-report" element={<L><BugReport /></L>} />
         <Route path="sales-budget" element={<L><SalesBudget /></L>} />
-        <Route path="churn-timeline" element={<L><ChurnTimeline /></L>} />
-        <Route path="churn-patterns" element={<L><ChurnPatterns /></L>} />
-        <Route path="churn-investigator" element={<L><ChurnInvestigator /></L>} />
-        <Route path="churn-risk-matrix" element={<L><ChurnRiskMatrix /></L>} />
+        <Route path="churn-timeline-classic" element={<L><ChurnTimeline /></L>} />
+        <Route path="churn-patterns-classic" element={<L><ChurnPatterns /></L>} />
+        <Route path="churn-investigator-classic" element={<L><ChurnInvestigator /></L>} />
+        <Route path="churn-risk-matrix-classic" element={<L><ChurnRiskMatrix /></L>} />
         <Route path="time-to-value" element={<L><TimeToValue /></L>} />
         <Route path="orders-verified" element={<L><OrdersVerified /></L>} />
         <Route path="stripe-connect-revenue-classic" element={<L><StripeConnectRevenue /></L>} />
         <Route path="services-classic" element={<L><Services /></L>} />
         <Route path="project-candidates" element={<L><ProjectCandidates /></L>} />
-        <Route path="renewal-management" element={<L><RenewalManagement /></L>} />
-        <Route path="contracts" element={<L><Contracts /></L>} />
+        <Route path="renewal-management-classic" element={<L><RenewalManagement /></L>} />
+        <Route path="contracts-classic" element={<L><Contracts /></L>} />
         <Route path="payments-opportunity" element={<L><PaymentsOpportunity /></L>} />
         <Route path="implementation" element={<L><Implementation /></L>} />
         <Route path="implementation-schedule" element={<L><ImplementationSchedule /></L>} />
@@ -149,11 +169,11 @@ export default function App() {
             <Route path="stripe-qb-reconciliation" element={<L><StripeQBReconciliation /></L>} />
           </>
         )}
-        <Route path="customers" element={<L><Customers /></L>} />
+        <Route path="customers-classic" element={<L><Customers /></L>} />
         <Route path="rep-dashboard" element={<L><RepDashboard /></L>} />
         <Route path="features" element={<L><Features /></L>} />
         <Route path="customer-detail" element={<L><CustomerDetail /></L>} />
-        <Route path="custom-report" element={<L><CustomReport /></L>} />
+        <Route path="custom-report-classic" element={<L><CustomReport /></L>} />
         <Route path="*" element={<Navigate to="/overview" replace />} />
       </Route>
     </Routes>

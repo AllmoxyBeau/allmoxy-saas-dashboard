@@ -128,7 +128,10 @@ for (const p of snap.rows) {
       model.state = 'paused';
       p.status = 'paused';
     } else if (legitNonBilling) {
+      // Pre-Sale / Partnership Free, not billing: on hold by agreement. Shown as Paused, not
+      // Active (Beau, 2026-11-09: "Active" must mean paying), and never churned.
       model.state = 'non_billing_arrangement';
+      p.status = 'paused';
     } else {
       const custSubs = (p.stripe_customer_ids || []).flatMap((c) => subsByCust.get(c) || []);
       if (custSubs.length && !custSubs.some((s) => LIVE_SUB.has(s.status))) model.churn_triggers.push('stripe_subscription_canceled');
