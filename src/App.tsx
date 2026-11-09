@@ -8,6 +8,7 @@ const OverviewDS = lazy(() => import('./pages/OverviewDS'));
 const RevenueWaterfallDS = lazy(() => import('./pages/RevenueWaterfallDS'));
 const LogoWaterfallDS = lazy(() => import('./pages/LogoWaterfallDS'));
 const NetRevenueRetentionDS = lazy(() => import('./pages/NetRevenueRetentionDS'));
+const CurrentMonthDS = lazy(() => import('./pages/CurrentMonthDS'));
 const ServiceTickets = lazy(() => import('./pages/ServiceTickets'));
 const ChurnTimeline = lazy(() => import('./pages/ChurnTimeline'));
 const Activation = lazy(() => import('./pages/Activation'));
@@ -84,10 +85,11 @@ export default function App() {
       <Route path="/revenue-waterfall" element={<L><RevenueWaterfallDS /></L>} />
       <Route path="/logo-waterfall" element={<L><LogoWaterfallDS /></L>} />
       <Route path="/net-revenue-retention" element={<L><NetRevenueRetentionDS /></L>} />
+      <Route path="/current-month" element={<L><CurrentMonthDS /></L>} />
       <Route path="/" element={<AppShell />}>
         <Route index element={<Navigate to="/overview" replace />} />
         <Route path="overview-classic" element={<NorthStar />} />
-        <Route path="current-month" element={<L><CurrentMonth /></L>} />
+        <Route path="current-month-classic" element={<L><CurrentMonth /></L>} />
         <Route path="revenue-waterfall-classic" element={<L><RevenueWaterfall /></L>} />
         <Route path="revenue-recognition" element={<L><RevenueRecognition /></L>} />
         <Route path="collections" element={<L><Collections /></L>} />
