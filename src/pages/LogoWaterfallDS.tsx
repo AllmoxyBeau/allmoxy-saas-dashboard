@@ -45,7 +45,7 @@ export default function LogoWaterfallDS() {
   const flow = useMemo(() => ((baseData as unknown as { logo_flow?: Flow[] } | undefined)?.logo_flow ?? []), [baseData]);
   const byMonth = useMemo(() => new Map(flow.map((r) => [r.month, r])), [flow]);
   const [windowN, setWindowN] = useState<'3' | '6' | '12'>('12');
-  const [drill, setDrill] = useState<{ month: string; buckets: Bucket[]; title: string } | null>(null);
+  const [drill, setDrill] = useState<{ months: string[]; buckets: Bucket[]; title: string } | null>(null);
   const range = useMonthRange(flow.map((r) => r.month));
   const visible = range.months.map((m) => byMonth.get(m)!).filter(Boolean);
 
@@ -74,11 +74,13 @@ export default function LogoWaterfallDS() {
   const tableRows = [...visible].reverse();
   const cols: Array<[string, boolean]> = [['Month', false], ['Starting', true], ...BUCKETS.map((b) => [`${b.sign > 0 ? '+' : '−'} ${b.label}`, true] as [string, boolean]), ['Net new', true], ['Ending', true], ['Gross churn (mo)', true]];
 
-  const drillRows = (month: string, buckets: Bucket[]) => {
-    const r = byMonth.get(month);
-    if (!r) return [];
-    return buckets.flatMap((b) => (r.details?.[b] ?? []).map((w) => [w.name, BUCKETS.find((x) => x.k === b)!.label, w.mrr != null ? usd(w.mrr) : '—']));
-  };
+  // Buckets over one or more months, newest month first.
+  const drillRows = (months: string[], buckets: Bucket[]) =>
+    [...months].reverse().flatMap((month) => {
+      const r = byMonth.get(month);
+      if (!r) return [];
+      return buckets.flatMap((b) => (r.details?.[b] ?? []).map((w) => [mlabel(month), w.name, BUCKETS.find((x) => x.k === b)!.label, w.mrr != null ? usd(w.mrr) : '—']));
+    });
 
   return (
     <DsPage
@@ -93,15 +95,19 @@ export default function LogoWaterfallDS() {
         </button>
       }
       overlays={drill && (
-        <SideSheet open onClose={() => setDrill(null)} title={`${drill.title} · ${mlabel(drill.month)}`}
+        <SideSheet open onClose={() => setDrill(null)} title={`${drill.title} · ${drill.months.length === 1 ? mlabel(drill.months[0]) : `${mlabel(drill.months[0])} to ${mlabel(drill.months[drill.months.length - 1])}`}`}
           text={drill.buckets.some((b) => b === 'lapsed' || b === 'paused')
             ? 'Stopped billing but not churned: lapsed (under 3 months, may still pay) or paused (pause granted in HubSpot). Churn is confirmed by a cancelled Stripe subscription, HubSpot Cancelled, or 3 months unbilled.'
             : undefined}>
           {(() => {
-            const rows = drillRows(drill.month, drill.buckets);
+            const many = drill.months.length > 1;
+            const all = drillRows(drill.months, drill.buckets);
+            const rows = many ? all : all.map((r) => r.slice(1));
+            const cols: Array<[string, boolean]> = [...(many ? [['Month', false] as [string, boolean]] : []), ['Customer', false], ['Movement', false], ['MRR', true]];
             return rows.length
-              ? <DataTable cols={[['Customer', false], ['Movement', false], ['MRR', true]]} rows={rows} label={drill.title} />
-              : <p className="am-card__text">No customers in this movement for the month.</p>;
+              ? <DataTable cols={cols} rows={rows} label={drill.title}
+                  foot={cols.map((_, i) => (i === 0 ? `Total · ${rows.length} customers` : ''))} />
+              : <p className="am-card__text">No customers in this movement for the period.</p>;
           })()}
         </SideSheet>
       )}
@@ -136,7 +142,7 @@ export default function LogoWaterfallDS() {
             const r = visible[i];
             return r ? [...BUCKETS.filter((b) => val(r, b.k) !== 0).map((b) => [b.label, signedN(b.sign * val(r, b.k))] as [string, string]), ['Net', signedN(r.net_new_logos)], ['Ending', r.ending_logos.toLocaleString()]] : [];
           }}
-          onSegment={(i, key) => { const st = STACKS.find((s) => s.key === key)!; setDrill({ month: range.months[i], buckets: st.parts, title: st.label }); }}
+          onSegment={(i, key) => { const st = STACKS.find((s) => s.key === key)!; setDrill({ months: [range.months[i]], buckets: st.parts, title: st.label }); }}
           aria={`Monthly customer movement, ${range.rangeText}.`} />
       </ChartCard>
 
@@ -153,7 +159,17 @@ export default function LogoWaterfallDS() {
               signedN(r.net_new_logos), r.ending_logos.toLocaleString(), pct(r.gross_logo_churn),
             ])}
             clickable={(col) => col >= 2 && col < 2 + BUCKETS.length}
-            onCell={(row, col) => { const b = BUCKETS[col - 2]; if (b) setDrill({ month: tableRows[row].month, buckets: [b.k], title: b.label }); }} />
+            onCell={(row, col) => { const b = BUCKETS[col - 2]; if (b) setDrill({ months: [tableRows[row].month], buckets: [b.k], title: b.label }); }}
+            foot={[
+              `Total · ${visible.length} months`, visible[0] ? visible[0].starting_logos.toLocaleString() : '—',
+              ...BUCKETS.map((b) => { const t = visible.reduce((a, r) => a + val(r, b.k), 0); return t ? signedN(b.sign * t) : '—'; }),
+              signedN(visible.reduce((a, r) => a + r.net_new_logos, 0)), visible.length ? visible[visible.length - 1].ending_logos.toLocaleString() : '—', '',
+            ]}
+            footClickable={(col) => col >= 2 && col <= 2 + BUCKETS.length}
+            onFoot={(col) => {
+              const b = BUCKETS[col - 2];
+              setDrill(b ? { months: range.months, buckets: [b.k], title: `All ${b.label.toLowerCase()}` } : { months: range.months, buckets: BUCKETS.map((x) => x.k), title: 'All movements' });
+            }} />
         </div>
       </section>
     </DsPage>

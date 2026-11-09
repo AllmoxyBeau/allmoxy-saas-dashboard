@@ -56,7 +56,7 @@ export default function RevenueWaterfallDS() {
   const [basis, setBasis] = useState<'accrual' | 'cash'>('accrual');
   const [windowN, setWindowN] = useState<'3' | '6' | '12'>('12');
   const [includePartial, setIncludePartial] = useState(false);
-  const [drill, setDrill] = useState<{ month: string; buckets: Bucket[]; title: string } | null>(null);
+  const [drill, setDrill] = useState<{ months: string[]; buckets: Bucket[]; title: string } | null>(null);
   const { data: qbData, isLoading: qbLoading, error: qbError } = useSheetTab('mrr_waterfall');
   const { data: txnData, isLoading: txnLoading, error: txnError } = useSheetTab('mrr_waterfall_txns');
   const qb = qbData as unknown as Snap | undefined;
@@ -115,19 +115,20 @@ export default function RevenueWaterfallDS() {
   const tone = (v: number | null, good: number, ok: number) => (v == null ? undefined : v >= good ? 'success' as const : v >= ok ? 'warning' as const : 'error' as const);
   const verdict = (v: number | null, good: number, ok: number) => (v == null ? undefined : v >= good ? 'On target' : v >= ok ? 'Watch' : 'Below target');
 
-  // ---- drill: one or more buckets of one month, as a customer table
-  const drillRows = (month: string, buckets: Bucket[]) => {
-    const r = byMonth.get(month);
-    if (!r) return [];
-    return buckets.flatMap((b) => {
-      const list = (r.details[b] ?? []) as Array<Named | Change>;
-      const label = BUCKETS.find((x) => x.k === b)!.label;
-      return list.map((x) => ('delta' in x
-        ? [x.name, label, `${usd(x.prev_mrr)} → ${usd(x.new_mrr)}`, signed(b === 'contraction' ? -x.delta : x.delta)]
-        : [x.name, label, (x as Named).pay_status || (x as Named).status || '—', signed(BUCKETS.find((y) => y.k === b)!.sign * x.mrr)]));
+  // ---- drill: buckets over one or more months, as a customer table (newest month first)
+  const drillRows = (months: string[], buckets: Bucket[]) =>
+    [...months].reverse().flatMap((month) => {
+      const r = byMonth.get(month);
+      if (!r) return [];
+      return buckets.flatMap((b) => {
+        const list = (r.details[b] ?? []) as Array<Named | Change>;
+        const label = BUCKETS.find((x) => x.k === b)!.label;
+        return list.map((x) => ('delta' in x
+          ? [mlabel(month), x.name, label, `${usd(x.prev_mrr)} → ${usd(x.new_mrr)}`, signed(b === 'contraction' ? -x.delta : x.delta)]
+          : [mlabel(month), x.name, label, (x as Named).pay_status || (x as Named).status || '—', signed(BUCKETS.find((y) => y.k === b)!.sign * x.mrr)]));
+      });
     });
-  };
-  const open = (month: string, buckets: Bucket[], title: string) => setDrill({ month, buckets, title });
+  const open = (months: string[], buckets: Bucket[], title: string) => setDrill({ months, buckets, title });
 
   const series = STACKS.map((st) => ({ key: st.key, label: st.label, tone: st.tone, values: visible.map((r) => st.sign * st.parts.reduce((a, b) => a + val(r, b), 0)) }));
   const basisLabel = source === 'txns' ? 'Stripe transactions (cash)' : basis === 'accrual' ? 'accrual (billed)' : 'cash (cleared)';
@@ -148,17 +149,23 @@ export default function RevenueWaterfallDS() {
         </button>
       }
       overlays={drill && (
-        <SideSheet open onClose={() => setDrill(null)} title={`${drill.title} · ${mlabel(drill.month)}`}
+        <SideSheet open onClose={() => setDrill(null)} title={`${drill.title} · ${drill.months.length === 1 ? mlabel(drill.months[0]) : `${mlabel(drill.months[0])} to ${mlabel(drill.months[drill.months.length - 1])}`}`}
           text={drill.buckets.some((b) => ['delinquent', 'voided', 'paused'].includes(b))
             ? 'Stopped billing but not churned: lapsed (under 3 months, may still pay), voided (the invoice was cancelled), or paused (pause granted in HubSpot). Churn is confirmed by a cancelled Stripe subscription, HubSpot Cancelled, or 3 months unbilled.'
             : undefined}>
           {(() => {
-            const rows = drillRows(drill.month, drill.buckets);
-            const hasDetail = rows.some((r) => r[2] !== '—');
+            const many = drill.months.length > 1;
+            const all = drillRows(drill.months, drill.buckets);
+            const hasDetail = all.some((r) => r[3] !== '—');
+            // Month column only when the sheet spans months; Detail only when any row has one.
+            const keep = [many, true, true, hasDetail, true];
+            const names: Array<[string, boolean]> = [['Month', false], ['Customer', false], ['Movement', false], ['Detail', false], ['MRR change', true]];
+            const rows = all.map((r) => r.filter((_, k) => keep[k]));
+            const net = all.reduce((a, r) => a + Number(String(r[4]).replace(/[^0-9.]/g, '')) * (String(r[4]).startsWith('−') ? -1 : 1), 0);
             return rows.length
-              ? <DataTable cols={hasDetail ? [['Customer', false], ['Movement', false], ['Detail', false], ['MRR change', true]] : [['Customer', false], ['Movement', false], ['MRR change', true]]}
-                  rows={hasDetail ? rows : rows.map((r) => [r[0], r[1], r[3]])} label={drill.title} />
-              : <p className="am-card__text">No customers in this movement for the month.</p>;
+              ? <DataTable cols={names.filter((_, k) => keep[k])} rows={rows} label={drill.title}
+                  foot={rows[0].map((_, i, arr) => (i === 0 ? `Total · ${rows.length} movements` : i === arr.length - 1 ? signed(net) : ''))} />
+              : <p className="am-card__text">No customers in this movement for the period.</p>;
           })()}
         </SideSheet>
       )}
@@ -197,7 +204,7 @@ export default function RevenueWaterfallDS() {
             const r = visible[i];
             return r ? [...BUCKETS.filter((b) => val(r, b.k) !== 0).map((b) => [b.label, signed(b.sign * val(r, b.k))] as [string, string]), ['Net new', signed(r.net_new_mrr)], ['Ending MRR', usd(r.ending_mrr)], ...(r.cashBackfill ? [['Basis', 'cash (before invoicing coverage)'] as [string, string]] : [])] : [];
           }}
-          onSegment={(i, key) => { const st = STACKS.find((s) => s.key === key)!; open(range.months[i], st.parts, st.label); }}
+          onSegment={(i, key) => { const st = STACKS.find((s) => s.key === key)!; open([range.months[i]], st.parts, st.label); }}
           aria={`Monthly MRR movement, ${range.rangeText}.`} />
       </ChartCard>
 
@@ -216,7 +223,18 @@ export default function RevenueWaterfallDS() {
             clickable={(col) => col >= 2 && col < 2 + BUCKETS.length}
             onCell={(row, col) => {
               const b = BUCKETS[col - 2];
-              if (b) open(tableRows[row].month, [b.k], b.label);
+              if (b) open([tableRows[row].month], [b.k], b.label);
+            }}
+            foot={[
+              `Total · ${visible.length} months`, visible[0] ? usd(visible[0].starting_mrr) : '—',
+              ...BUCKETS.map((b) => { const t = visible.reduce((a, r) => a + val(r, b.k), 0); return t ? signed(b.sign * t) : '—'; }),
+              signed(visible.reduce((a, r) => a + r.net_new_mrr, 0)), visible.length ? usd(visible[visible.length - 1].ending_mrr) : '—', '', '',
+            ]}
+            footClickable={(col) => col >= 2 && col <= 2 + BUCKETS.length}
+            onFoot={(col) => {
+              const b = BUCKETS[col - 2];
+              if (b) open(range.months, [b.k], `All ${b.label.toLowerCase()}`);
+              else open(range.months, BUCKETS.map((x) => x.k), 'All movements');
             }} />
         </div>
       </section>

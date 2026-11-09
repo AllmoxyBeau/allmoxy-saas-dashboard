@@ -148,7 +148,14 @@ export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, on
   );
 }
 
-export function DataTable({ cols, rows, label, onCell, clickable }: { cols: Array<[string, boolean]>; rows: Array<Array<ReactNode>>; label: string; onCell?: (row: number, col: number) => void; clickable?: (col: number) => boolean }) {
+/** Data table. `foot` adds the certified totals row (tfoot, title-small weight, out of the body);
+ *  with `onFoot`, a total is selectable and opens everything it sums (Beau, 2026-11-09: every
+ *  table with movement columns ends in a Total row that opens all of its data). */
+export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable }: {
+  cols: Array<[string, boolean]>; rows: Array<Array<ReactNode>>; label: string;
+  onCell?: (row: number, col: number) => void; clickable?: (col: number) => boolean;
+  foot?: Array<ReactNode>; onFoot?: (col: number) => void; footClickable?: (col: number) => boolean;
+}) {
   return (
     <table className="am-table" aria-label={label}>
       <thead><tr>{cols.map(([c, n]) => <th key={c} className={n ? 'am-table__num' : undefined} style={{ whiteSpace: 'nowrap' }}>{c}</th>)}</tr></thead>
@@ -159,6 +166,13 @@ export function DataTable({ cols, rows, label, onCell, clickable }: { cols: Arra
           </td>
         ))}</tr>
       ))}</tbody>
+      {foot && (
+        <tfoot><tr>{foot.map((v, j) => (
+          <td key={j} className={cols[j]?.[1] ? 'am-table__num' : undefined} style={{ whiteSpace: 'nowrap' }}>
+            {onFoot && (footClickable ? footClickable(j) : j > 0) && v !== '—' && v !== '' ? <button className="am-btn am-btn--text" onClick={() => onFoot(j)}>{v}</button> : v}
+          </td>
+        ))}</tr></tfoot>
+      )}
     </table>
   );
 }

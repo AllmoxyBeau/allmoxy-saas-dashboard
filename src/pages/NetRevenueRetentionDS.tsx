@@ -57,7 +57,10 @@ function MoverCard({ title, caption, rows, csv }: { title: string; caption: stri
         </button>
       </div>
       {rows.length ? <DataTable label={title} cols={[['Customer', false], ['Start', true], ['Now', true], ['Change', true]]}
-        rows={shown.map((m) => [m.name, usd(m.start), usd(m.end), `${m.delta >= 0 ? '+' : '−'}${usd(Math.abs(m.delta))}`])} />
+        rows={shown.map((m) => [m.name, usd(m.start), usd(m.end), `${m.delta >= 0 ? '+' : '−'}${usd(Math.abs(m.delta))}`])}
+        foot={[`Total · ${rows.length} customers`, usd(rows.reduce((a, m) => a + m.start, 0)), usd(rows.reduce((a, m) => a + m.end, 0)),
+          (() => { const d = rows.reduce((a, m) => a + m.delta, 0); return `${d >= 0 ? '+' : '−'}${usd(Math.abs(d))}`; })()]}
+        footClickable={() => !all && rows.length > 10} onFoot={() => setAll(true)} />
         : <p className="am-card__text">None in this window.</p>}
       {rows.length > 10 && <button className="am-btn am-btn--text" onClick={() => setAll(!all)}>{all ? 'Show top 10' : `Show all ${rows.length}`}</button>}
     </section>
