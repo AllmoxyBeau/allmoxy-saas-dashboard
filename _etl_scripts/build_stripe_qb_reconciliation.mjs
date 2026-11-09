@@ -20,8 +20,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 
 function readJson(p) { return JSON.parse(fs.readFileSync(p, 'utf8')); }
@@ -33,9 +35,20 @@ const pnl = readJson(path.join(SNAP, 'pnl_by_month.json'));
 // ============================================================================
 // Stripe-side rollup — sum of customer_profiles.transactions by month × type
 // ============================================================================
+// Annual prepay customers: their lump-sum CASH is set aside and their AMORTIZED monthly
+// subscription (monthly_history, annualized cells) is compared to QB 4100 instead — so
+// the tie-out compares like with like (was: cash lump sums vs QB's amortization, a
+// built-in −$3.1K every month and +$28.8K in May 2026 when B&B paid).
+const ANNUAL = new Set((readJson(path.join(ROOT, 'src/data/annual_payers.json')).annual_payer_ids || []).map(Number));
+const annualAmortByMonth = {};
 const stripeByMonth = {};
 for (const p of (profiles.rows || [])) {
+  const isAnnual = ANNUAL.has(p.allmoxy_customer_id);
+  if (isAnnual) {
+    for (const [m, c] of Object.entries(p.monthly_history || {})) annualAmortByMonth[m] = (annualAmortByMonth[m] || 0) + (c.subscription || 0);
+  }
   for (const t of (p.transactions || [])) {
+    if (isAnnual && t.type === 'subscription') continue;
     if (t.status !== 'succeeded') continue;
     const ym = (t.created || '').slice(0, 7);
     if (!ym) continue;
@@ -86,7 +99,8 @@ for (const m of months) {
   const q = qbByMonth[m];
   // Stripe subscription gross + annual deferred recognition ≈ QB subscription_revenue + annual_deferred.
   // The cleanest like-for-like is: cash subscription receipts in Stripe vs (subscription_revenue + annual_deferred) recognized in QB.
-  const stripeSub = s.subscription;
+  const stripeAnnual = annualAmortByMonth[m] || 0;
+  const stripeSub = s.subscription + stripeAnnual;
   const qbSubRecognized = q.subscription_revenue + q.annual_deferred;
   const subVariance = stripeSub - qbSubRecognized;
   const subVariancePct = qbSubRecognized > 0 ? subVariance / qbSubRecognized : null;
@@ -100,6 +114,8 @@ for (const m of months) {
     month: m,
     stripe: {
       subscription: round2(stripeSub),
+      subscription_monthly_cash: round2(s.subscription),
+      annual_amortized: round2(stripeAnnual),
       services: round2(stripeSvc),
       connect: round2(s.connect),
       other: round2(s.other),
@@ -140,10 +156,10 @@ function classifyTieOut(subVar, qbSub, svcVar, qbSvc) {
 // ============================================================================
 const reconcilingItems = [
   {
-    label: 'Annual lump-sum cash receipts',
+    label: 'Annual prepay customers (neutralized)',
     description:
-      'Stripe records the full lump-sum amount in the month it was charged (e.g., B&B Door\'s $32,002.50 in May 2026). QB defers and recognizes monthly via Line 4100 "Annual Deferred Monthly" (~$3,173/mo). Variance reconciles over the 12–15 month coverage window.',
-    sign: 'Stripe > QB in receipt month; Stripe < QB in subsequent months.',
+      'Annual payers\' lump-sum cash (e.g., B&B Door\'s $32,002.50 in May 2026) is NOT compared month-to-month. Their amortized monthly subscription (the same figure the customer base uses) is compared to QB Line 4100 "Annual Deferred Monthly" (~$3,173/mo) instead, so receipt timing no longer creates variance. Residual = amortization rate differences (dashboard vs QB schedule, ~$17/mo before Mar 2026).',
+    sign: 'Small; either direction.',
   },
   {
     label: 'Sales tax inclusion',

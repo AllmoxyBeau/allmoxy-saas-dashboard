@@ -26,19 +26,19 @@ type PlanRow = {
   net_required: number; expected_losses: number; gross_required: number; new_logos_required: number | null;
   actual_closing_mrr: number | null; actual_gross: number | null; actual_losses: number | null; variance: number | null;
 };
-type Stream = { key: string; label: string; basis: string; ttm: number; monthly: number; share: number | null };
+type Stream = { key: string; label: string; basis: string; ttm: number; monthly: number; share: number | null; run_rate?: number };
 type Snap = {
   streams: Stream[];
-  total_revenue: { ttm: number; monthly: number; target_annual: number; gap: number; note: string };
+  total_revenue: { ttm: number; monthly: number; target_annual: number; gap: number; note: string; window?: { start: string; end: string } };
   connect_opportunity: {
     processing_now: number; active_customers: number; attach_rate: number; not_processing: number;
-    fee_potential_annual: number; current_fees_annual: number; basis: string | null;
+    fee_potential_annual: number; current_fees_annual: number; gross_application_fees_annual?: number | null; basis: string | null;
     covers_pct_of_subscription_gap: number; covers_pct_of_total_gap: number;
   } | null;
   config: { target_annual_growth: number; plan_months: number; churn_improvement: number; editable_at: string };
   baseline: { as_of: string; mrr: number; arr: number; customers: number; arpa: number };
   target: { annual_growth: number; monthly_growth: number; target_arr: number; target_mrr: number; arr_gap: number; end_month: string | null };
-  trailing: { gains: number; losses: number; net: number; monthly_gain_rate: number; monthly_loss_rate: number; grr: number | null; nrr: number | null; new_logos_per_month: number | null };
+  trailing: { gains: number; losses: number; net: number; monthly_gain_rate: number; monthly_loss_rate: number; grr: number | null; nrr: number | null; new_logos_per_month: number | null; new_logo_arpa_equivalents_per_month?: number | null };
   effort: { run_rate_gross_per_month: number; required_gross_per_month: number; multiple: number | null; net_today_per_month: number };
   plan: PlanRow[];
 };
@@ -86,7 +86,7 @@ export default function SalesBudget() {
           { label: `Target ARR (+${Math.round((tg?.annual_growth ?? 0) * 100)}%)`, value: tg ? USD0.format(tg.target_arr) : '—', hint: `by ${tg?.end_month ? monthLabel(tg.end_month) : '—'}`, color: 'primary.main' },
           { label: 'ARR to add', value: tg ? USD0.format(tg.arr_gap) : '—', hint: `${pct1(tg?.monthly_growth)} compounding per month` },
           { label: 'Gross new needed', value: ef ? `${USD0.format(ef.required_gross_per_month)}/mo` : '—', hint: `vs ${ef ? USD0.format(ef.run_rate_gross_per_month) : '—'} today`, color: 'warning.main' },
-          { label: 'That is', value: ef?.multiple != null ? `${ef.multiple}× today` : '—', hint: `${snap?.plan[0]?.new_logos_required ?? '—'} new logos/mo if all from new`, color: 'error.main' },
+          { label: 'That is', value: ef?.multiple != null ? `${ef.multiple}× today` : '—', hint: `${snap?.plan[0]?.new_logos_required ?? '—'} avg-ARPA logos/mo if all from new`, color: 'error.main' },
         ].map((k) => (
           <Grid item xs={12} sm={6} md={2.4} key={k.label}>
             <Paper sx={{ p: 2, height: '100%' }}>
@@ -145,20 +145,20 @@ export default function SalesBudget() {
           Only {snap.connect_opportunity.processing_now} of {snap.connect_opportunity.active_customers} active customers process payments through Allmoxy ({(snap.connect_opportunity.attach_rate * 100).toFixed(0)}%).
           Attaching the other {snap.connect_opportunity.not_processing} is worth about {USD0.format(snap.connect_opportunity.fee_potential_annual)} a year —
           <strong> {(snap.connect_opportunity.covers_pct_of_subscription_gap * 100).toFixed(0)}% of the subscription growth gap</strong>, at roughly 99.6% gross margin, without winning a single new logo.
-          Six new logos a month is one route to the target; this is another, and it starts from a warm list.
+          {snap.plan[0]?.new_logos_required != null ? `About ${Math.round(snap.plan[0].new_logos_required)} average-ARPA new logos a month` : 'Winning new logos'} is one route to the target; this is another, and it starts from a warm list.
         </Alert>
       )}
 
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.5 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>The whole revenue base</Typography>
-          <InfoIcon info={<>The monthly plan above is priced on <strong>subscription only</strong>, which is the recurring line and the one MRR discipline applies to. It is 78% of the business.<br /><br />Connect fees and services are the other 22% and are shown here so the target is set against what the company actually earns.<br /><br /><strong>Bases are not fused.</strong> Subscription is the invoiced (accrual) basis; Connect and services are cash. Adding them gives a useful revenue figure but not a single-basis one, which is why they are listed separately.</>} />
+          <InfoIcon info={<>The monthly plan above is priced on <strong>subscription only</strong>, which is the recurring line and the one MRR discipline applies to. It is {pct1(snap?.streams.find((x) => x.key === 'subscription')?.share)} of trailing revenue.<br /><br />Connect fees and services are the rest and are shown here so the target is set against what the company actually earns.<br /><br /><strong>Every stream is summed over the same trailing twelve complete months</strong>{snap?.total_revenue.window ? ` (${monthLabel(snap.total_revenue.window.start)}–${monthLabel(snap.total_revenue.window.end)})` : ''}. Subscription is the monthly invoiced MRR including annual-payer amortization — not the current run-rate × 12, which is shown alongside for reference.<br /><br /><strong>Bases are not fused.</strong> Subscription is the invoiced (accrual) basis; Connect and services are cash. Adding them gives a useful revenue figure but not a single-basis one, which is why they are listed separately.</>} />
         </Stack>
         <Table size="small">
           <TableHead>
             <TableRow>
               <TableCell>Stream</TableCell>
-              <TableCell align="right">TTM</TableCell>
+              <TableCell align="right">Trailing 12 mo</TableCell>
               <TableCell align="right">Per month</TableCell>
               <TableCell align="right">Share</TableCell>
               <TableCell>Basis</TableCell>
@@ -171,7 +171,7 @@ export default function SalesBudget() {
                 <TableCell align="right">{USD0.format(st.ttm)}</TableCell>
                 <TableCell align="right" sx={{ color: 'text.secondary' }}>{USD0.format(st.monthly)}</TableCell>
                 <TableCell align="right">{st.share != null ? `${(st.share * 100).toFixed(1)}%` : '—'}</TableCell>
-                <TableCell sx={{ color: 'text.secondary', fontSize: 11 }}>{st.basis}</TableCell>
+                <TableCell sx={{ color: 'text.secondary', fontSize: 11 }}>{st.basis}{st.run_rate != null ? ` · run-rate ${USD0.format(st.run_rate)}/yr` : ''}</TableCell>
               </TableRow>
             ))}
             {snap && (
@@ -206,7 +206,7 @@ export default function SalesBudget() {
             <Table size="small">
               <TableBody>
                 {snap && ([
-                  ['Win more', `${snap.plan[0]?.new_logos_required ?? '—'} new logos/mo`, `${tr!.new_logos_per_month ?? '—'}/mo today`, 'error.main'],
+                  ['Win more', `${snap.plan[0]?.new_logos_required ?? '—'} avg-ARPA logos/mo`, `${tr!.new_logos_per_month ?? '—'} new logos/mo today${tr!.new_logo_arpa_equivalents_per_month != null ? ` (${tr!.new_logo_arpa_equivalents_per_month} at avg ARPA)` : ''}`, 'error.main'],
                   ['Expand more', `${USD0.format(ef!.required_gross_per_month)}/mo gross`, `${USD0.format(ef!.run_rate_gross_per_month)}/mo today`, 'warning.main'],
                   ['Lose less', `${pct1(tr!.monthly_loss_rate)}/mo leaking`, `GRR ${pct1(tr!.grr)} · NRR ${pct1(tr!.nrr)}`, 'info.main'],
                   ['Attach payments', snap.connect_opportunity ? `${USD0.format(snap.connect_opportunity.fee_potential_annual)}/yr available` : '—', snap.connect_opportunity ? `${snap.connect_opportunity.not_processing} customers not processing` : '—', 'success.main'],

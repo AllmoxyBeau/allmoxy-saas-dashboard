@@ -14,7 +14,7 @@ set -o pipefail
 export HOME="/Users/beaulewis"
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-PROJ="/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard"
+PROJ="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_DIR="$PROJ/_etl_scripts/logs"
 LOG="$LOG_DIR/daily_refresh.log"
 mkdir -p "$LOG_DIR"

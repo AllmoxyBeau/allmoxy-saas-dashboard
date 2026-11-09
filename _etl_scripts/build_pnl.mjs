@@ -21,10 +21,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy+LLC_Profit+and+Loss.xlsx';
-const SNAPSHOTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const XLSX_PATH = path.resolve(__dirname, '../..', 'Allmoxy+LLC_Profit+and+Loss.xlsx');
+const SNAPSHOTS = path.resolve(__dirname, '..', 'public/snapshots');
 
 const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
 const ws = wb.Sheets['Profit and Loss'];
@@ -290,7 +292,7 @@ for (const li of LINE_ITEMS) {
 // standalone lacks. The standalone stays AUTHORITATIVE for its own range (it
 // supersedes CAC Info, which can be stale/partial for recent months — same
 // basis as build_unit_econ's overlay).
-const CAC_XLSX = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
+const CAC_XLSX = path.resolve(__dirname, '../..', 'Allmoxy - Meta Data Reconcile Tool.xlsx');
 let historyMonths = [];
 try {
   const cwb = XLSX.read(fs.readFileSync(CAC_XLSX), { type: 'buffer' });

@@ -10,9 +10,11 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const CSV_PATH = '/tmp/instances.csv';
-const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const SNAP = path.resolve(__dirname, '..', 'public/snapshots');
 
 // Tiny CSV parser that respects quoted fields with commas.
 function parseCsv(text) {

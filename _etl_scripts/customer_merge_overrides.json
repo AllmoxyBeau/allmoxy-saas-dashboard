@@ -1,22 +1,37 @@
 {
-  "comment": "Merge duplicate allmoxy_customer_id rows that are really ONE customer into a single surviving record. Keyed by the AID being absorbed ('from'); 'into' is the surviving AID. apply_customer_merges.mjs folds the absorbed row's financials (lifetime/current totals, transactions, monthly_history, Stripe IDs, dates) into the survivor and removes the absorbed row. refresh_all applies it to allmoxy_core_customer (right after the core roster is built) and to customer_profiles (after enrichment), so the duplicate disappears from every downstream snapshot. Use when one real customer has two AIDs — e.g. re-onboarded under a new core id but same installer_id / HubSpot company / Stripe subscription.",
-  "updated_at": "2026-09-04",
-  "merges": {
-    "285": {
-      "into": 360,
-      "_note": "Elite Cabinets (#285, lifetime $866) is a duplicate of #360 Elite Cabinets (lifetime $18,091, active) — both carry Stripe customer cus_IcwiEEQYYpXLXh; Stripe's charge metadata says allmoxy_customer_id=360, so #360 is the live roster id. With both alive, #285 won the Stripe-id→profile map (invoice basis $288.75) while #360 kept a charge-basis $288.75 — a double count. Found in the Aug 2026 deposit reconciliation.",
-      "_set_at": "2026-09-04"
-    },
-    "_308_not_merged": "Wildwood #308 / Modern Fronts #457 are the same business (a 2022 rebrand) but are deliberately NOT merged here — customer_status_overrides.json already handles the pair as `duplicate_of`, which mirrors #457's status onto #308, zeroes its MRR and sets excluded_from_logo_count. That keeps the pre-rebrand payment history as its own record while counting the business once. A merge would destroy #308 and orphan that override. Confirmed by Beau 2026-06-12 and again 2026-09-08.",
-    "2027": {
-      "into": 500,
-      "_note": "Mountain Showcase Group (#2027) is the same customer as #500 Mountain Showcase Group, Inc. — identical installer_id 1952, HubSpot company 16344570990, and Stripe subscription sub_1RcKTnHkM2QhTtxhyv1n5FOR. #2027 is an empty duplicate (never_paid, $0, 0 transactions).",
-      "_set_at": "2026-06-24"
-    },
-    "2023": {
-      "into": 140,
-      "_note": "Multiwood (#2023) is the same customer as #140 Multiwood — both share Stripe customer cus_DrLqJJ7K4XfvPJ. #2023 is an empty duplicate (never_paid, $0). Surfaced by the Aurora roster migration: the xlsx left #2023's Stripe id blank (so it lingered as a separate $0 row), but Aurora correctly carries the shared id. Merge folds it into the real #140.",
-      "_set_at": "2026-06-30"
-    }
+ "comment": "Merge duplicate allmoxy_customer_id rows that are really ONE customer into a single surviving record. Keyed by the AID being absorbed ('from'); 'into' is the surviving AID. apply_customer_merges.mjs folds the absorbed row's financials (lifetime/current totals, transactions, monthly_history, Stripe IDs, dates) into the survivor and removes the absorbed row. refresh_all applies it to allmoxy_core_customer (right after the core roster is built) and to customer_profiles (after enrichment), so the duplicate disappears from every downstream snapshot. Use when one real customer has two AIDs — e.g. re-onboarded under a new core id but same installer_id / HubSpot company / Stripe subscription.",
+ "updated_at": "2026-11-09",
+ "merges": {
+  "285": {
+   "into": 360,
+   "_note": "Elite Cabinets (#285, lifetime $866) is a duplicate of #360 Elite Cabinets (lifetime $18,091, active) — both carry Stripe customer cus_IcwiEEQYYpXLXh; Stripe's charge metadata says allmoxy_customer_id=360, so #360 is the live roster id. With both alive, #285 won the Stripe-id→profile map (invoice basis $288.75) while #360 kept a charge-basis $288.75 — a double count. Found in the Aug 2026 deposit reconciliation.",
+   "_set_at": "2026-09-04"
+  },
+  "_308_not_merged": "Wildwood #308 / Modern Fronts #457 are the same business (a 2022 rebrand) but are deliberately NOT merged here — customer_status_overrides.json already handles the pair as `duplicate_of`, which mirrors #457's status onto #308, zeroes its MRR and sets excluded_from_logo_count. That keeps the pre-rebrand payment history as its own record while counting the business once. A merge would destroy #308 and orphan that override. Confirmed by Beau 2026-06-12 and again 2026-09-08.",
+  "2027": {
+   "into": 500,
+   "_note": "Mountain Showcase Group (#2027) is the same customer as #500 Mountain Showcase Group, Inc. — identical installer_id 1952, HubSpot company 16344570990, and Stripe subscription sub_1RcKTnHkM2QhTtxhyv1n5FOR. #2027 is an empty duplicate (never_paid, $0, 0 transactions).",
+   "_set_at": "2026-06-24"
+  },
+  "2023": {
+   "into": 140,
+   "_note": "Multiwood (#2023) is the same customer as #140 Multiwood — both share Stripe customer cus_DrLqJJ7K4XfvPJ. #2023 is an empty duplicate (never_paid, $0). Surfaced by the Aurora roster migration: the xlsx left #2023's Stripe id blank (so it lingered as a separate $0 row), but Aurora correctly carries the shared id. Merge folds it into the real #140.",
+   "_set_at": "2026-06-30"
+  },
+  "263": {
+   "into": 182,
+   "_note": "Safina Cabinetry (#263, lifetime $10,500, 2020-08…2023-12) and Centorbi Cabinetry (#182, $250, 2019-06) share Stripe customer cus_HuIb9go0WJW1Dw and HubSpot company 4397735512. The Aurora warehouse (silver_customers) has a single row, #182. Merged per the 2026-11-09 revenue audit (identity check); histories do not overlap, so nothing is double-counted.",
+   "_set_at": "2026-11-09"
+  },
+  "392": {
+   "into": 113,
+   "_note": "Wurth Louis And Company (#392, lifetime $3,380, 2022-07…2023-11) and Wurth LAC (#113, active) share Stripe customer cus_M3zTwrzoBqvtuD and HubSpot company 38788777240. Warehouse has a single row, #113. Merged per the 2026-11-09 revenue audit.",
+   "_set_at": "2026-11-09"
+  },
+  "455": {
+   "into": 303,
+   "_note": "Cabsource - Innovative Cabinet (#455, active, $1,005/mo) and Innovative Cabinetry And Design (#303, $99 in 2025-04) share Stripe customer cus_SB8OEWNPem6dz7 and HubSpot company 5388749162. Warehouse has a single row, #303, so #303 survives and carries #455's revenue and MRR. Merged per the 2026-11-09 revenue audit.",
+   "_set_at": "2026-11-09"
   }
+ }
 }

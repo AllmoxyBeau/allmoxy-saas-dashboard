@@ -1,50 +1,52 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-11-02T23:23:42.343Z",
-  "cachedUntil": "2026-11-02T23:28:42.343Z",
+  "fetchedAt": "2026-11-09T21:07:18.898Z",
+  "cachedUntil": "2026-11-09T21:12:18.898Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
   "latestMonth": "2026-10",
   "concentration": {
-    "total_active_customers": 191,
-    "total_mrr": 228816.61,
+    "total_active_customers": 198,
+    "total_mrr": 231104.61,
     "top1": {
       "n": 1,
       "customers": 1,
       "mrr": 7459.2,
-      "pct": 0.0326
+      "pct": 0.0323
     },
     "top5": {
       "n": 5,
       "customers": 5,
       "mrr": 30182.2,
-      "pct": 0.1319
+      "pct": 0.1306
     },
     "top10": {
       "n": 10,
       "customers": 10,
       "mrr": 52900.2,
-      "pct": 0.2312
+      "pct": 0.2289
     },
     "top20": {
       "n": 20,
       "customers": 20,
       "mrr": 87661.1,
-      "pct": 0.3831
+      "pct": 0.3793
     }
   },
   "distribution": [
     {
       "bucket": "< $100",
-      "customers": [
+      "customers": 2,
+      "mrr": 85.77,
+      "customers_list": [
         {
           "name": "UC Cabinet Components",
           "allmoxy_customer_id": 25,
           "current_mrr": 65,
           "lifetime_revenue": 5590,
           "years_with_us": 11.4,
-          "failed_3mo": 0
+          "failed_3mo": 2
         },
         {
           "name": "Raumplus",
@@ -54,12 +56,13 @@
           "years_with_us": 14.4,
           "failed_3mo": 0
         }
-      ],
-      "mrr": 85.77
+      ]
     },
     {
       "bucket": "$100–$500",
-      "customers": [
+      "customers": 77,
+      "mrr": 21354,
+      "customers_list": [
         {
           "name": "Dellusso Cabinet",
           "allmoxy_customer_id": 350,
@@ -77,14 +80,6 @@
           "failed_3mo": 0
         },
         {
-          "name": "Customer 2092",
-          "allmoxy_customer_id": 2092,
-          "current_mrr": 475,
-          "lifetime_revenue": 1900,
-          "years_with_us": 0.3,
-          "failed_3mo": 0
-        },
-        {
           "name": "The Door Company",
           "allmoxy_customer_id": 16,
           "current_mrr": 425,
@@ -98,7 +93,7 @@
           "current_mrr": 419,
           "lifetime_revenue": 24143.1,
           "years_with_us": 4.7,
-          "failed_3mo": 0
+          "failed_3mo": 8
         },
         {
           "name": "Quality Craft Woodworks",
@@ -121,7 +116,7 @@
           "allmoxy_customer_id": 320,
           "current_mrr": 415,
           "lifetime_revenue": 23128.5,
-          "years_with_us": 5.5,
+          "years_with_us": 5.6,
           "failed_3mo": 0
         },
         {
@@ -162,14 +157,14 @@
           "current_mrr": 399,
           "lifetime_revenue": 25854.8,
           "years_with_us": 7.8,
-          "failed_3mo": 0
+          "failed_3mo": 1
         },
         {
           "name": "Terzano Cabinetry Inc",
           "allmoxy_customer_id": 206,
           "current_mrr": 375,
           "lifetime_revenue": 31005,
-          "years_with_us": 8.1,
+          "years_with_us": 8.2,
           "failed_3mo": 0
         },
         {
@@ -201,7 +196,7 @@
           "allmoxy_customer_id": 474,
           "current_mrr": 350,
           "lifetime_revenue": 54296.3,
-          "years_with_us": 3.1,
+          "years_with_us": 3.2,
           "failed_3mo": 0
         },
         {
@@ -261,6 +256,14 @@
           "failed_3mo": 0
         },
         {
+          "name": "Customer 2100",
+          "allmoxy_customer_id": 2100,
+          "current_mrr": 290,
+          "lifetime_revenue": 7825,
+          "years_with_us": 0.2,
+          "failed_3mo": 0
+        },
+        {
           "name": "Elite Cabinets",
           "allmoxy_customer_id": 360,
           "current_mrr": 288.75,
@@ -273,7 +276,7 @@
           "allmoxy_customer_id": 2056,
           "current_mrr": 270,
           "lifetime_revenue": 6143.5,
-          "years_with_us": 0.6,
+          "years_with_us": 0.7,
           "failed_3mo": 0
         },
         {
@@ -281,7 +284,7 @@
           "allmoxy_customer_id": 540,
           "current_mrr": 262.5,
           "lifetime_revenue": 5206.88,
-          "years_with_us": 1.3,
+          "years_with_us": 1.4,
           "failed_3mo": 0
         },
         {
@@ -338,7 +341,7 @@
           "current_mrr": 250,
           "lifetime_revenue": 13448.67,
           "years_with_us": 1.7,
-          "failed_3mo": 0
+          "failed_3mo": 1
         },
         {
           "name": "Burton Cabinet Company",
@@ -354,7 +357,7 @@
           "current_mrr": 250,
           "lifetime_revenue": 4250,
           "years_with_us": 1.8,
-          "failed_3mo": 0
+          "failed_3mo": 2
         },
         {
           "name": "Capital Millwork",
@@ -441,7 +444,7 @@
           "allmoxy_customer_id": 546,
           "current_mrr": 250,
           "lifetime_revenue": 4980.5,
-          "years_with_us": 1.2,
+          "years_with_us": 1.3,
           "failed_3mo": 0
         },
         {
@@ -449,15 +452,15 @@
           "allmoxy_customer_id": 2037,
           "current_mrr": 250,
           "lifetime_revenue": 2150,
-          "years_with_us": 0.9,
-          "failed_3mo": 0
+          "years_with_us": 1,
+          "failed_3mo": 3
         },
         {
           "name": "Metro Drawer Boxes",
           "allmoxy_customer_id": 217,
           "current_mrr": 250,
           "lifetime_revenue": 28000,
-          "years_with_us": 6.8,
+          "years_with_us": 6.9,
           "failed_3mo": 0
         },
         {
@@ -465,7 +468,7 @@
           "allmoxy_customer_id": 2049,
           "current_mrr": 250,
           "lifetime_revenue": 3677,
-          "years_with_us": 0.7,
+          "years_with_us": 0.8,
           "failed_3mo": 0
         },
         {
@@ -514,7 +517,7 @@
           "current_mrr": 250,
           "lifetime_revenue": 17711,
           "years_with_us": 5.2,
-          "failed_3mo": 0
+          "failed_3mo": 3
         },
         {
           "name": "Santas Cabinets",
@@ -530,7 +533,7 @@
           "current_mrr": 250,
           "lifetime_revenue": 5824.17,
           "years_with_us": 1.6,
-          "failed_3mo": 0
+          "failed_3mo": 1
         },
         {
           "name": "Signature Cabinetry",
@@ -549,11 +552,35 @@
           "failed_3mo": 0
         },
         {
+          "name": "Customer 2092",
+          "allmoxy_customer_id": 2092,
+          "current_mrr": 250,
+          "lifetime_revenue": 1900,
+          "years_with_us": 0.3,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Customer 2094",
+          "allmoxy_customer_id": 2094,
+          "current_mrr": 250,
+          "lifetime_revenue": 1425,
+          "years_with_us": 0.3,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Customer 2123",
+          "allmoxy_customer_id": 2123,
+          "current_mrr": 250,
+          "lifetime_revenue": 250,
+          "years_with_us": 0.1,
+          "failed_3mo": 0
+        },
+        {
           "name": "Advanced Hardware Supply",
           "allmoxy_customer_id": 525,
           "current_mrr": 219,
           "lifetime_revenue": 9645,
-          "years_with_us": 1.7,
+          "years_with_us": 1.8,
           "failed_3mo": 0
         },
         {
@@ -569,7 +596,7 @@
           "allmoxy_customer_id": 2057,
           "current_mrr": 200,
           "lifetime_revenue": 600,
-          "years_with_us": 0.6,
+          "years_with_us": 0.7,
           "failed_3mo": 0
         },
         {
@@ -577,7 +604,15 @@
           "allmoxy_customer_id": 2047,
           "current_mrr": 200,
           "lifetime_revenue": 1000,
-          "years_with_us": 0.7,
+          "years_with_us": 0.8,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Customer 2113",
+          "allmoxy_customer_id": 2113,
+          "current_mrr": 200,
+          "lifetime_revenue": 600,
+          "years_with_us": 0.2,
           "failed_3mo": 0
         },
         {
@@ -593,7 +628,7 @@
           "allmoxy_customer_id": 384,
           "current_mrr": 199,
           "lifetime_revenue": 10200,
-          "years_with_us": 4.4,
+          "years_with_us": 4.5,
           "failed_3mo": 0
         },
         {
@@ -601,6 +636,14 @@
           "allmoxy_customer_id": 2106,
           "current_mrr": 169,
           "lifetime_revenue": 757,
+          "years_with_us": 0.2,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Customer 2112",
+          "allmoxy_customer_id": 2112,
+          "current_mrr": 169,
+          "lifetime_revenue": 4082,
           "years_with_us": 0.2,
           "failed_3mo": 0
         },
@@ -636,19 +679,20 @@
           "years_with_us": 6.7,
           "failed_3mo": 0
         }
-      ],
-      "mrr": 20420
+      ]
     },
     {
       "bucket": "$500–$1K",
-      "customers": [
+      "customers": 47,
+      "mrr": 33881.05,
+      "customers_list": [
         {
           "name": "Rta Cabinetry Inc",
           "allmoxy_customer_id": 160,
           "current_mrr": 960,
           "lifetime_revenue": 49153.87,
-          "years_with_us": 7.7,
-          "failed_3mo": 0
+          "years_with_us": 7.8,
+          "failed_3mo": 2
         },
         {
           "name": "Royal Plywood Co.",
@@ -672,7 +716,7 @@
           "current_mrr": 929,
           "lifetime_revenue": 44111.5,
           "years_with_us": 4.4,
-          "failed_3mo": 0
+          "failed_3mo": 13
         },
         {
           "name": "Brandenberger Door MFG",
@@ -776,7 +820,7 @@
           "current_mrr": 769,
           "lifetime_revenue": 35080.4,
           "years_with_us": 3.8,
-          "failed_3mo": 0
+          "failed_3mo": 2
         },
         {
           "name": "Cascade Distribution Group",
@@ -823,7 +867,7 @@
           "allmoxy_customer_id": 391,
           "current_mrr": 699,
           "lifetime_revenue": 45856,
-          "years_with_us": 4.3,
+          "years_with_us": 4.4,
           "failed_3mo": 0
         },
         {
@@ -832,7 +876,7 @@
           "current_mrr": 699,
           "lifetime_revenue": 33731.11,
           "years_with_us": 3.7,
-          "failed_3mo": 0
+          "failed_3mo": 15
         },
         {
           "name": "Cabinetry Concepts",
@@ -863,7 +907,7 @@
           "allmoxy_customer_id": 2044,
           "current_mrr": 667,
           "lifetime_revenue": 8288.2,
-          "years_with_us": 0.8,
+          "years_with_us": 0.9,
           "failed_3mo": 0
         },
         {
@@ -872,7 +916,7 @@
           "current_mrr": 658,
           "lifetime_revenue": 50404,
           "years_with_us": 10.7,
-          "failed_3mo": 0
+          "failed_3mo": 6
         },
         {
           "name": "Trimart",
@@ -883,11 +927,27 @@
           "failed_3mo": 0
         },
         {
+          "name": "Customer 2122",
+          "allmoxy_customer_id": 2122,
+          "current_mrr": 650,
+          "lifetime_revenue": 3250,
+          "years_with_us": 0.1,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Customer 2126",
+          "allmoxy_customer_id": 2126,
+          "current_mrr": 650,
+          "lifetime_revenue": 1775,
+          "years_with_us": 0,
+          "failed_3mo": 0
+        },
+        {
           "name": "Elite Woodworking",
           "allmoxy_customer_id": 309,
           "current_mrr": 637,
           "lifetime_revenue": 39994,
-          "years_with_us": 5.6,
+          "years_with_us": 5.7,
           "failed_3mo": 0
         },
         {
@@ -911,7 +971,7 @@
           "allmoxy_customer_id": 298,
           "current_mrr": 618.7,
           "lifetime_revenue": 36503.3,
-          "years_with_us": 5.7,
+          "years_with_us": 5.8,
           "failed_3mo": 0
         },
         {
@@ -927,7 +987,7 @@
           "allmoxy_customer_id": 64,
           "current_mrr": 600,
           "lifetime_revenue": 18031,
-          "years_with_us": 9.8,
+          "years_with_us": 9.9,
           "failed_3mo": 0
         },
         {
@@ -935,7 +995,7 @@
           "allmoxy_customer_id": 2048,
           "current_mrr": 580,
           "lifetime_revenue": 7128.5,
-          "years_with_us": 0.7,
+          "years_with_us": 0.8,
           "failed_3mo": 0
         },
         {
@@ -951,7 +1011,7 @@
           "allmoxy_customer_id": 14,
           "current_mrr": 576.45,
           "lifetime_revenue": 31510.53,
-          "years_with_us": 13.6,
+          "years_with_us": 13.7,
           "failed_3mo": 0
         },
         {
@@ -983,7 +1043,7 @@
           "allmoxy_customer_id": 83,
           "current_mrr": 525,
           "lifetime_revenue": 38802.9,
-          "years_with_us": 8.9,
+          "years_with_us": 9,
           "failed_3mo": 0
         },
         {
@@ -991,23 +1051,24 @@
           "allmoxy_customer_id": 310,
           "current_mrr": 525,
           "lifetime_revenue": 33243.66,
-          "years_with_us": 5.6,
-          "failed_3mo": 0
+          "years_with_us": 5.7,
+          "failed_3mo": 10
         },
         {
           "name": "Dovetail Wood Traditions",
           "allmoxy_customer_id": 541,
           "current_mrr": 500,
           "lifetime_revenue": 7633.5,
-          "years_with_us": 1.3,
+          "years_with_us": 1.4,
           "failed_3mo": 0
         }
-      ],
-      "mrr": 32581.05
+      ]
     },
     {
       "bucket": "$1K–$2K",
-      "customers": [
+      "customers": 36,
+      "mrr": 48019.3,
+      "customers_list": [
         {
           "name": "Drawers by Design",
           "allmoxy_customer_id": 82,
@@ -1086,14 +1147,14 @@
           "current_mrr": 1500,
           "lifetime_revenue": 23737.75,
           "years_with_us": 1.3,
-          "failed_3mo": 0
+          "failed_3mo": 14
         },
         {
           "name": "Diamond CNC",
           "allmoxy_customer_id": 168,
           "current_mrr": 1499,
           "lifetime_revenue": 118806.9,
-          "years_with_us": 7.6,
+          "years_with_us": 7.7,
           "failed_3mo": 0
         },
         {
@@ -1102,7 +1163,7 @@
           "current_mrr": 1499,
           "lifetime_revenue": 51447.5,
           "years_with_us": 3.6,
-          "failed_3mo": 0
+          "failed_3mo": 1
         },
         {
           "name": "D3Customcabinets",
@@ -1117,7 +1178,7 @@
           "allmoxy_customer_id": 262,
           "current_mrr": 1375,
           "lifetime_revenue": 94974.46,
-          "years_with_us": 6.2,
+          "years_with_us": 6.3,
           "failed_3mo": 0
         },
         {
@@ -1157,7 +1218,7 @@
           "allmoxy_customer_id": 30,
           "current_mrr": 1250,
           "lifetime_revenue": 135944.4,
-          "years_with_us": 10.7,
+          "years_with_us": 10.8,
           "failed_3mo": 0
         },
         {
@@ -1173,7 +1234,7 @@
           "allmoxy_customer_id": 545,
           "current_mrr": 1182,
           "lifetime_revenue": 15868,
-          "years_with_us": 1.2,
+          "years_with_us": 1.3,
           "failed_3mo": 0
         },
         {
@@ -1181,7 +1242,7 @@
           "allmoxy_customer_id": 343,
           "current_mrr": 1175,
           "lifetime_revenue": 65213.8,
-          "years_with_us": 5.2,
+          "years_with_us": 5.3,
           "failed_3mo": 0
         },
         {
@@ -1198,14 +1259,14 @@
           "current_mrr": 1100,
           "lifetime_revenue": 48104.5,
           "years_with_us": 3.6,
-          "failed_3mo": 0
+          "failed_3mo": 2
         },
         {
           "name": "Cabinet Restylers, Inc",
           "allmoxy_customer_id": 479,
           "current_mrr": 1099,
           "lifetime_revenue": 67340.5,
-          "years_with_us": 3,
+          "years_with_us": 3.1,
           "failed_3mo": 0
         },
         {
@@ -1253,7 +1314,7 @@
           "allmoxy_customer_id": 432,
           "current_mrr": 1049,
           "lifetime_revenue": 69804.5,
-          "years_with_us": 3.8,
+          "years_with_us": 3.9,
           "failed_3mo": 0
         },
         {
@@ -1281,10 +1342,10 @@
           "failed_3mo": 0
         },
         {
-          "name": "Cabsource - Innovative Cabinet",
-          "allmoxy_customer_id": 455,
+          "name": "Innovative Cabinetry And Design",
+          "allmoxy_customer_id": 303,
           "current_mrr": 1005,
-          "lifetime_revenue": 46477.83,
+          "lifetime_revenue": 599,
           "years_with_us": 5.8,
           "failed_3mo": 0
         },
@@ -1293,29 +1354,30 @@
           "allmoxy_customer_id": 42,
           "current_mrr": 1000,
           "lifetime_revenue": 88887,
-          "years_with_us": 9.9,
+          "years_with_us": 10,
           "failed_3mo": 0
         }
-      ],
-      "mrr": 48019.3
+      ]
     },
     {
       "bucket": "$2K–$5K",
-      "customers": [
+      "customers": 30,
+      "mrr": 92582.29,
+      "customers_list": [
         {
           "name": "Greyloch, LLC.",
           "allmoxy_customer_id": 136,
           "current_mrr": 4732,
           "lifetime_revenue": 210641,
           "years_with_us": 7.2,
-          "failed_3mo": 0
+          "failed_3mo": 3
         },
         {
           "name": "Corona Millworks",
           "allmoxy_customer_id": 300,
           "current_mrr": 4620,
           "lifetime_revenue": 291098.4,
-          "years_with_us": 8.8,
+          "years_with_us": 8.9,
           "failed_3mo": 0
         },
         {
@@ -1339,8 +1401,8 @@
           "allmoxy_customer_id": 363,
           "current_mrr": 3859,
           "lifetime_revenue": 186764,
-          "years_with_us": 4.8,
-          "failed_3mo": 0
+          "years_with_us": 4.9,
+          "failed_3mo": 3
         },
         {
           "name": "BTJ Cabinet Door Company",
@@ -1388,7 +1450,7 @@
           "current_mrr": 3299,
           "lifetime_revenue": 251302.6,
           "years_with_us": 7.7,
-          "failed_3mo": 0
+          "failed_3mo": 5
         },
         {
           "name": "Rehau Inc.",
@@ -1455,12 +1517,20 @@
           "failed_3mo": 0
         },
         {
+          "name": "Martin Wood Products",
+          "allmoxy_customer_id": 111,
+          "current_mrr": 2669,
+          "lifetime_revenue": 23216,
+          "years_with_us": 8.4,
+          "failed_3mo": 5
+        },
+        {
           "name": "Wizzwood DBA - Quality Kitchens Inc.",
           "allmoxy_customer_id": 330,
           "current_mrr": 2650,
           "lifetime_revenue": 128521.46,
           "years_with_us": 5.4,
-          "failed_3mo": 0
+          "failed_3mo": 1
         },
         {
           "name": "Closet City",
@@ -1468,15 +1538,7 @@
           "current_mrr": 2643,
           "lifetime_revenue": 176395.71,
           "years_with_us": 13.2,
-          "failed_3mo": 0
-        },
-        {
-          "name": "Customer 2100",
-          "allmoxy_customer_id": 2100,
-          "current_mrr": 2615,
-          "lifetime_revenue": 7825,
-          "years_with_us": 0.2,
-          "failed_3mo": 0
+          "failed_3mo": 1
         },
         {
           "name": "Cimino's Cabinet Doors Inc.",
@@ -1523,7 +1585,7 @@
           "allmoxy_customer_id": 159,
           "current_mrr": 2105,
           "lifetime_revenue": 99548.5,
-          "years_with_us": 7.7,
+          "years_with_us": 7.8,
           "failed_3mo": 0
         },
         {
@@ -1539,21 +1601,22 @@
           "allmoxy_customer_id": 423,
           "current_mrr": 2000,
           "lifetime_revenue": 121211.6,
-          "years_with_us": 3.8,
+          "years_with_us": 3.9,
           "failed_3mo": 0
         }
-      ],
-      "mrr": 92528.29
+      ]
     },
     {
       "bucket": "$5K+",
-      "customers": [
+      "customers": 6,
+      "mrr": 35182.2,
+      "customers_list": [
         {
           "name": "Lewis Cabinet Specialties Group LLC",
           "allmoxy_customer_id": 1,
           "current_mrr": 7459.2,
           "lifetime_revenue": 576593.94,
-          "years_with_us": 17.1,
+          "years_with_us": 17.2,
           "failed_3mo": 0
         },
         {
@@ -1569,7 +1632,7 @@
           "allmoxy_customer_id": 36,
           "current_mrr": 6000,
           "lifetime_revenue": 318233.1,
-          "years_with_us": 10.2,
+          "years_with_us": 10.3,
           "failed_3mo": 0
         },
         {
@@ -1585,7 +1648,7 @@
           "allmoxy_customer_id": 161,
           "current_mrr": 5000,
           "lifetime_revenue": 410553,
-          "years_with_us": 7.7,
+          "years_with_us": 7.8,
           "failed_3mo": 0
         },
         {
@@ -1596,8 +1659,7 @@
           "years_with_us": 7.6,
           "failed_3mo": 0
         }
-      ],
-      "mrr": 35182.2
+      ]
     }
   ],
   "top_customers": [
@@ -1606,7 +1668,7 @@
       "allmoxy_customer_id": 1,
       "current_mrr": 7459.2,
       "lifetime_revenue": 576593.94,
-      "years_with_us": 17.1,
+      "years_with_us": 17.2,
       "failed_3mo": 0
     },
     {
@@ -1622,7 +1684,7 @@
       "allmoxy_customer_id": 36,
       "current_mrr": 6000,
       "lifetime_revenue": 318233.1,
-      "years_with_us": 10.2,
+      "years_with_us": 10.3,
       "failed_3mo": 0
     },
     {
@@ -1638,7 +1700,7 @@
       "allmoxy_customer_id": 161,
       "current_mrr": 5000,
       "lifetime_revenue": 410553,
-      "years_with_us": 7.7,
+      "years_with_us": 7.8,
       "failed_3mo": 0
     },
     {
@@ -1655,14 +1717,14 @@
       "current_mrr": 4732,
       "lifetime_revenue": 210641,
       "years_with_us": 7.2,
-      "failed_3mo": 0
+      "failed_3mo": 3
     },
     {
       "name": "Corona Millworks",
       "allmoxy_customer_id": 300,
       "current_mrr": 4620,
       "lifetime_revenue": 291098.4,
-      "years_with_us": 8.8,
+      "years_with_us": 8.9,
       "failed_3mo": 0
     },
     {
@@ -1686,8 +1748,8 @@
       "allmoxy_customer_id": 363,
       "current_mrr": 3859,
       "lifetime_revenue": 186764,
-      "years_with_us": 4.8,
-      "failed_3mo": 0
+      "years_with_us": 4.9,
+      "failed_3mo": 3
     },
     {
       "name": "BTJ Cabinet Door Company",
@@ -1735,7 +1797,7 @@
       "current_mrr": 3299,
       "lifetime_revenue": 251302.6,
       "years_with_us": 7.7,
-      "failed_3mo": 0
+      "failed_3mo": 5
     },
     {
       "name": "Rehau Inc.",
@@ -1808,7 +1870,7 @@
       "allmoxy_customer_id": 1,
       "current_mrr": 7459.2,
       "lifetime_revenue": 576593.94,
-      "years_with_us": 17.1,
+      "years_with_us": 17.2,
       "failed_3mo": 0
     },
     {
@@ -1824,7 +1886,7 @@
       "allmoxy_customer_id": 36,
       "current_mrr": 6000,
       "lifetime_revenue": 318233.1,
-      "years_with_us": 10.2,
+      "years_with_us": 10.3,
       "failed_3mo": 0
     },
     {
@@ -1840,7 +1902,7 @@
       "allmoxy_customer_id": 161,
       "current_mrr": 5000,
       "lifetime_revenue": 410553,
-      "years_with_us": 7.7,
+      "years_with_us": 7.8,
       "failed_3mo": 0
     },
     {
@@ -1857,14 +1919,14 @@
       "current_mrr": 4732,
       "lifetime_revenue": 210641,
       "years_with_us": 7.2,
-      "failed_3mo": 0
+      "failed_3mo": 3
     },
     {
       "name": "Corona Millworks",
       "allmoxy_customer_id": 300,
       "current_mrr": 4620,
       "lifetime_revenue": 291098.4,
-      "years_with_us": 8.8,
+      "years_with_us": 8.9,
       "failed_3mo": 0
     },
     {
@@ -1888,8 +1950,8 @@
       "allmoxy_customer_id": 363,
       "current_mrr": 3859,
       "lifetime_revenue": 186764,
-      "years_with_us": 4.8,
-      "failed_3mo": 0
+      "years_with_us": 4.9,
+      "failed_3mo": 3
     },
     {
       "name": "BTJ Cabinet Door Company",
@@ -1937,7 +1999,7 @@
       "current_mrr": 3299,
       "lifetime_revenue": 251302.6,
       "years_with_us": 7.7,
-      "failed_3mo": 0
+      "failed_3mo": 5
     },
     {
       "name": "Rehau Inc.",
@@ -2004,12 +2066,20 @@
       "failed_3mo": 0
     },
     {
+      "name": "Martin Wood Products",
+      "allmoxy_customer_id": 111,
+      "current_mrr": 2669,
+      "lifetime_revenue": 23216,
+      "years_with_us": 8.4,
+      "failed_3mo": 5
+    },
+    {
       "name": "Wizzwood DBA - Quality Kitchens Inc.",
       "allmoxy_customer_id": 330,
       "current_mrr": 2650,
       "lifetime_revenue": 128521.46,
       "years_with_us": 5.4,
-      "failed_3mo": 0
+      "failed_3mo": 1
     },
     {
       "name": "Closet City",
@@ -2017,15 +2087,7 @@
       "current_mrr": 2643,
       "lifetime_revenue": 176395.71,
       "years_with_us": 13.2,
-      "failed_3mo": 0
-    },
-    {
-      "name": "Customer 2100",
-      "allmoxy_customer_id": 2100,
-      "current_mrr": 2615,
-      "lifetime_revenue": 7825,
-      "years_with_us": 0.2,
-      "failed_3mo": 0
+      "failed_3mo": 1
     },
     {
       "name": "Cimino's Cabinet Doors Inc.",
@@ -2072,7 +2134,7 @@
       "allmoxy_customer_id": 159,
       "current_mrr": 2105,
       "lifetime_revenue": 99548.5,
-      "years_with_us": 7.7,
+      "years_with_us": 7.8,
       "failed_3mo": 0
     },
     {
@@ -2088,7 +2150,7 @@
       "allmoxy_customer_id": 423,
       "current_mrr": 2000,
       "lifetime_revenue": 121211.6,
-      "years_with_us": 3.8,
+      "years_with_us": 3.9,
       "failed_3mo": 0
     },
     {
@@ -2169,14 +2231,14 @@
       "current_mrr": 1500,
       "lifetime_revenue": 23737.75,
       "years_with_us": 1.3,
-      "failed_3mo": 0
+      "failed_3mo": 14
     },
     {
       "name": "Diamond CNC",
       "allmoxy_customer_id": 168,
       "current_mrr": 1499,
       "lifetime_revenue": 118806.9,
-      "years_with_us": 7.6,
+      "years_with_us": 7.7,
       "failed_3mo": 0
     },
     {
@@ -2185,7 +2247,7 @@
       "current_mrr": 1499,
       "lifetime_revenue": 51447.5,
       "years_with_us": 3.6,
-      "failed_3mo": 0
+      "failed_3mo": 1
     },
     {
       "name": "D3Customcabinets",
@@ -2200,7 +2262,7 @@
       "allmoxy_customer_id": 262,
       "current_mrr": 1375,
       "lifetime_revenue": 94974.46,
-      "years_with_us": 6.2,
+      "years_with_us": 6.3,
       "failed_3mo": 0
     },
     {
@@ -2240,7 +2302,7 @@
       "allmoxy_customer_id": 30,
       "current_mrr": 1250,
       "lifetime_revenue": 135944.4,
-      "years_with_us": 10.7,
+      "years_with_us": 10.8,
       "failed_3mo": 0
     },
     {
@@ -2256,7 +2318,7 @@
       "allmoxy_customer_id": 545,
       "current_mrr": 1182,
       "lifetime_revenue": 15868,
-      "years_with_us": 1.2,
+      "years_with_us": 1.3,
       "failed_3mo": 0
     },
     {
@@ -2264,7 +2326,7 @@
       "allmoxy_customer_id": 343,
       "current_mrr": 1175,
       "lifetime_revenue": 65213.8,
-      "years_with_us": 5.2,
+      "years_with_us": 5.3,
       "failed_3mo": 0
     },
     {
@@ -2281,14 +2343,14 @@
       "current_mrr": 1100,
       "lifetime_revenue": 48104.5,
       "years_with_us": 3.6,
-      "failed_3mo": 0
+      "failed_3mo": 2
     },
     {
       "name": "Cabinet Restylers, Inc",
       "allmoxy_customer_id": 479,
       "current_mrr": 1099,
       "lifetime_revenue": 67340.5,
-      "years_with_us": 3,
+      "years_with_us": 3.1,
       "failed_3mo": 0
     },
     {
@@ -2336,7 +2398,7 @@
       "allmoxy_customer_id": 432,
       "current_mrr": 1049,
       "lifetime_revenue": 69804.5,
-      "years_with_us": 3.8,
+      "years_with_us": 3.9,
       "failed_3mo": 0
     },
     {
@@ -2364,10 +2426,10 @@
       "failed_3mo": 0
     },
     {
-      "name": "Cabsource - Innovative Cabinet",
-      "allmoxy_customer_id": 455,
+      "name": "Innovative Cabinetry And Design",
+      "allmoxy_customer_id": 303,
       "current_mrr": 1005,
-      "lifetime_revenue": 46477.83,
+      "lifetime_revenue": 599,
       "years_with_us": 5.8,
       "failed_3mo": 0
     },
@@ -2376,7 +2438,7 @@
       "allmoxy_customer_id": 42,
       "current_mrr": 1000,
       "lifetime_revenue": 88887,
-      "years_with_us": 9.9,
+      "years_with_us": 10,
       "failed_3mo": 0
     },
     {
@@ -2384,8 +2446,8 @@
       "allmoxy_customer_id": 160,
       "current_mrr": 960,
       "lifetime_revenue": 49153.87,
-      "years_with_us": 7.7,
-      "failed_3mo": 0
+      "years_with_us": 7.8,
+      "failed_3mo": 2
     },
     {
       "name": "Royal Plywood Co.",
@@ -2409,7 +2471,7 @@
       "current_mrr": 929,
       "lifetime_revenue": 44111.5,
       "years_with_us": 4.4,
-      "failed_3mo": 0
+      "failed_3mo": 13
     },
     {
       "name": "Brandenberger Door MFG",
@@ -2513,7 +2575,7 @@
       "current_mrr": 769,
       "lifetime_revenue": 35080.4,
       "years_with_us": 3.8,
-      "failed_3mo": 0
+      "failed_3mo": 2
     },
     {
       "name": "Cascade Distribution Group",
@@ -2560,7 +2622,7 @@
       "allmoxy_customer_id": 391,
       "current_mrr": 699,
       "lifetime_revenue": 45856,
-      "years_with_us": 4.3,
+      "years_with_us": 4.4,
       "failed_3mo": 0
     },
     {
@@ -2569,7 +2631,7 @@
       "current_mrr": 699,
       "lifetime_revenue": 33731.11,
       "years_with_us": 3.7,
-      "failed_3mo": 0
+      "failed_3mo": 15
     },
     {
       "name": "Cabinetry Concepts",
@@ -2600,7 +2662,7 @@
       "allmoxy_customer_id": 2044,
       "current_mrr": 667,
       "lifetime_revenue": 8288.2,
-      "years_with_us": 0.8,
+      "years_with_us": 0.9,
       "failed_3mo": 0
     },
     {
@@ -2609,7 +2671,7 @@
       "current_mrr": 658,
       "lifetime_revenue": 50404,
       "years_with_us": 10.7,
-      "failed_3mo": 0
+      "failed_3mo": 6
     },
     {
       "name": "Trimart",
@@ -2620,11 +2682,27 @@
       "failed_3mo": 0
     },
     {
+      "name": "Customer 2122",
+      "allmoxy_customer_id": 2122,
+      "current_mrr": 650,
+      "lifetime_revenue": 3250,
+      "years_with_us": 0.1,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Customer 2126",
+      "allmoxy_customer_id": 2126,
+      "current_mrr": 650,
+      "lifetime_revenue": 1775,
+      "years_with_us": 0,
+      "failed_3mo": 0
+    },
+    {
       "name": "Elite Woodworking",
       "allmoxy_customer_id": 309,
       "current_mrr": 637,
       "lifetime_revenue": 39994,
-      "years_with_us": 5.6,
+      "years_with_us": 5.7,
       "failed_3mo": 0
     },
     {
@@ -2648,7 +2726,7 @@
       "allmoxy_customer_id": 298,
       "current_mrr": 618.7,
       "lifetime_revenue": 36503.3,
-      "years_with_us": 5.7,
+      "years_with_us": 5.8,
       "failed_3mo": 0
     },
     {
@@ -2664,7 +2742,7 @@
       "allmoxy_customer_id": 64,
       "current_mrr": 600,
       "lifetime_revenue": 18031,
-      "years_with_us": 9.8,
+      "years_with_us": 9.9,
       "failed_3mo": 0
     },
     {
@@ -2672,7 +2750,7 @@
       "allmoxy_customer_id": 2048,
       "current_mrr": 580,
       "lifetime_revenue": 7128.5,
-      "years_with_us": 0.7,
+      "years_with_us": 0.8,
       "failed_3mo": 0
     },
     {
@@ -2688,7 +2766,7 @@
       "allmoxy_customer_id": 14,
       "current_mrr": 576.45,
       "lifetime_revenue": 31510.53,
-      "years_with_us": 13.6,
+      "years_with_us": 13.7,
       "failed_3mo": 0
     },
     {
@@ -2720,7 +2798,7 @@
       "allmoxy_customer_id": 83,
       "current_mrr": 525,
       "lifetime_revenue": 38802.9,
-      "years_with_us": 8.9,
+      "years_with_us": 9,
       "failed_3mo": 0
     },
     {
@@ -2728,15 +2806,15 @@
       "allmoxy_customer_id": 310,
       "current_mrr": 525,
       "lifetime_revenue": 33243.66,
-      "years_with_us": 5.6,
-      "failed_3mo": 0
+      "years_with_us": 5.7,
+      "failed_3mo": 10
     },
     {
       "name": "Dovetail Wood Traditions",
       "allmoxy_customer_id": 541,
       "current_mrr": 500,
       "lifetime_revenue": 7633.5,
-      "years_with_us": 1.3,
+      "years_with_us": 1.4,
       "failed_3mo": 0
     },
     {
@@ -2756,14 +2834,6 @@
       "failed_3mo": 0
     },
     {
-      "name": "Customer 2092",
-      "allmoxy_customer_id": 2092,
-      "current_mrr": 475,
-      "lifetime_revenue": 1900,
-      "years_with_us": 0.3,
-      "failed_3mo": 0
-    },
-    {
       "name": "The Door Company",
       "allmoxy_customer_id": 16,
       "current_mrr": 425,
@@ -2777,7 +2847,7 @@
       "current_mrr": 419,
       "lifetime_revenue": 24143.1,
       "years_with_us": 4.7,
-      "failed_3mo": 0
+      "failed_3mo": 8
     },
     {
       "name": "Quality Craft Woodworks",
@@ -2800,7 +2870,7 @@
       "allmoxy_customer_id": 320,
       "current_mrr": 415,
       "lifetime_revenue": 23128.5,
-      "years_with_us": 5.5,
+      "years_with_us": 5.6,
       "failed_3mo": 0
     },
     {
@@ -2841,14 +2911,14 @@
       "current_mrr": 399,
       "lifetime_revenue": 25854.8,
       "years_with_us": 7.8,
-      "failed_3mo": 0
+      "failed_3mo": 1
     },
     {
       "name": "Terzano Cabinetry Inc",
       "allmoxy_customer_id": 206,
       "current_mrr": 375,
       "lifetime_revenue": 31005,
-      "years_with_us": 8.1,
+      "years_with_us": 8.2,
       "failed_3mo": 0
     },
     {
@@ -2880,7 +2950,7 @@
       "allmoxy_customer_id": 474,
       "current_mrr": 350,
       "lifetime_revenue": 54296.3,
-      "years_with_us": 3.1,
+      "years_with_us": 3.2,
       "failed_3mo": 0
     },
     {
@@ -2940,6 +3010,14 @@
       "failed_3mo": 0
     },
     {
+      "name": "Customer 2100",
+      "allmoxy_customer_id": 2100,
+      "current_mrr": 290,
+      "lifetime_revenue": 7825,
+      "years_with_us": 0.2,
+      "failed_3mo": 0
+    },
+    {
       "name": "Elite Cabinets",
       "allmoxy_customer_id": 360,
       "current_mrr": 288.75,
@@ -2952,7 +3030,7 @@
       "allmoxy_customer_id": 2056,
       "current_mrr": 270,
       "lifetime_revenue": 6143.5,
-      "years_with_us": 0.6,
+      "years_with_us": 0.7,
       "failed_3mo": 0
     },
     {
@@ -2960,7 +3038,7 @@
       "allmoxy_customer_id": 540,
       "current_mrr": 262.5,
       "lifetime_revenue": 5206.88,
-      "years_with_us": 1.3,
+      "years_with_us": 1.4,
       "failed_3mo": 0
     },
     {
@@ -3017,7 +3095,7 @@
       "current_mrr": 250,
       "lifetime_revenue": 13448.67,
       "years_with_us": 1.7,
-      "failed_3mo": 0
+      "failed_3mo": 1
     },
     {
       "name": "Burton Cabinet Company",
@@ -3033,7 +3111,7 @@
       "current_mrr": 250,
       "lifetime_revenue": 4250,
       "years_with_us": 1.8,
-      "failed_3mo": 0
+      "failed_3mo": 2
     },
     {
       "name": "Capital Millwork",
@@ -3120,7 +3198,7 @@
       "allmoxy_customer_id": 546,
       "current_mrr": 250,
       "lifetime_revenue": 4980.5,
-      "years_with_us": 1.2,
+      "years_with_us": 1.3,
       "failed_3mo": 0
     },
     {
@@ -3128,15 +3206,15 @@
       "allmoxy_customer_id": 2037,
       "current_mrr": 250,
       "lifetime_revenue": 2150,
-      "years_with_us": 0.9,
-      "failed_3mo": 0
+      "years_with_us": 1,
+      "failed_3mo": 3
     },
     {
       "name": "Metro Drawer Boxes",
       "allmoxy_customer_id": 217,
       "current_mrr": 250,
       "lifetime_revenue": 28000,
-      "years_with_us": 6.8,
+      "years_with_us": 6.9,
       "failed_3mo": 0
     },
     {
@@ -3144,7 +3222,7 @@
       "allmoxy_customer_id": 2049,
       "current_mrr": 250,
       "lifetime_revenue": 3677,
-      "years_with_us": 0.7,
+      "years_with_us": 0.8,
       "failed_3mo": 0
     },
     {
@@ -3193,7 +3271,7 @@
       "current_mrr": 250,
       "lifetime_revenue": 17711,
       "years_with_us": 5.2,
-      "failed_3mo": 0
+      "failed_3mo": 3
     },
     {
       "name": "Santas Cabinets",
@@ -3209,7 +3287,7 @@
       "current_mrr": 250,
       "lifetime_revenue": 5824.17,
       "years_with_us": 1.6,
-      "failed_3mo": 0
+      "failed_3mo": 1
     },
     {
       "name": "Signature Cabinetry",
@@ -3228,11 +3306,35 @@
       "failed_3mo": 0
     },
     {
+      "name": "Customer 2092",
+      "allmoxy_customer_id": 2092,
+      "current_mrr": 250,
+      "lifetime_revenue": 1900,
+      "years_with_us": 0.3,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Customer 2094",
+      "allmoxy_customer_id": 2094,
+      "current_mrr": 250,
+      "lifetime_revenue": 1425,
+      "years_with_us": 0.3,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Customer 2123",
+      "allmoxy_customer_id": 2123,
+      "current_mrr": 250,
+      "lifetime_revenue": 250,
+      "years_with_us": 0.1,
+      "failed_3mo": 0
+    },
+    {
       "name": "Advanced Hardware Supply",
       "allmoxy_customer_id": 525,
       "current_mrr": 219,
       "lifetime_revenue": 9645,
-      "years_with_us": 1.7,
+      "years_with_us": 1.8,
       "failed_3mo": 0
     },
     {
@@ -3248,7 +3350,7 @@
       "allmoxy_customer_id": 2057,
       "current_mrr": 200,
       "lifetime_revenue": 600,
-      "years_with_us": 0.6,
+      "years_with_us": 0.7,
       "failed_3mo": 0
     },
     {
@@ -3256,7 +3358,15 @@
       "allmoxy_customer_id": 2047,
       "current_mrr": 200,
       "lifetime_revenue": 1000,
-      "years_with_us": 0.7,
+      "years_with_us": 0.8,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Customer 2113",
+      "allmoxy_customer_id": 2113,
+      "current_mrr": 200,
+      "lifetime_revenue": 600,
+      "years_with_us": 0.2,
       "failed_3mo": 0
     },
     {
@@ -3272,7 +3382,7 @@
       "allmoxy_customer_id": 384,
       "current_mrr": 199,
       "lifetime_revenue": 10200,
-      "years_with_us": 4.4,
+      "years_with_us": 4.5,
       "failed_3mo": 0
     },
     {
@@ -3280,6 +3390,14 @@
       "allmoxy_customer_id": 2106,
       "current_mrr": 169,
       "lifetime_revenue": 757,
+      "years_with_us": 0.2,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Customer 2112",
+      "allmoxy_customer_id": 2112,
+      "current_mrr": 169,
+      "lifetime_revenue": 4082,
       "years_with_us": 0.2,
       "failed_3mo": 0
     },
@@ -3321,7 +3439,7 @@
       "current_mrr": 65,
       "lifetime_revenue": 5590,
       "years_with_us": 11.4,
-      "failed_3mo": 0
+      "failed_3mo": 2
     },
     {
       "name": "Raumplus",
@@ -3332,10 +3450,198 @@
       "failed_3mo": 0
     }
   ],
-  "dunning_customers": [],
+  "dunning_customers": [
+    {
+      "name": "Greyloch, LLC.",
+      "allmoxy_customer_id": 136,
+      "current_mrr": 4732,
+      "in_customer_base": true,
+      "failed_3mo": 3,
+      "failed_3mo_amount": 225
+    },
+    {
+      "name": "Cutting Edge Doors & Woodworking",
+      "allmoxy_customer_id": 363,
+      "current_mrr": 3859,
+      "in_customer_base": true,
+      "failed_3mo": 3,
+      "failed_3mo_amount": 8697
+    },
+    {
+      "name": "Cabredo LLC",
+      "allmoxy_customer_id": 164,
+      "current_mrr": 3299,
+      "in_customer_base": true,
+      "failed_3mo": 5,
+      "failed_3mo_amount": 16495
+    },
+    {
+      "name": "Martin Wood Products",
+      "allmoxy_customer_id": 111,
+      "current_mrr": 2669,
+      "in_customer_base": true,
+      "failed_3mo": 5,
+      "failed_3mo_amount": 26345
+    },
+    {
+      "name": "Wizzwood DBA - Quality Kitchens Inc.",
+      "allmoxy_customer_id": 330,
+      "current_mrr": 2650,
+      "in_customer_base": true,
+      "failed_3mo": 1,
+      "failed_3mo_amount": 2871.94
+    },
+    {
+      "name": "Closet City",
+      "allmoxy_customer_id": 17,
+      "current_mrr": 2643,
+      "in_customer_base": true,
+      "failed_3mo": 1,
+      "failed_3mo_amount": 2623
+    },
+    {
+      "name": "Vlux",
+      "allmoxy_customer_id": 543,
+      "current_mrr": 1500,
+      "in_customer_base": true,
+      "failed_3mo": 14,
+      "failed_3mo_amount": 18595.5
+    },
+    {
+      "name": "Door Masters of Houston",
+      "allmoxy_customer_id": 443,
+      "current_mrr": 1499,
+      "in_customer_base": true,
+      "failed_3mo": 1,
+      "failed_3mo_amount": 1499
+    },
+    {
+      "name": "NuDoors DBA - Spayce Integrated LLC",
+      "allmoxy_customer_id": 440,
+      "current_mrr": 1100,
+      "in_customer_base": true,
+      "failed_3mo": 2,
+      "failed_3mo_amount": 2200
+    },
+    {
+      "name": "Rta Cabinetry Inc",
+      "allmoxy_customer_id": 160,
+      "current_mrr": 960,
+      "in_customer_base": true,
+      "failed_3mo": 2,
+      "failed_3mo_amount": 1920
+    },
+    {
+      "name": "Dot Custom Cabinets LLC",
+      "allmoxy_customer_id": 385,
+      "current_mrr": 929,
+      "in_customer_base": true,
+      "failed_3mo": 13,
+      "failed_3mo_amount": 11440
+    },
+    {
+      "name": "Drawer Box Solutions",
+      "allmoxy_customer_id": 427,
+      "current_mrr": 769,
+      "in_customer_base": true,
+      "failed_3mo": 2,
+      "failed_3mo_amount": 1538
+    },
+    {
+      "name": "Staley Custom Cabinets",
+      "allmoxy_customer_id": 437,
+      "current_mrr": 699,
+      "in_customer_base": true,
+      "failed_3mo": 15,
+      "failed_3mo_amount": 11227.35
+    },
+    {
+      "name": "Bella Imc",
+      "allmoxy_customer_id": 31,
+      "current_mrr": 658,
+      "in_customer_base": true,
+      "failed_3mo": 6,
+      "failed_3mo_amount": 3948
+    },
+    {
+      "name": "Empyre Designs",
+      "allmoxy_customer_id": 310,
+      "current_mrr": 525,
+      "in_customer_base": true,
+      "failed_3mo": 10,
+      "failed_3mo_amount": 5633.75
+    },
+    {
+      "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
+      "allmoxy_customer_id": 457,
+      "current_mrr": 419,
+      "in_customer_base": true,
+      "failed_3mo": 8,
+      "failed_3mo_amount": 2055
+    },
+    {
+      "name": "Global Cabinet Supply",
+      "allmoxy_customer_id": 275,
+      "current_mrr": 399,
+      "in_customer_base": true,
+      "failed_3mo": 1,
+      "failed_3mo_amount": 399
+    },
+    {
+      "name": "Salerno's Custom Cab",
+      "allmoxy_customer_id": 344,
+      "current_mrr": 250,
+      "in_customer_base": true,
+      "failed_3mo": 3,
+      "failed_3mo_amount": 750
+    },
+    {
+      "name": "Lane Industries",
+      "allmoxy_customer_id": 2037,
+      "current_mrr": 250,
+      "in_customer_base": true,
+      "failed_3mo": 3,
+      "failed_3mo_amount": 750
+    },
+    {
+      "name": "Cabinet Doors NJ Llc",
+      "allmoxy_customer_id": 521,
+      "current_mrr": 250,
+      "in_customer_base": true,
+      "failed_3mo": 2,
+      "failed_3mo_amount": 500
+    },
+    {
+      "name": "SCP Cabinets",
+      "allmoxy_customer_id": 532,
+      "current_mrr": 250,
+      "in_customer_base": true,
+      "failed_3mo": 1,
+      "failed_3mo_amount": 268.63
+    },
+    {
+      "name": "Big Timber Millworks",
+      "allmoxy_customer_id": 527,
+      "current_mrr": 250,
+      "in_customer_base": true,
+      "failed_3mo": 1,
+      "failed_3mo_amount": 268.13
+    },
+    {
+      "name": "UC Cabinet Components",
+      "allmoxy_customer_id": 25,
+      "current_mrr": 65,
+      "in_customer_base": true,
+      "failed_3mo": 2,
+      "failed_3mo_amount": 130
+    }
+  ],
   "dunning_summary": {
-    "total_dunning_customers": 0,
-    "total_at_risk_amount": 0
+    "total_dunning_customers": 23,
+    "total_at_risk_amount": 30624,
+    "mrr_at_risk": 30624,
+    "failed_attempts": 104,
+    "failed_attempts_amount": 120379.3
   },
-  "notes": "Per-customer MRR drawn from MRR by Month tab (191 customers with MRR > $0 in 2026-06). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue and dunning counts joined from Stripe Sync (20K+ classified transactions). Dunning = charge attempts with status=failed in trailing 3 months."
+  "notes": "Per-customer MRR from the canonical customer base (198 customers with MRR > $0 in 2026-10). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue joined from Stripe Sync (20K+ classified transactions). Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); $ at risk = their MRR, failed-attempt $ counts every retry."
 }

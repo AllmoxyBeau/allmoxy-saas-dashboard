@@ -1,18 +1,18 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-11-02T23:23:38.445Z",
-  "cachedUntil": "2026-11-02T23:28:38.447Z",
+  "fetchedAt": "2026-11-09T21:07:16.248Z",
+  "cachedUntil": "2026-11-09T21:12:16.248Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
-    "total_issues": 19,
+    "total_issues": 18,
     "resolved_count": 0,
     "by_category": {
       "hubspot_instance_missing_aid": {
         "count": 9,
         "label": "HubSpot Instance missing Allmoxy Customer ID",
         "severity_counts": {
-          "low": 4,
-          "medium": 5,
+          "low": 6,
+          "medium": 3,
           "high": 0
         }
       },
@@ -26,10 +26,10 @@
         }
       },
       "connect_mapping_orphan": {
-        "count": 8,
+        "count": 7,
         "label": "Connect customer in mapping but no longer in source xlsx",
         "severity_counts": {
-          "low": 8,
+          "low": 7,
           "medium": 0,
           "high": 0
         }
@@ -37,8 +37,8 @@
     },
     "by_severity": {
       "high": 0,
-      "medium": 7,
-      "low": 12
+      "medium": 5,
+      "low": 13
     }
   },
   "issues": [
@@ -105,14 +105,14 @@
     {
       "category": "hubspot_instance_missing_aid",
       "category_label": "HubSpot Instance missing Allmoxy Customer ID",
-      "severity": "medium",
+      "severity": "low",
       "instance_id": "61198798504",
       "account_name": "Precise Closets & Cabinetry",
       "installer_id": "2170",
       "pay_status": "Active",
-      "suggested_aid": null,
-      "suggested_customer_name": null,
-      "action": "Open HubSpot Instance \"Precise Closets & Cabinetry\" — no installer_id match, requires manual lookup"
+      "suggested_aid": 2112,
+      "suggested_customer_name": "Precise Closets & Cabinetry",
+      "action": "Open HubSpot Instance \"Precise Closets & Cabinetry\", set Allmoxy Customer ID = 2112"
     },
     {
       "category": "hubspot_instance_missing_aid",
@@ -141,14 +141,14 @@
     {
       "category": "hubspot_instance_missing_aid",
       "category_label": "HubSpot Instance missing Allmoxy Customer ID",
-      "severity": "medium",
+      "severity": "low",
       "instance_id": "63209755225",
       "account_name": "Glacier Millworks",
       "installer_id": "2173",
       "pay_status": "Active",
-      "suggested_aid": null,
-      "suggested_customer_name": null,
-      "action": "Open HubSpot Instance \"Glacier Millworks\" — no installer_id match, requires manual lookup"
+      "suggested_aid": 2120,
+      "suggested_customer_name": "Glacier Millworks",
+      "action": "Open HubSpot Instance \"Glacier Millworks\", set Allmoxy Customer ID = 2120"
     },
     {
       "category": "hubspot_company_id_ghost",
@@ -239,19 +239,6 @@
       "connect_name": "Cabinet Parts to Go",
       "pay_status": "Active",
       "action": "Either the customer churned (remove from src/data/connect_customer_overrides.json mapping) or their Connect account changed — check Stripe Connect dashboard for \"Cabinet Parts to Go\""
-    },
-    {
-      "category": "connect_mapping_orphan",
-      "category_label": "Connect customer in mapping but no longer in source xlsx",
-      "severity": "low",
-      "allmoxy_customer_id": {
-        "allmoxy_customer_id": 550,
-        "stripe_connect_account_id": "acct_1S1UoS0atrcrba4J"
-      },
-      "customer_name": "(unknown)",
-      "connect_name": "Capital Millwork LLC",
-      "pay_status": null,
-      "action": "Either the customer churned (remove from src/data/connect_customer_overrides.json mapping) or their Connect account changed — check Stripe Connect dashboard for \"Capital Millwork LLC\""
     }
   ]
 }

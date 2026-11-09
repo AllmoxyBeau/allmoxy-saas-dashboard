@@ -70,6 +70,17 @@ function classifyType(c) {
 const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base64');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Exponential backoff with jitter. These syncs make thousands of sequential calls over
+// tens of minutes, and the old policy (6 tries, 500ms * n) gave a page just 10.5s of
+// total retry budget before throwing — so one network blip longer than that killed the
+// entire nightly chain. It did exactly that on 2026-10-18 and again on 2026-10-20
+// ("Stripe: retries exhausted" / ETIMEDOUT), each time wasting the whole run.
+// Budget is now ~90s per page, which rides out a short outage without masking a real one.
+function backoffMs(attempt) {
+  return Math.min(30000, 1000 * Math.pow(2, attempt)) + Math.floor(Math.random() * 500);
+}
+
+
 // Incremental by default: seed from the previous cache and only fetch items
 // created AFTER the last run's high-water mark. First run (no cache) or --full
 // does the full backfill. NOTE: incremental fetches by created date, so a refund
@@ -92,11 +103,11 @@ const createdGt = (!FULL && prev?.max_created)
 async function getPage(url, params) {
   const qs = new URLSearchParams({ limit: '100', ...params });
   if (createdGt) qs.set('created[gt]', String(createdGt));
-  for (let a = 0; a < 6; a++) {
+  for (let a = 0; a < 9; a++) {
     let res;
     try { res = await fetch(`${url}?${qs}`, { headers: { Authorization: AUTH } }); }
-    catch { await sleep(500 * (a + 1)); continue; }
-    if (res.status === 429 || res.status >= 500) { await sleep(500 * (a + 1)); continue; }
+    catch { await sleep(backoffMs(a)); continue; }
+    if (res.status === 429 || res.status >= 500) { await sleep(backoffMs(a)); continue; }
     const body = await res.json();
     if (res.status !== 200) throw new Error(`Stripe ${res.status}: ${body?.error?.message || ''}`);
     return body;
@@ -175,7 +186,7 @@ function record(c) {
   e.first_ts = Math.min(e.first_ts, c.created); e.last_ts = Math.max(e.last_ts, c.created);
   // Replace by id so a re-fetched charge (new refund, say) updates rather than doubles.
   e.transactions = e.transactions.filter((t) => t.i !== c.id);
-  e.transactions.push({ d: iso(c.created), a: r2(gross), t: type, r: r2((c.amount_refunded || 0) / 100), i: c.id });
+  e.transactions.push({ d: iso(c.created), a: r2(gross), t: type, r: r2((c.amount_refunded || 0) / 100), i: c.id, ...(typeof c.invoice === 'string' ? { inv: c.invoice } : {}) });
   byCust.set(cus, e);
   counted++;
 }

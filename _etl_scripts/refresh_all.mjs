@@ -11,13 +11,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const SOURCE_DIR = '/Users/beaulewis/projects/2 - Allmoxy - CFO/';
+const SOURCE_DIR = path.resolve(__dirname, '../..');
 const PRIMARY_XLSX = path.join(SOURCE_DIR, 'Allmoxy - Meta Data Reconcile Tool.xlsx');
-const SNAPSHOTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
-const SCRIPTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts';
-const OVERRIDES = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/src/data/connect_customer_overrides.json';
+const SNAPSHOTS = path.resolve(__dirname, '..', 'public/snapshots');
+const SCRIPTS = path.resolve(__dirname, '..', '_etl_scripts');
+const OVERRIDES = path.resolve(__dirname, '..', 'src/data/connect_customer_overrides.json');
 
 const PRIMARY_SHEET_ID = '18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30';
 
@@ -66,7 +68,7 @@ function writeSnap(name, obj) {
 function buildCoreCustomer(wb) {
   // Roster spine migrated to Aurora `customers` (cache/aurora_customers.json from
   // sync_aurora.mjs); xlsx allmoxy_core_customer tab is the fallback.
-  const AURORA_ROSTER_CACHE = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/aurora_customers.json';
+  const AURORA_ROSTER_CACHE = path.resolve(__dirname, '..', '_etl_scripts/cache/aurora_customers.json');
   const raw = fs.existsSync(AURORA_ROSTER_CACHE)
     ? JSON.parse(fs.readFileSync(AURORA_ROSTER_CACHE, 'utf8')).rows
     : XLSX.utils.sheet_to_json(wb.Sheets['allmoxy_core_customer'], { range: 1, defval: null, raw: false });
@@ -86,6 +88,22 @@ function buildCoreCustomer(wb) {
         harvest_id: r.harvest_id != null ? String(r.harvest_id) : null,
       };
     });
+  // Stripe customers the Aurora roster doesn't carry yet (roster_supplement.json). An
+  // entry is skipped as soon as any of its Stripe ids appears in the roster.
+  const SUPPLEMENT = path.resolve(__dirname, '..', '_etl_scripts/roster_supplement.json');
+  if (fs.existsSync(SUPPLEMENT)) {
+    const known = new Set(rows.flatMap((r) => r.stripe_customer_ids));
+    const knownAids = new Set(rows.map((r) => r.allmoxy_customer_id));
+    for (const s of JSON.parse(fs.readFileSync(SUPPLEMENT, 'utf8')).customers || []) {
+      if (s.stripe_customer_ids.some((id) => known.has(id))) continue;
+      if (knownAids.has(s.allmoxy_customer_id)) throw new Error(`roster_supplement: provisional id ${s.allmoxy_customer_id} collides with the roster`);
+      rows.push({
+        allmoxy_customer_id: s.allmoxy_customer_id, name: s.name, sign_up_date: s.sign_up_date,
+        hubspot_company_id: null, installer_id: null, installer_directory: s.installer_directory,
+        stripe_customer_ids: s.stripe_customer_ids, harvest_id: null,
+      });
+    }
+  }
   return {
     tab: 'allmoxy_core_customer',
     sheetId: PRIMARY_SHEET_ID,
@@ -250,6 +268,82 @@ function buildConnectByCustomerMonth(acctIndex) {
   };
 }
 
+// The Connect xlsx exports stop when someone last re-exported them (2026 file: June 19),
+// so from CONNECT_API_FROM onward the per-customer schedule comes from the live Stripe
+// Connect cache instead (sync_stripe_connect.mjs → by_account_month, gross application
+// fees in the account's currency). Each month is scaled to the net-settled USD figure
+// (sync_stripe_connect_net.mjs: Stripe FX applied, net of refunds — what hits the bank
+// and ties to QB 4300), and accounts that can't be named land in an explicit
+// "Unattributed Connect accounts" row, so the rows always sum to the month total.
+const CONNECT_API_FROM = '2026-06';
+const UNATTRIBUTED_CONNECT = 'Unattributed Connect accounts';
+function overlayConnectFromApi(connectByCust, acctIndex) {
+  const cacheDir = path.resolve(__dirname, '..', '_etl_scripts/cache');
+  const readJson = (f) => { try { return JSON.parse(fs.readFileSync(path.join(cacheDir, f), 'utf8')); } catch { return null; } };
+  const vol = readJson('stripe_connect_volume.json');
+  if (!vol?.by_account_month) { console.log('  ⚠ no stripe_connect_volume cache — Connect stays on the xlsx exports'); return; }
+  const netByMonth = Object.fromEntries((readJson('stripe_connect_net.json')?.monthly || []).map((r) => [r.month, r.net_usd]));
+  // Hand-confirmed account names win over the xlsx index (same rule as build_connect_volume).
+  const names = new Map(acctIndex);
+  try {
+    const ov = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'src/data/connect_customer_overrides.json'), 'utf8'));
+    // Mapping values are plain allmoxy_customer_ids; acct ids live in
+    // stripe_connect_account_ids_by_id (aid → acct_). Object values are legacy.
+    const nameByAid = new Map();
+    for (const [name, v] of Object.entries(ov.mapping || {})) {
+      if (typeof v === 'number' && !nameByAid.has(v)) nameByAid.set(v, name);
+      const acct = v && typeof v === 'object' ? v.stripe_connect_account_id : null;
+      if (acct && acct.startsWith('acct_')) names.set(acct, name);
+    }
+    for (const [aid, acct] of Object.entries(ov.stripe_connect_account_ids_by_id || {})) {
+      const name = nameByAid.get(Number(aid));
+      if (name && typeof acct === 'string' && acct.startsWith('acct_')) names.set(acct, name);
+    }
+  } catch { /* overrides optional */ }
+
+  const nowMonth = new Date().toISOString().slice(0, 7);
+  const fees = new Map(); // month -> Map(name -> fee)
+  for (const r of vol.by_account_month) {
+    if (r.month < CONNECT_API_FROM || r.month > nowMonth || !r.fee_revenue) continue;
+    const name = names.get(r.account) || UNATTRIBUTED_CONNECT;
+    if (!fees.has(r.month)) fees.set(r.month, new Map());
+    const m = fees.get(r.month);
+    m.set(name, (m.get(name) || 0) + r.fee_revenue);
+  }
+  const months = [...fees.keys()].sort();
+  if (!months.length) return;
+
+  const rowByName = new Map(connectByCust.rows.map((r) => [r.customer_name, r]));
+  const r2 = (v) => Math.round(v * 100) / 100;
+  for (const m of months) {
+    const byName = fees.get(m);
+    const gross = [...byName.values()].reduce((s, v) => s + v, 0);
+    const target = netByMonth[m] ?? gross;
+    const scale = gross > 0 ? target / gross : 1;
+    for (const r of connectByCust.rows) r[m] = null;
+    let assigned = 0;
+    const entries = [...byName.entries()].sort((a, b) => b[1] - a[1]);
+    entries.forEach(([name, fee], idx) => {
+      if (!rowByName.has(name)) {
+        const row = { customer_name: name };
+        for (const c of connectByCust.columns.slice(1)) row[c] = null;
+        connectByCust.rows.push(row); rowByName.set(name, row);
+      }
+      // Last entry absorbs the rounding so the rows sum to the target to the cent.
+      const v = idx === entries.length - 1 ? r2(target - assigned) : r2(fee * scale);
+      assigned = r2(assigned + v);
+      rowByName.get(name)[m] = v;
+    });
+    connectByCust.monthlyTotals[m] = r2(target);
+    if (!connectByCust.columns.includes(m)) connectByCust.columns.push(m);
+  }
+  connectByCust.columns = ['customer_name', ...connectByCust.columns.slice(1).sort()];
+  for (const r of connectByCust.rows) for (const c of connectByCust.columns.slice(1)) if (!(c in r)) r[c] = null;
+  connectByCust.rowCount = connectByCust.rows.length;
+  connectByCust.notes += ` From ${CONNECT_API_FROM} the schedule comes from the live Stripe Connect API (application fees by account), scaled to net-settled USD; unnamed accounts are carried in "${UNATTRIBUTED_CONNECT}" so rows sum to the month total.`;
+  console.log(`  Connect ${months[0]}…${months[months.length - 1]} from Stripe API (net USD): ${months.map((m) => `${m} $${Math.round(connectByCust.monthlyTotals[m]).toLocaleString()}`).join(' · ')}`);
+}
+
 function buildConnectByMonth(connectByCust) {
   const monthCols = connectByCust.columns.slice(1); // drop customer_name
   const rows = monthCols.map((month) => ({
@@ -395,6 +489,7 @@ console.log('\n[2/5] Connect union from 6 annual Connect xlsx files');
 const acctIndex = buildAcctNameIndex();
 console.log(`  built acct_id → name index: ${acctIndex.size} entries`);
 const connectByCust = buildConnectByCustomerMonth(acctIndex);
+overlayConnectFromApi(connectByCust, acctIndex);
 const connectByMonth = buildConnectByMonth(connectByCust);
 writeSnap('connect_by_customer_month', connectByCust);
 writeSnap('connect_by_month', connectByMonth);
@@ -483,6 +578,9 @@ runScriptArgs('apply_customer_merges.mjs', ['customer_profiles']);
 // live Stripe API (metadata-classified). Runs after Connect attribution (so it
 // preserves monthly connect) and BEFORE status overrides / never-paid (so those
 // still win). No-op if the Stripe charges cache is absent.
+// Implementation / Support invoice lines are services, not MRR: split them out of
+// the charges cache first so the seam carries them into profiles as services.
+runScript('apply_invoice_line_split.mjs', null);
 console.log('  applying Stripe revenue seam (June 2026+)…');
 runScript('apply_stripe_seam.mjs', null);
 
@@ -526,12 +624,18 @@ console.log('  building revenue recognition (accrual / invoice basis)…');
 try { runScript('build_revenue_recognition.mjs', null); }
 catch (e) { console.log('  ⚠ revenue recognition build failed (kept previous snapshot):', e.message); }
 
+// THE CHURN RULE (churn_rules.mjs, 2026-11-09) — sets status / churn_month / churn_model
+// on every profile from invoiced billing + Stripe sub state + HubSpot Pay Status (incl.
+// "Pause Granted"). Needs the accrual series; must precede the waterfall + base.
+runScript('apply_churn_model.mjs', null);
+
 runScript('build_waterfall.mjs', 'mrr_waterfall');
 // THE canonical logo count + MRR (reads revenue_recognition.accrual_series, so it must
 // run after it). Every page showing "customers" or "MRR" reads this one file.
 runScript('build_customer_base.mjs', null);
-// Sales budget is priced off the canonical base and the accrual waterfall.
-runScript('build_sales_budget.mjs', null);
+// Canonical status + MRR back onto the profiles, BEFORE the roster / health / detail
+// builds read them (active_today, current_subscription_mrr).
+runScript('apply_canonical_customer_fields.mjs', null);
 // Cohort "active today" is reconciled to the canonical base, so it has to run AFTER it.
 // It used to sit earlier in the pipeline and read a stale base, which is exactly how the
 // cohort page came to report 189 active against a canonical 197.
@@ -613,6 +717,10 @@ catch (e) { console.log('  ⚠ build_activation failed:', e.message); }
 // reconciles for the seamed months. Runs after all monthly builds, before the tests.
 console.log('  applying Stripe revenue seam to monthly aggregates (June 2026+)…');
 runScript('apply_stripe_seam_monthly.mjs', null);
+// Sales budget is priced off the canonical base and the accrual waterfall, and sums the
+// services/Connect streams from mrr_by_month — so it must run AFTER the seam above
+// (it used to run before it and summed Connect with Jul–Oct 2026 missing).
+runScript('build_sales_budget.mjs', null);
 
 // Canonical customer count into the monthly aggregates, then rebuild customer_health so
 // its concentration view counts the same base. customer_health has to run EARLY too

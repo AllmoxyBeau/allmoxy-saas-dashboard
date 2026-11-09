@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
@@ -27,9 +28,9 @@ type CustRow = {
   billing_state: string; movement: string;
 };
 type Snap = {
-  month: string; prior_month: string; as_of: string;
+  month: string; prior_month: string; as_of: string; generated_on?: string; data_stale?: boolean;
   day_of_month: number; days_in_month: number; elapsed_pct: number;
-  mrr: { starting: number; expected_ending: number; net_change: number; net_change_pct: number | null; billed_so_far: number; still_to_bill: number };
+  mrr: { starting: number; expected_ending: number; net_change: number; net_change_pct: number | null; billed_so_far: number; still_to_bill: number; annual_amortized?: number };
   movement: Record<'new' | 'expansion' | 'contraction' | 'lost' | 'flat', Bucket>;
   billing: Record<string, Bucket>;
   customers: CustRow[];
@@ -47,6 +48,7 @@ const BILLING_ORDER: Array<{ key: string; label: string; help: string; tone: 'er
   { key: 'partially_billed', label: 'Partly billed', tone: 'info', help: 'Some billing has landed and more is still scheduled this month — commonly a small add-on invoice ahead of the main subscription date.' },
   { key: 'not_yet_billed', label: 'Not yet billed', tone: 'info', help: 'Active subscription whose billing day is still ahead this month, valued at what it billed last month. An expectation, not a fact.' },
   { key: 'collected', label: 'Collected', tone: 'success', help: 'Billed and paid.' },
+  { key: 'annual_amortized', label: 'Annual (amortized)', tone: 'default', help: 'Annual prepay customer carried at its monthly amortization (booked on 4100). Never billed monthly, so it never moves within the month.' },
 ];
 
 export default function AccrualMonthPanel() {
@@ -72,8 +74,13 @@ export default function AccrualMonthPanel() {
         <Chip size="small" label="accrual" color="primary" sx={{ height: 18, fontSize: 10 }} />
         <InfoIcon info={<><strong>What moved:</strong> each customer's billing this month against last month, measured <strong>billing to billing</strong> — invoices by invoice date plus recurring direct charges. Payment timing cannot create movement here: a late payment is not contraction, a catch-up payment is not growth.<br /><br /><strong>Where the month is up to:</strong> customers bill on their own day, so mid-month the book splits between billed and still-to-come. The <em>not yet billed</em> bucket is invisible to a cash view and is usually the difference between "we are down badly" and "it is the {snap?.day_of_month}th".<br /><br /><strong>Expected ending</strong> assumes anyone still to bill repeats last month. It is a projection for the un-billed part and a fact for the rest.</>} />
         <Box sx={{ flexGrow: 1 }} />
-        {snap && <Typography variant="caption" sx={{ color: 'text.secondary' }}>day {snap.day_of_month} of {snap.days_in_month} · vs {snap.prior_month}</Typography>}
+        {snap && <Typography variant="caption" sx={{ color: 'text.secondary' }}>Stripe data through {snap.as_of} · day {snap.day_of_month} of {snap.days_in_month} · vs {snap.prior_month}</Typography>}
       </Stack>
+      {snap?.data_stale && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          Stripe data was last pulled {snap.as_of}; today is {snap.generated_on}. Everything below is measured as of {snap.as_of} — customers who bill after that date show as still to bill, not lost. Run a refresh for current numbers.
+        </Alert>
+      )}
 
       <Grid container spacing={2} sx={{ mb: 2 }}>
         {[
@@ -87,7 +94,7 @@ export default function AccrualMonthPanel() {
           {
             label: 'Expected ending',
             value: m ? USD0.format(m.expected_ending) : '—',
-            hint: 'billed + still to bill',
+            hint: m?.annual_amortized ? `billed + still to bill + ${USD0.format(m.annual_amortized)} annual (amortized)` : 'billed + still to bill',
             color: 'text.primary',
             info: <>Billing already issued this month, plus what customers still to bill are expected to bill. Part fact, part projection.<br /><br />The projected half assumes anyone with a billing date still ahead repeats last month. It is deliberately <em>not</em> a straight-line pace: billing dates cluster early, so extrapolating from elapsed days overstates badly.</>,
           },

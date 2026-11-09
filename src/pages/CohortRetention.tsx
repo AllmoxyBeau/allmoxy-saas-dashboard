@@ -74,6 +74,7 @@ type CohortSnapshot = {
   cohortYears: number[];
   cohortTriangle: Record<string, TriangleEntry>;
   notes: string;
+  activeTodayAsOf?: string | null;
 };
 
 type Metric = 'dollar' | 'logo';
@@ -111,6 +112,13 @@ function currentRetentionColor(pct: number | null): string {
 export default function CohortRetention() {
   const { data, isLoading, error } = useSheetTab('cohort_retention');
   const snap = data as unknown as CohortSnapshot | undefined;
+  // "Active today" is the canonical customer base (patch_cohort_active), so label it with
+  // the base's own as-of month rather than a hard-coded definition.
+  const { data: baseData } = useSheetTab('customer_base');
+  const baseAsOf = (baseData as unknown as { as_of?: string } | undefined)?.as_of ?? snap?.activeTodayAsOf ?? null;
+  const activeAsOfLabel = baseAsOf
+    ? (() => { const [y, m] = baseAsOf.split('-').map(Number); return new Date(y, m - 1, 1).toLocaleString('en-US', { month: 'short', year: 'numeric' }); })()
+    : 'the latest complete month';
 
   const [metric, setMetric] = useState<Metric>('dollar');
   const [showPre2018, setShowPre2018] = useState(false);
@@ -194,7 +202,7 @@ export default function CohortRetention() {
               <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Customers ever signed up
               </Typography>
-              <InfoIcon info={<><strong>What it is:</strong> All-time unique customer count — everyone who's ever had a paid relationship with Allmoxy, active or churned.<br /><br /><strong>Data:</strong> Union of allmoxy_core_customer (master roster, 600 customers) and Stripe Sync classified transactions (covers customers not yet in the roster).</>} />
+              <InfoIcon info={<><strong>What it is:</strong> All-time unique customer count — everyone who's ever had a paid relationship with Allmoxy, active or churned.<br /><br /><strong>Data:</strong> Union of allmoxy_core_customer (master roster) and Stripe Sync classified transactions (covers customers not yet in the roster){snap ? <> — {snap.totalCustomers.toLocaleString()} unique customers after merging duplicate records</> : null}.</>} />
             </Stack>
             <Typography variant="h4" sx={{ fontWeight: 500, mt: 0.5 }}>
               {isLoading || !snap ? <Skeleton width="50%" /> : snap.totalCustomers.toLocaleString()}
@@ -210,13 +218,13 @@ export default function CohortRetention() {
               <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Active today
               </Typography>
-              <InfoIcon info={<><strong>What it is:</strong> Customers currently paying — those with at least one succeeded Stripe charge in the current calendar year.<br /><br /><strong>Data:</strong> Count of distinct customers whose most recent succeeded Stripe charge falls in 2026, aggregated from Stripe Sync.</>} />
+              <InfoIcon info={<><strong>What it is:</strong> Customers currently paying — those with a live subscription in {activeAsOfLabel}, the same canonical customer base every page counts.<br /><br /><strong>Data:</strong> Cohort members flagged active when they are in customer_base (invoiced basis plus annual amortisation; paused and lapsed accounts are not counted). Cohort membership itself still comes from Stripe first-payment dates.</>} />
             </Stack>
             <Typography variant="h4" sx={{ fontWeight: 500, mt: 0.5 }}>
               {isLoading || !snap ? <Skeleton width="50%" /> : snap.activeToday.toLocaleString()}
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
-              Customer has a 2026 Stripe charge
+              Live subscription in {activeAsOfLabel} (canonical customer base)
             </Typography>
           </Paper>
         </Grid>

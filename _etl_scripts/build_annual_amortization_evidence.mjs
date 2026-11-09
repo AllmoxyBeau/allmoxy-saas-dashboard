@@ -25,8 +25,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 
 function readJson(p) {
@@ -39,6 +41,17 @@ const annualPayers = readJson(path.join(ROOT, 'src/data/annual_payers.json'));
 const amortOverrides = readJson(path.join(ROOT, '_etl_scripts/annual_amortization_overrides.json'));
 const syntheticTxns = readJson(path.join(ROOT, '_etl_scripts/synthetic_transactions.json'));
 const profiles = readJson(path.join(SNAP, 'customer_profiles.json'));
+
+const customerBase = readJson(path.join(SNAP, 'customer_base.json'));
+
+// Last COMPLETE month: cells up to and including it are recognized to date; later
+// cells are scheduled (deferred) revenue that has not been earned yet. Anchored to
+// the canonical customer base's as_of month, falling back to the prior calendar month.
+const LAST_COMPLETE_MONTH = customerBase?.as_of || (() => {
+  const d = new Date();
+  const p = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+  return `${p.getFullYear()}-${String(p.getMonth() + 1).padStart(2, '0')}`;
+})();
 
 const profileById = new Map();
 for (const r of profiles?.rows || []) profileById.set(r.allmoxy_customer_id, r);
@@ -78,6 +91,9 @@ for (const id of annualPayers?.annual_payer_ids || []) {
     }
   }
   annualizedMonths.sort((a, b) => a.month.localeCompare(b.month));
+  for (const c of annualizedMonths) c.recognized = c.month <= LAST_COMPLETE_MONTH;
+  const recognizedCells = annualizedMonths.filter((c) => c.recognized);
+  const deferredCells = annualizedMonths.filter((c) => !c.recognized);
 
   // Source payments: Stripe subscription transactions with amount > $3K
   // (the amortization threshold), plus any synthetic transactions on file.
@@ -117,6 +133,11 @@ for (const id of annualPayers?.annual_payer_ids || []) {
     annualized_months: annualizedMonths,
     annualized_month_count: annualizedMonths.length,
     total_amortized_dollars: round2(totalAmortizedDollars),
+    // Split at the last complete month: recognized to date vs scheduled/deferred.
+    recognized_to_date_dollars: round2(recognizedCells.reduce((s, c) => s + c.subscription, 0)),
+    recognized_month_count: recognizedCells.length,
+    deferred_dollars: round2(deferredCells.reduce((s, c) => s + c.subscription, 0)),
+    deferred_month_count: deferredCells.length,
 
     // Source payments
     stripe_payments: stripeAnnualPayments,
@@ -160,6 +181,11 @@ const out = {
     annual_payer_count: entries.length,
     total_amortized_dollars: round2(entries.reduce((s, e) => s + (e.total_amortized_dollars || 0), 0)),
     total_annualized_months: entries.reduce((s, e) => s + (e.annualized_month_count || 0), 0),
+    as_of_month: LAST_COMPLETE_MONTH,
+    recognized_to_date_dollars: round2(entries.reduce((s, e) => s + (e.recognized_to_date_dollars || 0), 0)),
+    recognized_month_count: entries.reduce((s, e) => s + (e.recognized_month_count || 0), 0),
+    deferred_dollars: round2(entries.reduce((s, e) => s + (e.deferred_dollars || 0), 0)),
+    deferred_month_count: entries.reduce((s, e) => s + (e.deferred_month_count || 0), 0),
     payers_with_overrides: entries.filter((e) => e.override_count > 0).length,
     payers_with_synthetic_payments: entries.filter((e) => e.synthetic_payment_count > 0).length,
     payers_with_contract_link: entries.filter((e) => e.contract_link).length,
@@ -171,6 +197,6 @@ const out = {
 const outPath = path.join(SNAP, 'annual_amortization_evidence.json');
 fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
 console.log(`Wrote ${outPath}`);
-console.log(`  ${entries.length} annual payer(s) · $${out.summary.total_amortized_dollars.toLocaleString()} amortized · ${out.summary.total_annualized_months} annualized month-cells`);
+console.log(`  ${entries.length} annual payer(s) · $${out.summary.total_amortized_dollars.toLocaleString()} scheduled across ${out.summary.total_annualized_months} month-cells — $${out.summary.recognized_to_date_dollars.toLocaleString()} recognized through ${LAST_COMPLETE_MONTH} (${out.summary.recognized_month_count} cells), $${out.summary.deferred_dollars.toLocaleString()} deferred (${out.summary.deferred_month_count} cells)`);
 console.log(`  ${out.summary.payers_with_overrides} with custom amortization windows · ${out.summary.payers_with_synthetic_payments} with off-Stripe payments`);
 console.log(`  ${out.summary.payers_verified} verified · ${out.summary.payers_with_contract_link} with contract on file`);

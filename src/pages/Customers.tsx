@@ -18,6 +18,8 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import TablePagination from '@mui/material/TablePagination';
 import Skeleton from '@mui/material/Skeleton';
 import Alert from '@mui/material/Alert';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import PageHeader from '../components/common/PageHeader';
 import CustomerLink from '../components/common/CustomerLink';
 import CsvExportButton from '../components/common/CsvExportButton';
@@ -122,6 +124,10 @@ export default function Customers() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
+  // Duplicate profile rows (excluded_from_logo_count — the same customer under a second
+  // AID) are hidden by default: left in, they inflate the count and double the MRR /
+  // lifetime $ of every customer they shadow.
+  const [hideDuplicates, setHideDuplicates] = useState(true);
 
   // Memoized Sets so the per-row filter check is O(1) instead of O(n) per row.
   const tierSet = useMemo(() => new Set(tierFilter), [tierFilter]);
@@ -138,7 +144,12 @@ export default function Customers() {
     setPage(0);
   }
 
-  const profiles = profilesData?.rows ?? [];
+  const allProfiles = profilesData?.rows ?? [];
+  const duplicateCount = useMemo(() => allProfiles.filter((p) => p.excluded_from_logo_count).length, [allProfiles]);
+  const profiles = useMemo(
+    () => (hideDuplicates ? allProfiles.filter((p) => !p.excluded_from_logo_count) : allProfiles),
+    [allProfiles, hideDuplicates]
+  );
 
   // Distinct values for filter dropdowns + per-value counts. Counts always
   // come from the unfiltered profile set so the dropdown shows the full
@@ -261,7 +272,7 @@ export default function Customers() {
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
               <>
                 <Typography variant="h5" sx={{ fontWeight: 500 }}>{summary.count.toLocaleString()}</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>of {profiles.length.toLocaleString()} total</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>of {profiles.length.toLocaleString()} total{hideDuplicates && duplicateCount > 0 ? ` · ${duplicateCount} duplicate rows hidden` : ''}</Typography>
               </>
             )}
           </Paper>
@@ -349,6 +360,10 @@ export default function Customers() {
               value={segmentFilter}
               onChange={(v) => { setSegmentFilter(v); setPage(0); }}
               placeholderAll="All segments"
+            />
+            <FormControlLabel
+              control={<Switch size="small" checked={hideDuplicates} onChange={(e) => { setHideDuplicates(e.target.checked); setPage(0); }} />}
+              label={<Typography variant="body2">Hide duplicates{duplicateCount > 0 ? ` (${duplicateCount})` : ''}</Typography>}
             />
           </Stack>
         </Stack>

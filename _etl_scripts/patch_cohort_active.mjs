@@ -11,8 +11,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const SNAP = path.resolve(__dirname, '..', 'public/snapshots');
 const profilesPath = path.join(SNAP, 'customer_profiles.json');
 const cohortPath = path.join(SNAP, 'cohort_retention.json');
 
@@ -141,8 +143,14 @@ const beforeTotal = cohort.totalCustomers;
 cohort.activeToday = totalActiveAfter;
 cohort.totalCustomers = totalCustomersAfter;
 cohort.fetchedAt = new Date().toISOString();
-cohort.notes = (cohort.notes || '') +
-  ` Active-today reconciled with customer_profiles (subscription MRR > 0 in latest complete month): ${beforeActive} → ${totalActiveAfter}.`;
+// The page labels the tile from these, so the definition text cannot drift from the data.
+cohort.activeTodayBasis = base?.members?.length ? 'customer_base' : 'current_subscription_mrr';
+cohort.activeTodayAsOf = base?.as_of ?? null;
+const NOTE_TAG = ' Active-today reconciled with';
+cohort.notes = String(cohort.notes || '').split(NOTE_TAG)[0] +
+  (base?.members?.length
+    ? `${NOTE_TAG} the canonical customer base (live subscription in ${base.as_of}): ${beforeActive} → ${totalActiveAfter}.`
+    : `${NOTE_TAG} customer_profiles (subscription MRR > 0 in latest complete month): ${beforeActive} → ${totalActiveAfter}.`);
 
 fs.writeFileSync(cohortPath, JSON.stringify(cohort));
 console.log(`  patched cohort_retention.json: activeToday ${beforeActive} → ${totalActiveAfter}, totalCustomers ${beforeTotal} → ${totalCustomersAfter}`);

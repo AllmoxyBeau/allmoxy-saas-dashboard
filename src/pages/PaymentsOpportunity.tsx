@@ -58,14 +58,14 @@ type Snapshot = {
   currencies: Record<string, number>;
   currency_caveat: string | null;
   annualized: { basis: string; gross_volume: number; fee_revenue: number; txn_count: number; blended_take_rate: number | null };
-  attach: { connected_accounts: number; active_customers: number; active_customers_on_connect: number; attach_rate: number | null };
+  attach: { connected_accounts: number; active_customers: number; active_customers_on_connect: number; attach_rate: number | null; customers_with_mapped_account?: number; definition?: string };
   scenarios: Scenario[];
   mom?: Mom;
   take_rate_distribution: Record<string, number>;
   penetration?: {
     active_customers: number; processing_now: number; attach_rate: number | null; lapsed: number; never: number;
     not_processing: number; attach_target_order_volume: number; attach_target_fee_potential: number;
-    attach_potential_basis: string;
+    attach_potential_basis: string; attach_capture_assumption?: number;
   };
   customers?: CustomerRow[];
   monthly: MonthRow[];
@@ -81,6 +81,18 @@ const STATUS_FG: Record<ConnectStatus, string> = { processing: '#1A9E5C', lapsed
 export default function PaymentsOpportunity() {
   const { data, isLoading, error } = useSheetTab<Snapshot>('connect_volume');
   const snap = data as Snapshot | undefined;
+  // Canonical Connect revenue (the figure every other page reports): connect_by_month
+  // mrr_connect over the last 12 complete months. The Stripe application_fees sum in
+  // connect_volume.annualized.fee_revenue is GROSS of refunds/reversals and FX, so it
+  // runs a few % hotter — shown only as a labelled secondary with the gap.
+  const { data: cbmData, isLoading: cbmLoading } = useSheetTab<{ month: string; mrr_connect: number | null }>('connect_by_month');
+  const canon = useMemo(() => {
+    const now = new Date();
+    const cm = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    const rows = (cbmData?.rows ?? []).filter((r) => r.month < cm).sort((x, y) => (x.month < y.month ? -1 : 1)).slice(-12);
+    if (rows.length === 0) return null;
+    return { ttm: rows.reduce((s, r) => s + (r.mrr_connect || 0), 0), from: rows[0].month, to: rows[rows.length - 1].month };
+  }, [cbmData]);
 
   const trend = useMemo(() => {
     const now = new Date();
@@ -134,8 +146,22 @@ export default function PaymentsOpportunity() {
     for (const [k, v] of Object.entries(noteEdits)) { if (v && v.trim()) merged[k] = v.trim(); else delete merged[k]; }
     navigator.clipboard?.writeText(JSON.stringify({ notes: merged }, null, 2)).then(() => {}, () => {});
   };
-  const current = snap?.scenarios.find((s) => Math.abs(s.take_rate - (a?.blended_take_rate ?? 0.005)) < 0.0006) ?? snap?.scenarios[0];
-  const target1 = snap?.scenarios.find((s) => Math.abs(s.take_rate - 0.01) < 0.0001);
+  // Scenarios restated on the canonical revenue basis: holding GMV constant, revenue
+  // scales with take-rate, so each tile = canonical TTM × (rate ÷ today's blended take).
+  // "Today" therefore equals the headline Connect revenue exactly.
+  const scenarios = useMemo<Scenario[]>(() => {
+    const raw = snap?.scenarios ?? [];
+    const blended = a?.blended_take_rate;
+    if (!canon || !blended) return raw;
+    return raw.map((s) => {
+      const rev = Math.round(canon.ttm * (s.take_rate / blended));
+      return { ...s, annual_fee_revenue: rev, delta_vs_current: Math.round(rev - canon.ttm), multiple_vs_current: Math.round((s.take_rate / blended) * 100) / 100 };
+    });
+  }, [snap, a, canon]);
+  const current = scenarios.find((s) => Math.abs(s.take_rate - (a?.blended_take_rate ?? 0.005)) < 0.0006) ?? scenarios[0];
+  const todayRevenue = canon?.ttm ?? current?.annual_fee_revenue;
+  const target1 = scenarios.find((s) => Math.abs(s.take_rate - 0.01) < 0.0001);
+  const capturePct = pen?.attach_capture_assumption != null ? Math.round(pen.attach_capture_assumption * 100) : null;
 
   const acctCsv = useMemo(() => ([
     { key: 'customer', label: 'Customer', getValue: (r: AccountRow) => r.customer_name ?? r.account },
@@ -167,10 +193,12 @@ export default function PaymentsOpportunity() {
           info="Gross dollars charged through Stripe Connect across all connected accounts over the last 12 complete months. From the live application_fees API with the underlying charge expanded." />
         <Kpi label="Blended take rate" value={a?.blended_take_rate != null ? (a.blended_take_rate * 100).toFixed(2) + '%' : undefined} sub="fee ÷ GMV" loading={isLoading}
           info="Our application fee as a share of gross volume. Nearly the entire book sits at a flat 0.50%, with a handful grandfathered at 1.0% and a few discounted." />
-        <Kpi label="Connect fee revenue" value={a ? USD0.format(a.fee_revenue) : undefined} sub={`${a?.txn_count.toLocaleString() ?? '—'} transactions`} accent="success.main" valueColor="success.main" loading={isLoading}
-          info="Annualized Connect fee revenue — what we monetize today off the processing volume." />
-        <Kpi label="Connect attach" value={at ? `${((at.attach_rate ?? 0) * 100).toFixed(0)}%` : undefined} sub={at ? `${at.active_customers_on_connect} of ${at.active_customers} active · ${at.connected_accounts} accounts total` : undefined} loading={isLoading}
-          info="Share of the active customer book currently processing payments on Connect. The un-attached majority is the second growth lever (alongside take-rate)." />
+        <Kpi label="Connect revenue (TTM)" value={canon ? USD0.format(canon.ttm) : undefined}
+          sub={canon ? `${monthLabel(canon.from)}–${monthLabel(canon.to)}${a ? ` · gross application fees (Stripe) ${USD0.format(a.fee_revenue)}, ${a.fee_revenue - canon.ttm >= 0 ? '+' : '−'}${USD0.format(Math.abs(a.fee_revenue - canon.ttm))}` : ''}` : undefined}
+          accent="success.main" valueColor="success.main" loading={isLoading || cbmLoading}
+          info="Canonical Connect revenue — the sum of monthly Connect revenue (connect_by_month) over the last 12 complete months, the same figure the Overview and Stripe Connect pages report. The secondary figure is the gross Stripe application_fees sum over the same months (before refunds/reversals and with CAD/AUD at face); the difference is the reconciling gap, not extra revenue." />
+        <Kpi label="Connect attach" value={pen ? `${((pen.attach_rate ?? 0) * 100).toFixed(0)}%` : undefined} sub={pen ? `${pen.processing_now} of ${pen.active_customers} customers processing now${at ? ` · ${at.connected_accounts} accounts total` : ''}` : undefined} loading={isLoading}
+          info="Share of the customer base (the canonical active logos) processing payments on Connect now — any Connect fee in the last 3 complete months. Same definition as 'Processing now' below. The un-attached majority is the second growth lever (alongside take-rate)." />
       </Grid>
 
       {/* Monthly GMV + take rate */}
@@ -200,13 +228,13 @@ export default function PaymentsOpportunity() {
       <Paper sx={{ p: 3, mb: 2 }}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
           <Typography variant="h6">Take-rate expansion</Typography>
-          <InfoIcon info="Holding today's GMV constant, what Connect fee revenue would be at higher take-rates. The whole book is priced at 0.50% — moving toward the 1.0% that some accounts already pay roughly doubles payments revenue at zero acquisition cost. This is the lever a PE buyer underwrites; attach growth compounds on top." />
+          <InfoIcon info="Holding today's GMV constant, what Connect fee revenue would be at higher take-rates. 'Today' is the canonical Connect revenue TTM; each other tile scales it by take-rate ÷ today's blended take. The whole book is priced at 0.50% — moving toward the 1.0% that some accounts already pay roughly doubles payments revenue at zero acquisition cost. This is the lever a PE buyer underwrites; attach growth compounds on top." />
         </Stack>
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 2 }}>
           On {a ? USD_C.format(a.gross_volume) : '—'} annual GMV · current blended {a?.blended_take_rate != null ? (a.blended_take_rate * 100).toFixed(2) + '%' : '—'}
         </Typography>
         <Grid container spacing={2}>
-          {(snap?.scenarios ?? []).map((s) => {
+          {scenarios.map((s) => {
             const isCurrent = current && s.take_rate === current.take_rate;
             return (
               <Grid item xs={6} md={3} key={s.take_rate}>
@@ -215,7 +243,7 @@ export default function PaymentsOpportunity() {
                     <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 700, fontSize: 11 }}>{(s.take_rate * 100).toFixed(2)}% take</Typography>
                     {isCurrent && <Chip label="today" size="small" sx={{ height: 16, fontSize: 9 }} />}
                   </Stack>
-                  <Typography variant="h5" sx={{ fontWeight: 600, mt: 0.5 }}>{USD0.format(s.annual_fee_revenue)}<Box component="span" sx={{ fontSize: 12, fontWeight: 400, color: 'text.secondary' }}>/yr</Box></Typography>
+                  <Typography variant="h5" sx={{ fontWeight: 600, mt: 0.5 }}>{USD0.format(isCurrent && todayRevenue != null ? todayRevenue : s.annual_fee_revenue)}<Box component="span" sx={{ fontSize: 12, fontWeight: 400, color: 'text.secondary' }}>/yr</Box></Typography>
                   {!isCurrent && (
                     <Typography variant="caption" sx={{ color: 'success.main', fontWeight: 600 }}>
                       +{USD0.format(s.delta_vs_current)}/yr{s.multiple_vs_current ? ` · ${s.multiple_vs_current}×` : ''}
@@ -238,13 +266,13 @@ export default function PaymentsOpportunity() {
         <Paper sx={{ p: 3, mb: 2 }}>
           <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
             <Typography variant="h6">Attach opportunity</Typography>
-            <InfoIcon info={<><strong>The second growth lever: monetizing the customers not yet on Connect.</strong><br /><br />"Processing now" = any Connect fee in the last 3 months. <strong>Click any metric below to filter the table</strong> to that set. Attach targets are active customers <em>not</em> processing, ranked by verified-order volume (the addressable base), with fee potential at the standard 0.5% take. {pen.attach_potential_basis}</>} />
+            <InfoIcon info={<><strong>The second growth lever: monetizing the customers not yet on Connect.</strong><br /><br />"Processing now" = any Connect fee in the last 3 complete months (the same definition as the headline attach rate). <strong>Click any metric below to filter the table</strong> to that set. Attach targets are active customers <em>not</em> processing, ranked by verified-order volume (the addressable base), with fee potential at the standard 0.5% take × the capture factor. {pen.attach_potential_basis}</>} />
           </Stack>
           <Grid container spacing={2} sx={{ mt: 0.5, mb: 1 }}>
-            <Kpi label="Processing now" value={`${pen.processing_now}`} sub={`of ${pen.active_customers} active · ${((pen.attach_rate ?? 0) * 100).toFixed(0)}% attach`} accent="success.main" loading={isLoading} info="Active customers with any Connect fee in the last 3 months. Click to list them." onClick={() => toggleFilter('processing')} selected={tableFilter === 'processing'} />
+            <Kpi label="Processing now" value={`${pen.processing_now}`} sub={`of ${pen.active_customers} customers · ${((pen.attach_rate ?? 0) * 100).toFixed(0)}% attach`} accent="success.main" loading={isLoading} info="Customer-base members with any Connect fee in the last 3 complete months — the attach definition used in the headline. Click to list them." onClick={() => toggleFilter('processing')} selected={tableFilter === 'processing'} />
             <Kpi label="Lapsed" value={`${pen.lapsed}`} sub="processed before, idle 3mo+" accent="warning.main" loading={isLoading} info="Previously processed on Connect but idle 3+ months — reactivation targets. Click to list them." onClick={() => toggleFilter('lapsed')} selected={tableFilter === 'lapsed'} />
             <Kpi label="Not on Connect" value={`${pen.never}`} sub="never processed on Connect" loading={isLoading} info="Active customers that have never processed a payment on Connect (lapsed accounts — which were on Connect and fell off — are counted separately). Click to list them." onClick={() => toggleFilter('not_on_connect')} selected={tableFilter === 'not_on_connect'} />
-            <Kpi label="Attach fee potential" value={`${USD0.format(pen.attach_target_fee_potential)}/yr`} sub={`~${USD0.format(Math.round(pen.attach_target_fee_potential / 12))}/mo · at 0.5% on ${USD_C.format(pen.attach_target_order_volume)} orders`} accent="primary.main" valueColor="primary.main" loading={isLoading} info="Estimated Connect fee if non-processing customers with order volume attached at the standard 0.5% take. Annual headline; monthly = annual ÷ 12. Upper bound — not all order volume is card-processed. Click to list those targets." onClick={() => toggleFilter('targets')} selected={tableFilter === 'targets'} />
+            <Kpi label="Attach fee potential" value={`${USD0.format(pen.attach_target_fee_potential)}/yr`} sub={`~${USD0.format(Math.round(pen.attach_target_fee_potential / 12))}/mo · at 0.5% × ${capturePct ?? '—'}% capture on ${USD_C.format(pen.attach_target_order_volume)} orders`} accent="primary.main" valueColor="primary.main" loading={isLoading} info={`Estimated Connect fee if non-processing customers with order volume attached: annual order volume × ${capturePct ?? '—'}% capture (the median share of order volume current processors actually run through Connect — not all orders are card-processed) × the standard 0.5% take. Annual headline; monthly = annual ÷ 12. Click to list those targets.`} onClick={() => toggleFilter('targets')} selected={tableFilter === 'targets'} />
           </Grid>
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mt: 1, mb: 0.5 }}>
             <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>

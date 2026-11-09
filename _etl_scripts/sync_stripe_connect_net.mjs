@@ -58,22 +58,33 @@ else if (!FULL && prev?.max_created) { createdGte = prev.max_created + 1; increm
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Exponential backoff with jitter. These syncs make thousands of sequential calls over
+// tens of minutes, and the old policy (6 tries, 500ms * n) gave a page just 10.5s of
+// total retry budget before throwing — so one network blip longer than that killed the
+// entire nightly chain. It did exactly that on 2026-10-18 and again on 2026-10-20
+// ("Stripe: retries exhausted" / ETIMEDOUT), each time wasting the whole run.
+// Budget is now ~90s per page, which rides out a short outage without masking a real one.
+function backoffMs(attempt) {
+  return Math.min(30000, 1000 * Math.pow(2, attempt)) + Math.floor(Math.random() * 500);
+}
+
+
 async function getPage(startingAfter) {
   const qs = new URLSearchParams({ limit: '100' });
   if (startingAfter) qs.set('starting_after', startingAfter);
   if (createdGte) qs.set('created[gte]', String(createdGte));
   let lastErr = null;
-  for (let attempt = 0; attempt < 8; attempt++) {
+  for (let attempt = 0; attempt < 9; attempt++) {
     try {
       const res = await fetch('https://api.stripe.com/v1/balance_transactions?' + qs.toString(), { headers: { Authorization: AUTH } });
-      if (res.status === 429 || res.status >= 500) { await sleep(1000 * (attempt + 1)); continue; }
+      if (res.status === 429 || res.status >= 500) { await sleep(backoffMs(attempt)); continue; }
       const body = await res.json();
       if (res.status !== 200) throw new Error(`Stripe ${res.status}: ${body?.error?.message || JSON.stringify(body).slice(0, 200)}`);
       return body;
     } catch (e) {
       lastErr = e;
       if (/^Stripe 4/.test(String(e.message || ''))) throw e;
-      await sleep(1000 * (attempt + 1)); // network/transient — retry
+      await sleep(backoffMs(attempt)); // network/transient — retry
     }
   }
   throw new Error(`Stripe: retries exhausted${lastErr ? ` (${lastErr.message})` : ''}`);

@@ -31,7 +31,7 @@ type Effective = 'collectible' | 'uncollectible' | 'collected_manually';
 type DecoratedRow = ArRow & { effective: Effective; source: RowSource; pendingNote: string | null };
 type Snap = {
   ar_aging: ArRow[]; ar_total: number;
-  ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; collected_manually_total?: number; collected_manually_count?: number; books_go_live: string } | null;
+  ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; bookable_count?: number; pre_accrual_total?: number; pre_accrual_count?: number; collected_manually_total?: number; collected_manually_count?: number; books_go_live: string } | null;
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -118,7 +118,15 @@ export default function Collections() {
     });
   }, [rows, filter, ownerFilter, sortKey, sortDesc]);
 
+  // Only write-offs whose revenue was recognized on the accrual books (service month on/after
+  // books go-live) reach 4950. Earlier ones ran on cash: no receivable was ever booked, so
+  // writing them off makes no journal entry. Same rule as build_revenue_recognition's
+  // bookable_writeoff, recomputed here so pending decisions move the hint too.
+  const goLive = snap?.ar_policy?.books_go_live ?? '2026-01';
   const t = useMemo(() => ({
+    writeoffBookable: rows.filter((r) => r.effective === 'uncollectible' && r.service_month >= goLive).reduce((s, r) => s + r.amount, 0),
+    writeoffBookableN: rows.filter((r) => r.effective === 'uncollectible' && r.service_month >= goLive).length,
+    writeoffPreN: rows.filter((r) => r.effective === 'uncollectible' && r.service_month < goLive).length,
     chase: rows.filter((r) => r.effective === 'collectible').reduce((s, r) => s + r.amount, 0),
     chaseN: rows.filter((r) => r.effective === 'collectible').length,
     writeoff: rows.filter((r) => r.effective === 'uncollectible').reduce((s, r) => s + r.amount, 0),
@@ -127,7 +135,7 @@ export default function Collections() {
     collectedN: rows.filter((r) => r.effective === 'collected_manually').length,
     live: rows.filter((r) => r.effective === 'collectible' && r.customer_still_paying).reduce((s, r) => s + r.amount, 0),
     pendingN: Object.keys(pending).length,
-  }), [rows, pending]);
+  }), [rows, pending, goLive]);
 
   // Owner options with their outstanding count and $ — computed off the status filter
   // so the numbers match what selecting that owner would actually show.
@@ -175,7 +183,7 @@ export default function Collections() {
 
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={12} sm={6} md={3}><Kpi label="Chasing" value={USD0.format(t.chase)} hint={`${t.chaseN} invoices still collectible`} color="success.main" loading={isLoading} /></Grid>
-        <Grid item xs={12} sm={6} md={3}><Kpi label="Writing off" value={USD0.format(t.writeoff)} hint={`${t.writeoffN} invoices → 4950`} color="error.main" loading={isLoading} /></Grid>
+        <Grid item xs={12} sm={6} md={3}><Kpi label="Writing off" value={USD0.format(t.writeoff)} hint={`${t.writeoffBookableN} invoices / ${USD0.format(t.writeoffBookable)} → 4950 · ${t.writeoffPreN} pre-go-live (no entry)`} color="error.main" loading={isLoading} /></Grid>
         <Grid item xs={12} sm={6} md={3}><Kpi label="Owed by live customers" value={USD0.format(t.live)} hint="Still paying you — best odds" color="primary.main" loading={isLoading} /></Grid>
         {t.collectedN > 0 && (
           <Grid item xs={12} sm={6} md={3}><Kpi label="Collected manually" value={USD0.format(t.collected)} hint={`${t.collectedN} paid outside the invoice — no bad debt`} color="info.main" loading={isLoading} /></Grid>

@@ -105,15 +105,19 @@ export default function AdjustmentsRegister() {
     const monetary = rows.filter((r) => r.severity === 'monetary');
     let absDelta = 0;
     let nWithDelta = 0;
-    let nCustomers = new Set<string>();
     for (const r of monetary) {
       if (typeof r.delta === 'number') {
         absDelta += Math.abs(r.delta);
         nWithDelta++;
       }
-      if (r.customer_name) nCustomers.add(r.customer_name);
     }
+    // Distinct customers across ALL adjustments (monetary + hygiene), matching the
+    // "Total adjustments" figure it sits under.
+    const nCustomers = new Set(rows.map((r) => r.customer_name).filter(Boolean));
+    // Source files are derived from the register itself, never hard-coded.
+    const sourceFiles = [...new Set(rows.map((r) => r.source_file).filter(Boolean))];
     return {
+      sourceFiles,
       total: rows.length,
       monetary: monetary.length,
       hygiene: rows.length - monetary.length,
@@ -140,10 +144,10 @@ export default function AdjustmentsRegister() {
 
       {snap && (
         <Alert severity="info" sx={{ mb: 3 }}>
-          <strong>{stats.total} adjustments</strong> consolidated from 6 source config files
-          (<code>annual_payers.json</code>, <code>annual_amortization_overrides.json</code>,
-          {' '}<code>variance_overrides.json</code>, <code>transaction_overrides.json</code>,
-          {' '}<code>stripe_id_overrides.json</code>, <code>connect_customer_overrides.json</code>).
+          <strong>{stats.total} adjustments</strong> consolidated from {stats.sourceFiles.length} source file{stats.sourceFiles.length === 1 ? '' : 's'}
+          {' '}({stats.sourceFiles.map((f, i) => (
+            <span key={f}>{i > 0 ? ', ' : ''}<code>{f.split('/').pop()}</code></span>
+          ))}).
           {' '}<strong>{stats.monetary}</strong> have a dollar impact; <strong>{stats.hygiene}</strong> are
           data-hygiene only (no dollar impact but they affect customer/transaction attribution).
           Last refreshed: {new Date(snap.fetched_at).toLocaleString()}.

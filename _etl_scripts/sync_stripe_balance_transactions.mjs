@@ -25,13 +25,26 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, '_etl_scripts/cache/stripe_balance_transactions.json');
 const ENV = Object.fromEntries(fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split('\n').filter((l) => l.includes('=') && !l.startsWith('#')).map((l) => { const i = l.indexOf('='); return [l.slice(0, i).trim(), l.slice(i + 1).trim().replace(/^["']|["']$/g, '')]; }));
 if (!ENV.STRIPE_SECRET_KEY) throw new Error('Missing STRIPE_SECRET_KEY in .env.local');
 const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base64');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Exponential backoff with jitter. These syncs make thousands of sequential calls over
+// tens of minutes, and the old policy (6 tries, 500ms * n) gave a page just 10.5s of
+// total retry budget before throwing — so one network blip longer than that killed the
+// entire nightly chain. It did exactly that on 2026-10-18 and again on 2026-10-20
+// ("Stripe: retries exhausted" / ETIMEDOUT), each time wasting the whole run.
+// Budget is now ~90s per page, which rides out a short outage without masking a real one.
+function backoffMs(attempt) {
+  return Math.min(30000, 1000 * Math.pow(2, attempt)) + Math.floor(Math.random() * 500);
+}
+
 const r2 = (v) => Math.round(v * 100) / 100;
 // Must cover the whole accrual-reliable window (2025-08+), not just the JE months:
 // build_revenue_recognition folds direct/legacy subscription charges from these rows
@@ -41,9 +54,9 @@ const r2 = (v) => Math.round(v * 100) / 100;
 const FROM = '2025-08';
 
 async function get(p) {
-  for (let a = 0; a < 6; a++) {
-    let res; try { res = await fetch('https://api.stripe.com/v1/' + p, { headers: { Authorization: AUTH } }); } catch { await sleep(500 * (a + 1)); continue; }
-    if (res.status === 429 || res.status >= 500) { await sleep(500 * (a + 1)); continue; }
+  for (let a = 0; a < 9; a++) {
+    let res; try { res = await fetch('https://api.stripe.com/v1/' + p, { headers: { Authorization: AUTH } }); } catch { await sleep(backoffMs(a)); continue; }
+    if (res.status === 429 || res.status >= 500) { await sleep(backoffMs(a)); continue; }
     const body = await res.json();
     if (res.status !== 200) throw new Error(`Stripe ${res.status}: ${body?.error?.message || ''}`);
     return body;
@@ -62,6 +75,17 @@ function denverMidnightUTC(y, m, d) {
   return Math.floor(Date.UTC(y, m - 1, d, 6) / 1000);
 }
 const addMonth = (y, m) => (m === 12 ? [y + 1, 1] : [y, m + 1]);
+
+// Stripe metadata is typed by hand, so it arrives in whatever case it was entered:
+// "Services" and "services" both appear. Normalise before matching, or a capital-S
+// charge drops into 4700 Miscellaneous Income purely on capitalisation.
+function normaliseType(raw) {
+  const v = String(raw ?? '').trim().toLowerCase();
+  if (!v) return null;
+  if (v === 'services' || v === 'service') return 'services';
+  if (v === 'subscription' || v === 'ai tokens' || v === 'ai_tokens') return 'subscription';
+  return v;   // anything genuinely new stays visible rather than forced into a bucket
+}
 
 const now = new Date(); const curY = now.getFullYear(), curM = now.getMonth() + 1;
 const months = []; { let [y, m] = FROM.split('-').map(Number); while (y < curY || (y === curY && m <= curM)) { months.push([y, m]); [y, m] = addMonth(y, m); } }

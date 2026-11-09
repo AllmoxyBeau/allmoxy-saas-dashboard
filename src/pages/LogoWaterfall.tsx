@@ -32,10 +32,11 @@ type LogoFlowRow = {
   month: string;
   starting_logos: number; new_logos: number; reactivated_logos: number;
   churned_logos: number; lapsed_logos: number; ending_logos: number;
+  recovered_logos?: number; paused_logos?: number;
   net_new_logos: number; gross_logo_churn: number | null;
-  details?: { new?: Array<{ name: string; mrr?: number }>; reactivated?: Array<{ name: string; mrr?: number }>; churned?: Array<{ name: string; mrr?: number }>; lapsed?: Array<{ name: string; mrr?: number }> };
+  details?: { new?: Array<{ name: string; mrr?: number }>; reactivated?: Array<{ name: string; mrr?: number }>; churned?: Array<{ name: string; mrr?: number }>; lapsed?: Array<{ name: string; mrr?: number }>; recovered?: Array<{ name: string; mrr?: number }>; paused?: Array<{ name: string; mrr?: number }> };
 };
-type DrillCategory = 'new' | 'reactivated' | 'churn' | 'lapsed';
+type DrillCategory = 'new' | 'reactivated' | 'recovered' | 'churn' | 'lapsed' | 'paused';
 
 const monthLabel = (iso: string) => {
   const [y, m] = iso.split('-').map(Number);
@@ -102,6 +103,8 @@ export default function LogoWaterfall() {
       reactivated_logos: r.reactivated_logos,
       churned_logos: r.churned_logos,
       lapsed_logos: r.lapsed_logos,
+      recovered_logos: r.recovered_logos ?? 0,
+      paused_logos: r.paused_logos ?? 0,
       ending_logos: r.ending_logos,
       net_new_logos: r.net_new_logos,
       logo_growth_rate: r.starting_logos > 0 ? r.net_new_logos / r.starting_logos : null,
@@ -135,6 +138,8 @@ export default function LogoWaterfall() {
       .map((r) => ({
         ...r,
         neg_churn: -r.churned_logos,
+        neg_lapsed: -r.lapsed_logos,
+        neg_paused: -r.paused_logos,
       }));
   }, [monthly, fromMonth, toMonth]);
 
@@ -148,10 +153,18 @@ export default function LogoWaterfall() {
     const newSum = rows.reduce((s, r) => s + r.new_logos, 0);
     const reSum = rows.reduce((s, r) => s + r.reactivated_logos, 0);
     const churnedSum = rows.reduce((s, r) => s + r.churned_logos, 0);
-    const netNew = newSum + reSum - churnedSum;
-    const annualGrossChurn = starting > 0 ? 1 - Math.pow(1 - churnedSum / starting, 12 / N) : null;
+    const lapsedSum = rows.reduce((s, r) => s + r.lapsed_logos, 0);
+    const pausedSum = rows.reduce((s, r) => s + r.paused_logos, 0);
+    const recoveredSum = rows.reduce((s, r) => s + r.recovered_logos, 0);
+    // Every departure counts — confirmed churn AND lapses (stopped billing, not yet
+    // confirmed gone). Leaving lapses out made net new read +15 for a 195 → 198 window,
+    // and flattered gross churn and logo NRR. Starting + net new must equal ending.
+    const departed = churnedSum + lapsedSum;
+    // Pauses leave the paying count but are not churn; recovered lapses come back.
+    const netNew = newSum + reSum + recoveredSum - departed - pausedSum;
+    const annualGrossChurn = starting > 0 ? 1 - Math.pow(1 - departed / starting, 12 / N) : null;
     const annualGrowthRate = starting > 0 ? Math.pow(ending / starting, 12 / N) - 1 : null;
-    const annualNrr = starting > 0 ? Math.pow((starting - churnedSum + reSum) / starting, 12 / N) : null;
+    const annualNrr = starting > 0 ? Math.pow((starting - departed - pausedSum + reSum + recoveredSum) / starting, 12 / N) : null;
     return {
       windowStart: rows[0].month,
       windowEnd: rows[rows.length - 1].month,
@@ -160,6 +173,9 @@ export default function LogoWaterfall() {
       newSum,
       reSum,
       churnedSum,
+      lapsedSum,
+      pausedSum,
+      recoveredSum,
       netNew,
       annualGrossChurn,
       annualGrowthRate,
@@ -170,7 +186,7 @@ export default function LogoWaterfall() {
   if (wfError) {
     return (
       <Box>
-        <PageHeader title="Logo Waterfall" subtitle="Per-month customer count movement: starting → new + reactivated − churned → ending." />
+        <PageHeader title="Logo Waterfall" subtitle="Per-month customer count movement: starting → new + reactivated − churned − lapsed → ending." />
         <Alert severity="warning">Failed to load mrr_waterfall snapshot.</Alert>
       </Box>
     );
@@ -181,7 +197,7 @@ export default function LogoWaterfall() {
     <Box>
       <PageHeader
         title="Logo Waterfall"
-        subtitle="Mirror of the MRR waterfall but counting paying customers instead of dollars. New + reactivated − churned = net new logos for each month."
+        subtitle="Mirror of the MRR waterfall but counting paying customers instead of dollars. New + reactivated − churned − lapsed = net new logos for each month."
       />
 
       <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={1} sx={{ mb: 2 }}>
@@ -211,7 +227,7 @@ export default function LogoWaterfall() {
             hint={headerStats ? `${headerStats.starting} → ${headerStats.ending} customers` : 'loading'}
             color={headerStats && headerStats.netNew >= 0 ? 'success.main' : 'error.main'}
             loading={isLoading}
-            info={<><strong>What it is:</strong> Net change in paying-customer count over the window. New + Reactivated − Churned.</>}
+            info={<><strong>What it is:</strong> Net change in paying-customer count over the window. New + Reactivated + Recovered − Churned − Lapsed − Paused, so Starting + Net new = Ending.</>}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -228,17 +244,17 @@ export default function LogoWaterfall() {
           <StatCard
             label={`Annualized gross churn · ${headerWindow}`}
             value={pct(headerStats?.annualGrossChurn ?? null)}
-            hint="Logo-weighted (count of customers, not $)"
+            hint={headerStats ? `${headerStats.churnedSum} churned + ${headerStats.lapsedSum} lapsed of ${headerStats.starting}` : 'Logo-weighted (count of customers, not $)'}
             color={churnColor(headerStats?.annualGrossChurn ?? null)}
             loading={isLoading}
-            info={<><strong>What it is:</strong> Logo-weighted gross churn — % of starting customers who left, annualized.<br /><br /><strong>Differs from MRR churn:</strong> a $20K customer leaving counts the same as a $200 customer here. Logo churn typically runs higher than MRR churn because the long tail of small customers churns more than the larger accounts.</>}
+            info={<><strong>What it is:</strong> Logo-weighted gross churn — % of starting customers who left (confirmed churned + lapsed), annualized.<br /><br /><strong>Differs from MRR churn:</strong> a $20K customer leaving counts the same as a $200 customer here. Logo churn typically runs higher than MRR churn because the long tail of small customers churns more than the larger accounts.</>}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <StatCard
             label={`Annualized logo NRR · ${headerWindow}`}
             value={pct(headerStats?.annualNrr ?? null)}
-            hint="(start − churned + reactivated) ÷ start"
+            hint="(start − churned − lapsed + reactivated) ÷ start"
             color={(headerStats?.annualNrr ?? 0) >= 1 ? 'success.main' : (headerStats?.annualNrr ?? 0) >= 0.85 ? 'warning.main' : 'error.main'}
             loading={isLoading}
             info={<><strong>What it is:</strong> Logo-NRR — of the customers existing at the start of the window, how many remain (or returned) by the end. Doesn't credit new logos.<br /><br /><strong>Reactivated counts toward retention</strong> because the customer existed in our universe before — they just had a gap.</>}
@@ -296,7 +312,7 @@ export default function LogoWaterfall() {
                   labelFormatter={monthLabelLong}
                   formatter={(value: number, name: string) => {
                     const labelMap: Record<string, string> = {
-                      new_logos: 'New', reactivated_logos: 'Reactivated', neg_churn: 'Churned', net_new_logos: 'Net new',
+                      new_logos: 'New', reactivated_logos: 'Reactivated', neg_churn: 'Churned', neg_lapsed: 'Lapsed', neg_paused: 'Paused', net_new_logos: 'Net new',
                     };
                     return [Math.abs(value), labelMap[name] || name];
                   }}
@@ -304,6 +320,8 @@ export default function LogoWaterfall() {
                 <Bar dataKey="new_logos" stackId="movement" fill="#1A9E5C" name="new_logos" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'new')} />
                 <Bar dataKey="reactivated_logos" stackId="movement" fill="#9F7AEA" name="reactivated_logos" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'reactivated')} />
                 <Bar dataKey="neg_churn" stackId="movement" fill="#DA3633" name="neg_churn" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'churn')} />
+                <Bar dataKey="neg_lapsed" stackId="movement" fill="#D69E2E" name="neg_lapsed" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'lapsed')} />
+                <Bar dataKey="neg_paused" stackId="movement" fill="#64748B" name="neg_paused" cursor="pointer" onClick={(p: { payload?: { month: string } }) => p.payload && openDrill(p.payload.month, 'paused')} />
                 <Line type="monotone" dataKey="net_new_logos" stroke="#E6EDF3" strokeWidth={2} dot={{ r: 2.5, fill: '#E6EDF3' }} name="net_new_logos" />
               </ComposedChart>
             </ResponsiveContainer>
@@ -313,6 +331,8 @@ export default function LogoWaterfall() {
           <LegendSwatch color="#1A9E5C" label="New logos" />
           <LegendSwatch color="#9F7AEA" label="Reactivated" />
           <LegendSwatch color="#DA3633" label="Churned" />
+          <LegendSwatch color="#D69E2E" label="Lapsed" />
+          <LegendSwatch color="#64748B" label="Paused" />
           <LegendSwatch color="#E6EDF3" label="Net new (line)" />
         </Stack>
       </Paper>
@@ -335,6 +355,9 @@ export default function LogoWaterfall() {
                 { key: 'new_logos', label: 'New' },
                 { key: 'reactivated_logos', label: 'Reactivated' },
                 { key: 'churned_logos', label: 'Churned' },
+                { key: 'lapsed_logos', label: 'Lapsed' },
+                { key: 'paused_logos', label: 'Paused' },
+                { key: 'recovered_logos', label: 'Recovered' },
                 { key: 'ending_logos', label: 'Ending' },
                 { key: 'net_new_logos', label: 'Net new' },
                 { key: 'gross_churn_rate_monthly', label: 'Gross churn (mo)' },
@@ -357,6 +380,7 @@ export default function LogoWaterfall() {
                 <TableCell align="right">Reactiv.</TableCell>
                 <TableCell align="right">Churned</TableCell>
                 <TableCell align="right">Lapsed</TableCell>
+                <TableCell align="right">Paused</TableCell>
                 <TableCell align="right">Ending</TableCell>
                 <TableCell align="right">Net new</TableCell>
                 <TableCell align="right">Gross churn</TableCell>
@@ -382,6 +406,9 @@ export default function LogoWaterfall() {
                         which is why the rows never added up. */}
                     <TableCell align="right" sx={{ color: 'warning.main', ...hoverCell }} onClick={() => openDrill(r.month, 'lapsed')}>
                       {r.lapsed_logos > 0 ? `-${r.lapsed_logos}` : '—'}
+                    </TableCell>
+                    <TableCell align="right" sx={{ color: '#64748B', ...hoverCell }} onClick={() => openDrill(r.month, 'paused')}>
+                      {r.paused_logos > 0 ? `-${r.paused_logos}` : '—'}
                     </TableCell>
                     <TableCell align="right" sx={{ fontWeight: 500 }}>{r.ending_logos}</TableCell>
                     <TableCell align="right" sx={{ fontWeight: 500, color: r.net_new_logos >= 0 ? 'success.main' : 'error.main' }}>
@@ -409,18 +436,22 @@ export default function LogoWaterfall() {
         const title = category === 'new' ? 'New logos'
           : category === 'reactivated' ? 'Reactivated logos'
           : category === 'lapsed' ? 'Lapsed logos (stopped billing, not confirmed churned)'
+          : category === 'paused' ? 'Paused logos (pause granted / non-billing arrangement — not churn)'
+          : category === 'recovered' ? 'Recovered logos (back within 3 months — never churn)'
           : 'Churned logos';
         const accent = category === 'new' ? 'rgba(26, 158, 92, 0.5)'
           : category === 'reactivated' ? 'rgba(159, 122, 234, 0.5)'
           : category === 'lapsed' ? 'rgba(214, 158, 46, 0.5)'
+          : category === 'paused' ? 'rgba(100, 116, 139, 0.5)'
+          : category === 'recovered' ? 'rgba(20, 184, 166, 0.5)'
           : 'rgba(218, 54, 51, 0.5)';
         const key = category === 'churn' ? 'churned' : category;
-        const items = (row.details?.[key as 'new' | 'reactivated' | 'churned' | 'lapsed'] ?? []) as Array<{ name: string; mrr?: number }>;
+        const items = (row.details?.[key as 'new' | 'reactivated' | 'recovered' | 'churned' | 'lapsed' | 'paused'] ?? []) as Array<{ name: string; mrr?: number }>;
         const columns: DrillColumn<{ name: string; mrr?: number }>[] = [
           { key: 'name', label: 'Customer', render: (r) => <CustomerLink name={r.name} /> },
           {
             key: 'mrr',
-            label: category === 'churn' || category === 'lapsed' ? 'Last MRR' : 'MRR',
+            label: category === 'churn' || category === 'lapsed' || category === 'paused' ? 'Last MRR' : 'MRR',
             align: 'right',
             render: (r) => (typeof r.mrr === 'number' ? `$${r.mrr.toLocaleString('en-US', { maximumFractionDigits: 0 })}` : '—'),
             exportValue: (r) => r.mrr ?? 0,

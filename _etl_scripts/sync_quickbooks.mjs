@@ -51,11 +51,22 @@ const TOKEN_URL = 'https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer';
 const MINOR_VERSION = '73';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Exponential backoff with jitter. These syncs make thousands of sequential calls over
+// tens of minutes, and the old policy (6 tries, 500ms * n) gave a page just 10.5s of
+// total retry budget before throwing — so one network blip longer than that killed the
+// entire nightly chain. It did exactly that on 2026-10-18 and again on 2026-10-20
+// ("Stripe: retries exhausted" / ETIMEDOUT), each time wasting the whole run.
+// Budget is now ~90s per page, which rides out a short outage without masking a real one.
+function backoffMs(attempt) {
+  return Math.min(30000, 1000 * Math.pow(2, attempt)) + Math.floor(Math.random() * 500);
+}
+
+
 // --- 1) Refresh the access token; persist the rotated refresh token ----------
 async function refreshAccessToken() {
   const basic = Buffer.from(`${ENV.QBO_CLIENT_ID}:${ENV.QBO_CLIENT_SECRET}`).toString('base64');
   const body = new URLSearchParams({ grant_type: 'refresh_token', refresh_token: ENV.QBO_REFRESH_TOKEN });
-  for (let a = 0; a < 4; a++) {
+  for (let a = 0; a < 9; a++) {
     let res;
     try {
       res = await fetch(TOKEN_URL, {
@@ -63,8 +74,8 @@ async function refreshAccessToken() {
         headers: { Authorization: `Basic ${basic}`, 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
         body,
       });
-    } catch { await sleep(600 * (a + 1)); continue; }
-    if (res.status === 429 || res.status >= 500) { await sleep(600 * (a + 1)); continue; }
+    } catch { await sleep(backoffMs(a)); continue; }
+    if (res.status === 429 || res.status >= 500) { await sleep(backoffMs(a)); continue; }
     const j = await res.json();
     if (res.status !== 200) throw new Error(`QBO token refresh ${res.status}: ${JSON.stringify(j).slice(0, 200)} (refresh token may be expired — re-run the OAuth Playground consent)`);
     return j; // { access_token, refresh_token, expires_in, x_refresh_token_expires_in }
@@ -88,11 +99,11 @@ function persistRefreshToken(newToken) {
 async function fetchPnL(accessToken, startDate, endDate) {
   const qs = new URLSearchParams({ start_date: startDate, end_date: endDate, summarize_column_by: 'Month', minorversion: MINOR_VERSION });
   const url = `${API_BASE}/v3/company/${ENV.QBO_REALM_ID}/reports/ProfitAndLoss?${qs}`;
-  for (let a = 0; a < 4; a++) {
+  for (let a = 0; a < 9; a++) {
     let res;
     try { res = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } }); }
-    catch { await sleep(600 * (a + 1)); continue; }
-    if (res.status === 429 || res.status >= 500) { await sleep(600 * (a + 1)); continue; }
+    catch { await sleep(backoffMs(a)); continue; }
+    if (res.status === 429 || res.status >= 500) { await sleep(backoffMs(a)); continue; }
     const j = await res.json();
     if (res.status !== 200) throw new Error(`QBO P&L ${res.status}: ${JSON.stringify(j).slice(0, 200)}`);
     return j;

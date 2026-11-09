@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * Churn Risk Matrix builder — applies the 5-signal health scoring model from the
- * allmoxy-monthly-dashboard skill to every active paying customer (status='active'
- * + current_subscription_mrr > 0, NOT excluded_from_logo_count).
+ * allmoxy-monthly-dashboard skill to every customer in the canonical customer base
+ * (customer_profiles.active_today, MRR = current_subscription_mrr).
  *
  * Signal weights (skill reference):
  *   1. Order Volume         — up to 35 pts (from orders_verified.json)
@@ -25,8 +25,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 
 function readJson(p) { return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : null; }
@@ -54,25 +56,15 @@ function lookupOwner(profile) {
   return { id, name: owners.owner_names?.[id] || `(owner ${id})`, source: 'hubspot_company' };
 }
 
-// All paying customers — not just status='active' with positive current MRR.
-// Includes status='at_risk' (failed charges, still our customer) and customers
-// between billing cycles (paid recently but $0 in latest month). Filter to
-// non-churned + non-excluded + actually paid us at some point (lifetime > 0).
-// Exclude:
-//   - pay_status='Cancelled' (Playbook completed; decision already made)
-//   - pay_status='Active - Pause Granted' (legitimate pause we agreed to;
-//     not a retention target — they're in a known hold pattern)
-const PAUSE_GRANTED_STATUSES = new Set(['Active - Pause Granted']);
-const cohort = (profiles?.rows || []).filter((r) =>
-  r.status !== 'churned' &&
-  r.status !== 'never_paid' &&
-  !r.excluded_from_logo_count &&
-  (r.lifetime_subscription || 0) > 0 &&
-  r.pay_status !== 'Cancelled' &&
-  !PAUSE_GRANTED_STATUSES.has(r.pay_status)
-);
-
-console.log(`Paying customer cohort (non-churned, lifetime > 0, not playbook-cancelled, not on agreed pause): ${cohort.length} customers`);
+// COHORT = the canonical customer base: customer_profiles rows with active_today (set
+// from customer_base.members by apply_canonical_customer_fields), scored at their
+// current_subscription_mrr (= the base's MRR). This used to be its own status /
+// lifetime / pay_status filter, which drifted to 201 customers / $226,837 against the
+// canonical 198 / $231,105 — a risk matrix that did not cover the same book as every
+// other page. Paused and lapsed accounts are already outside the base. HubSpot pay
+// status is carried on each row, not used to drop a paying customer from the risk view.
+const cohort = (profiles?.rows || []).filter((r) => r.active_today === true);
+console.log(`Paying customer cohort (canonical customer base, active_today): ${cohort.length} customers · $${round2(cohort.reduce((s, r) => s + (r.current_subscription_mrr || 0), 0)).toLocaleString()} MRR`);
 
 const ordersByCustomer = new Map();
 for (const [k, v] of Object.entries(orders?.by_customer || {})) ordersByCustomer.set(Number(k), v);
@@ -470,6 +462,7 @@ function scoreCustomer(c) {
     primary_segment: c.primary_segment,
     sub_segment: c.sub_segment,
     sign_up_date: c.sign_up_date,
+    pay_status: c.pay_status ?? null,
     failed_3mo_count: c.failed_3mo_count || 0,
     failed_3mo_amount: round2(c.failed_3mo_amount || 0),
     // Signal 1
@@ -584,6 +577,7 @@ for (const k of Object.keys(matrix)) {
 
 // Summary stats
 const totals = {
+  cohort_basis: 'customer_base (customer_profiles.active_today; MRR = current_subscription_mrr)',
   cohort_size: scored.length,
   total_mrr: round2(scored.reduce((s, c) => s + c.current_subscription_mrr, 0)),
   total_arr_at_risk: round2(scored.reduce((s, c) => s + c.arr_at_risk, 0)),
@@ -601,7 +595,7 @@ const totals = {
 const out = {
   fetched_at: new Date().toISOString(),
   comment:
-    '5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to all active paying customers. Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.',
+    '5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to every customer in the canonical customer base (active_today). Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.',
   scoring_mode: signalsByCustomer.size > 0 && ordersByCustomer.size > 0 ? 'full' : (ordersByCustomer.size > 0 ? 'orders_only' : signalsByCustomer.size > 0 ? 'hubspot_only' : 'minimal'),
   totals,
   matrix,

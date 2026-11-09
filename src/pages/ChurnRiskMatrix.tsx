@@ -222,6 +222,10 @@ export default function ChurnRiskMatrix() {
     return { ...rawSnap, customers, matrix, totals };
   }, [rawSnap, bidOnlyOverrides]);
 
+  // Canonical customer base, to show the matrix covers the same book every page counts.
+  const { data: baseData } = useSheetTab('customer_base');
+  const baseCustomers = (baseData as unknown as { customers?: number } | undefined)?.customers ?? null;
+
   const [tierFilter, setTierFilter] = useState<'all' | 'red' | 'yellow' | 'green' | 'unscored'>('all');
   const [cellFilter, setCellFilter] = useState<string | null>(null); // e.g. "red_large"
   // Multi-select dropdowns. Empty array = "all" (no filter). Owner and
@@ -347,11 +351,16 @@ export default function ChurnRiskMatrix() {
     return out;
   }, [filtered, sortKey, sortDir]);
 
+  const tierShare = (mrr: number | undefined) => {
+    const total = viewSnap?.totals.total_mrr ?? 0;
+    return total > 0 ? `${Math.round(((mrr ?? 0) / total) * 100)}%` : '—';
+  };
+
   return (
     <Box>
       <PageHeader
         title="Churn Risk Matrix"
-        subtitle="Every paying customer (active + at-risk, lifetime > $0) scored on a 5-signal health model (orders, launch, recency, risk signals, tenure). The matrix and attack list below surface customers most likely to churn — sorted by ARR at risk."
+        subtitle="Every customer in the canonical customer base (live subscription, scored at current subscription MRR) on a 5-signal health model (orders, launch, recency, risk signals, tenure). The matrix and attack list below surface customers most likely to churn — sorted by ARR at risk."
         question="durable"
       />
 
@@ -372,7 +381,7 @@ export default function ChurnRiskMatrix() {
               <>
                 <Typography variant="h4" sx={{ fontWeight: 500, color: 'warning.main' }}>{USD0.format(viewSnap?.totals.total_arr_at_risk ?? 0)}</Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  of {USD0.format((viewSnap?.totals.total_mrr ?? 0) * 12)} {ownerFilter.length === 0 ? 'cohort' : ownerFilter.length === 1 ? `${ownerFilter[0]}'s` : `${ownerFilter.length} owners'`} ARR ({viewSnap?.totals.cohort_size ?? 0} customers)
+                  of {USD0.format((viewSnap?.totals.total_mrr ?? 0) * 12)} {ownerFilter.length === 0 ? 'customer-base' : ownerFilter.length === 1 ? `${ownerFilter[0]}'s` : `${ownerFilter.length} owners'`} ARR ({viewSnap?.totals.cohort_size ?? 0}{ownerFilter.length === 0 && baseCustomers != null ? ` of ${baseCustomers}` : ''} customers · {USD0.format(viewSnap?.totals.total_mrr ?? 0)}/mo MRR)
                 </Typography>
               </>
             )}
@@ -384,7 +393,7 @@ export default function ChurnRiskMatrix() {
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32 }} /> : (
               <>
                 <Typography variant="h4" sx={{ fontWeight: 500, color: TIER_COLOR.red }}>{viewSnap?.totals.red_count ?? 0}</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{USD0.format(viewSnap?.totals.red_mrr ?? 0)}/mo MRR</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{USD0.format(viewSnap?.totals.red_mrr ?? 0)}/mo MRR · {tierShare(viewSnap?.totals.red_mrr)} of cohort MRR</Typography>
               </>
             )}
           </Paper>
@@ -395,7 +404,7 @@ export default function ChurnRiskMatrix() {
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32 }} /> : (
               <>
                 <Typography variant="h4" sx={{ fontWeight: 500, color: TIER_COLOR.yellow }}>{viewSnap?.totals.yellow_count ?? 0}</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{USD0.format(viewSnap?.totals.yellow_mrr ?? 0)}/mo MRR</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{USD0.format(viewSnap?.totals.yellow_mrr ?? 0)}/mo MRR · {tierShare(viewSnap?.totals.yellow_mrr)} of cohort MRR</Typography>
               </>
             )}
           </Paper>
@@ -406,7 +415,7 @@ export default function ChurnRiskMatrix() {
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32 }} /> : (
               <>
                 <Typography variant="h4" sx={{ fontWeight: 500, color: TIER_COLOR.green }}>{viewSnap?.totals.green_count ?? 0}</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{USD0.format(viewSnap?.totals.green_mrr ?? 0)}/mo MRR</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{USD0.format(viewSnap?.totals.green_mrr ?? 0)}/mo MRR · {tierShare(viewSnap?.totals.green_mrr)} of cohort MRR</Typography>
               </>
             )}
           </Paper>

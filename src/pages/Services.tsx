@@ -115,16 +115,17 @@ export default function Services() {
     return m;
   }, [profilesData]);
 
-  // Fractional months elapsed in the current calendar year, prorating the
-  // partial trailing month by day-of-month. Today 2026-06-18 → 5 full months
-  // (Jan-May) + 18/30 of June ≈ 5.6. Driver for every annualization on the
-  // page so customer-level numbers and headline KPIs use the same divisor.
-  const monthsElapsed = useMemo(() => {
-    const today = new Date();
-    const monthIndex = today.getMonth() + 1;
-    const dom = today.getDate();
-    const daysInThisMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-    return (monthIndex - 1) + dom / daysInThisMonth;
+  // COMPLETE months elapsed in the current calendar year (2026-11-09 → 10, Jan–Oct).
+  // The in-progress month is excluded from both numerator and divisor everywhere on
+  // the page: prorating it by the wall clock assumed its data ran through today, when
+  // the services sync can trail by days — a few days of billings counted as a
+  // third of a month. Driver for every annualization on the page so customer-level
+  // numbers and headline KPIs use the same divisor.
+  const monthsElapsed = useMemo(() => new Date().getMonth(), []);
+  // The in-progress month (YYYY-MM); keys >= this are partial.
+  const currentMonthKey = useMemo(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
   }, []);
 
   // Per-customer aggregation. Annualization uses the shared monthsElapsed so
@@ -145,7 +146,7 @@ export default function Services() {
         if (num === 0) continue;
         lifetime += num;
         const yr = k.slice(0, 4);
-        if (yr === currentYearStr) cy += num;
+        if (yr === currentYearStr) { if (k < currentMonthKey) cy += num; }
         else if (yr === priorYearStr) py += num;
       }
       if (lifetime === 0) continue;
@@ -164,7 +165,7 @@ export default function Services() {
       });
     }
     return out;
-  }, [data, monthsElapsed, profileByName]);
+  }, [data, monthsElapsed, profileByName, currentMonthKey]);
 
   // Segment facets — count customers per segment in the unfiltered set so
   // chip counts always reflect the underlying data, not the active filter.
@@ -224,7 +225,7 @@ export default function Services() {
     for (const m of months) {
       const v = Number(mt[m]) || 0;
       lifetime += v;
-      if (m.startsWith(currentYearStr)) cy += v;
+      if (m.startsWith(currentYearStr)) { if (m < currentMonthKey) cy += v; }
       else if (m.startsWith(priorYearStr)) py += v;
     }
     const annualized = monthsElapsed > 0 && monthsElapsed < 12 ? (cy * 12) / monthsElapsed : cy;
@@ -239,26 +240,29 @@ export default function Services() {
       yoyPct,
       lifetime,
     };
-  }, [filteredMonthlyTotals, monthsElapsed]);
+  }, [filteredMonthlyTotals, monthsElapsed, currentMonthKey]);
 
   // Yearly chart — same monthly totals, grouped by year, with annualized
   // projection on the current year. Filter-aware.
   const yearlyChart = useMemo(() => {
     const today = new Date();
     const currentYearStr = String(today.getFullYear());
-    const byYear = new Map<string, { total: number; months: number }>();
+    // total = everything collected (incl. the in-progress month, shown as actual);
+    // completeTotal = complete months only, the annualization basis.
+    const byYear = new Map<string, { total: number; completeTotal: number; months: number }>();
     for (const [m, v] of Object.entries(filteredMonthlyTotals)) {
       const yr = m.slice(0, 4);
       const num = Number(v) || 0;
-      if (!byYear.has(yr)) byYear.set(yr, { total: 0, months: 0 });
+      if (!byYear.has(yr)) byYear.set(yr, { total: 0, completeTotal: 0, months: 0 });
       const e = byYear.get(yr)!;
       e.total += num;
+      if (m < currentMonthKey) e.completeTotal += num;
       if (num > 0) e.months++;
     }
     return [...byYear.entries()]
       .map(([year, v]) => {
         const isCurrent = year === currentYearStr && monthsElapsed > 0 && monthsElapsed < 12;
-        const annualized = isCurrent ? (v.total * 12) / monthsElapsed : v.total;
+        const annualized = isCurrent ? (v.completeTotal * 12) / monthsElapsed : v.total;
         return {
           year,
           actual_usd: Math.round(v.total * 100) / 100,
@@ -268,7 +272,7 @@ export default function Services() {
         };
       })
       .sort((a, b) => a.year.localeCompare(b.year));
-  }, [filteredMonthlyTotals, monthsElapsed]);
+  }, [filteredMonthlyTotals, monthsElapsed, currentMonthKey]);
 
   // Monthly trend window — filter-aware.
   const trendChart = useMemo(() => {
@@ -338,12 +342,12 @@ export default function Services() {
           <Paper sx={{ p: 2, flexGrow: 1, borderLeft: '3px solid', borderColor: 'primary.main' }}>
             <Stack direction="row" spacing={0.5} alignItems="center">
               <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>YTD annualized</Typography>
-              <InfoIcon info="YTD services × 12 / months-elapsed. Months-elapsed is fractional — today's date prorates the partial trailing month so a half-finished June counts as 0.5 of a month, not a full one." />
+              <InfoIcon info="YTD services for COMPLETE months × 12 / complete months. The in-progress month is left out of both sides — its data may trail today, so prorating it by the calendar would understate the pace." />
             </Stack>
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
               <>
                 <Typography variant="h5" sx={{ fontWeight: 500, color: 'primary.main' }}>{USD_COMPACT.format(summary.ytdAnnualized)}</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{monthsElapsed.toFixed(1)}/12 months elapsed</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{monthsElapsed}/12 complete months</Typography>
               </>
             )}
           </Paper>
@@ -391,7 +395,7 @@ export default function Services() {
           <InfoIcon info={
             <>
               <strong>What it is:</strong> Total services revenue by calendar year. The lighter top portion of the current year&apos;s bar shows the annualized projection if YTD pace continues.<br /><br />
-              <strong>Annualized:</strong> YTD total × (12 / months elapsed). Months elapsed is fractional — today&apos;s position in the trailing month prorates correctly, so a half-finished June doesn&apos;t over-project. Orange line shows how many distinct months in that year have data.
+              <strong>Annualized:</strong> complete-month YTD total × (12 / complete months). The in-progress month shows in the actual bar but is not used for the projection. Orange line shows how many distinct months in that year have data.
             </>
           } />
         </Stack>

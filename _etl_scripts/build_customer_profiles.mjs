@@ -10,10 +10,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
-const SNAPSHOTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const XLSX_PATH = path.resolve(__dirname, '../..', 'Allmoxy - Meta Data Reconcile Tool.xlsx');
+const SNAPSHOTS = path.resolve(__dirname, '..', 'public/snapshots');
 
 const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
 
@@ -24,7 +26,7 @@ const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
 // Cache schema: { byHubspotId: { "<hs_object_id>": { primary, sub, name } } }.
 // Refresh by re-pulling via MCP, or replace this step with a direct fetch_hubspot_segments.mjs
 // once the token is rotated.
-const HUBSPOT_SEGMENTS_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_segments.json';
+const HUBSPOT_SEGMENTS_CACHE_PATH = path.resolve(__dirname, '..', '_etl_scripts/cache/hubspot_segments.json');
 const hubspotSegmentsCache = fs.existsSync(HUBSPOT_SEGMENTS_CACHE_PATH)
   ? JSON.parse(fs.readFileSync(HUBSPOT_SEGMENTS_CACHE_PATH, 'utf8'))?.byHubspotId ?? {}
   : {};
@@ -40,14 +42,14 @@ const hubspotSegmentsCache = fs.existsSync(HUBSPOT_SEGMENTS_CACHE_PATH)
 // strings; normalize to a clean array.
 const hsMulti = (v) => (v ? String(v).split(';').map((s) => s.trim()).filter(Boolean) : []);
 
-const HUBSPOT_API_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_companies.json';
-const HUBSPOT_OWNERS_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_owners.json';
+const HUBSPOT_API_CACHE_PATH = path.resolve(__dirname, '..', '_etl_scripts/cache/hubspot_companies.json');
+const HUBSPOT_OWNERS_CACHE_PATH = path.resolve(__dirname, '..', '_etl_scripts/cache/hubspot_owners.json');
 
 // Live Instance custom-object status, keyed by installer_id. This is the LIVE
 // pay status HubSpot shows on the Instance (e.g. "Active") — the xlsx Sync
 // Sheet's Pay Status column lags, so we prefer this. Skip sandbox instances and
 // prefer a real (non-empty) status when a customer has multiple instances.
-const HUBSPOT_INSTANCES_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/hubspot_instances.json';
+const HUBSPOT_INSTANCES_CACHE_PATH = path.resolve(__dirname, '..', '_etl_scripts/cache/hubspot_instances.json');
 const instanceStatusByInstaller = new Map();
 if (fs.existsSync(HUBSPOT_INSTANCES_CACHE_PATH)) {
   try {
@@ -66,7 +68,7 @@ if (fs.existsSync(HUBSPOT_INSTANCES_CACHE_PATH)) {
 // company keeps ALL its Stripe Customer IDs, but the MAIN/CURRENT one is whichever
 // customer owns the live subscription (active > trialing > past_due > unpaid — a
 // failing card is still the current account; only cancelled drops out).
-const STRIPE_SUBS_CACHE_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/stripe_subscriptions.json';
+const STRIPE_SUBS_CACHE_PATH = path.resolve(__dirname, '..', '_etl_scripts/cache/stripe_subscriptions.json');
 let subsBySub = {}, subsByCust = {};
 if (fs.existsSync(STRIPE_SUBS_CACHE_PATH)) {
   try { const j = JSON.parse(fs.readFileSync(STRIPE_SUBS_CACHE_PATH, 'utf8')); subsBySub = j.by_subscription || {}; subsByCust = j.by_customer || {}; } catch { /* ignore */ }
@@ -91,7 +93,7 @@ function pickPrimaryStripeCustomer(custIds, subIds) {
 // grace-period are measured from the restart date, not the original sign-up —
 // a returning customer shouldn't be scored as a long-tenured churn risk while
 // they're effectively starting over. Cohort/acquisition year stays original.
-const RESTART_OVERRIDES_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/restart_date_overrides.json';
+const RESTART_OVERRIDES_PATH = path.resolve(__dirname, '..', '_etl_scripts/restart_date_overrides.json');
 const restartByAid = new Map();
 if (fs.existsSync(RESTART_OVERRIDES_PATH)) {
   try {
@@ -204,7 +206,7 @@ function hubspotLiveForCustomer(stripeIds, hubspotCompanyId) {
 // amortization, MRR, and waterfall just like Stripe charges. Keyed by
 // allmoxy_customer_id; the injected transaction shape matches the Stripe
 // transaction shape downstream code expects.
-const SYNTHETIC_TXNS_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/synthetic_transactions.json';
+const SYNTHETIC_TXNS_PATH = path.resolve(__dirname, '..', '_etl_scripts/synthetic_transactions.json');
 const syntheticTxnsByCustomerId = new Map();
 try {
   const raw = JSON.parse(fs.readFileSync(SYNTHETIC_TXNS_PATH, 'utf8'));
@@ -235,7 +237,7 @@ try {
 // customer who has charges in Stripe Sync — without this, the customer's
 // transactions go orphan and they appear as a phantom "blank-named" row in the
 // MRR by Month tab's totals.
-const STRIPE_ID_OVERRIDES_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/stripe_id_overrides.json';
+const STRIPE_ID_OVERRIDES_PATH = path.resolve(__dirname, '..', '_etl_scripts/stripe_id_overrides.json');
 const stripeIdOverridesById = new Map();
 try {
   const raw = JSON.parse(fs.readFileSync(STRIPE_ID_OVERRIDES_PATH, 'utf8'));
@@ -253,7 +255,7 @@ try {
 // (cache/aurora_customers.json, from sync_aurora.mjs). Same column shape so the
 // coreById mapping below is unchanged. Falls back to the xlsx tab if the Aurora
 // cache is absent (transition / offline safety).
-const AURORA_ROSTER_CACHE = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/cache/aurora_customers.json';
+const AURORA_ROSTER_CACHE = path.resolve(__dirname, '..', '_etl_scripts/cache/aurora_customers.json');
 const useAuroraRoster = fs.existsSync(AURORA_ROSTER_CACHE);
 const coreRaw = useAuroraRoster
   ? JSON.parse(fs.readFileSync(AURORA_ROSTER_CACHE, 'utf8')).rows
@@ -279,6 +281,25 @@ for (const r of coreRaw) {
     stripe_customer_ids: stripeIds,
     harvest_id: r.harvest_id ? String(r.harvest_id) : null,
   });
+}
+// Stripe customers Aurora doesn't carry yet (roster_supplement.json — same rule as
+// refresh_all.mjs buildCoreCustomer: skipped once any of their Stripe ids is known).
+{
+  const SUPPLEMENT = path.resolve(__dirname, '..', '_etl_scripts/roster_supplement.json');
+  if (fs.existsSync(SUPPLEMENT)) {
+    const known = new Set([...coreById.values()].flatMap((c) => c.stripe_customer_ids));
+    let added = 0;
+    for (const s of JSON.parse(fs.readFileSync(SUPPLEMENT, 'utf8')).customers || []) {
+      if (s.stripe_customer_ids.some((id) => known.has(id)) || coreById.has(s.allmoxy_customer_id)) continue;
+      coreById.set(s.allmoxy_customer_id, {
+        allmoxy_customer_id: s.allmoxy_customer_id, name: s.name, sign_up_date: s.sign_up_date,
+        hubspot_company_id: null, installer_id: null, installer_directory: s.installer_directory,
+        stripe_customer_ids: [...s.stripe_customer_ids], harvest_id: null,
+      });
+      added++;
+    }
+    if (added) console.error(`[roster] +${added} from roster_supplement.json (not yet in Aurora)`);
+  }
 }
 
 // ---------- Hubspot Instance Sync Sheet → per-stripe-customer enrichment ----------
@@ -627,7 +648,7 @@ for (const r of svcSnap.rows) {
 // Annual payers — exempt from the "missed a month" non-payment test (they pay
 // once a year, so a monthly gap is normal). Same source apply_annual_amortization uses.
 const ANNUAL_IDS = (() => {
-  try { return new Set(JSON.parse(fs.readFileSync('/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/src/data/annual_payers.json', 'utf8')).annual_payer_ids || []); }
+  try { return new Set(JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'src/data/annual_payers.json'), 'utf8')).annual_payer_ids || []); }
   catch { return new Set(); }
 })();
 

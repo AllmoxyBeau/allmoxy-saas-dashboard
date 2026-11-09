@@ -61,9 +61,20 @@ for (const year of ['2025', '2026', '2024']) { // later years first so recent na
 // record them (Beau identified acct_1S1UoS0atrcrba4J as Capital Millwork LLC, 2026-09-16).
 try {
   const ov = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/connect_customer_overrides.json'), 'utf8'));
+  const nameByAid = new Map();
   for (const [name, v] of Object.entries(ov.mapping || {})) {
-    const acct = typeof v === 'object' ? v.stripe_connect_account_id : null;
+    // Legacy object shape { allmoxy_customer_id, stripe_connect_account_id } still honoured.
+    const acct = v && typeof v === 'object' ? v.stripe_connect_account_id : null;
     if (acct && acct.startsWith('acct_')) acctName.set(acct, name);   // overrides beat the xlsx
+    const aid = v && typeof v === 'object' ? v.allmoxy_customer_id : v;
+    if (aid != null && !nameByAid.has(String(aid))) nameByAid.set(String(aid), name);
+  }
+  // Canonical shape: mapping values are plain aids; hand-confirmed acct_ ids live in
+  // stripe_connect_account_ids_by_id (aid → acct_). Name each such account after the
+  // mapping entry carrying the same aid.
+  for (const [aid, acct] of Object.entries(ov.stripe_connect_account_ids_by_id || {})) {
+    const name = nameByAid.get(aid);
+    if (name && typeof acct === 'string' && acct.startsWith('acct_')) acctName.set(acct, name);
   }
 } catch { /* no overrides file — fall back to the xlsx alone */ }
 
@@ -152,9 +163,12 @@ const annualTxns = sum(last12, 'txn_count');
 const blendedTake = annualGmv > 0 ? annualFee / annualGmv : null;
 
 // --- attach: Connect accounts vs the active book -------------------------
-// Active customers only — exclude at_risk/churned/never_paid. The attach pipeline
-// and penetration metrics target the currently-active book.
-const activeProfiles = profiles.filter((p) => p.status === 'active');
+// The active book = canonical customer-base membership (active_today), the same
+// 198-logo set behind customer_base.customers / mrr. status==='active' was the wrong
+// set: it included non-members (e.g. excluded duplicates) and omitted base members
+// flagged at_risk (several of whom process on Connect). Attach and penetration both
+// use this one denominator.
+const activeProfiles = profiles.filter((p) => p.active_today === true && !p.excluded_from_logo_count);
 const onConnectAids = new Set(byAccount.filter((a) => a.allmoxy_customer_id != null).map((a) => a.allmoxy_customer_id));
 const activeOnConnect = activeProfiles.filter((p) => onConnectAids.has(p.allmoxy_customer_id)).length;
 
@@ -269,11 +283,16 @@ const out = {
     txn_count: annualTxns,
     blended_take_rate: blendedTake != null ? Math.round(blendedTake * 100000) / 100000 : null,
   },
+  // ONE attach definition, shared with penetration: a base member processing now (any
+  // Connect fee in the last 3 complete months) ÷ the customer base. The looser "has any
+  // mapped Connect account" count is kept as a secondary field, not as an attach rate.
   attach: {
+    definition: 'Base members (customer_base, active_today) with any Connect fee in the last 3 complete months ÷ base members.',
     connected_accounts: cache.totals.distinct_accounts,
     active_customers: activeProfiles.length,
-    active_customers_on_connect: activeOnConnect,
-    attach_rate: activeProfiles.length > 0 ? Math.round((activeOnConnect / activeProfiles.length) * 1000) / 1000 : null,
+    active_customers_on_connect: processingCount,
+    attach_rate: activeProfiles.length > 0 ? Math.round((processingCount / activeProfiles.length) * 1000) / 1000 : null,
+    customers_with_mapped_account: activeOnConnect,
   },
   scenarios,
   mom,
@@ -297,4 +316,4 @@ const out = {
   notes: 'Stripe Connect processing volume + take-rate from the live application_fees API (charge expanded for gross). Annualized figures use the last 12 complete months. Scenarios hold GMV constant and vary take-rate — the embedded-payments expansion lever.',
 };
 fs.writeFileSync(path.join(SNAP, 'connect_volume.json'), JSON.stringify(out, null, 2));
-console.error(`✓ connect_volume.json: annual GMV $${out.annualized.gross_volume.toLocaleString()} · fees $${out.annualized.fee_revenue.toLocaleString()} · take ${(out.annualized.blended_take_rate * 100).toFixed(2)}% · ${out.attach.active_customers_on_connect}/${out.attach.active_customers} active on Connect · ${byAccount.filter((a) => a.customer_name && a.customer_name !== '#N/A').length}/${byAccount.length} accounts named`);
+console.error(`✓ connect_volume.json: annual GMV $${out.annualized.gross_volume.toLocaleString()} · fees $${out.annualized.fee_revenue.toLocaleString()} · take ${(out.annualized.blended_take_rate * 100).toFixed(2)}% · ${out.attach.active_customers_on_connect}/${out.attach.active_customers} processing on Connect · ${byAccount.filter((a) => a.customer_name && a.customer_name !== '#N/A').length}/${byAccount.length} accounts named`);

@@ -20,8 +20,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const COHORT = '/tmp/at_risk_cohort.json';
 const BATCH = '/tmp/hubspot_company_batch.json';
 const RISK = '/tmp/hubspot_risk_signals.json'; // Optional — populated by note-scan pass

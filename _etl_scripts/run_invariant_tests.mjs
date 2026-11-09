@@ -21,8 +21,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 
 function readJson(p) {
@@ -509,7 +511,15 @@ test('every paid Stripe invoice has a matching charge in the cash cache', 'error
   const gaps = [];
   let checked = 0;
   for (const [cid, c] of Object.entries(inv.by_customer || {})) {
-    const txns = ((chg.by_customer || {})[cid]?.transactions || []).filter((t) => t.t === 'subscription');
+    // apply_invoice_line_split.mjs splits one charge into subscription + services rows
+    // sharing its id — rejoin them so the charge is matched at its full amount.
+    const joined = new Map();
+    for (const t of ((chg.by_customer || {})[cid]?.transactions || [])) {
+      if (t.t !== 'subscription' && !t.sp) continue;
+      const j = joined.get(t.i);
+      if (j) { j.a = (j.a || 0) + (t.a || 0); j.r = (j.r || 0) + (t.r || 0); } else joined.set(t.i, { ...t });
+    }
+    const txns = [...joined.values()];
     for (const i of (c.invoices || [])) {
       if (i.status !== 'paid' || !i.paid_at) continue;
       const m = String(i.paid_at).slice(0, 7);
@@ -613,6 +623,136 @@ test('customer base MRR reconciles to the accrual waterfall', 'warn', () => {
       ? `$${Math.round(b.mrr).toLocaleString()} = waterfall $${Math.round(row.ending_mrr).toLocaleString()} + $${Math.round(annual).toLocaleString()} annual amortization`
       : `customer_base $${b.mrr} − annual $${annual} ≠ waterfall ending $${row.ending_mrr} (gap $${gap})`,
   };
+});
+
+// ============================================================================
+// CROSS-REPORT REVENUE CONSISTENCY (revenue audit, 2026-11-09). Each of these was a
+// live break: Connect missing Jul–Oct 2026 (TTM −$190K), 8 Stripe customers absent
+// from every MRR report, per-customer tabs not summing to their own totals, and four
+// different NRR/GRR figures. They guard the same number reading the same everywhere.
+// ============================================================================
+const lastCompleteMonth = (() => { const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() - 1); return d.toISOString().slice(0, 7); })();
+const sumRows = (snap, m) => round2((snap?.rows || []).reduce((s, r) => s + (typeof r[m] === 'number' ? r[m] : 0), 0));
+
+test('per-customer tabs sum to their own monthly totals (subscription, services, connect)', 'error', () => {
+  const bad = [];
+  for (const f of ['subscription_by_month', 'services_by_month', 'connect_by_customer_month']) {
+    const s = readJson(path.join(SNAP, `${f}.json`));
+    for (const [m, t] of Object.entries(s?.monthlyTotals || {})) {
+      if (m < '2024-01') continue;
+      const rs = sumRows(s, m);
+      if (Math.abs(rs - t) > 1) bad.push(`${f} ${m}: rows $${rs} vs total $${t}`);
+    }
+  }
+  return { passed: bad.length === 0, detail: bad.length ? bad.slice(0, 6).join(' · ') + (bad.length > 6 ? ` …+${bad.length - 6}` : '') : 'all rows sum to totals (2024+)' };
+});
+
+test('subscription tab totals = Overview subscription (mrr_by_month)', 'error', () => {
+  const s = readJson(path.join(SNAP, 'subscription_by_month.json'));
+  const mbm = readJson(path.join(SNAP, 'mrr_by_month.json'));
+  const bad = (mbm?.rows || []).filter((r) => r.month >= '2024-01' && r.month <= lastCompleteMonth && Math.abs((s?.monthlyTotals?.[r.month] ?? 0) - (r.mrr_subscription ?? 0)) > 1)
+    .map((r) => `${r.month}: tab $${s?.monthlyTotals?.[r.month]} vs overview $${r.mrr_subscription}`);
+  return { passed: bad.length === 0, detail: bad.length ? bad.slice(0, 6).join(' · ') : 'ties every month 2024+' };
+});
+
+test('Connect has every complete month and ties to net-settled Stripe Connect', 'error', () => {
+  const con = readJson(path.join(SNAP, 'connect_by_month.json'));
+  const net = readJson(path.join(ROOT, '_etl_scripts/cache/stripe_connect_net.json'));
+  const by = Object.fromEntries((con?.rows || []).map((r) => [r.month, r.mrr_connect]));
+  const bad = [];
+  for (const r of net?.monthly || []) {
+    if (r.month < '2026-06' || r.month > lastCompleteMonth) continue;
+    if (by[r.month] == null) bad.push(`${r.month}: missing`);
+    else if (Math.abs(by[r.month] - r.net_usd) > 1) bad.push(`${r.month}: tab $${by[r.month]} vs net $${r.net_usd}`);
+  }
+  return { passed: bad.length === 0, detail: bad.length ? bad.join(' · ') : `Jun 2026…${lastCompleteMonth} present and tied to net USD` };
+});
+
+test('every Stripe customer billing recurring lines in the last 3 months is linked to a profile', 'error', () => {
+  const inv = readJson(path.join(ROOT, '_etl_scripts/cache/stripe_invoices.json'));
+  const prof = readJson(path.join(SNAP, 'customer_profiles.json'));
+  if (!inv) return { passed: true, detail: 'no invoice cache — skipped' };
+  const linked = new Set((prof?.rows || []).flatMap((p) => p.stripe_customer_ids || []));
+  const since = (() => { const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() - 3); return d.toISOString().slice(0, 10); })();
+  const orphans = [];
+  for (const [cid, c] of Object.entries(inv.by_customer || {})) {
+    if (linked.has(cid)) continue;
+    const amt = (c.invoices || []).filter((i) => ['paid', 'open', 'uncollectible'].includes(i.status) && String(i.d) >= since)
+      .flatMap((i) => i.lines || []).filter((l) => l.rec).reduce((s, l) => s + (l.a || 0), 0);
+    if (amt > 0) orphans.push(`${cid} $${round2(amt)}`);
+  }
+  return { passed: orphans.length === 0, detail: orphans.length ? `${orphans.length} unlinked (add to roster_supplement.json or Aurora): ${orphans.join(', ')}` : 'no unlinked recurring billers' };
+});
+
+test('every product on recent invoices is classified in product_revenue_types.json', 'warn', () => {
+  const inv = readJson(path.join(ROOT, '_etl_scripts/cache/stripe_invoices.json'));
+  const map = readJson(path.join(ROOT, '_etl_scripts/product_revenue_types.json'))?.products || {};
+  if (!inv) return { passed: true, detail: 'no invoice cache — skipped' };
+  const missing = new Map();
+  for (const c of Object.values(inv.by_customer || {})) for (const i of c.invoices || []) {
+    if (String(i.d) < '2026-08-01') continue;
+    for (const l of i.lines || []) if (l.prod && !map[l.prod]) missing.set(l.prod, round2((missing.get(l.prod) || 0) + (l.a || 0)));
+  }
+  return { passed: missing.size === 0, detail: missing.size ? [...missing].map(([p, a]) => `${p} $${a}`).join(', ') : 'all classified' };
+});
+
+test('Revenue Recognition recognized = accrual series (no revenue outside the customer base)', 'error', () => {
+  const rr = readJson(path.join(SNAP, 'revenue_recognition.json'));
+  if (!rr?.by_month?.[lastCompleteMonth]) return { passed: true, detail: 'not built — skipped' };
+  const series = round2((rr.accrual_series || []).reduce((s, r) => s + ((r.months || {})[lastCompleteMonth] || 0), 0));
+  const rec = rr.by_month[lastCompleteMonth].recognized;
+  return { passed: Math.abs(series - rec) <= 1, detail: `${lastCompleteMonth}: recognized $${rec} vs accrual series $${series}` };
+});
+
+test('Current Month opens at the canonical base MRR', 'error', () => {
+  const cm = readJson(path.join(SNAP, 'current_month.json'));
+  const b = readJson(path.join(SNAP, 'customer_base.json'));
+  if (!cm || !b || cm.prior_month !== b.as_of) return { passed: true, detail: 'months not aligned — skipped' };
+  return { passed: Math.abs(cm.mrr.starting - b.mrr) <= 1, detail: `current month starting $${cm.mrr.starting} vs base $${b.mrr}` };
+});
+
+test('one retention definition: NRR/GRR identical across waterfall, Sales Budget and Unit Economics', 'error', () => {
+  const w = readJson(path.join(SNAP, 'mrr_waterfall.json'))?.ttm_accrual;
+  const sb = readJson(path.join(SNAP, 'sales_budget.json'))?.trailing;
+  const ue = readJson(path.join(SNAP, 'unit_economics.json'))?.ttm;
+  if (!w) return { passed: true, detail: 'no accrual TTM — skipped' };
+  const bad = [];
+  if (sb && (Math.abs(sb.nrr - w.annual_nrr) > 0.001 || Math.abs(sb.grr - w.annual_grr) > 0.001)) bad.push(`sales budget ${sb.nrr}/${sb.grr}`);
+  if (ue && (ue.annual_grr == null || Math.abs(ue.annual_grr - w.annual_grr) > 0.001)) bad.push(`unit econ GRR ${ue.annual_grr}`);
+  if (ue && ue.annual_revenue_churn_rate != null && Math.abs(ue.annual_revenue_churn_rate - (1 - w.annual_grr)) > 0.001) bad.push(`unit econ revenue churn ${ue.annual_revenue_churn_rate} ≠ 1 − GRR`);
+  return { passed: bad.length === 0, detail: bad.length ? `waterfall ${w.annual_nrr}/${w.annual_grr} vs ${bad.join(', ')}` : `NRR ${(w.annual_nrr * 100).toFixed(1)}% · GRR ${(w.annual_grr * 100).toFixed(1)}% everywhere` };
+});
+
+test('TTM streams agree: Unit Economics and Sales Budget = 12-month sums of the monthly series', 'error', () => {
+  const ue = readJson(path.join(SNAP, 'unit_economics.json'));
+  const sb = readJson(path.join(SNAP, 'sales_budget.json'));
+  const mbm = Object.fromEntries((readJson(path.join(SNAP, 'mrr_by_month.json'))?.rows || []).map((r) => [r.month, r]));
+  const con = Object.fromEntries((readJson(path.join(SNAP, 'connect_by_month.json'))?.rows || []).map((r) => [r.month, r.mrr_connect]));
+  const bad = [];
+  if (ue?.ttm) {
+    const ms = ue.monthly.filter((r) => r.month >= ue.ttm.windowStart && r.month <= ue.ttm.windowEnd).map((r) => r.month);
+    const c = round2(ms.reduce((s, m) => s + (con[m] || 0), 0));
+    const sv = round2(ms.reduce((s, m) => s + (mbm[m]?.mrr_services || 0), 0));
+    if (Math.abs(c - ue.ttm.connect_revenue) > 1) bad.push(`UE connect $${ue.ttm.connect_revenue} vs $${c}`);
+    if (Math.abs(sv - ue.ttm.services_revenue) > 1) bad.push(`UE services $${ue.ttm.services_revenue} vs $${sv}`);
+  }
+  if (sb?.streams) {
+    const ms = Object.keys(mbm).filter((m) => m <= lastCompleteMonth).sort().slice(-12);
+    const c = round2(ms.reduce((s, m) => s + (mbm[m]?.mrr_connect || 0), 0));
+    const sbc = sb.streams.find((s) => s.key === 'connect')?.ttm;
+    if (sbc != null && Math.abs(c - sbc) > 1) bad.push(`Sales Budget connect $${sbc} vs $${c}`);
+  }
+  return { passed: bad.length === 0, detail: bad.length ? bad.join(' · ') : 'Unit Economics and Sales Budget TTMs tie to the monthly series' };
+});
+
+test('Customer Detail MRR and active flag = canonical base', 'error', () => {
+  const b = readJson(path.join(SNAP, 'customer_base.json'));
+  const prof = readJson(path.join(SNAP, 'customer_profiles.json'));
+  if (!b || !prof) return { passed: true, detail: 'skipped' };
+  const mem = new Map(b.members.map((m) => [m.allmoxy_customer_id, m.mrr]));
+  const bad = prof.rows.filter((p) => !p.excluded_from_logo_count && (
+    p.active_today !== mem.has(p.allmoxy_customer_id) || Math.abs((p.current_subscription_mrr || 0) - (mem.get(p.allmoxy_customer_id) || 0)) > 0.01));
+  return { passed: bad.length === 0, detail: bad.length ? `${bad.length} profile(s) differ: ${bad.slice(0, 5).map((p) => p.name).join(', ')}` : `${b.customers} members aligned` };
 });
 
 

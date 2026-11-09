@@ -107,6 +107,8 @@ type ProfileRow = {
   transactions: Transaction[];
 };
 type ProfilesSnap = { rows: ProfileRow[]; fetchedAt: string };
+// Only the cut-off fields are read here; the rest of current_month.json drives AccrualMonthPanel.
+type CurrentMonthSnap = { month?: string; as_of?: string; day_of_month?: number; data_stale?: boolean; generated_on?: string };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 
@@ -123,12 +125,15 @@ function daysInMonth(iso: string) {
   const [y, m] = iso.split('-').map(Number);
   return new Date(y, m, 0).getDate();
 }
-function daysElapsed(currentMonth: string, fetchedAt: string) {
-  const fetched = new Date(fetchedAt);
-  const fetchedMonth = `${fetched.getFullYear()}-${String(fetched.getMonth() + 1).padStart(2, '0')}`;
-  if (fetchedMonth < currentMonth) return 0;
-  if (fetchedMonth > currentMonth) return daysInMonth(currentMonth);
-  return fetched.getDate();
+// Days of `currentMonth` covered by the DATA, from its cut-off date (YYYY-MM-DD).
+// Never the wall clock or the snapshot's fetchedAt: when the Stripe sync trails today,
+// a wall-clock day count inflates every run-rate denominator and marks billing days
+// as "passed" that the data cannot see yet.
+function daysElapsed(currentMonth: string, asOfIso: string) {
+  const asOfMonth = asOfIso.slice(0, 7);
+  if (asOfMonth < currentMonth) return 0;
+  if (asOfMonth > currentMonth) return daysInMonth(currentMonth);
+  return Number(asOfIso.slice(8, 10));
 }
 function pctDelta(a: number | null, b: number | null) {
   if (a == null || b == null || b === 0) return null;
@@ -151,6 +156,9 @@ function round2(n: number) {
 export default function CurrentMonth() {
   const { data: mrrData, isLoading: mrrLoading } = useSheetTab('mrr_by_month');
   const { data: profilesData } = useSheetTab('customer_profiles');
+  // Data cut-off (Stripe sync as-of date) — the one elapsed-days basis for every
+  // projection on this page.
+  const { data: cmData } = useSheetTab('current_month');
   // Accrual (invoiced) series — see the 'billing_timing' category below. A cash gap in
   // the prior month is only a real interruption if the customer was not INVOICED then.
   const { data: rrData } = useSheetTab('revenue_recognition');
@@ -177,6 +185,8 @@ export default function CurrentMonth() {
   const mrr = mrrData as unknown as MrrSnap | undefined;
   const profiles = profilesData as unknown as ProfilesSnap | undefined;
 
+  const cmSnap = cmData as unknown as CurrentMonthSnap | undefined;
+
   const view = useMemo(() => {
     if (!mrr || mrr.rows.length === 0) return null;
     const lastRow = mrr.rows[mrr.rows.length - 1];
@@ -185,7 +195,35 @@ export default function CurrentMonth() {
     const priorRow = mrr.rows.find((r) => r.month === prior) ?? null;
 
     const totalDays = daysInMonth(currentMonth);
-    const elapsed = daysElapsed(currentMonth, mrr.fetchedAt);
+    // Cut-off resolution. The cash cards below are built from customer_profiles
+    // transactions + mrr_by_month, which come from the Stripe Sync pipeline and can trail
+    // the Stripe API caches that set current_month.json as_of. So the cut-off is the
+    // EARLIER of: current_month.json as_of (Stripe data cut-off) and the latest
+    // transaction date in customer_profiles. snapshot fetchedAt is the last resort only.
+    let asOf: string | null = null;
+    let asOfSource: 'current_month' | 'transactions' | 'fetchedAt' = 'fetchedAt';
+    if (cmSnap?.as_of && /^\d{4}-\d{2}-\d{2}/.test(cmSnap.as_of)) {
+      asOf = cmSnap.as_of.slice(0, 10);
+      asOfSource = 'current_month';
+    }
+    if (profiles) {
+      let latest = '';
+      for (const p of profiles.rows) {
+        for (const t of p.transactions ?? []) {
+          const d = (t.created ?? '').slice(0, 10);
+          if (d > latest) latest = d;
+        }
+      }
+      if (/^\d{4}-\d{2}-\d{2}$/.test(latest) && (!asOf || latest < asOf)) {
+        asOf = latest;
+        asOfSource = 'transactions';
+      }
+    }
+    if (!asOf) {
+      const f = new Date(mrr.fetchedAt);
+      asOf = `${f.getFullYear()}-${String(f.getMonth() + 1).padStart(2, '0')}-${String(f.getDate()).padStart(2, '0')}`;
+    }
+    const elapsed = daysElapsed(currentMonth, asOf);
     const remaining = Math.max(totalDays - elapsed, 0);
 
     const project = (mtd: number | null) => {
@@ -199,6 +237,10 @@ export default function CurrentMonth() {
       lastRow,
       priorRow,
       totalDays,
+      asOf,
+      asOfSource,
+      stripeAsOf: cmSnap?.as_of?.slice(0, 10) ?? null,
+      dataStale: cmSnap?.data_stale === true,
       elapsed,
       remaining,
       // Subscription is a snapshot — billing cycles, NOT daily accrual; no projection.
@@ -223,7 +265,7 @@ export default function CurrentMonth() {
         priorTotal: priorRow?.mrr_blended ?? null,
       },
     };
-  }, [mrr]);
+  }, [mrr, cmSnap, profiles]);
 
   // Per-subscription variance computation. Each customer can have multiple subscriptions
   // (e.g., DOT Cabinets has a $49 sandbox + $880 main on different billing days). We
@@ -252,6 +294,9 @@ export default function CurrentMonth() {
       delta: number;
       expectedByDay?: number;
       daysOverdue?: number;
+      // Billing day has passed and Stripe shows NO attempt (success or failure) yet —
+      // either the charge isn't synced yet or the sub was turned off. Never skipped.
+      noAttempt?: boolean;
     };
 
     let postedCur = 0;
@@ -582,6 +627,29 @@ export default function CurrentMonth() {
                 currentAmount: 0,
                 delta: round2(-priorAmount),
               });
+            } else if (
+              p.status === 'active' &&
+              p.pay_status !== 'Active - Pause Granted' &&
+              p.pay_status !== 'Cancelled' &&
+              !ANNUAL_PAYER_IDS.has(p.allmoxy_customer_id) &&
+              !billedAfterCm
+            ) {
+              // An ACTIVE account whose billing day has passed with zero Stripe
+              // attempts used to vanish from the page — neither posted, expected, nor
+              // overdue. Surface it as overdue ("no attempt — not yet synced?") so
+              // the projection and the variance both account for it.
+              overduePriors += priorAmount;
+              overdueSubs += 1;
+              detail.push({
+                ...rowBase,
+                category: 'overdue',
+                priorAmount: round2(priorAmount),
+                currentAmount: 0,
+                delta: round2(-priorAmount),
+                expectedByDay: c.expectedDay,
+                daysOverdue: elapsedDay - c.expectedDay,
+                noAttempt: true,
+              });
             }
             continue;
           }
@@ -743,13 +811,14 @@ export default function CurrentMonth() {
     );
   }
 
-  const elapsedCaveat = `${view.elapsed} of ${view.totalDays} days`;
+  const dataThrough = fmtIso(`${view.asOf}T12:00:00`);
+  const elapsedCaveat = `${view.elapsed} of ${view.totalDays} days · data through ${dataThrough}`;
 
   return (
     <Box>
       <PageHeader
         title={`${monthLabel(view.currentMonth)} · Month-to-date`}
-        subtitle={`Live snapshot of the partial current month. Data refreshed ${fmtIso(mrr?.fetchedAt)} · ${elapsedCaveat} elapsed · ${view.remaining} days remaining.`}
+        subtitle={`Live snapshot of the partial current month. Data through ${dataThrough}${view.asOfSource === 'current_month' ? ' (Stripe sync cut-off)' : view.asOfSource === 'transactions' ? ` (latest synced transaction${view.stripeAsOf && view.stripeAsOf > view.asOf ? `; Stripe API data runs to ${fmtIso(`${view.stripeAsOf}T12:00:00`)}` : ''})` : ''}${view.dataStale ? ' — STALE, trails today' : ''} · refreshed ${fmtIso(mrr?.fetchedAt)} · ${view.elapsed} of ${view.totalDays} days elapsed · ${view.remaining} days remaining. All projections use this cut-off.`}
       />
 
       {/* The accrual answer leads: how MRR moved, and what is billed vs still to come.
@@ -771,7 +840,7 @@ export default function CurrentMonth() {
           <KPICard
             label="Subscription MRR"
             value={subscriptionView ? USD0.format(subscriptionView.projected) : USD0.format(view.subscription.mtd ?? 0)}
-            valueHint={subscriptionView ? 'projected month-end (excludes overdue & paused)' : undefined}
+            valueHint={subscriptionView ? `projected month-end (excludes overdue & paused) · data through ${dataThrough}` : undefined}
             sub={
               subscriptionView
                 ? `${USD0.format(subscriptionView.postedCur)} posted from ${subscriptionView.postedSubs} subscriptions · ${USD0.format(subscriptionView.expectedDollars)} expected from ${subscriptionView.expectedSubs}`
@@ -832,14 +901,17 @@ export default function CurrentMonth() {
             const connProj = view.connect.projected ?? view.connect.mtd ?? 0;
             const annualProj = subscriptionView?.annualAmort ?? 0;
             const blendedProjected = subProj + svcProj + connProj + annualProj;
-            const blendedMtd = (view.blended.mtd ?? 0) + annualProj;
+            // mrr_blended already carries this month's annual amortization (it is part
+            // of mrr_by_month.mrr_subscription), so adding annualProj again double-counted it.
+            const blendedMtd = view.blended.mtd ?? 0;
             const stillExpected = Math.max(blendedProjected - blendedMtd, 0);
             return (
               <KPICard
                 label="Blended revenue"
                 value={USD0.format(blendedProjected)}
-                valueHint="projected month-end (all streams + annual)"
+                valueHint={`projected month-end (all streams + annual) · data through ${dataThrough}`}
                 sub={`${USD0.format(blendedMtd)} posted · ${USD0.format(stillExpected)} still expected`}
+                projectionCaveat={elapsedCaveat}
                 delta={pctDelta(blendedProjected, view.blended.priorTotal)}
                 deltaLabel={`projected vs ${monthLabel(view.prior)} full`}
                 info={
@@ -889,6 +961,7 @@ export default function CurrentMonth() {
                     { key: 'delta', label: 'Δ' },
                     { key: 'expectedByDay', label: 'Expected day', getValue: (r) => r.expectedByDay ?? '' },
                     { key: 'daysOverdue', label: 'Days overdue', getValue: (r) => r.daysOverdue ?? '' },
+                    { key: 'noAttempt', label: 'No Stripe attempt', getValue: (r) => (r.noAttempt ? 'yes' : '') },
                     { key: 'stripeIds', label: 'Stripe customer ID', getValue: (r) => r.stripeIds?.[0] ?? '' },
                   ]}
                   rows={subscriptionView.detail.filter((r) => activeCategories.has(r.category))}
@@ -988,7 +1061,7 @@ export default function CurrentMonth() {
                             </TableCell>
                             <TableCell sx={{ color: 'text.secondary' }}>
                               {r.category === 'overdue' && r.expectedByDay != null
-                                ? `expected day ${r.expectedByDay} · ${r.daysOverdue}d overdue`
+                                ? `expected day ${r.expectedByDay} · ${r.daysOverdue}d overdue${r.noAttempt ? ' · no Stripe attempt yet — not yet synced?' : ''}`
                                 : ''}
                             </TableCell>
                             <TableCell align="right">

@@ -40,7 +40,11 @@ type Row = {
 type Tally = { key: string; customers: number; mrr_lost: number };
 type Snap = {
   totals: { churned_customers: number; mrr_lost: number; lifetime_lost: number; with_reason: number; researched: number; unexplained: number };
-  ttm: { window_start: string; churned_customers: number; mrr_lost: number; avg_tenure_years: number | null; left_at_full_price: number; declined_first: number };
+  ttm: {
+    window_start: string; window_end?: string; basis?: string;
+    churned_customers: number; mrr_lost: number; avg_tenure_years: number | null; left_at_full_price: number; declined_first: number;
+    lapsed_customers?: number; lapsed_mrr?: number; paused_customers?: number; paused_mrr?: number;
+  };
   monthly: Array<{ month: string; customers: number; mrr_lost: number }>;
   by_reason: Tally[]; by_subpattern: Tally[]; by_segment: Tally[];
   customers: Row[];
@@ -70,7 +74,7 @@ export default function ChurnTimeline() {
 
   const rows = useMemo(() => {
     let r = snap?.customers ?? [];
-    if (since === 'ttm' && snap) r = r.filter((x) => x.churn_month >= snap.ttm.window_start);
+    if (since === 'ttm' && snap) r = r.filter((x) => x.churn_month >= snap.ttm.window_start && (!snap.ttm.window_end || x.churn_month <= snap.ttm.window_end));
     else if (since === '24m' && snap) {
       const [y, m] = snap.ttm.window_start.split('-').map(Number);
       const cut = `${y - 1}-${String(m).padStart(2, '0')}`;
@@ -118,7 +122,14 @@ export default function ChurnTimeline() {
 
       <Grid container spacing={2} sx={{ mb: 3 }}>
         {[
-          { label: 'Churned (TTM)', value: String(ttm?.churned_customers ?? '—'), hint: `${USD0.format(ttm?.mrr_lost ?? 0)} of MRR`, color: 'error.main' },
+          {
+            label: 'Churned (TTM)',
+            value: String(ttm?.churned_customers ?? '—'),
+            // Churn = first un-invoiced month, confirmed (cancel / churn reason / 3 months unbilled).
+            // Lapsed (provisional) and paused exits are not churn — shown beside it, not in it.
+            hint: `${USD0.format(ttm?.mrr_lost ?? 0)} of MRR${ttm?.window_end ? ` · ${monthLabel(ttm.window_start)}–${monthLabel(ttm.window_end)}` : ''} · not incl. ${ttm?.lapsed_customers ?? 0} lapsed (${USD0.format(ttm?.lapsed_mrr ?? 0)}), ${ttm?.paused_customers ?? 0} paused (${USD0.format(ttm?.paused_mrr ?? 0)})`,
+            color: 'error.main',
+          },
           { label: 'Avg tenure at churn', value: ttm?.avg_tenure_years != null ? `${ttm.avg_tenure_years.toFixed(1)}y` : '—', hint: 'trailing 12 months' },
           { label: 'Declined before leaving', value: `${ttm?.declined_first ?? 0} of ${ttm?.churned_customers ?? 0}`, hint: `${ttm?.left_at_full_price ?? 0} left at full price`, color: 'warning.main' },
           { label: 'Churned all time', value: String(t?.churned_customers ?? '—'), hint: `${USD0.format(t?.lifetime_lost ?? 0)} lifetime revenue` },
@@ -139,7 +150,7 @@ export default function ChurnTimeline() {
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.5 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>Churn by month</Typography>
-          <InfoIcon info={<><strong>Churn month</strong> is the first month a customer did not pay for, derived from the last month carrying subscription revenue.<br /><br />That is deliberately not HubSpot's cancellation date, which records when someone closed the record — often months later, sometimes never.<br /><br />Bars are customers lost; the line is the MRR that left with them. A month with no bar had no churn at all.</>} />
+          <InfoIcon info={<><strong>Churn month</strong> is the first un-invoiced month (the churn rule): churn is confirmed by a Stripe cancellation, a HubSpot Cancelled status or churn reason, or three months unbilled. Paused accounts (incl. HubSpot "Active - Pause Granted") are never churn.<br /><br />That is deliberately not HubSpot's cancellation date, which records when someone closed the record — often months later, sometimes never.<br /><br />Bars are customers lost; the line is the MRR that left with them. A month with no bar had no churn at all.</>} />
           <Box sx={{ flexGrow: 1 }} />
           <ToggleButtonGroup
             size="small"

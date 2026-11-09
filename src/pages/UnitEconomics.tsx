@@ -27,6 +27,7 @@ import { useSheetTab } from '../hooks/useSheetTab';
 
 type WaterfallMonthlyRow = {
   month: string;
+  partial?: boolean;
   gross_churn_rate_monthly?: number | null;
   nrr_monthly?: number | null;
   grr_monthly?: number | null;
@@ -35,7 +36,17 @@ type WaterfallMonthlyRow = {
     churn: Array<{ name: string; mrr: number }>;
   };
 };
-type WaterfallSnap = { monthly: WaterfallMonthlyRow[] };
+type WaterfallSnap = {
+  monthly: WaterfallMonthlyRow[];
+  // Accrual (invoice-billed) basis — canonical for retention.
+  monthly_accrual?: WaterfallMonthlyRow[];
+  ttm_accrual?: { windowStart: string; windowEnd: string; annual_nrr: number | null; annual_grr: number | null } | null;
+};
+// customer_base.json — THE canonical customer count + logo flow.
+type CustomerBaseSnap = {
+  customers: number;
+  logo_flow?: Array<{ month: string; starting_logos: number; churned_logos: number; lapsed_logos: number }>;
+};
 
 type ServicesRow = { customer_name: string } & Record<string, number | null>;
 type ServicesSnap = { rows: ServicesRow[] };
@@ -58,6 +69,7 @@ type MonthlyRow = {
   logo_qty: number | null;
   avg_mrr_per_customer: number | null;
   net_op_income: number;
+  qb_total_income?: number | null;
 };
 
 type UnitEconSnapshot = {
@@ -78,8 +90,11 @@ type UnitEconSnapshot = {
     new_logos: number;
     cac: number | null;
     net_op_income: number;
+    pnl_coverage?: { months: number; start: string | null; end: string | null } | null;
     monthly_churn_rate: number | null;
     annual_churn_rate: number | null;
+    annual_logo_churn_rate?: number | null;
+    annual_revenue_churn_rate?: number | null;
     avg_mrr_per_customer: number | null;
     logo_qty_latest: number | null;
     ltv: number | null;
@@ -152,6 +167,8 @@ export default function UnitEconomics() {
   const { data: svcData } = useSheetTab('services_by_month');
   // Connect economics — live GMV / take / fee + attach + expansion levers.
   const { data: connectData } = useSheetTab('connect_volume');
+  const { data: baseData } = useSheetTab('customer_base');
+  const base = baseData as unknown as CustomerBaseSnap | undefined;
   const cv = connectData as unknown as {
     annualized?: { gross_volume: number; fee_revenue: number; txn_count: number; blended_take_rate: number | null; basis: string };
     attach?: { active_customers: number; active_customers_on_connect: number; attach_rate: number | null; connected_accounts: number };
@@ -163,6 +180,14 @@ export default function UnitEconomics() {
   const svcSheet = svcData as unknown as ServicesSnap | undefined;
   const ttm = snap?.ttm;
   const svc = snap?.services;
+  // ONE Connect processing count for the whole page: base members processing on
+  // Connect (connect_volume.attach, built on customer_base membership), over the
+  // canonical customer count. Falls back to the unit_economics TTM count.
+  const activeCustomers = base?.customers ?? snap?.connect?.active_logos ?? null;
+  const connectProcessing = cv?.attach?.active_customers_on_connect ?? cv?.penetration?.processing_now ?? snap?.connect?.customers_using_connect ?? null;
+  const connectAttach = connectProcessing != null && activeCustomers ? connectProcessing / activeCustomers : null;
+  // Canonical Connect revenue TTM (connect_by_month — what the revenue streams sum).
+  const connectRevTtm = snap?.connect?.connect_revenue_ttm ?? snap?.ttm.connect_revenue ?? null;
 
   const [drill, setDrill] = useState<DrillKind | null>(null);
   const [streamBasis, setStreamBasis] = useState<'annual' | 'monthly'>('annual');
@@ -176,9 +201,9 @@ export default function UnitEconomics() {
 
   // Per-stream unit economics: Subscription (MRR) / Services / Stripe Connect.
   // Revenue + share use the TTM block so all three align to one 12-mo window.
-  // Subscription & Services are QuickBooks-sourced (may lag a month or two);
-  // Connect is platform-fee revenue from connect_by_month and is current — so
-  // the stacked trend only plots months where QB subscription data is present.
+  // Subscription & Services come from the live Stripe MRR snapshots and Connect from
+  // connect_by_month — all current through the latest complete month; the stacked
+  // trend drops the in-progress month.
   const streams = useMemo(() => {
     if (!snap?.ttm) return null;
     const t = snap.ttm;
@@ -208,10 +233,10 @@ export default function UnitEconomics() {
       {
         key: 'connect', label: 'Stripe Connect', color: '#14B8A6',
         revenue: t.connect_revenue, share: share(t.connect_revenue), recurring: true,
-        customers: snap.connect?.customers_using_connect ?? null, customersLabel: 'active on Connect',
-        arpu: snap.connect?.avg_connect_revenue_per_connect_customer ?? null, arpuNoun: 'Connect customer', lifetimeArpu: false,
+        customers: connectProcessing, customersLabel: 'processing on Connect',
+        arpu: connectProcessing ? t.connect_revenue / connectProcessing : null, arpuNoun: 'processing customer', lifetimeArpu: false,
         margin: null,
-        note: snap.connect?.attach_rate != null ? `${(snap.connect.attach_rate * 100).toFixed(0)}% of active book uses Connect` : null,
+        note: connectAttach != null ? `${(connectAttach * 100).toFixed(0)}% of ${activeCustomers} active customers process on Connect` : null,
       },
     ];
     const now = new Date();
@@ -221,7 +246,7 @@ export default function UnitEconomics() {
       .slice(-24)
       .map((m) => ({ month: m.month, Subscription: m.subscription_revenue, Services: m.services_revenue, Connect: m.connect_revenue }));
     return { cards, total, trendRows };
-  }, [snap]);
+  }, [snap, connectProcessing, connectAttach, activeCustomers]);
 
   // Rolling trailing-12-month unit economics, anchored at each month M (window = M-11..M).
   // Each row gives a smoothed snapshot of how UE would have looked if you'd run a TTM at that
@@ -231,7 +256,13 @@ export default function UnitEconomics() {
     if (!snap || snap.monthly.length < 12) return [];
     const endMonth = snap.ttm?.windowEnd ?? snap.monthly[snap.monthly.length - 1].month;
     const completeRows = snap.monthly.filter((r) => r.month <= endMonth);
-    const wfMonthly = wf?.monthly ?? [];
+    // Retention reads the ACCRUAL waterfall (canonical) wherever it exists; cash fills
+    // history before accrual coverage. In-progress (partial) months are dropped.
+    const wfByMonth = new Map((wf?.monthly ?? []).filter((r) => !r.partial).map((r) => [r.month, r]));
+    for (const r of wf?.monthly_accrual ?? []) if (!r.partial) wfByMonth.set(r.month, r);
+    const wfMonthly = [...wfByMonth.values()].sort((a, b) => a.month.localeCompare(b.month));
+    // Canonical logo flow (customer_base) for logo churn: lost = churned + lapsed.
+    const flowByMonth = new Map((base?.logo_flow ?? []).filter((f) => f.starting_logos > 0).map((f) => [f.month, f]));
 
     const out: Array<{
       month: string;
@@ -239,8 +270,9 @@ export default function UnitEconomics() {
       ltv: number | null;
       ltv_cac_ratio: number | null;
       cac_payback_months: number | null;
-      monthly_churn_rate: number | null;
-      annual_churn_rate: number | null;
+      monthly_revenue_churn_rate: number | null;
+      annual_revenue_churn_rate: number | null;
+      annual_logo_churn_rate: number | null;
       gross_margin: number | null;
       subscription_gross_margin: number | null;
       avg_mrr_per_customer: number | null;
@@ -283,14 +315,23 @@ export default function UnitEconomics() {
       const pnl_complete = rows.every((r) => r.cogs != null);
       const net_op_income = pnl_complete ? sum('net_op_income') : null;
 
-      // Trailing-12M retention: compound the monthly NRR/GRR ratios from the
-      // waterfall (annualized retention — the figure a buyer scrutinizes).
+      // Trailing-12M retention — same definition as the waterfall's ttm_accrual:
+      // mean of the 12 monthly NRR/GRR rates, compounded ^12.
       const retRows = wfMonthly.filter((r) => r.month >= rows[0].month && r.month <= last.month);
-      const nrr = retRows.length === 12 ? retRows.reduce((a, r) => a * (r.nrr_monthly ?? 1), 1) : null;
-      const grr = retRows.length === 12 ? retRows.reduce((a, r) => a * (r.grr_monthly ?? 1), 1) : null;
+      const meanRate = (k: 'nrr_monthly' | 'grr_monthly') =>
+        retRows.length === 12 && retRows.every((r) => r[k] != null)
+          ? retRows.reduce((a, r) => a + (r[k] as number), 0) / 12
+          : null;
+      const nrrMean = meanRate('nrr_monthly');
+      const grrMean = meanRate('grr_monthly');
+      const nrr = nrrMean != null ? Math.pow(nrrMean, 12) : null;
+      const grr = grrMean != null ? Math.pow(grrMean, 12) : null;
       const logos = last.logo_qty;
 
-      const gross_margin = pnl_complete && total_income > 0 ? gross_profit / total_income : null;
+      // QuickBooks gross profit ÷ QuickBooks total income (same ledger); older
+      // snapshots without qb_total_income fall back to the live-revenue total.
+      const qbIncome = rows.every((r) => r.qb_total_income != null) ? sum('qb_total_income') : total_income;
+      const gross_margin = pnl_complete && qbIncome > 0 ? gross_profit / qbIncome : null;
 
       let subGmNum = 0;
       let subGmDen = 0;
@@ -307,17 +348,26 @@ export default function UnitEconomics() {
       const cac = pnl_complete && new_logos > 0 ? snm_expense / new_logos : null;
       const avg_mrr_per_customer = last.avg_mrr_per_customer;
 
-      const wfRows = wfMonthly.filter((r) => r.month >= rows[0].month && r.month <= last.month);
-      const monthlyChurnAvg =
-        wfRows.length > 0
-          ? wfRows.reduce((s, r) => s + (r.gross_churn_rate_monthly ?? 0), 0) / wfRows.length
-          : null;
-      const annual_churn_rate =
-        monthlyChurnAvg == null ? null : 1 - Math.pow(Math.max(1 - monthlyChurnAvg, 0), 12);
+      // Gross REVENUE churn = 1 − GRR (every lost dollar: churn, contraction, voided,
+      // delinquent, paused; recovered credited back) — the same churn LTV uses in
+      // build_unit_econ. Monthly = 1 − mean monthly GRR.
+      const monthlyRevChurn = grrMean != null ? 1 - grrMean : null;
+      const annual_revenue_churn_rate = grr != null ? 1 - grr : null;
+
+      // Logo churn from the canonical logo flow: Σ(churned + lapsed) ÷ Σ starting
+      // logos over the 12 months, annualized. Null until the flow covers all 12.
+      const flows = rows.map((r) => flowByMonth.get(r.month));
+      const annual_logo_churn_rate = flows.every((f) => f != null)
+        ? (() => {
+            const lost = flows.reduce((a, f) => a + f!.churned_logos + f!.lapsed_logos, 0);
+            const starting = flows.reduce((a, f) => a + f!.starting_logos, 0);
+            return starting > 0 ? 1 - Math.pow(1 - lost / starting, 12) : null;
+          })()
+        : null;
 
       const ltv =
-        avg_mrr_per_customer != null && subscription_gross_margin != null && monthlyChurnAvg != null && monthlyChurnAvg > 0
-          ? (avg_mrr_per_customer * subscription_gross_margin) / monthlyChurnAvg
+        avg_mrr_per_customer != null && subscription_gross_margin != null && monthlyRevChurn != null && monthlyRevChurn > 0
+          ? (avg_mrr_per_customer * subscription_gross_margin) / monthlyRevChurn
           : null;
       const cac_payback_months =
         cac != null && avg_mrr_per_customer != null && subscription_gross_margin != null && avg_mrr_per_customer * subscription_gross_margin > 0
@@ -331,8 +381,9 @@ export default function UnitEconomics() {
         ltv,
         ltv_cac_ratio,
         cac_payback_months,
-        monthly_churn_rate: monthlyChurnAvg,
-        annual_churn_rate,
+        monthly_revenue_churn_rate: monthlyRevChurn,
+        annual_revenue_churn_rate,
+        annual_logo_churn_rate,
         gross_margin,
         subscription_gross_margin,
         avg_mrr_per_customer,
@@ -350,7 +401,7 @@ export default function UnitEconomics() {
       });
     }
     return out;
-  }, [snap, wf]);
+  }, [snap, wf, base]);
 
   // Latest complete trailing-12M anchor — the "current" values the KPI strip shows.
   const latest = useMemo(() => (monthlyTtm.length ? monthlyTtm[monthlyTtm.length - 1] : null), [monthlyTtm]);
@@ -381,6 +432,8 @@ export default function UnitEconomics() {
     return null;
   }, [monthlyTtm]);
 
+  const pnlThrough = ttm?.pnl_coverage?.end ? `P&L through ${monthLabel(ttm.pnl_coverage.end)}` : 'P&L pending';
+
   // For a KPI headline: the last anchor with a value (profitability metrics
   // hard-stop before the latest anchor), and the value 6 anchors earlier for
   // the Δ. Reads straight off monthlyTtm so churn (not in chartData) works too.
@@ -407,8 +460,9 @@ export default function UnitEconomics() {
     { key: 'ltv', label: 'LTV' },
     { key: 'ltv_cac_ratio', label: 'LTV:CAC' },
     { key: 'cac_payback_months', label: 'CAC payback (months)' },
-    { key: 'monthly_churn_rate', label: 'Monthly churn rate' },
-    { key: 'annual_churn_rate', label: 'Annual churn rate' },
+    { key: 'monthly_revenue_churn_rate', label: 'Monthly gross revenue churn (1 − mean monthly GRR)' },
+    { key: 'annual_revenue_churn_rate', label: 'Annual gross revenue churn (1 − GRR)' },
+    { key: 'annual_logo_churn_rate', label: 'Annual logo churn (churned + lapsed)' },
     { key: 'gross_margin', label: 'Gross margin' },
     { key: 'subscription_gross_margin', label: 'Subscription gross margin' },
     { key: 'avg_mrr_per_customer', label: 'Avg MRR per customer (anchor month)' },
@@ -448,14 +502,18 @@ export default function UnitEconomics() {
       {/* Headline KPI strip — current trailing-12M value + benchmark + Δ vs 6mo + sparkline */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
         {([
-          { label: 'Net revenue retention', fmt: (v: number) => pct(v), bench: 'Target ≥ 100%', good: 'up' as const, color: '#1A9E5C', dataKey: 'nrr', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt` },
-          { label: 'Gross revenue retention', fmt: (v: number) => pct(v), bench: 'Target ≥ 90%', good: 'up' as const, color: '#9F7AEA', dataKey: 'grr', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt` },
-          { label: 'LTV : CAC', fmt: (v: number) => ratio(v), bench: 'Target ≥ 3×', good: 'up' as const, color: '#2C73FF', dataKey: 'ltv_cac_ratio', deltaFmt: (d: number) => `${d.toFixed(1)}×` },
-          { label: 'CAC payback', fmt: (v: number) => months(v), bench: 'Good ≤ 12 mo', good: 'down' as const, color: '#F5A623', dataKey: 'cac_payback_months', deltaFmt: (d: number) => `${Math.abs(d).toFixed(1)} mo` },
-          { label: 'Gross margin', fmt: (v: number) => pct(v), bench: 'Target ≥ 75%', good: 'up' as const, color: '#1A9E5C', dataKey: 'gross_margin', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt` },
-          { label: 'Annual logo churn', fmt: (v: number) => pct(v), bench: 'Lower is better', good: 'down' as const, color: '#DA3633', dataKey: 'annual_churn_rate', deltaFmt: (d: number) => `${(Math.abs(d) * 100).toFixed(1)}pt` },
+          // Headline values come from the canonical snapshots (waterfall ttm_accrual,
+          // unit_economics.ttm); the rolling series supplies the sparkline and the Δ.
+          { label: 'Net revenue retention', fmt: (v: number) => pct(v), bench: 'Target ≥ 100% · TTM accrual', good: 'up' as const, color: '#1A9E5C', dataKey: 'nrr', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt`, headline: wf?.ttm_accrual?.annual_nrr },
+          { label: 'Gross revenue retention', fmt: (v: number) => pct(v), bench: 'Target ≥ 90% · TTM accrual', good: 'up' as const, color: '#9F7AEA', dataKey: 'grr', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt`, headline: wf?.ttm_accrual?.annual_grr },
+          { label: 'LTV : CAC', fmt: (v: number) => ratio(v), bench: `Target ≥ 3× · ${pnlThrough}`, good: 'up' as const, color: '#2C73FF', dataKey: 'ltv_cac_ratio', deltaFmt: (d: number) => `${d.toFixed(1)}×`, headline: ttm?.ltv_cac_ratio },
+          { label: 'CAC payback', fmt: (v: number) => months(v), bench: `Good ≤ 12 mo · ${pnlThrough}`, good: 'down' as const, color: '#F5A623', dataKey: 'cac_payback_months', deltaFmt: (d: number) => `${Math.abs(d).toFixed(1)} mo`, headline: ttm?.cac_payback_months },
+          { label: 'Gross margin', fmt: (v: number) => pct(v), bench: 'Target ≥ 75%', good: 'up' as const, color: '#1A9E5C', dataKey: 'gross_margin', deltaFmt: (d: number) => `${(d * 100).toFixed(1)}pt`, headline: undefined },
+          { label: 'Annual logo churn', fmt: (v: number) => pct(v), bench: 'Churned + lapsed logos · lower is better', good: 'down' as const, color: '#DA3633', dataKey: 'annual_logo_churn_rate', deltaFmt: (d: number) => `${(Math.abs(d) * 100).toFixed(1)}pt`, headline: ttm?.annual_logo_churn_rate },
         ]).map((k) => {
-          const { cur, prev } = kpiVal(k.dataKey);
+          const series = kpiVal(k.dataKey);
+          const cur = k.headline !== undefined ? (k.headline ?? null) : series.cur;
+          const prev = series.prev;
           return (
             <Grid item xs={6} sm={4} md={2} key={k.label}>
               <KpiTile
@@ -496,7 +554,7 @@ export default function UnitEconomics() {
         </Grid>
         <Grid item xs={12} md={6}>
           <TrendPanel group="Retention" title="Net & gross revenue retention" ctx="Annualized NRR / GRR, trailing 12 months. The single most scrutinized quality signal — trajectory matters more than the point." loading={isLoading}
-            info={<><strong>What it is:</strong> Trailing-12M retention, computed by compounding the waterfall's monthly NRR/GRR ratios.<br /><br /><strong>NRR</strong> includes expansion; <strong>GRR</strong> is retention before upsell. Dashed line = 100% (no net change).</>}>
+            info={<><strong>What it is:</strong> Trailing-12M retention from the accrual MRR waterfall (cash basis only for history before accrual coverage): the mean of the 12 monthly NRR/GRR rates, compounded ^12 — the same definition as the headline. Every lost dollar (churn, contraction, voided, delinquent, paused) counts; recovered lapses are credited back.<br /><br /><strong>NRR</strong> includes expansion; <strong>GRR</strong> is retention before upsell. Dashed line = 100% (no net change).</>}>
             <ResponsiveContainer>
               <LineChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(139,148,158,0.12)" vertical={false} />
@@ -557,7 +615,7 @@ export default function UnitEconomics() {
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" flexWrap="wrap" useFlexGap>
             <Stack direction="row" spacing={1} alignItems="center">
               <Typography variant="h6">Revenue streams</Typography>
-              <InfoIcon info={<><strong>The three revenue streams and their per-customer economics.</strong><br /><br />Figures are trailing-12-month so all three align to one window; toggle <strong>Monthly</strong> to divide by 12 for an average monthly rate. <strong>Subscription</strong> and <strong>Services</strong> come from the QuickBooks P&L (which can lag the latest month or two); <strong>Stripe Connect</strong> is Allmoxy's platform-fee revenue (from connect_by_month) and is current. The stacked chart plots only months where QuickBooks subscription data is present, so recent QB-lagged months don't read as a cliff.</>} />
+              <InfoIcon info={<><strong>The three revenue streams and their per-customer economics.</strong><br /><br />Figures are trailing-12-month so all three align to one window; toggle <strong>Monthly</strong> to divide by 12 for an average monthly rate. <strong>Subscription</strong> and <strong>Services</strong> come from the live Stripe MRR snapshots (mrr_by_month), current through the latest complete month; <strong>Stripe Connect</strong> is Allmoxy's platform-fee revenue (from connect_by_month), also current. Implementation and support are Services, not MRR. Only margins come from the QuickBooks P&L ({pnlThrough}). The stacked chart excludes the in-progress month.</>} />
             </Stack>
             <ToggleButtonGroup
               size="small"
@@ -627,27 +685,27 @@ export default function UnitEconomics() {
       {/* Connect economics — the platform-take business as its own unit */}
       {cv?.annualized && (() => {
         const an = cv.annualized!;
-        const at = cv.attach;
         const pen = cv.penetration;
-        const processing = pen?.processing_now || at?.active_customers_on_connect || 0;
-        const feePerCustomer = processing > 0 ? an.fee_revenue / processing : null;
+        const processing = connectProcessing ?? 0;
+        const feeRev = connectRevTtm ?? an.fee_revenue;
+        const feePerCustomer = processing > 0 ? feeRev / processing : null;
         const feePerTxn = an.txn_count > 0 ? an.fee_revenue / an.txn_count : null;
         const avgTxnSize = an.txn_count > 0 ? an.gross_volume / an.txn_count : null;
         const s1 = (cv.scenarios || []).find((s) => Math.abs(s.take_rate - 0.01) < 1e-6);
         const attachPotential = pen?.attach_target_fee_potential ?? null;
         const metrics = [
           { l: 'Processing volume (GMV)', v: USD_COMPACT.format(an.gross_volume), s: 'annualized / TTM', color: '#14B8A6' },
-          { l: 'Blended take rate', v: an.blended_take_rate != null ? (an.blended_take_rate * 100).toFixed(2) + '%' : '—', s: 'fee ÷ GMV' },
-          { l: 'Connect fee revenue', v: USD0.format(an.fee_revenue), s: `${an.txn_count.toLocaleString()} transactions`, color: '#1A9E5C' },
-          { l: 'Attach rate', v: at?.attach_rate != null ? (at.attach_rate * 100).toFixed(0) + '%' : '—', s: `${at?.active_customers_on_connect ?? '—'} of ${at?.active_customers ?? '—'} active customers` },
-          { l: 'Fee / processing customer', v: feePerCustomer != null ? USD0.format(feePerCustomer) + '/yr' : '—', s: `${processing} processing now` },
-          { l: 'Fee / transaction', v: feePerTxn != null ? '$' + feePerTxn.toFixed(2) : '—', s: avgTxnSize != null ? `on ${USD0.format(avgTxnSize)} avg charge` : '' },
+          { l: 'Blended take rate', v: an.blended_take_rate != null ? (an.blended_take_rate * 100).toFixed(2) + '%' : '—', s: 'gross application fees ÷ GMV' },
+          { l: 'Connect revenue (TTM)', v: USD0.format(feeRev), s: `gross application fees (Stripe): ${USD0.format(an.fee_revenue)}`, color: '#1A9E5C' },
+          { l: 'Attach rate', v: connectAttach != null ? (connectAttach * 100).toFixed(0) + '%' : '—', s: `${connectProcessing ?? '—'} of ${activeCustomers ?? '—'} active customers` },
+          { l: 'Revenue / processing customer', v: feePerCustomer != null ? USD0.format(feePerCustomer) + '/yr' : '—', s: `${processing} processing now` },
+          { l: 'Fee / transaction', v: feePerTxn != null ? '$' + feePerTxn.toFixed(2) : '—', s: avgTxnSize != null ? `gross app fee · ${an.txn_count.toLocaleString()} txns · ${USD0.format(avgTxnSize)} avg charge` : '' },
         ];
         return (
           <Paper sx={{ p: 3, mb: 3 }}>
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
               <Typography variant="h6">Connect economics</Typography>
-              <InfoIcon info={<><strong>The embedded-payments business as its own unit.</strong> Allmoxy takes a platform fee (~0.5%) on GMV processed through Stripe Connect. Live from the application_fees API ({an.basis}). Because it's a take on payments with negligible incremental cost, fee revenue is <strong>near-100% contribution margin</strong> — and it's underpenetrated, so the two levers below are pure upside.</>} />
+              <InfoIcon info={<><strong>The embedded-payments business as its own unit.</strong> Allmoxy takes a platform fee (~0.5%) on GMV processed through Stripe Connect. Revenue is the canonical Connect TTM (connect_by_month, the figure the revenue streams sum); GMV, take rate and per-transaction fee come live from the Stripe application_fees API ({an.basis}) and are gross application fees, so they run slightly above recognized revenue. Attach = customers processing on Connect ÷ the canonical {activeCustomers ?? '—'} active customers. Because it's a take on payments with negligible incremental cost, fee revenue is <strong>near-100% contribution margin</strong> — and it's underpenetrated, so the two levers below are pure upside.</>} />
             </Stack>
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 2 }}>
               Platform-fee revenue on payments processed through Connect · near-100% contribution margin (no incremental COGS).
@@ -676,7 +734,7 @@ export default function UnitEconomics() {
                 <Box sx={{ p: 2, borderRadius: 1, bgcolor: 'rgba(44,115,255,0.08)', border: '1px solid', borderColor: 'rgba(44,115,255,0.25)' }}>
                   <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lever 2 · Attach growth</Typography>
                   <Typography variant="body2" sx={{ mt: 0.5 }}>
-                    Only {at?.attach_rate != null ? (at.attach_rate * 100).toFixed(0) + '%' : '—'} of active customers process on Connect. Attaching the non-processing book (capture-adjusted) is an estimated <strong style={{ color: '#2C73FF' }}>{attachPotential != null ? '+' + USD0.format(attachPotential) + '/yr' : '—'}</strong> in fee revenue — see the Payments Opportunity page for the per-customer targets.
+                    Only {connectAttach != null ? (connectAttach * 100).toFixed(0) + '%' : '—'} of active customers process on Connect. Attaching the non-processing book (capture-adjusted) is an estimated <strong style={{ color: '#2C73FF' }}>{attachPotential != null ? '+' + USD0.format(attachPotential) + '/yr' : '—'}</strong> in fee revenue — see the Payments Opportunity page for the per-customer targets.
                   </Typography>
                 </Box>
               </Grid>
@@ -720,7 +778,8 @@ export default function UnitEconomics() {
                   <TableCell align="right">LTV</TableCell>
                   <TableCell align="right">LTV : CAC</TableCell>
                   <TableCell align="right">Payback</TableCell>
-                  <TableCell align="right">Annual churn</TableCell>
+                  <TableCell align="right">Annual revenue churn</TableCell>
+                  <TableCell align="right">Annual logo churn</TableCell>
                   <TableCell align="right">GM</TableCell>
                   <TableCell align="right">Sub GM</TableCell>
                   <TableCell align="right">Avg MRR / cust</TableCell>
@@ -736,7 +795,8 @@ export default function UnitEconomics() {
                     <TableCell align="right">{r.ltv != null ? USD0.format(r.ltv) : '—'}</TableCell>
                     <TableCell align="right" sx={{ color: ltvCacColor(r.ltv_cac_ratio), fontWeight: 500 }}>{ratio(r.ltv_cac_ratio)}</TableCell>
                     <TableCell align="right" sx={{ color: paybackColor(r.cac_payback_months), fontWeight: 500 }}>{months(r.cac_payback_months)}</TableCell>
-                    <TableCell align="right" sx={{ color: churnColor(r.annual_churn_rate), fontWeight: 500 }}>{pct(r.annual_churn_rate, 1)}</TableCell>
+                    <TableCell align="right" sx={{ color: churnColor(r.annual_revenue_churn_rate), fontWeight: 500 }}>{pct(r.annual_revenue_churn_rate, 1)}</TableCell>
+                    <TableCell align="right" sx={{ color: churnColor(r.annual_logo_churn_rate) }}>{pct(r.annual_logo_churn_rate, 1)}</TableCell>
                     <TableCell align="right" sx={{ color: gmColor(r.gross_margin) }}>{pct(r.gross_margin)}</TableCell>
                     <TableCell align="right">{pct(r.subscription_gross_margin)}</TableCell>
                     <TableCell align="right">{r.avg_mrr_per_customer != null ? USD0.format(r.avg_mrr_per_customer) : '—'}</TableCell>
@@ -798,7 +858,7 @@ export default function UnitEconomics() {
               color="text.primary"
               loading={isLoading}
               compact
-              info={<><strong>What it is:</strong> Services revenue recognized over the trailing 12 months. Hint shows the ratio to total revenue so you can see how material services is to the blended number.<br /><br /><strong>Data:</strong> Sum of "4300 Services Income" from QuickBooks P&L over the TTM window.</>}
+              info={<><strong>What it is:</strong> Services revenue recognized over the trailing 12 months. Hint shows the ratio to total revenue so you can see how material services is to the blended number.<br /><br /><strong>Data:</strong> Sum of monthly services revenue from the live Stripe snapshots (mrr_by_month services stream — implementation, support and other non-recurring work) over the TTM window, current through the latest complete month.</>}
             />
           </Grid>
           <Grid item xs={12} md={3}>

@@ -22,10 +22,13 @@ import CollapseToggle, { useCollapse } from '../components/common/CollapseToggle
 import { useSheetTab } from '../hooks/useSheetTab';
 
 type UnitEconSnap = {
-  monthly: Array<{ month: string; subscription_revenue: number; total_income: number; snm_expense: number; gross_margin: number | null; net_op_income: number }>;
+  monthly: Array<{ month: string; subscription_revenue: number; total_income: number; snm_expense: number | null; gross_margin: number | null; net_op_income: number | null; pnl_available?: boolean }>;
   ttm: {
     windowStart: string;
     windowEnd: string;
+    pnl_coverage?: { months: number; start: string | null; end: string | null } | null;
+    pnl_total_income?: number | null;
+    operating_margin?: number | null;
     subscription_revenue: number;
     services_revenue: number;
     total_income: number;
@@ -50,8 +53,10 @@ type UnitEconSnap = {
     avg_services_revenue_per_attached_customer: number | null;
   };
 };
+type WaterfallMonthRow = { month: string; partial?: boolean; new_mrr: number; expansion_mrr: number; contraction_mrr: number; churn_mrr: number; net_new_mrr: number; starting_mrr: number; ending_mrr: number };
 type WaterfallSnap = {
-  monthly: Array<{ month: string; new_mrr: number; expansion_mrr: number; contraction_mrr: number; churn_mrr: number; net_new_mrr: number; starting_mrr: number; ending_mrr: number }>;
+  monthly_accrual?: WaterfallMonthRow[];
+  monthly: Array<{ month: string; partial?: boolean; new_mrr: number; expansion_mrr: number; contraction_mrr: number; churn_mrr: number; net_new_mrr: number; starting_mrr: number; ending_mrr: number }>;
   ttm: {
     annual_grr: number | null;
     annual_nrr: number | null;
@@ -70,6 +75,8 @@ type WaterfallSnap = {
   accrual_reliable_from?: string | null;
 };
 type MrrSnap = { rows: Array<{ month: string; mrr_subscription: number | null; logo_qty: number | null }> };
+// customer_base.json — THE canonical customer count + MRR (invoiced/accrual basis).
+type CustomerBaseSnap = { as_of: string; customers: number; mrr: number; arr: number; by_month: Array<{ month: string; customers: number; mrr: number }> };
 type HealthSnap = { concentration: { top10: { pct: number | null }; total_active_customers: number; total_mrr: number }; dunning_summary: { total_dunning_customers: number; total_at_risk_amount: number } };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -85,6 +92,16 @@ function pctSigned(v: number | null | undefined, digits = 1) {
 }
 function ratio(v: number | null | undefined) { return v == null ? '—' : `${v.toFixed(2)}x`; }
 function months(v: number | null | undefined) { return v == null ? '—' : `${v.toFixed(1)} mo`; }
+function monLabel(iso: string | null | undefined) {
+  if (!iso) return '—';
+  const [y, m] = iso.split('-').map(Number);
+  return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'short' }) + '-' + String(y).slice(2);
+}
+function shiftMonth(iso: string, delta: number) {
+  const [y, m] = iso.split('-').map(Number);
+  const d = new Date(y, m - 1 + delta, 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
 
 type Verdict = 'strong' | 'solid' | 'watch' | 'weak' | 'unknown';
 function verdictColor(v: Verdict): 'success.main' | 'warning.main' | 'error.main' | 'text.primary' {
@@ -106,6 +123,8 @@ export default function MAReadiness() {
   const { data: wfData } = useSheetTab('mrr_waterfall');
   const { data: mrrData } = useSheetTab('mrr_by_month');
   const { data: healthData } = useSheetTab('customer_health');
+  const { data: baseData } = useSheetTab('customer_base');
+  const base = baseData as unknown as CustomerBaseSnap | undefined;
   const checklistTable = useCollapse(true);
 
   const ue = ueData as unknown as UnitEconSnap | undefined;
@@ -117,34 +136,54 @@ export default function MAReadiness() {
   const retentionBasis = wf?.ttm_accrual ? 'accrual (billed)' : 'cash (cleared)';
   const mrr = mrrData as unknown as MrrSnap | undefined;
   const health = healthData as unknown as HealthSnap | undefined;
+  // QuickBooks P&L coverage inside the TTM window — every P&L-derived metric
+  // (margins, CAC, LTV) is scoped to these months and labelled with them.
+  const pnlCov = ue?.ttm.pnl_coverage ?? null;
+  const pnlThrough = pnlCov?.end ? `P&L through ${monLabel(pnlCov.end)}` : 'P&L pending';
 
   const computed = useMemo(() => {
     if (!ue || !wf || !mrr || !health) return null;
 
-    // ARR growth YoY using subscription MRR × 12 at TTM endpoint vs 12 months prior.
-    const ttmEnd = ue.ttm.windowEnd;
-    const endingSubMonth = mrr.rows.find((r) => r.month === ttmEnd);
-    const priorMonth = (() => {
-      const [y, m] = ttmEnd.split('-').map(Number);
-      return `${y - 1}-${String(m).padStart(2, '0')}`;
-    })();
-    const priorSubMonth = mrr.rows.find((r) => r.month === priorMonth);
-    const arrCurrent = (endingSubMonth?.mrr_subscription ?? 0) * 12;
-    const arrYearAgo = (priorSubMonth?.mrr_subscription ?? 0) * 12;
+    // Subscription ARR = canonical customer_base MRR × 12 (invoiced/accrual basis, the
+    // same MRR every other page shows). YoY compares customer_base.by_month at as_of vs
+    // 12 months earlier; falls back to cash mrr_by_month only if the canonical series
+    // doesn't reach back a year.
+    const asOf = base?.as_of ?? ue.ttm.windowEnd;
+    const priorMonth = shiftMonth(asOf, -12);
+    const baseNow = base?.by_month.find((r) => r.month === asOf);
+    const basePrior = base?.by_month.find((r) => r.month === priorMonth);
+    const arrCurrent = base ? base.mrr * 12 : (mrr.rows.find((r) => r.month === asOf)?.mrr_subscription ?? 0) * 12;
+    const arrYearAgo = basePrior && baseNow
+      ? basePrior.mrr * 12
+      : (mrr.rows.find((r) => r.month === priorMonth)?.mrr_subscription ?? 0) * 12;
+    const arrBasis = basePrior && baseNow ? 'customer_base (accrual)' : 'mrr_by_month (cash)';
     const arrGrowth = arrYearAgo > 0 ? (arrCurrent - arrYearAgo) / arrYearAgo : null;
 
-    // Rule of 40 = growth % + operating margin %.
-    const opMargin = ue.ttm.total_income > 0 ? ue.ttm.net_op_income / ue.ttm.total_income : null;
+    // Rule of 40 = growth % + operating margin %. Operating margin is coverage-matched:
+    // QuickBooks net operating income ÷ QuickBooks total income over the SAME P&L months
+    // (ue.ttm.total_income spans 12 months while net_op_income only covers pnl_coverage).
+    const opMargin = ue.ttm.operating_margin
+      ?? (ue.ttm.pnl_total_income && ue.ttm.pnl_total_income > 0 ? ue.ttm.net_op_income / ue.ttm.pnl_total_income : null);
     const rule40 = arrGrowth != null && opMargin != null ? (arrGrowth + opMargin) * 100 : null;
 
     // Magic Number (trailing 3-month): annualized net new MRR / quarterly S&M.
-    const last3 = wf.monthly.slice(-3);
-    const q_net_new_mrr = last3.reduce((s, m) => s + m.net_new_mrr, 0);
-    const q_snm = (() => {
-      const last3U = ue.monthly.slice(-3);
-      return last3U.reduce((s, m) => s + m.snm_expense, 0);
-    })();
-    const magicNumber = q_snm > 0 ? (q_net_new_mrr * 4) / q_snm : null;
+    // Net new MRR from the ACCRUAL waterfall (in-progress months dropped); the quarter is
+    // the last 3 consecutive months that have both QuickBooks S&M and a waterfall row.
+    const wfRows = (wf.monthly_accrual && wf.monthly_accrual.length ? wf.monthly_accrual : wf.monthly).filter((m) => !m.partial);
+    const wfByMonth = new Map(wfRows.map((m) => [m.month, m]));
+    const ueByMonth = new Map(ue.monthly.map((m) => [m.month, m]));
+    const hasSnm = (mo: string) => { const u = ueByMonth.get(mo); return !!u && u.pnl_available !== false && typeof u.snm_expense === 'number'; };
+    let magicEnd: string | null = null;
+    for (let i = wfRows.length - 1; i >= 0; i--) {
+      const mo = wfRows[i].month;
+      const q = [shiftMonth(mo, -2), shiftMonth(mo, -1), mo];
+      if (q.every((x) => hasSnm(x) && wfByMonth.has(x))) { magicEnd = mo; break; }
+    }
+    const magicMonths = magicEnd ? [shiftMonth(magicEnd, -2), shiftMonth(magicEnd, -1), magicEnd] : [];
+    const q_net_new_mrr = magicMonths.reduce((s, mo) => s + (wfByMonth.get(mo)?.net_new_mrr ?? 0), 0);
+    const q_snm = magicMonths.reduce((s, mo) => s + (ueByMonth.get(mo)?.snm_expense ?? 0), 0);
+    const magicNumber = magicEnd && q_snm > 0 ? (q_net_new_mrr * 4) / q_snm : null;
+    const magicWindow = magicEnd ? `${monLabel(magicMonths[0])} – ${monLabel(magicEnd)}` : null;
 
     // Blended ARR = subscription ARR + annualized services + annualized connect (from TTM).
     const servicesAnnualized = ue.ttm.services_revenue; // already TTM
@@ -154,7 +193,11 @@ export default function MAReadiness() {
       arrCurrent,
       arrYearAgo,
       arrGrowth,
+      arrBasis,
+      asOf,
+      priorMonth,
       opMargin,
+      magicWindow,
       rule40,
       magicNumber,
       q_net_new_mrr,
@@ -162,19 +205,21 @@ export default function MAReadiness() {
       blendedArr,
       servicesAnnualized,
     };
-  }, [ue, wf, mrr, health]);
+  }, [ue, wf, mrr, health, base]);
 
   // Three "big question" verdicts, scored from key metrics.
   const verdicts = useMemo(() => {
     if (!ue || !wf || !health || !computed) {
       return { healthy: { score: 0, total: 0, verdict: 'unknown' as Verdict }, efficient: { score: 0, total: 0, verdict: 'unknown' as Verdict }, exit: { score: 0, total: 0, verdict: 'unknown' as Verdict } };
     }
+    // Test the SAME revenue-churn figure the "Annual revenue churn" card displays.
+    const revenueChurn = ue.ttm.annual_revenue_churn_rate ?? ret!.annual_gross_churn_rate ?? 1;
     const tests = {
       healthy: [
         { label: 'ARR growth ≥ 15%', pass: (computed.arrGrowth ?? 0) >= 0.15 },
         { label: 'NRR ≥ 100%', pass: (ret!.annual_nrr ?? 0) >= 1 },
         { label: 'GRR ≥ 80%', pass: (ret!.annual_grr ?? 0) >= 0.8 },
-        { label: 'Annual revenue churn ≤ 10%', pass: (ret!.annual_gross_churn_rate ?? 1) <= 0.1 },
+        { label: 'Annual revenue churn ≤ 10%', pass: revenueChurn <= 0.1 },
         { label: 'Top-10 concentration ≤ 30%', pass: (health.concentration.top10.pct ?? 1) <= 0.3 },
       ],
       efficient: [
@@ -190,7 +235,7 @@ export default function MAReadiness() {
         { label: 'LTV:CAC ≥ 3', pass: (ue.ttm.ltv_cac_ratio ?? 0) >= 3 },
         { label: 'Rule of 40 ≥ 40', pass: (computed.rule40 ?? 0) >= 40 },
         { label: 'Top-10 concentration ≤ 30%', pass: (health.concentration.top10.pct ?? 1) <= 0.3 },
-        { label: 'Annual revenue churn ≤ 10%', pass: (ret!.annual_gross_churn_rate ?? 1) <= 0.1 },
+        { label: 'Annual revenue churn ≤ 10%', pass: revenueChurn <= 0.1 },
       ],
     };
     const score = (arr: Array<{ pass: boolean }>) => arr.filter((x) => x.pass).length;
@@ -280,34 +325,34 @@ export default function MAReadiness() {
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="Subscription ARR" value={computed ? USD_COMPACT.format(computed.arrCurrent) : null} hint="Ending sub MRR × 12" loading={ueLoading} info={<><strong>What it is:</strong> Current subscription run-rate annualized.<br /><br /><strong>Data:</strong> Subscription MRR from the latest complete month of MRR by Month × 12.</>} />
+            <Metric label="Subscription ARR" value={computed ? USD_COMPACT.format(computed.arrCurrent) : null} hint={`Canonical MRR × 12 · ${monLabel(computed?.asOf)}`} loading={ueLoading} info={<><strong>What it is:</strong> Current subscription run-rate annualized.<br /><br /><strong>Data:</strong> <code>customer_base.json</code> MRR (invoiced/accrual basis — the canonical MRR every page shows, incl. annual payers at amortized MRR) × 12.</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="YoY ARR growth" value={computed ? pctSigned(computed.arrGrowth) : null} hint={computed ? `from ${USD_COMPACT.format(computed.arrYearAgo)}` : 'loading'} color={growthColor(computed?.arrGrowth)} loading={ueLoading} info={<><strong>What it is:</strong> Subscription ARR growth year-over-year.<br /><br /><strong>Data:</strong> (Current ARR − Year-ago ARR) ÷ Year-ago ARR. Both endpoints are point-in-time subscription MRR × 12.<br /><br /><strong>Target:</strong> ≥ 15% healthy · ≥ 30% strong</>} />
+            <Metric label="YoY ARR growth" value={computed ? pctSigned(computed.arrGrowth) : null} hint={computed ? `from ${USD_COMPACT.format(computed.arrYearAgo)} (${monLabel(computed.priorMonth)})` : 'loading'} color={growthColor(computed?.arrGrowth)} loading={ueLoading} info={<><strong>What it is:</strong> Subscription ARR growth year-over-year.<br /><br /><strong>Data:</strong> (Current ARR − Year-ago ARR) ÷ Year-ago ARR. Both endpoints are point-in-time canonical MRR × 12 from <code>customer_base.by_month</code> (same basis as the Subscription ARR card){computed?.arrBasis !== 'customer_base (accrual)' ? ' — falling back to cash mrr_by_month because the canonical series does not reach back 12 months' : ''}.<br /><br /><strong>Target:</strong> ≥ 15% healthy · ≥ 30% strong</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="NRR (annual)" value={pct(ret?.annual_nrr)} hint={`Target ≥ 110% · ${retentionBasis}`} color={nrrColor(ret?.annual_nrr)} loading={ueLoading} info={<><strong>What it is:</strong> Net Revenue Retention — of every $1 existing customers paid a year ago, how much they pay now (including expansion, excluding new logos).<br /><br /><strong>Data:</strong> Monthly NRR from the MRR waterfall, compounded ×12.<br /><br /><strong>Target:</strong> ≥ 100% good · ≥ 110% top-quartile</>} />
+            <Metric label="NRR (annual)" value={pct(ret?.annual_nrr)} hint={`Target ≥ 110% · ${retentionBasis}`} color={nrrColor(ret?.annual_nrr)} loading={ueLoading} info={<><strong>What it is:</strong> Net Revenue Retention — of every $1 existing customers paid a year ago, how much they pay now (including expansion, excluding new logos).<br /><br /><strong>Data:</strong> Accrual MRR waterfall, trailing 12 months: every lost dollar (churn, contraction, voided, delinquent, paused) counts, recovered lapses are credited back, expansion added; mean monthly rate compounded ^12.<br /><br /><strong>Target:</strong> ≥ 100% good · ≥ 110% top-quartile</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="GRR (annual)" value={pct(ret?.annual_grr)} hint="Target ≥ 90%" color={grrColor(ret?.annual_grr)} loading={ueLoading} info={<><strong>What it is:</strong> Gross Revenue Retention — like NRR but without expansion credit. The retention "ceiling."<br /><br /><strong>Data:</strong> (Starting − Churn − Contraction) ÷ Starting, compounded to annual from MRR waterfall.<br /><br /><strong>Target:</strong> ≥ 90% top-quartile</>} />
+            <Metric label="GRR (annual)" value={pct(ret?.annual_grr)} hint="Target ≥ 90%" color={grrColor(ret?.annual_grr)} loading={ueLoading} info={<><strong>What it is:</strong> Gross Revenue Retention — like NRR but without expansion credit. The retention "ceiling."<br /><br /><strong>Data:</strong> (Starting − Churn − Contraction − Voided − Delinquent − Paused + Recovered) ÷ Starting, from the accrual MRR waterfall; mean monthly rate over the trailing 12 months, compounded ^12.<br /><br /><strong>Target:</strong> ≥ 90% top-quartile</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="Rule of 40" value={computed?.rule40 != null ? computed.rule40.toFixed(0) : null} hint="Growth % + Op margin %" color={rule40Color(computed?.rule40)} loading={ueLoading} info={<><strong>What it is:</strong> Growth rate + operating margin. Benchmark for "efficient growth" in SaaS.<br /><br /><strong>Data:</strong> YoY ARR growth % + TTM operating margin (Net Operating Income ÷ Total Income from QB P&L).<br /><br /><strong>Target:</strong> ≥ 40</>} />
+            <Metric label="Rule of 40" value={computed?.rule40 != null ? computed.rule40.toFixed(0) : null} hint={`Growth % + Op margin % · ${pnlThrough}`} color={rule40Color(computed?.rule40)} loading={ueLoading} info={<><strong>What it is:</strong> Growth rate + operating margin. Benchmark for "efficient growth" in SaaS.<br /><br /><strong>Data:</strong> YoY ARR growth % + operating margin (QuickBooks Net Operating Income ÷ QuickBooks Total Income over the same P&L-covered months, {monLabel(pnlCov?.start)} – {monLabel(pnlCov?.end)}, {pnlCov?.months ?? '—'} mo).<br /><br /><strong>Target:</strong> ≥ 40</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="LTV : CAC" value={ratio(ue?.ttm.ltv_cac_ratio)} hint="Target ≥ 3x" color={ltvCacColor(ue?.ttm.ltv_cac_ratio)} loading={ueLoading} info={<><strong>What it is:</strong> Lifetime value of a customer relative to cost to acquire.<br /><br /><strong>Data:</strong> LTV (avg MRR × subscription gross margin ÷ monthly churn) ÷ CAC (TTM S&M ÷ TTM new logos).<br /><br /><strong>Target:</strong> ≥ 3x · ≥ 5x best-in-class</>} />
+            <Metric label="LTV : CAC" value={ratio(ue?.ttm.ltv_cac_ratio)} hint={`Target ≥ 3x · ${pnlThrough}`} color={ltvCacColor(ue?.ttm.ltv_cac_ratio)} loading={ueLoading} info={<><strong>What it is:</strong> Lifetime value of a customer relative to cost to acquire.<br /><br /><strong>Data:</strong> LTV (avg MRR × subscription gross margin ÷ monthly gross revenue churn, i.e. 1 − accrual TTM GRR) ÷ CAC (TTM S&M ÷ TTM new logos).<br /><br /><strong>Target:</strong> ≥ 3x · ≥ 5x best-in-class</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="CAC payback" value={months(ue?.ttm.cac_payback_months)} hint="Good ≤ 12 mo" color={paybackColor(ue?.ttm.cac_payback_months)} loading={ueLoading} info={<><strong>What it is:</strong> Months of gross profit to recover CAC on a new customer.<br /><br /><strong>Data:</strong> CAC ÷ (avg MRR × subscription gross margin).<br /><br /><strong>Target:</strong> ≤ 12 mo good · 12–18 caution</>} />
+            <Metric label="CAC payback" value={months(ue?.ttm.cac_payback_months)} hint={`Good ≤ 12 mo · ${pnlThrough}`} color={paybackColor(ue?.ttm.cac_payback_months)} loading={ueLoading} info={<><strong>What it is:</strong> Months of gross profit to recover CAC on a new customer.<br /><br /><strong>Data:</strong> CAC ÷ (avg MRR × subscription gross margin).<br /><br /><strong>Target:</strong> ≤ 12 mo good · 12–18 caution</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="Gross margin" value={pct(ue?.ttm.gross_margin)} hint="Target ≥ 70%" color={gmColor(ue?.ttm.gross_margin)} loading={ueLoading} info={<><strong>What it is:</strong> TTM blended gross margin.<br /><br /><strong>Data:</strong> (Total Income − Total COGS) ÷ Total Income from QuickBooks, summed across TTM.<br /><br /><strong>Target:</strong> ≥ 70% · ≥ 75% top-quartile SaaS</>} />
+            <Metric label="Gross margin" value={pct(ue?.ttm.gross_margin)} hint={`Target ≥ 70% · ${pnlThrough}`} color={gmColor(ue?.ttm.gross_margin)} loading={ueLoading} info={<><strong>What it is:</strong> TTM blended gross margin.<br /><br /><strong>Data:</strong> (Total Income − Total COGS) ÷ Total Income from QuickBooks, summed across the P&L-covered months of the TTM window ({monLabel(pnlCov?.start)} – {monLabel(pnlCov?.end)}).<br /><br /><strong>Target:</strong> ≥ 70% · ≥ 75% top-quartile SaaS</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="Annual logo churn" value={pct(ue?.ttm.annual_logo_churn_rate ?? ue?.ttm.annual_churn_rate)} hint="Confirmed churns only" color={churnColor(ue?.ttm.annual_logo_churn_rate ?? ue?.ttm.annual_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of customers who <em>confirmed-churned</em> in the trailing 12 months (excludes delinquency, pauses, and annual-payer gaps — those are tracked separately).<br /><br /><strong>Data:</strong> Confirmed churned logos (status=churned) from the MRR waterfall ÷ starting active logos, annualized.<br /><br /><strong>Target:</strong> ≤ 10% excellent · ≤ 20% acceptable. Compare with revenue churn → small accounts leave, large ones stay.</>} />
+            <Metric label="Annual logo churn" value={pct(ue?.ttm.annual_logo_churn_rate ?? ue?.ttm.annual_churn_rate)} hint="Confirmed churns only" color={churnColor(ue?.ttm.annual_logo_churn_rate ?? ue?.ttm.annual_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of customers who <em>confirmed-churned</em> in the trailing 12 months (excludes delinquency, pauses, and annual-payer gaps — those are tracked separately).<br /><br /><strong>Data:</strong> Lost logos (churned + lapsed) from the canonical logo flow (<code>customer_base.logo_flow</code>) ÷ starting logos, summed over the trailing 12 months and annualized. Paused customers are not churn.<br /><br /><strong>Target:</strong> ≤ 10% excellent · ≤ 20% acceptable.</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <Metric label="Annual revenue churn" value={pct(ue?.ttm.annual_revenue_churn_rate ?? ret?.annual_gross_churn_rate)} hint="MRR-dollar gross churn" color={churnColor(ue?.ttm.annual_revenue_churn_rate ?? ret?.annual_gross_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of MRR lost to churn in the trailing 12 months (gross, before expansion). The dollar-weighted retention signal a buyer weighs most.<br /><br /><strong>Data:</strong> Churned MRR ÷ starting MRR from the waterfall, annualized.<br /><br /><strong>Why it's far below logo churn:</strong> the accounts that leave are small — the revenue base is stickier than the customer count.</>} />
+            <Metric label="Annual revenue churn" value={pct(ue?.ttm.annual_revenue_churn_rate ?? ret?.annual_gross_churn_rate)} hint="1 − accrual TTM GRR" color={churnColor(ue?.ttm.annual_revenue_churn_rate ?? ret?.annual_gross_churn_rate)} loading={ueLoading} info={<><strong>What it is:</strong> % of MRR lost to churn in the trailing 12 months (gross, before expansion). The dollar-weighted retention signal a buyer weighs most.<br /><br /><strong>Data:</strong> 1 − annual GRR from the accrual MRR waterfall — every lost dollar counts (churn, contraction, voided, delinquent, paused), recovered lapses credited back; mean monthly rate over the trailing 12 months, compounded ^12.<br /><br /><strong>Reading it with logo churn:</strong> logo churn counts customers lost; revenue churn weights them by MRR and also includes downgrades, so the two can move independently — compare them to see whether losses skew toward small or large accounts.</>} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <Metric label="Top 10 concentration" value={pct(health?.concentration.top10.pct)} hint="Target ≤ 25%" color={concColor(health?.concentration.top10.pct)} loading={ueLoading} info={<><strong>What it is:</strong> % of subscription MRR from the top 10 customers — the concentration-risk number a buyer will ask about first.<br /><br /><strong>Data:</strong> Sum of top-10 current MRR ÷ total subscription MRR from the Customer Health snapshot.<br /><br /><strong>Target:</strong> ≤ 25% low risk · &gt; 40% concerning</>} />
@@ -323,12 +368,12 @@ export default function MAReadiness() {
               <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                 Rule of 40 breakdown
               </Typography>
-              <InfoIcon info={<><strong>What it is:</strong> The Rule of 40 number with its two components broken out — the "show your work" box.<br /><br /><strong>Data:</strong> YoY ARR growth % (current sub MRR × 12 vs. 12 months prior) + TTM operating margin (Net Operating Income ÷ Total Income from QuickBooks).</>} />
+              <InfoIcon info={<><strong>What it is:</strong> The Rule of 40 number with its two components broken out — the "show your work" box.<br /><br /><strong>Data:</strong> YoY ARR growth % (canonical MRR × 12 vs. 12 months prior) + operating margin (QuickBooks Net Operating Income ÷ QuickBooks Total Income over the same P&L-covered months).</>} />
             </Stack>
             {!computed ? <Skeleton variant="rectangular" height={140} /> : (
               <Stack spacing={1.5}>
                 <BreakdownRow label="ARR growth rate (YoY)" value={pctSigned(computed.arrGrowth)} color={growthColor(computed.arrGrowth)} />
-                <BreakdownRow label="+ Operating margin (TTM)" value={pct(computed.opMargin)} color={marginColor(computed.opMargin)} />
+                <BreakdownRow label={`+ Operating margin (${monLabel(pnlCov?.start)} – ${monLabel(pnlCov?.end)}, ${pnlCov?.months ?? '—'} mo P&L)`} value={pct(computed.opMargin)} color={marginColor(computed.opMargin)} />
                 <Box sx={{ borderTop: '1px solid rgba(139, 148, 158, 0.25)', pt: 1 }}>
                   <BreakdownRow label="Rule of 40 score" value={computed.rule40 != null ? computed.rule40.toFixed(1) : '—'} color={rule40Color(computed.rule40)} bold />
                 </Box>
@@ -345,18 +390,21 @@ export default function MAReadiness() {
               <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                 Magic Number (trailing quarter)
               </Typography>
-              <InfoIcon info={<><strong>What it is:</strong> Sales & marketing efficiency in a single number — net new ARR added per dollar of S&M.<br /><br /><strong>Data:</strong> Net new MRR over the last 3 months × 4 (annualized) ÷ S&M spend over the last 3 months. Net new MRR = New + Expansion − Contraction − Churn from the waterfall. S&M = Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission from QuickBooks.</>} />
+              <InfoIcon info={<><strong>What it is:</strong> Sales & marketing efficiency in a single number — net new ARR added per dollar of S&M.<br /><br /><strong>Data:</strong> Net new MRR over the latest complete quarter that QuickBooks S&M covers × 4 (annualized) ÷ S&M spend over the same 3 months. Net new MRR = New + Reactivated + Recovered + Expansion − Contraction − Churn − Voided − Delinquent − Paused from the accrual waterfall (in-progress months excluded). S&M = Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission from QuickBooks.</>} />
             </Stack>
             {!computed ? <Skeleton variant="rectangular" height={140} /> : (
               <Stack spacing={1.5}>
-                <BreakdownRow label="Net new MRR (last 3 mo)" value={USD0.format(computed.q_net_new_mrr)} />
+                {!computed.magicWindow ? (
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>N/A — no complete quarter with QuickBooks S&M ({pnlThrough}).</Typography>
+                ) : null}
+                <BreakdownRow label={`Net new MRR (${computed.magicWindow ?? 'N/A'})`} value={USD0.format(computed.q_net_new_mrr)} />
                 <BreakdownRow label="Annualized (×4)" value={USD0.format(computed.q_net_new_mrr * 4)} />
-                <BreakdownRow label="÷ S&M spend (last 3 mo)" value={USD0.format(computed.q_snm)} />
+                <BreakdownRow label={`÷ S&M spend (${computed.magicWindow ?? 'N/A'})`} value={USD0.format(computed.q_snm)} />
                 <Box sx={{ borderTop: '1px solid rgba(139, 148, 158, 0.25)', pt: 1 }}>
                   <BreakdownRow label="Magic Number" value={ratio(computed.magicNumber)} color={magicColor(computed.magicNumber)} bold />
                 </Box>
                 <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  Target ≥ 0.75 (spend more); ≥ 1.0 is excellent (self-funded growth). Below 0.5 usually triggers S&M cuts.
+                  {computed.magicWindow ? `Quarter ${computed.magicWindow} · ${pnlThrough}. ` : ''}Target ≥ 0.75 (spend more); ≥ 1.0 is excellent (self-funded growth). Below 0.5 usually triggers S&M cuts.
                 </Typography>
               </Stack>
             )}

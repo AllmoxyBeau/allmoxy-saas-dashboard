@@ -17,10 +17,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
-const CHURN_XLSX = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Churn Details.xlsx';
+const SNAP = path.resolve(__dirname, '..', 'public/snapshots');
+const CHURN_XLSX = path.resolve(__dirname, '../..', 'Churn Details.xlsx');
 
 // Sub-pattern catalog. Each entry: { label, parent_reason, description, regex[] }
 // regex[] is matched (case-insensitive) against the combined evidence blob for each customer.

@@ -44,8 +44,11 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { classifyDeparture, classifyReturn } from './churn_rules.mjs';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const read = (p, d = null) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } };
 const r2 = (v) => Math.round(v * 100) / 100;
@@ -83,7 +86,7 @@ function membersFor(m) {
     if (mrr <= 0) continue;
     const p = byAid.get(r.allmoxy_customer_id);
     if (p?.excluded_from_logo_count) {
-      if (m === months[months.length - 1]) {
+      if (m === months[months.length - 1] && !excludedLog.some((e) => e.allmoxy_customer_id === r.allmoxy_customer_id)) {
         excludedLog.push({ allmoxy_customer_id: r.allmoxy_customer_id, name: nameOf(r.allmoxy_customer_id), mrr: r2(mrr), reason: 'duplicate / excluded_from_logo_count' });
       }
       continue;
@@ -122,26 +125,39 @@ const by_month = months.map((m) => {
 // leaving the count invisibly. Computing both the endpoints and the movements from one
 // membership set removes the possibility.
 //
-// Departures are split by WHY, which is an attribute lookup, not a second calculation:
-//   churned — the relationship is confirmed over (profile status 'churned')
-//   lapsed  — stopped billing but not confirmed gone (delinquent / voided / at-risk).
-//             These may come back, and several do: that is what `reactivated` counts.
+// Movements follow THE CHURN RULE (churn_rules.mjs, 2026-11-09), applied to THIS
+// membership series so the logo flow and the MRR waterfall classify alike:
+//   churned     — confirmed (Stripe sub canceled / HubSpot Cancelled / 3 months unbilled),
+//                 booked in the month billing stopped and never relabelled afterwards
+//   lapsed      — stopped billing, not yet confirmed (provisional, < 3 months old)
+//   paused      — HubSpot Pay Status "Pause Granted": not billing, never churned
+//   recovered   — back within 3 months of a lapse (it was never churn)
+//   reactivated — back after confirmed churn
 const memberSets = new Map(months.map((m) => [m, new Map(membersFor(m).map((x) => [x.allmoxy_customer_id, x]))]));
+const seriesByAid = new Map();
+for (const [m, set] of memberSets) for (const [aid, x] of set) {
+  if (!seriesByAid.has(aid)) seriesByAid.set(aid, {});
+  seriesByAid.get(aid)[m] = x.mrr;
+}
 const everSeen = new Set();
 const logo_flow = [];
 for (let i = 0; i < months.length; i++) {
   const m = months[i];
   const cur = memberSets.get(m);
   const prev = i > 0 ? memberSets.get(months[i - 1]) : new Map();
-  const newOnes = [], reactivated = [], churned = [], lapsed = [];
+  const newOnes = [], reactivated = [], recovered = [], churned = [], lapsed = [], paused = [];
   for (const [aid, x] of cur) {
     if (prev.has(aid)) continue;
-    (everSeen.has(aid) ? reactivated : newOnes).push({ allmoxy_customer_id: aid, name: x.name, mrr: x.mrr });
+    const row = { allmoxy_customer_id: aid, name: x.name, mrr: x.mrr };
+    if (!everSeen.has(aid)) newOnes.push(row);
+    else (classifyReturn(seriesByAid.get(aid), m) === 'recovered' ? recovered : reactivated).push(row);
   }
   for (const [aid, x] of prev) {
     if (cur.has(aid)) continue;
-    const st = byAid.get(aid)?.status;
-    (st === 'churned' ? churned : lapsed).push({ allmoxy_customer_id: aid, name: x.name, mrr: x.mrr, status: st ?? null });
+    const p = byAid.get(aid);
+    const cls = classifyDeparture(seriesByAid.get(aid), m, p?.churn_model);
+    const row = { allmoxy_customer_id: aid, name: x.name, mrr: x.mrr, status: p?.status ?? null };
+    (cls === 'churn' ? churned : cls === 'paused' ? paused : lapsed).push(row);
   }
   for (const aid of cur.keys()) everSeen.add(aid);
   const starting = i > 0 ? prev.size : 0;
@@ -151,15 +167,18 @@ for (let i = 0; i < months.length; i++) {
     starting_logos: starting,
     new_logos: newOnes.length,
     reactivated_logos: reactivated.length,
+    recovered_logos: recovered.length,
     churned_logos: churned.length,
     lapsed_logos: lapsed.length,
+    paused_logos: paused.length,
     ending_logos: ending,
-    net_new_logos: newOnes.length + reactivated.length - churned.length - lapsed.length,
+    net_new_logos: newOnes.length + reactivated.length + recovered.length - churned.length - lapsed.length - paused.length,
     // Gross logo churn counts every departure, confirmed or not — understating it by
     // excluding lapses is how the old table hid 6 of August's 7 missing customers.
+    // Gross logo churn = confirmed churn + still-provisional lapses. Pauses are not churn.
     gross_logo_churn: starting > 0 ? Math.round(((churned.length + lapsed.length) / starting) * 10000) / 10000 : null,
-    balances: starting + newOnes.length + reactivated.length - churned.length - lapsed.length === ending,
-    details: { new: newOnes, reactivated, churned, lapsed },
+    balances: starting + newOnes.length + reactivated.length + recovered.length - churned.length - lapsed.length - paused.length === ending,
+    details: { new: newOnes, reactivated, recovered, churned, lapsed, paused },
   });
 }
 const unbalanced = logo_flow.filter((r) => r.month !== months[0] && !r.balances).length;
@@ -186,6 +205,8 @@ const out = {
   by_status: byStatus,
   members,
   excluded: excludedLog,
+  // Paused customers are NOT in the count (no revenue) and NOT churned.
+  paused: PROF.filter((p) => p.churn_model?.state === 'paused').map((p) => ({ allmoxy_customer_id: p.allmoxy_customer_id, name: nameOf(p.allmoxy_customer_id), since: p.churn_model.pause?.start_date ?? null, resume_date: p.churn_model.pause?.resume_date ?? null, review_needed: !!p.churn_model.pause?.review_needed, review_reason: p.churn_model.pause?.review_reason ?? null })),
   by_month,
   logo_flow,
   notes: 'THE canonical logo count and MRR. Every page showing "customers" or "MRR" should read this, not derive its own — three separate counts (184/191/195) and four MRR figures were being published before 2026-09-14. `status` remains an attribute (see by_status) for CS workflows; it is not a count. Annual payers appear with source=annual_amortized because they bill yearly and so are absent from the monthly invoice series.',

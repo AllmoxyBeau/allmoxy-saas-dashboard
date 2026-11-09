@@ -14,8 +14,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const SEAM = '2026-06';
 const CACHE = path.join(ROOT, '_etl_scripts/cache/stripe_charges.json');
@@ -49,7 +51,9 @@ for (const p of profiles) {
     t.sub += v.subscription || 0; t.svc += v.services || 0; t.connect += v.connect || 0;
     if ((v.subscription || 0) > 0) t.logos += 1;
     monthTot[m] = t;
-    const nm = nameMonth.get(p.name) || {}; nm[m] = { sub: v.subscription || 0, svc: v.services || 0 }; nameMonth.set(p.name, nm);
+    // Accumulate: two profiles can share a display name, and overwriting dropped one.
+    const nm = nameMonth.get(p.name) || {}; const cur = nm[m] || { sub: 0, svc: 0 };
+    nm[m] = { sub: cur.sub + (v.subscription || 0), svc: cur.svc + (v.services || 0) }; nameMonth.set(p.name, nm);
   }
 }
 
@@ -60,6 +64,10 @@ for (const p of profiles) {
 // July Stripe data lands. Connect for seamed months prefers the net-settled USD
 // figure (real revenue to the bank), falling back to the attributed profiles sum.
 const mrr = read('mrr_by_month.json');
+// Services before the seam come from the sheet's summary row, which ties to QuickBooks
+// (mean gap ~$1K/mo) — the per-customer rows miss services nobody attributed to a
+// customer (~$4.7K/mo short, $175K over 2022-03…2025-08). Read before it is rewritten.
+const svcSheetTotals = { ...(read('services_by_month.json').monthlyTotals || {}) };
 const existingMrrMonths = new Set(mrr.rows.map((r) => r.month));
 let mrrTouched = 0, mrrAdded = 0;
 const buildMrrRow = (m, t) => {
@@ -82,15 +90,16 @@ for (const row of mrr.rows) {
     // Seamed months: full overlay incl. net-USD Connect.
     Object.assign(row, buildMrrRow(row.month, t)); mrrTouched++;
   } else {
-    // Historical (pre-seam) months: tie subscription + services + logos to the
-    // auditable per-customer detail (was the xlsx "MRR by Month Total row", which
-    // drifted ~0.5% from the summed Stripe-Sync detail). KEEP the existing curated
-    // Connect figure — the detail's connect is attribution-lossy. Recompute blended.
+    // Historical (pre-seam) months: tie subscription + logos to the auditable
+    // per-customer detail (was the xlsx "MRR by Month Total row", which drifted ~0.5%
+    // from the summed Stripe-Sync detail). Services keep the sheet summary row (ties to
+    // QB; the detail misses unattributed services) and Connect keeps the curated union
+    // (the detail's connect is attribution-lossy). Recompute blended.
     const connect = row.mrr_connect || 0;
     row.mrr_subscription = r2(t.sub);
-    row.mrr_services = r2(t.svc);
+    row.mrr_services = r2(svcSheetTotals[row.month] ?? t.svc);
     row.logo_qty = t.logos;
-    row.mrr_blended = r2(t.sub + t.svc + connect);
+    row.mrr_blended = r2(t.sub + row.mrr_services + connect);
     row.avg_mrr_blended = t.logos ? Math.round(row.mrr_blended / t.logos) : 0;
     mrrTouched++;
   }
@@ -107,7 +116,35 @@ for (const m of Object.keys(monthTot).sort()) {
 mrr.rows.sort((a, b) => String(a.month).localeCompare(String(b.month)));
 fs.writeFileSync(path.join(SNAP, 'mrr_by_month.json'), JSON.stringify(mrr, null, 2));
 
-// 2) + 3) per-customer monthly snapshots — overlay AND append seamed month columns.
+// 2) subscription_by_month — rebuilt ENTIRELY from customer_profiles.monthly_history,
+// the same detail mrr_by_month's subscription now sums, so the NRR page's cohort view
+// and the Overview drill read the canonical series. (Previously: the xlsx rows overlaid
+// by name, which dropped every customer the sheet didn't list and kept a totals row
+// that included annual lump sums as cash — e.g. May 2026 $262,792 vs $229,613.)
+{
+  const snap = read('subscription_by_month.json');
+  const months = [...new Set(Object.keys(monthTot))].filter((m) => isMonth(m) && m <= NOW_MONTH).sort();
+  const rows = [];
+  for (const [name, byM] of nameMonth) {
+    const row = { customer_name: name };
+    let any = false;
+    for (const m of months) { const v = byM[m]?.sub || 0; row[m] = v ? r2(v) : null; if (v) any = true; }
+    if (any) rows.push(row);
+  }
+  rows.sort((a, b) => String(a.customer_name).localeCompare(String(b.customer_name)));
+  snap.columns = ['customer_name', ...months];
+  snap.rows = rows;
+  snap.rowCount = rows.length;
+  snap.monthlyTotals = Object.fromEntries(months.map((m) => [m, r2(monthTot[m].sub)]));
+  snap.notes = `Per-customer × per-month subscription MRR from customer_profiles.monthly_history (${rows.length} customers × ${months.length} months) — the same detail as mrr_by_month.mrr_subscription, so rows sum to the totals.`;
+  fs.writeFileSync(path.join(SNAP, 'subscription_by_month.json'), JSON.stringify(snap, null, 2));
+}
+
+// 3) services_by_month — overlay AND append seamed month columns (adding customers the
+// sheet never listed), then carry any remaining gap between the sheet's summary total
+// and its customer rows in an explicit "Unattributed services" row, so the rows always
+// sum to the totals the Services page, Overview and Unit Economics show.
+const UNATTRIBUTED_SVC = 'Unattributed services';
 function seamPerCustomer(file, field) {
   const snap = read(file);
   const totals = snap.monthlyTotals || (snap.monthlyTotals = {});
@@ -119,14 +156,33 @@ function seamPerCustomer(file, field) {
   const seamMonths = Object.keys(monthTot)
     .filter((m) => isMonth(m) && m >= SEAM && m <= NOW_MONTH)
     .sort();
-  for (const row of snap.rows || []) {
+  snap.rows = (snap.rows || []).filter((r) => r.customer_name !== UNATTRIBUTED_SVC);
+  const have = new Set(snap.rows.map((r) => r.customer_name));
+  for (const [name, nm] of nameMonth) {
+    if (have.has(name) || !seamMonths.some((k) => nm[k]?.[field])) continue;
+    const row = { customer_name: name };
+    for (const c of snap.columns || []) if (c !== 'customer_name') row[c] = null;
+    snap.rows.push(row);
+  }
+  for (const row of snap.rows) {
     const nm = nameMonth.get(row.customer_name);
     for (const k of seamMonths) row[k] = nm && nm[k] ? r2(nm[k][field]) : 0;
   }
   for (const k of seamMonths) totals[k] = monthTot[k] ? r2(monthTot[k][field === 'sub' ? 'sub' : 'svc']) : 0;
+  const cols = [...new Set([...(snap.columns || []).filter((c) => c !== 'customer_name'), ...seamMonths])].sort();
+  snap.columns = ['customer_name', ...cols];
+  const gapRow = { customer_name: UNATTRIBUTED_SVC };
+  let anyGap = false;
+  for (const m of cols) {
+    const rowSum = snap.rows.reduce((s, r) => s + (typeof r[m] === 'number' ? r[m] : 0), 0);
+    const gap = r2((totals[m] ?? rowSum) - rowSum);
+    gapRow[m] = Math.abs(gap) >= 0.01 ? gap : null;
+    if (gapRow[m] != null) anyGap = true;
+  }
+  if (anyGap) snap.rows.push(gapRow);
+  snap.rowCount = snap.rows.length;
   fs.writeFileSync(path.join(SNAP, file), JSON.stringify(snap, null, 2));
 }
-seamPerCustomer('subscription_by_month.json', 'sub');
 seamPerCustomer('services_by_month.json', 'svc');
 
 console.error(`[seam-monthly] overlaid Stripe (>=${SEAM}) on mrr_by_month (${mrrTouched} mo overlaid, ${mrrAdded} appended) + subscription_by_month + services_by_month`);

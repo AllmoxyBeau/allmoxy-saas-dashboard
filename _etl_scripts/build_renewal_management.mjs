@@ -50,25 +50,48 @@ const quotesRaw = fs.existsSync(quotesPath)
   ? JSON.parse(fs.readFileSync(quotesPath, 'utf8')).quotes || []
   : [];
 
+// ---------- canonical customer base --------------------------------------
+// The page population is the canonical customer base (customer_base.members), the
+// same 198 customers every other page counts. It used to be "every Instance whose
+// HubSpot status is Active-ish", which drifted to 210 rows / 209 customers: paused,
+// lapsed and not-yet-billing accounts were in it, one customer appeared twice (two
+// Instances), and 6 paying customers were missing.
+const BASE = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_base.json'), 'utf8')); }
+  catch { return null; }
+})();
+const baseMembers = BASE?.members || [];
+const baseIds = new Set(baseMembers.map((m) => m.allmoxy_customer_id));
+const baseMrrById = new Map(baseMembers.map((m) => [m.allmoxy_customer_id, m.mrr]));
+
 // ---------- profile index by every plausible join key ---------------------
+// Several keys are SHARED between a live customer and a dead duplicate record (e.g.
+// Wizzwood DBA - Quality Kitchens Inc. [330, paying] and the never-paid duplicate
+// Quality Kitchens Inc. [333, excluded_from_logo_count] carry the same installer_id
+// 1882, subscription and installer directory). Last-write-wins handed Wizzwood's
+// Instance to the duplicate, so a $2,650/mo customer vanished from the page. Each
+// index now keeps the most canonical profile for a key: base member > counted logo >
+// excluded duplicate.
+const rank = (p) => (baseIds.has(p.allmoxy_customer_id) ? 3 : 0) + (p.excluded_from_logo_count ? 0 : 1);
 const byAid = new Map();
 const byInstallerId = new Map();
 const byStripeCompanyId = new Map();
 const bySubId = new Map();
 const byInstallerDir = new Map();
 const byNormName = new Map();
+const put = (m, k, p) => { if (k == null || k === '') return; const cur = m.get(k); if (!cur || rank(p) > rank(cur)) m.set(k, p); };
 for (const p of profiles) {
   byAid.set(String(p.allmoxy_customer_id), p);
-  if (p.installer_id) byInstallerId.set(String(p.installer_id), p);
-  for (const cid of (p.stripe_customer_ids || [])) byStripeCompanyId.set(cid, p);
-  if (p.stripe_subscription_id) bySubId.set(p.stripe_subscription_id, p);
-  for (const s of (p.all_stripe_subscription_ids || [])) bySubId.set(s, p);
-  if (p.installer_directory) byInstallerDir.set(String(p.installer_directory).toLowerCase(), p);
-  if (p.name) {
-    const k = norm(p.name);
-    if (k && !byNormName.has(k)) byNormName.set(k, p);
-  }
+  if (p.installer_id) put(byInstallerId, String(p.installer_id), p);
+  for (const cid of (p.stripe_customer_ids || [])) put(byStripeCompanyId, cid, p);
+  if (p.stripe_subscription_id) put(bySubId, p.stripe_subscription_id, p);
+  for (const s of (p.all_stripe_subscription_ids || [])) put(bySubId, s, p);
+  if (p.installer_directory) put(byInstallerDir, String(p.installer_directory).toLowerCase(), p);
+  if (p.name) put(byNormName, norm(p.name), p);
 }
+// Merged / duplicate records point at their canonical survivor.
+const canonicalOf = new Map();
+for (const p of profiles) for (const m of (p.merged_from_ids || [])) canonicalOf.set(m, p);
 
 const matrixByAid = new Map(matrixRows.map((r) => [r.allmoxy_customer_id, r]));
 
@@ -101,6 +124,21 @@ for (const list of quotesByAid.values()) {
 }
 
 function joinInstance(i) {
+  const j = joinInstanceRaw(i);
+  if (!j) return null;
+  // A join that lands on a merged-away record is re-pointed at its survivor.
+  const surv = canonicalOf.get(j.p.allmoxy_customer_id);
+  if (surv) return { p: surv, via: `${j.via}→merged` };
+  // A join that lands on a non-base record while the Instance's Stripe customer is a
+  // base member (Wizzwood's case) is re-pointed at the base member.
+  if (!baseIds.has(j.p.allmoxy_customer_id) && i.stripe_company_id) {
+    const alt = byStripeCompanyId.get(i.stripe_company_id);
+    if (alt && baseIds.has(alt.allmoxy_customer_id)) return { p: alt, via: `${j.via}→stripe_company_id` };
+  }
+  return j;
+}
+
+function joinInstanceRaw(i) {
   // Cascade: installer_id (most reliable on Instance) → aid → sub_id → stripe
   // customer → installer_url subdomain → normalized name.
   if (i.installer_id && byInstallerId.has(String(i.installer_id))) return { p: byInstallerId.get(String(i.installer_id)), via: 'installer_id' };
@@ -211,23 +249,50 @@ const todayMs = today.getTime();
 const rows = [];
 const unjoined = [];
 const skippedSandbox = [];
+const notInBase = [];        // Active-ish Instances whose customer is not in the base
+const duplicateInstances = []; // second+ Instance for a customer already on the page
 let withRenewalDate = 0;
 
+// ONE Instance per base customer. Join every production Instance, keep those whose
+// customer is in the canonical base, and when a customer has several pick the best:
+// HubSpot-active status first, then one carrying a renewal date, then most recent.
+// The HubSpot Instance status is NOT the gate any more — the base is (three new
+// customers have an Instance with no status yet; they are paying and belong here).
+const instanceRank = (i) =>
+  (ACTIVE.has(i.status) ? 4 : i.status == null ? 2 : 0) +
+  ((i.calculated_renewal_date || i.renewal_date) ? 1 : 0);
+const chosen = new Map(); // aid → { i, join }
 for (const i of instances) {
-  // Filter early to keep the snapshot focused on the live renewal pipeline.
-  if (!ACTIVE.has(i.status)) continue;
   // Skip sandboxes — they share customers with production instances and would
   // double-count. account_name is the cleanest tell.
   if (/sandbox|\bdev\b|\btest\b/i.test(i.account_name || '')) {
-    skippedSandbox.push({ id: i.id, account_name: i.account_name });
+    if (ACTIVE.has(i.status)) skippedSandbox.push({ id: i.id, account_name: i.account_name });
     continue;
   }
-
   const join = joinInstance(i);
   if (!join) {
-    unjoined.push({ id: i.id, account_name: i.account_name, installer_id: i.installer_id, status: i.status });
+    if (ACTIVE.has(i.status)) unjoined.push({ id: i.id, account_name: i.account_name, installer_id: i.installer_id, status: i.status });
     continue;
   }
+  const aid = join.p.allmoxy_customer_id;
+  if (baseIds.size && !baseIds.has(aid)) {
+    if (ACTIVE.has(i.status)) notInBase.push({ id: i.id, account_name: i.account_name, allmoxy_customer_id: aid, status: i.status, customer_status: join.p.status });
+    continue;
+  }
+  if (!baseIds.size && !ACTIVE.has(i.status)) continue; // no base built yet — old rule
+  const cur = chosen.get(aid);
+  if (!cur) { chosen.set(aid, { i, join }); continue; }
+  const better = instanceRank(i) > instanceRank(cur.i)
+    || (instanceRank(i) === instanceRank(cur.i) && String(i.id) > String(cur.i.id));
+  const loser = better ? cur.i : i;
+  duplicateInstances.push({ id: loser.id, account_name: loser.account_name, allmoxy_customer_id: aid, status: loser.status });
+  if (better) chosen.set(aid, { i, join });
+}
+const baseWithoutInstance = baseMembers
+  .filter((m) => !chosen.has(m.allmoxy_customer_id))
+  .map((m) => ({ allmoxy_customer_id: m.allmoxy_customer_id, name: m.name, mrr: m.mrr }));
+
+for (const { i, join } of chosen.values()) {
   const profile = join.p;
   const aid = profile.allmoxy_customer_id;
   const ov = ordersByCustomer[String(aid)] || null;
@@ -255,7 +320,8 @@ for (const i of instances) {
   // Annualized: current ARR / current-year annualized order $
   const monthlyAvgCY = Number(ov?.monthly_avg_current_year) || 0;
   const annualizedOrders = monthlyAvgCY * 12;
-  const currentMrr = Number(profile.current_subscription_mrr) || 0;
+  // Canonical MRR (customer_base) — equals profiles.current_subscription_mrr for members.
+  const currentMrr = Number(baseMrrById.has(aid) ? baseMrrById.get(aid) : profile.current_subscription_mrr) || 0;
   const currentArr = currentMrr * 12;
   const costRatioAnnualizedPct = annualizedOrders > 0 ? round2((currentArr / annualizedOrders) * 100) : null;
 
@@ -385,6 +451,13 @@ for (const i of instances) {
 const upcomingWindow = 90;
 const aggregates = {
   total_instances: rows.length,
+  // Population check: rows are one per customer, restricted to the canonical base.
+  customers: new Set(rows.map((r) => r.allmoxy_customer_id)).size,
+  base_customers: baseMembers.length || null,
+  base_as_of: BASE?.as_of ?? null,
+  base_customers_without_instance: baseWithoutInstance.length,
+  active_instances_not_in_base: notInBase.length,
+  duplicate_instances_dropped: duplicateInstances.length,
   with_renewal_date: withRenewalDate,
   unjoined_active_count: unjoined.length,
   skipped_sandbox_count: skippedSandbox.length,
@@ -551,9 +624,12 @@ const out = {
   source:
     'HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. ' +
     'Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. ' +
-    'Filtered to active (non-Cancelled, non-Pre-Sale, non-sandbox) instances.',
+    'Population = the canonical customer base (customer_base.members), one row per customer (best production Instance: HubSpot-active status, then has a renewal date). Join indexes prefer base members over duplicate records. MRR = customer_base MRR.',
   aggregates,
   rows,
+  base_customers_without_instance: baseWithoutInstance,
+  active_instances_not_in_base: notInBase,
+  duplicate_instances_dropped: duplicateInstances,
   // Surface unjoined for the Data Cleanup page
   unjoined_active_instances: unjoined,
   skipped_sandbox_count: skippedSandbox.length,
@@ -570,3 +646,4 @@ console.log(`  Median cost ratio — lifetime: ${aggregates.median_cost_ratio_li
 console.log(`  Cost-ratio drop-off flags (recent 3mo +25% vs trailing 9mo): ${aggregates.dropoff_count}`);
 console.log(`  Quote coverage: ${aggregates.customers_with_quote} customers have ${aggregates.total_quote_count} quote(s) · upcoming renewals w/ quote: ${aggregates.upcoming_renewals_with_quote} (vs ${aggregates.upcoming_renewals_without_quote} without)`);
 console.log(`  Unjoined active: ${unjoined.length} · Skipped sandboxes: ${skippedSandbox.length}`);
+console.log(`  Population: ${aggregates.customers} customers (${rows.length} rows) of ${aggregates.base_customers} in base · ${baseWithoutInstance.length} base customer(s) with no Instance${baseWithoutInstance.length ? ` (${baseWithoutInstance.map((m) => m.name).join(', ')})` : ''} · ${notInBase.length} active Instance(s) outside the base · ${duplicateInstances.length} duplicate Instance(s) dropped`);

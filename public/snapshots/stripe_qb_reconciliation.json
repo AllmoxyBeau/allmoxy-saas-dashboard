@@ -1,11 +1,13 @@
 {
-  "fetched_at": "2026-11-02T23:23:45.486Z",
+  "fetched_at": "2026-11-09T21:07:21.269Z",
   "comment": "Stripe ↔ QuickBooks per-month reconciliation. Stripe side is sum of customer_profiles.transactions (status=succeeded) by type; QB side is the corresponding pnl_by_month line items. Variance = Stripe minus QB-recognized. Tie-out status: tight (≤1% variance), acceptable (≤5%), investigate (>5%). See `reconciling_items` for canonical reasons for residual variance.",
   "rows": [
     {
       "month": "2025-01",
       "stripe": {
-        "subscription": 224784.03,
+        "subscription": 227673.03,
+        "subscription_monthly_cash": 224784.03,
+        "annual_amortized": 2889,
         "services": 34104.5,
         "connect": 0,
         "other": 0,
@@ -23,8 +25,8 @@
         "total_income": 289543.76
       },
       "variance": {
-        "subscription_dollars": -1026.66,
-        "subscription_pct": -0.004546551804079667,
+        "subscription_dollars": 1862.34,
+        "subscription_pct": 0.00824735091150922,
         "services_dollars": -1266,
         "services_pct": -0.03579253898022363
       },
@@ -33,12 +35,14 @@
     {
       "month": "2025-02",
       "stripe": {
-        "subscription": 252415.22,
+        "subscription": 231472.14,
+        "subscription_monthly_cash": 228488.22,
+        "annual_amortized": 2983.92,
         "services": 24072.25,
         "connect": 0,
         "other": 0,
         "refunds": 1270,
-        "total": 276487.47
+        "total": 252560.47
       },
       "qb": {
         "subscription_revenue": 223010.22,
@@ -51,8 +55,8 @@
         "total_income": 285208.07
       },
       "variance": {
-        "subscription_dollars": 26404.43,
-        "subscription_pct": 0.11682818329160312,
+        "subscription_dollars": 5461.35,
+        "subscription_pct": 0.024164111810768125,
         "services_dollars": -7405.5,
         "services_pct": -0.23526141480887294
       },
@@ -61,7 +65,9 @@
     {
       "month": "2025-03",
       "stripe": {
-        "subscription": 224289.06,
+        "subscription": 227272.98,
+        "subscription_monthly_cash": 224289.06,
+        "annual_amortized": 2983.92,
         "services": 20578.5,
         "connect": 0,
         "other": 0,
@@ -79,8 +85,8 @@
         "total_income": 280736.37
       },
       "variance": {
-        "subscription_dollars": -2046.68,
-        "subscription_pct": -0.00904267262430579,
+        "subscription_dollars": 937.24,
+        "subscription_pct": 0.004140927986008837,
         "services_dollars": -3968.5,
         "services_pct": -0.1616694504420092
       },
@@ -89,7 +95,9 @@
     {
       "month": "2025-04",
       "stripe": {
-        "subscription": 225877.08,
+        "subscription": 228861,
+        "subscription_monthly_cash": 225877.08,
+        "annual_amortized": 2983.92,
         "services": 30312,
         "connect": 0,
         "other": 0,
@@ -107,8 +115,8 @@
         "total_income": 291234.88
       },
       "variance": {
-        "subscription_dollars": -64.57,
-        "subscription_pct": -0.0002857817494029006,
+        "subscription_dollars": 2919.35,
+        "subscription_pct": 0.012920813847292144,
         "services_dollars": -1126.5,
         "services_pct": -0.03583186220716637
       },
@@ -117,7 +125,9 @@
     {
       "month": "2025-05",
       "stripe": {
-        "subscription": 224314.69,
+        "subscription": 227298.61,
+        "subscription_monthly_cash": 224314.69,
+        "annual_amortized": 2983.92,
         "services": 19938,
         "connect": 0,
         "other": 0,
@@ -135,8 +145,8 @@
         "total_income": 279631.44
       },
       "variance": {
-        "subscription_dollars": -2201.57,
-        "subscription_pct": -0.009719258123015129,
+        "subscription_dollars": 782.35,
+        "subscription_pct": 0.003453835940960732,
         "services_dollars": -910,
         "services_pct": -0.043649270913277055
       },
@@ -145,7 +155,9 @@
     {
       "month": "2025-06",
       "stripe": {
-        "subscription": 223558.77,
+        "subscription": 226542.69,
+        "subscription_monthly_cash": 223558.77,
+        "annual_amortized": 2983.92,
         "services": 9860.5,
         "connect": 0,
         "other": 0,
@@ -163,8 +175,8 @@
         "total_income": 270976.99
       },
       "variance": {
-        "subscription_dollars": -3000.57,
-        "subscription_pct": -0.013244079895360025,
+        "subscription_dollars": -16.65,
+        "subscription_pct": -0.00007349068019011391,
         "services_dollars": -690,
         "services_pct": -0.06539974408795791
       },
@@ -173,7 +185,9 @@
     {
       "month": "2025-07",
       "stripe": {
-        "subscription": 233118.36,
+        "subscription": 236102.28,
+        "subscription_monthly_cash": 233118.36,
+        "annual_amortized": 2983.92,
         "services": 23887.1,
         "connect": 0,
         "other": 0,
@@ -191,17 +205,19 @@
         "total_income": 297377.99
       },
       "variance": {
-        "subscription_dollars": -4073.9,
-        "subscription_pct": -0.01717551829052129,
+        "subscription_dollars": -1089.98,
+        "subscription_pct": -0.004595343878421955,
         "services_dollars": 0,
         "services_pct": 0
       },
-      "tie_out_status": "acceptable"
+      "tie_out_status": "tight"
     },
     {
       "month": "2025-08",
       "stripe": {
-        "subscription": 229522.24,
+        "subscription": 232506.16,
+        "subscription_monthly_cash": 229522.24,
+        "annual_amortized": 2983.92,
         "services": 14209.5,
         "connect": 0,
         "other": 0,
@@ -219,8 +235,8 @@
         "total_income": 283389.61
       },
       "variance": {
-        "subscription_dollars": -2308.9,
-        "subscription_pct": -0.00995940407315463,
+        "subscription_dollars": 675.02,
+        "subscription_pct": 0.0029116882227294026,
         "services_dollars": -4260.5,
         "services_pct": -0.23067135896047644
       },
@@ -229,7 +245,9 @@
     {
       "month": "2025-09",
       "stripe": {
-        "subscription": 228085.44,
+        "subscription": 231069.36,
+        "subscription_monthly_cash": 228085.44,
+        "annual_amortized": 2983.92,
         "services": 39572.15,
         "connect": 0,
         "other": 0,
@@ -247,8 +265,8 @@
         "total_income": 307229.39
       },
       "variance": {
-        "subscription_dollars": -1242.9,
-        "subscription_pct": -0.005419740098410839,
+        "subscription_dollars": 1741.02,
+        "subscription_pct": 0.007591822275432764,
         "services_dollars": -1800,
         "services_pct": -0.04350752861526413
       },
@@ -257,7 +275,9 @@
     {
       "month": "2025-10",
       "stripe": {
-        "subscription": 230650.71,
+        "subscription": 233634.63,
+        "subscription_monthly_cash": 230650.71,
+        "annual_amortized": 2983.92,
         "services": 30558.65,
         "connect": 0,
         "other": 0,
@@ -275,8 +295,8 @@
         "total_income": 298782.52
       },
       "variance": {
-        "subscription_dollars": -1394.66,
-        "subscription_pct": -0.006010290142828549,
+        "subscription_dollars": 1589.26,
+        "subscription_pct": 0.006848919243680705,
         "services_dollars": -586.5,
         "services_pct": -0.018831182383131882
       },
@@ -285,7 +305,9 @@
     {
       "month": "2025-11",
       "stripe": {
-        "subscription": 229474.25,
+        "subscription": 232458.17,
+        "subscription_monthly_cash": 229474.25,
+        "annual_amortized": 2983.92,
         "services": 21627.2,
         "connect": 0,
         "other": 0,
@@ -303,8 +325,8 @@
         "total_income": 285135.46
       },
       "variance": {
-        "subscription_dollars": -2185.7,
-        "subscription_pct": -0.009434949804659854,
+        "subscription_dollars": 798.22,
+        "subscription_pct": 0.003445653856007485,
         "services_dollars": 0,
         "services_pct": 0
       },
@@ -313,12 +335,14 @@
     {
       "month": "2025-12",
       "stripe": {
-        "subscription": 238061.62,
+        "subscription": 228621.04,
+        "subscription_monthly_cash": 225587.62,
+        "annual_amortized": 3033.42,
         "services": 25224.5,
         "connect": 0,
         "other": 0,
         "refunds": 2739,
-        "total": 263286.12
+        "total": 250812.12
       },
       "qb": {
         "subscription_revenue": 224010.31,
@@ -331,8 +355,8 @@
         "total_income": 283703.57
       },
       "variance": {
-        "subscription_dollars": 11050.74,
-        "subscription_pct": 0.048679340831593455,
+        "subscription_dollars": 1610.16,
+        "subscription_pct": 0.007092875900925869,
         "services_dollars": -690,
         "services_pct": -0.02662602018175153
       },
@@ -341,7 +365,9 @@
     {
       "month": "2026-01",
       "stripe": {
-        "subscription": 225411.68,
+        "subscription": 228445.1,
+        "subscription_monthly_cash": 225411.68,
+        "annual_amortized": 3033.42,
         "services": 27028.7,
         "connect": 0,
         "other": 0,
@@ -359,17 +385,19 @@
         "total_income": 284806.74
       },
       "variance": {
-        "subscription_dollars": -3324.03,
-        "subscription_pct": -0.014532186513422097,
+        "subscription_dollars": -290.61,
+        "subscription_pct": -0.0012705055979235387,
         "services_dollars": -0.57,
         "services_pct": -0.00002108824988613118
       },
-      "tie_out_status": "acceptable"
+      "tie_out_status": "tight"
     },
     {
       "month": "2026-02",
       "stripe": {
-        "subscription": 226677.19,
+        "subscription": 229710.61,
+        "subscription_monthly_cash": 226677.19,
+        "annual_amortized": 3033.42,
         "services": 29068.2,
         "connect": 0,
         "other": 0,
@@ -387,8 +415,8 @@
         "total_income": 300384.05
       },
       "variance": {
-        "subscription_dollars": -2640.41,
-        "subscription_pct": -0.01151420562573493,
+        "subscription_dollars": 393.01,
+        "subscription_pct": 0.0017138239716444799,
         "services_dollars": -711.15,
         "services_pct": -0.023880642122813343
       },
@@ -397,7 +425,9 @@
     {
       "month": "2026-03",
       "stripe": {
-        "subscription": 236400.1,
+        "subscription": 239573.1,
+        "subscription_monthly_cash": 236400.1,
+        "annual_amortized": 3173,
         "services": 34301.8,
         "connect": 0,
         "other": 0,
@@ -415,17 +445,19 @@
         "total_income": 313088.17
       },
       "variance": {
-        "subscription_dollars": -3146,
-        "subscription_pct": -0.01313317144382659,
+        "subscription_dollars": 27,
+        "subscription_pct": 0.00011271316878033453,
         "services_dollars": -90,
         "services_pct": -0.002616902866381151
       },
-      "tie_out_status": "acceptable"
+      "tie_out_status": "tight"
     },
     {
       "month": "2026-04",
       "stripe": {
-        "subscription": 229206.16,
+        "subscription": 232379.16,
+        "subscription_monthly_cash": 229206.16,
+        "annual_amortized": 3173,
         "services": 19380.1,
         "connect": 0,
         "other": 0,
@@ -443,22 +475,24 @@
         "total_income": 291564.08
       },
       "variance": {
-        "subscription_dollars": -3193,
-        "subscription_pct": -0.013739292345118632,
+        "subscription_dollars": -20,
+        "subscription_pct": -0.00008605883084947466,
         "services_dollars": 0,
         "services_pct": 0
       },
-      "tie_out_status": "acceptable"
+      "tie_out_status": "tight"
     },
     {
       "month": "2026-05",
       "stripe": {
-        "subscription": 262791.98,
+        "subscription": 233962.48,
+        "subscription_monthly_cash": 230789.48,
+        "annual_amortized": 3173,
         "services": 19809,
         "connect": 0,
         "other": 0,
         "refunds": 20,
-        "total": 282600.98
+        "total": 250598.48
       },
       "qb": {
         "subscription_revenue": 230789.48,
@@ -471,17 +505,19 @@
         "total_income": 291635.11
       },
       "variance": {
-        "subscription_dollars": 28829.5,
-        "subscription_pct": 0.1232227492203022,
+        "subscription_dollars": 0,
+        "subscription_pct": 0,
         "services_dollars": 0,
         "services_pct": 0
       },
-      "tie_out_status": "investigate"
+      "tie_out_status": "tight"
     },
     {
       "month": "2026-06",
       "stripe": {
-        "subscription": 225054.74,
+        "subscription": 228227.74,
+        "subscription_monthly_cash": 225054.74,
+        "annual_amortized": 3173,
         "services": 16585.4,
         "connect": 0,
         "other": 0,
@@ -499,19 +535,19 @@
         "total_income": 291612.55
       },
       "variance": {
-        "subscription_dollars": -4943.13,
-        "subscription_pct": -0.021492068600461406,
+        "subscription_dollars": -1770.13,
+        "subscription_pct": -0.007696288665629837,
         "services_dollars": 0,
         "services_pct": 0
       },
-      "tie_out_status": "acceptable"
+      "tie_out_status": "tight"
     }
   ],
   "reconciling_items": [
     {
-      "label": "Annual lump-sum cash receipts",
-      "description": "Stripe records the full lump-sum amount in the month it was charged (e.g., B&B Door's $32,002.50 in May 2026). QB defers and recognizes monthly via Line 4100 \"Annual Deferred Monthly\" (~$3,173/mo). Variance reconciles over the 12–15 month coverage window.",
-      "sign": "Stripe > QB in receipt month; Stripe < QB in subsequent months."
+      "label": "Annual prepay customers (neutralized)",
+      "description": "Annual payers' lump-sum cash (e.g., B&B Door's $32,002.50 in May 2026) is NOT compared month-to-month. Their amortized monthly subscription (the same figure the customer base uses) is compared to QB Line 4100 \"Annual Deferred Monthly\" (~$3,173/mo) instead, so receipt timing no longer creates variance. Residual = amortization rate differences (dashboard vs QB schedule, ~$17/mo before Mar 2026).",
+      "sign": "Small; either direction."
     },
     {
       "label": "Sales tax inclusion",
@@ -536,8 +572,8 @@
   ],
   "summary": {
     "n_months": 18,
-    "n_tight": 1,
-    "n_acceptable": 12,
-    "n_investigate": 5
+    "n_tight": 7,
+    "n_acceptable": 7,
+    "n_investigate": 4
   }
 }

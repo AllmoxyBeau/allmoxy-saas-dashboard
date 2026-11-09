@@ -61,9 +61,13 @@ type WaterfallTtm = {
   ending_mrr: number;
   new_mrr: number;
   reactivated_mrr?: number;
+  recovered_mrr?: number;
   expansion_mrr: number;
   contraction_mrr: number;
   churn_mrr: number;
+  voided_mrr?: number;
+  delinquent_mrr?: number;
+  paused_mrr?: number;
   net_new_mrr: number;
   gross_mrr_churn_ttm: number | null;
   annual_gross_churn_rate: number | null;
@@ -73,6 +77,7 @@ type WaterfallTtm = {
 };
 type WaterfallMonthly = {
   month: string;
+  partial?: boolean;
   starting_mrr: number;
   new_mrr: number;
   reactivated_mrr?: number;
@@ -104,10 +109,28 @@ type UnitEconTtm = {
   net_op_income: number;
   monthly_churn_rate: number | null;
   annual_churn_rate: number | null;
+  annual_logo_churn_rate?: number | null;
+  annual_revenue_churn_rate?: number | null;
+  ltv_cac_ratio?: number | null;
+  pnl_coverage?: { months: number; start: string; end: string } | null;
   avg_mrr_per_customer: number | null;
   logo_qty_latest: number;
   ltv: number | null;
   cac_payback_months: number | null;
+};
+
+// customer_base.json — THE canonical customer count + MRR (invoiced/accrual basis,
+// annual payers amortized, duplicate records excluded).
+type CustomerBaseMember = { allmoxy_customer_id: number; name: string; mrr: number; source: string; status: string };
+type CustomerBase = {
+  as_of: string;
+  customers: number;
+  mrr: number;
+  arr: number;
+  arpa: number;
+  members: CustomerBaseMember[];
+  by_month: Array<{ month: string; customers: number; mrr: number; arpa: number }>;
+  logo_flow: Array<{ month: string; new_logos: number; churned_logos: number; ending_logos: number }>;
 };
 
 type CohortSummary = { year: number; initial: number; active: number; churned: number; retentionPct: number | null };
@@ -230,13 +253,30 @@ export default function CIMPacket() {
   const { data: cohortData } = useSheetTab('cohort_retention');
   const { data: profilesData } = useSheetTab('customer_profiles');
   const { data: pnlData } = useSheetTab('pnl_by_month');
+  const { data: cbData } = useSheetTab('customer_base');
 
   const mrr = mrrData as unknown as { rows: MrrMonthlyRow[] } | undefined;
-  const wf = wfData as unknown as { monthly: WaterfallMonthly[]; ttm: WaterfallTtm } | undefined;
+  // Accrual (invoiced) waterfall is canonical. `monthly`/`ttm` in the same
+  // snapshot are the CASH basis and must not feed retention/waterfall cards.
+  const wf = wfData as unknown as { monthly_accrual: WaterfallMonthly[]; ttm_accrual: WaterfallTtm } | undefined;
   const ue = ueData as unknown as { ttm: UnitEconTtm; monthly: Array<{ month: string; subscription_revenue: number; gross_margin: number; new_logos: number; cac: number | null; avg_mrr_per_customer: number | null }> } | undefined;
   const cohort = cohortData as unknown as { cohortSummary: CohortSummary[]; totalCustomers: number; activeToday: number } | undefined;
   const profiles = profilesData as unknown as { rows: ProfileRow[] } | undefined;
   const pnl = pnlData as unknown as PnlSnapshot | undefined;
+  const cb = cbData as unknown as CustomerBase | undefined;
+
+  // QuickBooks P&L only covers part of the TTM window. Every P&L-derived figure
+  // (gross margin, gross profit, S&M, CAC, net op income) is labelled with it so
+  // nobody divides a 12-month revenue figure by an 8-month cost figure.
+  const qbWindow = useMemo(() => {
+    const c = ue?.ttm?.pnl_coverage;
+    if (!c || !c.start || !c.end) return { short: 'QB coverage', long: 'QuickBooks P&L coverage months', months: null as number | null };
+    const range = `${monthLabelShort(c.start)}–${monthLabelShort(c.end)}`;
+    return { short: `${range}, QB`, long: `QuickBooks P&L coverage: ${range} (${c.months} mo)`, months: c.months };
+  }, [ue]);
+
+  // New logos over the last 12 logo_flow entries (customer_base, invoiced basis).
+  const newLogosTtm = useMemo(() => (cb?.logo_flow ?? []).slice(-12).reduce((s, r) => s + (r.new_logos ?? 0), 0), [cb]);
 
   // ---- Derived: latest complete month ----
   // Source of truth: the ETL pipeline's TTM window end. Both the unit_economics
@@ -246,7 +286,7 @@ export default function CIMPacket() {
   // we're sitting in June) and badly understate every headline metric.
   const headlineMonth = useMemo(() => {
     if (ue?.ttm?.windowEnd) return ue.ttm.windowEnd;
-    if (wf?.ttm?.windowEnd) return wf.ttm.windowEnd;
+    if (wf?.ttm_accrual?.windowEnd) return wf.ttm_accrual.windowEnd;
     // Fallback: walk back from the latest month and skip the calendar month
     // matching today's YYYY-MM (rough proxy for "incomplete").
     const rows = mrr?.rows ?? [];
@@ -263,22 +303,35 @@ export default function CIMPacket() {
   const headlineRow = useMemo(() => mrr?.rows.find((r) => r.month === headlineMonth), [mrr, headlineMonth]);
 
   // ---- Derived: ARR trajectory (24m) ----
+  // Subscription MRR comes from customer_base.by_month (canonical, invoiced
+  // basis); Services + Connect come from mrr_by_month for the same months.
   const arrSeries = useMemo(() => {
-    const rows = (mrr?.rows ?? []).filter((r) => r.month <= headlineMonth);
-    return rows.slice(-24).map((r) => ({
-      month: r.month,
-      label: monthLabelShort(r.month),
-      arr: (r.mrr_subscription ?? 0) * 12,
-      mrr_sub: r.mrr_subscription ?? 0,
-      mrr_svc: r.mrr_services ?? 0,
-      mrr_connect: r.mrr_connect ?? 0,
-    }));
-  }, [mrr, headlineMonth]);
+    const byMonth = new Map((mrr?.rows ?? []).map((r) => [r.month, r]));
+    const rows = (cb?.by_month ?? []).filter((r) => r.month <= headlineMonth);
+    return rows.slice(-24).map((r) => {
+      const m = byMonth.get(r.month);
+      return {
+        month: r.month,
+        label: monthLabelShort(r.month),
+        arr: (r.mrr ?? 0) * 12,
+        mrr_sub: r.mrr ?? 0,
+        mrr_svc: m?.mrr_services ?? 0,
+        mrr_connect: m?.mrr_connect ?? 0,
+      };
+    });
+  }, [mrr, cb, headlineMonth]);
+
+  // Headline subscription MRR for the reference month (customer_base).
+  const cbHeadline = useMemo(() => {
+    if (!cb) return null;
+    const row = cb.by_month?.find((r) => r.month === headlineMonth);
+    return row ?? { month: cb.as_of, customers: cb.customers, mrr: cb.mrr, arpa: cb.arpa };
+  }, [cb, headlineMonth]);
 
   // ---- Derived: stream composition for headline month + TTM ----
   const streamComposition = useMemo(() => {
-    if (!headlineRow) return null;
-    const sub = headlineRow.mrr_subscription ?? 0;
+    if (!headlineRow || !cbHeadline) return null;
+    const sub = cbHeadline.mrr ?? 0;
     const svc = headlineRow.mrr_services ?? 0;
     const conn = headlineRow.mrr_connect ?? 0;
     const total = sub + svc + conn;
@@ -291,11 +344,43 @@ export default function CIMPacket() {
       svcPct: total > 0 ? svc / total : 0,
       connPct: total > 0 ? conn / total : 0,
     };
-  }, [headlineRow]);
+  }, [headlineRow, cbHeadline]);
+
+  // ---- Derived: current customer base joined to profile attributes ----
+  // Membership + MRR come from customer_base.members (excludes duplicate
+  // records); segment / lifetime / tenure attributes come from profiles.
+  const baseRows = useMemo(() => {
+    const byId = new Map((profiles?.rows ?? []).map((r) => [r.allmoxy_customer_id, r]));
+    return (cb?.members ?? []).map((m): ProfileRow => {
+      const p = byId.get(m.allmoxy_customer_id);
+      return {
+        ...(p ?? {
+          allmoxy_customer_id: m.allmoxy_customer_id,
+          name: m.name,
+          primary_segment: null,
+          sub_segment: null,
+          pay_status: null,
+          status: m.status,
+          current_services: 0,
+          current_connect: 0,
+          lifetime_total: 0,
+          lifetime_subscription: 0,
+          first_payment_date: null,
+          last_payment_date: null,
+          years_with_us: null,
+          monthly_history: {},
+          latest_month: cb?.as_of ?? '',
+          churn_reason: null,
+        }),
+        name: p?.name ?? m.name,
+        current_subscription_mrr: m.mrr ?? 0,
+      };
+    });
+  }, [cb, profiles]);
 
   // ---- Derived: top customer concentration (post-amortization) ----
   const concentration = useMemo(() => {
-    const rows = (profiles?.rows ?? []).filter((r) => (r.current_subscription_mrr ?? 0) > 0);
+    const rows = baseRows.filter((r) => (r.current_subscription_mrr ?? 0) > 0);
     const sorted = rows.slice().sort((a, b) => (b.current_subscription_mrr ?? 0) - (a.current_subscription_mrr ?? 0));
     const totalMrr = sorted.reduce((s, r) => s + (r.current_subscription_mrr ?? 0), 0);
     const slice = (n: number) => sorted.slice(0, n).reduce((s, r) => s + (r.current_subscription_mrr ?? 0), 0);
@@ -309,11 +394,11 @@ export default function CIMPacket() {
       top20Pct: totalMrr > 0 ? slice(20) / totalMrr : 0,
       top10: top10Rows,
     };
-  }, [profiles]);
+  }, [baseRows]);
 
   // ---- Derived: segment mix (primary + sub) ----
   const segmentMix = useMemo(() => {
-    const rows = (profiles?.rows ?? []).filter((r) => (r.current_subscription_mrr ?? 0) > 0);
+    const rows = baseRows.filter((r) => (r.current_subscription_mrr ?? 0) > 0);
     const byPrimary = new Map<string, { count: number; mrr: number; subByName: Map<string, { count: number; mrr: number }> }>();
     for (const r of rows) {
       const seg = (r.primary_segment ?? '').trim() || '(unsegmented)';
@@ -339,7 +424,7 @@ export default function CIMPacket() {
       .sort((a, b) => b.mrr - a.mrr);
     const totalMrr = primaryRows.reduce((s, r) => s + r.mrr, 0);
     return { primary: primaryRows, totalMrr };
-  }, [profiles]);
+  }, [baseRows]);
 
   // ---- Derived: churn-by-reason (top clusters) ----
   const churnByReason = useMemo(() => {
@@ -376,9 +461,9 @@ export default function CIMPacket() {
     };
   }, [profiles]);
 
-  // ---- Derived: NRR/GRR trend (last 24 months) ----
+  // ---- Derived: NRR/GRR trend (last 24 complete months, accrual basis) ----
   const retentionTrend = useMemo(() => {
-    const months = (wf?.monthly ?? []).slice(-24);
+    const months = (wf?.monthly_accrual ?? []).filter((m) => !m.partial).slice(-24);
     return months.map((m) => ({
       month: m.month,
       label: monthLabelShort(m.month),
@@ -411,7 +496,7 @@ export default function CIMPacket() {
   }, [pnl]);
 
   const isLoading = mrrLoading;
-  const isReady = mrr && wf && ue && cohort && profiles && headlineRow;
+  const isReady = mrr && wf && ue && cohort && profiles && cb && headlineRow && cbHeadline;
 
   // ============================================================================
   // Render
@@ -500,44 +585,44 @@ export default function CIMPacket() {
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
                   label="ARR"
-                  value={USD_COMPACT.format((headlineRow!.mrr_subscription ?? 0) * 12)}
-                  sub={`${USD0.format(headlineRow!.mrr_subscription ?? 0)} subscription MRR`}
+                  value={USD_COMPACT.format(cbHeadline!.month === cb!.as_of ? cb!.arr : cbHeadline!.mrr * 12)}
+                  sub={`${USD0.format(cbHeadline!.mrr)} MRR (subscription)`}
                   accent="primary.main"
                 />
               </Grid>
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
-                  label="Blended MRR"
-                  value={USD_COMPACT.format(headlineRow!.mrr_blended ?? 0)}
-                  sub="Subscription + Services + Connect"
+                  label="Total monthly revenue"
+                  value={USD_COMPACT.format(streamComposition?.total ?? 0)}
+                  sub="Subscription MRR + Services + Connect (services are not MRR)"
                 />
               </Grid>
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
                   label="Active customers"
-                  value={(headlineRow!.logo_qty ?? 0).toLocaleString()}
+                  value={(cbHeadline!.customers ?? 0).toLocaleString()}
                   sub={`${cohort!.activeToday ?? 0} active today / ${cohort!.totalCustomers ?? 0} lifetime`}
                 />
               </Grid>
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
                   label="NRR (TTM)"
-                  value={pct(wf!.ttm.annual_nrr)}
-                  sub={`GRR ${pct(wf!.ttm.annual_grr)}`}
-                  accent={wf!.ttm.annual_nrr != null && wf!.ttm.annual_nrr >= 1 ? 'success.main' : 'warning.main'}
+                  value={pct(wf!.ttm_accrual.annual_nrr)}
+                  sub={`GRR ${pct(wf!.ttm_accrual.annual_grr)}`}
+                  accent={wf!.ttm_accrual.annual_nrr != null && wf!.ttm_accrual.annual_nrr >= 1 ? 'success.main' : 'warning.main'}
                 />
               </Grid>
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
                   label="LTV : CAC"
                   value={ue!.ttm.ltv != null && ue!.ttm.cac ? `${(ue!.ttm.ltv / ue!.ttm.cac).toFixed(1)}x` : '—'}
-                  sub={`Payback ${ue!.ttm.cac_payback_months != null ? `${ue!.ttm.cac_payback_months.toFixed(1)} mo` : '—'}`}
+                  sub={`Payback ${ue!.ttm.cac_payback_months != null ? `${ue!.ttm.cac_payback_months.toFixed(1)} mo` : '—'} · CAC on ${qbWindow.short}`}
                   accent={ue!.ttm.ltv != null && ue!.ttm.cac && (ue!.ttm.ltv / ue!.ttm.cac) >= 3 ? 'success.main' : 'warning.main'}
                 />
               </Grid>
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
-                  label="Gross margin (TTM)"
+                  label={`Gross margin (${qbWindow.short})`}
                   value={pct(ue!.ttm.gross_margin)}
                   sub={`Sub GM ${pct(ue!.ttm.subscription_gross_margin)}`}
                 />
@@ -545,23 +630,23 @@ export default function CIMPacket() {
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
                   label="Net new MRR (TTM)"
-                  value={USD_COMPACT.format(wf!.ttm.net_new_mrr ?? 0)}
-                  sub={`Quick ratio ${wf!.ttm.quick_ratio != null ? `${wf!.ttm.quick_ratio.toFixed(1)}x` : '—'}`}
-                  accent={wf!.ttm.net_new_mrr >= 0 ? 'success.main' : 'error.main'}
+                  value={`${(wf!.ttm_accrual.net_new_mrr ?? 0) >= 0 ? '+' : ''}${USD_COMPACT.format(wf!.ttm_accrual.net_new_mrr ?? 0)}`}
+                  sub={`Quick ratio ${wf!.ttm_accrual.quick_ratio != null ? `${wf!.ttm_accrual.quick_ratio.toFixed(1)}x` : '—'}`}
+                  accent={wf!.ttm_accrual.net_new_mrr >= 0 ? 'success.main' : 'error.main'}
                 />
               </Grid>
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
-                  label="Annual churn (TTM)"
-                  value={pct(ue!.ttm.annual_churn_rate)}
-                  sub={`${USD_COMPACT.format(wf!.ttm.churn_mrr ?? 0)} MRR churned`}
+                  label="Logo churn (TTM)"
+                  value={pct(ue!.ttm.annual_logo_churn_rate ?? ue!.ttm.annual_churn_rate)}
+                  sub={`${USD_COMPACT.format(wf!.ttm_accrual.churn_mrr ?? 0)} MRR churned outright`}
                 />
               </Grid>
               <Grid item xs={6} sm={4} md={2.4}>
                 <KPITile
-                  label="ARPU (TTM)"
-                  value={ue!.ttm.avg_mrr_per_customer != null ? USD0.format(ue!.ttm.avg_mrr_per_customer) : '—'}
-                  sub={`${ue!.ttm.new_logos} new logos (TTM)`}
+                  label={`ARPA (${monthLabelShort(cbHeadline!.month)})`}
+                  value={USD0.format(cbHeadline!.arpa)}
+                  sub={`${newLogosTtm} new logos (TTM)`}
                 />
               </Grid>
               <Grid item xs={6} sm={4} md={2.4}>
@@ -643,12 +728,12 @@ export default function CIMPacket() {
           </Section>
 
           {/* §5 FINANCIAL HIGHLIGHTS */}
-          <Section number="5" title="Financial Highlights" subtitle={`TTM window: ${ue!.ttm.windowStart} → ${ue!.ttm.windowEnd}`}>
+          <Section number="5" title="Financial Highlights" subtitle={`Revenue: TTM ${ue!.ttm.windowStart} → ${ue!.ttm.windowEnd} (12 mo) · Profitability: ${qbWindow.long}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Paper variant="outlined" sx={{ p: 2 }}>
                   <Typography variant="overline" sx={{ color: 'text.secondary', fontSize: 10, letterSpacing: '0.06em' }}>
-                    Trailing-12-month revenue
+                    Trailing-12-month revenue ({ue!.ttm.windowStart} → {ue!.ttm.windowEnd})
                   </Typography>
                   <Table size="small" sx={{ mt: 1 }}>
                     <TableBody>
@@ -663,45 +748,49 @@ export default function CIMPacket() {
               <Grid item xs={12} md={6}>
                 <Paper variant="outlined" sx={{ p: 2 }}>
                   <Typography variant="overline" sx={{ color: 'text.secondary', fontSize: 10, letterSpacing: '0.06em' }}>
-                    Trailing-12-month profitability
+                    Profitability — {qbWindow.long}
                   </Typography>
                   <Table size="small" sx={{ mt: 1 }}>
                     <TableBody>
-                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>Gross profit</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{USD0.format(ue!.ttm.gross_profit)}</TableCell></TableRow>
-                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>Gross margin</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{pct(ue!.ttm.gross_margin)}</TableCell></TableRow>
-                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>Subscription gross margin</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{pct(ue!.ttm.subscription_gross_margin)}</TableCell></TableRow>
-                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>S&M expense (TTM)</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{USD0.format(ue!.ttm.snm_expense)}</TableCell></TableRow>
-                      <TableRow><TableCell sx={{ fontWeight: 600 }}>Net operating income</TableCell><TableCell align="right" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: ue!.ttm.net_op_income >= 0 ? 'success.main' : 'error.main' }}>{USD0.format(ue!.ttm.net_op_income)}</TableCell></TableRow>
+                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>Gross profit ({qbWindow.short})</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{USD0.format(ue!.ttm.gross_profit)}</TableCell></TableRow>
+                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>Gross margin ({qbWindow.short})</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{pct(ue!.ttm.gross_margin)}</TableCell></TableRow>
+                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>Subscription gross margin ({qbWindow.short})</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{pct(ue!.ttm.subscription_gross_margin)}</TableCell></TableRow>
+                      <TableRow><TableCell sx={{ borderBottom: 'none' }}>S&M expense ({qbWindow.short})</TableCell><TableCell align="right" sx={{ borderBottom: 'none', fontVariantNumeric: 'tabular-nums' }}>{USD0.format(ue!.ttm.snm_expense)}</TableCell></TableRow>
+                      <TableRow><TableCell sx={{ fontWeight: 600 }}>Net operating income ({qbWindow.short})</TableCell><TableCell align="right" sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: ue!.ttm.net_op_income >= 0 ? 'success.main' : 'error.main' }}>{USD0.format(ue!.ttm.net_op_income)}</TableCell></TableRow>
                     </TableBody>
                   </Table>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1, fontStyle: 'italic' }}>
+                    QuickBooks P&L covers only {qbWindow.months ?? 'part'} of the 12 revenue months. Profitability figures are not
+                    comparable to the 12-month revenue at left — do not divide across the two windows.
+                  </Typography>
                 </Paper>
               </Grid>
             </Grid>
           </Section>
 
           {/* §6 REVENUE COMPOSITION */}
-          <Section number="6" title="Revenue Composition" subtitle="Latest complete month, by stream">
+          <Section number="6" title="Revenue Composition" subtitle="Latest complete month, by stream · Subscription = canonical MRR (customer_base); Services are not MRR">
             {streamComposition && (
               <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
                   <Paper variant="outlined" sx={{ p: 2, borderLeft: '4px solid', borderColor: '#2C73FF' }}>
-                    <Typography variant="overline" sx={{ color: 'text.secondary', fontSize: 10, letterSpacing: '0.06em' }}>Subscription (recurring)</Typography>
+                    <Typography variant="overline" sx={{ color: 'text.secondary', fontSize: 10, letterSpacing: '0.06em' }}>Subscription MRR (recurring)</Typography>
                     <Typography variant="h5" sx={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums', mt: 0.5 }}>{USD0.format(streamComposition.subscription)}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>{pct(streamComposition.subPct)} of blended MRR</Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>{pct(streamComposition.subPct)} of total monthly revenue</Typography>
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Paper variant="outlined" sx={{ p: 2, borderLeft: '4px solid', borderColor: '#1A9E5C' }}>
                     <Typography variant="overline" sx={{ color: 'text.secondary', fontSize: 10, letterSpacing: '0.06em' }}>Services (project-based)</Typography>
                     <Typography variant="h5" sx={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums', mt: 0.5 }}>{USD0.format(streamComposition.services)}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>{pct(streamComposition.svcPct)} of blended MRR</Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>{pct(streamComposition.svcPct)} of total monthly revenue · not MRR</Typography>
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Paper variant="outlined" sx={{ p: 2, borderLeft: '4px solid', borderColor: '#D97706' }}>
                     <Typography variant="overline" sx={{ color: 'text.secondary', fontSize: 10, letterSpacing: '0.06em' }}>Connect (affiliate fees)</Typography>
                     <Typography variant="h5" sx={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums', mt: 0.5 }}>{USD0.format(streamComposition.connect)}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>{pct(streamComposition.connPct)} of blended MRR</Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>{pct(streamComposition.connPct)} of total monthly revenue</Typography>
                   </Paper>
                 </Grid>
               </Grid>
@@ -723,7 +812,7 @@ export default function CIMPacket() {
           </Section>
 
           {/* §7 ARR TRAJECTORY */}
-          <Section number="7" title="ARR Trajectory" subtitle="Subscription MRR × 12 · last 24 months">
+          <Section number="7" title="ARR Trajectory" subtitle={`Canonical subscription MRR × 12 (customer_base, invoiced basis) · ${arrSeries.length} months from ${arrSeries[0] ? monthLabelShort(arrSeries[0].month) : '—'}`}>
             <Box sx={{ height: 260 }}>
               <ResponsiveContainer>
                 <AreaChart data={arrSeries}>
@@ -744,35 +833,40 @@ export default function CIMPacket() {
           </Section>
 
           {/* §8 MRR WATERFALL (TTM) */}
-          <Section number="8" title="MRR Waterfall — Trailing 12 Months" subtitle={`${wf!.ttm.windowStart} → ${wf!.ttm.windowEnd}`}>
+          <Section number="8" title="MRR Waterfall — Trailing 12 Months" subtitle={`${wf!.ttm_accrual.windowStart} → ${wf!.ttm_accrual.windowEnd} · invoiced (accrual) basis · Starting + adds − losses = Ending`}>
             <Grid container spacing={1.5}>
-              <Grid item xs={6} md={2}><KPITile label="Starting MRR" value={USD_COMPACT.format(wf!.ttm.starting_mrr)} /></Grid>
-              <Grid item xs={6} md={2}><KPITile label="+ New" value={USD_COMPACT.format(wf!.ttm.new_mrr)} accent="success.main" /></Grid>
-              <Grid item xs={6} md={2}><KPITile label="+ Reactivated" value={USD_COMPACT.format(wf!.ttm.reactivated_mrr ?? 0)} accent="success.main" /></Grid>
-              <Grid item xs={6} md={2}><KPITile label="+ Expansion" value={USD_COMPACT.format(wf!.ttm.expansion_mrr)} accent="success.main" /></Grid>
-              <Grid item xs={6} md={2}><KPITile label="− Contraction" value={USD_COMPACT.format(wf!.ttm.contraction_mrr)} accent="warning.main" /></Grid>
-              <Grid item xs={6} md={2}><KPITile label="− Churn" value={USD_COMPACT.format(wf!.ttm.churn_mrr)} accent="error.main" /></Grid>
-              <Grid item xs={6} md={3}><KPITile label="Net new MRR" value={USD_COMPACT.format(wf!.ttm.net_new_mrr)} accent={wf!.ttm.net_new_mrr >= 0 ? 'success.main' : 'error.main'} /></Grid>
-              <Grid item xs={6} md={3}><KPITile label="Ending MRR" value={USD_COMPACT.format(wf!.ttm.ending_mrr)} sub="Latest complete month" /></Grid>
-              <Grid item xs={6} md={3}><KPITile label="Quick ratio" value={wf!.ttm.quick_ratio != null ? `${wf!.ttm.quick_ratio.toFixed(2)}x` : '—'} sub="(New+Exp) / (Churn+Contr)" /></Grid>
-              <Grid item xs={6} md={3}><KPITile label="Annual gross churn" value={pct(wf!.ttm.annual_gross_churn_rate)} sub="$ basis" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="Starting MRR" value={USD_COMPACT.format(wf!.ttm_accrual.starting_mrr)} /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="+ New" value={USD_COMPACT.format(wf!.ttm_accrual.new_mrr)} accent="success.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="+ Reactivated" value={USD_COMPACT.format(wf!.ttm_accrual.reactivated_mrr ?? 0)} accent="success.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="+ Recovered" value={USD_COMPACT.format(wf!.ttm_accrual.recovered_mrr ?? 0)} sub="Lapses credited back" accent="success.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="+ Expansion" value={USD_COMPACT.format(wf!.ttm_accrual.expansion_mrr)} accent="success.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="− Contraction" value={USD_COMPACT.format(wf!.ttm_accrual.contraction_mrr)} accent="warning.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="− Churn" value={USD_COMPACT.format(wf!.ttm_accrual.churn_mrr)} accent="error.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="− Voided" value={USD_COMPACT.format(wf!.ttm_accrual.voided_mrr ?? 0)} sub="Invoices voided / non-payment" accent="error.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="− Delinquent (lapsed)" value={USD_COMPACT.format(wf!.ttm_accrual.delinquent_mrr ?? 0)} accent="error.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="− Paused" value={USD_COMPACT.format(wf!.ttm_accrual.paused_mrr ?? 0)} sub="HubSpot Pause Granted" accent="warning.main" /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="Net new MRR" value={`${wf!.ttm_accrual.net_new_mrr >= 0 ? '+' : ''}${USD_COMPACT.format(wf!.ttm_accrual.net_new_mrr)}`} accent={wf!.ttm_accrual.net_new_mrr >= 0 ? 'success.main' : 'error.main'} /></Grid>
+              <Grid item xs={6} md={2}><KPITile label="Ending MRR" value={USD_COMPACT.format(wf!.ttm_accrual.ending_mrr)} sub={cbHeadline!.month === wf!.ttm_accrual.windowEnd ? `Invoiced; + ${USD_COMPACT.format(cbHeadline!.mrr - wf!.ttm_accrual.ending_mrr)} annual amortization = ${USD_COMPACT.format(cbHeadline!.mrr)} MRR` : 'Latest complete month'} /></Grid>
+              <Grid item xs={6} md={4}><KPITile label="Quick ratio" value={wf!.ttm_accrual.quick_ratio != null ? `${wf!.ttm_accrual.quick_ratio.toFixed(2)}x` : '—'} sub="(New+Reactivated+Exp) / (Churn+Contr)" /></Grid>
+              <Grid item xs={6} md={4}><KPITile label="Gross revenue churn" value={pct(wf!.ttm_accrual.annual_grr != null ? 1 - wf!.ttm_accrual.annual_grr : null)} sub="1 − GRR · every lost dollar" /></Grid>
+              <Grid item xs={6} md={4}><KPITile label="Outright churn rate" value={pct(wf!.ttm_accrual.annual_gross_churn_rate)} sub="Churn bucket only, $ basis" /></Grid>
             </Grid>
           </Section>
 
           {/* §9 NET REVENUE RETENTION */}
-          <Section number="9" title="Net Revenue Retention" subtitle="Trailing 12 months · monthly NRR / GRR series">
+          <Section number="9" title="Net Revenue Retention" subtitle="Trailing 12 months, accrual basis · monthly NRR / GRR series (complete months only)">
             <Grid container spacing={2} sx={{ mb: 2 }}>
               <Grid item xs={6} md={3}>
-                <KPITile label="NRR (TTM)" value={pct(wf!.ttm.annual_nrr)} accent={wf!.ttm.annual_nrr != null && wf!.ttm.annual_nrr >= 1 ? 'success.main' : 'warning.main'} />
+                <KPITile label="NRR (TTM)" value={pct(wf!.ttm_accrual.annual_nrr)} accent={wf!.ttm_accrual.annual_nrr != null && wf!.ttm_accrual.annual_nrr >= 1 ? 'success.main' : 'warning.main'} />
               </Grid>
               <Grid item xs={6} md={3}>
-                <KPITile label="GRR (TTM)" value={pct(wf!.ttm.annual_grr)} accent={wf!.ttm.annual_grr != null && wf!.ttm.annual_grr >= 0.9 ? 'success.main' : 'warning.main'} />
+                <KPITile label="GRR (TTM)" value={pct(wf!.ttm_accrual.annual_grr)} accent={wf!.ttm_accrual.annual_grr != null && wf!.ttm_accrual.annual_grr >= 0.9 ? 'success.main' : 'warning.main'} />
               </Grid>
               <Grid item xs={6} md={3}>
-                <KPITile label="Expansion $ (TTM)" value={USD_COMPACT.format(wf!.ttm.expansion_mrr)} />
+                <KPITile label="Expansion $ (TTM)" value={USD_COMPACT.format(wf!.ttm_accrual.expansion_mrr)} />
               </Grid>
               <Grid item xs={6} md={3}>
-                <KPITile label="Contraction $ (TTM)" value={USD_COMPACT.format(wf!.ttm.contraction_mrr)} />
+                <KPITile label="Contraction $ (TTM)" value={USD_COMPACT.format(wf!.ttm_accrual.contraction_mrr)} />
               </Grid>
             </Grid>
             <Box sx={{ height: 220 }}>
@@ -826,20 +920,20 @@ export default function CIMPacket() {
           </Section>
 
           {/* §11 UNIT ECONOMICS */}
-          <Section number="11" title="Unit Economics" subtitle="Trailing-12-month basis · S&M from QuickBooks lines 6050 / 6300 / 6310">
+          <Section number="11" title="Unit Economics" subtitle={`CAC, gross margin and net op income: ${qbWindow.long} · S&M = QuickBooks 6050 + 6300 + 6500 + 5200 · LTV/ARPA on current customer base`}>
             <Grid container spacing={1.5}>
               <Grid item xs={6} md={3}>
                 <KPITile
                   label="CAC"
                   value={ue!.ttm.cac != null ? USD0.format(ue!.ttm.cac) : '—'}
-                  sub={`${ue!.ttm.new_logos} new logos · ${USD0.format(ue!.ttm.snm_expense)} S&M`}
+                  sub={`${ue!.ttm.new_logos} new logos · ${USD0.format(ue!.ttm.snm_expense)} S&M (${qbWindow.short})`}
                 />
               </Grid>
               <Grid item xs={6} md={3}>
                 <KPITile
                   label="LTV"
                   value={ue!.ttm.ltv != null ? USD0.format(ue!.ttm.ltv) : '—'}
-                  sub={`Annual churn ${pct(ue!.ttm.annual_churn_rate)}`}
+                  sub={`Gross revenue churn ${pct(ue!.ttm.annual_revenue_churn_rate)} (1 − GRR)`}
                 />
               </Grid>
               <Grid item xs={6} md={3}>
@@ -860,19 +954,19 @@ export default function CIMPacket() {
               </Grid>
               <Grid item xs={6} md={3}>
                 <KPITile
-                  label="ARPU"
-                  value={ue!.ttm.avg_mrr_per_customer != null ? USD0.format(ue!.ttm.avg_mrr_per_customer) : '—'}
-                  sub="Avg subscription MRR / billing customer"
+                  label={`ARPA (${monthLabelShort(cbHeadline!.month)})`}
+                  value={USD0.format(cbHeadline!.arpa)}
+                  sub="Subscription MRR / active customer"
                 />
               </Grid>
               <Grid item xs={6} md={3}>
-                <KPITile label="Gross margin" value={pct(ue!.ttm.gross_margin)} sub={`Sub GM ${pct(ue!.ttm.subscription_gross_margin)}`} />
+                <KPITile label={`Gross margin (${qbWindow.short})`} value={pct(ue!.ttm.gross_margin)} sub={`Sub GM ${pct(ue!.ttm.subscription_gross_margin)}`} />
               </Grid>
               <Grid item xs={6} md={3}>
-                <KPITile label="Net op income (TTM)" value={USD_COMPACT.format(ue!.ttm.net_op_income)} accent={ue!.ttm.net_op_income >= 0 ? 'success.main' : 'error.main'} />
+                <KPITile label={`Net op income (${qbWindow.short})`} value={USD_COMPACT.format(ue!.ttm.net_op_income)} accent={ue!.ttm.net_op_income >= 0 ? 'success.main' : 'error.main'} />
               </Grid>
               <Grid item xs={6} md={3}>
-                <KPITile label="Logos (current)" value={(ue!.ttm.logo_qty_latest ?? 0).toLocaleString()} sub={`${ue!.ttm.new_logos} added TTM`} />
+                <KPITile label="Logos (current)" value={(cbHeadline!.customers ?? 0).toLocaleString()} sub={`${ue!.ttm.new_logos} added ${qbWindow.short} · ${newLogosTtm} added TTM`} />
               </Grid>
             </Grid>
           </Section>
@@ -881,13 +975,13 @@ export default function CIMPacket() {
           <Section number="12" title="Customer Metrics" subtitle={`Post-amortization · Reference month: ${monthLabelLong(headlineMonth)}`}>
             <Grid container spacing={1.5}>
               <Grid item xs={6} md={3}>
-                <KPITile label="Active billing customers" value={concentration.activeBilling.toLocaleString()} sub="Subscription MRR > 0 in reference month" />
+                <KPITile label="Active customers" value={cbHeadline!.customers.toLocaleString()} sub="Canonical customer base (duplicates excluded)" />
               </Grid>
               <Grid item xs={6} md={3}>
-                <KPITile label="Total subscription MRR" value={USD_COMPACT.format(concentration.totalMrr)} sub="Sum of active customers" />
+                <KPITile label="Subscription MRR" value={USD_COMPACT.format(cbHeadline!.mrr)} sub="Canonical MRR (customer_base)" />
               </Grid>
               <Grid item xs={6} md={3}>
-                <KPITile label="ARPU" value={USD0.format(concentration.activeBilling > 0 ? concentration.totalMrr / concentration.activeBilling : 0)} sub="Average MRR / billing customer" />
+                <KPITile label="ARPA" value={USD0.format(cbHeadline!.arpa)} sub="MRR / active customer" />
               </Grid>
               <Grid item xs={6} md={3}>
                 <KPITile label="Lifetime customers" value={cohort!.totalCustomers.toLocaleString()} sub={`${(cohort!.activeToday / cohort!.totalCustomers * 100).toFixed(0)}% active today`} />
@@ -1109,7 +1203,7 @@ export default function CIMPacket() {
                     {pnlSummary.months.map((m) => (
                       <TableCell key={m} align="right">{monthLabelShort(m)}</TableCell>
                     ))}
-                    <TableCell align="right" sx={{ borderLeft: '1px solid', borderColor: 'divider', fontWeight: 600 }}>TTM</TableCell>
+                    <TableCell align="right" sx={{ borderLeft: '1px solid', borderColor: 'divider', fontWeight: 600 }}>TTM to {pnlSummary.months.length ? monthLabelShort(pnlSummary.months[pnlSummary.months.length - 1]) : '—'}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

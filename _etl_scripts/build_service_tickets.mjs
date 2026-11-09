@@ -24,8 +24,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const read = (p, d = null) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } };
 const r2 = (v) => Math.round(v * 100) / 100;
@@ -88,6 +90,10 @@ function cohortStats(list) {
     cohort_p90_resolution_days: durs.length ? r2(pct(durs, 0.9)) : null,
     cohort_measurable: durs.length,
     cohort_closed_share: list.length ? r2(closedCount / list.length) : null,
+    // Same cohort + same measurable set as the median, so the three headline numbers
+    // (median, within-7d, same-day) describe one population.
+    cohort_same_day_rate: durs.length ? r2(durs.filter((d) => d < 1).length / durs.length) : null,
+    cohort_within_7d_rate: durs.length ? r2(durs.filter((d) => d <= 7).length / durs.length) : null,
   };
 }
 
@@ -191,7 +197,10 @@ const realAll = closedAll.filter((ms) => ms > INSTANT_MS).map((ms) => ms / 864e5
 const ttmRows = monthly.filter((r) => r.month >= ttmStart && !r.partial);
 const ttmCreated = ttmRows.reduce((s, r) => s + r.created, 0);
 const ttmClosed = ttmRows.reduce((s, r) => s + r.closed, 0);
-const ttmReal = TICKETS.filter((t) => (monthOf(t.closed_date) || '') >= ttmStart)
+// Closed-in-window basis (secondary): bounded to complete months so the partial current
+// month can't leak in. Still distorted by backlog purges — the headline rates below use
+// the created cohort instead.
+const ttmReal = TICKETS.filter((t) => { const m = monthOf(t.closed_date) || ''; return m >= ttmStart && m < nowMonth; })
   .map(resolutionMs).filter((ms) => ms != null && ms > INSTANT_MS).map((ms) => ms / 864e5);
 
 const out = {
@@ -216,14 +225,18 @@ const out = {
     per_month: r2(ttmCreated / Math.max(1, ttmRows.length)),
     median_resolution_days: ttmReal.length ? r2(median(ttmReal)) : null,
     p90_resolution_days: ttmReal.length ? r2(pct(ttmReal, 0.9)) : null,
-    // Headline metric: cohort basis over the TTM, purge-proof.
+    // Headline metrics: cohort basis over the TTM (tickets CREATED in the last 12
+    // complete months), purge-proof. same_day_rate / within_7d_rate are on this same
+    // cohort as the median — the close-date basis counted the June-2026 backlog purge
+    // of year-old tickets and contradicted the ~1-day median.
     ...(() => {
       const list = TICKETS.filter((t) => (monthOf(t.created) || '') >= ttmStart && (monthOf(t.created) || '') < nowMonth);
-      return cohortStats(list);
+      const c = cohortStats(list);
+      return { ...c, same_day_rate: c.cohort_same_day_rate, within_7d_rate: c.cohort_within_7d_rate, rate_basis: 'cohort (created in TTM), measurable closes only' };
     })(),
     purge_months: ttmRows.filter((r) => r.backlog_purge).map((r) => r.month),
-    same_day_rate: ttmReal.length ? r2(ttmReal.filter((d) => d < 1).length / ttmReal.length) : null,
-    within_7d_rate: ttmReal.length ? r2(ttmReal.filter((d) => d <= 7).length / ttmReal.length) : null,
+    closed_basis_same_day_rate: ttmReal.length ? r2(ttmReal.filter((d) => d < 1).length / ttmReal.length) : null,
+    closed_basis_within_7d_rate: ttmReal.length ? r2(ttmReal.filter((d) => d <= 7).length / ttmReal.length) : null,
     measurable: ttmReal.length,
   },
   monthly,

@@ -2,7 +2,7 @@
 /**
  * Adjustments Register builder.
  *
- * Consolidates all six override / adjustment files into a single canonical
+ * Consolidates every override / adjustment source file into a single canonical
  * register that a QoE reviewer can audit in one place. Every adjustment we
  * make to raw source data (Stripe, HubSpot, QuickBooks, the meta xlsx) lands
  * here with a normalized schema:
@@ -25,8 +25,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 
 function readJson(p) {
@@ -301,11 +303,14 @@ if (neverPaidCustomers.length > 0) {
 // ============================================================================
 // Write the consolidated register
 // ============================================================================
+const sourceFiles = [...new Set(adjustments.map((a) => a.source_file).filter(Boolean))];
 const out = {
   fetched_at: new Date().toISOString(),
   comment:
-    'Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer "give me every adjustment you made to the raw data" from this single file. Drill into the source_file column to see the underlying config.',
+    `Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from ${sourceFiles.length} underlying source files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer "give me every adjustment you made to the raw data" from this single file. Drill into the source_file column to see the underlying config.`,
   totals: {
+    source_files: sourceFiles,
+    distinct_customers: new Set(adjustments.map((a) => a.customer_name).filter(Boolean)).size,
     by_category: adjustments.reduce((acc, a) => {
       acc[a.category] = (acc[a.category] || 0) + 1;
       return acc;

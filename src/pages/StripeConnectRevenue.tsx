@@ -55,6 +55,15 @@ type CustomerRow = {
 
 type SortKey = 'name' | 'ytd' | 'ytd_annualized' | 'prior_year' | 'yoy_pct' | 'lifetime';
 
+// The in-progress calendar month. Months >= this are partial: they are kept in
+// "actual" and lifetime totals but never in YTD / months-loaded / annualization,
+// or a few days of fees would be counted as a full month.
+function currentMonthIso() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+const MONTH_KEY = /^\d{4}-\d{2}$/;
+
 export default function StripeConnectRevenue() {
   const { data: monthData, isLoading: monthLoading, error: monthError } = useSheetTab<ConnectByMonth>('connect_by_month');
   const { data: custData, isLoading: custLoading } = useSheetTab<ConnectByCustomerMonth>('connect_by_customer_month');
@@ -81,13 +90,15 @@ export default function StripeConnectRevenue() {
     const today = new Date();
     const currentYearStr = String(today.getFullYear());
     const priorYearStr = String(today.getFullYear() - 1);
+    const cm = currentMonthIso();
     let cy = 0, py = 0, lifetime = 0, monthsLoadedCurrent = 0;
     for (const r of rows) {
       const v = Number(r.mrr_connect) || 0;
       lifetime += v;
       const yr = r.month.slice(0, 4);
-      if (yr === currentYearStr) { cy += v; if (v > 0) monthsLoadedCurrent++; }
-      else if (yr === priorYearStr) py += v;
+      if (yr === currentYearStr) {
+        if (r.month < cm) { cy += v; if (v > 0) monthsLoadedCurrent++; }
+      } else if (yr === priorYearStr) py += v;
     }
     const latest = rows[rows.length - 1];
     const annualized = monthsLoadedCurrent > 0 ? (cy * 12) / monthsLoadedCurrent : cy;
@@ -114,19 +125,25 @@ export default function StripeConnectRevenue() {
     if (rows.length === 0) return [];
     const today = new Date();
     const currentYearStr = String(today.getFullYear());
-    const byYear = new Map<string, { total: number; months: number }>();
+    const cm = currentMonthIso();
+    // total = everything actually collected (incl. the in-progress month);
+    // completeTotal / months = complete months only, the annualization basis.
+    const byYear = new Map<string, { total: number; completeTotal: number; months: number }>();
     for (const r of rows) {
       const yr = r.month.slice(0, 4);
       const v = Number(r.mrr_connect) || 0;
-      if (!byYear.has(yr)) byYear.set(yr, { total: 0, months: 0 });
+      if (!byYear.has(yr)) byYear.set(yr, { total: 0, completeTotal: 0, months: 0 });
       const e = byYear.get(yr)!;
       e.total += v;
-      if (v > 0) e.months++;
+      if (r.month < cm) {
+        e.completeTotal += v;
+        if (v > 0) e.months++;
+      }
     }
     return [...byYear.entries()]
       .map(([year, v]) => {
         const isCurrent = year === currentYearStr && v.months > 0 && v.months < 12;
-        const annualized = isCurrent ? (v.total * 12) / v.months : v.total;
+        const annualized = isCurrent ? (v.completeTotal * 12) / v.months : v.total;
         return {
           year,
           actual_usd: Math.round(v.total * 100) / 100,
@@ -159,15 +176,18 @@ export default function StripeConnectRevenue() {
     // Determine months loaded for current year from the overall total (consistent
     // with the KPI summary) so per-customer annualization uses the same divisor.
     const monthsLoadedCurrent = summary.monthsLoadedCurrent || 1;
+    const cm = currentMonthIso();
     for (const row of c.rows) {
       let cy = 0, py = 0, lifetime = 0;
       for (const [k, v] of Object.entries(row)) {
-        if (k === 'customer_name') continue;
+        // Month columns only — rows also carry allmoxy_customer_id, which used to be
+        // summed into Lifetime.
+        if (!MONTH_KEY.test(k)) continue;
         const num = Number(v) || 0;
         if (num === 0) continue;
         lifetime += num;
         const yr = k.slice(0, 4);
-        if (yr === currentYearStr) cy += num;
+        if (yr === currentYearStr) { if (k < cm) cy += num; }
         else if (yr === priorYearStr) py += num;
       }
       if (lifetime === 0) continue;
@@ -233,7 +253,7 @@ export default function StripeConnectRevenue() {
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
               <>
                 <Typography variant="h5" sx={{ fontWeight: 500 }}>{USD_COMPACT.format(summary.latestAmount)}</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{summary.latestMonth ?? '—'}</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{summary.latestMonth ?? '—'}{summary.latestMonth != null && summary.latestMonth >= currentMonthIso() ? ' (in progress)' : ''}</Typography>
               </>
             )}
           </Paper>
@@ -242,12 +262,12 @@ export default function StripeConnectRevenue() {
           <Paper sx={{ p: 2, flexGrow: 1, borderLeft: '3px solid', borderColor: 'primary.main' }}>
             <Stack direction="row" spacing={0.5} alignItems="center">
               <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>YTD annualized</Typography>
-              <InfoIcon info="Sum of all current-year monthly Connect fees × (12 / months loaded). If the YTD pace continues for the rest of the year." />
+              <InfoIcon info="Sum of current-year Connect fees for COMPLETE months × (12 / complete months). The in-progress month is excluded so a few days of fees don't count as a full month. If the YTD pace continues for the rest of the year." />
             </Stack>
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
               <>
                 <Typography variant="h5" sx={{ fontWeight: 500, color: 'primary.main' }}>{USD_COMPACT.format(summary.ytdAnnualized)}</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{summary.monthsLoadedCurrent}/12 months loaded</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>{summary.monthsLoadedCurrent}/12 complete months</Typography>
               </>
             )}
           </Paper>
@@ -293,7 +313,7 @@ export default function StripeConnectRevenue() {
           <InfoIcon info={
             <>
               <strong>What it is:</strong> Total Connect (affiliate) fees by calendar year. The lighter top portion of the current year&apos;s bar shows the annualized projection if YTD pace continues.<br /><br />
-              <strong>Annualized:</strong> YTD total × (12 / months loaded). When months loaded = 12 (a complete year) the projection is 0 — bar is just the actual total.
+              <strong>Annualized:</strong> complete-month YTD total × (12 / complete months); the in-progress month is shown in the actual bar but not used for the projection. When months loaded = 12 (a complete year) the projection is 0 — bar is just the actual total.
             </>
           } />
         </Stack>

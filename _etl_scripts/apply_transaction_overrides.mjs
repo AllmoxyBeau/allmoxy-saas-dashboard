@@ -19,8 +19,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const OVERRIDES_PATH = path.join(ROOT, '_etl_scripts/transaction_overrides.json');
 
@@ -289,10 +291,10 @@ for (const ov of overrides) {
     patchCustomerList(customerHealth.dunning_customers);
     if (Array.isArray(customerHealth.distribution)) {
       for (const bucket of customerHealth.distribution) {
-        patchCustomerList(bucket.customers);
+        patchCustomerList(Array.isArray(bucket.customers_list) ? bucket.customers_list : bucket.customers);
         if (typeof bucket.mrr === 'number') {
           // Only adjust the bucket total if the customer actually sits in this bucket.
-          const inBucket = bucket.customers?.some((c) => c.allmoxy_customer_id === allmoxy_customer_id);
+          const inBucket = (Array.isArray(bucket.customers_list) ? bucket.customers_list : Array.isArray(bucket.customers) ? bucket.customers : []).some((c) => c.allmoxy_customer_id === allmoxy_customer_id);
           if (inBucket) bucket.mrr = round2(bucket.mrr + subDelta);
         }
       }

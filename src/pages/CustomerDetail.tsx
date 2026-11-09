@@ -58,7 +58,7 @@ type CustomerProfile = {
   last_payment_date: string | null;
   years_with_us: number | null;
   cohort_year: number | null;
-  status: 'active' | 'at_risk' | 'non_payment' | 'churned' | 'never_paid';
+  status: 'active' | 'at_risk' | 'non_payment' | 'paused' | 'churned' | 'never_paid';
   active_today: boolean;
   lifetime_total: number;
   lifetime_subscription: number;
@@ -295,7 +295,8 @@ const HUBSPOT_CHURN_PLAYBOOK = [
 function statusChipProps(status: CustomerProfile['status']) {
   if (status === 'active') return { label: 'Active', bgcolor: 'rgba(26, 158, 92, 0.18)', color: 'success.main' } as const;
   if (status === 'at_risk') return { label: 'At risk · dunning', bgcolor: 'rgba(245, 158, 11, 0.18)', color: 'warning.main' } as const;
-  if (status === 'non_payment') return { label: 'Non-payment · missed a month', bgcolor: 'rgba(234, 88, 12, 0.20)', color: '#C2410C' } as const;
+  if (status === 'non_payment') return { label: 'Lapsed · stopped billing, churn confirms at 3 months', bgcolor: 'rgba(234, 88, 12, 0.20)', color: '#C2410C' } as const;
+  if (status === 'paused') return { label: 'Paused · pause granted (not churned)', bgcolor: 'rgba(100, 116, 139, 0.22)', color: '#64748B' } as const;
   if (status === 'never_paid') return { label: 'Never paid', bgcolor: 'rgba(139, 148, 158, 0.20)', color: 'text.secondary' } as const;
   return { label: 'Churned', bgcolor: 'rgba(218, 54, 51, 0.18)', color: 'error.main' } as const;
 }
@@ -532,7 +533,7 @@ export default function CustomerDetail() {
               <StatCard label="Lifetime Connect fees" value={USD0.format(selected.lifetime_connect)} hint={`${((selected.lifetime_connect / Math.max(selected.lifetime_total, 1)) * 100).toFixed(0)}% of lifetime`} info={<><strong>What it is:</strong> Total affiliate/connect fees Allmoxy has earned from this customer's Stripe Connect transactions.<br /><br /><strong>Data:</strong> Sum of per-month fees from the 2024/2025/2026 Stripe Connect Revenue sheets, matched by customer name.</>} />
             </Box>
             <Box sx={{ flex: '1 1 150px' }}>
-              <StatCard label={`${monthLabel(selected.latest_month)} MRR`} value={USD0.format(selected.current_subscription_mrr)} hint={selected.current_subscription_mrr > 0 ? 'Currently paying' : 'Not paying this month'} info={<><strong>What it is:</strong> This customer's subscription MRR in the latest complete month.<br /><br /><strong>Data:</strong> Looked up in the MRR by Month tab for the reference month shown.</>} />
+              <StatCard label={`${monthLabel(selected.latest_month)} MRR`} value={USD0.format(selected.current_subscription_mrr)} hint={selected.current_subscription_mrr > 0 ? 'Currently paying' : 'Not paying this month'} info={<><strong>What it is:</strong> This customer's subscription MRR in the latest complete month.<br /><br /><strong>Data:</strong> The canonical customer base — invoiced (accrual) basis, annual payers at amortized MRR, implementation/support excluded — so it matches this customer's line in the Overview's "Active paying customers" list. Cash collected in the month can differ when a payment lands early or late.</>} />
             </Box>
             <Box sx={{ flex: '1 1 150px' }}>
               <StatCard label="Total orders" value={auroraRec?.total_orders != null ? auroraRec.total_orders.toLocaleString() : '—'} hint={auroraRec?.total_orders_asof ? `lifetime · as of ${formatDateMDY(auroraRec.total_orders_asof)}` : 'lifetime cumulative'} info={<><strong>What it is:</strong> Cumulative count of all orders this customer has ever placed in Allmoxy.<br /><br /><strong>Data:</strong> Live from the Aurora warehouse (<code>instance_total_orders</code>), mapped by installer&nbsp;ID. This is the authoritative order count — the meta spreadsheet carries dollars only.</>} />

@@ -49,6 +49,8 @@ type Aggregates = {
   done_tickets: number;
   tickets_with_matched_customer: number;
   open_mrr_at_stake: number;
+  open_customers_distinct?: number;
+  open_mrr_ticket_weighted?: number;
   distinct_customers_tagged: number;
   unmatched_labels: string[];
 };
@@ -70,6 +72,21 @@ export default function Features() {
   const snap = data as Snapshot | undefined;
   const rows = snap?.rows ?? [];
   const agg = snap?.aggregates;
+  // Distinct customers with >=1 open ticket, each counted ONCE at current MRR — derived
+  // from the rows so it holds even on a snapshot built before the aggregate was fixed
+  // (which summed MRR per ticket and re-counted the same customer on every ticket).
+  const openStake = useMemo(() => {
+    const seen = new Map<number, number>();
+    let ticketWeighted = 0;
+    for (const r of rows) {
+      if (r.stage_category === 'Done') continue;
+      ticketWeighted += r.total_mrr;
+      for (const c of r.customers) if (!seen.has(c.allmoxy_customer_id)) seen.set(c.allmoxy_customer_id, c.mrr);
+    }
+    let mrr = 0;
+    for (const v of seen.values()) mrr += v;
+    return { mrr, customers: seen.size, ticketWeighted: agg?.open_mrr_ticket_weighted ?? ticketWeighted };
+  }, [rows, agg]);
 
   const [showDone, setShowDone] = useState(false);
   const [withRevenueOnly, setWithRevenueOnly] = useState(false);
@@ -131,7 +148,7 @@ export default function Features() {
 
       <Grid container spacing={2} sx={{ mb: 2 }} alignItems="stretch">
         <KpiTile label="Open tickets" info="DEV tickets tagged with at least one customer that aren't Done. The CS→Dev prioritization backlog." value={agg?.open_tickets} sub={`${agg?.total_tickets ?? 0} total tagged`} accent="primary.main" valueColor="primary.main" isLoading={isLoading} />
-        <KpiTile label="Open MRR at stake" info="Sum of tagged-customer MRR across all open tickets (a customer counts once per ticket). The total recurring revenue represented by the open feature backlog." value={agg ? USD0.format(agg.open_mrr_at_stake) : undefined} sub="across open tickets" accent="success.main" valueColor="success.main" isLoading={isLoading} />
+        <KpiTile label="Open MRR at stake" info={`Current subscription MRR of the distinct customers tagged on at least one open ticket — each customer counted once, however many tickets they're on. The recurring revenue represented by the open feature backlog. Secondary: the ticket-weighted sum (${USD0.format(openStake.ticketWeighted)}) adds a customer's MRR once per open ticket — a demand-intensity signal, not revenue, and many times the book's total MRR.`} value={agg ? USD0.format(openStake.mrr) : undefined} sub={`${openStake.customers} customers · ticket-weighted ${USD0.format(openStake.ticketWeighted)}`} accent="success.main" valueColor="success.main" isLoading={isLoading} />
         <KpiTile label="Customers driving features" info="Distinct customers tagged on at least one DEV ticket." value={agg?.distinct_customers_tagged} sub="tagged on ≥1 ticket" isLoading={isLoading} />
         <KpiTile label="Tickets w/ revenue weight" info="Tagged tickets where at least one customer matched the revenue roster. The rest tag customers we couldn't resolve by name (see footer)." value={agg?.tickets_with_matched_customer} sub={`of ${agg?.total_tickets ?? 0} tagged`} isLoading={isLoading} />
       </Grid>

@@ -23,8 +23,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 
 function readJson(p) {
@@ -32,6 +34,9 @@ function readJson(p) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 function round2(n) { return Math.round(n * 100) / 100; }
+// Margins are ratios: keep 4dp (0.0523 = 5.23%). round2 on a ratio collapsed 5.23% to
+// 5.0% on the page.
+function round4(n) { return Math.round(n * 10000) / 10000; }
 
 const pnl = readJson(path.join(SNAP, 'pnl_by_month.json'));
 const adjConfig = readJson(path.join(ROOT, '_etl_scripts/ebitda_adjustments.json'));
@@ -125,11 +130,11 @@ function buildBridge(windowName, windowMonths) {
       { key: 'amortization', label: 'Amortization (7405)', amount: round2(amortization) },
     ],
     gaap_ebitda: round2(gaap_ebitda),
-    gaap_ebitda_margin: ebitdaMargin != null ? round2(ebitdaMargin) : null,
+    gaap_ebitda_margin: ebitdaMargin != null ? round4(ebitdaMargin) : null,
     qoe_adjustments: qoeAddBacks,
     qoe_adjustment_total: round2(qoeAddBackTotal),
     adjusted_ebitda: round2(adjusted_ebitda),
-    adjusted_ebitda_margin: adjEbitdaMargin != null ? round2(adjEbitdaMargin) : null,
+    adjusted_ebitda_margin: adjEbitdaMargin != null ? round4(adjEbitdaMargin) : null,
     placeholder_adjustment_count: qoeAddBacks.filter((a) => a.is_placeholder).length,
   };
 }
@@ -142,7 +147,8 @@ const latestMonth = months[months.length - 1];
 const ytdYear = latestMonth.slice(0, 4);
 const ytdMonths = months.filter((m) => m.startsWith(ytdYear));
 bridges.ytd_current = buildBridge('ytd_current', ytdMonths);
-bridges.ytd_current.label = `YTD ${ytdYear}`;
+// Name the last P&L month — the QuickBooks P&L lags, so "YTD" alone overstates coverage.
+bridges.ytd_current.label = `YTD ${ytdYear} through ${latestMonth}`;
 
 // Latest month
 bridges.latest_month = buildBridge('latest_month', [latestMonth]);
@@ -158,7 +164,7 @@ if (months.length >= 12) {
     window: 'ttm',
     label: 'TTM (unavailable)',
     unavailable: true,
-    reason: `Only ${months.length} month(s) of P&L data available (${months[0]} – ${latestMonth}). TTM bridge will activate automatically once the QB P&L export covers 12+ months. Upload an extended Profit and Loss xlsx to /Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy+LLC_Profit+and+Loss.xlsx and re-run refresh_all.`,
+    reason: `Only ${months.length} month(s) of P&L data available (${months[0]} – ${latestMonth}). TTM bridge will activate automatically once the QB P&L export covers 12+ months. Upload an extended Profit and Loss xlsx to ../Allmoxy+LLC_Profit+and+Loss.xlsx and re-run refresh_all.`,
   };
 }
 
@@ -169,6 +175,7 @@ const out = {
   source: {
     pnl_months: pnl.months.length,
     pnl_window: `${months[0]} – ${latestMonth}`,
+    last_pnl_month: latestMonth,
     qoe_adjustment_count: adjConfig?.adjustments?.length ?? 0,
     qoe_adjustments_placeholder_count: (adjConfig?.adjustments || []).filter((a) => a.is_placeholder).length,
   },

@@ -69,6 +69,7 @@ type RenewalRow = {
 type Snapshot = {
   fetchedAt: string;
   rows: RenewalRow[];
+  aggregates?: { base_customers?: number | null; base_as_of?: string | null; base_customers_without_instance?: number };
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -295,7 +296,7 @@ export default function Contracts() {
           label="Total quotes"
           info="Sum of all HubSpot Quotes across every customer. Informational — not clickable."
           value={stats.quoteTotal}
-          sub={`across ${stats.total} customers`}
+          sub={`across ${stats.total}${snap?.aggregates?.base_customers != null ? ` of ${snap.aggregates.base_customers}` : ''} customers (canonical base)`}
           accent="primary.main"
           valueColor="primary.main"
           isLoading={isLoading}

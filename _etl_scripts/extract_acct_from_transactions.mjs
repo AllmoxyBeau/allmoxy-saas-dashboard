@@ -10,10 +10,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const FILES = ['/tmp/connect2024.md', '/tmp/connect2025.md', '/tmp/connect2026.md'];
-const overridesPath = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/src/data/connect_customer_overrides.json';
-const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const overridesPath = path.resolve(__dirname, '..', 'src/data/connect_customer_overrides.json');
+const SNAP = path.resolve(__dirname, '..', 'public/snapshots');
 
 const overrides = JSON.parse(fs.readFileSync(overridesPath, 'utf8'));
 const profiles = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8'));

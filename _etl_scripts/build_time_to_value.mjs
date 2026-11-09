@@ -17,8 +17,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 
 function readJson(p) { return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : null; }
@@ -47,20 +49,24 @@ function lookupOwner(profile) {
 const ordersByCustomer = new Map();
 for (const [k, v] of Object.entries(orders?.by_customer || {})) ordersByCustomer.set(Number(k), v);
 
-// All paying customers — includes status='at_risk' and customers between cycles.
-// Match the Churn Risk Matrix cohort exclusions: playbook-cancelled and
-// agreed pauses are not retention targets.
+// COHORT = the canonical customer base (customer_profiles.active_today, the same 198
+// paying customers every page counts), MINUS an explicit, labelled exclusion: HubSpot
+// pay status Cancelled (playbook done, decision made) or Active - Pause Granted (an
+// agreed hold) — neither is a time-to-value target. This used to be its own status /
+// lifetime / pay_status filter that drifted to 201 / $226,837 against the canonical
+// 198 / $231,105, with nothing on the page saying who was in or out.
 const PAUSE_GRANTED_STATUSES = new Set(['Active - Pause Granted']);
-const cohort = (profiles?.rows || []).filter((r) =>
-  r.status !== 'churned' &&
-  r.status !== 'never_paid' &&
-  !r.excluded_from_logo_count &&
-  (r.lifetime_subscription || 0) > 0 &&
-  r.pay_status !== 'Cancelled' &&
-  !PAUSE_GRANTED_STATUSES.has(r.pay_status)
-);
+const paying = (profiles?.rows || []).filter((r) => r.active_today === true);
+const exclusionReason = (r) =>
+  r.pay_status === 'Cancelled' ? 'HubSpot pay status Cancelled'
+  : PAUSE_GRANTED_STATUSES.has(r.pay_status) ? 'HubSpot pay status Active - Pause Granted'
+  : null;
+const cohortExcluded = paying
+  .filter((r) => exclusionReason(r))
+  .map((r) => ({ allmoxy_customer_id: r.allmoxy_customer_id, name: r.name, pay_status: r.pay_status, current_subscription_mrr: round2(r.current_subscription_mrr), reason: exclusionReason(r) }));
+const cohort = paying.filter((r) => !exclusionReason(r));
 
-console.log(`Paying customer cohort (non-churned, lifetime > 0, not playbook-cancelled, not on agreed pause): ${cohort.length} customers`);
+console.log(`Paying customers (canonical base): ${paying.length} · excluded ${cohortExcluded.length} (Cancelled / Pause Granted) · cohort ${cohort.length}`);
 console.log(`Order data for ${ordersByCustomer.size} customers`);
 
 const today = new Date();
@@ -254,8 +260,14 @@ for (const m of ttvSorted) {
 }
 
 // Headline
+// ONE definition of "at risk" for every number on the page (burn tile, its /mo hint,
+// the At-risk toggle): not getting verified value yet. no_data IS included — a paying
+// customer with no verified orders on file has not shown value — and is labelled so.
+// Healthy, bid-only (value outside order data) and onboarding (grace period) are not.
+const AT_RISK_CATEGORIES = ['gym_member', 'never_launched_some_orders', 'launched_dormant', 'declining', 'no_data', 'unknown'];
+const atRisk = customers.filter((c) => AT_RISK_CATEGORIES.includes(c.category));
 const totalWasted = customers.reduce((s, c) => s + c.wasted_to_date, 0);
-const totalBurn = customers.filter((c) => c.category !== 'healthy').reduce((s, c) => s + c.current_burn_annualized, 0);
+const totalBurn = atRisk.reduce((s, c) => s + c.current_burn_annualized, 0);
 const gymMembers = categoryBuckets.gym_member.customers.length;
 const dormant = categoryBuckets.launched_dormant.customers.length;
 const declining = categoryBuckets.declining.customers.length;
@@ -263,12 +275,19 @@ const declining = categoryBuckets.declining.customers.length;
 const out = {
   fetched_at: new Date().toISOString(),
   comment:
-    'Time to Value — for each active paying customer, classifies whether they are getting product value via verified order data. Categories: gym_member (never launched, no orders), never_launched_some_orders (orders but no Live Date — hygiene), launched_dormant (Live Date but no current-year orders), declining (orders down >50% YoY), healthy (launched + running orders). "Wasted to date" = subscription $ paid without realized value. "Annualized burn" = current MRR × 12 if they never realize value going forward.',
+    'Time to Value — for each customer in the canonical customer base (less HubSpot Cancelled / Pause Granted, listed in cohort_excluded), classifies whether they are getting product value via verified order data. Categories: gym_member (never launched, no orders), never_launched_some_orders (orders but no Live Date — hygiene), launched_dormant (Live Date but no current-year orders), declining (orders down >50% YoY), healthy (launched + running orders). "Wasted to date" = subscription $ paid without realized value. "Annualized burn" = current MRR × 12 if they never realize value going forward.',
   as_of_year: currentYear,
   cohort_size: cohort.length,
+  cohort_base_size: paying.length,
+  cohort_base_mrr: round2(paying.reduce((s, r) => s + (r.current_subscription_mrr || 0), 0)),
+  cohort_excluded: cohortExcluded,
+  at_risk_categories: AT_RISK_CATEGORIES,
   summary: {
     total_wasted_to_date: round2(totalWasted),
     total_annualized_burn_at_risk: round2(totalBurn),
+    at_risk_count: atRisk.length,
+    at_risk_mrr: round2(atRisk.reduce((s, c) => s + (c.current_subscription_mrr || 0), 0)),
+    at_risk_no_data_count: atRisk.filter((c) => c.category === 'no_data').length,
     gym_member_count: gymMembers,
     launched_dormant_count: dormant,
     declining_count: declining,
@@ -288,6 +307,6 @@ const outPath = path.join(SNAP, 'time_to_value.json');
 fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
 console.log(`Wrote ${outPath}`);
 console.log(`  Total wasted to date: $${out.summary.total_wasted_to_date.toLocaleString()}`);
-console.log(`  Annualized burn at risk (non-healthy): $${out.summary.total_annualized_burn_at_risk.toLocaleString()}`);
+console.log(`  Annualized burn at risk (${AT_RISK_CATEGORIES.join(', ')}; ${atRisk.length} customers): $${out.summary.total_annualized_burn_at_risk.toLocaleString()}`);
 console.log(`  Gym members: ${gymMembers} · Dormant: ${dormant} · Declining: ${declining} · Healthy: ${categoryBuckets.healthy.customers.length}`);
 console.log(`  TTV median: ${median} mo · p90: ${p90} mo (n=${ttvSorted.length})`);

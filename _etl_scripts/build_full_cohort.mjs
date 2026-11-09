@@ -8,11 +8,13 @@
 //   - services_by_month snapshot (already correct from earlier)
 
 import fs from 'node:fs';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
-const SNAPSHOTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const XLSX_PATH = path.resolve(__dirname, '../..', 'Allmoxy - Meta Data Reconcile Tool.xlsx');
+const SNAPSHOTS = path.resolve(__dirname, '..', 'public/snapshots');
 
 const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
 

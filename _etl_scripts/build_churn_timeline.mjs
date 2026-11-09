@@ -30,8 +30,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const read = (p, d = null) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } };
 const r2 = (v) => Math.round(v * 100) / 100;
@@ -43,6 +45,16 @@ const SUBPAT = read(path.join(SNAP, 'churn_subpatterns.json'), {});
 const ORDERS = read(path.join(SNAP, 'orders_verified.json'), { by_customer: {} }).by_customer || {};
 const TICKETS = read(path.join(SNAP, 'service_tickets.json'), { customers: [] });
 const RISK = read(path.join(SNAP, 'churn_risk_matrix.json'), { customers: [] }).customers || [];
+const BASE = read(path.join(SNAP, 'customer_base.json'), {});
+const LOGO_FLOW = BASE.logo_flow || [];
+
+// Canonical churn month per customer, from the customer base's logo flow. Under the
+// churn rule (2026-11) churn is dated to the FIRST UN-INVOICED month and confirmed by a
+// Stripe cancel / HubSpot Cancelled or churn reason / 3 months unbilled; paused and
+// lapsed-provisional customers are NOT churn. logo_flow already applies that rule, so it
+// is the date of record; profiles.churn_month is the same rule on the profile side.
+const flowChurnMonth = new Map();
+for (const m of LOGO_FLOW) for (const c of m.details?.churned || []) flowChurnMonth.set(c.allmoxy_customer_id, m.month);
 
 const inferBy = new Map(INFER.map((c) => [c.allmoxy_customer_id, c]));
 const riskBy = new Map(RISK.map((c) => [c.allmoxy_customer_id, c]));
@@ -62,7 +74,9 @@ for (const p of PROF) {
   const paying = Object.keys(hist).filter((m) => (hist[m]?.subscription || 0) > 0).sort();
   if (!paying.length) continue;
   const lastMonth = paying[paying.length - 1];
-  const churnMonth = addMonths(lastMonth, 1);    // first month they did not pay for
+  // First un-invoiced month (churn rule): profile churn_month, else the logo-flow month,
+  // else the month after the last subscription payment.
+  const churnMonth = p.churn_month || flowChurnMonth.get(p.allmoxy_customer_id) || addMonths(lastMonth, 1);
 
   // ── MRR run-up: what they were worth at their best, and what was left at the end ──
   const amounts = paying.map((m) => hist[m].subscription);
@@ -82,7 +96,13 @@ for (const p of PROF) {
   // A placeholder is not a reason. "(needs manual review)" and friends are the reason
   // machinery admitting it does not know, and counting them as explained would report
   // 0 unexplained churns when 9 customers ($4,166 of MRR) have never been diagnosed.
-  const isPlaceholder = (v) => !v || /needs manual review|unknown|unclassified|tbd|n\/a|^-+$/i.test(String(v).trim());
+  //
+  // This must agree with ChurnPatterns / ChurnInvestigator, which treat ANY fully
+  // parenthesised value ("(needs manual review)", "(no evidence found)", …) as a
+  // placeholder, and drop low-confidence "Unresponsive" inferences — that is the
+  // inference layer's default when it found nothing, not a diagnosis.
+  const isPlaceholder = (v) => !v || /^\(.*\)$/.test(String(v).trim()) || /needs manual review|unknown|unclassified|tbd|n\/a|^-+$/i.test(String(v).trim());
+  const isDefaultInference = (c) => c?.confidence === 'low' && c?.suggested_reason === 'Unresponsive';
   const res = RESEARCH[String(p.allmoxy_customer_id)];
   const inf = inferBy.get(p.allmoxy_customer_id);
   const hub = (p.churn_reason || '').trim();
@@ -91,7 +111,7 @@ for (const p of PROF) {
     reason = res.proposed_churn_reason; reasonSource = 'research'; confidence = res.confidence || null;
     const q = (res.evidence_quotes || [])[0];
     evidence = q?.quote || null; evidenceDate = q?.date || null;
-  } else if (!isPlaceholder(inf?.suggested_reason)) {
+  } else if (!isPlaceholder(inf?.suggested_reason) && !isDefaultInference(inf)) {
     reason = inf.suggested_reason; reasonSource = 'inferred'; confidence = inf.confidence || null;
     evidence = inf.evidence_quote || null; evidenceDate = inf.evidence_date || null;
   } else if (!isPlaceholder(hub)) {
@@ -222,8 +242,19 @@ const tally = (key) => {
   return [...m.values()].sort((a, b) => b.mrr_lost - a.mrr_lost);
 };
 
-const ttmStart = addMonths(new Date().toISOString().slice(0, 7), -12);
-const ttm = rows.filter((r) => r.churn_month >= ttmStart);
+// TTM = the last 12 COMPLETE months, ending at the customer base's as-of month, and
+// counted from customer_base.logo_flow so this tile agrees with every other churn count.
+// (It used to start 12 months before the calendar month and count by cash last-payment
+// month, which dated churn a month early and included the month in progress.)
+const asOf = BASE.as_of || addMonths(new Date().toISOString().slice(0, 7), -1);
+const ttmStart = addMonths(asOf, -11);
+const ttmFlow = LOGO_FLOW.filter((m) => m.month >= ttmStart && m.month <= asOf);
+const flowList = (k) => ttmFlow.flatMap((m) => (m.details?.[k] || []).map((c) => ({ ...c, month: m.month })));
+const ttmChurned = flowList('churned');
+const ttmLapsed = flowList('lapsed');
+const ttmPaused = flowList('paused');
+const ttmIds = new Set(ttmChurned.map((c) => c.allmoxy_customer_id));
+const ttm = LOGO_FLOW.length ? rows.filter((r) => ttmIds.has(r.allmoxy_customer_id)) : rows.filter((r) => r.churn_month >= ttmStart && r.churn_month <= asOf);
 
 const out = {
   tab: 'churn_timeline',
@@ -238,8 +269,15 @@ const out = {
   },
   ttm: {
     window_start: ttmStart,
-    churned_customers: ttm.length,
-    mrr_lost: r2(ttm.reduce((s, r) => s + r.mrr_at_churn, 0)),
+    window_end: asOf,
+    basis: LOGO_FLOW.length ? 'customer_base.logo_flow (first un-invoiced month)' : 'profiles churn_month',
+    churned_customers: LOGO_FLOW.length ? ttmChurned.length : ttm.length,
+    mrr_lost: r2(LOGO_FLOW.length ? ttmChurned.reduce((s, c) => s + (c.mrr || 0), 0) : ttm.reduce((s, r) => s + r.mrr_at_churn, 0)),
+    // Not churn under the rule — shown alongside so the reader sees every exit path.
+    lapsed_customers: ttmLapsed.length,
+    lapsed_mrr: r2(ttmLapsed.reduce((s, c) => s + (c.mrr || 0), 0)),
+    paused_customers: ttmPaused.length,
+    paused_mrr: r2(ttmPaused.reduce((s, c) => s + (c.mrr || 0), 0)),
     avg_tenure_years: ttm.length ? r2(ttm.reduce((s, r) => s + (r.tenure_years || 0), 0) / ttm.length) : null,
     left_at_full_price: ttm.filter((r) => (r.months_declining_before_churn || 0) === 0).length,
     declined_first: ttm.filter((r) => (r.months_declining_before_churn || 0) > 0).length,
@@ -249,7 +287,7 @@ const out = {
   by_subpattern: tally('subpattern_label'),
   by_segment: tally('segment'),
   customers: rows,
-  notes: 'Churned customers in the order they left, newest first. Churn month = the first month they did not pay for, derived from the last month with subscription revenue — a defensible date, unlike a HubSpot cancellation stamp which records when someone closed the record. Reason is ranked: researched (someone read the account) > inferred (signals + a quote) > the HubSpot dropdown. The run-up fields (decline from peak, months declining, order volume final year vs prior, support load, failed payments) are what turn a one-word reason into a story.',
+  notes: 'Churned customers in the order they left, newest first. Churn month = the first un-invoiced month (churn rule: confirmed by Stripe cancel / HubSpot Cancelled or churn reason / 3 months unbilled; paused is never churn), from customer_profiles.churn_month / customer_base.logo_flow — unlike a HubSpot cancellation stamp which records when someone closed the record. TTM = last 12 complete months to the customer base as-of month, counted from logo_flow; lapsed and paused exits are reported separately. Reason is ranked: researched (someone read the account) > inferred (signals + a quote) > the HubSpot dropdown. The run-up fields (decline from peak, months declining, order volume final year vs prior, support load, failed payments) are what turn a one-word reason into a story.',
 };
 
 fs.writeFileSync(path.join(SNAP, 'churn_timeline.json'), JSON.stringify(out));

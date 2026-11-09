@@ -13,10 +13,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SNAPSHOTS =
   process.argv[2] ||
-  '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+  path.resolve(__dirname, '..', 'public/snapshots');
 
 const classification = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'classification_master.json'), 'utf8'));
 const core = JSON.parse(fs.readFileSync(path.join(SNAPSHOTS, 'allmoxy_core_customer.json'), 'utf8'));

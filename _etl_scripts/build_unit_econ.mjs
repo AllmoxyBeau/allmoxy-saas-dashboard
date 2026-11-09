@@ -8,10 +8,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
-const SNAPSHOTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const XLSX_PATH = path.resolve(__dirname, '../..', 'Allmoxy - Meta Data Reconcile Tool.xlsx');
+const SNAPSHOTS = path.resolve(__dirname, '..', 'public/snapshots');
 
 // CANONICAL customer count (Beau, 2026-09-14). logo_qty used to come from the xlsx
 // headline row, which is stale — it reported 183 logos for 2026-06 while the canonical
@@ -283,6 +285,9 @@ const monthly = months.map((m) => {
     logo_qty: logoQty,
     avg_mrr_per_customer: avgMRR != null ? r2(avgMRR) : null,
     net_op_income: pnlAvailable ? r2(netOp) : null,
+    // QuickBooks Total Income for the same month — the denominator that matches the
+    // QuickBooks numerators above (gross profit, COGS, net operating income).
+    qb_total_income: pnlAvailable ? r2(qbTotalIncome) : null,
   };
 });
 
@@ -309,8 +314,11 @@ const ttmGrossProfit = sum(ttmPnl, 'gross_profit');
 const ttmSNM = sum(ttmPnl, 'snm_expense');
 const ttmNewLogos = sum(ttmPnl, 'new_logos'); // logos over the P&L-covered months (matches S&M spend)
 const ttmNetOp = sum(ttmPnl, 'net_op_income');
-const ttmPnlTotalIncome = sum(ttmPnl, 'total_income');
-const ttmPnlSubRev = sum(ttmPnl, 'subscription_revenue');
+// Margins divide QuickBooks numerators by QuickBooks Total Income over the SAME
+// covered months — never by the Stripe-based total_income, which is a different
+// ledger and silently skews the ratio.
+const ttmPnlTotalIncome = sum(ttmPnl, 'qb_total_income');
+const ttmPnlSubRev = ttmPnl.reduce((s, r) => s + v(pnl.subRev, r.month), 0);
 const ttmGM = ttmPnlTotalIncome > 0 ? ttmGrossProfit / ttmPnlTotalIncome : null;
 const ttmSubGM = ttmPnlSubRev > 0 ? (ttmPnlSubRev - ttmCOGS * (ttmPnlSubRev / (ttmPnlTotalIncome || 1))) / ttmPnlSubRev : null;
 
@@ -321,33 +329,55 @@ const latest = completeMonths[completeMonths.length - 1];
 const avgMRR = latest?.avg_mrr_per_customer ?? null;
 const logoQtyNow = latest?.logo_qty ?? null;
 
-// Logo churn from the waterfall's CONFIRMED churned_logos (status=churned), not
-// from Logo Qty count-deltas. The old delta method (gross adds − net change)
-// mislabeled delinquency, pauses, and annual-payer gaps as churn, overstating
-// it (~25% vs the true ~17%). monthly rate = churned logos ÷ starting active
-// logos, summed over the window; annualized by compounding. Feeds LTV so the
-// customer-lifetime math matches the Scorecard's logo-churn figure.
+// Logo churn from the CANONICAL logo flow (customer_base.logo_flow, built on the
+// churn rule in churn_rules.mjs): lost logos = churned + lapsed; PAUSED is not churn.
+// Monthly rate = Σ lost logos ÷ Σ starting logos over the TTM window's months
+// (every month counts — the first month's denominator is its own starting_logos,
+// i.e. the prior month's ending count); annualized by compounding.
+// Fallback (no logo_flow coverage): the waterfall's churned_logos ÷ the prior
+// month's logo count, seeded from the month before the window so all 12 months count.
 let totalChurn = 0;
 let totalStartingLogos = 0;
-for (let i = 1; i < ttm.length; i++) {
-  const prev = ttm[i - 1];
-  const cur = ttm[i];
-  const churn = churnedLogosByMonth[cur.month] ?? 0;
-  totalChurn += churn;
-  totalStartingLogos += prev.logo_qty ?? 0;
+const ttmMonthSet = new Set(ttm.map((r) => r.month));
+const logoFlowTtm = (CUSTOMER_BASE?.logo_flow || []).filter((f) => ttmMonthSet.has(f.month) && (f.starting_logos ?? 0) > 0);
+let logoChurnSource = 'customer_base.logo_flow';
+if (logoFlowTtm.length > 0) {
+  for (const f of logoFlowTtm) {
+    totalChurn += (f.churned_logos ?? 0) + (f.lapsed_logos ?? 0);
+    totalStartingLogos += f.starting_logos ?? 0;
+  }
+} else {
+  logoChurnSource = 'mrr_waterfall.churned_logos';
+  const monthlyByMonth = new Map(monthly.map((r) => [r.month, r]));
+  for (const cur of ttm) {
+    const [yy, mm] = cur.month.split('-').map(Number);
+    const pd = new Date(yy, mm - 2, 1);
+    const prevMonth = `${pd.getFullYear()}-${String(pd.getMonth() + 1).padStart(2, '0')}`;
+    const prev = monthlyByMonth.get(prevMonth);
+    if (!prev?.logo_qty) continue;
+    totalChurn += churnedLogosByMonth[cur.month] ?? 0;
+    totalStartingLogos += prev.logo_qty;
+  }
 }
+const logoChurnMonths = logoFlowTtm.length > 0 ? logoFlowTtm.length : ttm.length;
 const monthlyChurnRate = totalStartingLogos > 0 ? totalChurn / totalStartingLogos : null; // per-month
 const annualChurnRate = monthlyChurnRate != null ? 1 - Math.pow(1 - monthlyChurnRate, 12) : null;
-// Also carry the waterfall's REVENUE (MRR-dollar) gross churn so the snapshot
-// exposes both lenses (small logos churn, big ones stay → revenue churn ≪ logo churn).
-// Accrual TTM preferred — see churnedLogosByMonth above.
-const annualRevenueChurnRate = waterfall?.ttm_accrual?.annual_gross_churn_rate
-  ?? waterfall?.ttm?.annual_gross_churn_rate ?? null;
+// REVENUE churn is the ONE retention definition every page uses (Beau, 2026-11-09):
+// gross revenue churn = 1 − the accrual waterfall's TTM GRR. GRR/NRR (churn_rules.mjs)
+// count EVERY dollar that stopped — churn + contraction + voided + delinquent + paused —
+// and credit recovered lapses back; each monthly rate is averaged over the TTM window
+// and annualized as (mean monthly rate)^12. NRR additionally adds expansion. (The
+// waterfall's annual_gross_churn_rate counts outright churn only, which understated
+// losses and inflated LTV.) Cash TTM is the fallback before the accrual window exists.
+const retentionTtm = waterfall?.ttm_accrual ?? waterfall?.ttm ?? null;
+const annualRevenueChurnRate = retentionTtm?.annual_grr != null ? 1 - retentionTtm.annual_grr : null;
+const monthlyRevenueChurnRate = annualRevenueChurnRate != null ? 1 - Math.pow(1 - annualRevenueChurnRate, 1 / 12) : null;
 const retentionBasis = waterfall?.ttm_accrual ? 'accrual' : 'cash';
 
-// LTV = (avg MRR * gross margin) / monthly churn rate  (subscription only)
-const ltv = avgMRR != null && ttmSubGM != null && monthlyChurnRate && monthlyChurnRate > 0
-  ? (avgMRR * ttmSubGM) / monthlyChurnRate
+// LTV = (avg MRR * subscription gross margin) / monthly gross REVENUE churn — the same
+// churn the NRR page, Revenue Waterfall and Sales Budget report.
+const ltv = avgMRR != null && ttmSubGM != null && monthlyRevenueChurnRate && monthlyRevenueChurnRate > 0
+  ? (avgMRR * ttmSubGM) / monthlyRevenueChurnRate
   : null;
 
 const cacPayback = avgMRR != null && ttmSubGM != null && ttmCAC != null && avgMRR * ttmSubGM > 0
@@ -360,6 +390,7 @@ const ltvCac = ltv != null && ttmCAC != null && ttmCAC > 0 ? ltv / ttmCAC : null
 const svcCustomersEver = new Set();
 const svcCustomerRevenue = new Map(); // customer_name -> total services $
 for (const r of services.rows) {
+  if (r.customer_name === 'Unattributed services') continue; // revenue, but not a customer
   let total = 0;
   for (const [k, val] of Object.entries(r)) {
     if (k === 'customer_name') continue;
@@ -385,6 +416,7 @@ const ttmConnectMonths = new Set(ttm.map((r) => r.month));
 let connectCustomersTtm = 0;
 let connectRevTtmFromCust = 0;
 for (const r of connectByCust.rows) {
+  if (r.customer_name === 'Unattributed Connect accounts') continue; // revenue, but not one customer
   let total = 0;
   for (const [k, val] of Object.entries(r)) {
     if (ttmConnectMonths.has(k) && typeof val === 'number') total += val;
@@ -424,11 +456,19 @@ const out = {
     new_logos: ttmNewLogos,
     cac: ttmCAC != null ? Math.round(ttmCAC * 100) / 100 : null,
     net_op_income: Math.round(ttmNetOp * 100) / 100,
+    // QuickBooks Total Income over pnl_coverage months — pair with net_op_income /
+    // gross_profit for coverage-matched margins (total_income above spans all 12).
+    pnl_total_income: Math.round(ttmPnlTotalIncome * 100) / 100,
+    operating_margin: ttmPnlTotalIncome > 0 ? Math.round((ttmNetOp / ttmPnlTotalIncome) * 10000) / 10000 : null,
     monthly_churn_rate: monthlyChurnRate != null ? Math.round(monthlyChurnRate * 10000) / 10000 : null,
     annual_churn_rate: annualChurnRate != null ? Math.round(annualChurnRate * 10000) / 10000 : null,
     retention_basis: retentionBasis,
     annual_logo_churn_rate: annualChurnRate != null ? Math.round(annualChurnRate * 10000) / 10000 : null,
+    logo_churn: { source: logoChurnSource, months: logoChurnMonths, lost_logos: totalChurn, starting_logo_months: totalStartingLogos, definition: 'lost = churned + lapsed (paused is not churn); monthly = Σlost ÷ Σstarting; annual = 1 − (1 − monthly)^12' },
     annual_revenue_churn_rate: annualRevenueChurnRate != null ? Math.round(annualRevenueChurnRate * 10000) / 10000 : null,
+    monthly_revenue_churn_rate: monthlyRevenueChurnRate != null ? Math.round(monthlyRevenueChurnRate * 10000) / 10000 : null,
+    annual_nrr: retentionTtm?.annual_nrr ?? null,
+    annual_grr: retentionTtm?.annual_grr ?? null,
     avg_mrr_per_customer: avgMRR != null ? Math.round(avgMRR * 100) / 100 : null,
     logo_qty_latest: logoQtyNow,
     ltv: ltv != null ? Math.round(ltv * 100) / 100 : null,
@@ -455,8 +495,9 @@ const out = {
     'Revenue (subscription/services/connect) sourced from the LIVE MRR snapshots so every month is current; QuickBooks P&L drives profitability (COGS, margins, CAC, LTV) only for the months it covers (see ttm.pnl_coverage) — recent months show revenue with margins pending the P&L refresh. ' +
     'Unit economics derived from QuickBooks CAC Info P&L × allmoxy_core_customer signups × mrr_by_month logo counts. ' +
     'CAC = (Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission) / new logos. ' +
-    'LTV = Avg MRR × Subscription Gross Margin / Monthly Logo Churn Rate. ' +
-    'Churn rate derived from Logo Qty deltas and gross signups (aggregate, not per-cohort). ' +
+    'LTV = Avg MRR × Subscription Gross Margin / Monthly Gross Revenue Churn, where gross revenue churn = 1 − the accrual waterfall TTM GRR (the one retention definition every page uses; contraction, voided and delinquent MRR count as losses). ' +
+    'Logo churn = customer_base.logo_flow (churned + lapsed) ÷ starting logos over the TTM months, annualized; paused is not churn; reported separately. ' +
+    'Margins (gross, subscription gross, operating) = QuickBooks numerator ÷ QuickBooks Total Income over pnl_coverage months (pnl_total_income). ' +
     'All metrics are subscription-only unless stated; services revenue is tracked separately.',
 };
 

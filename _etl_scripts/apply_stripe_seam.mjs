@@ -15,8 +15,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SEAM = '2026-06';            // first month sourced from Stripe
 const SEAM_DAY = `${SEAM}-01`;
 const CACHE = path.join(ROOT, '_etl_scripts/cache/stripe_charges.json');

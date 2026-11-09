@@ -1,8 +1,8 @@
 {
   "tab": "allmoxy_core_customer",
   "sheetId": "18RR86SKihlhx9qa1LyP59XaxRKkOHbAx00NnbE7iV30",
-  "fetchedAt": "2026-11-02T23:22:47.457Z",
-  "cachedUntil": "2026-11-02T23:27:47.457Z",
+  "fetchedAt": "2026-11-09T21:06:44.231Z",
+  "cachedUntil": "2026-11-09T21:11:44.231Z",
   "columns": [
     "allmoxy_customer_id",
     "name",
@@ -1431,7 +1431,7 @@
       "name": "Martin Wood Products",
       "sign_up_date": "2018-06-02",
       "hubspot_company_id": "1128625396",
-      "installer_id": "981",
+      "installer_id": "2171",
       "installer_directory": "martinwoodproducts",
       "stripe_customer_ids": [
         "cus_Cyf3kUlf6uI7lR"
@@ -1462,7 +1462,7 @@
         "cus_CzhPuQ3a10hV14",
         "cus_M3zTwrzoBqvtuD"
       ],
-      "harvest_id": null
+      "harvest_id": "6900956"
     },
     {
       "allmoxy_customer_id": 114,
@@ -2352,7 +2352,6 @@
       "installer_id": null,
       "installer_directory": null,
       "stripe_customer_ids": [
-        "cus_FHHDUoNCjeKgUw",
         "cus_FHHDUoNCjeKgUw",
         "cus_HuIb9go0WJW1Dw"
       ],
@@ -3394,18 +3393,6 @@
       "harvest_id": "9743744"
     },
     {
-      "allmoxy_customer_id": 263,
-      "name": "Safina Cabinetry",
-      "sign_up_date": "2020-08-26",
-      "hubspot_company_id": "4397735512",
-      "installer_id": null,
-      "installer_directory": null,
-      "stripe_customer_ids": [
-        "cus_HuIb9go0WJW1Dw"
-      ],
-      "harvest_id": "9835477"
-    },
-    {
       "allmoxy_customer_id": 264,
       "name": "A.N.A. Custom Millwork",
       "sign_up_date": "2019-05-01",
@@ -3899,12 +3886,13 @@
     {
       "allmoxy_customer_id": 303,
       "name": "Innovative Cabinetry And Design",
-      "sign_up_date": "2021-02-16",
+      "sign_up_date": "2021-02-01",
       "hubspot_company_id": "34886905005",
-      "installer_id": null,
-      "installer_directory": null,
+      "installer_id": "1492",
+      "installer_directory": "cabsource",
       "stripe_customer_ids": [
-        "cus_SB8OEWNPem6dz7"
+        "cus_SB8OEWNPem6dz7",
+        "cus_IxWtKe36bwi19S"
       ],
       "harvest_id": "10455666"
     },
@@ -5022,18 +5010,6 @@
       "harvest_id": "12324837"
     },
     {
-      "allmoxy_customer_id": 392,
-      "name": "Wurth Louis And Company",
-      "sign_up_date": "2022-07-15",
-      "hubspot_company_id": "38788777240",
-      "installer_id": null,
-      "installer_directory": null,
-      "stripe_customer_ids": [
-        "cus_M3zTwrzoBqvtuD"
-      ],
-      "harvest_id": "6900956"
-    },
-    {
       "allmoxy_customer_id": 393,
       "name": "Maxx Distributors",
       "sign_up_date": "2022-07-18",
@@ -5803,19 +5779,6 @@
       "installer_directory": null,
       "stripe_customer_ids": [],
       "harvest_id": "13968087"
-    },
-    {
-      "allmoxy_customer_id": 455,
-      "name": "Cabsource - Innovative Cabinet",
-      "sign_up_date": "2021-02-01",
-      "hubspot_company_id": "5388749162",
-      "installer_id": "1492",
-      "installer_directory": "cabsource",
-      "stripe_customer_ids": [
-        "cus_IxWtKe36bwi19S",
-        "cus_SB8OEWNPem6dz7"
-      ],
-      "harvest_id": null
     },
     {
       "allmoxy_customer_id": 456,
@@ -7707,7 +7670,7 @@
       "allmoxy_customer_id": 2100,
       "name": "Rb Millwork",
       "sign_up_date": "2026-08-24",
-      "hubspot_company_id": null,
+      "hubspot_company_id": "22397883144",
       "installer_id": "2159",
       "installer_directory": "rbmillwork",
       "stripe_customer_ids": [
@@ -7769,7 +7732,7 @@
       "allmoxy_customer_id": 2106,
       "name": "Criscott Properies",
       "sign_up_date": "2026-08-27",
-      "hubspot_company_id": null,
+      "hubspot_company_id": "58429330202",
       "installer_id": "2165",
       "installer_directory": "criscott",
       "stripe_customer_ids": [
@@ -7777,8 +7740,142 @@
         "cus_V9TaK8hvFgRZG2"
       ],
       "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2112,
+      "name": "Precise Closets & Cabinetry",
+      "sign_up_date": "2026-09-01",
+      "hubspot_company_id": "57895561804",
+      "installer_id": "2170",
+      "installer_directory": "precisecc",
+      "stripe_customer_ids": [
+        "cus_VBLOw1g7IvXnXD"
+      ],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2113,
+      "name": "Hardwoods Specialty Products",
+      "sign_up_date": "2026-09-01",
+      "hubspot_company_id": "57950361216",
+      "installer_id": "2167",
+      "installer_directory": "hardwoods",
+      "stripe_customer_ids": [
+        "cus_VBIu13PGD0CfuO"
+      ],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2120,
+      "name": "Glacier Millworks",
+      "sign_up_date": "2026-10-05",
+      "hubspot_company_id": "57940490836",
+      "installer_id": "2173",
+      "installer_directory": "glaciermillworks",
+      "stripe_customer_ids": [
+        "cus_VMxfYoakslDDsB"
+      ],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2121,
+      "name": "Btj Sandbox",
+      "sign_up_date": "2026-10-05",
+      "hubspot_company_id": null,
+      "installer_id": "2174",
+      "installer_directory": "btjsandbox",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2122,
+      "name": "Gm Doors Llc Dba Pine Door Manufacturing",
+      "sign_up_date": "2026-10-16",
+      "hubspot_company_id": "57937779627",
+      "installer_id": "2175",
+      "installer_directory": "pinedoor",
+      "stripe_customer_ids": [
+        "cus_VS98Y3FhOLB9e2"
+      ],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2123,
+      "name": "Contour Panel Components",
+      "sign_up_date": "2026-10-20",
+      "hubspot_company_id": "54269288594",
+      "installer_id": "2176",
+      "installer_directory": "contourpanel",
+      "stripe_customer_ids": [
+        "cus_VTewgbWcZr3UIB"
+      ],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2124,
+      "name": "Mullwoods Sandbox",
+      "sign_up_date": "2026-10-26",
+      "hubspot_company_id": null,
+      "installer_id": "2177",
+      "installer_directory": "mullwoodssandbox",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2125,
+      "name": "Thomas Creek Woodworks Sandbox",
+      "sign_up_date": "2026-10-26",
+      "hubspot_company_id": null,
+      "installer_id": "2178",
+      "installer_directory": "thomascreekwwsandbox",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2126,
+      "name": "Sommers Wood N Door",
+      "sign_up_date": "2026-10-27",
+      "hubspot_company_id": "60176667999",
+      "installer_id": "2179",
+      "installer_directory": "sommers-wood-n-door",
+      "stripe_customer_ids": [
+        "cus_VWJLiX8tyumTK6"
+      ],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2127,
+      "name": "Dbs Sandbox",
+      "sign_up_date": "2026-10-30",
+      "hubspot_company_id": null,
+      "installer_id": "2180",
+      "installer_directory": "dbssandbox",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2128,
+      "name": "Formations Sandbox",
+      "sign_up_date": "2026-11-05",
+      "hubspot_company_id": null,
+      "installer_id": "2181",
+      "installer_directory": "formationssandbox",
+      "stripe_customer_ids": [],
+      "harvest_id": null
+    },
+    {
+      "allmoxy_customer_id": 2129,
+      "name": "Clement Custom Doors",
+      "sign_up_date": "2026-11-05",
+      "hubspot_company_id": "1129292503",
+      "installer_id": "2182",
+      "installer_directory": "clement-custom-doors",
+      "stripe_customer_ids": [
+        "cus_VZhz3Bhh9Q770u"
+      ],
+      "harvest_id": null
     }
   ],
-  "rowCount": 617,
+  "rowCount": 626,
   "notes": "Full customer roster from the allmoxy_core_customer tab of the local xlsx."
 }

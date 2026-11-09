@@ -9,12 +9,14 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Stripe Connect Revenue 2026.xlsx';
-const overridesPath = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/src/data/connect_customer_overrides.json';
-const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const XLSX_PATH = path.resolve(__dirname, '../..', 'Stripe Connect Revenue 2026.xlsx');
+const overridesPath = path.resolve(__dirname, '..', 'src/data/connect_customer_overrides.json');
+const SNAP = path.resolve(__dirname, '..', 'public/snapshots');
 
-const XLSX = await import('/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs');
+const XLSX = await import('../node_modules/xlsx/xlsx.mjs');
 const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer', cellDates: false });
 
 // Master Class Import: header row at index 0.

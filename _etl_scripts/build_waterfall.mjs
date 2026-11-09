@@ -22,8 +22,11 @@
 // Retention metrics should read the ACCRUAL basis; reconciliation reads CASH.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { classifyDeparture, classifyReturn } from './churn_rules.mjs';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const profilesSnap = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8'));
 const profiles = profilesSnap.rows;
@@ -103,7 +106,7 @@ function cashCustomers() {
         if (mrrByMonth[m] <= 0.5) delete mrrByMonth[m];
       }
     }
-    if (Object.keys(mrrByMonth).length) out.push({ name: p.name, id: p.allmoxy_customer_id ?? null, status: p.status ?? null, pay_status: p.pay_status ?? null, mrrByMonth });
+    if (Object.keys(mrrByMonth).length) out.push({ name: p.name, id: p.allmoxy_customer_id ?? null, status: p.status ?? null, pay_status: p.pay_status ?? null, model: p.churn_model ?? null, mrrByMonth });
   }
   return out;
 }
@@ -115,7 +118,10 @@ function accrualCustomers() {
   const out = [];
   for (const row of RR.accrual_series) {
     const p = byAid.get(row.allmoxy_customer_id); if (!p) continue;
-    if (Object.keys(row.months || {}).length) out.push({ name: p.name, id: p.allmoxy_customer_id, status: p.status ?? null, pay_status: p.pay_status ?? null, mrrByMonth: row.months });
+    // Same exclusion as the canonical base (build_customer_base): a duplicate record is
+    // not a customer, so it can't be "new MRR" here either (Canary Closets, $90, Oct-26).
+    if (p.excluded_from_logo_count) continue;
+    if (Object.keys(row.months || {}).length) out.push({ name: p.name, id: p.allmoxy_customer_id, status: p.status ?? null, pay_status: p.pay_status ?? null, model: p.churn_model ?? null, mrrByMonth: row.months });
   }
   return out;
 }
@@ -146,14 +152,17 @@ function walk(customers, { startMonth = null } = {}) {
     // cash basis emits 2027 rows built from amortization alone.
     if (cur > currentMonth) break;
     const isPartial = cur >= currentMonth;
-    let newMrr = 0, reactivatedMrr = 0, expansion = 0, contraction = 0, churn = 0, voided = 0, delinquent = 0;
-    let startingMrr = 0, endingMrr = 0, churnedLogos = 0, voidedLogos = 0, delinquentLogos = 0, newLogos = 0, reactivatedLogos = 0;
-    const details = { new: [], reactivated: [], expansion: [], contraction: [], churn: [], voided: [], delinquent: [] };
+    let newMrr = 0, reactivatedMrr = 0, recoveredMrr = 0, expansion = 0, contraction = 0, churn = 0, voided = 0, delinquent = 0, paused = 0;
+    let startingMrr = 0, endingMrr = 0, churnedLogos = 0, voidedLogos = 0, delinquentLogos = 0, newLogos = 0, reactivatedLogos = 0, recoveredLogos = 0, pausedLogos = 0;
+    const details = { new: [], reactivated: [], recovered: [], expansion: [], contraction: [], churn: [], voided: [], delinquent: [], paused: [] };
     for (const c of customers) {
       const p = c.mrrByMonth[prev] ?? 0, n = c.mrrByMonth[cur] ?? 0;
       startingMrr += p; endingMrr += n;
       if (p === 0 && n > 0) {
         if (firstMonth.get(keyOf(c)) === cur) { newMrr += n; newLogos += 1; details.new.push({ name: c.name, id: c.id, mrr: r2(n) }); }
+        // THE CHURN RULE (churn_rules.mjs): back after LAPSE_MONTHS+ unbilled = reactivated
+        // (it was churn); back sooner = recovered (a lapse, never churn).
+        else if (classifyReturn(c.mrrByMonth, cur) === 'recovered') { recoveredMrr += n; recoveredLogos += 1; details.recovered.push({ name: c.name, id: c.id, mrr: r2(n) }); }
         else { reactivatedMrr += n; reactivatedLogos += 1; details.reactivated.push({ name: c.name, id: c.id, mrr: r2(n) }); }
       } else if (p > 0 && n === 0) {
         // Dropped to $0. Three distinct causes, reported separately:
@@ -162,7 +171,12 @@ function walk(customers, { startMonth = null } = {}) {
         //                intentionally canceled, so nothing is owed. Not dunning.
         //   delinquent — still billable, just didn't clear (card failure / non-payment).
         // All three reduce ending MRR; separating them keeps `churn` a true-loss number.
-        if (c.status === 'churned') { churn += p; churnedLogos += 1; details.churn.push({ name: c.name, id: c.id, mrr: r2(p) }); }
+        // THE CHURN RULE (churn_rules.mjs) decides churn vs lapse vs pause for THIS
+        // departure — from the billing that followed it, not from today's status — so a
+        // month's churn is fixed once confirmed and never relabelled later.
+        const cls = classifyDeparture(c.mrrByMonth, cur, c.model);
+        if (cls === 'churn') { churn += p; churnedLogos += 1; details.churn.push({ name: c.name, id: c.id, mrr: r2(p) }); }
+        else if (cls === 'paused') { paused += p; pausedLogos += 1; details.paused.push({ name: c.name, id: c.id, mrr: r2(p), status: c.status, pay_status: c.pay_status }); }
         else if (voidedByAid.get(c.id)?.has(cur)) { voided += p; voidedLogos += 1; details.voided.push({ name: c.name, id: c.id, mrr: r2(p), status: c.status, pay_status: c.pay_status }); }
         else { delinquent += p; delinquentLogos += 1; details.delinquent.push({ name: c.name, id: c.id, mrr: r2(p), status: c.status, pay_status: c.pay_status }); }
       } else if (n > p) {
@@ -171,26 +185,30 @@ function walk(customers, { startMonth = null } = {}) {
         contraction += p - n; details.contraction.push({ name: c.name, id: c.id, prev_mrr: r2(p), new_mrr: r2(n), delta: r2(p - n) });
       }
     }
-    for (const k of ['new', 'reactivated', 'churn', 'voided', 'delinquent']) details[k].sort((a, b) => b.mrr - a.mrr);
+    for (const k of ['new', 'reactivated', 'recovered', 'churn', 'voided', 'delinquent', 'paused']) details[k].sort((a, b) => b.mrr - a.mrr);
     for (const k of ['expansion', 'contraction']) details[k].sort((a, b) => b.delta - a.delta);
-    const netNew = newMrr + reactivatedMrr + expansion - contraction - churn - voided - delinquent;
-    const grr = startingMrr > 0 ? (startingMrr - churn - contraction) / startingMrr : null;
-    const nrr = startingMrr > 0 ? (startingMrr - churn - contraction + expansion) / startingMrr : null;
+    const netNew = newMrr + reactivatedMrr + recoveredMrr + expansion - contraction - churn - voided - delinquent - paused;
+    // Retention counts EVERY dollar that stopped (churn, contraction, voided, lapsed,
+    // paused). A lapse that comes back within LAPSE_MONTHS is credited back as
+    // 'recovered', so a short dunning gap nets to ~zero instead of reading as loss.
+    const lost = churn + contraction + voided + delinquent + paused;
+    const grr = startingMrr > 0 ? Math.min(1, (startingMrr - lost + recoveredMrr) / startingMrr) : null;
+    const nrr = startingMrr > 0 ? (startingMrr - lost + recoveredMrr + expansion) / startingMrr : null;
     const p4 = (v) => (v != null ? Math.round(v * 10000) / 10000 : null);
     monthly.push({
       month: cur,
       partial: isPartial,
-      starting_mrr: r2(startingMrr), new_mrr: r2(newMrr), reactivated_mrr: r2(reactivatedMrr),
+      starting_mrr: r2(startingMrr), new_mrr: r2(newMrr), reactivated_mrr: r2(reactivatedMrr), recovered_mrr: r2(recoveredMrr), paused_mrr: r2(paused),
       expansion_mrr: r2(expansion), contraction_mrr: r2(contraction), churn_mrr: r2(churn),
       voided_mrr: r2(voided), delinquent_mrr: r2(delinquent),
       ending_mrr: r2(endingMrr), net_new_mrr: r2(netNew),
       new_logos: newLogos, reactivated_logos: reactivatedLogos, churned_logos: churnedLogos,
-      voided_logos: voidedLogos, delinquent_logos: delinquentLogos,
+      voided_logos: voidedLogos, delinquent_logos: delinquentLogos, recovered_logos: recoveredLogos, paused_logos: pausedLogos,
       gross_churn_rate_monthly: p4(startingMrr > 0 ? churn / startingMrr : null),
       net_churn_rate_monthly: p4(startingMrr > 0 ? (churn + contraction - expansion) / startingMrr : null),
       expansion_rate_monthly: p4(startingMrr > 0 ? expansion / startingMrr : null),
       grr_monthly: p4(grr), nrr_monthly: p4(nrr),
-      quick_ratio: churn + contraction > 0 ? Math.round(((newMrr + expansion) / (churn + contraction)) * 100) / 100 : null,
+      quick_ratio: churn + contraction > 0 ? Math.round(((newMrr + reactivatedMrr + expansion) / (churn + contraction)) * 100) / 100 : null,
       details,
     });
   }
@@ -210,13 +228,14 @@ function summarize(monthly) {
     starting_mrr: r2(start), ending_mrr: r2(ttm[ttm.length - 1]?.ending_mrr ?? 0),
     new_mrr: r2(sum('new_mrr')), reactivated_mrr: r2(sum('reactivated_mrr')),
     expansion_mrr: r2(sum('expansion_mrr')), contraction_mrr: r2(contraction),
+    recovered_mrr: r2(sum('recovered_mrr')), paused_mrr: r2(sum('paused_mrr')),
     churn_mrr: r2(churn), voided_mrr: r2(sum('voided_mrr')), delinquent_mrr: r2(sum('delinquent_mrr')),
-    net_new_mrr: r2(sum('new_mrr') + sum('reactivated_mrr') + sum('expansion_mrr') - contraction - churn - sum('voided_mrr') - sum('delinquent_mrr')),
+    net_new_mrr: r2(sum('new_mrr') + sum('reactivated_mrr') + sum('recovered_mrr') + sum('expansion_mrr') - contraction - churn - sum('voided_mrr') - sum('delinquent_mrr') - sum('paused_mrr')),
     gross_mrr_churn_ttm: p4(start > 0 ? churn / start : null),
     annual_gross_churn_rate: p4(mGross != null ? 1 - Math.pow(1 - mGross, 12) : null),
     annual_grr: p4(mGRR != null ? Math.pow(mGRR, 12) : null),
     annual_nrr: p4(mNRR != null ? Math.pow(mNRR, 12) : null),
-    quick_ratio: churn + contraction > 0 ? Math.round(((sum('new_mrr') + sum('expansion_mrr')) / (churn + contraction)) * 100) / 100 : null,
+    quick_ratio: churn + contraction > 0 ? Math.round(((sum('new_mrr') + sum('reactivated_mrr') + sum('expansion_mrr')) / (churn + contraction)) * 100) / 100 : null,
   };
 }
 
@@ -244,7 +263,7 @@ const out = {
     'MRR waterfall on two bases. CASH (monthly/ttm) = customer_profiles.monthly_history — what cleared Stripe, boundary-slip corrected, full history; use for bank reconciliation. ' +
     'ACCRUAL (monthly_accrual/ttm_accrual) = revenue_recognition.accrual_series — what was BILLED by invoice date, so a card failure is an open receivable rather than churn; use for retention metrics. ' +
     `Accrual starts ${accrualFrom ?? 'n/a'} because Stripe-invoice coverage before mid-2025 is 4–28% of actual revenue (Allmoxy migrated to invoicing then). ` +
-    'New = customer first appears with MRR > 0; Reactivated = billed before, returning. Churn = confirmed-churned (status churned). ' +
+    'New = customer first appears with MRR > 0. THE CHURN RULE (churn_rules.mjs, 2026-11-09): Churn = confirmed (Stripe subscription canceled, HubSpot Cancelled / churn reason, or 3 months unbilled), dated to the first un-invoiced month; Reactivated = back after 3+ unbilled months; Recovered = back sooner (a lapse, never churn); Paused = HubSpot Pay Status "Pause Granted" (never churn). GRR/NRR count every dollar that stopped (churn + contraction + voided + delinquent + paused) and credit recovered lapses back; annualized as mean monthly rate ^12. ' +
     'Voided = dropped to $0 with a VOIDED invoice for the period — billing intentionally canceled, nothing owed (not dunning). ' +
     'Delinquent = dropped to $0, still billable, did not clear (card failure / non-payment) — may still pay. All three reduce ending MRR but are reported separately. ' +
     'Sales tax is EXCLUDED on both bases: it is a pass-through liability, not revenue. Accrual sums pre-tax invoice lines; cash has collected tax subtracted by the invoice paid month (~1.5% of gross, ~$3.4K/mo). ' +

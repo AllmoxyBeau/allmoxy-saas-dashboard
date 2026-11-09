@@ -28,18 +28,25 @@ type AdjustmentsSummary = {
   };
 };
 type EbitdaBridge = {
+  source?: { pnl_window?: string; last_pnl_month?: string; qoe_adjustment_count?: number; qoe_adjustments_placeholder_count?: number };
   bridges?: {
-    ytd_current?: { label?: string; net_income?: number; gaap_ebitda?: number; adjusted_ebitda?: number; gaap_ebitda_margin?: number | null; adjusted_ebitda_margin?: number | null };
+    ytd_current?: { label?: string; end?: string; net_income?: number; gaap_ebitda?: number; adjusted_ebitda?: number; gaap_ebitda_margin?: number | null; adjusted_ebitda_margin?: number | null };
+    ttm?: { label?: string; unavailable?: boolean; reason?: string; start?: string; end?: string };
   };
 };
 type AmortEvidence = {
   summary?: {
     annual_payer_count: number;
     total_amortized_dollars: number;
+    recognized_to_date_dollars?: number;
+    as_of_month?: string;
     payers_verified: number;
     payers_with_contract_link: number;
   };
+  entries?: Array<{ customer_name: string; contract_link: string | null }>;
 };
+type CustomerBase = { members: Array<{ allmoxy_customer_id: number }> };
+type RosterRow = { allmoxy_customer_id: number; status: string | null; sub_segment: string | null; churn_reason: string | null };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 
@@ -87,24 +94,56 @@ const SECTIONS: Array<{
   },
 ];
 
-const PUNCH_LIST_HINTS = [
-  'EBITDA add-backs are placeholders (owner-comp, one-time fees, discretionary perks)',
-  'Annual-payer contracts not linked (B&B Door, Mid Michigan Wood)',
-  'TTM EBITDA bridge inactive (P&L only 5 months YTD — needs 12+ months)',
-  'Sub-segment backfill ~64% complete (49 active customers still untagged)',
-  'Churn reason backfill ~25% complete (deep research in batch files)',
-];
-
 export default function BankerHandoff() {
   const { data: invariantData } = useSheetTab('invariant_test_results');
   const { data: adjData } = useSheetTab('adjustments_register');
   const { data: ebitdaData } = useSheetTab('ebitda_bridge');
   const { data: amortData } = useSheetTab('annual_amortization_evidence');
+  const { data: baseData } = useSheetTab('customer_base');
+  const { data: rosterData } = useSheetTab('customer_profiles_roster');
 
   const inv = invariantData as unknown as InvariantSummary | undefined;
   const adj = adjData as unknown as AdjustmentsSummary | undefined;
-  const ebitda = (ebitdaData as unknown as EbitdaBridge | undefined)?.bridges?.ytd_current;
-  const amort = (amortData as unknown as AmortEvidence | undefined)?.summary;
+  const ebitdaSnap = ebitdaData as unknown as EbitdaBridge | undefined;
+  const ebitda = ebitdaSnap?.bridges?.ytd_current;
+  const amortSnap = amortData as unknown as AmortEvidence | undefined;
+  const amort = amortSnap?.summary;
+  const base = baseData as unknown as CustomerBase | undefined;
+  const roster = (rosterData as unknown as { rows?: RosterRow[] } | undefined)?.rows;
+  // The EBITDA window always names its last P&L month (QuickBooks lags the calendar).
+  const ytdLabel = ebitda?.label
+    ? (ebitda.label.includes('through') ? ebitda.label : `${ebitda.label} through ${ebitda.end ?? ebitdaSnap?.source?.last_pnl_month ?? '—'}`)
+    : 'YTD';
+
+  // Punch list — derived from the snapshots, so it can never go stale.
+  const punchList = useMemo(() => {
+    const items: string[] = [];
+    const placeholders = ebitdaSnap?.source?.qoe_adjustments_placeholder_count ?? 0;
+    if (placeholders > 0) {
+      items.push(`EBITDA add-backs: ${placeholders} of ${ebitdaSnap?.source?.qoe_adjustment_count ?? placeholders} QoE adjustments are still placeholders (owner-comp, one-time fees, discretionary perks)`);
+    }
+    const unlinked = (amortSnap?.entries ?? []).filter((e) => !e.contract_link).map((e) => e.customer_name);
+    if (unlinked.length > 0) items.push(`Annual-payer contracts not linked (${unlinked.join(', ')})`);
+    const ttm = ebitdaSnap?.bridges?.ttm;
+    if (ttm?.unavailable) items.push(`TTM EBITDA bridge inactive — ${ttm.reason ?? 'P&L does not yet cover 12 months'}`);
+    if (ebitdaSnap?.source?.last_pnl_month) {
+      items.push(`QuickBooks P&L ends ${ebitdaSnap.source.last_pnl_month} — EBITDA, margins, CAC and LTV exclude later months until the P&L export is refreshed`);
+    }
+    if (base?.members && roster) {
+      const memberIds = new Set(base.members.map((m) => m.allmoxy_customer_id));
+      const members = roster.filter((r) => memberIds.has(r.allmoxy_customer_id));
+      const tagged = members.filter((r) => (r.sub_segment ?? '').trim()).length;
+      if (members.length > 0 && tagged < members.length) {
+        items.push(`Sub-segment backfill ${Math.round((tagged / members.length) * 100)}% complete (${members.length - tagged} of ${members.length} active customers still untagged)`);
+      }
+      const churned = roster.filter((r) => r.status === 'churned');
+      const withReason = churned.filter((r) => (r.churn_reason ?? '').trim()).length;
+      if (churned.length > 0 && withReason < churned.length) {
+        items.push(`Churn reason backfill ${Math.round((withReason / churned.length) * 100)}% complete (${churned.length - withReason} of ${churned.length} churned customers have no reason recorded)`);
+      }
+    }
+    return items;
+  }, [ebitdaSnap, amortSnap, base, roster]);
 
   const statusColor = useMemo(() => {
     if (!inv) return '#94a3b8';
@@ -140,7 +179,7 @@ export default function BankerHandoff() {
         <Grid item xs={12} sm={6} md={3}>
           <Paper sx={{ p: 2.5 }}>
             <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>
-              {ebitda?.label ?? 'YTD'} GAAP EBITDA
+              GAAP EBITDA · {ytdLabel}
             </Typography>
             <Typography variant="h5" sx={{ fontWeight: 500 }}>{ebitda?.gaap_ebitda != null ? USD0.format(ebitda.gaap_ebitda) : '—'}</Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
@@ -151,7 +190,7 @@ export default function BankerHandoff() {
         <Grid item xs={12} sm={6} md={3}>
           <Paper sx={{ p: 2.5, bgcolor: 'rgba(44, 115, 255, 0.06)', borderLeft: '3px solid', borderColor: 'primary.main' }}>
             <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>
-              {ebitda?.label ?? 'YTD'} Adjusted EBITDA
+              Adjusted EBITDA · {ytdLabel}
             </Typography>
             <Typography variant="h5" sx={{ fontWeight: 600, color: 'primary.main' }}>{ebitda?.adjusted_ebitda != null ? USD0.format(ebitda.adjusted_ebitda) : '—'}</Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
@@ -177,7 +216,9 @@ export default function BankerHandoff() {
             </Typography>
             <Typography variant="h5" sx={{ fontWeight: 500 }}>{amort?.annual_payer_count ?? '—'} payer(s)</Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-              {amort != null ? USD0.format(amort.total_amortized_dollars) : '—'} amortized · {amort?.payers_verified ?? 0}/{amort?.annual_payer_count ?? 0} verified
+              {amort == null ? '—' : amort.recognized_to_date_dollars != null
+                ? `${USD0.format(amort.recognized_to_date_dollars)} recognized through ${amort.as_of_month} (${USD0.format(amort.total_amortized_dollars)} scheduled)`
+                : `${USD0.format(amort.total_amortized_dollars)} amortized`} · {amort?.payers_verified ?? 0}/{amort?.annual_payer_count ?? 0} verified
             </Typography>
           </Paper>
         </Grid>
@@ -217,7 +258,11 @@ export default function BankerHandoff() {
           Items to resolve before final banker handoff. Each is surfaced live by the Invariant Tests page.
         </Typography>
         <Stack component="ol" sx={{ pl: 3, m: 0 }} spacing={0.75}>
-          {PUNCH_LIST_HINTS.map((p, i) => (
+          {punchList.length === 0 ? (
+            <Typography component="li" variant="body2" sx={{ fontSize: 13, lineHeight: 1.6, color: 'text.secondary' }}>
+              {ebitdaData && amortData ? 'No open items.' : 'Loading…'}
+            </Typography>
+          ) : punchList.map((p, i) => (
             <Typography key={i} component="li" variant="body2" sx={{ fontSize: 13, lineHeight: 1.6 }}>{p}</Typography>
           ))}
         </Stack>

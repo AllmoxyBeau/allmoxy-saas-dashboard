@@ -33,8 +33,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const read = (p, d = null) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } };
 const r2 = (v) => Math.round(v * 100) / 100;
@@ -46,13 +48,38 @@ const SUBS = read(path.join(ROOT, '_etl_scripts/cache/stripe_subscriptions.json'
 const RR = read(path.join(SNAP, 'revenue_recognition.json'));
 const PROF = read(path.join(SNAP, 'customer_profiles.json'), { rows: [] }).rows || [];
 const ANNUAL = new Set((read(path.join(ROOT, 'src/data/annual_payers.json'), {}).annual_payer_ids || []).map(Number));
+// The canonical base (build_customer_base, which runs before this) decides who counts:
+// its exclusions (duplicates) are dropped here too, and its annual payers are carried
+// at their amortized MRR, so "Starting MRR" equals the Overview headline for last month.
+const BASE = read(path.join(SNAP, 'customer_base.json'), { members: [], excluded: [] });
+const EXCLUDED = new Set((BASE.excluded || []).map((e) => e.allmoxy_customer_id));
+const ANNUAL_MEMBERS = (BASE.members || []).filter((m) => m.source === 'annual_amortized');
+// Implementation / Support products are services, not MRR (product_revenue_types.json).
+const SERVICE_PRODUCTS = new Set(Object.entries(read(path.join(ROOT, '_etl_scripts/product_revenue_types.json'), {}).products || {})
+  .filter(([, v]) => v.revenue_type === 'services').map(([k]) => k));
+// Subscription share of an invoice: its subscription total less any services-product lines.
+const subscriptionAmount = (i) => {
+  const lines = (i.lines || []).filter((l) => l.a);
+  const total = lines.reduce((s, l) => s + l.a, 0);
+  const svc = lines.filter((l) => l.prod && SERVICE_PRODUCTS.has(l.prod)).reduce((s, l) => s + l.a, 0);
+  return total > 0 && svc ? r2((i.sub || 0) * (1 - svc / total)) : (i.sub || 0);
+};
 
 const now = new Date();
 const CM = now.toISOString().slice(0, 7);
 const addMonths = (m, k) => { const [y, mo] = m.split('-').map(Number); const d = new Date(y, mo - 1 + k, 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; };
 const PM = addMonths(CM, -1);
-const today = now.toISOString().slice(0, 10);
-const dayNow = now.getDate();
+// "Today" for this panel is the date the Stripe data was PULLED, not the wall clock.
+// A stale cache measured against the real date reads every customer whose billing
+// day fell in the gap as "nothing scheduled" (Lewis Cabinet, Drawer Box… — 37
+// customers / $57.8K on 2026-11-09 with data from 11-02). The oldest of the caches
+// this panel reads is the honest cut-off.
+const fetchedDates = [INV.fetchedAt, SUBS.fetchedAt, BT.fetchedAt]
+  .map((d) => String(d || '').slice(0, 10)).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d));
+const wallToday = now.toISOString().slice(0, 10);
+const today = fetchedDates.length ? fetchedDates.sort()[0] < wallToday ? fetchedDates.sort()[0] : wallToday : wallToday;
+const dayNow = today.slice(0, 7) === CM ? Number(today.slice(8, 10)) : 1;
+const dataStale = today < wallToday;
 const daysInMonth = new Date(Number(CM.slice(0, 4)), Number(CM.slice(5, 7)), 0).getDate();
 
 const custToProf = new Map();
@@ -83,11 +110,12 @@ function rowFor(aid, name) {
 for (const [cid, c] of Object.entries(INV.by_customer || {})) {
   const prof = custToProf.get(cid);
   const aid = prof?.allmoxy_customer_id;
-  if (aid == null || ANNUAL.has(aid)) continue;
+  if (aid == null || ANNUAL.has(aid) || EXCLUDED.has(aid)) continue;
   for (const i of (c.invoices || [])) {
     if ((i.d || '').slice(0, 7) !== CM || !RECOGNIZED.has(i.status)) continue;
+    const amt = subscriptionAmount(i);
+    if (!amt) continue;
     const r = rowFor(aid, prof.customer_name || prof.name);
-    const amt = i.sub || 0;
     r.invoiced = r2(r.invoiced + amt);
     if (i.status === 'paid') r.collected = r2(r.collected + amt);
     else if (i.status === 'uncollectible') r.uncollectible = r2(r.uncollectible + amt);
@@ -102,7 +130,7 @@ for (const r of (BT.months?.[CM]?.rows || [])) {
   if (!RECURRING_DIRECT.test(String(r.desc || ''))) continue;
   const prof = r.cust ? custToProf.get(r.cust) : null;
   const aid = prof?.allmoxy_customer_id;
-  if (aid == null || ANNUAL.has(aid)) continue;
+  if (aid == null || ANNUAL.has(aid) || EXCLUDED.has(aid)) continue;
   const row = rowFor(aid, prof.customer_name || prof.name);
   row.direct = r2(row.direct + r.amount);
   row.collected = r2(row.collected + r.amount);   // direct charges clear on post
@@ -124,7 +152,7 @@ for (const [cid, c] of Object.entries(CH.by_customer || {})) {
 
 // ── 4. everyone who billed last month but has nothing here yet ───────────────
 for (const [aid, months] of accrual) {
-  if (ANNUAL.has(aid) || (months[PM] || 0) <= 0) continue;
+  if (ANNUAL.has(aid) || EXCLUDED.has(aid) || (months[PM] || 0) <= 0) continue;
   const p = byAid.get(aid);
   rowFor(aid, p?.customer_name || p?.name || `#${aid}`);
 }
@@ -164,8 +192,20 @@ for (const r of rows.values()) {
   if (!r.has_upcoming && d && d > dayNow) r.has_upcoming = true;
 }
 
+// ── annual payers: carried flat at their amortized MRR (booked on 4100, never
+//    billed monthly), so the panel opens at the same MRR as the canonical base. ──
+for (const m of ANNUAL_MEMBERS) {
+  const r = rowFor(m.allmoxy_customer_id, m.name);
+  r.annual = true;
+  r.prior_billed = r2(m.mrr);
+}
+
 // ── classify ─────────────────────────────────────────────────────────────────
 for (const r of rows.values()) {
+  if (r.annual) {
+    Object.assign(r, { billed_so_far: 0, upcoming_expected: 0, expected: r.prior_billed, delta: 0, billing_state: 'annual_amortized', movement: 'flat' });
+    continue;
+  }
   const billedSoFar = r2(r.invoiced + r.direct);
   r.billed_so_far = billedSoFar;
   // A customer still to bill this month is expected to bill as they did last month.
@@ -200,13 +240,17 @@ const expected = r2(all.reduce((s, r) => s + r.expected, 0));
 const out = {
   tab: 'current_month',
   fetchedAt: new Date().toISOString(),
-  basis: 'accrual — Stripe invoices by invoice date plus recurring direct charges, subscription only, annual payers excluded (booked on 4100)',
+  basis: 'accrual — Stripe invoices by invoice date plus recurring direct charges, subscription only (implementation/support lines excluded), annual payers carried flat at amortized MRR (booked on 4100)',
   month: CM, prior_month: PM, as_of: today,
+  // as_of is the Stripe data cut-off. When it trails the real date the panel says so
+  // instead of reading un-synced billing days as lost customers.
+  generated_on: wallToday, data_stale: dataStale,
   day_of_month: dayNow, days_in_month: daysInMonth, elapsed_pct: r2(dayNow / daysInMonth),
   mrr: {
     starting, expected_ending: expected,
     net_change: r2(expected - starting),
-    net_change_pct: starting > 0 ? r2((expected - starting) / starting) : null,
+    net_change_pct: starting > 0 ? Math.round(((expected - starting) / starting) * 10000) / 10000 : null,
+    annual_amortized: amtBy((r) => r.annual, 'expected'),
     billed_so_far: amtBy(() => true, 'billed_so_far'),
     still_to_bill: amtBy(() => true, 'upcoming_expected'),
   },
@@ -225,6 +269,7 @@ const out = {
     partially_billed: { amount: amtBy((r) => r.billing_state === 'partially_billed', 'upcoming_expected'), customers: cnt((r) => r.billing_state === 'partially_billed') },
     not_yet_billed: { amount: amtBy((r) => r.billing_state === 'not_yet_billed', 'upcoming_expected'), customers: cnt((r) => r.billing_state === 'not_yet_billed') },
     nothing_scheduled: { amount: amtBy((r) => r.billing_state === 'nothing_scheduled', 'prior_billed'), customers: cnt((r) => r.billing_state === 'nothing_scheduled') },
+    annual_amortized: { amount: amtBy((r) => r.billing_state === 'annual_amortized', 'expected'), customers: cnt((r) => r.billing_state === 'annual_amortized') },
   },
   customers: all,
   notes: 'Accrual view of the month in progress. Movement is measured BILLING TO BILLING (invoices + recurring direct charges) against the same measure last month, so payment timing cannot create false expansion or contraction. "Not yet billed" is valued at last month\'s billing — an expectation, not a fact. "Nothing scheduled" means they billed last month with nothing issued and no billing date ahead: the genuine risk set, and the number worth working.',

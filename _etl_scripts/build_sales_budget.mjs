@@ -27,8 +27,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const read = (p, d = null) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } };
 const r2 = (v) => Math.round(v * 100) / 100;
@@ -38,6 +40,7 @@ const BASE = read(path.join(SNAP, 'customer_base.json'));
 const WF = read(path.join(SNAP, 'mrr_waterfall.json'));
 const MBM = read(path.join(SNAP, 'mrr_by_month.json'), { rows: [] }).rows || [];
 const CONNECT = read(path.join(SNAP, 'connect_volume.json'));
+const AMORT = read(path.join(SNAP, 'annual_amortization_evidence.json'));
 
 if (!BASE?.mrr || !WF?.ttm_accrual) {
   console.error('[sales_budget] customer_base or mrr_waterfall missing — cannot build');
@@ -55,8 +58,11 @@ const addMonths = (m, k) => { const [y, mo] = m.split('-').map(Number); const d 
 // Losses include delinquency and voids, not just confirmed churn: from a budget's
 // point of view money that stops arriving has to be replaced whatever the label on it.
 const openMrr = t.starting_mrr || BASE.mrr;
-const lossesTtm = (t.churn_mrr || 0) + (t.contraction_mrr || 0) + (t.delinquent_mrr || 0) + (t.voided_mrr || 0);
-const gainsTtm = (t.new_mrr || 0) + (t.expansion_mrr || 0) + (t.reactivated_mrr || 0);
+// Every waterfall bucket is counted so gains − losses = the waterfall's net_new_mrr:
+// paused MRR stops arriving (a loss to replace, though not churn), recovered lapses
+// come back (a gain).
+const lossesTtm = (t.churn_mrr || 0) + (t.contraction_mrr || 0) + (t.delinquent_mrr || 0) + (t.voided_mrr || 0) + (t.paused_mrr || 0);
+const gainsTtm = (t.new_mrr || 0) + (t.expansion_mrr || 0) + (t.reactivated_mrr || 0) + (t.recovered_mrr || 0);
 const monthlyLossRate = openMrr > 0 ? lossesTtm / openMrr / 12 : 0;
 const monthlyGainRate = openMrr > 0 ? gainsTtm / openMrr / 12 : 0;
 const plannedLossRate = monthlyLossRate * (1 - CHURN_IMPROVEMENT);
@@ -94,8 +100,8 @@ for (let i = 0; i < MONTHS; i++) {
     new_logos_required: arpa > 0 ? Math.round((grossRequired / arpa) * 10) / 10 : null,
     // Tracking: only months the waterfall has actually closed.
     actual_closing_mrr: a && !a.partial ? a.ending_mrr : null,
-    actual_gross: a && !a.partial ? r2((a.new_mrr || 0) + (a.expansion_mrr || 0) + (a.reactivated_mrr || 0)) : null,
-    actual_losses: a && !a.partial ? r2((a.churn_mrr || 0) + (a.contraction_mrr || 0) + (a.delinquent_mrr || 0) + (a.voided_mrr || 0)) : null,
+    actual_gross: a && !a.partial ? r2((a.new_mrr || 0) + (a.expansion_mrr || 0) + (a.reactivated_mrr || 0) + (a.recovered_mrr || 0)) : null,
+    actual_losses: a && !a.partial ? r2((a.churn_mrr || 0) + (a.contraction_mrr || 0) + (a.delinquent_mrr || 0) + (a.voided_mrr || 0) + (a.paused_mrr || 0)) : null,
     variance: a && !a.partial ? r2(a.ending_mrr - closing) : null,
   });
   mrr = closing;
@@ -115,16 +121,35 @@ for (let i = 0; i < MONTHS; i++) {
 // BASES ARE NOT MIXED SILENTLY. Subscription is the invoiced (accrual) basis; services
 // and Connect are cash. They are labelled as such and reported per stream rather than
 // fused into one number.
-const ttmMonths = (WF.monthly_accrual || []).filter((r) => !r.partial).map((r) => r.month);
+// Trailing TWELVE complete months (was every accrual month — 15 by Oct 2026, so the
+// "TTM" streams summed 15 months).
+const ttmMonths = (WF.monthly_accrual || []).filter((r) => !r.partial).map((r) => r.month).slice(-12);
 const winStart = ttmMonths[0], winEnd = ttmMonths[ttmMonths.length - 1];
 const inWindow = MBM.filter((r) => r.month >= winStart && r.month <= winEnd);
 const sumStream = (k) => r2(inWindow.reduce((s, r) => s + (r[k] || 0), 0));
 const svcTtm = sumStream('mrr_services');
 const conTtm = sumStream('mrr_connect');
-const subTtmRunRate = r2(BASE.mrr * 12);   // canonical, invoiced
+const subTtmRunRate = r2(BASE.mrr * 12);   // canonical, invoiced — a run-rate, NOT trailing
+// Subscription TRAILING twelve months, same window as the other streams: the accrual
+// waterfall's ending MRR for each month plus that month's annual-payer amortization
+// (annual payers bill yearly, so they are absent from the invoice series and are
+// recognized at amount/term per month). This reproduces customer_base.by_month.mrr
+// month for month — the canonical MRR — so it is checked against it below.
+const amortByMonth = new Map();
+for (const e of AMORT?.entries || []) {
+  for (const c of e.annualized_months || []) amortByMonth.set(c.month, (amortByMonth.get(c.month) || 0) + (c.subscription || 0));
+}
+const accrualByMonth = new Map((WF.monthly_accrual || []).filter((r) => !r.partial).map((r) => [r.month, r]));
+const subMonthly = ttmMonths.map((m) => (accrualByMonth.get(m)?.ending_mrr || 0) + (amortByMonth.get(m) || 0));
+const subTtm = r2(subMonthly.reduce((s, x) => s + x, 0));
+const baseByMonth = new Map((BASE.by_month || []).map((r) => [r.month, r.mrr]));
+const subTtmCanon = ttmMonths.every((m) => baseByMonth.has(m)) ? r2(ttmMonths.reduce((s, m) => s + baseByMonth.get(m), 0)) : null;
+if (subTtmCanon != null && Math.abs(subTtmCanon - subTtm) > 1) {
+  console.error(`[sales_budget] WARN subscription TTM ${subTtm} (accrual + amortization) ≠ customer_base.by_month sum ${subTtmCanon}`);
+}
 
 const streams = [
-  { key: 'subscription', label: 'Subscription', basis: 'invoiced (accrual)', ttm: subTtmRunRate, monthly: r2(BASE.mrr) },
+  { key: 'subscription', label: 'Subscription', basis: 'invoiced (accrual) incl. annual amortization', ttm: subTtm, monthly: r2(subTtm / 12), run_rate: subTtmRunRate },
   { key: 'connect', label: 'Connect fees', basis: 'cash (application fees)', ttm: conTtm, monthly: r2(conTtm / 12) },
   { key: 'services', label: 'Services', basis: 'cash', ttm: svcTtm, monthly: r2(svcTtm / 12) },
 ];
@@ -132,13 +157,18 @@ const totalTtm = r2(streams.reduce((s, x) => s + x.ttm, 0));
 for (const st of streams) st.share = totalTtm > 0 ? r2(st.ttm / totalTtm * 10000) / 10000 : null;
 
 const pen = CONNECT?.penetration || null;
+// Denominator is THE canonical customer count (customer_base), not connect_volume's own.
+const processingNow = pen ? (CONNECT?.attach?.active_customers_on_connect ?? pen.processing_now) : null;
 const connectOpportunity = pen ? {
-  processing_now: pen.processing_now,
-  active_customers: pen.active_customers,
-  attach_rate: pen.attach_rate,
-  not_processing: pen.not_processing,
+  processing_now: processingNow,
+  active_customers: BASE.customers,
+  attach_rate: BASE.customers > 0 ? Math.round((processingNow / BASE.customers) * 1000) / 1000 : null,
+  not_processing: Math.max(0, BASE.customers - processingNow),
   fee_potential_annual: r2(pen.attach_target_fee_potential || 0),
-  current_fees_annual: r2(CONNECT?.annualized?.fee_revenue || conTtm),
+  // Canonical Connect TTM (connect_by_month, the Connect stream above); the Stripe
+  // gross application-fee figure is kept separately and labelled as such.
+  current_fees_annual: conTtm,
+  gross_application_fees_annual: CONNECT?.annualized?.fee_revenue != null ? r2(CONNECT.annualized.fee_revenue) : null,
   basis: pen.attach_potential_basis || null,
 } : null;
 
@@ -173,7 +203,14 @@ const out = {
     monthly_loss_rate: r2(monthlyLossRate * 10000) / 10000,
     grr: t.annual_grr ?? null,
     nrr: t.annual_nrr ?? null,
-    new_logos_per_month: arpa > 0 ? Math.round(((t.new_mrr || 0) / 12 / arpa) * 10) / 10 : null,
+    // REAL new logos per month over the same trailing window, from the canonical logo flow.
+    new_logos_per_month: (() => {
+      const flow = (BASE.logo_flow || []).filter((f) => ttmMonths.includes(f.month));
+      return flow.length ? Math.round((flow.reduce((s, f) => s + (f.new_logos || 0), 0) / flow.length) * 10) / 10 : null;
+    })(),
+    // New MRR expressed in average-ARPA customers (what new_logos_required is priced in).
+    new_logo_arpa_equivalents_per_month: arpa > 0 ? Math.round(((t.new_mrr || 0) / 12 / arpa) * 10) / 10 : null,
+    window: { start: winStart, end: winEnd },
   },
   // The headline honesty check: how much harder than today.
   effort: {
@@ -188,7 +225,8 @@ const out = {
     monthly: r2(totalTtm / 12),
     target_annual: r2(totalTtm * (1 + GROWTH)),
     gap: r2(totalTtm * GROWTH),
-    note: 'Subscription is the invoiced basis; services and Connect are cash. Reported per stream rather than fused, so the mixture is visible.',
+    note: 'All three streams are summed over the same trailing twelve complete months. Subscription is the invoiced basis (accrual ending MRR + annual amortization); services and Connect are cash. Reported per stream rather than fused, so the mixture is visible.',
+    window: { start: winStart, end: winEnd },
   },
   connect_opportunity: connectOpportunity ? {
     ...connectOpportunity,

@@ -38,6 +38,17 @@ const AUTH = 'Basic ' + Buffer.from(ENV.STRIPE_SECRET_KEY + ':').toString('base6
 const API_VERSION = '2023-10-16';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Exponential backoff with jitter. These syncs make thousands of sequential calls over
+// tens of minutes, and the old policy (6 tries, 500ms * n) gave a page just 10.5s of
+// total retry budget before throwing — so one network blip longer than that killed the
+// entire nightly chain. It did exactly that on 2026-10-18 and again on 2026-10-20
+// ("Stripe: retries exhausted" / ETIMEDOUT), each time wasting the whole run.
+// Budget is now ~90s per page, which rides out a short outage without masking a real one.
+function backoffMs(attempt) {
+  return Math.min(30000, 1000 * Math.pow(2, attempt)) + Math.floor(Math.random() * 500);
+}
+
+
 // Rank of a subscription status for "which is the current account". A live sub
 // (even past_due / unpaid — failing but not cancelled) outranks a cancelled one.
 const STATUS_RANK = { active: 6, trialing: 5, past_due: 4, unpaid: 3, paused: 2, incomplete: 1, canceled: 0, incomplete_expired: 0 };
@@ -45,11 +56,11 @@ const STATUS_RANK = { active: 6, trialing: 5, past_due: 4, unpaid: 3, paused: 2,
 async function getPage(startingAfter) {
   const qs = new URLSearchParams({ limit: '100', status: 'all' });
   if (startingAfter) qs.set('starting_after', startingAfter);
-  for (let a = 0; a < 6; a++) {
+  for (let a = 0; a < 9; a++) {
     let res;
     try { res = await fetch('https://api.stripe.com/v1/subscriptions?' + qs, { headers: { Authorization: AUTH, 'Stripe-Version': API_VERSION } }); }
-    catch { await sleep(500 * (a + 1)); continue; }
-    if (res.status === 429 || res.status >= 500) { await sleep(500 * (a + 1)); continue; }
+    catch { await sleep(backoffMs(a)); continue; }
+    if (res.status === 429 || res.status >= 500) { await sleep(backoffMs(a)); continue; }
     const body = await res.json();
     if (res.status !== 200) throw new Error(`Stripe ${res.status}: ${body?.error?.message || ''}`);
     return body;

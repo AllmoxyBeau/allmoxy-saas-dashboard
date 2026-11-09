@@ -28,8 +28,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 const INV = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/stripe_invoices.json'), 'utf8'));
 const PROF = JSON.parse(fs.readFileSync(path.join(SNAP, 'customer_profiles.json'), 'utf8')).rows;
@@ -39,6 +41,16 @@ const QB = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/qb_accounts.
 // 4100 Annual Deferred Monthly as a SEPARATE entry. They are routed OUT of the
 // subscription line here so recognized/collected reflect monthly billing only.
 const ANNUAL = new Set((JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/annual_payers.json'), 'utf8')).annual_payer_ids || []).map(Number));
+// Products Beau classifies as services (Implementation, Support). They bill as recurring
+// subscription lines, but they are NOT MRR (Beau, 2026-11-09): kept out of the recognized
+// subscription series so the accrual waterfall, customer base and current month agree
+// with the cash series (apply_invoice_line_split.mjs routes the same lines to services).
+const SERVICE_PRODUCTS = (() => {
+  try {
+    const p = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/product_revenue_types.json'), 'utf8')).products || {};
+    return new Set(Object.entries(p).filter(([, v]) => v.revenue_type === 'services').map(([k]) => k));
+  } catch { return new Set(); }
+})();
 // Stripe balance transactions by month (sync_stripe_balance_transactions) — the
 // cash side of the JE. Optional: if not pulled yet, the JE block is skipped.
 let BT = null; try { BT = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/cache/stripe_balance_transactions.json'), 'utf8')); } catch { /* not pulled yet */ }
@@ -97,6 +109,7 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
 
     for (const l of (inv.lines || [])) {
       if (!l.rec || !l.ps || !l.pe || l.ps === l.pe) continue; // recurring subscription lines only
+      if (l.prod && SERVICE_PRODUCTS.has(l.prod)) continue;   // implementation / support → services, not MRR
       const days = (new Date(l.pe) - new Date(l.ps)) / 86400000;
       const months = Math.max(1, Math.round(days / 30.44));
       // INVOICE-DATE attribution (Beau, 2026-09): a monthly line recognizes in the
@@ -260,7 +273,7 @@ const g = (map, aid, m) => (map.get(aid) || {})[m] || 0;
 function rowFor(aid, m) {
   // Annual prepay → 4100 (booked separately); never in the subscription line.
   if (ANNUAL.has(aid)) {
-    return { basis: 'annual', recognized: 0, collected_in_period: 0, collected_after_period: 0, still_open: 0, outstanding_at_period_end: 0, annual_deferred: r2(g(chgByAid, aid, m)) };
+    return { basis: 'annual', recognized: 0, collected_in_period: 0, collected_after_period: 0, still_open: 0, unbilled_carry: 0, outstanding_at_period_end: 0, annual_deferred: r2(g(chgByAid, aid, m)) };
   }
   const hasInv = invCustomers.has(aid);
   if (hasInv) {
@@ -284,12 +297,18 @@ function rowFor(aid, m) {
     const collected_in_period = r2(g(collIn, aid, m) + direct);
     const collected_after_period = r2(g(collAfter, aid, m));
     const still_open = r2(g(stillOpen, aid, m));
-    // Outstanding at the cutoff = everything not cleared by month-end (later-collected + still open).
+    // Fill-forward carry: a live sub recognized at its last invoiced rate in a month with
+    // NO invoice issued (e.g. Next Gen Cabinet Doors, $250 in 2025-09 and 2026-03). It is
+    // recognized but was never billed, so it is neither collected-after nor still-open —
+    // it was the unexplained gap in New AR. Reported as its own bucket so
+    // outstanding = collected_after_period + still_open + unbilled_carry.
+    const unbilled_carry = r2(Math.max(0, invoiceRec - g(rec, aid, m)));
+    // Outstanding at the cutoff = everything not cleared by month-end (later-collected + still open + unbilled carry).
     const outstanding_at_period_end = r2(Math.max(0, recognized - collected_in_period));
-    return { basis: 'invoice', recognized, collected_in_period, collected_after_period, still_open, outstanding_at_period_end, direct_collection: r2(directCollection) };
+    return { basis: 'invoice', recognized, collected_in_period, collected_after_period, still_open, unbilled_carry, outstanding_at_period_end, direct_collection: r2(directCollection) };
   }
   const chg = r2(g(chgByAid, aid, m)); // direct-charge: we only know what cleared
-  return { basis: 'charge', recognized: chg, collected_in_period: chg, collected_after_period: 0, still_open: 0, outstanding_at_period_end: 0 };
+  return { basis: 'charge', recognized: chg, collected_in_period: chg, collected_after_period: 0, still_open: 0, unbilled_carry: 0, outstanding_at_period_end: 0 };
 }
 
 // ── monthly summary ──
@@ -300,8 +319,8 @@ function rowFor(aid, m) {
 const chgMonthTotal = (m) => r2(PROF.reduce((s, p) => s + (p.monthly_history?.[m]?.subscription || 0), 0));
 const by_month = {};
 for (const m of MONTHS) {
-  let recognized = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, outstanding = 0, annual = 0, directColl = 0;
-  for (const aid of allAids) { const r = rowFor(aid, m); recognized += r.recognized; collected_in_period += r.collected_in_period; collected_after_period += r.collected_after_period; still_open += r.still_open; outstanding += r.outstanding_at_period_end; annual += r.annual_deferred || 0; directColl += r.direct_collection || 0; }
+  let recognized = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, unbilled_carry = 0, outstanding = 0, annual = 0, directColl = 0;
+  for (const aid of allAids) { const r = rowFor(aid, m); recognized += r.recognized; collected_in_period += r.collected_in_period; collected_after_period += r.collected_after_period; still_open += r.still_open; unbilled_carry += r.unbilled_carry || 0; outstanding += r.outstanding_at_period_end; annual += r.annual_deferred || 0; directColl += r.direct_collection || 0; }
   // Manual catch-up charges ("March backpayment") are cash received THIS month against a
   // PRIOR month's already-recognized invoice. They belong in prior-AR collections, not in
   // revenue — that keeps cash_received tied to the bank while revenue stays on invoice date.
@@ -313,6 +332,7 @@ for (const m of MONTHS) {
     outstanding_at_period_end: r2(outstanding),         // = accrual adjustment (DR AR / CR Revenue)
     collected_after_period: r2(collected_after_period), // of this month's billings, eventually collected later
     still_open: r2(still_open),                         // of this month's billings, never collected yet
+    unbilled_carry: r2(unbilled_carry),                 // recognized by fill-forward with no invoice issued (never billed)
     prior_ar_collected,                                 // cash received THIS month for prior months' AR
     cash_received: r2(collected_in_period + prior_ar_collected), // reconciles to bank deposits this month
     annual_deferred: r2(annual),                        // 4100 Annual Deferred Monthly — booked separately (memo)

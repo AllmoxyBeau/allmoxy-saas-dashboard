@@ -74,6 +74,10 @@ type EvidenceEntry = {
   annualized_months: AnnualizedMonth[];
   annualized_month_count: number;
   total_amortized_dollars: number;
+  recognized_to_date_dollars?: number;
+  recognized_month_count?: number;
+  deferred_dollars?: number;
+  deferred_month_count?: number;
   stripe_payments: StripePayment[];
   stripe_payment_count: number;
   synthetic_payments: SyntheticPayment[];
@@ -91,6 +95,11 @@ type EvidenceSnapshot = {
     annual_payer_count: number;
     total_amortized_dollars: number;
     total_annualized_months: number;
+    as_of_month?: string;
+    recognized_to_date_dollars?: number;
+    recognized_month_count?: number;
+    deferred_dollars?: number;
+    deferred_month_count?: number;
     payers_with_overrides: number;
     payers_with_synthetic_payments: number;
     payers_with_contract_link: number;
@@ -143,7 +152,10 @@ export default function AnnualAmortizationEvidence() {
 
       {snap && (
         <Alert severity="info" sx={{ mb: 3 }}>
-          <strong>{snap.summary.annual_payer_count} annual payer(s)</strong> · <strong>{USD0.format(snap.summary.total_amortized_dollars)}</strong> total amortized into the MRR series across <strong>{snap.summary.total_annualized_months}</strong> monthly cells.
+          <strong>{snap.summary.annual_payer_count} annual payer(s)</strong> · <strong>{USD0.format(snap.summary.total_amortized_dollars)}</strong> scheduled into the MRR series across <strong>{snap.summary.total_annualized_months}</strong> monthly cells
+          {snap.summary.recognized_to_date_dollars != null && (
+            <> — <strong>{USD0.format(snap.summary.recognized_to_date_dollars)}</strong> recognized through {snap.summary.as_of_month} ({snap.summary.recognized_month_count} cells) and <strong>{USD0.format(snap.summary.deferred_dollars ?? 0)}</strong> deferred to future months ({snap.summary.deferred_month_count} cells)</>
+          )}.
           {' '}{snap.summary.payers_verified}/{snap.summary.annual_payer_count} verified · {snap.summary.payers_with_contract_link}/{snap.summary.annual_payer_count} have a contract on file.
           Last refreshed: {new Date(snap.fetched_at).toLocaleString()}.
         </Alert>
@@ -164,8 +176,17 @@ export default function AnnualAmortizationEvidence() {
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <Paper sx={{ p: 2.5 }}>
-            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Dollars amortized</Typography>
-            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32 }} /> : (
+            <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>
+              {snap?.summary.recognized_to_date_dollars != null ? `Recognized through ${snap.summary.as_of_month}` : 'Dollars amortized'}
+            </Typography>
+            {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32 }} /> : snap?.summary.recognized_to_date_dollars != null ? (
+              <>
+                <Typography variant="h4" sx={{ fontWeight: 500, color: 'primary.main' }}>{USD0.format(snap.summary.recognized_to_date_dollars)}</Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                  {snap.summary.recognized_month_count} month-cells · + {USD0.format(snap.summary.deferred_dollars ?? 0)} deferred ({snap.summary.deferred_month_count} future cells) · {USD0.format(snap.summary.total_amortized_dollars)} scheduled
+                </Typography>
+              </>
+            ) : (
               <>
                 <Typography variant="h4" sx={{ fontWeight: 500, color: 'primary.main' }}>{USD0.format(snap?.summary.total_amortized_dollars ?? 0)}</Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary' }}>Across {snap?.summary.total_annualized_months ?? 0} month-cells</Typography>
@@ -252,13 +273,15 @@ export default function AnnualAmortizationEvidence() {
                 </Box>
                 <Box sx={{ textAlign: 'right' }}>
                   <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>
-                    Total amortized into MRR
+                    {e.recognized_to_date_dollars != null ? `Recognized through ${snap?.summary.as_of_month ?? 'last complete month'}` : 'Total amortized into MRR'}
                   </Typography>
                   <Typography variant="h5" sx={{ fontWeight: 500, color: 'primary.main' }}>
-                    {USD0.format(e.total_amortized_dollars)}
+                    {USD0.format(e.recognized_to_date_dollars ?? e.total_amortized_dollars)}
                   </Typography>
-                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                    {e.annualized_month_count} month-cells
+                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                    {e.recognized_to_date_dollars != null
+                      ? `${e.recognized_month_count} month-cells · + ${USD0.format(e.deferred_dollars ?? 0)} deferred (${e.deferred_month_count} future)`
+                      : `${e.annualized_month_count} month-cells`}
                   </Typography>
                 </Box>
               </Stack>
@@ -388,6 +411,7 @@ export default function AnnualAmortizationEvidence() {
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 36, '& .MuiAccordionSummary-content': { my: 1 } }}>
                   <Typography variant="caption" sx={{ color: 'text.secondary' }}>
                     Show {e.annualized_month_count} monthly cells totaling {USD0.format(e.total_amortized_dollars)}
+                    {e.deferred_month_count ? ` (${e.deferred_month_count} future months not yet recognized)` : ''}
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{ p: 0 }}>
@@ -402,7 +426,7 @@ export default function AnnualAmortizationEvidence() {
                       <TableBody>
                         {e.annualized_months.map((m) => (
                           <TableRow key={m.month}>
-                            <TableCell sx={{ fontSize: 12 }}>{m.month}</TableCell>
+                            <TableCell sx={{ fontSize: 12 }}>{m.month}{snap?.summary.as_of_month && m.month > snap.summary.as_of_month ? ' · deferred' : ''}</TableCell>
                             <TableCell align="right" sx={{ fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>{USD2.format(m.subscription)}</TableCell>
                           </TableRow>
                         ))}

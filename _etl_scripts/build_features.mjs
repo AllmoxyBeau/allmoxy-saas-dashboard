@@ -86,12 +86,22 @@ const rows = features.tickets.map((t) => {
 rows.sort((a, b) => b.total_mrr - a.total_mrr || b.customer_count - a.customer_count);
 
 const open = rows.filter((r) => r.stage_category !== 'Done');
+// Open MRR at stake = each DISTINCT customer with >=1 open ticket counted once, at their
+// current subscription MRR. Summing total_mrr across tickets re-counted a customer's MRR
+// once per ticket they're tagged on (a customer on 40 tickets counted 40x), producing a
+// figure (~$2.75M) many times the whole book's MRR. That ticket-weighted sum is kept
+// only as a labelled secondary (open_mrr_ticket_weighted) - useful as demand intensity,
+// never as revenue.
+const openCustomers = new Map();
+for (const r of open) for (const c of r.customers) if (!openCustomers.has(c.allmoxy_customer_id)) openCustomers.set(c.allmoxy_customer_id, c);
 const aggregates = {
   total_tickets: rows.length,
   open_tickets: open.length,
   done_tickets: rows.length - open.length,
   tickets_with_matched_customer: rows.filter((r) => r.customer_count > 0).length,
-  open_mrr_at_stake: round2(open.reduce((s, r) => s + r.total_mrr, 0)),
+  open_mrr_at_stake: round2([...openCustomers.values()].reduce((s, c) => s + c.mrr, 0)),
+  open_customers_distinct: openCustomers.size,
+  open_mrr_ticket_weighted: round2(open.reduce((s, r) => s + r.total_mrr, 0)),
   distinct_customers_tagged: new Set(rows.flatMap((r) => r.customers.map((c) => c.allmoxy_customer_id))).size,
   unmatched_labels: [...new Set(rows.flatMap((r) => r.unmatched_labels))].sort(),
 };
@@ -108,5 +118,5 @@ fs.writeFileSync(OUT, JSON.stringify({
 
 console.log(`✓ features.json: ${rows.length} DEV tickets (${aggregates.open_tickets} open)`);
 console.log(`  ${aggregates.tickets_with_matched_customer} tickets matched ≥1 customer · ${aggregates.distinct_customers_tagged} distinct customers`);
-console.log(`  Open MRR at stake (sum across open tickets): $${aggregates.open_mrr_at_stake.toLocaleString()}`);
+console.log(`  Open MRR at stake (distinct customers): $${aggregates.open_mrr_at_stake.toLocaleString()} across ${aggregates.open_customers_distinct} customers · ticket-weighted $${aggregates.open_mrr_ticket_weighted.toLocaleString()}`);
 if (aggregates.unmatched_labels.length) console.log(`  ${aggregates.unmatched_labels.length} unmatched labels: ${aggregates.unmatched_labels.slice(0, 20).join(', ')}`);

@@ -17,22 +17,30 @@ type UnitEconMonthly = {
   month: string;
   subscription_revenue: number;
   total_income: number;
-  snm_expense: number;
+  snm_expense: number | null;
   gross_margin: number | null;
-  net_op_income: number;
+  net_op_income: number | null;
   cac: number | null;
+  pnl_available?: boolean;
+  qb_total_income?: number | null;
 };
 type UnitEconSnap = { monthly: UnitEconMonthly[] };
 
 type WaterfallMonthly = {
   month: string;
+  partial?: boolean;
   net_new_mrr: number;
   quick_ratio: number | null;
   nrr_monthly: number | null;
   grr_monthly: number | null;
   gross_churn_rate_monthly: number | null;
 };
-type WaterfallSnap = { monthly: WaterfallMonthly[] };
+type WaterfallTtm = { windowStart: string; windowEnd: string; annual_nrr: number | null; annual_grr: number | null; quick_ratio: number | null };
+type WaterfallSnap = {
+  monthly: WaterfallMonthly[];
+  monthly_accrual?: WaterfallMonthly[];
+  ttm_accrual?: WaterfallTtm;
+};
 
 type MrrSnap = { rows: Array<{ month: string; mrr_subscription: number | null }> };
 
@@ -74,7 +82,16 @@ export default function Efficiency() {
     const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     const completeUeMonthly = ue.monthly.filter((m) => m.month < currentMonth);
     const ueByMonth = new Map(completeUeMonthly.map((m) => [m.month, m]));
-    const wfByMonth = new Map(wf.monthly.map((m) => [m.month, m]));
+    // Retention / waterfall metrics: ACCRUAL basis (canonical) wherever it exists,
+    // falling back to the cash series only for history before accrual coverage.
+    // Partial (in-progress) months are dropped on both bases.
+    const wfByMonth = new Map(wf.monthly.filter((m) => !m.partial).map((m) => [m.month, m]));
+    for (const m of wf.monthly_accrual ?? []) if (!m.partial) wfByMonth.set(m.month, m);
+    // A P&L month is usable only when QuickBooks covers it (pnl_available !== false
+    // and the field is populated). Windows touching an uncovered month return null
+    // rather than silently summing the gap as $0.
+    const pnlOk = (m: UnitEconMonthly | undefined, k: keyof UnitEconMonthly) =>
+      !!m && m.pnl_available !== false && typeof m[k] === 'number';
     const mrrByMonth = new Map(mrr.rows.map((r) => [r.month, r]));
     const months = completeUeMonthly.map((m) => m.month); // canonical ordering
 
@@ -84,8 +101,9 @@ export default function Efficiency() {
       if (endIdx < windowMonths - 1) return null;
       let total = 0;
       for (let i = endIdx - windowMonths + 1; i <= endIdx; i++) {
-        const v = ueByMonth.get(months[i])?.[k];
-        total += typeof v === 'number' ? v : 0;
+        const u = ueByMonth.get(months[i]);
+        if (!pnlOk(u, k)) return null;
+        total += u![k] as number;
       }
       return total;
     }
@@ -94,9 +112,9 @@ export default function Efficiency() {
       if (endIdx < windowMonths - 1) return null;
       let total = 0;
       for (let i = endIdx - windowMonths + 1; i <= endIdx; i++) {
-        const m = months[i];
-        const v = wfByMonth.get(m)?.[k];
-        total += typeof v === 'number' ? v : 0;
+        const v = wfByMonth.get(months[i])?.[k];
+        if (typeof v !== 'number') return null;
+        total += v;
       }
       return total;
     }
@@ -113,14 +131,19 @@ export default function Efficiency() {
         ? (curMrr - priorMrr) / priorMrr
         : null;
 
-      // TTM op margin
+      // TTM op margin — null unless all 12 months are covered by the QuickBooks P&L
+      // (numerator and denominator over the same months).
       const ttmNetOp = sumWindow(month, 'net_op_income', 12);
-      const ttmTotal = sumWindow(month, 'total_income', 12);
+      // Denominator = QuickBooks Total Income (same ledger as Net Operating Income);
+      // older snapshots without qb_total_income fall back to total_income.
+      const ttmTotal = ue.monthly.some((r) => r.qb_total_income != null)
+        ? sumWindow(month, 'qb_total_income', 12)
+        : sumWindow(month, 'total_income', 12);
       const opMargin = ttmNetOp != null && ttmTotal != null && ttmTotal > 0 ? ttmNetOp / ttmTotal : null;
 
       const rule40 = arrGrowth != null && opMargin != null ? (arrGrowth + opMargin) * 100 : null;
 
-      // Magic Number (trailing 3-month)
+      // Magic Number (trailing 3-month) — null if any S&M month in the quarter is missing
       const q_net_new = sumWfWindow(month, 'net_new_mrr', 3);
       const q_snm = sumWindow(month, 'snm_expense', 3);
       const magic = q_net_new != null && q_snm != null && q_snm > 0
@@ -128,18 +151,32 @@ export default function Efficiency() {
         : null;
 
       // Burn multiple TTM = |TTM op loss| / TTM net new MRR (× 12? Net new MRR summed 12 months already equals ARR added). If positive op income, treat as 0 burn.
+      const pnlComplete = ttmNetOp != null && ttmTotal != null;
       const burn = ttmNetOp != null && ttmNetOp < 0 ? -ttmNetOp : 0;
       const ttmNetNewMrr = sumWfWindow(month, 'net_new_mrr', 12);
       const burnMultiple = burn > 0 && ttmNetNewMrr != null && ttmNetNewMrr > 0
         ? burn / ttmNetNewMrr
         : null;
 
-      // Monthly NRR & GRR annualized
-      const annualNRR = w?.nrr_monthly != null ? Math.pow(w.nrr_monthly, 12) : null;
-      const annualGRR = w?.grr_monthly != null ? Math.pow(w.grr_monthly, 12) : null;
+      // Annual NRR & GRR — same definition as the waterfall's ttm_accrual:
+      // mean of the trailing 12 monthly rates, compounded ^12 (not one month ^12).
+      function trailingMeanPow(k: 'nrr_monthly' | 'grr_monthly'): number | null {
+        const endIdx = months.indexOf(month);
+        if (endIdx < 11) return null;
+        let sum = 0;
+        for (let i = endIdx - 11; i <= endIdx; i++) {
+          const v = wfByMonth.get(months[i])?.[k];
+          if (typeof v !== 'number') return null;
+          sum += v;
+        }
+        return Math.pow(sum / 12, 12);
+      }
+      const annualNRR = trailingMeanPow('nrr_monthly');
+      const annualGRR = trailingMeanPow('grr_monthly');
 
       return {
         month,
+        pnlComplete,
         arrGrowth: arrGrowth != null ? Math.round(arrGrowth * 1000) / 10 : null, // percent with 1dp
         rule40: rule40 != null ? Math.round(rule40 * 10) / 10 : null,
         magic: magic != null ? Math.round(magic * 100) / 100 : null,
@@ -151,15 +188,23 @@ export default function Efficiency() {
         opMargin: opMargin != null ? Math.round(opMargin * 1000) / 10 : null,
       };
     });
-  }, [ue, wf]);
+  }, [ue, wf, mrr]);
 
-  // Latest row with waterfall data populated (skips partial current month where wf excludes data).
-  const latest = useMemo(() => {
-    for (let i = series.length - 1; i >= 0; i--) {
-      if (series[i].quickRatio != null || series[i].annualNRR != null) return series[i];
-    }
-    return series[series.length - 1];
+  // P&L-dependent cards (Rule of 40, Burn Multiple) anchor on the last month whose
+  // trailing-12 window is fully covered by the QuickBooks P&L; Magic Number anchors
+  // on the last month whose trailing quarter has S&M for every month.
+  const pnlAnchor = useMemo(() => {
+    for (let i = series.length - 1; i >= 0; i--) if (series[i].pnlComplete) return series[i];
+    return undefined;
   }, [series]);
+  const magicAnchor = useMemo(() => {
+    for (let i = series.length - 1; i >= 0; i--) if (series[i].magic != null) return series[i];
+    return undefined;
+  }, [series]);
+  const pnlThrough = pnlAnchor ? `P&L through ${monthLabel(pnlAnchor.month).replace(' ', '-')}` : 'P&L pending';
+  // Retention cards: canonical TTM accrual figures from the waterfall snapshot.
+  const ttmAcc = wf?.ttm_accrual;
+  const ttmLabel = ttmAcc ? `${monthLabel(ttmAcc.windowStart)}–${monthLabel(ttmAcc.windowEnd)}` : '';
 
   // Trim series to window
   const visible = useMemo(() => {
@@ -181,9 +226,9 @@ export default function Efficiency() {
         <Grid item xs={12} sm={6} md={2.4}>
           <SummaryCard
             label="Rule of 40"
-            value={latest?.rule40 != null ? `${latest.rule40.toFixed(1)}` : null}
-            hint="TTM growth + op margin"
-            color={rule40Color(latest?.rule40 ?? null)}
+            value={pnlAnchor?.rule40 != null ? `${pnlAnchor.rule40.toFixed(1)}` : null}
+            hint={`TTM growth + op margin · ${pnlThrough}`}
+            color={rule40Color(pnlAnchor?.rule40 ?? null)}
             loading={isLoading}
             info={
               <>
@@ -191,6 +236,7 @@ export default function Efficiency() {
                 Above 40 signals efficient growth; below suggests over-spending or under-growing.
                 <br /><br />
                 <strong>Data:</strong> ARR growth YoY (current subscription MRR × 12 vs. 12 months prior) plus TTM operating margin (Net Operating Income ÷ Total Income from QuickBooks P&L, trailing 12 months).
+                Both sides use the same 12 months, anchored at the last month the QuickBooks P&L covers — months after that are not counted as $0.
                 <br /><br />
                 <strong>Target:</strong> ≥ 40
               </>
@@ -200,15 +246,16 @@ export default function Efficiency() {
         <Grid item xs={12} sm={6} md={2.4}>
           <SummaryCard
             label="Magic Number"
-            value={ratio(latest?.magic ?? null)}
-            hint="Trailing Q · ≥ 0.75"
-            color={magicColor(latest?.magic ?? null)}
+            value={ratio(magicAnchor?.magic ?? null)}
+            hint={magicAnchor ? `Quarter ending ${monthLabel(magicAnchor.month)} · ≥ 0.75` : 'Trailing Q · ≥ 0.75'}
+            color={magicColor(magicAnchor?.magic ?? null)}
             loading={isLoading}
             info={
               <>
                 <strong>What it is:</strong> Sales & marketing efficiency — how much net new ARR each dollar of S&M produces.
                 <br /><br />
-                <strong>Data:</strong> Trailing-quarter net new MRR (New + Expansion − Contraction − Churn from the MRR waterfall) × 4, divided by trailing-quarter S&M spend (QuickBooks: Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission).
+                <strong>Data:</strong> Trailing-quarter net new MRR (New + Reactivated + Recovered + Expansion − Contraction − Churn − Voided − Delinquent − Paused, from the accrual MRR waterfall) × 4, divided by trailing-quarter S&M spend (QuickBooks: Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission).
+                Shown for the latest quarter where every month has QuickBooks S&M.
                 <br /><br />
                 <strong>Target:</strong> ≥ 0.75 = spend more · ≥ 1.0 = self-funded growth · &lt; 0.5 usually triggers S&M cuts
               </>
@@ -218,15 +265,15 @@ export default function Efficiency() {
         <Grid item xs={12} sm={6} md={2.4}>
           <SummaryCard
             label="Quick Ratio"
-            value={ratio(latest?.quickRatio ?? null)}
-            hint="Monthly · ≥ 4x"
-            color={quickColor(latest?.quickRatio ?? null)}
+            value={ratio(ttmAcc?.quick_ratio ?? null)}
+            hint={`TTM ${ttmLabel} · ≥ 4x`}
+            color={quickColor(ttmAcc?.quick_ratio ?? null)}
             loading={isLoading}
             info={
               <>
                 <strong>What it is:</strong> Growth durability — dollars of MRR added divided by dollars lost each month. High ratio means growth is coming from new business, not just offsetting churn.
                 <br /><br />
-                <strong>Data:</strong> (New MRR + Expansion MRR) ÷ (Contraction MRR + Churn MRR), derived from per-customer MRR changes month over month.
+                <strong>Data:</strong> (New + Reactivated + Recovered + Expansion MRR) ÷ (Contraction + Churn + Voided + Delinquent + Paused MRR), summed over the trailing 12 months of the accrual MRR waterfall.
                 <br /><br />
                 <strong>Target:</strong> ≥ 4x healthy · &lt; 2x is a warning sign
               </>
@@ -236,15 +283,15 @@ export default function Efficiency() {
         <Grid item xs={12} sm={6} md={2.4}>
           <SummaryCard
             label="Annual NRR"
-            value={latest?.annualNRR != null ? `${latest.annualNRR.toFixed(1)}%` : null}
-            hint="Monthly NRR compounded · ≥ 100%"
-            color={nrrColor(latest?.annualNRR != null ? latest.annualNRR / 100 : null)}
+            value={ttmAcc?.annual_nrr != null ? `${(ttmAcc.annual_nrr * 100).toFixed(1)}%` : null}
+            hint={`TTM ${ttmLabel} · accrual · ≥ 100%`}
+            color={nrrColor(ttmAcc?.annual_nrr ?? null)}
             loading={isLoading}
             info={
               <>
                 <strong>What it is:</strong> Net Revenue Retention — of every $1 of MRR at the start of the period, how much remains from the same customers at the end (including expansion, minus contraction and churn). &gt; 100% means existing customers grow net.
                 <br /><br />
-                <strong>Data:</strong> Monthly NRR = (Starting MRR − Churn − Contraction + Expansion) ÷ Starting MRR, from the MRR waterfall. Annualized by compounding the monthly rate × 12.
+                <strong>Data:</strong> Monthly NRR = (Starting MRR + Expansion + Recovered − Contraction − Churn − Voided − Delinquent − Paused) ÷ Starting MRR, from the accrual MRR waterfall. Annualized as the mean of the trailing 12 monthly rates, compounded ^12.
                 <br /><br />
                 <strong>Target:</strong> ≥ 100% good · ≥ 110% top-quartile SaaS
               </>
@@ -254,9 +301,9 @@ export default function Efficiency() {
         <Grid item xs={12} sm={6} md={2.4}>
           <SummaryCard
             label="Burn Multiple"
-            value={latest?.burnMultiple != null ? `${latest.burnMultiple.toFixed(2)}x` : 'N/A'}
-            hint={latest?.burnMultiple == null ? 'Net operating income positive' : 'Burn / Net new ARR · < 1x is strong'}
-            color={latest?.burnMultiple == null ? 'success.main' : latest.burnMultiple < 1 ? 'success.main' : latest.burnMultiple < 2 ? 'warning.main' : 'error.main'}
+            value={!pnlAnchor ? null : pnlAnchor.burnMultiple != null ? `${pnlAnchor.burnMultiple.toFixed(2)}x` : 'N/A'}
+            hint={pnlAnchor?.burnMultiple == null ? `Net operating income positive · ${pnlThrough}` : `Burn / Net new ARR · < 1x is strong · ${pnlThrough}`}
+            color={pnlAnchor?.burnMultiple == null ? 'success.main' : pnlAnchor.burnMultiple < 1 ? 'success.main' : pnlAnchor.burnMultiple < 2 ? 'warning.main' : 'error.main'}
             loading={isLoading}
             info={
               <>
@@ -322,7 +369,7 @@ export default function Efficiency() {
               <>
                 <strong>What it is:</strong> Growth % + operating margin % over time. Shows whether efficiency is improving or eroding.
                 <br /><br />
-                <strong>Data:</strong> At each month, ARR growth YoY + TTM operating margin (Net Operating Income ÷ Total Income, summed over the prior 12 months).
+                <strong>Data:</strong> At each month, ARR growth YoY + TTM operating margin (Net Operating Income ÷ Total Income, summed over the prior 12 months). Blank for months whose 12-month window extends past the last QuickBooks P&L month.
                 <br /><br />
                 <strong>Target:</strong> ≥ 40 · above means efficient growth for the stage
               </>
@@ -342,7 +389,7 @@ export default function Efficiency() {
               <>
                 <strong>What it is:</strong> Sales-and-marketing efficiency trend. Watching this over time reveals if CAC is scaling or compressing.
                 <br /><br />
-                <strong>Data:</strong> For each month M, (trailing 3-month net new MRR × 4) ÷ trailing 3-month S&M spend. Net new MRR from the waterfall; S&M from QuickBooks (Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission).
+                <strong>Data:</strong> For each month M, (trailing 3-month net new MRR × 4) ÷ trailing 3-month S&M spend. Net new MRR (all waterfall buckets) from the accrual waterfall where available, cash waterfall for earlier history; S&M from QuickBooks (Marketing Payroll + Marketing & Advertising + Sales Expenses + Sales Commission). Blank where any S&M month is not yet in the P&L.
                 <br /><br />
                 <strong>Target:</strong> ≥ 0.75 good · ≥ 1.0 excellent
               </>
@@ -362,7 +409,7 @@ export default function Efficiency() {
               <>
                 <strong>What it is:</strong> Monthly growth-durability ratio. Spikes mean a great month; sustained decline means churn/contraction is outpacing new business.
                 <br /><br />
-                <strong>Data:</strong> For each month, (New MRR + Expansion MRR) ÷ (Contraction MRR + Churn MRR) — directly from the MRR waterfall's per-customer monthly deltas.
+                <strong>Data:</strong> For each month, (New + Reactivated + Recovered + Expansion MRR) ÷ (Contraction + Churn + Voided + Delinquent + Paused MRR) — accrual MRR waterfall where available, cash waterfall for earlier history. In-progress months are excluded.
                 <br /><br />
                 <strong>Target:</strong> ≥ 4x healthy
               </>
@@ -371,7 +418,7 @@ export default function Efficiency() {
         </Grid>
         <Grid item xs={12} md={6}>
           <TrendChart
-            title="Annual NRR (TTM-annualized)"
+            title="Annual NRR (trailing-12 mean monthly, compounded)"
             data={visible}
             dataKey="annualNRR"
             color="#2C73FF"
@@ -382,7 +429,7 @@ export default function Efficiency() {
               <>
                 <strong>What it is:</strong> Rolling annualized Net Revenue Retention — is your existing customer base growing or shrinking in aggregate?
                 <br /><br />
-                <strong>Data:</strong> Monthly NRR = (Starting MRR − Churn − Contraction + Expansion) ÷ Starting MRR, then compounded to annual as monthly_nrr<sup>12</sup>. Source is the MRR waterfall.
+                <strong>Data:</strong> Monthly NRR = (Starting MRR + Expansion + Recovered − Contraction − Churn − Voided − Delinquent − Paused) ÷ Starting MRR; each point is the mean of the trailing 12 monthly rates, compounded ^12 (the latest point equals the TTM accrual card). Accrual waterfall where available, cash waterfall for earlier history.
                 <br /><br />
                 <strong>Target:</strong> ≥ 100% good · ≥ 110% top-quartile
               </>

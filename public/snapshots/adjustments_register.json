@@ -1,13 +1,25 @@
 {
-  "fetched_at": "2026-11-02T23:23:37.113Z",
-  "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 6 underlying config files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
+  "fetched_at": "2026-11-09T21:07:15.329Z",
+  "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 9 underlying source files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
+    "source_files": [
+      "src/data/annual_payers.json",
+      "_etl_scripts/annual_amortization_overrides.json",
+      "_etl_scripts/variance_overrides.json",
+      "_etl_scripts/transaction_overrides.json",
+      "_etl_scripts/stripe_id_overrides.json",
+      "_etl_scripts/synthetic_transactions.json",
+      "_etl_scripts/customer_status_overrides.json",
+      "src/data/connect_customer_overrides.json",
+      "_etl_scripts/apply_never_paid_classification.mjs"
+    ],
+    "distinct_customers": 30,
     "by_category": {
       "annual_payer_flag": 2,
       "amortization": 1,
       "variance": 3,
       "reclassification": 3,
-      "hygiene_stripe_id": 4,
+      "hygiene_stripe_id": 6,
       "synthetic_transaction": 1,
       "status_override": 16,
       "hygiene_connect_mapping": 1,
@@ -15,9 +27,9 @@
     },
     "by_severity": {
       "monetary": 26,
-      "hygiene": 6
+      "hygiene": 8
     },
-    "total": 32
+    "total": 34
   },
   "adjustments": [
     {
@@ -29,9 +41,9 @@
       "period": null,
       "txn_date": null,
       "before": null,
-      "after": 49947.78,
+      "after": 51941.7,
       "delta": null,
-      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $49,947.78 across 24 months.",
+      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $51,941.7 across 25 months.",
       "evidence": null,
       "source_file": "src/data/annual_payers.json",
       "added_by": "updated_at 2026-06-12"
@@ -45,9 +57,9 @@
       "period": null,
       "txn_date": null,
       "before": null,
-      "after": 18414,
+      "after": 19404,
       "delta": null,
-      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $18,414 across 18 months.",
+      "reason": "Flagged as an annual payer — lump-sum charges ≥ $3,000 are amortized across coverage months (default 12, override-capable). Trailing-18-month amortized contribution to MRR: $19,404 across 19 months.",
       "evidence": null,
       "source_file": "src/data/annual_payers.json",
       "added_by": "updated_at 2026-06-12"
@@ -227,6 +239,38 @@
       "evidence": null,
       "source_file": "_etl_scripts/stripe_id_overrides.json",
       "added_by": "Beau, 2026-05-01"
+    },
+    {
+      "id": "hygiene-stripe-2094",
+      "category": "hygiene_stripe_id",
+      "severity": "hygiene",
+      "customer_name": "Wood House Cabinets",
+      "customer_id": 2094,
+      "period": null,
+      "txn_date": null,
+      "before": null,
+      "after": null,
+      "delta": null,
+      "reason": "Injected 1 Stripe customer ID(s): cus_V34oPdfWCqx63w. Revenue audit 2026-11-09: Aurora aid 2094 (Wood House Cabinets, woodhousecabinets, signed up 2026-08-10) has no Stripe id; it bills on cus_V34oPdfWCqx63w ('Woodhouse Cabinetry & Mill', created 2026-08-10, HubSpot instance 59730370986). Unlinked, its $475/mo (core + support) was missing from every MRR report.",
+      "evidence": null,
+      "source_file": "_etl_scripts/stripe_id_overrides.json",
+      "added_by": null
+    },
+    {
+      "id": "hygiene-stripe-111",
+      "category": "hygiene_stripe_id",
+      "severity": "hygiene",
+      "customer_name": "Martin Wood Products",
+      "customer_id": 111,
+      "period": null,
+      "txn_date": null,
+      "before": null,
+      "after": null,
+      "delta": null,
+      "reason": "Injected 1 Stripe customer ID(s): cus_VHMbDfdPPue9XX. Revenue audit 2026-11-09: returning customer (aid 111, martinwoodproducts) re-signed 2026-09-17 on a new Stripe customer cus_VHMbDfdPPue9XX (Lester@martinwoodproducts.com, HubSpot instance 62111099509). Aurora still lists only the 2018 id cus_Cyf3kUlf6uI7lR, so the new billing ($5,269/mo invoiced, past due) was unattributed.",
+      "evidence": null,
+      "source_file": "_etl_scripts/stripe_id_overrides.json",
+      "added_by": null
     },
     {
       "id": "synthetic-15-2025-12-15",
@@ -514,7 +558,7 @@
       "reason": "108 customer-name → allmoxy_customer_id mappings for Stripe Connect revenue attribution. Source: Stripe Connect Revenue sheets carry the customer NAME on each transaction; this file resolves names to canonical Allmoxy IDs so per-customer Connect rollups join correctly. Roughly 0 names remain unmapped (acceptable — typically dormant or one-off accounts).",
       "evidence": null,
       "source_file": "src/data/connect_customer_overrides.json",
-      "added_by": "updated_at 2026-09-16"
+      "added_by": "updated_at 2026-11-09"
     },
     {
       "id": "auto-never-paid-classification",
@@ -527,7 +571,7 @@
       "before": null,
       "after": null,
       "delta": null,
-      "reason": "106 customer record(s) auto-classified status='never_paid' and excluded_from_logo_count=true (lifetime ≤ $0). Split: 78 pure never-paid (0 transactions) + 28 zero-net-revenue-with-activity (had transactions but they netted to $0 — refunds, chargebacks, reversed billing). Rationale: net economic contribution to Allmoxy was zero either way, so they should not appear in churn or logo counts. Sample: #333 Quality Kitchens Inc., #44 Archer Mills, #45 Architectural Stairways, Inc., ….",
+      "reason": "110 customer record(s) auto-classified status='never_paid' and excluded_from_logo_count=true (lifetime ≤ $0). Split: 82 pure never-paid (0 transactions) + 28 zero-net-revenue-with-activity (had transactions but they netted to $0 — refunds, chargebacks, reversed billing). Rationale: net economic contribution to Allmoxy was zero either way, so they should not appear in churn or logo counts. Sample: #333 Quality Kitchens Inc., #44 Archer Mills, #45 Architectural Stairways, Inc., ….",
       "evidence": null,
       "source_file": "_etl_scripts/apply_never_paid_classification.mjs",
       "added_by": "Auto-classifier (deterministic rule, not user-maintained)"

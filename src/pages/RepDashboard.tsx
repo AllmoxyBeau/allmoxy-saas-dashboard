@@ -41,6 +41,7 @@ type Profile = {
   sign_up_date: string | null;
   last_payment_date: string | null;
   excluded_from_logo_count?: boolean;
+  active_today?: boolean;
   failed_3mo_count?: number;
   monthly_history: Record<string, MonthlyCell>;
 };
@@ -75,6 +76,17 @@ type TtvCustomer = {
 };
 
 type TtvSnap = { customers: TtvCustomer[] };
+
+// Canonical customer base (build_customer_base.mjs) — the logo count, MRR and
+// month-by-month logo flow every other page reports.
+type FlowDetail = { allmoxy_customer_id: number; name: string; mrr: number };
+type BaseSnap = {
+  by_month: Array<{ month: string; customers: number; mrr: number }>;
+  logo_flow: Array<{
+    month: string; churned_logos: number; lapsed_logos: number; paused_logos: number;
+    details?: { churned?: FlowDetail[]; lapsed?: FlowDetail[]; paused?: FlowDetail[] };
+  }>;
+};
 
 // Bid-only overrides live in localStorage (written by the Customer Detail
 // toggle). Same key + read pattern as ChurnRiskMatrix and TimeToValue so all
@@ -111,6 +123,8 @@ export default function RepDashboard() {
   const ttvQuery = useSheetTab<TtvSnap>('time_to_value');
   const matrixRaw = matrixQuery.data as unknown as MatrixSnap | undefined;
   const ttvRaw = ttvQuery.data as unknown as TtvSnap | undefined;
+  const baseQuery = useSheetTab('customer_base');
+  const baseRaw = baseQuery.data as unknown as BaseSnap | undefined;
 
   // Live bid-only overrides from localStorage — same listener pattern as
   // ChurnRiskMatrix + TimeToValue so flipping a customer to bid-only in
@@ -161,19 +175,25 @@ export default function RepDashboard() {
   }, [matrixRaw, bidOnlyOverrides]);
 
   const profiles = profilesData?.rows ?? [];
+  // The book = canonical customer-base membership (active_today), the same 198-logo /
+  // MRR set as customer_base. Duplicates (excluded_from_logo_count) are never members.
+  const baseProfiles = useMemo(() => profiles.filter((p) => p.active_today === true && !p.excluded_from_logo_count), [profiles]);
+  const profileByAidAll = useMemo(() => {
+    const m = new Map<number, Profile>();
+    for (const p of profiles) m.set(p.allmoxy_customer_id, p);
+    return m;
+  }, [profiles]);
 
-  // Owners sorted by book size (paying-customer count)
+  // Owners sorted by book size (customer-base member count)
   const ownerOptions = useMemo(() => {
     const m = new Map<string, number>();
-    for (const p of profiles) {
-      if (p.status === 'churned' || p.status === 'never_paid') continue;
-      if ((p.lifetime_subscription || 0) <= 0) continue;
+    for (const p of baseProfiles) {
       const o = repName(p);
       if (!o) continue;
       m.set(o, (m.get(o) ?? 0) + 1);
     }
     return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([name, count]) => ({ name, count }));
-  }, [profiles]);
+  }, [baseProfiles]);
 
   // Rep from URL ?rep= or default to 'all' when data loads.
   // 'all' = roll-up across every rep (no owner filter applied).
@@ -189,19 +209,13 @@ export default function RepDashboard() {
     setSearchParams({ rep: name }, { replace: true });
   }
 
-  // A rep's book = every non-churned account they own that has paid
-  // subscription history. This matches the badge count exactly, so accounts
-  // whose current pay_status is blank/unset in HubSpot (but who are paying)
-  // still show up — rather than only customers whose pay_status is one of the
-  // "Active*" values. When 'all', no owner filter.
+  // A rep's book = the customer-base members (active_today) they own. 'All' is the
+  // whole base, so the Book tile ties to customer_base.customers / mrr exactly. The
+  // old rule (status not churned/never_paid with lifetime > 0) swept in duplicates
+  // and lapsed/paused accounts (224 logos vs the canonical 198).
   const book = useMemo(
-    () => profiles.filter((p) => {
-      if (p.status === 'churned' || p.status === 'never_paid') return false;
-      if ((p.lifetime_subscription || 0) <= 0) return false;
-      if (isAll) return true;
-      return repName(p) === selectedRep;
-    }),
-    [profiles, selectedRep, isAll],
+    () => baseProfiles.filter((p) => isAll || repName(p) === selectedRep),
+    [baseProfiles, selectedRep, isAll],
   );
 
   // Card-failure subset — customers a rep should call to get their payment
@@ -339,22 +353,22 @@ export default function RepDashboard() {
       .filter((c) => c.tier === t)
       .reduce((s, c) => s + (c.current_subscription_mrr || 0), 0);
     const arrAtRisk = matrixForRep.reduce((s, c) => s + (c.arr_at_risk || 0), 0);
-    // Recently-churned for the "Churned (last 90d)" KPI — pull from the rep's
-    // full owner set (not the active-book filter, since book excludes churned).
-    const churnedRecent = profiles.filter((p) =>
-      p.status === 'churned'
-      && (isAll || repName(p) === selectedRep)
-      && p.last_payment_date && isWithinDays(p.last_payment_date, 90)
-    );
-    const churnedMrrLast90 = churnedRecent.reduce((s, p) => {
-      // Use their pre-churn MRR — find the last month with subscription > 0 in monthly_history
-      const months = Object.keys(p.monthly_history || {}).sort();
-      for (let i = months.length - 1; i >= 0; i--) {
-        const m = p.monthly_history[months[i]];
-        if (m && (m.subscription || 0) > 0) return s + (m.subscription || 0);
-      }
-      return s;
-    }, 0);
+    // "Churned (last 90d)" = canonical logo flow (customer_base.logo_flow) over the
+    // last 3 COMPLETE months: churned + lapsed (non-payment) logos that left the base,
+    // with paused logos reported separately. Owner filter via the profile lookup. The
+    // old rule (status 'churned' AND last payment within 90d) was structurally ~0 —
+    // a churned customer's last payment is almost always older than 90 days.
+    const now = new Date();
+    const curKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    const flowLast3 = (baseRaw?.logo_flow ?? []).filter((f) => f.month < curKey).slice(-3);
+    const ownerMatch = (d: FlowDetail) => {
+      if (isAll) return true;
+      const p = profileByAidAll.get(d.allmoxy_customer_id);
+      return !!p && repName(p) === selectedRep;
+    };
+    const lost = flowLast3.flatMap((f) => [...(f.details?.churned ?? []), ...(f.details?.lapsed ?? [])]).filter(ownerMatch);
+    const pausedRecent = flowLast3.flatMap((f) => f.details?.paused ?? []).filter(ownerMatch);
+    const churnedMrrLast90 = lost.reduce((s, d) => s + (d.mrr || 0), 0);
     const recencies = matrixForRep
       .map((c) => c.days_since_last_contact)
       .filter((v): v is number => v != null);
@@ -370,11 +384,14 @@ export default function RepDashboard() {
       yellowMrr: tierMrr('yellow'),
       greenCount: tierCount('green'),
       greenMrr: tierMrr('green'),
-      churnedLast90Count: churnedRecent.length,
+      churnedLast90Count: lost.length,
       churnedLast90Mrr: churnedMrrLast90,
+      churnedWindow: flowLast3.length ? `${monthLabel(flowLast3[0].month)}–${monthLabel(flowLast3[flowLast3.length - 1].month)}` : null,
+      pausedLast90Count: pausedRecent.length,
+      pausedLast90Mrr: pausedRecent.reduce((s, d) => s + (d.mrr || 0), 0),
       avgDaysSinceContact: avgRecency,
     };
-  }, [book, matrixForRep]);
+  }, [book, matrixForRep, baseRaw, profileByAidAll, isAll, selectedRep]);
 
   // 12-month MRR trend: sum each month's subscription across the rep's customers.
   // IMPORTANT: trend uses the FULL owner set (including churned customers) so
@@ -387,15 +404,28 @@ export default function RepDashboard() {
   //   2. The current month is PARTIAL — many customers haven't been billed
   //      yet, so it falsely shows a steep drop. End the trend at the LAST
   //      COMPLETE month (current month - 1).
+  //   3. Duplicate profile rows (excluded_from_logo_count) are dropped — they
+  //      double-count the subscription of the customer they shadow.
+  // For 'All' the trend is the canonical customer_base.by_month (invoiced/accrual
+  // MRR + logos). Per-owner accrual history isn't published, so an owner view sums
+  // that owner's per-customer subscription history (cash basis) and is labelled so.
   const historicalSet = useMemo(
-    () => profiles.filter((p) => (p.lifetime_subscription || 0) > 0 && (isAll || repName(p) === selectedRep)),
+    () => profiles.filter((p) => !p.excluded_from_logo_count && (p.lifetime_subscription || 0) > 0 && (isAll || repName(p) === selectedRep)),
     [profiles, selectedRep, isAll],
   );
+  const trendIsCanonical = isAll && (baseRaw?.by_month?.length ?? 0) > 0;
   const mrrTrend = useMemo(() => {
-    if (historicalSet.length === 0) return [] as Array<{ month: string; mrr: number; logos: number }>;
     const now = new Date();
     const lastCompleteDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
     const lastCompleteKey = `${lastCompleteDate.getFullYear()}-${String(lastCompleteDate.getMonth() + 1).padStart(2, '0')}`;
+    if (trendIsCanonical) {
+      return (baseRaw?.by_month ?? [])
+        .filter((r) => r.month <= lastCompleteKey)
+        .map((r) => ({ month: r.month, mrr: Math.round(r.mrr * 100) / 100, logos: r.customers }))
+        .sort((a, b) => a.month.localeCompare(b.month))
+        .slice(-12);
+    }
+    if (historicalSet.length === 0) return [] as Array<{ month: string; mrr: number; logos: number }>;
     const monthAgg = new Map<string, { mrr: number; logos: number }>();
     for (const p of historicalSet) {
       for (const [month, cell] of Object.entries(p.monthly_history || {})) {
@@ -412,7 +442,7 @@ export default function RepDashboard() {
       .map(([month, v]) => ({ month, mrr: Math.round(v.mrr * 100) / 100, logos: v.logos }))
       .sort((a, b) => a.month.localeCompare(b.month));
     return all.slice(-12);
-  }, [historicalSet]);
+  }, [historicalSet, trendIsCanonical, baseRaw]);
 
   // Their attack list (red + yellow, sorted by ARR at risk desc)
   const attackList = useMemo(() => {
@@ -464,7 +494,7 @@ export default function RepDashboard() {
     return { byCat: [...byCat.entries()].sort((a, b) => b[1] - a[1]), totalSignals };
   }, [matrixForRep]);
 
-  const isLoading = profilesLoading || matrixQuery.isLoading || ttvQuery.isLoading;
+  const isLoading = profilesLoading || matrixQuery.isLoading || ttvQuery.isLoading || baseQuery.isLoading;
   const error = profilesError;
 
   return (
@@ -486,7 +516,7 @@ export default function RepDashboard() {
           )}
           {ownerOptions.length > 0 && (
             <Chip
-              label={`All (${ownerOptions.reduce((s, o) => s + o.count, 0)})`}
+              label={`All (${baseProfiles.length})`}
               size="small"
               onClick={() => pickRep('all')}
               variant={isAll ? 'filled' : 'outlined'}
@@ -607,11 +637,17 @@ export default function RepDashboard() {
             </Grid>
             <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
               <Paper sx={{ p: 2.5, flexGrow: 1 }}>
-                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Churned (last 90d)</Typography>
+                <Stack direction="row" spacing={0.5} alignItems="center">
+                  <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>Churned (last 3 mo)</Typography>
+                  <InfoIcon info={`Logos that left the customer base over the last 3 complete months${kpis.churnedWindow ? ` (${kpis.churnedWindow})` : ''}, from the canonical logo flow (customer_base.logo_flow): churned + lapsed (non-payment). Paused logos are shown separately — they are expected to return. MRR = each logo's MRR when it left. ${isAll ? 'All reps.' : `Owner = ${selectedRep} (current HubSpot owner).`}`} />
+                </Stack>
                 {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32 }} /> : (
                   <>
                     <Typography variant="h4" sx={{ fontWeight: 500, color: kpis.churnedLast90Count > 0 ? 'error.main' : 'text.primary' }}>{kpis.churnedLast90Count}</Typography>
                     <Typography variant="caption" sx={{ color: 'text.secondary' }}>{USD0.format(kpis.churnedLast90Mrr)}/mo lost</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', fontSize: 11 }}>
+                      + {kpis.pausedLast90Count} paused ({USD0.format(kpis.pausedLast90Mrr)}/mo)
+                    </Typography>
                   </>
                 )}
               </Paper>
@@ -729,8 +765,10 @@ export default function RepDashboard() {
           {/* MRR trend */}
           <Paper sx={{ p: 3, mb: 3 }}>
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>MRR Trend — last 12 months</Typography>
-              <InfoIcon info={`Subscription MRR contributed by ${isAll ? 'every paying customer' : `${selectedRep}'s book`} each month. Sum of per-customer subscription history. Ends at the last COMPLETE month — the current month is excluded because not every customer has been billed yet, which would falsely show a drop.`} />
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>MRR Trend — last 12 months{trendIsCanonical ? '' : ' (cash basis)'}</Typography>
+              <InfoIcon info={trendIsCanonical
+                ? 'Canonical customer-base MRR each month (customer_base.by_month — invoiced/accrual basis, annual payers amortized, duplicates excluded) — the same series as the Overview. Ends at the last COMPLETE month.'
+                : `Subscription collected from customers ${selectedRep} owns (incl. since-churned accounts, so prior months reflect the book as it was), summed from per-customer payment history — CASH basis, because per-owner accrual history isn't published; it will differ from the accrual MRR on the Book tile. Duplicate profile rows are excluded. Ends at the last COMPLETE month — the current month is excluded because not every customer has been billed yet.`} />
             </Stack>
             {isLoading ? <Skeleton variant="rectangular" height={260} /> : mrrTrend.length === 0 ? (
               <Typography variant="body2" sx={{ color: 'text.secondary', py: 4, textAlign: 'center' }}>No MRR history available.</Typography>
@@ -877,12 +915,6 @@ export default function RepDashboard() {
       )}
     </Box>
   );
-}
-
-function isWithinDays(iso: string, days: number): boolean {
-  const t = new Date(iso).getTime();
-  if (Number.isNaN(t)) return false;
-  return (Date.now() - t) / (1000 * 60 * 60 * 24) <= days;
 }
 
 type DrillSortKeyOuter = 'name' | 'owner' | 'tier' | 'status' | 'pay_status' | 'mrr' | 'arr_at_risk' | 'tenure';

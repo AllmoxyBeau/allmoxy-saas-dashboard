@@ -54,6 +54,10 @@ type Snapshot = {
   fetched_at: string;
   as_of_year: number;
   cohort_size: number;
+  /** Canonical customer base (active_today) before the labelled exclusion below. */
+  cohort_base_size?: number;
+  cohort_excluded?: Array<{ allmoxy_customer_id: number; name: string; pay_status: string | null; current_subscription_mrr: number; reason: string }>;
+  at_risk_categories?: string[];
   summary: {
     total_wasted_to_date: number;
     total_annualized_burn_at_risk: number;
@@ -73,6 +77,13 @@ type Snapshot = {
 };
 
 const USD0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+// ONE "at risk" definition for the burn tile, its /mo hint and the At-risk toggle (the
+// ETL writes the same list as at_risk_categories). Includes no_data: a paying customer
+// with no verified orders on file has not shown value. Excludes healthy, bid-only
+// (value outside order data) and onboarding (grace period).
+const AT_RISK_CATEGORIES: ReadonlyArray<string> = ['gym_member', 'never_launched_some_orders', 'launched_dormant', 'declining', 'no_data', 'unknown'];
+const isAtRisk = (c: { category: string }) => AT_RISK_CATEGORIES.includes(c.category);
 
 const CATEGORY_COLOR: Record<TtvCustomer['category'], string> = {
   onboarding: '#2C73FF',
@@ -161,7 +172,7 @@ export default function TimeToValue() {
     const summary = {
       ...rawSnap.summary,
       total_wasted_to_date: customers.reduce((s, c) => s + c.wasted_to_date, 0),
-      total_annualized_burn_at_risk: customers.filter((c) => c.category !== 'healthy' && c.category !== 'bid_only' && c.category !== 'onboarding').reduce((s, c) => s + c.current_burn_annualized, 0),
+      total_annualized_burn_at_risk: customers.filter(isAtRisk).reduce((s, c) => s + c.current_burn_annualized, 0),
       gym_member_count: customers.filter((c) => c.category === 'gym_member').length,
       launched_dormant_count: customers.filter((c) => c.category === 'launched_dormant').length,
       declining_count: customers.filter((c) => c.category === 'declining').length,
@@ -203,7 +214,7 @@ export default function TimeToValue() {
     // Rebuild summary
     const summary: Snapshot['summary'] = {
       total_wasted_to_date: customers.reduce((s, c) => s + (c.wasted_to_date || 0), 0),
-      total_annualized_burn_at_risk: customers.filter((c) => c.category !== 'healthy' && c.category !== 'bid_only' && c.category !== 'onboarding').reduce((s, c) => s + (c.current_burn_annualized || 0), 0),
+      total_annualized_burn_at_risk: customers.filter(isAtRisk).reduce((s, c) => s + (c.current_burn_annualized || 0), 0),
       gym_member_count: customers.filter((c) => c.category === 'gym_member').length,
       launched_dormant_count: customers.filter((c) => c.category === 'launched_dormant').length,
       declining_count: customers.filter((c) => c.category === 'declining').length,
@@ -245,7 +256,7 @@ export default function TimeToValue() {
   const filtered = useMemo(() => {
     let rows = snap?.customers ?? [];
     if (filter === 'all') {/* no-op */}
-    else if (filter === 'at_risk') rows = rows.filter((c) => c.category !== 'healthy' && c.category !== 'no_data' && c.category !== 'onboarding');
+    else if (filter === 'at_risk') rows = rows.filter(isAtRisk);
     else rows = rows.filter((c) => c.category === filter);
     if (ownerFilter !== 'all') {
       rows = rows.filter((c) => (c.owner_name || '(unassigned)') === ownerFilter);
@@ -262,7 +273,7 @@ export default function TimeToValue() {
     <Box>
       <PageHeader
         title="Time to Value"
-        subtitle="Are paying customers getting actual product value? Cohort = all paying customers (active + at-risk, lifetime > $0). Driven by verified order data — orders flowing through Allmoxy = value realized, regardless of MRR collected. The headline numbers tell you how much $ is going to customers who aren't (yet) getting value."
+        subtitle="Are paying customers getting actual product value? Cohort = the canonical customer base (live subscription), less customers HubSpot marks Cancelled or Active - Pause Granted (listed below the tiles). Driven by verified order data — orders flowing through Allmoxy = value realized, regardless of MRR collected. The headline numbers tell you how much $ is going to customers who aren't (yet) getting value."
         question="durable"
       />
 
@@ -275,7 +286,10 @@ export default function TimeToValue() {
           .filter((c) => cats.includes(c.category))
           .reduce((s, c) => s + (c.current_subscription_mrr || 0), 0);
         const wastedMonthlyMrr = sumMrr(['gym_member', 'never_launched_some_orders', 'launched_dormant', 'declining']);
-        const burnMonthlyMrr = wastedMonthlyMrr; // same cohort as annual burn / 12
+        // Same category list as the annual burn figure and the At-risk toggle (incl. no-order-data).
+        const atRiskRows = (viewSnap?.customers ?? []).filter(isAtRisk);
+        const burnMonthlyMrr = atRiskRows.reduce((s, c) => s + (c.current_subscription_mrr || 0), 0);
+        const noDataAtRisk = atRiskRows.filter((c) => c.category === 'no_data').length;
         const healthyMonthlyMrr = sumMrr(['healthy', 'bid_only']);
         return (
           <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -299,7 +313,9 @@ export default function TimeToValue() {
                 {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32 }} /> : (
                   <>
                     <Typography variant="h4" sx={{ fontWeight: 500, color: 'warning.main' }}>{USD0.format(viewSnap?.summary.total_annualized_burn_at_risk ?? 0)}</Typography>
-                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>If non-healthy customers don't realize value in next 12mo</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                      If the {atRiskRows.length} at-risk customers (gym member, hygiene gap, dormant, declining, no order data{noDataAtRisk > 0 ? ` — ${noDataAtRisk} with no order data` : ''}) don't realize value in next 12mo
+                    </Typography>
                     <Typography variant="caption" sx={{ color: 'warning.main', fontWeight: 600, display: 'block', mt: 0.25 }}>
                       {USD0.format(burnMonthlyMrr)}/mo at risk
                     </Typography>
@@ -324,7 +340,11 @@ export default function TimeToValue() {
                 {isLoading ? <Skeleton variant="text" sx={{ fontSize: 32 }} /> : (
                   <>
                     <Typography variant="h4" sx={{ fontWeight: 500, color: 'success.main' }}>{viewSnap?.summary.healthy_count ?? 0}</Typography>
-                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>of {viewSnap?.cohort_size ?? 0} {ownerFilter === 'all' ? 'paying customers' : `${ownerFilter}'s customers`}</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                      {ownerFilter === 'all' && viewSnap?.cohort_base_size != null
+                        ? `of ${viewSnap.cohort_size} in cohort (of ${viewSnap.cohort_base_size} paying; ${viewSnap.cohort_excluded?.length ?? 0} excluded — HubSpot Cancelled / Pause Granted)`
+                        : `of ${viewSnap?.cohort_size ?? 0} ${ownerFilter === 'all' ? 'paying customers' : `${ownerFilter}'s customers`}`}
+                    </Typography>
                     <Typography variant="caption" sx={{ color: 'success.main', fontWeight: 600, display: 'block', mt: 0.25 }}>
                       {USD0.format(healthyMonthlyMrr)}/mo realized
                     </Typography>
@@ -335,6 +355,15 @@ export default function TimeToValue() {
           </Grid>
         );
       })()}
+
+      {snap?.cohort_base_size != null && (
+        <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: -1.5, mb: 2 }}>
+          Cohort: {snap.cohort_base_size} paying customers (canonical customer base) − {snap.cohort_excluded?.length ?? 0} excluded = {snap.cohort_size}
+          {(snap.cohort_excluded?.length ?? 0) > 0 && (
+            <> · excluded: {snap.cohort_excluded!.map((e) => `${e.name} (${e.pay_status}, ${USD0.format(e.current_subscription_mrr)}/mo)`).join('; ')}</>
+          )}
+        </Typography>
+      )}
 
       {/* Category breakdown */}
       <Paper sx={{ p: 3, mb: 3 }}>
@@ -436,7 +465,7 @@ export default function TimeToValue() {
           sx={{ '& .MuiToggleButton-root': { px: 1.5, py: 0.25, fontSize: 11, textTransform: 'none' } }}
         >
           <ToggleButton value="all">All ({viewSnap?.customers?.length ?? 0})</ToggleButton>
-          <ToggleButton value="at_risk">At risk ({(viewSnap?.customers?.length ?? 0) - (viewSnap?.summary.healthy_count ?? 0) - ((viewSnap?.by_category.no_data?.count ?? 0))})</ToggleButton>
+          <ToggleButton value="at_risk">At risk ({(viewSnap?.customers ?? []).filter(isAtRisk).length})</ToggleButton>
           {(viewSnap?.by_category.gym_member?.count ?? 0) > 0 && <ToggleButton value="gym_member">Gym ({viewSnap!.by_category.gym_member.count})</ToggleButton>}
           {(viewSnap?.by_category.never_launched_some_orders?.count ?? 0) > 0 && <ToggleButton value="never_launched_some_orders">Hygiene ({viewSnap!.by_category.never_launched_some_orders.count})</ToggleButton>}
           {(viewSnap?.by_category.launched_dormant?.count ?? 0) > 0 && <ToggleButton value="launched_dormant">Dormant ({viewSnap!.by_category.launched_dormant.count})</ToggleButton>}

@@ -250,7 +250,23 @@ export default function OrdersVerified() {
   );
 
   const summary = useMemo(() => {
-    const totalAnnualized = filtered.reduce((s, r) => s + r.current_year_annualized, 0);
+    // Annualize the BOOK, not each customer: current-year $ × 12 ÷ the number of months
+    // of the year that carry revenue across the filtered set — the same global
+    // months-loaded denominator as the year chart below, so the KPI equals the chart's
+    // projected bar. Summing each row's own 12 ÷ (its months with revenue) extrapolated
+    // every mid-year starter (and every customer with a $0 month) to a full year.
+    const currentYearStr = String(new Date().getFullYear());
+    const monthsWithRevenue = new Set<string>();
+    for (const r of filtered) {
+      for (const [m, mv] of Object.entries(r.monthly_verified || {})) {
+        if (m.startsWith(currentYearStr) && (mv?.usd || 0) > 0) monthsWithRevenue.add(m);
+      }
+    }
+    const globalMonthsLoaded = monthsWithRevenue.size;
+    const totalYtd = filtered.reduce((s, r) => s + r.current_year_usd, 0);
+    const totalAnnualized = globalMonthsLoaded > 0 && globalMonthsLoaded < 12
+      ? (totalYtd * 12) / globalMonthsLoaded
+      : totalYtd;
     const totalPriorYear = filtered.reduce((s, r) => s + r.prior_year_usd, 0);
     const totalLifetime = filtered.reduce((s, r) => s + r.lifetime_usd, 0);
     const totalLifetimeOrders = filtered.reduce((s, r) => s + r.lifetime_orders, 0);
@@ -264,6 +280,8 @@ export default function OrdersVerified() {
     return {
       count: filtered.length,
       totalAnnualized,
+      totalYtd,
+      globalMonthsLoaded,
       totalPriorYear,
       totalLifetime,
       totalLifetimeOrders,
@@ -387,7 +405,7 @@ export default function OrdersVerified() {
           <Paper sx={{ p: 2, flexGrow: 1, borderLeft: '3px solid', borderColor: 'primary.main' }}>
             <Stack direction="row" spacing={0.5} alignItems="center">
               <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10.5 }}>YTD annualized</Typography>
-              <InfoIcon info="Sum of every filtered customer's current-year invoiced $ multiplied by (12 / months loaded). Apples-to-apples comparison with prior year total." />
+              <InfoIcon info={`Filtered customers' current-year invoiced $ (${USD_COMPACT.format(summary.totalYtd)} YTD) × 12 ÷ ${summary.globalMonthsLoaded || '—'} months of the year with revenue — one book-level denominator, the same as the year chart's projected bar. Apples-to-apples comparison with prior year total; YoY compares this to the prior-year actual.`} />
             </Stack>
             {isLoading ? <Skeleton variant="text" sx={{ fontSize: 28 }} /> : (
               <>

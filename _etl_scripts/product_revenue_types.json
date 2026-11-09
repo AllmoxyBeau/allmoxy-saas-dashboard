@@ -1,7 +1,22 @@
 {
  "_comment": "Beau's Stripe product -> revenue type map (products.csv export, 2026-10-07). From Sep 2026 Allmoxy sells MULTIPLE LINE ITEMS on one subscription, so revenue is recognised per invoice LINE, not per charge. Edit here - no code change needed. Revenue types (subscription, services, operatortokens, customdomain) map to QB accounts in qb_accounts.json under revenue_accounts.",
- "updated_at": "2026-10-07",
+ "updated_at": "2026-11-09",
  "products": {
+  "prod_VS98IRnzjFaAVc": {
+   "name": "Allmoxy Core — Production Cabinets · Growth",
+   "revenue_type": "subscription",
+   "_note": "Added 2026-11-09 (revenue audit): was unmapped, $1,300 billed since Aug 2026."
+  },
+  "prod_VTew7e0RzYkht8": {
+   "name": "Allmoxy Core — Production Cabinets · Starter",
+   "revenue_type": "subscription",
+   "_note": "Added 2026-11-09 (revenue audit): was unmapped."
+  },
+  "prod_VWJLJSlhTf2iTF": {
+   "name": "Allmoxy Implementation — Standard",
+   "revenue_type": "services",
+   "_note": "Added 2026-11-09 (revenue audit): second 'Implementation - Standard' product (em dash) created 2026-10; same treatment as prod_VBin1ANZrDosU5."
+  },
   "prod_VHMb4oBFOAXoCV": {
    "name": "Allmoxy Add-on - API & sandbox",
    "revenue_type": "subscription",

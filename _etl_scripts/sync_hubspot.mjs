@@ -218,6 +218,7 @@ const INSTANCE_PROPS = [
   'instance_creation',
   'payment_start_date',
   'payment_pause_date',
+  'pause_resume_date',     // created 2026-11-09 — expected end of a granted pause (churn model)
   'last_payment_date',
   'merchant_connect_date',
   'goal_launch_date__cloned_',

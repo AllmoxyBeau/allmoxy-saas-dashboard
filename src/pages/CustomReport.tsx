@@ -35,7 +35,7 @@ type Profile = {
   last_payment_date: string | null;
   years_with_us: number | null;
   cohort_year: number | null;
-  status: 'active' | 'at_risk' | 'non_payment' | 'churned' | 'never_paid';
+  status: 'active' | 'at_risk' | 'non_payment' | 'paused' | 'churned' | 'never_paid';
   active_today: boolean;
   lifetime_total: number;
   lifetime_subscription: number;
@@ -147,9 +147,11 @@ const PRESETS: Preset[] = [
   {
     id: 'active_roster',
     label: 'Active paying roster',
-    description: 'Every currently-paying customer with MRR, lifetime, tenure.',
+    description: 'Every customer in the canonical customer base (active today — duplicates excluded) with MRR, lifetime, tenure. Ties to the headline customer count and MRR.',
     fields: ['allmoxy_customer_id', 'name', 'current_subscription_mrr', 'lifetime_total', 'years_with_us', 'sign_up_date', 'cohort_year'],
-    filters: ['has_subscription'],
+    // active_today = customer_base membership. 'MRR > 0' also matched a duplicate
+    // profile row (excluded_from_logo_count) carrying MRR, giving 199 vs the base's 198.
+    filters: ['active'],
   },
   {
     id: 'dunning',

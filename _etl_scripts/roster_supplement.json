@@ -1,0 +1,5 @@
+{
+  "comment": "Customers billing in Stripe but missing from the Aurora `customers` roster (cache/aurora_customers.json, last synced 2026-09-15 — sync_aurora has timed out since). Appended to allmoxy_core_customer by refresh_all.mjs ONLY when none of an entry's stripe_customer_ids already appears in the roster, so an entry retires itself the moment Aurora carries the customer. IDs 9001+ are PROVISIONAL (Aurora assigns the real allmoxy_customer_id); once Aurora has the customer, delete the entry. History: 2026-11-09 the revenue audit added 8 Stripe customers missing from a stale Aurora cache; the same day Aurora synced again and now carries all of them (Precise 2112, Hardwoods 2113, Glacier 2120, Pine Door 2122, Contour 2123, Sommers 2126; Martin Wood Products is 111; Woodhouse is 2094, linked via stripe_id_overrides.json). Empty is the normal state.",
+  "updated_at": "2026-11-09",
+  "customers": []
+}

@@ -1,10 +1,15 @@
 {
-  "fetched_at": "2026-11-02T23:23:36.959Z",
+  "fetched_at": "2026-11-09T21:07:15.221Z",
   "comment": "Annual-amortization evidence registry (QoE-4). Per annual-payer, captures: source payment trace (Stripe / check / wire), the actual realized amortization on monthly_history, any custom override window, QB deferred-revenue treatment, and sign-off. A QoE reviewer should be able to answer \"show me every annualized dollar in the MRR series and prove it\" from this file alone. Built by _etl_scripts/build_annual_amortization_evidence.mjs.",
   "summary": {
     "annual_payer_count": 2,
-    "total_amortized_dollars": 147355.5,
-    "total_annualized_months": 94,
+    "total_amortized_dollars": 154137.42,
+    "total_annualized_months": 98,
+    "as_of_month": "2026-10",
+    "recognized_to_date_dollars": 138163.42,
+    "recognized_month_count": 90,
+    "deferred_dollars": 15974,
+    "deferred_month_count": 8,
     "payers_with_overrides": 1,
     "payers_with_synthetic_payments": 1,
     "payers_with_contract_link": 0,
@@ -29,247 +34,326 @@
       "annualized_months": [
         {
           "month": "2022-03",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-04",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-05",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-06",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-07",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-08",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-09",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-10",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-11",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2022-12",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-01",
-          "subscription": 2883.66
+          "subscription": 2883.66,
+          "recognized": true
         },
         {
           "month": "2023-02",
-          "subscription": 2883.66
+          "subscription": 2883.66,
+          "recognized": true
         },
         {
           "month": "2023-03",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-04",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-05",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-06",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-07",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-08",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-09",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-10",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-11",
-          "subscription": 1441.83
+          "subscription": 1441.83,
+          "recognized": true
         },
         {
           "month": "2023-12",
-          "subscription": 3340.83
+          "subscription": 3340.83,
+          "recognized": true
         },
         {
           "month": "2024-01",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-02",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-03",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-04",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-05",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-06",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-07",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-08",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-09",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-10",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2024-11",
-          "subscription": 1899
+          "subscription": 1899,
+          "recognized": true
+        },
+        {
+          "month": "2024-12",
+          "subscription": 1899,
+          "recognized": true
+        },
+        {
+          "month": "2025-01",
+          "subscription": 1899,
+          "recognized": true
         },
         {
           "month": "2025-02",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-03",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-04",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-05",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-06",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-07",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-08",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-09",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-10",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-11",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2025-12",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2026-01",
-          "subscription": 1993.92
+          "subscription": 1993.92,
+          "recognized": true
+        },
+        {
+          "month": "2026-02",
+          "subscription": 1993.92,
+          "recognized": true
         },
         {
           "month": "2026-03",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": true
         },
         {
           "month": "2026-04",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": true
         },
         {
           "month": "2026-05",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": true
         },
         {
           "month": "2026-06",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": true
         },
         {
           "month": "2026-07",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": true
         },
         {
           "month": "2026-08",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": true
         },
         {
           "month": "2026-09",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": true
         },
         {
           "month": "2026-10",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": true
         },
         {
           "month": "2026-11",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": false
         },
         {
           "month": "2026-12",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": false
         },
         {
           "month": "2027-01",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": false
         },
         {
           "month": "2027-02",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": false
         },
         {
           "month": "2027-03",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": false
         },
         {
           "month": "2027-04",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": false
         },
         {
           "month": "2027-05",
-          "subscription": 2133.5
+          "subscription": 2133.5,
+          "recognized": false
         }
       ],
-      "annualized_month_count": 60,
-      "total_amortized_dollars": 113321.46,
+      "annualized_month_count": 63,
+      "total_amortized_dollars": 119113.38,
+      "recognized_to_date_dollars": 104178.88,
+      "recognized_month_count": 56,
+      "deferred_dollars": 14934.5,
+      "deferred_month_count": 7,
       "stripe_payments": [
         {
           "created": "2022-03-07 9:33:50",
@@ -338,143 +422,186 @@
       "annualized_months": [
         {
           "month": "2024-01",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-02",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-03",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-04",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-05",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-06",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-07",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-08",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-09",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-10",
-          "subscription": 806.67
+          "subscription": 806.67,
+          "recognized": true
         },
         {
           "month": "2024-11",
-          "subscription": 1796.67
+          "subscription": 1796.67,
+          "recognized": true
         },
         {
           "month": "2024-12",
-          "subscription": 1796.67
+          "subscription": 1796.67,
+          "recognized": true
         },
         {
           "month": "2025-01",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-02",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-03",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-04",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-05",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-06",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-07",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-08",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-09",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-10",
-          "subscription": 990
+          "subscription": 990,
+          "recognized": true
+        },
+        {
+          "month": "2025-11",
+          "subscription": 990,
+          "recognized": true
         },
         {
           "month": "2025-12",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-01",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-02",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-03",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-04",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-05",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-06",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-07",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-08",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-09",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-10",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": true
         },
         {
           "month": "2026-11",
-          "subscription": 1039.5
+          "subscription": 1039.5,
+          "recognized": false
         }
       ],
-      "annualized_month_count": 34,
-      "total_amortized_dollars": 34034.04,
+      "annualized_month_count": 35,
+      "total_amortized_dollars": 35024.04,
+      "recognized_to_date_dollars": 33984.54,
+      "recognized_month_count": 34,
+      "deferred_dollars": 1039.5,
+      "deferred_month_count": 1,
       "stripe_payments": [
         {
           "created": "2024-01-03 12:50:39",

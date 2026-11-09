@@ -142,6 +142,10 @@ function computeBreakdown(rows: SubRow[], anchor: string, windowMonths: number, 
 export default function NetRevenueRetention() {
   const { data: subData, isLoading: subLoading, error: subError } = useSheetTab('subscription_by_month');
   const { data: ueData } = useSheetTab('unit_economics');
+  // THE retention definition every page shares (Revenue Waterfall, Sales Budget, Unit
+  // Economics LTV): accrual waterfall, trailing 12 complete months.
+  const { data: wfData, isLoading: wfLoading } = useSheetTab('mrr_waterfall');
+  const canon = (wfData as unknown as { ttm_accrual?: { windowStart: string; windowEnd: string; annual_nrr: number; annual_grr: number } } | undefined)?.ttm_accrual;
   const sub = subData as unknown as SubSnap | undefined;
   const ue = ueData as unknown as UeSnap | undefined;
 
@@ -289,11 +293,35 @@ export default function NetRevenueRetention() {
         </Stack>
       </Stack>
 
-      {/* Headline cards */}
+      {/* Canonical retention — identical to Revenue Waterfall, Sales Budget and Unit Economics */}
+      <Grid container spacing={2} sx={{ mb: 2 }}>
+        <Grid item xs={12} sm={6} md={3}>
+          <StatCard
+            label="NRR · TTM (canonical)"
+            value={pct(canon?.annual_nrr ?? null)}
+            hint={canon ? `${monthLabel(canon.windowStart)} → ${monthLabel(canon.windowEnd)} · accrual` : 'loading'}
+            color={nrrColor(canon?.annual_nrr ?? null)}
+            loading={wfLoading}
+            info={<><strong>What it is:</strong> The one NRR every page reports — the Revenue Waterfall, Sales Budget and Unit Economics show this same figure.<br /><br /><strong>Data:</strong> Accrual (invoiced) waterfall, trailing 12 complete months: starting MRR plus expansion, less contraction, churn, voided and delinquent MRR, over starting MRR. New and reactivated customers are excluded.<br /><br /><strong>Cohort view below:</strong> the point-to-point cohort cards answer a different question (the same named customers then vs. now) and will not match exactly.</>}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <StatCard
+            label="GRR · TTM (canonical)"
+            value={pct(canon?.annual_grr ?? null)}
+            hint="Gross revenue churn = 1 − GRR (feeds LTV)"
+            color={grrColor(canon?.annual_grr ?? null)}
+            loading={wfLoading}
+            info={<><strong>What it is:</strong> The canonical NRR with expansion removed — pure leakage from the existing book. 1 − GRR is the gross revenue churn Unit Economics uses for LTV.</>}
+          />
+        </Grid>
+      </Grid>
+
+      {/* Cohort (point-to-point) view */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={12} sm={6} md={2.4}>
           <StatCard
-            label={`NRR · ${windowMonths}M`}
+            label={`Cohort NRR · ${windowMonths}M`}
             value={pct(latest?.nrr ?? null)}
             hint="Target ≥ 100% · best-in-class ≥ 120%"
             color={nrrColor(latest?.nrr ?? null)}
@@ -303,7 +331,7 @@ export default function NetRevenueRetention() {
         </Grid>
         <Grid item xs={12} sm={6} md={2.4}>
           <StatCard
-            label={`GRR · ${windowMonths}M`}
+            label={`Cohort GRR · ${windowMonths}M`}
             value={pct(latest?.grr ?? null)}
             hint="Target ≥ 85% · best-in-class ≥ 90%"
             color={grrColor(latest?.grr ?? null)}

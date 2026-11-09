@@ -4,9 +4,12 @@
 // transaction_type = 'services' and status = 'succeeded'.
 
 import fs from 'node:fs';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
+const XLSX_PATH = path.resolve(__dirname, '../..', 'Allmoxy - Meta Data Reconcile Tool.xlsx');
 const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
 
 // Stripe Sync row 2 holds the headers; data starts row 3.

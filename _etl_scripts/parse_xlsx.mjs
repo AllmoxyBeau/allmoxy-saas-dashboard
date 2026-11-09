@@ -3,9 +3,12 @@
 // List tab names first so we can confirm the right one.
 
 import fs from 'node:fs';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const FILE = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
+const FILE = path.resolve(__dirname, '../..', 'Allmoxy - Meta Data Reconcile Tool.xlsx');
 
 const wb = XLSX.read(fs.readFileSync(FILE), { type: 'buffer' });
 console.log('Sheet names:', JSON.stringify(wb.SheetNames));

@@ -139,7 +139,7 @@ export default function ServiceTickets() {
           <Kpi label="Median time to close" value={days(t?.cohort_median_resolution_days)} hint={`cohort basis · ${N0.format(t?.cohort_measurable ?? 0)} measurable`} color="primary.main" loading={isLoading} />
         </Grid>
         <Grid item xs={12} sm={6} md={2.4}>
-          <Kpi label="Closed within 7 days" value={pct(t?.within_7d_rate)} hint={`${pct(t?.same_day_rate)} same day`} loading={isLoading} />
+          <Kpi label="Closed within 7 days" value={pct(t?.within_7d_rate)} hint={`${pct(t?.same_day_rate)} same day · same cohort as median`} loading={isLoading} />
         </Grid>
         <Grid item xs={12} sm={6} md={2.4}>
           <Kpi label="Net queue change" value={`${(t?.net ?? 0) > 0 ? '+' : ''}${N0.format(t?.net ?? 0)}`} hint={`${N0.format(t?.created ?? 0)} in · ${N0.format(t?.closed ?? 0)} out (TTM)`} color={(t?.net ?? 0) > 0 ? 'error.main' : 'success.main'} loading={isLoading} />

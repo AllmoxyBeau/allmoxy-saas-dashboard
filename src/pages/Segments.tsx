@@ -91,17 +91,26 @@ type SegmentRow = {
 
 type Filter = 'all' | 'active' | 'cancelled';
 
-// Module-scope so the same definition is used inside the useMemo and the render
-// body. "Active" = currently billing subscription MRR > 0 in the latest complete
-// month (matches Overview's mrr_by_month.logo_qty and Customer Health's count).
-function isActive(c: ProfileRow): boolean {
-  return (c.current_subscription_mrr ?? 0) > 0;
+// "Active" = a member of THE canonical customer base (customer_base.json members —
+// invoiced basis, duplicates excluded), so this page's count and MRR tie to Overview.
+// Before customer_base loads, falls back to currently billing subscription MRR > 0.
+type CustomerBaseIds = { members: Array<{ allmoxy_customer_id: number }>; excluded?: Array<{ allmoxy_customer_id: number }> };
+function makeIsActive(memberIds: Set<number> | null) {
+  return (c: ProfileRow): boolean =>
+    memberIds ? memberIds.has(c.allmoxy_customer_id) : (c.current_subscription_mrr ?? 0) > 0;
 }
 
 export default function Segments() {
   const { data: profilesData, isLoading } = useSheetTab('customer_profiles');
   const snap = profilesData as unknown as { rows: ProfileRow[] } | undefined;
-  const profiles = snap?.rows ?? [];
+  const { data: baseData } = useSheetTab('customer_base');
+  const base = baseData as unknown as CustomerBaseIds | undefined;
+  const memberIds = useMemo(() => (base?.members ? new Set(base.members.map((m) => m.allmoxy_customer_id)) : null), [base]);
+  // Duplicate records (customer_base.excluded) are dropped entirely so one business
+  // counts once in every count and MRR total on this page.
+  const excludedIds = useMemo(() => new Set((base?.excluded ?? []).map((m) => m.allmoxy_customer_id)), [base]);
+  const profiles = useMemo(() => (snap?.rows ?? []).filter((r) => !excludedIds.has(r.allmoxy_customer_id)), [snap, excludedIds]);
+  const isActive = useMemo(() => makeIsActive(memberIds), [memberIds]);
 
   const [filter, setFilter] = useState<Filter>('all');
   const [drillSegment, setDrillSegment] = useState<string | null>(null);
@@ -165,7 +174,7 @@ export default function Segments() {
       return total;
     }
 
-    // isActive defined at module scope. "Cancelled" inside this scope = not actively
+    // isActive = canonical customer_base membership. "Cancelled" inside this scope = not actively
     // billing this month (matches Overview / Customer Health rather than HubSpot's
     // pay_status tag, which would inflate the count by including paused / pre-sale /
     // card-failure customers who aren't generating revenue).
@@ -270,7 +279,7 @@ export default function Segments() {
     const totalActive = profiles.filter((c) => !isCancelled(c)).length;
     const totalCancelled = profiles.filter(isCancelled).length;
     const totalSegmented = profiles.filter((c) => (c.primary_segment ?? '').trim()).length;
-    const totalCurrentMrr = profiles.reduce((s, c) => s + (c.current_subscription_mrr ?? 0), 0);
+    const totalCurrentMrr = profiles.filter((c) => !isCancelled(c)).reduce((s, c) => s + (c.current_subscription_mrr ?? 0), 0);
 
     return {
       latestMonth,
@@ -288,7 +297,7 @@ export default function Segments() {
         segmentCount: segments.filter((s) => !s.isUnsegmented).length,
       },
     };
-  }, [profiles]);
+  }, [profiles, isActive]);
 
   if (isLoading || !view) {
     return (

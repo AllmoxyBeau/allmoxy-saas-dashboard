@@ -194,6 +194,16 @@ export default function NorthStar() {
     return Math.round(sum * 100) / 100;
   }, [headline, customerProfiles]);
 
+  // Headline total = the three stream cards exactly: canonical Subscription MRR
+  // (customer_base.mrr, accrual incl. annual amortization) + Services revenue + Connect
+  // fees. `headline.mrr_blended` uses CASH subscription, so it never equalled the sum of
+  // the cards. Services is non-recurring, so this is "total monthly revenue", not MRR.
+  const subscriptionHeadline = base?.mrr ?? headline?.mrr_subscription ?? null;
+  const totalMonthlyRevenue =
+    headline && subscriptionHeadline != null
+      ? subscriptionHeadline + (headline.mrr_services ?? 0) + (headline.mrr_connect ?? 0)
+      : null;
+
   const completeMonths = useMemo(() => rows.filter((r) => r.month < currentMonth), [rows, currentMonth]);
   const firstMonth = completeMonths[0]?.month;
   const lastComplete = completeMonths[completeMonths.length - 1]?.month;
@@ -296,7 +306,7 @@ export default function NorthStar() {
             hint={base ? `${monthLabel(base.as_of)} · Stream 1 · click` : headline ? `${monthLabel(headline.month)} · Stream 1 · click` : 'loading'}
             stream="Stream 1"
             onClick={() => openDrill({ kind: 'subscription' })}
-            info={<><strong>What it is:</strong> Subscription MRR for the latest complete month, on the <strong>invoiced (accrual) basis</strong> — what was billed and earned, which is the run-rate the business is actually running at.<br /><br /><strong>Data:</strong> <code>customer_base.json</code>, the single canonical source. It is the sum of the MRR of the same {base?.customers ?? '—'} customers shown in "Active paying customers", so the two always reconcile and ARPA is meaningful.<br /><br /><strong>Includes:</strong> annual payers at their amortized monthly revenue (annual-payer list: <code>src/data/annual_payers.json</code>). Excludes duplicate records so one business counts once.<br /><br /><strong>Why it differs from the Revenue Waterfall:</strong> the waterfall's accrual view excludes annual amortization (booked separately on 4100), and its cash toggle shows what actually cleared Stripe. All three reconcile: cash + billed-not-yet-collected + annual amortization = this number.<br /><br /><strong>Click:</strong> Drill to each contributing transaction; filter for annual vs. regular.</>}
+            info={<><strong>What it is:</strong> Subscription MRR for the latest complete month, on the <strong>invoiced (accrual) basis</strong> — what was billed and earned, which is the run-rate the business is actually running at.<br /><br /><strong>Data:</strong> <code>customer_base.json</code>, the single canonical source. It is the sum of the MRR of the same {base?.customers ?? '—'} customers shown in "Active paying customers", so the two always reconcile and ARPA is meaningful.<br /><br /><strong>Includes:</strong> annual payers at their amortized monthly revenue (annual-payer list: <code>src/data/annual_payers.json</code>). Excludes duplicate records so one business counts once.<br /><br /><strong>Why it differs from the Revenue Waterfall:</strong> the waterfall's accrual view excludes annual amortization (booked separately on 4100), so <em>waterfall accrual ending MRR + annual amortization = this number</em>. The waterfall's cash toggle shows what actually cleared Stripe in the month; it differs from the accrual figure by payment timing (billed this month but collected in another, or collected this month for another month's invoice), so it does not reconcile to this number by a simple add-on.<br /><br /><strong>Click:</strong> Drill to each contributing transaction; filter for annual vs. regular.</>}
             footerChip={
               annualizedSubscription > 0
                 ? { label: `incl. ${USD0.format(annualizedSubscription)} annualized`, tooltip: '1/12 portions of annual lump-sum payments from annual-payer customers' }
@@ -306,7 +316,7 @@ export default function NorthStar() {
         </Grid>
         <Grid item xs={12} sm={6} md={2.4}>
           <MetricCard
-            label="Services MRR"
+            label="Services revenue"
             value={
               isLoading || !headline
                 ? null
@@ -314,7 +324,7 @@ export default function NorthStar() {
                   ? USD0.format(headline.mrr_services)
                   : '—'
             }
-            hint={headline ? `${monthLabel(headline.month)} · Stream 2 · click` : 'loading'}
+            hint={headline ? `${monthLabel(headline.month)} · non-recurring · click` : 'loading'}
             stream="Stream 2"
             onClick={() => openDrill({ kind: 'services' })}
             info={<><strong>What it is:</strong> Services (project-based) revenue recognized in the latest complete month. Non-recurring by nature — we track it separately from subscription so recurring-revenue metrics aren't distorted by one-off project billings.<br /><br /><strong>Data:</strong> Sum of Stripe transactions where transaction_type = "services" and status = "succeeded", aggregated from the Stripe Sync tab.<br /><br /><strong>Click:</strong> Drill to each services customer with their payment date and amount.</>}
@@ -338,18 +348,18 @@ export default function NorthStar() {
         </Grid>
         <Grid item xs={12} sm={6} md={2.4}>
           <MetricCard
-            label="Blended MRR"
+            label="Total monthly revenue"
             value={
               isLoading || !headline
                 ? null
-                : headline.mrr_blended != null
-                  ? USD0.format(headline.mrr_blended)
+                : totalMonthlyRevenue != null
+                  ? USD0.format(totalMonthlyRevenue)
                   : '—'
             }
-            hint={headline ? `${monthLabel(headline.month)} · Stream 1 + 2 + 3 · click` : 'loading'}
+            hint={headline ? `${monthLabel(headline.month)} · Subscription MRR + Services + Connect · click` : 'loading'}
             stream="Blended"
             onClick={() => openDrill({ kind: 'blended' })}
-            info={<><strong>What it is:</strong> Subscription MRR + Services revenue + Connect fees for the latest complete month — the total "dollars in" number.<br /><br /><strong>Data:</strong> Sum of the three stream cards above. Each stream comes from its own authoritative source (see individual card info).<br /><br /><strong>Note:</strong> Each stream behaves differently — subscription is recurring, services is project-based, Connect is transaction-driven. The Blended total is informative but the per-stream cards tell the actual operating story.</>}
+            info={<><strong>What it is:</strong> Subscription MRR + Services revenue + Connect fees for the latest complete month — total monthly revenue. Not an MRR figure: Services (implementation &amp; support) is non-recurring revenue.<br /><br /><strong>Data:</strong> Exactly the sum of the three stream cards to the left — Subscription MRR from <code>customer_base.json</code> (accrual, incl. annual amortization), Services and Connect from their own sources (see individual card info).<br /><br /><strong>Note:</strong> Each stream behaves differently — subscription is recurring, services is project-based, Connect is transaction-driven. The total is informative but the per-stream cards tell the actual operating story.</>}
           />
         </Grid>
       </Grid>
@@ -865,7 +875,9 @@ function NorthStarDrill({
       .map((r) => {
         let lifetime = 0;
         for (const [k, v] of Object.entries(r)) {
-          if (k === 'customer_name') continue;
+          // Month columns only — the row also carries allmoxy_customer_id, which
+          // used to be added into "lifetime" fees.
+          if (!/^\d{4}-\d{2}$/.test(k)) continue;
           if (typeof v === 'number' && v > 0) lifetime += v;
         }
         return {
@@ -908,7 +920,9 @@ function NorthStarDrill({
       .map((r) => {
         let lifetime = 0;
         for (const [k, v] of Object.entries(r)) {
-          if (k === 'customer_name') continue;
+          // Month columns only — the row also carries allmoxy_customer_id, which
+          // used to be added into "lifetime" fees.
+          if (!/^\d{4}-\d{2}$/.test(k)) continue;
           if (typeof v === 'number' && v > 0) lifetime += v;
         }
         return {
@@ -963,7 +977,7 @@ function NorthStarDrill({
     ];
     const titleMap: Record<string, string> = {
       active_logos: 'Active paying customers',
-      blended: 'Blended MRR contributors',
+      blended: 'Total monthly revenue · subscription contributors',
     };
     return (
       <DrillDownPanel

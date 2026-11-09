@@ -17,17 +17,19 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const SOURCE = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Orders Verified Data.xlsx';
+const SOURCE = path.resolve(__dirname, '../..', 'Orders Verified Data.xlsx');
 // Multi-month 2026 supplement — one tab per month (Jan, Feb, March, April,
 // May, ...). Each tab: { subdomain, total invoices }. When present, this
 // REPLACES the Raw Data tab's 2026 totals (which lag behind) and populates
 // per-month values in monthly_supplement so the dashboard can render true
 // monthly trends. Single-month "Verified Orders May 2026.xlsx" is the legacy
 // fallback if the multi-month file isn't there.
-const VERIFIED_2026_MONTHLY = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Verified Orders 2026.xlsx';
-const VERIFIED_2026_MAY_FALLBACK = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Verified Orders May 2026.xlsx';
+const VERIFIED_2026_MONTHLY = path.resolve(__dirname, '../..', 'Verified Orders 2026.xlsx');
+const VERIFIED_2026_MAY_FALLBACK = path.resolve(__dirname, '../..', 'Verified Orders May 2026.xlsx');
 const VERIFIED_2026_YEAR = '2026';
 // Map a sheet name (e.g. "Jan", "May", "April") to its month-of-year number.
 const MONTH_NAME_TO_NUM = {
@@ -44,8 +46,8 @@ const MONTH_NAME_TO_NUM = {
   nov: '11', november: '11',
   dec: '12', december: '12',
 };
-const OUT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots/orders_verified.json';
-const PROFILES = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots/customer_profiles.json';
+const OUT = path.resolve(__dirname, '..', 'public/snapshots/orders_verified.json');
+const PROFILES = path.resolve(__dirname, '..', 'public/snapshots/customer_profiles.json');
 
 function parseNum(v) {
   if (v == null || v === '') return 0;
@@ -432,7 +434,7 @@ console.log(`Live Date inferred for ${inferredCount} customers (orders present b
 // ($102.88M against a real $3.49M) is present in gold too — it inherits the same
 // upstream data, so migrating does not retire that correction.
 // ============================================================================
-const GOLD_PATH = path.join('/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard', '_etl_scripts/cache/aurora_orders_verified_monthly.json');
+const GOLD_PATH = path.join(path.resolve(__dirname, '..'), '_etl_scripts/cache/aurora_orders_verified_monthly.json');
 let goldApplied = 0, goldMonths = null, goldCountYears = 0;
 try {
   const gold = JSON.parse(fs.readFileSync(GOLD_PATH, 'utf8'));
@@ -525,7 +527,7 @@ for (const c of byCustomer.values()) {
 // affected total_usd from orders_value_overrides.json and adjust the customer's
 // total_lifetime_usd by the delta so lifetime stays consistent. Applied BEFORE
 // the finalize/rounding loop so downstream (latest year, aggregates) use it.
-const OVERRIDES_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/_etl_scripts/orders_value_overrides.json';
+const OVERRIDES_PATH = path.resolve(__dirname, '..', '_etl_scripts/orders_value_overrides.json');
 let valueOverrides = {};
 try { valueOverrides = JSON.parse(fs.readFileSync(OVERRIDES_PATH, 'utf8')); } catch { /* no overrides file */ }
 for (const [aidStr, years] of Object.entries(valueOverrides)) {

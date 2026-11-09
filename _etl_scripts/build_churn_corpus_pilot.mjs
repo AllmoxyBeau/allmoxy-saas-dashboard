@@ -8,9 +8,11 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const PORTAL_ID = '4910812';
-const SNAP = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const SNAP = path.resolve(__dirname, '..', 'public/snapshots');
 
 // Customer metadata — top 5 by lifetime subscription $
 const META = [

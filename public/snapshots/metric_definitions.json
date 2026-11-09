@@ -1,6 +1,6 @@
 {
   "comment": "QoE-7: canonical definitions for every metric a banker / buyer / QoE reviewer will see in the dashboard. Each entry specifies what the metric means in plain English, its exact formula, source files, the time window it covers, every adjustment applied to the raw data, where it is displayed, and a sign-off. This is the FIRST document a reviewer should read — every other artifact in the data room flows from these definitions. Built by hand and committed to git; published to the dashboard as a snapshot.",
-  "updated_at": "2026-06-12",
+  "updated_at": "2026-11-09",
   "verified_by": "Beau Lewis (CEO/owner)",
   "categories": [
     {
@@ -66,15 +66,16 @@
     },
     {
       "id": "mrr_subscription",
-      "name": "Subscription MRR",
+      "name": "Subscription MRR (canonical)",
       "category": "revenue",
-      "definition": "Monthly recurring subscription revenue from Allmoxy SaaS billing. Excludes one-time services, affiliate (Connect) fees, and tax. Annual-payer lump sums are amortized so the series shows true run-rate, not lumpy receipts. Customer counts paired with this metric MUST come from customer_base.json (see active_customers) — three different counts (184/191/195) were published simultaneously before 2026-09-14 because each page derived its own.",
-      "formula": "Per month m: sum across all active customers of monthly_history[m].subscription. Annual-payer charges (≥ $3K from customers in annual_payers.json) are spread as amount/months over their coverage window (default 12 months forward; override-driven windows for specific customers).",
+      "definition": "THE canonical MRR: monthly recurring subscription revenue from customer_base.json (customer_base.mrr; per month customer_base.by_month[].mrr), on the invoiced (accrual) basis with annual payers amortized and duplicate records excluded. Excludes services (implementation, support, training — Services revenue, never MRR), Connect fees, and tax. The cash-basis series — sum of customer_profiles.monthly_history[m].subscription as published in mrr_by_month.mrr_subscription — is a cash-receipts view and differs from canonical MRR by timing (e.g. failed/late payments); it must not be labelled as the headline MRR. Customer counts paired with this metric MUST come from customer_base.json (see active_customers) — three different counts (184/191/195) were published simultaneously before 2026-09-14 because each page derived its own.",
+      "formula": "Canonical: customer_base.mrr = sum of customer_base.members[].mrr for the reference month (invoiced subscription revenue + amortized annual-payer revenue). Cash basis (mrr_by_month.mrr_subscription): per month m, sum across customers of monthly_history[m].subscription, annual-payer charges (≥ $3K from customers in annual_payers.json) spread as amount/months over their coverage window.",
       "source_files": [
+        "public/snapshots/customer_base.json",
         "public/snapshots/mrr_by_month.json",
         "public/snapshots/customer_profiles.json"
       ],
-      "source_lineage": "Authoritative source = QB 'MRR by Month' tab in Meta Reconcile xlsx. Cross-checked against transaction-stream rollup from Stripe payments captured in customer_profiles.transactions. Both should agree within 0.5% in recent months — see invariant tests.",
+      "source_lineage": "Canonical = customer_base.json built from Stripe invoices (accrual). Cash series = QB 'MRR by Month' tab in Meta Reconcile xlsx, cross-checked against the transaction-stream rollup in customer_profiles.transactions. customer_base MRR ties to the accrual waterfall ending MRR + annual amortization (invariant tests).",
       "window": "Point-in-time, per calendar month",
       "adjustments": [
         "Annual-payer amortization (annual_payers.json + annual_amortization_overrides.json)",
@@ -89,7 +90,7 @@
         "/net-revenue-retention"
       ],
       "verified_by": "Beau Lewis",
-      "verified_at": "2026-06-12"
+      "verified_at": "2026-11-09"
     },
     {
       "id": "mrr_services",
@@ -137,12 +138,13 @@
     },
     {
       "id": "mrr_blended",
-      "name": "Blended MRR",
+      "name": "Total monthly revenue (formerly 'Blended MRR')",
       "category": "revenue",
-      "definition": "Total monthly recurring revenue across all streams: subscription + services + connect. Used for headline 'top-line MRR' on the Overview and CIM Packet.",
-      "formula": "Per month m: mrr_subscription[m] + mrr_services[m] + mrr_connect[m].",
+      "definition": "Total monthly revenue across all streams: subscription MRR + services + Connect. This is NOT MRR — services (implementation, support, training) are non-recurring Services revenue and Connect is transaction-driven. Never label this figure 'MRR'; the canonical MRR is mrr_subscription (customer_base.mrr).",
+      "formula": "Per month m: subscription MRR[m] + mrr_services[m] + mrr_connect[m]. On the CIM Packet the subscription component is customer_base MRR; mrr_by_month.mrr_blended uses the cash subscription series.",
       "source_files": [
-        "public/snapshots/mrr_by_month.json"
+        "public/snapshots/mrr_by_month.json",
+        "public/snapshots/customer_base.json"
       ],
       "source_lineage": "Derived from the three component streams (see their individual definitions).",
       "window": "Point-in-time, per calendar month",
@@ -155,7 +157,7 @@
         "/cim-packet"
       ],
       "verified_by": "Beau Lewis",
-      "verified_at": "2026-06-12"
+      "verified_at": "2026-11-09"
     },
     {
       "id": "avg_mrr_blended",
@@ -182,17 +184,18 @@
       "id": "logo_qty",
       "name": "Active logo count",
       "category": "customer_state",
-      "definition": "Number of distinct paying customers ('logos') with active subscription billing in a given month. Excludes records flagged as duplicates of another customer (excluded_from_logo_count=true).",
-      "formula": "Per month m: count of customers where monthly_history[m].subscription > 0 AND status='active' AND NOT excluded_from_logo_count. Source is QB's 'MRR by Month' tab 'Logo Qty' row.",
+      "definition": "Number of distinct paying customers ('logos') with live subscription revenue in a given month, read from customer_base.by_month[].customers — THE canonical customer count. Invoiced (accrual) basis plus annual payers at their amortized monthly revenue; excludes records flagged as duplicates (excluded_from_logo_count). Customer status (active / at_risk / paused) is an attribute for CS workflows, not a filter on the count.",
+      "formula": "Per month m: customer_base.by_month[m].customers = count of customers with invoiced subscription revenue in m (or amortized annual coverage of m), excluding excluded_from_logo_count records. Latest month = customer_base.customers.",
       "source_files": [
-        "public/snapshots/mrr_by_month.json",
+        "public/snapshots/customer_base.json",
         "public/snapshots/customer_profiles.json"
       ],
-      "source_lineage": "QB tab is authoritative for the historical series. Latest month verified against customer_profiles via invariant tests.",
+      "source_lineage": "Stripe invoices (accrual) via build of customer_base.json; annual payers from annual_payers.json amortization. mrr_by_month.logo_qty (QB 'MRR by Month' Logo Qty row) is a legacy cash-basis series and is not the headline count.",
       "window": "Point-in-time, per calendar month",
       "adjustments": [
-        "Duplicate-record dedupe: customers flagged excluded_from_logo_count (Ruck Cabinet Doors → Thomas Creek, Ultra Craftsmanship → Ultrashelf, AWI Tacoma → AWI parent) are not counted as their own logo.",
-        "Status overrides: comp arrangements DO count as a logo; sub-instance-of-parent and duplicate_of records do NOT."
+        "Duplicate-record dedupe: customers flagged excluded_from_logo_count (e.g. Canary Closets #12, Ruck Cabinet Doors → Thomas Creek, Ultra Craftsmanship → Ultrashelf, AWI Tacoma → AWI parent) are not counted as their own logo.",
+        "Annual payers counted via amortized coverage (source=annual_amortized).",
+        "Status is NOT a filter: at_risk customers still count; HubSpot 'Pause Granted' customers leave the count as paused (never churned)."
       ],
       "displayed_on": [
         "/overview",
@@ -200,7 +203,7 @@
         "/current-month"
       ],
       "verified_by": "Beau Lewis",
-      "verified_at": "2026-06-12"
+      "verified_at": "2026-11-09"
     },
     {
       "id": "customer_status",
@@ -231,12 +234,12 @@
       "id": "churned_logos",
       "name": "Churned logos",
       "category": "churn",
-      "definition": "Number of customers (logos) currently in churned state. Excludes duplicates/sub-instances flagged excluded_from_logo_count.",
-      "formula": "count of customers where status='churned' AND NOT excluded_from_logo_count.",
+      "definition": "Customers whose churn is confirmed under THE CHURN RULE (adopted 2026-11-09): billing stopped and EITHER the Stripe subscription is canceled, HubSpot Pay Status is Cancelled / a churn reason is filled, OR 3 consecutive months passed without an invoice. The churn is dated to the first un-invoiced month (churn_month) and never moves. HubSpot Pay Status \"Active - Pause Granted\" (and Pre-Sale / Partnership Free) supersedes the rule: those customers are Paused, never churned. Excludes duplicates/sub-instances flagged excluded_from_logo_count.",
+      "formula": "count of customers where status='churned' AND NOT excluded_from_logo_count; per month, customer_base.logo_flow.churned_logos counts departures in that month classified churn by churn_rules.classifyDeparture (back within 3 months = lapse, later = churn then reactivation).",
       "source_files": [
         "public/snapshots/customer_profiles.json"
       ],
-      "source_lineage": "customer_profiles.status (after all overrides) is canonical.",
+      "source_lineage": "apply_churn_model.mjs writes status, churn_month and churn_model (triggers, pause details) onto customer_profiles; build_waterfall and build_customer_base classify each departure with the same churn_rules.mjs.",
       "window": "Point-in-time",
       "adjustments": [
         "Annual-payer false-positive correction; duplicate dedupe; status overrides (per customer_status definition)."
@@ -296,52 +299,55 @@
       "id": "nrr",
       "name": "Net Revenue Retention (NRR)",
       "category": "retention",
-      "definition": "Of the revenue a cohort generated in their starting month, what percentage remains 12 months later (accounting for expansion, contraction, and churn). >100% = expansion exceeds churn.",
-      "formula": "For each cohort_month: sum of subscription MRR from that cohort in month N+12 / sum of subscription MRR from that cohort in month N.",
+      "definition": "Of the subscription MRR the book carried at the start of each month, how much it carried at the end after expansion and every dollar that stopped — contraction, confirmed churn, voided, still-provisional lapses and pauses — with lapses that came back within 3 months credited back as Recovered. New and reactivated customers are excluded. >100% = expansion exceeds losses. The ONE retention definition every page uses (NRR page headline, Revenue Waterfall, Sales Budget, Unit Economics LTV). GRR is the same with expansion excluded (capped at 100%).",
+      "formula": "Accrual (invoiced) waterfall, trailing 12 complete months. Monthly NRR = (starting + expansion + recovered − contraction − churn − voided − delinquent − paused) / starting; annual NRR = (mean of the 12 monthly rates)^12 (mrr_waterfall.ttm_accrual.annual_nrr). Monthly GRR = min(1, (starting + recovered − contraction − churn − voided − delinquent − paused) / starting); annual GRR = mean^12. Churn vs lapse vs pause follows THE CHURN RULE (_etl_scripts/churn_rules.mjs).",
       "source_files": [
-        "public/snapshots/cohort_retention.json"
+        "public/snapshots/mrr_waterfall.json"
       ],
-      "source_lineage": "Derived from cohort_retention dollar series.",
-      "window": "Trailing 12 months from each cohort starting month",
+      "source_lineage": "build_waterfall.mjs accrual series (revenue_recognition.accrual_series + annual amortization).",
+      "window": "Trailing 12 complete months",
       "adjustments": [
-        "Inherits cohort_retention adjustments."
+        "Implementation/support lines excluded from MRR (services).",
+        "Annual payers at amortized MRR.",
+        "Duplicates excluded per customer_base."
       ],
       "displayed_on": [
         "/net-revenue-retention"
       ],
       "verified_by": "Beau Lewis",
-      "verified_at": "2026-06-12"
+      "verified_at": "2026-11-09"
     },
     {
       "id": "arpu",
-      "name": "ARPU (Average Revenue Per User)",
+      "name": "ARPA (Average Revenue Per Account)",
       "category": "unit_economics",
-      "definition": "Average monthly subscription revenue per active customer. Used as input to LTV.",
-      "formula": "Per period: mrr_subscription[period] / count of customers with subscription > 0 in that period.",
+      "definition": "Average monthly subscription MRR per active customer in the canonical customer base. Used as input to LTV and CAC payback. Services and Connect are excluded (not MRR).",
+      "formula": "customer_base.mrr / customer_base.customers (= customer_base.arpa); per month: customer_base.by_month[m].mrr / customer_base.by_month[m].customers. unit_economics.ttm.avg_mrr_per_customer mirrors the latest month.",
       "source_files": [
+        "public/snapshots/customer_base.json",
         "public/snapshots/unit_economics.json"
       ],
-      "source_lineage": "Computed from mrr_by_month + customer_profiles.",
-      "window": "Per calendar month (or rolling, depending on the chart)",
+      "source_lineage": "customer_base.json (invoiced/accrual basis, annual payers amortized, duplicate records excluded).",
+      "window": "Point-in-time, per calendar month (latest complete month for headlines)",
       "adjustments": [
-        "Inherits mrr_subscription adjustments."
+        "Inherits customer_base adjustments (annual-payer amortization, duplicate exclusion)."
       ],
       "displayed_on": [
         "/unit-economics"
       ],
       "verified_by": "Beau Lewis",
-      "verified_at": "2026-06-12"
+      "verified_at": "2026-11-09"
     },
     {
       "id": "ltv",
       "name": "LTV (Lifetime Value)",
       "category": "unit_economics",
       "definition": "Expected total subscription revenue from an average customer over their entire lifetime, accounting for ARPU and churn rate.",
-      "formula": "ARPU × (1 / monthly_churn_rate) × gross_margin. Reported as a point-in-time estimate based on the trailing window.",
+      "formula": "ARPU × subscription gross margin / monthly gross revenue churn, where monthly gross revenue churn = 1 − (accrual TTM GRR)^(1/12). Reported as a point-in-time estimate based on the trailing window.",
       "source_files": [
         "public/snapshots/unit_economics.json"
       ],
-      "source_lineage": "Computed from ARPU, churn rate, and gross margin.",
+      "source_lineage": "Computed from ARPU, QuickBooks subscription gross margin, and the accrual waterfall TTM GRR (same retention definition as the NRR page).",
       "window": "Point-in-time, computed from a trailing window",
       "adjustments": [
         "Inherits inputs."
@@ -350,29 +356,30 @@
         "/unit-economics"
       ],
       "verified_by": "Beau Lewis",
-      "verified_at": "2026-06-12"
+      "verified_at": "2026-11-09"
     },
     {
       "id": "cac",
       "name": "CAC (Customer Acquisition Cost)",
       "category": "unit_economics",
-      "definition": "Total sales & marketing spend divided by new customers acquired in the period. Sales spend = 6050 Marketing Payroll + 6300 Marketing & Advertising + 6500 Sales Expenses; new customers = first-paid logos in the period.",
-      "formula": "(marketing_payroll + marketing_advertising + sales_expenses) over period / count of first-paid customers in period.",
+      "definition": "Sales & marketing spend divided by new customers acquired over the SAME months. S&M = 6050 Marketing Payroll + 6300 Marketing & Advertising + 6500 Sales Expenses + 5200 Sales Commission. Both numerator and denominator are restricted to the QuickBooks P&L coverage months inside the TTM window (unit_economics.ttm.pnl_coverage — e.g. 8 months, not 12, while QB lags), so CAC is never a partial-period cost over a full-period logo count.",
+      "formula": "sum over pnl_coverage months of (6050 marketing_payroll + 6300 marketing_advertising + 6500 sales_expenses + 5200 sales_commission) / sum over the same months of new_logos (first-paid customers).",
       "source_files": [
         "public/snapshots/unit_economics.json",
         "public/snapshots/pnl_by_month.json"
       ],
-      "source_lineage": "Marketing/sales lines from QB P&L; new-customer count from customer_profiles sign-ups.",
-      "window": "Per quarter or rolling, depending on the chart",
+      "source_lineage": "S&M lines from the QB P&L (pnl_by_month / build_unit_econ.mjs); new-logo count from customer_profiles sign-ups, summed over the same P&L-covered months.",
+      "window": "QuickBooks P&L coverage months within the trailing-12 window (unit_economics.ttm.pnl_coverage); label every display with that window.",
       "adjustments": [
-        "None directly; inherits P&L line-item categorization (QB's chart of accounts)."
+        "None directly; inherits P&L line-item categorization (QB's chart of accounts).",
+        "FLAG (unresolved, code unchanged): 5200 Sales Commission is classified under COGS in the QB P&L (build_pnl.mjs section 'cogs'), so it reduces gross margin AND is added to S&M for CAC — a possible double count across gross margin and CAC/payback. Needs a CFO decision on which side it belongs to."
       ],
       "displayed_on": [
         "/unit-economics",
         "/efficiency"
       ],
       "verified_by": "Beau Lewis",
-      "verified_at": "2026-06-12"
+      "verified_at": "2026-11-09"
     },
     {
       "id": "payback_period",
@@ -657,5 +664,5 @@
       "verified_at": "2026-06-12"
     }
   ],
-  "fetched_at": "2026-11-02T23:23:37.161Z"
+  "fetched_at": "2026-11-09T21:07:15.357Z"
 }

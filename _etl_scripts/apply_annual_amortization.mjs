@@ -18,12 +18,15 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const ROOT = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard';
+const ROOT = path.resolve(__dirname, '..');
 const SNAP = path.join(ROOT, 'public/snapshots');
 
 const ANNUAL_THRESHOLD = 3000;
 const AMORTIZE_MONTHS = 12;
+const RENEWAL_GAP_MAX = 2; // months between annual windows carried at the prior rate
 
 const annualCfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/annual_payers.json'), 'utf8'));
 const ANNUAL_IDS = new Set(annualCfg.annual_payer_ids);
@@ -69,6 +72,7 @@ function amortizeCustomer(profile) {
   const monthlySub = {};
   const monthlyAnnualized = new Set();
   const monthlyPayDate = {};
+  const monthlyBridged = new Set();
 
   const subTx = (profile.transactions || []).filter((t) => t.type === 'subscription' && t.status === 'succeeded');
   for (const t of subTx) {
@@ -93,6 +97,26 @@ function amortizeCustomer(profile) {
       monthlySub[origin] = round2((monthlySub[origin] ?? 0) + t.amount);
       if (!monthlyPayDate[origin]) monthlyPayDate[origin] = payDate;
     }
+  }
+
+  // Late renewal: a gap of ≤ RENEWAL_GAP_MAX months between two annual coverage windows
+  // (B&B: Feb-25 payment ran through Jan-26, next coverage from Mar-26; Mid Michigan:
+  // through Oct-25, next from Dec-25) is a customer who renewed late, not one who left.
+  // QuickBooks keeps booking 4100 through the gap, and the subscription series fills a
+  // live sub forward between invoices the same way — so carry the prior window's rate
+  // across it instead of showing a one-month lapse and a reactivation.
+  const covered = [...monthlyAnnualized].sort();
+  for (let i = 1; i < covered.length; i++) {
+    const prev = covered[i - 1];
+    const gap = [];
+    for (let m = addMonths(prev, 1); m < covered[i]; m = addMonths(m, 1)) gap.push(m);
+    if (!gap.length || gap.length > RENEWAL_GAP_MAX || gap.some((m) => monthlySub[m])) continue;
+    for (const m of gap) {
+      monthlySub[m] = monthlySub[prev];
+      monthlyAnnualized.add(m);
+      monthlyBridged.add(m);
+    }
+    console.log(`  renewal gap bridged: ${profile.name} · ${gap.join(', ')} at $${monthlySub[prev]}/mo`);
   }
 
   return { monthlySub, monthlyAnnualized, monthlyPayDate };

@@ -56,7 +56,12 @@ type CustomerHealthSnapshot = {
   dunning_customers: DunningCustomer[];
   dunning_summary: {
     total_dunning_customers: number;
+    /** MRR of customers with failed charges (one figure per customer, not per retry). */
     total_at_risk_amount: number;
+    mrr_at_risk?: number;
+    failed_attempts?: number;
+    /** Every failed attempt summed — retries of one invoice count each time. */
+    failed_attempts_amount?: number;
   };
   notes: string;
 };
@@ -210,7 +215,7 @@ export default function CustomerHealth() {
           <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
             Top 25 customers by current MRR
           </Typography>
-          <InfoIcon info={<><strong>What it is:</strong> Ranked roster of the 25 biggest subscription customers for the reference month, with current MRR, % of total MRR, lifetime revenue, tenure, and a flag column for dunning.<br /><br /><strong>Data:</strong> Current MRR from the MRR by Month tab · lifetime revenue from Stripe Sync succeeded charges · years since first payment · failed-charge count from Stripe Sync in the last 3 months.</>} />
+          <InfoIcon info={<><strong>What it is:</strong> Ranked roster of the 25 biggest subscription customers for the reference month, with current MRR, % of total MRR, lifetime revenue, tenure, and a flag column for dunning.<br /><br /><strong>Data:</strong> Current MRR from the canonical customer base · lifetime revenue from Stripe Sync succeeded charges · years since first payment · failed-charge count from customer_profiles (live Stripe) in the last 3 months.</>} />
         </Stack>
         <Collapse in={topTable.open} unmountOnExit>
         {isLoading || !snap ? (
@@ -265,7 +270,7 @@ export default function CustomerHealth() {
             <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
               Dunning watch list · failed charges in trailing 3 months
             </Typography>
-            <InfoIcon info={<><strong>What it is:</strong> Customers whose Stripe charges have failed in the last 3 months — the "intervene before they churn" list.<br /><br /><strong>Data:</strong> Aggregated from Stripe Sync (status='failed', created date within trailing 3 months). The "Failed attempts" chip turns red at 3+ attempts — usually a sign of a dead card that needs CS outreach.</>} />
+            <InfoIcon info={<><strong>What it is:</strong> Customers whose Stripe charges have failed in the last 3 months — the "intervene before they churn" list.<br /><br /><strong>Data:</strong> customer_profiles failed_3mo_count / failed_3mo_amount (live Stripe, status='failed' within trailing 3 months); churned and duplicate records excluded.<br /><br /><strong>$ at risk</strong> is the MRR of these customers — what is lost if they do not recover. <strong>Failed attempts $</strong> sums every retry, so one $3,299 invoice retried five times reads $16,495 there; it is context, not exposure. The "Failed attempts" chip turns red at 3+ attempts — usually a sign of a dead card that needs CS outreach.</>} />
             {snap && snap.dunning_customers.length > 0 && (
               <Typography
                 variant="caption"
@@ -277,9 +282,16 @@ export default function CustomerHealth() {
             )}
           </Stack>
           {snap && (
-            <Typography variant="caption" sx={{ color: 'error.main', fontWeight: 500 }}>
-              {snap.dunning_summary.total_dunning_customers} customers · {USD0.format(snap.dunning_summary.total_at_risk_amount)} at risk
-            </Typography>
+            <Box sx={{ textAlign: 'right' }}>
+              <Typography variant="caption" sx={{ color: 'error.main', fontWeight: 500, display: 'block' }}>
+                {snap.dunning_summary.total_dunning_customers} customers · {USD0.format(snap.dunning_summary.mrr_at_risk ?? snap.dunning_summary.total_at_risk_amount)}/mo MRR at risk
+              </Typography>
+              {snap.dunning_summary.failed_attempts_amount != null && (
+                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', fontSize: 10 }}>
+                  {snap.dunning_summary.failed_attempts ?? 0} failed attempts · {USD0.format(snap.dunning_summary.failed_attempts_amount)} failed-attempt $ (incl. retries)
+                </Typography>
+              )}
+            </Box>
           )}
         </Stack>
         <Collapse in={dunningTable.open} unmountOnExit>
@@ -296,7 +308,7 @@ export default function CustomerHealth() {
                 <TableCell>Customer</TableCell>
                 <TableCell align="right">Current MRR</TableCell>
                 <TableCell align="right">Failed attempts</TableCell>
-                <TableCell align="right">Total $ failed</TableCell>
+                <TableCell align="right">Failed attempts $</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -384,12 +396,12 @@ export default function CustomerHealth() {
           { key: 'name', label: 'Customer', render: (r) => <CustomerLink id={r.allmoxy_customer_id} name={r.name} /> },
           { key: 'current_mrr', label: 'Current MRR', align: 'right', render: (r) => USD0.format(r.current_mrr) },
           { key: 'failed_3mo', label: 'Failed attempts', align: 'right' },
-          { key: 'failed_3mo_amount', label: 'Total $ failed', align: 'right', render: (r) => USD0.format(r.failed_3mo_amount) },
+          { key: 'failed_3mo_amount', label: 'Failed attempts $', align: 'right', render: (r) => USD0.format(r.failed_3mo_amount) },
         ];
         return (
           <DrillDownPanel
             title="Dunning watch list · trailing 3 months"
-            subtitle={`${snap.dunning_summary.total_dunning_customers} customers · ${USD0.format(snap.dunning_summary.total_at_risk_amount)} at risk`}
+            subtitle={`${snap.dunning_summary.total_dunning_customers} customers · ${USD0.format(snap.dunning_summary.mrr_at_risk ?? snap.dunning_summary.total_at_risk_amount)}/mo MRR at risk · ${USD0.format(snap.dunning_summary.failed_attempts_amount ?? 0)} failed-attempt $ (incl. retries)`}
             accent="rgba(218, 54, 51, 0.5)"
             rows={snap.dunning_customers as unknown as Array<Record<string, unknown>>}
             columns={dunningColumns as unknown as DrillColumn<Record<string, unknown>>[]}

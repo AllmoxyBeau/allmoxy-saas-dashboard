@@ -1,6 +1,6 @@
 {
-  "comment": "Maps each Connect-fee-earning customer name (from the 3 Stripe Connect Revenue sheets) to its allmoxy_customer_id and (when researched) Stripe Connect account_id. Two supported shapes for a mapping entry: (1) shorthand — just the allmoxy_customer_id as a number; (2) full — { allmoxy_customer_id, stripe_connect_account_id }. The connect attribution builder accepts either.",
-  "updated_at": "2026-09-16",
+  "comment": "Maps each Connect-fee-earning customer name (from the 3 Stripe Connect Revenue sheets) to its allmoxy_customer_id and (when researched) Stripe Connect account_id. Every mapping value MUST be a plain number (the allmoxy_customer_id) — apply_connect_attribution, build_data_cleanup, the acct-mapping scripts and the Custom Report all use the value directly as the id (an object value serialized as \"[object Object]\" downstream). Record a hand-confirmed Stripe Connect acct_ id in stripe_connect_account_ids_by_id (aid → acct_); build_connect_volume names that account after the mapping entry with the same aid.",
+  "updated_at": "2026-11-09",
   "mapping": {
     "Primary Kitchen": 176,
     "BTJ Cabinet Door Company": 256,
@@ -28,7 +28,7 @@
     "Amco Distributors Inc.": 23,
     "Metro Drawer Boxes": 217,
     "Kc Doors Ltd.": 405,
-    "Red Rock Milling LLC": 2030,
+    "Red Rock Milling LLC": 396,
     "Door Masters Of Houston": 443,
     "Timeless Cabinetry": 24,
     "Cabinartny": 284,
@@ -80,7 +80,7 @@
     "Stanisci Design & Manufacturing": 449,
     "GWEUROCASE.COM": 106,
     "Trim Art LLC": 19,
-    "CabSource LLC admin": 455,
+    "CabSource LLC admin": 303,
     "DOT Cabinets USA": 385,
     "D3 Custom Cabinets": 463,
     "Quality Craft Wood Works Inc.": 29,
@@ -109,10 +109,7 @@
     "Core Cabinet Production": 313,
     "Prorustics": 2020,
     "Cabinet Parts to Go": 514,
-    "Capital Millwork LLC": {
-      "allmoxy_customer_id": 550,
-      "stripe_connect_account_id": "acct_1S1UoS0atrcrba4J"
-    }
+    "Capital Millwork LLC": 550
   },
   "stripe_connect_account_ids_by_id": {
     "550": "acct_1S1UoS0atrcrba4J",

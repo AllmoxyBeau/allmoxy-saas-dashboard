@@ -7,10 +7,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import * as XLSX from '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/node_modules/xlsx/xlsx.mjs';
+import * as XLSX from '../node_modules/xlsx/xlsx.mjs';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const XLSX_PATH = '/Users/beaulewis/projects/2 - Allmoxy - CFO/Allmoxy - Meta Data Reconcile Tool.xlsx';
-const SNAPSHOTS = '/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/public/snapshots';
+const XLSX_PATH = path.resolve(__dirname, '../..', 'Allmoxy - Meta Data Reconcile Tool.xlsx');
+const SNAPSHOTS = path.resolve(__dirname, '..', 'public/snapshots');
 
 const wb = XLSX.read(fs.readFileSync(XLSX_PATH), { type: 'buffer' });
 
@@ -251,6 +253,18 @@ if (BASE?.members?.length) {
   liveLatestMonth = BASE.as_of;
 }
 
+// ---------- failed charges: ALWAYS from customer_profiles ----------
+// failed_3mo used to come from the Stripe Sync tab of the xlsx above, which stopped
+// updating months ago — so the dunning watch list read 0 customers / $0 while 20
+// paying customers had failed charges in live Stripe. customer_profiles carries
+// failed_3mo_count / failed_3mo_amount from the live Stripe seam (apply_stripe_seam),
+// so it is the only source used here. A customer with no profile has no known failures.
+for (const c of customers) {
+  const p = c.allmoxy_customer_id != null ? profById.get(c.allmoxy_customer_id) : null;
+  c.failed_3mo = p?.failed_3mo_count ?? 0;
+  c.failed_3mo_amount = Math.round((p?.failed_3mo_amount ?? 0) * 100) / 100;
+}
+
 // ---------- concentration ----------
 const activeCustomers = customers.filter((c) => c.current_mrr > 0);
 activeCustomers.sort((a, b) => b.current_mrr - a.current_mrr);
@@ -290,16 +304,30 @@ const distribution = buckets.map((b) => {
 });
 
 // ---------- dunning list (failed charges last 3 months) ----------
-const dunning = customers
-  .filter((c) => c.failed_3mo > 0)
-  .sort((a, b) => b.failed_3mo_amount - a.failed_3mo_amount)
-  .map((c) => ({
-    name: c.name,
-    allmoxy_customer_id: c.allmoxy_customer_id,
-    current_mrr: c.current_mrr,
-    failed_3mo: c.failed_3mo,
-    failed_3mo_amount: c.failed_3mo_amount,
-  }));
+// Built straight from customer_profiles (live Stripe failures), not from the xlsx roster
+// above, so a failing customer missing from the stale roster still shows. Churned and
+// duplicate records are left out — this is the "intervene before they churn" list.
+//
+// "$ at risk" is the MRR of these customers, NOT the sum of failed attempts: Stripe
+// retries the same invoice several times, so Cabredo's one $3,299 invoice read as
+// $16,495 "at risk" after five retries. Failed-attempt dollars are kept as a secondary
+// figure (failed_3mo_amount / failed_attempts_amount) and labelled as attempts.
+const baseMrrById = new Map((BASE?.members || []).map((m) => [m.allmoxy_customer_id, m.mrr]));
+const dunning = profiles.rows
+  .filter((p) => (p.failed_3mo_count || 0) > 0 && !p.excluded_from_logo_count && p.status !== 'churned' && p.status !== 'never_paid')
+  .map((p) => {
+    const id = p.allmoxy_customer_id;
+    const mrr = baseMrrById.size ? (baseMrrById.get(id) ?? 0) : (p.current_subscription_mrr || 0);
+    return {
+      name: p.customer_name || p.name || `Customer ${id}`,
+      allmoxy_customer_id: id,
+      current_mrr: Math.round(mrr * 100) / 100,
+      in_customer_base: baseMrrById.size ? baseMrrById.has(id) : (p.current_subscription_mrr || 0) > 0,
+      failed_3mo: p.failed_3mo_count || 0,
+      failed_3mo_amount: Math.round((p.failed_3mo_amount || 0) * 100) / 100,
+    };
+  })
+  .sort((a, b) => b.current_mrr - a.current_mrr || b.failed_3mo_amount - a.failed_3mo_amount);
 
 const now = new Date();
 const slimCustomer = (c) => ({
@@ -320,9 +348,12 @@ const out = {
   rowCount: 0,
   latestMonth: BASE?.as_of ?? latestComplete.month,
   concentration,
+  // customers = COUNT (the page's bar chart plots it); customers_list = the members (the
+  // drill-down reads it). This used to overwrite customers with the array and never
+  // write customers_list, which broke both the bars and the drill.
   distribution: distribution.map((b) => ({
     ...b,
-    customers: activeCustomers
+    customers_list: activeCustomers
       .filter((c) => c.current_mrr >= buckets.find((bb) => bb.label === b.bucket).min && c.current_mrr < buckets.find((bb) => bb.label === b.bucket).max)
       .map(slimCustomer),
   })),
@@ -331,13 +362,19 @@ const out = {
   dunning_customers: dunning.slice(0, 50),
   dunning_summary: {
     total_dunning_customers: dunning.length,
-    total_at_risk_amount: Math.round(dunning.reduce((s, d) => s + d.failed_3mo_amount, 0) * 100) / 100,
+    // MRR of the customers with failed charges — what we lose if they do not recover.
+    total_at_risk_amount: Math.round(dunning.reduce((s, d) => s + d.current_mrr, 0) * 100) / 100,
+    mrr_at_risk: Math.round(dunning.reduce((s, d) => s + d.current_mrr, 0) * 100) / 100,
+    // Sum of every failed ATTEMPT (retries of one invoice count each time). Context only.
+    failed_attempts: dunning.reduce((s, d) => s + d.failed_3mo, 0),
+    failed_attempts_amount: Math.round(dunning.reduce((s, d) => s + d.failed_3mo_amount, 0) * 100) / 100,
   },
   notes:
-    `Per-customer MRR drawn from MRR by Month tab (${activeCustomers.length} customers with MRR > $0 in ${latestComplete.month}). ` +
+    `Per-customer MRR from the canonical customer base (${activeCustomers.length} customers with MRR > $0 in ${BASE?.as_of ?? latestComplete.month}). ` +
     'Concentration = top-N current MRR share of subscription MRR total. ' +
-    'Lifetime revenue and dunning counts joined from Stripe Sync (20K+ classified transactions). ' +
-    'Dunning = charge attempts with status=failed in trailing 3 months.',
+    'Lifetime revenue joined from Stripe Sync (20K+ classified transactions). ' +
+    'Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); ' +
+    '$ at risk = their MRR, failed-attempt $ counts every retry.',
 };
 
 process.stdout.write(JSON.stringify(out, null, 2) + '\n');

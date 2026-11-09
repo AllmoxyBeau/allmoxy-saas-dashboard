@@ -104,6 +104,13 @@ type RenewalRow = {
 
 type Aggregates = {
   total_instances: number;
+  // Population check against the canonical customer base (build_renewal_management).
+  customers?: number;
+  base_customers?: number | null;
+  base_as_of?: string | null;
+  base_customers_without_instance?: number;
+  active_instances_not_in_base?: number;
+  duplicate_instances_dropped?: number;
   with_renewal_date: number;
   renewals_in_next_90d: number;
   renewals_in_next_90d_arr: number;
@@ -225,8 +232,14 @@ export default function RenewalManagement() {
       if (metricFilter === 'next_12mo' && (r.days_to_renewal == null || r.days_to_renewal < 0 || r.days_to_renewal > 365)) return false;
       if (metricFilter === 'expansion' && r.action_tag !== 'Expansion Opportunity') return false;
       if (metricFilter === 'contraction' && r.action_tag !== 'Contraction Risk') return false;
-      if (metricFilter === 'dropoff' && (r.dropoff_pct == null || r.dropoff_pct > -0.25)) return false;
-      if (metricFilter === 'with_quote' && !((r.quotes?.length ?? 0) > 0)) return false;
+      // Same rule as the tile (ETL dropoff_count): cost ratio UP 25%+ (dropoff_pct >= +0.25).
+      if (metricFilter === 'dropoff' && (r.dropoff_pct == null || r.dropoff_pct < 0.25)) return false;
+      // Same window as the tile (upcoming_renewals_with_quote): renewal in the next 12 months.
+      if (metricFilter === 'with_quote') {
+        const upcoming = r.days_to_renewal != null && r.days_to_renewal >= 0 && r.days_to_renewal <= 365;
+        if (!upcoming) return false;
+        if (!((r.quotes?.length ?? 0) > 0)) return false;
+      }
       if (metricFilter === 'no_quote_upcoming') {
         const upcoming = r.days_to_renewal != null && r.days_to_renewal >= 0 && r.days_to_renewal <= 365;
         if (!upcoming) return false;
@@ -320,6 +333,14 @@ export default function RenewalManagement() {
       />
 
       {error && <Alert severity="error" sx={{ mb: 2 }}>Failed to load renewal_management: {String(error)}</Alert>}
+
+      {agg?.base_customers != null && (
+        <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1.5 }}>
+          {agg.customers ?? agg.total_instances} of {agg.base_customers} customers in the canonical customer base{agg.base_as_of ? ` (${agg.base_as_of})` : ''} · one row per customer
+          {(agg.base_customers_without_instance ?? 0) > 0 ? ` · ${agg.base_customers_without_instance} without a HubSpot Instance` : ''}
+          {(agg.active_instances_not_in_base ?? 0) > 0 ? ` · ${agg.active_instances_not_in_base} active-status Instance(s) excluded (not in the base: paused, lapsed or not yet billing)` : ''}
+        </Typography>
+      )}
 
       {/* KPI tiles — click a tile to filter the table below to that slice;
           click again to clear. Mutually exclusive. */}

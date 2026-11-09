@@ -1,9 +1,10 @@
 {
-  "fetched_at": "2026-11-02T23:23:37.007Z",
+  "fetched_at": "2026-11-09T21:07:15.254Z",
   "comment": "Adjusted EBITDA bridge (QoE-5). GAAP Net Income → standard EBITDA add-backs (interest, tax, D&A) → GAAP EBITDA → QoE adjustments (owner-comp normalization, one-time costs, discretionary perks) → Adjusted EBITDA. Three time windows: YTD, latest month, TTM. QoE add-backs are user-maintained in _etl_scripts/ebitda_adjustments.json. Built by _etl_scripts/build_ebitda_bridge.mjs.",
   "source": {
     "pnl_months": 102,
     "pnl_window": "2018-01 – 2026-06",
+    "last_pnl_month": "2026-06",
     "qoe_adjustment_count": 3,
     "qoe_adjustments_placeholder_count": 3
   },
@@ -38,7 +39,7 @@
         }
       ],
       "gaap_ebitda": 176800.47,
-      "gaap_ebitda_margin": 0.1,
+      "gaap_ebitda_margin": 0.0997,
       "qoe_adjustments": [
         {
           "id": "owner-comp-normalization-placeholder",
@@ -76,9 +77,9 @@
       ],
       "qoe_adjustment_total": 0,
       "adjusted_ebitda": 176800.47,
-      "adjusted_ebitda_margin": 0.1,
+      "adjusted_ebitda_margin": 0.0997,
       "placeholder_adjustment_count": 3,
-      "label": "YTD 2026"
+      "label": "YTD 2026 through 2026-06"
     },
     "latest_month": {
       "window": "latest_month",
@@ -110,7 +111,7 @@
         }
       ],
       "gaap_ebitda": 26057.6,
-      "gaap_ebitda_margin": 0.09,
+      "gaap_ebitda_margin": 0.0894,
       "qoe_adjustments": [
         {
           "id": "owner-comp-normalization-placeholder",
@@ -137,7 +138,7 @@
       ],
       "qoe_adjustment_total": 0,
       "adjusted_ebitda": 26057.6,
-      "adjusted_ebitda_margin": 0.09,
+      "adjusted_ebitda_margin": 0.0894,
       "placeholder_adjustment_count": 2,
       "label": "Latest month (2026-06)"
     },
@@ -171,7 +172,7 @@
         }
       ],
       "gaap_ebitda": 184648.24,
-      "gaap_ebitda_margin": 0.05,
+      "gaap_ebitda_margin": 0.0523,
       "qoe_adjustments": [
         {
           "id": "owner-comp-normalization-placeholder",
@@ -209,7 +210,7 @@
       ],
       "qoe_adjustment_total": 0,
       "adjusted_ebitda": 184648.24,
-      "adjusted_ebitda_margin": 0.05,
+      "adjusted_ebitda_margin": 0.0523,
       "placeholder_adjustment_count": 3,
       "label": "TTM (2025-07 – 2026-06)"
     }
