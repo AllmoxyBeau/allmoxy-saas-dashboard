@@ -706,6 +706,10 @@ if (BT?.months) {
     const cashByInv = new Map();          // invoice id -> cash received this month (gross)
     const directSubCashByAid = new Map(); // aid|'unmapped' -> subscription share of no-invoice charges this month
     const invSubCashByAid = new Map();    // aid -> subscription share of invoice-backed charges this month
+    // ANNUAL PAYERS (B&B Door, Mid Michigan): the subscription share of what they pay is a
+    // prepayment — it credits deferred revenue, never 4000 and never AR (Beau, 2026-11-09).
+    let annualSubCash = 0; const annualRows = [];
+    const isAnnualCharge = (r) => { const pa = r.cust ? custToProf.get(r.cust) : null; return !!pa && ANNUAL.has(pa.allmoxy_customer_id); };
     const addDirectSub = (r, v) => { if (!v) return; const p0 = r.cust ? custToProf.get(r.cust) : null; const k = p0 ? p0.allmoxy_customer_id : 'unmapped'; directSubCashByAid.set(k, (directSubCashByAid.get(k) || 0) + v); };
     let unsplit = 0;
     if (splitOn) {
@@ -718,8 +722,10 @@ if (BT?.months) {
             byType[t] += r.amount * share;
             if (invMix) invCash[t] = (invCash[t] || 0) + r.amount * share;
           }
+          const annualSub = isAnnualCharge(r) ? r.amount * (mix.subscription || 0) : 0;
+          if (annualSub) { annualSubCash += annualSub; annualRows.push({ name: nameOf(custToProf.get(r.cust).allmoxy_customer_id), amount: r2(annualSub), invoice_id: r.inv || null }); }
           if (invMix) {
-            cashByInv.set(r.inv, (cashByInv.get(r.inv) || 0) + r.amount);
+            cashByInv.set(r.inv, (cashByInv.get(r.inv) || 0) + r.amount - annualSub);
             const pc = r.cust ? custToProf.get(r.cust) : null;
             if (pc && invMix.subscription) invSubCashByAid.set(pc.allmoxy_customer_id, (invSubCashByAid.get(pc.allmoxy_customer_id) || 0) + r.amount * invMix.subscription);
           }
@@ -734,14 +740,16 @@ if (BT?.months) {
           const t = /allmoxy ai tokens|operator tokens|ai[_ ]?tokens/i.test(d) ? 'operatortokens' : reTag(r);
           if (t) byType[t] = (byType[t] || 0) + r.amount;
           else unsplit += r.amount;
-          if (t === 'subscription') addDirectSub(r, r.amount);
+          if (t === 'subscription' && isAnnualCharge(r)) { annualSubCash += r.amount; annualRows.push({ name: nameOf(custToProf.get(r.cust).allmoxy_customer_id), amount: r2(r.amount), invoice_id: null }); }
+          else if (t === 'subscription') addDirectSub(r, r.amount);
         }
       }
       for (const t of Object.keys(byType)) byType[t] = r2(byType[t]);
       unsplit = r2(unsplit);
     }
 
-    const subGross = splitOn ? r2(byType.subscription - svcShift) : r2(reSub - svcShift);
+    annualSubCash = r2(annualSubCash);
+    const subGross = splitOn ? r2(byType.subscription - svcShift - annualSubCash) : r2(reSub - svcShift);
     const svcGross = splitOn ? r2(byType.services + svcShift) : r2(reSvc + svcShift);
     const tokGross = splitOn ? r2(byType.operatortokens) : 0;
     const domGross = splitOn ? r2(byType.customdomain) : 0;
@@ -827,6 +835,8 @@ if (BT?.months) {
     if (tokGross) line(A.operatortokens, 0, tokGross, 'Operator token charges', 'cash');
     if (domGross) line(A.customdomain, 0, domGross, 'Custom domain charges', 'cash');
     line(A.subscription, 0, restate ? r2(R + taxTotal) : subGross, restate ? 'Subscription revenue recognized (invoice basis, incl. sales tax)' : 'Subscription charges (gross, incl. sales tax)', 'cash');
+    if (annualSubCash) line(A.deferred_revenue || { number: '????', name: 'Deferred Revenue (annual prepayments) — MAP ACCOUNT' }, 0, annualSubCash,
+      `Annual prepayment received — ${annualRows.map((a) => a.name).filter((v, k, arr) => arr.indexOf(v) === k).join(', ')} (amortized to 4100 in the separate entry)`, 'cash');
     if (reSvcRef) line(A.services, reSvcRef, 0, 'Services refunds', 'cash');
     if (reSubRef) line(A.subscription, reSubRef, 0, 'Subscription refunds', 'cash');
     if (T.connect_refunds) line(A.stripe_fee_income, T.connect_refunds, 0, 'Connect platform-fee refunds', 'cash');
@@ -994,6 +1004,7 @@ if (BT?.months) {
         charge_fees: T.charge_fees, other_fees: T.other_fees, untagged_gross: T.untagged_gross,
         recognized_ex_tax: R, charge_basis_correction: chargeBasisCorrTotal, charge_basis_corrections: Object.fromEntries([...chargeBasisCorr].map(([k, v]) => [nameOf(k), v])), recognized_invoice_basis: by_month[m]?.recognized || 0, direct_subscription_charges: direct, direct_rows: directRows,
         tax_by_state_invoice: taxInv, tax_by_state_cash: taxCash, tax_basis_used: QB.sales_tax_basis, tax_total_used: taxTotal,
+        annual_prepayments: annualRows, annual_prepayment_total: annualSubCash,
         accrual_adjustment: adj, accrual_adjustment_total: adjTotal, accrual_adjustment_by_account: { subscription: adj, ...adjNS }, annual_deferred_memo: by_month[m]?.annual_deferred || 0, balance_txn_rows: T.row_count,
       },
       memo: [

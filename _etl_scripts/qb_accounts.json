@@ -29,6 +29,11 @@
       "number": "4100",
       "name": "Annual Deferred Monthly"
     },
+    "deferred_revenue": {
+      "number": "????",
+      "name": "Deferred Revenue (annual prepayments) \u2014 MAP ACCOUNT",
+      "_comment": "Beau, 2026-11-09: an annual payer's prepayment (B&B Door, Mid Michigan) is not 4000 revenue and never a receivable. The cash credits this liability; the monthly amortization to 4100 stays in Beau's separate entry. Set the QuickBooks account number here."
+    },
     "stripe_fee_income": {
       "number": "4200",
       "name": "Stripe Fee Income"
