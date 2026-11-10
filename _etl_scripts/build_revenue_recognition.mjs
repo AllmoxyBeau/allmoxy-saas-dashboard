@@ -84,6 +84,23 @@ for (const p of PROF) for (const cid of (p.stripe_customer_ids || [])) custToPro
 const profByAid = new Map(PROF.map((p) => [p.allmoxy_customer_id, p]));
 const nameOf = (aid) => profByAid.get(aid)?.customer_name || profByAid.get(aid)?.hubspot_instance_name || String(aid);
 
+// ── KNOWN BAD DEBT, NOT RECOGNIZED (Beau, 2026-11-09) ──
+// For the Jan–Oct 2026 audit window, an invoice billed in the window that is marked
+// Write off (uncollectible) on the Collections page is never recognized: its unpaid
+// part stays out of revenue, AR and sales tax, and gets no 4950 write-off line. A/R
+// write-offs (recognize, then expense) begin the month after the window. Billed MRR
+// (accrual_series), churn and retention are unaffected — this is a books policy.
+const NOREC = QB.bad_debt_not_recognized || null;
+const inNoRec = (m) => !!NOREC && !!m && m >= NOREC.from && m <= NOREC.through;
+const AR_DECISIONS_EARLY = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/ar_collection_overrides.json'), 'utf8')).decisions || {}; }
+  catch { return {}; }
+})();
+const isKnownBadDebt = (inv) => (inv.status === 'open' || inv.status === 'uncollectible') && (inv.remaining || 0) > 0
+  && AR_DECISIONS_EARLY[inv.id]?.decision === 'uncollectible';
+const badDebt = new Map();    // aid × month → unpaid amount NOT recognized (known bad debt)
+const badDebtInvoices = [];   // audit list, one row per invoice × month
+
 // ── per aid × service month buckets ──
 const rec = new Map();        // recognized (billed = earned)
 const collIn = new Map();     // collected by month-end cutoff (paid_at <= end of service month)
@@ -101,6 +118,7 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
   const aid = prof ? prof.allmoxy_customer_id : `stripe:${cid}`;
   for (const inv of cust.invoices || []) {
     if (!RECOGNIZED_STATUS.has(inv.status)) continue; // skip void / draft
+    const knownBad = isKnownBadDebt(inv);
     const paidFrac = inv.sub > 0 ? Math.min(1, (inv.paid || 0) / inv.sub) : (inv.status === 'paid' ? 1 : 0);
     // Cutoff month = month the payment cleared (from Stripe status_transitions.paid_at).
     // Fallback for legacy cache rows lacking paid_at: treat as paid in the invoice month.
@@ -132,7 +150,12 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
             priorArCollected[paidMonth] = r2((priorArCollected[paidMonth] || 0) + paidPart);
           }
         }
-        if (unpaidPart > 0) add(stillOpen, aid, m, unpaidPart);      // never collected (open/uncollectible)
+        if (unpaidPart > 0) {
+          if (knownBad && inNoRec(m)) {                              // known bad debt in the audit window → not revenue
+            add(badDebt, aid, m, unpaidPart);
+            badDebtInvoices.push({ allmoxy_customer_id: typeof aid === 'number' ? aid : null, name: nameOf(aid), invoice_id: inv.id || null, invoice_date: inv.d, month: m, amount: r2(unpaidPart), stripe_status: inv.status });
+          } else add(stillOpen, aid, m, unpaidPart);                 // never collected (open/uncollectible)
+        }
       }
       invCustomers.add(aid);
     }
@@ -292,7 +315,8 @@ function rowFor(aid, m) {
     // revenue and must count, or the customer reads as churned.
     const directCollection = invoiceRec > 0 ? pending : 0;
     const direct = r2(addOn + (invoiceRec > 0 ? 0 : pending));
-    const recognized = r2(invoiceRec + direct);
+    const bad_debt_not_recognized = r2(g(badDebt, aid, m));
+    const recognized = r2(invoiceRec + direct - bad_debt_not_recognized);
     // Direct charges clear on post, so they're cash in-period as well as revenue.
     const collected_in_period = r2(g(collIn, aid, m) + direct);
     const collected_after_period = r2(g(collAfter, aid, m));
@@ -305,7 +329,7 @@ function rowFor(aid, m) {
     const unbilled_carry = r2(Math.max(0, invoiceRec - g(rec, aid, m)));
     // Outstanding at the cutoff = everything not cleared by month-end (later-collected + still open + unbilled carry).
     const outstanding_at_period_end = r2(Math.max(0, recognized - collected_in_period));
-    return { basis: 'invoice', recognized, collected_in_period, collected_after_period, still_open, unbilled_carry, outstanding_at_period_end, direct_collection: r2(directCollection) };
+    return { basis: 'invoice', recognized, bad_debt_not_recognized, collected_in_period, collected_after_period, still_open, unbilled_carry, outstanding_at_period_end, direct_collection: r2(directCollection) };
   }
   const chg = r2(g(chgByAid, aid, m)); // direct-charge: we only know what cleared
   return { basis: 'charge', recognized: chg, collected_in_period: chg, collected_after_period: 0, still_open: 0, unbilled_carry: 0, outstanding_at_period_end: 0 };
@@ -319,14 +343,15 @@ function rowFor(aid, m) {
 const chgMonthTotal = (m) => r2(PROF.reduce((s, p) => s + (p.monthly_history?.[m]?.subscription || 0), 0));
 const by_month = {};
 for (const m of MONTHS) {
-  let recognized = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, unbilled_carry = 0, outstanding = 0, annual = 0, directColl = 0;
-  for (const aid of allAids) { const r = rowFor(aid, m); recognized += r.recognized; collected_in_period += r.collected_in_period; collected_after_period += r.collected_after_period; still_open += r.still_open; unbilled_carry += r.unbilled_carry || 0; outstanding += r.outstanding_at_period_end; annual += r.annual_deferred || 0; directColl += r.direct_collection || 0; }
+  let recognized = 0, badDebtNR = 0, collected_in_period = 0, collected_after_period = 0, still_open = 0, unbilled_carry = 0, outstanding = 0, annual = 0, directColl = 0;
+  for (const aid of allAids) { const r = rowFor(aid, m); recognized += r.recognized; badDebtNR += r.bad_debt_not_recognized || 0; collected_in_period += r.collected_in_period; collected_after_period += r.collected_after_period; still_open += r.still_open; unbilled_carry += r.unbilled_carry || 0; outstanding += r.outstanding_at_period_end; annual += r.annual_deferred || 0; directColl += r.direct_collection || 0; }
   // Manual catch-up charges ("March backpayment") are cash received THIS month against a
   // PRIOR month's already-recognized invoice. They belong in prior-AR collections, not in
   // revenue — that keeps cash_received tied to the bank while revenue stays on invoice date.
   const prior_ar_collected = r2((priorArCollected[m] || 0) + directColl);
   by_month[m] = {
     recognized: r2(recognized),
+    bad_debt_not_recognized: r2(badDebtNR),           // known bad debt billed this month, kept out of revenue (audit window)
     cash: r2(chgMonthTotal(m)),                         // charge basis (reference)
     collected_in_period: r2(collected_in_period),       // cleared by month-end, this month's service
     outstanding_at_period_end: r2(outstanding),         // = accrual adjustment (DR AR / CR Revenue)
@@ -375,7 +400,9 @@ for (const r of arRows) {
   // one would expense against an asset that was never recorded. Only AR whose revenue
   // was recognized in the accrual period (books go-live onward) is bookable; older
   // balances are memo-only, shown so the aging is complete.
-  r.bookable_writeoff = !r.collectible && !r.collected_manually && r.service_month >= BOOKS_GO_LIVE;
+  // In the not-recognized window the revenue was never booked, so there is no AR to relieve.
+  r.not_recognized = !r.collectible && !r.collected_manually && inNoRec(r.service_month);
+  r.bookable_writeoff = !r.collectible && !r.collected_manually && r.service_month >= BOOKS_GO_LIVE && !r.not_recognized;
   // Bad debt is recognized when collection became improbable — i.e. the month the
   // invoice crossed the threshold — not retroactively in the month it was billed
   // (which would restate a period already posted).
@@ -658,7 +685,9 @@ if (BT?.months) {
     for (const c of Object.values(INV.by_customer || {})) for (const i of (c.invoices || [])) {
       if (!RECOGNIZED_STATUS.has(i.status)) continue;
       const billed = monthOf(i.d) === m, paid = !!i.paid_at && monthOf(i.paid_at) === m;
-      for (const t of (i.taxes || [])) { const s = t.state || '??'; if (billed) taxInv[s] = r2((taxInv[s] || 0) + t.a); if (paid) taxCash[s] = r2((taxCash[s] || 0) + t.a); }
+      // Known bad debt in the audit window: only the tax on what was actually paid is owed.
+      const taxKeep = isKnownBadDebt(i) && inNoRec(m) ? (i.sub > 0 ? Math.min(1, (i.paid || 0) / i.sub) : 0) : 1;
+      for (const t of (i.taxes || [])) { const s = t.state || '??'; if (billed) taxInv[s] = r2((taxInv[s] || 0) + t.a * taxKeep); if (paid) taxCash[s] = r2((taxCash[s] || 0) + t.a); }
     }
     const taxUsed = QB.sales_tax_basis === 'cash' ? taxCash : taxInv;
     const taxTotal = r2(Object.values(taxUsed).reduce((s, v) => s + v, 0));
@@ -730,7 +759,7 @@ if (BT?.months) {
         const billedM = monthOf(i.d), paidM = i.paid_at ? monthOf(i.paid_at) : null;
         const paidByCutoff = paidM != null && paidM <= m;
         const rowBase = { allmoxy_customer_id: aid, name, invoice_id: i.id || null, invoice_date: i.d, amount: r2(i.sub), tax: r2(i.tax || 0), status: i.status, paid_at: i.paid_at || null };
-        if (billedM === m && !paidByCutoff) newArRows.push({ ...rowBase, resolution: i.paid_at ? `paid ${i.paid_at}` : i.status === 'uncollectible' ? 'uncollectible' : 'still open' });
+        if (billedM === m && !paidByCutoff && !(isKnownBadDebt(i) && inNoRec(m))) newArRows.push({ ...rowBase, resolution: i.paid_at ? `paid ${i.paid_at}` : i.status === 'uncollectible' ? 'uncollectible' : 'still open' });
         if (billedM < m && paidM === m) priorArRows.push(rowBase);
       }
     }
@@ -765,6 +794,7 @@ if (BT?.months) {
       },
       memo: [
         `4100 Annual Deferred Monthly $${(by_month[m]?.annual_deferred || 0).toFixed(2)} (B&B Door, Mid Michigan) is booked separately — not part of this entry.`,
+        ...(by_month[m]?.bad_debt_not_recognized ? [`Known bad debt NOT recognized: $${by_month[m].bad_debt_not_recognized.toFixed(2)} billed this month and marked Write off is left out of 4000, AR and sales tax (no 4950 line) — Jan–Oct 2026 audit policy.`] : []),
         `Sales tax shown on the ${QB.sales_tax_basis} basis; the other basis for reference: $${r2(Object.values(QB.sales_tax_basis === 'cash' ? taxInv : taxCash).reduce((s, v) => s + v, 0)).toFixed(2)}.`,
       ],
     };
@@ -797,7 +827,7 @@ const accrual_series = [];
 for (const aid of allAids) {
   if (typeof aid !== 'number' || ANNUAL.has(aid)) continue;
   const months = {};
-  for (const m of MONTHS) { if (m < ACCRUAL_RELIABLE_FROM) continue; const v = rowFor(aid, m).recognized; if (v > 0) months[m] = v; }
+  for (const m of MONTHS) { if (m < ACCRUAL_RELIABLE_FROM) continue; const r = rowFor(aid, m); const v = r2(r.recognized + (r.bad_debt_not_recognized || 0)); if (v > 0) months[m] = v; }
   if (Object.keys(months).length) accrual_series.push({ allmoxy_customer_id: aid, months });
 }
 // Coverage ratio per month — how much of cash MRR the accrual basis accounts for.
@@ -823,6 +853,13 @@ const out = {
     pre_accrual_count: arWrittenOffRows.length - arBookableRows.length,
     writeoff_by_month: writeoffByMonth,
     books_go_live: BOOKS_GO_LIVE,
+    bad_debt_not_recognized: NOREC ? {
+      from: NOREC.from, through: NOREC.through,
+      total: r2(badDebtInvoices.reduce((s, r) => s + r.amount, 0)),
+      invoice_count: new Set(badDebtInvoices.map((r) => r.invoice_id)).size,
+      by_month: Object.fromEntries(MONTHS.filter(inNoRec).map((m) => [m, by_month[m]?.bad_debt_not_recognized || 0])),
+      invoices: badDebtInvoices.sort((a, b) => a.month.localeCompare(b.month) || b.amount - a.amount),
+    } : null,
     note: WRITEOFF_DAYS == null
       ? 'No automatic write-off. Every invoice stays in AR until it is explicitly marked uncollectible on the Collections page — age alone cannot tell a dead account from one that is merely behind. Marking one books it to 4950 Uncollectible Income (only if its revenue was recognized on the accrual books); it is NOT modified in Stripe.'
       : `Default for UNDECIDED invoices only: older than ${WRITEOFF_DAYS} days counts as not collectible. Explicit decisions on the Collections page always win. Invoices are NOT modified in Stripe — void or mark them uncollectible there to make it official. Revenue stays recognized; the write-off is a bad-debt expense.`,

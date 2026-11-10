@@ -5,6 +5,8 @@
   "sales_tax_basis": "invoice",
   "_ar_writeoff_comment": "NULL = no automatic write-off (Beau, 2026-09-05, final). Every invoice stays in AR until HE marks it uncollectible on the Revenue \u2192 Collections page; nothing is written off by age. The brief 90-day auto rule was removed because age alone can't tell 'gone' from 'behind' \u2014 it was writing off $8,154 from customers still paying every month (LV Service Solutions pays $699/mo with four unpaid $699 invoices). Setting a number here re-enables the age rule as a DEFAULT for undecided invoices; explicit decisions in ar_collection_overrides.json always win either way.",
   "ar_writeoff_after_days": null,
+  "_bad_debt_not_recognized_comment": "Beau, 2026-11-09: for the Jan\u2013Oct 2026 audit, invoices billed in these months that are KNOWN bad debt (marked Write off on the Collections page) are never recognized as revenue: no 4000 credit, no AR, no tax, and no 4950 write-off. A/R write-offs (recognize, then DR 4950 / CR 1200 in the month decided) start with the month after `through`. Billed MRR, churn and retention metrics are unchanged.",
+  "bad_debt_not_recognized": { "from": "2026-01", "through": "2026-10" },
   "apply_refund_classification_fix": true,
   "accounts": {
     "stripe_clearing": {

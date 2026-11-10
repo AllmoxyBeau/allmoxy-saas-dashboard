@@ -1,7 +1,7 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-11-09T22:52:32.551Z",
-  "jira_fetchedAt": "2026-11-09T22:52:09.889Z",
+  "fetchedAt": "2026-11-10T01:45:28.793Z",
+  "jira_fetchedAt": "2026-11-10T01:45:03.865Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
     "total_tickets": 4601,
@@ -11154,7 +11154,7 @@
         }
       ],
       "created": "2026-09-11",
-      "updated": "2026-11-06",
+      "updated": "2026-11-09",
       "resolved": "2026-10-08",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13100",
       "tag_count": 2,
@@ -15100,8 +15100,8 @@
     {
       "key": "DEV-12225",
       "summary": "Orders report feedback",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "Medium",
       "issue_score": 211,

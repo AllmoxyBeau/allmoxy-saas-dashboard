@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-09T22:50:56.543Z",
+  "fetched_at": "2026-11-10T01:43:51.821Z",
   "comment": "5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to every customer in the canonical customer base (active_today). Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.",
   "scoring_mode": "full",
   "totals": {
@@ -2282,8 +2282,8 @@
       "sub_segment": null,
       "sign_up_date": "2025-07-09",
       "pay_status": "Active - Card Failure",
-      "failed_3mo_count": 14,
-      "failed_3mo_amount": 18595.5,
+      "failed_3mo_count": 13,
+      "failed_3mo_amount": 16983.75,
       "signal_1_orders": 35,
       "orders_label": "running",
       "orders_detail": "$809/mo avg in 2026 (new this year)",
@@ -2319,10 +2319,10 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "$809/mo avg in 2026 (new this year) · 27d since contact · 14 failed charges (3mo) · CS Pulse: yellow",
+      "narrative": "$809/mo avg in 2026 (new this year) · 27d since contact · 13 failed charges (3mo) · CS Pulse: yellow",
       "primary_risk_driver": {
         "key": "Billing friction",
-        "summary": "14 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
+        "summary": "13 failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.",
         "source": "signals"
       }
     },
@@ -4501,8 +4501,8 @@
       "sub_segment": "Component Manufacturer",
       "sign_up_date": "2025-02-11",
       "pay_status": "Active",
-      "failed_3mo_count": 1,
-      "failed_3mo_amount": 268.13,
+      "failed_3mo_count": 0,
+      "failed_3mo_amount": 0,
       "signal_1_orders": 0,
       "orders_label": "dropped_off",
       "orders_detail": "$12/mo avg in 2025 but ZERO in 2026 YTD — dropped off",
@@ -4538,7 +4538,7 @@
       "has_hubspot_data": true,
       "scoring_data_status": "full",
       "is_bid_only": false,
-      "narrative": "0d since contact · 1 failed charges (3mo)",
+      "narrative": "0d since contact",
       "primary_risk_driver": {
         "key": "Stuck in implementation, never launched",
         "expected_value": "Sales call not captured — inferred: Big Timber bought Allmoxy to run an online product catalog and ordering system for their door/millwork business — a UI catalog routing B2C/B2B buyers, vanity-URL sales tracking, supplier integrations, and Stripe \"pay-before-processing\" checkout, with data-driven pricing formulas so customers could quote and order doors online.",

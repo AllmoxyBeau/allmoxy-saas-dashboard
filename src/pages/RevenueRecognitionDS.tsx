@@ -39,7 +39,7 @@ type Snap = {
   reconciliation_detail: DetailRow[]; orphan_stripe_customers: Array<{ stripe_customer: string; months: string[]; latest_mrr: number }>;
   data_quality?: { invoices_missing_paid_at: number };
   journal_entries?: Record<string, JournalEntry>;
-  ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; bookable_count: number; pre_accrual_total: number; pre_accrual_count: number; books_go_live: string } | null;
+  ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; bookable_count: number; pre_accrual_total: number; pre_accrual_count: number; books_go_live: string; bad_debt_not_recognized?: { from: string; through: string; total: number; invoice_count: number; by_month: Record<string, number> } | null } | null;
 };
 
 const USD2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -360,6 +360,7 @@ export default function RevenueRecognitionDS() {
             <span className="am-tag am-tag--info">Nothing is written off automatically</span>
             <span className="am-card__text">Every invoice stays in AR until it's marked uncollectible on Collections.
               {snap.ar_policy.written_off_total > 0 && <> {usd(snap.ar_policy.written_off_total)} across {snap.ar_policy.written_off_count} invoice{snap.ar_policy.written_off_count === 1 ? '' : 's'} has been marked uncollectible so far; {usd(snap.ar_policy.bookable_total)} of that books to 4950.</>}
+              {snap.ar_policy.bad_debt_not_recognized && snap.ar_policy.bad_debt_not_recognized.total > 0 && <> Known bad debt billed {mlabel(snap.ar_policy.bad_debt_not_recognized.from)} to {mlabel(snap.ar_policy.bad_debt_not_recognized.through)} ({usd(snap.ar_policy.bad_debt_not_recognized.total)}, {snap.ar_policy.bad_debt_not_recognized.invoice_count} invoices) is not recognized as revenue at all: it is left out of subscription revenue, AR and sales tax on each month's entry, with no 4950 line.</>}
             </span>
             <button className="am-btn am-btn--text" onClick={() => navigate('/collections')}>Open Collections</button>
           </div>

@@ -1,7 +1,7 @@
 {
-  "fetchedAt": "2026-11-09T22:51:43.682Z",
-  "jira_fetchedAt": "2026-11-09T22:51:08.413Z",
-  "harvest_fetchedAt": "2026-11-09T22:51:43.602Z",
+  "fetchedAt": "2026-11-10T01:44:36.334Z",
+  "jira_fetchedAt": "2026-11-10T01:44:03.222Z",
+  "harvest_fetchedAt": "2026-11-10T01:44:36.236Z",
   "note": "Implementation projects = services revenue. JIRA (IPA epics) supplies stage; Harvest supplies hours + billable $. Join: harvest_id==client_id (exact); JIRA by epic-summary name-match (+ overrides).",
   "aggregates": {
     "total_customers": 110,
@@ -2913,7 +2913,7 @@
     {
       "allmoxy_customer_id": 527,
       "name": "Big Timber Millworks",
-      "customer_status": "at_risk",
+      "customer_status": "active",
       "account_rep": "Connor Wright",
       "harvest_id": "15887575",
       "sign_up_date": "2025-02-11",

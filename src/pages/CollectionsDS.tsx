@@ -11,7 +11,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSheetTab } from '../hooks/useSheetTab';
-import { DataTable, DsPage, Icon, KpiCard, Segmented, Select, SideSheet, downloadCsv, mlabel, usd } from '../design-system/parts';
+import { DataTable, DsPage, Icon, KpiCard, Segmented, Select, SideSheet, addMonths, downloadCsv, mlabel, mshort, usd } from '../design-system/parts';
 
 type ArRow = {
   allmoxy_customer_id: number | null; name: string; invoice_id: string | null; invoice_date: string;
@@ -27,7 +27,7 @@ type Effective = 'collectible' | 'uncollectible' | 'collected_manually';
 type DecoratedRow = ArRow & { effective: Effective; source: RowSource; pendingNote: string | null };
 type Snap = {
   ar_aging: ArRow[]; ar_total: number;
-  ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; bookable_count?: number; pre_accrual_total?: number; pre_accrual_count?: number; collected_manually_total?: number; collected_manually_count?: number; books_go_live: string } | null;
+  ar_policy?: { writeoff_after_days: number | null; open_total: number; open_count: number; written_off_total: number; written_off_count: number; bookable_total: number; bookable_count?: number; pre_accrual_total?: number; pre_accrual_count?: number; collected_manually_total?: number; collected_manually_count?: number; books_go_live: string; bad_debt_not_recognized?: { from: string; through: string; total: number; invoice_count: number } | null } | null;
 };
 
 const USD2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -129,10 +129,16 @@ export default function CollectionsDS() {
   // Only write-offs whose revenue was recognized on the accrual books (service month on/after
   // books go-live) reach 4950. Earlier ones ran on cash: no receivable was ever booked, so
   // writing them off makes no journal entry.
+  // Known bad debt billed inside the audit window (Jan–Oct 2026) was never recognized as
+  // revenue, so writing it off makes no entry either; 4950 starts the month after.
   const goLive = snap?.ar_policy?.books_go_live ?? '2026-01';
+  const nr = snap?.ar_policy?.bad_debt_not_recognized ?? null;
+  const inNr = (m: string) => !!nr && m >= nr.from && m <= nr.through;
+  const to4950 = (r: { effective: string; service_month: string }) => r.effective === 'uncollectible' && r.service_month >= goLive && !inNr(r.service_month);
   const t = useMemo(() => ({
-    writeoffBookable: rows.filter((r) => r.effective === 'uncollectible' && r.service_month >= goLive).reduce((s, r) => s + r.amount, 0),
-    writeoffBookableN: rows.filter((r) => r.effective === 'uncollectible' && r.service_month >= goLive).length,
+    writeoffBookable: rows.filter(to4950).reduce((s, r) => s + r.amount, 0),
+    writeoffBookableN: rows.filter(to4950).length,
+    writeoffNrN: rows.filter((r) => r.effective === 'uncollectible' && inNr(r.service_month)).length,
     writeoffPreN: rows.filter((r) => r.effective === 'uncollectible' && r.service_month < goLive).length,
     chase: rows.filter((r) => r.effective === 'collectible').reduce((s, r) => s + r.amount, 0),
     chaseN: rows.filter((r) => r.effective === 'collectible').length,
@@ -145,7 +151,7 @@ export default function CollectionsDS() {
     undecidedN: rows.filter((r) => r.source === 'auto').length,
     decidedN: rows.filter((r) => r.source !== 'auto').length,
     pendingN: Object.keys(pending).length,
-  }), [rows, pending, goLive]);
+  }), [rows, pending, goLive, nr]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Owner options with their count and $, computed off the status filter so the numbers
   // match what selecting that owner would show.
@@ -196,6 +202,7 @@ export default function CollectionsDS() {
         <SideSheet open={help} onClose={() => setHelp(false)} title="How decisions work">
           <p className="am-card__text"><b>Reading a row.</b> Customer state shows whether the relationship is alive: a customer still paying monthly is far more likely to settle an old balance. Age is days since the invoice date. Source is how the current call was made: Automatic (the age rule), Decided (committed), or Pending (yours, not yet applied).</p>
           <p className="am-card__text"><b>Making a call.</b> Chase keeps the invoice in AR; Write off books it to 4950 Uncollectible Income. Only balances whose revenue was recognized from {mlabel(goLive)} onward hit the books. Earlier years ran on cash, so no receivable was ever recorded and writing them off makes no entry.</p>
+          {nr && <p className="am-card__text"><b>{mlabel(nr.from)} to {mlabel(nr.through)}.</b> Invoices billed in these months and marked Write off are not recognized as revenue at all: no subscription revenue, no AR, no sales tax and no 4950 line on that month's entry. Write-offs book to 4950 from {mlabel(addMonths(nr.through, 1))} onward.</p>}
           <p className="am-card__text"><b>Saving.</b> Decisions are saved in your browser (shared with the classic Collections page). Use Copy pending decisions and give them to Claude to commit with node _etl_scripts/toggle_ar_collection.mjs apply.</p>
           <p className="am-card__text">Marking an invoice here changes the dashboard only. It does not touch Stripe: void it or mark it uncollectible in Stripe to make it official.</p>
         </SideSheet>
@@ -207,7 +214,7 @@ export default function CollectionsDS() {
         <KpiCard label="Chasing" value={isLoading ? '…' : usd(t.chase)} hint={`${t.chaseN} invoices still collectible`}
           tag={t.chaseN > 0 ? 'Needs action' : 'Clear'} tagTone={t.chaseN > 0 ? 'warning' : 'success'} onOpen={() => setFilter('chase')} />
         <KpiCard label="Writing off" value={isLoading ? '…' : usd(t.writeoff)}
-          hint={`${t.writeoffBookableN} invoices / ${usd(t.writeoffBookable)} → 4950 · ${t.writeoffPreN} pre-go-live (no entry)`}
+          hint={`${t.writeoffBookableN} → 4950 (${usd(t.writeoffBookable)})${nr ? ` · ${t.writeoffNrN} ${mshort(nr.from)}–${mshort(nr.through)} not recognized` : ''} · ${t.writeoffPreN} pre-go-live (no entry)`}
           tag="Bad debt" tagTone="error" onOpen={() => setFilter('writeoff')} />
         <KpiCard label="Owed by live customers" value={isLoading ? '…' : usd(t.live)} hint="Still paying you — best odds"
           tag={`${t.liveN} invoices`} tagTone="info" />
