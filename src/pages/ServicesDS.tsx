@@ -18,7 +18,9 @@ import {
 } from '../design-system/parts';
 
 type CustomerMonthRow = { customer_name: string; [yearMonth: string]: string | number | null };
-type ServicesByMonth = { rows: CustomerMonthRow[]; monthlyTotals: Record<string, number>; notes?: string };
+type ServicesByMonth = { rows: CustomerMonthRow[]; monthlyTotals: Record<string, number>; notes?: string;
+  // services billed as recurring lines on a Stripe subscription; the rest is individual invoices
+  subscriptionBilled?: { monthlyTotals: Record<string, number>; byCustomer: Record<string, Record<string, number>> } };
 type Profile = {
   allmoxy_customer_id: number; name: string; hubspot_instance_name?: string | null;
   customer_name?: string | null; primary_segment: string | null;
@@ -206,6 +208,18 @@ export default function ServicesDS() {
   const partialMonth = allMonths.find((m) => m >= currentMonthKey) ?? null;
   const range = useMonthRange(includePartial ? allMonths : allMonths.filter((m) => m < currentMonthKey));
   const mval = (m: string) => Math.round((Number(filteredMonthlyTotals[m]) || 0) * 100) / 100;
+  // Of each month's services, how much was billed on a subscription (same segment filter).
+  const subBilled = useMemo(() => {
+    const sb = snap?.subscriptionBilled;
+    if (!sb) return {} as Record<string, number>;
+    if (segmentFilter.size === 0) return sb.monthlyTotals;
+    const wanted = new Set(filteredCustomers.map((r) => r.name));
+    const t: Record<string, number> = {};
+    for (const [name, months] of Object.entries(sb.byCustomer)) if (wanted.has(name)) for (const [m, v] of Object.entries(months)) t[m] = (t[m] ?? 0) + v;
+    return t;
+  }, [snap, segmentFilter, filteredCustomers]);
+  const sval = (m: string) => Math.min(mval(m), Math.round((Number(subBilled[m]) || 0) * 100) / 100);
+  const ival = (m: string) => Math.round((mval(m) - sval(m)) * 100) / 100;
   const yearOf = (y: string) => yearly.find((r) => r.year === y);
   const currentYear = String(new Date().getFullYear());
   const priorYear = String(new Date().getFullYear() - 1);
@@ -332,9 +346,13 @@ export default function ServicesDS() {
           {partialMonth && <Switch checked={includePartial} onChange={setIncludePartial}>Include {mlabel(partialMonth)} (in progress)</Switch>}
         </div>
         {isLoading ? <p className="am-card__text">Loading…</p> : (
-          <ColumnChart months={range.months} fmt={usdk}
-            series={[{ key: 'services', label: 'Services revenue', tone: 'div-1', values: range.months.map(mval) }]}
-            tipRows={(i) => { const m = range.months[i]; return [['Services revenue', usd(mval(m))], ...(m >= currentMonthKey ? [['Status', 'in progress'] as [string, string]] : [])]; }}
+          <ColumnChart months={range.months} fmt={usdk} stacked legend
+            labelFor={(i) => usdk(mval(range.months[i]))}
+            series={[
+              { key: 'individual', label: 'Individual invoices', tone: 'div-1', values: range.months.map(ival) },
+              { key: 'subscription', label: 'Billed on a subscription', tone: 'div-2', values: range.months.map(sval) },
+            ]}
+            tipRows={(i) => { const m = range.months[i]; return [['Services revenue', usd(mval(m))], ['Billed on a subscription', usd(sval(m))], ['Individual invoices', usd(ival(m))], ...(m >= currentMonthKey ? [['Status', 'in progress'] as [string, string]] : [])]; }}
             onSegment={(i) => setDrill({ kind: 'month', month: range.months[i] })}
             aria={`Monthly services revenue, ${range.rangeText}.`} />
         )}

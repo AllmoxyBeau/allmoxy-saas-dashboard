@@ -13145,5 +13145,50 @@
     "2026-10": 26425.4,
     "2026-11": 9862.5
   },
-  "notes": "Per-customer services revenue from the Services by Month tab (207 customers × 52 months). Monthly totals taken from the sheet's formula-driven summary row, not customer sums."
+  "notes": "Per-customer services revenue from the Services by Month tab (207 customers × 52 months). Monthly totals taken from the sheet's formula-driven summary row, not customer sums.",
+  "subscriptionBilled": {
+    "note": "Services billed as recurring lines on a Stripe subscription (Support / Implementation on the subscription invoice). The rest of each month is individual service invoices and charges.",
+    "monthlyTotals": {
+      "2026-09": 5835.52,
+      "2026-10": 7625,
+      "2026-11": 8375,
+      "2026-08": 225
+    },
+    "byCustomer": {
+      "Wood House Cabinets": {
+        "2026-09": 225,
+        "2026-10": 225
+      },
+      "Precise Closets & Cabinetry": {
+        "2026-09": 460.52,
+        "2026-10": 1125,
+        "2026-11": 1125
+      },
+      "Rb Millwork": {
+        "2026-09": 2325,
+        "2026-10": 2325,
+        "2026-11": 2325
+      },
+      "Fox Creek Cabinets": {
+        "2026-08": 225,
+        "2026-09": 225,
+        "2026-10": 225
+      },
+      "Martin Wood Products": {
+        "2026-09": 2600
+      },
+      "Glacier Millworks": {
+        "2026-11": 2600
+      },
+      "Gm Doors Llc Dba Pine Door Manufacturing": {
+        "2026-10": 2600
+      },
+      "Sommers Wood N Door": {
+        "2026-10": 1125
+      },
+      "Clement Custom Doors": {
+        "2026-11": 2325
+      }
+    }
+  }
 }

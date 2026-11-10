@@ -717,6 +717,8 @@ catch (e) { console.log('  ⚠ build_activation failed:', e.message); }
 // reconciles for the seamed months. Runs after all monthly builds, before the tests.
 console.log('  applying Stripe revenue seam to monthly aggregates (June 2026+)…');
 runScript('apply_stripe_seam_monthly.mjs', null);
+// Services by how they were billed: on a subscription vs individual invoices (Services page chart).
+runScript('apply_services_billing_split.mjs', null);
 // Sales budget is priced off the canonical base and the accrual waterfall, and sums the
 // services/Connect streams from mrr_by_month — so it must run AFTER the seam above
 // (it used to run before it and summed Connect with Jul–Oct 2026 missing).
