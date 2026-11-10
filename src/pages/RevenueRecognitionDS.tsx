@@ -27,7 +27,8 @@ type DetailRow = { allmoxy_customer_id: number; name: string; month: string; bas
 type JeLine = { account: string; debit: number | null; credit: number | null; description: string; group: 'cash' | 'tax' | 'accrual' | 'writeoff' };
 type BalanceReport = { period_tz: string; starting_balance: number | null; charges_gross: number; refunds: number; connect_earnings: number; connect_refunds: number; stripe_fees: number; other_activity: number; net_activity: number; payouts: number; ending_balance: number | null; anchored: boolean };
 type ArDetailRow = { allmoxy_customer_id: number | null; name: string; invoice_id: string | null; invoice_date: string; amount: number; tax: number; status: string; paid_at: string | null; resolution?: string };
-type ArDetail = { new_ar_rows: ArDetailRow[]; prior_ar_rows: ArDetailRow[]; new_ar_ex_tax: number; new_ar_tax: number; prior_ar_collected: number; residual: number; total: number };
+type ArOtherRow = { allmoxy_customer_id: number | null; name: string; category: string; label: string; amount: number; invoice_id?: string | null };
+type ArDetail = { new_ar_rows: ArDetailRow[]; prior_ar_rows: ArDetailRow[]; other_rows?: ArOtherRow[]; other_total?: number; new_ar_ex_tax: number; new_ar_tax: number; prior_ar_collected: number; residual: number; total: number };
 type JournalEntry = {
   lines: JeLine[]; debits: number; credits: number; balanced: boolean; memo: string[];
   balance_report?: BalanceReport; ar_detail?: ArDetail;
@@ -158,7 +159,11 @@ export default function RevenueRecognitionDS() {
         [`New AR: billed, unpaid at month-end (${d.new_ar_rows.length} invoice${d.new_ar_rows.length === 1 ? '' : 's'})`, d.new_ar_ex_tax],
         ['New AR: sales tax on those invoices', d.new_ar_tax],
         [`Less: prior-month AR collected this month (${d.prior_ar_rows.length})`, -d.prior_ar_collected],
-        ...(Math.abs(d.residual) >= 0.01 ? [['Other timing / partial payments', d.residual] as [string, number]] : []),
+        // Every other item, grouped by what it is (each one is listed below).
+        ...Object.entries((d.other_rows ?? []).reduce<Record<string, { label: string; v: number; n: number }>>((acc, r) => {
+          const o = acc[r.category] ?? (acc[r.category] = { label: r.label, v: 0, n: 0 }); o.v += r.amount; o.n++; return acc;
+        }, {})).map(([, o]) => [`${o.label} (${o.n})`, o.v] as [string, number]),
+        ...(Math.abs(d.residual) >= 0.01 ? [['Unreconciled — report this', d.residual] as [string, number]] : []),
       ];
       const invTable = (title: string, rows: ArDetailRow[], negative: boolean) => {
         const s = negative ? -1 : 1;
@@ -176,6 +181,12 @@ export default function RevenueRecognitionDS() {
         <DataTable label="AR bridge" cols={[['Part', false], ['Amount', true]]} rows={bridge.map(([l, v]) => [l, money(v)])} foot={['Δ Accounts Receivable (posted)', money(d.total)]} />
         {invTable(`Billed in ${ml}, unpaid at month-end: new AR`, d.new_ar_rows, false)}
         {!!d.prior_ar_rows.length && invTable('Prior-month invoices collected this month: relieves AR', d.prior_ar_rows, true)}
+        {!!d.other_rows?.length && <>
+          <div className="am-chart__head"><span className="am-chart__title">Other items that move AR</span><span className="am-chart__caption">{d.other_rows.length} item{d.other_rows.length === 1 ? '' : 's'}</span></div>
+          <div style={{ overflowX: 'auto' }}><DataTable label="Other items that move AR" cols={[['Customer', false], ['What it is', false], ['Amount', true]]}
+            rows={d.other_rows.map((r) => [r.allmoxy_customer_id != null ? custCell(r.allmoxy_customer_id, r.name) : r.name, <span key="l" style={{ display: 'inline-block', maxWidth: 420, whiteSpace: 'normal' }}>{r.label}</span>, money(r.amount)])}
+            foot={[`Total · ${d.other_rows.length}`, '', money(d.other_total ?? sum(d.other_rows, (r) => r.amount))]} /></div>
+        </>}
         <p className="am-card__text">Every open invoice across all history is in the AR aging table ({snap ? usd(snap.ar_total) : '—'} collectible).</p>
       </>;
     }

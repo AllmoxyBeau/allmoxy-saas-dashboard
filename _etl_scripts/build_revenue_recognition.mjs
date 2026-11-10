@@ -225,6 +225,7 @@ const directServices = {};            // month -> $           retyped subscripti
 const directUnmapped = {};            // month -> $           no profile; JE only
 const directAdjustments = [];         // audit trail for the snapshot
 const directAddOnNonSub = {};         // month -> $  direct token / custom-domain add-ons inside recognized (cash → 4410/4420)
+const directAddOnNonSubByAid = new Map(); // aid -> { month: $ } same, per customer (for the AR bridge)
 // One-off charges with no invoice and no tag, split by Beau in charge_revenue_overrides.json.
 // Their SUBSCRIPTION share is that month's software revenue (Glacier Millworks paid $4,600 on
 // 2026-10-02 = $2,000 Core Software + $2,600 services, before its subscription invoices began).
@@ -271,7 +272,11 @@ if (BT?.months) {
       if (ANNUAL.has(aid)) continue;                 // annual prepay → 4100, booked separately
       if (!invCustomers.has(aid)) continue;          // charge-basis customer: already in monthly_history
       const bucket = (r.forceRecurring || RECURRING_DIRECT.test(String(r.desc || ''))) ? directRecurring : directPending;
-      if (bucket === directRecurring && /ai tokens|custom\s*dom/i.test(String(r.desc || ''))) directAddOnNonSub[m] = r2((directAddOnNonSub[m] || 0) + r.amount);
+      if (bucket === directRecurring && /ai tokens|custom\s*dom/i.test(String(r.desc || ''))) {
+        directAddOnNonSub[m] = r2((directAddOnNonSub[m] || 0) + r.amount);
+        if (!directAddOnNonSubByAid.has(aid)) directAddOnNonSubByAid.set(aid, {});
+        const da = directAddOnNonSubByAid.get(aid); da[m] = r2((da[m] || 0) + r.amount);
+      }
       if (!bucket.has(aid)) bucket.set(aid, {});
       const o = bucket.get(aid); o[m] = r2((o[m] || 0) + r.amount);
     }
@@ -581,9 +586,12 @@ const taxNS = {};         // month -> tax share of non-subscription lines billed
 const recNonSubInR = {};  // month -> custom-domain / token lines that sit inside recognized (R)
 const subOutsideR = {};   // month -> subscription-type lines R does not carry (one-time lines)
 const bump = (o, m, v) => { o[m] = r2((o[m] || 0) + v); };
+const billedByInv = new Map();   // invoice id -> { month: lines recognized that month, ex tax } (the AR bridge's billed side)
+const invMeta = new Map();       // invoice id -> { inv, aid, name }
 for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
   const prof = custToProf.get(cid); const aid = prof ? prof.allmoxy_customer_id : null;
   for (const inv of (cust.invoices || [])) {
+    if (inv.id) invMeta.set(inv.id, { inv, aid, name: aid != null ? nameOf(aid) : nameOf(`stripe:${cid}`) });
     if (!RECOGNIZED_STATUS.has(inv.status)) continue;
     const lines = inv.lines || [];
     const lineTotal = lines.reduce((s, l) => s + (l.a || 0), 0);
@@ -604,6 +612,10 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
         const v = v0 * keep;
         if (!v) continue;
         const taxPart = (inv.tax || 0) * (v0 / lineTotal) * keep;
+        if (inv.id && !(t === 'subscription' && aid != null && ANNUAL.has(aid))) {
+          if (!billedByInv.has(inv.id)) billedByInv.set(inv.id, {});
+          const bi = billedByInv.get(inv.id); bi[m] = (bi[m] || 0) + v;
+        }
         // Annual prepayers (B&B Door, Mid Michigan) are booked on 4100 in a separate entry — left as they were.
         if (t === 'subscription') { if (!inR && !(aid != null && ANNUAL.has(aid))) bump(subOutsideR, m, v); continue; }
         if (inR) { if (aid != null && !ANNUAL.has(aid)) bump(recNonSubInR, m, v); }
@@ -686,6 +698,10 @@ if (BT?.months) {
     const splitOn = SPLIT_START && m >= SPLIT_START;
     const byType = Object.fromEntries(REV_TYPES.map((t) => [t, 0]));
     const invCash = Object.fromEntries(REV_TYPES.map((t) => [t, 0]));   // cash against INVOICES, by type
+    const cashByInv = new Map();          // invoice id -> cash received this month (gross)
+    const directSubCashByAid = new Map(); // aid|'unmapped' -> subscription share of no-invoice charges this month
+    const invSubCashByAid = new Map();    // aid -> subscription share of invoice-backed charges this month
+    const addDirectSub = (r, v) => { if (!v) return; const p0 = r.cust ? custToProf.get(r.cust) : null; const k = p0 ? p0.allmoxy_customer_id : 'unmapped'; directSubCashByAid.set(k, (directSubCashByAid.get(k) || 0) + v); };
     let unsplit = 0;
     if (splitOn) {
       for (const r of chargeRows) {
@@ -697,6 +713,12 @@ if (BT?.months) {
             byType[t] += r.amount * share;
             if (invMix) invCash[t] = (invCash[t] || 0) + r.amount * share;
           }
+          if (invMix) {
+            cashByInv.set(r.inv, (cashByInv.get(r.inv) || 0) + r.amount);
+            const pc = r.cust ? custToProf.get(r.cust) : null;
+            if (pc && invMix.subscription) invSubCashByAid.set(pc.allmoxy_customer_id, (invSubCashByAid.get(pc.allmoxy_customer_id) || 0) + r.amount * invMix.subscription);
+          }
+          else addDirectSub(r, r.amount * (mix.subscription || 0));
         } else {
           // No invoice to read lines from. A standalone AI-token upgrade is apitokens;
           // anything else keeps what the charge itself says.
@@ -707,6 +729,7 @@ if (BT?.months) {
           const t = /allmoxy ai tokens|operator tokens|ai[_ ]?tokens/i.test(d) ? 'operatortokens' : reTag(r);
           if (t) byType[t] = (byType[t] || 0) + r.amount;
           else unsplit += r.amount;
+          if (t === 'subscription') addDirectSub(r, r.amount);
         }
       }
       for (const t of Object.keys(byType)) byType[t] = r2(byType[t]);
@@ -768,8 +791,22 @@ if (BT?.months) {
     // cash credits 4420/4410, so they come out here and accrue on their own accounts.
     const adjNS = {};
     for (const t of NONSUB) adjNS[t] = splitOn ? r2((billedNS[m]?.[t] || 0) - (invCash[t] || 0)) : 0;
+    // CHARGE-BASIS customers (no Stripe invoices) can never carry AR — what they paid is what
+    // they owe (policy 7). Their recognized figure comes from the charges ledger, which can tag
+    // AI-token or services charges as subscription (Canary Closets' $90 of tokens, Oct 2026;
+    // Evolve Elements' $93 services invoice, Jan 2026) or move a charge to its service month
+    // (Raumplus, Apr→May 2026). In the entry, use the subscription cash actually collected.
+    const chargeBasisCorr = new Map();
+    if (splitOn) for (const aid of allAids) {
+      if (ANNUAL.has(aid)) continue;
+      const rr0 = rowFor(aid, m); if (rr0.basis !== 'charge') continue;
+      const cashSub = (directSubCashByAid.get(aid) || 0) + (invSubCashByAid.get(aid) || 0);
+      const d0 = r2(rr0.recognized - cashSub);
+      if (Math.abs(d0) >= 0.005) chargeBasisCorr.set(aid, d0);
+    }
+    const chargeBasisCorrTotal = r2([...chargeBasisCorr.values()].reduce((s2, v) => s2 + v, 0));
     const adj = splitOn
-      ? r2(R - (recNonSubInR[m] || 0) - (directAddOnNonSub[m] || 0) + (subOutsideR[m] || 0) + taxTotal - (taxNS[m] || 0) - subGross)
+      ? r2(R - chargeBasisCorrTotal - (recNonSubInR[m] || 0) - (directAddOnNonSub[m] || 0) + (subOutsideR[m] || 0) + taxTotal - (taxNS[m] || 0) - subGross)
       : r2(R + taxTotal - subGross);
     const adjTotal = r2(adj + NONSUB.reduce((s2, t) => s2 + adjNS[t], 0));
     if (reclassified > 0.01) reclassLog.push({ month: m, amount: reclassified });
@@ -835,30 +872,82 @@ if (BT?.months) {
         line(A.accounts_receivable, 0, -v, 'Accrual: relieve AR collected this month', 'accrual');
       }
     }
-    // ── AR detail: itemize Δ AR so the 1200 line is auditable ──
-    // Δ AR = [invoices BILLED this month, unpaid at month-end (ex-tax + their tax)]
-    //      − [invoices billed in PRIOR months, paid this month (incl. tax)]  + residual.
-    // Residual absorbs fill-forward/orphan/partial-payment effects so the bridge always
-    // ties to the posted line.
-    const newArRows = [], priorArRows = [];
-    for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
-      const prof = custToProf.get(cid); const aid = prof ? prof.allmoxy_customer_id : null;
-      if (aid != null && ANNUAL.has(aid)) continue;
-      const name = aid != null ? nameOf(aid) : cid;
-      for (const i of (cust.invoices || [])) {
-        const exTax = r2((i.sub || 0) + (i.svc || 0));            // every line reaches AR, not just subscription
-        if (!RECOGNIZED_STATUS.has(i.status) || !(exTax > 0)) continue;
-        const billedM = monthOf(i.d), paidM = i.paid_at ? monthOf(i.paid_at) : null;
-        const paidByCutoff = paidM != null && paidM <= m;
-        const rowBase = { allmoxy_customer_id: aid, name, invoice_id: i.id || null, invoice_date: i.d, amount: exTax, tax: r2(i.tax || 0), status: i.status, paid_at: i.paid_at || null };
-        if (billedM === m && !paidByCutoff && !(isKnownBadDebt(i) && inNoRec(m))) newArRows.push({ ...rowBase, resolution: i.paid_at ? `paid ${i.paid_at}` : i.status === 'uncollectible' ? 'uncollectible' : 'still open' });
-        if (billedM < m && paidM === m) priorArRows.push(rowBase);
+    // ── AR BRIDGE: every dollar of the posted 1200 movement, itemized (Beau, 2026-11-09:
+    // "It has to be accounted for each month"). Built from the SAME inputs as the posted
+    // adjustment, so it ties to the cent:
+    //   invoices  — per invoice: lines recognized this month (+ its sales tax in its billing
+    //               month) − cash received against it this month (Stripe, Denver time)
+    //   customers — revenue recognized with no invoice behind it, less cash received with no
+    //               invoice behind it: carried-forward subscriptions, payments made outside the
+    //               invoice (catch-ups), charge-basis customers, unmapped charges
+    //   retyped   — direct charges moved to 4300 Services by override
+    const taxKeepOf = (i) => (isKnownBadDebt(i) && inNoRec(m) ? (i.sub > 0 ? Math.min(1, (i.paid || 0) / i.sub) : 0) : 1);
+    const newArRows = [], priorArRows = [], otherRows = [];
+    const invIds = new Set([...cashByInv.keys()]);
+    for (const [id, bi] of billedByInv) if (bi[m]) invIds.add(id);
+    for (const [id, meta] of invMeta) if (monthOf(meta.inv.d) === m && (meta.inv.tax || 0) > 0 && RECOGNIZED_STATUS.has(meta.inv.status)) invIds.add(id);
+    for (const id of invIds) {
+      const meta = invMeta.get(id); if (!meta) continue;
+      const i = meta.inv;
+      const billedEx = r2(billedByInv.get(id)?.[m] || 0);
+      const billedTax = RECOGNIZED_STATUS.has(i.status) && monthOf(i.d) === m ? r2((i.tax || 0) * taxKeepOf(i)) : 0;
+      const cash = r2(cashByInv.get(id) || 0);
+      const delta = r2(billedEx + billedTax - cash);
+      if (Math.abs(delta) < 0.005) continue;
+      const lineTotal = (i.lines || []).reduce((s2, l) => s2 + (l.a || 0), 0);
+      const exShare = lineTotal + (i.tax || 0) > 0 ? lineTotal / (lineTotal + (i.tax || 0)) : 1;
+      const cashEx = r2(cash * exShare), cashTax = r2(cash - cashEx);
+      const base = { allmoxy_customer_id: meta.aid, name: meta.name, invoice_id: id, invoice_date: i.d, status: i.status, paid_at: i.paid_at || null };
+      if (meta.aid != null && ANNUAL.has(meta.aid)) {
+        otherRows.push({ ...base, category: 'annual_prepayment', label: 'Annual prepayment received (booked on 4100 separately)', amount: delta });
+      } else if (billedEx + billedTax > 0 && cash < billedEx + billedTax - 0.005 && monthOf(i.d) <= m && billedTax + billedEx > 0 && (monthOf(i.d) === m || !cash)) {
+        if (monthOf(i.d) === m) {
+          newArRows.push({ ...base, amount: r2(billedEx - cashEx), tax: r2(billedTax - cashTax), resolution: cash > 0 ? 'partly paid' : i.paid_at ? `paid ${i.paid_at}` : i.status === 'uncollectible' ? 'uncollectible' : 'still open' });
+        } else {
+          otherRows.push({ ...base, category: 'spread', label: 'Multi-month invoice: this month\'s share recognized, not yet collected', amount: delta });
+        }
+      } else if (billedEx + billedTax === 0 && cash > 0) {
+        priorArRows.push({ ...base, amount: cashEx, tax: cashTax });
+      } else {
+        otherRows.push({ ...base, category: delta < 0 ? 'paid_ahead' : 'partial',
+          label: delta < 0 ? 'Paid more than was recognized this month (multi-month invoice or early payment)' : 'Recognized this month, partly paid', amount: delta });
       }
     }
+    // Non-invoice items, per customer.
+    const nonInv = new Map();
+    const addNI = (k, v, kind) => { if (!v) return; const o = nonInv.get(k) || { carry: 0, direct: 0, chg: 0, cash: 0 }; o[kind] += v; nonInv.set(k, o); };
+    for (const aid of allAids) {
+      if (ANNUAL.has(aid)) continue;
+      const rr = rowFor(aid, m);
+      if (rr.basis === 'invoice') {
+        const carry = rr.unbilled_carry || 0;
+        const direct = r2(rr.recognized - g(rec, aid, m) - carry + (rr.bad_debt_not_recognized || 0) - g(directAddOnNonSubByAid, aid, m));
+        addNI(aid, carry, 'carry'); addNI(aid, direct, 'direct');
+      } else if (rr.basis === 'charge') addNI(aid, r2(rr.recognized - (chargeBasisCorr.get(aid) || 0)), 'chg');
+    }
+    addNI('unmapped', direct, 'direct');
+    for (const a of directAdjustments) if (a.month === m && (a.action === 'retyped_to_services' || a.action === 'services_by_description')) addNI(a.allmoxy_customer_id ?? 'unmapped', a.amount, 'cash');                      // unmapped direct subscription charges added to R above
+    for (const [k, v] of directSubCashByAid) addNI(k, -v, 'cash');
+    for (const [k, o] of nonInv) {
+      const net = r2(o.carry + o.direct + o.chg + o.cash);
+      if (Math.abs(net) < 0.005) continue;
+      const aid = k === 'unmapped' ? null : k;
+      const name = aid == null ? 'Charges with no customer record' : nameOf(aid);
+      if (o.carry && Math.abs(net - o.carry) < 0.005) otherRows.push({ allmoxy_customer_id: aid, name, category: 'carry', label: 'Subscription recognized with no invoice issued this month (carried forward)', amount: net });
+      else if (o.chg) otherRows.push({ allmoxy_customer_id: aid, name, category: 'charge_basis', label: 'Charge-basis customer: recognized (charges ledger) vs. collected this month', amount: net });
+      else if (net < 0) otherRows.push({ allmoxy_customer_id: aid, name, category: 'outside_invoice', label: 'Paid outside the invoice (manual / catch-up charge) — clears earlier AR', amount: net });
+      else otherRows.push({ allmoxy_customer_id: aid, name, category: 'outside_invoice', label: 'Recognized from a direct charge not yet collected', amount: net });
+    }
+    // Charges retyped to services by override: their cash was counted as subscription above and is
+    // taken back out here, against the same customer, so it nets to zero rather than showing twice.
     newArRows.sort((a, b) => (b.amount + b.tax) - (a.amount + a.tax)); priorArRows.sort((a, b) => (b.amount + b.tax) - (a.amount + a.tax));
-    const newArExTax = r2(newArRows.reduce((s, r) => s + r.amount, 0)), newArTax = r2(newArRows.reduce((s, r) => s + r.tax, 0));
-    const priorArCollectedInclTax = r2(priorArRows.reduce((s, r) => s + r.amount + r.tax, 0));
-    const ar_detail = { new_ar_rows: newArRows, prior_ar_rows: priorArRows, new_ar_ex_tax: newArExTax, new_ar_tax: newArTax, prior_ar_collected: priorArCollectedInclTax, residual: r2(adjTotal - (newArExTax + newArTax - priorArCollectedInclTax)), total: adjTotal, by_account: { subscription: adj, ...adjNS } };
+    otherRows.sort((a, b) => Math.abs(b.amount) - Math.abs(a.amount));
+    const newArExTax = r2(newArRows.reduce((s2, r) => s2 + r.amount, 0)), newArTax = r2(newArRows.reduce((s2, r) => s2 + r.tax, 0));
+    const priorArCollectedInclTax = r2(priorArRows.reduce((s2, r) => s2 + r.amount + r.tax, 0));
+    const otherTotal = r2(otherRows.reduce((s2, r) => s2 + r.amount, 0));
+    const ar_detail = { new_ar_rows: newArRows, prior_ar_rows: priorArRows, other_rows: otherRows, other_total: otherTotal,
+      new_ar_ex_tax: newArExTax, new_ar_tax: newArTax, prior_ar_collected: priorArCollectedInclTax,
+      residual: r2(adjTotal - (newArExTax + newArTax - priorArCollectedInclTax + otherTotal)), total: adjTotal, by_account: { subscription: adj, ...adjNS } };
 
     // Safety net: if Stripe introduces a balance-transaction category we don't map, the
     // entry would silently come up short (a $417 chargeback + $15 fee did exactly that).
@@ -880,7 +969,7 @@ if (BT?.months) {
         subscription_gross: subGross, services_gross: svcGross, connect_gross: T.connect_gross,
         subscription_refunds: T.subscription_refunds, services_refunds: T.services_refunds, connect_refunds: T.connect_refunds,
         charge_fees: T.charge_fees, other_fees: T.other_fees, untagged_gross: T.untagged_gross,
-        recognized_ex_tax: R, recognized_invoice_basis: by_month[m]?.recognized || 0, direct_subscription_charges: direct, direct_rows: directRows,
+        recognized_ex_tax: R, charge_basis_correction: chargeBasisCorrTotal, charge_basis_corrections: Object.fromEntries([...chargeBasisCorr].map(([k, v]) => [nameOf(k), v])), recognized_invoice_basis: by_month[m]?.recognized || 0, direct_subscription_charges: direct, direct_rows: directRows,
         tax_by_state_invoice: taxInv, tax_by_state_cash: taxCash, tax_basis_used: QB.sales_tax_basis, tax_total_used: taxTotal,
         accrual_adjustment: adj, accrual_adjustment_total: adjTotal, accrual_adjustment_by_account: { subscription: adj, ...adjNS }, annual_deferred_memo: by_month[m]?.annual_deferred || 0, balance_txn_rows: T.row_count,
       },
