@@ -53,6 +53,7 @@ const ServicesDS = lazy(() => import('./pages/ServicesDS'));
 const StripeConnectRevenueDS = lazy(() => import('./pages/StripeConnectRevenueDS'));
 const CollectionsDS = lazy(() => import('./pages/CollectionsDS'));
 const RevenueRecognitionDS = lazy(() => import('./pages/RevenueRecognitionDS'));
+const ArAdjustmentsDS = lazy(() => import('./pages/ArAdjustmentsDS'));
 const ServiceTickets = lazy(() => import('./pages/ServiceTickets'));
 const ChurnTimeline = lazy(() => import('./pages/ChurnTimeline'));
 const Activation = lazy(() => import('./pages/Activation'));
@@ -179,6 +180,7 @@ export default function App() {
       <Route path="/stripe-connect-revenue" element={<L><StripeConnectRevenueDS /></L>} />
       <Route path="/collections" element={<L><CollectionsDS /></L>} />
       <Route path="/revenue-recognition" element={<L><RevenueRecognitionDS /></L>} />
+      <Route path="/ar-adjustments" element={<L><ArAdjustmentsDS /></L>} />
       <Route path="/" element={<AppShell />}>
         <Route index element={<Navigate to="/overview" replace />} />
         <Route path="overview-classic" element={<NorthStar />} />
