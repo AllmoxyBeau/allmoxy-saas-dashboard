@@ -587,6 +587,7 @@ const recNonSubInR = {};  // month -> custom-domain / token lines that sit insid
 const subOutsideR = {};   // month -> subscription-type lines R does not carry (one-time lines)
 const bump = (o, m, v) => { o[m] = r2((o[m] || 0) + v); };
 const billedByInv = new Map();   // invoice id -> { month: lines recognized that month, ex tax } (the AR bridge's billed side)
+const billedByInvType = new Map(); // invoice id -> { month: { type: { lines, tax } } } — per-account AR detail
 const invMeta = new Map();       // invoice id -> { inv, aid, name }
 for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
   const prof = custToProf.get(cid); const aid = prof ? prof.allmoxy_customer_id : null;
@@ -615,6 +616,10 @@ for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
         if (inv.id && !(t === 'subscription' && aid != null && ANNUAL.has(aid))) {
           if (!billedByInv.has(inv.id)) billedByInv.set(inv.id, {});
           const bi = billedByInv.get(inv.id); bi[m] = (bi[m] || 0) + v;
+          if (!billedByInvType.has(inv.id)) billedByInvType.set(inv.id, {});
+          const bt = billedByInvType.get(inv.id); if (!bt[m]) bt[m] = {};
+          const o = bt[m][t] || (bt[m][t] = { lines: 0, tax: 0 });
+          o.lines += v; if (t !== 'subscription') o.tax += taxPart;
         }
         // Annual prepayers (B&B Door, Mid Michigan) are booked on 4100 in a separate entry — left as they were.
         if (t === 'subscription') { if (!inR && !(aid != null && ANNUAL.has(aid))) bump(subOutsideR, m, v); continue; }
@@ -811,7 +816,7 @@ if (BT?.months) {
     const adjTotal = r2(adj + NONSUB.reduce((s2, t) => s2 + adjNS[t], 0));
     if (reclassified > 0.01) reclassLog.push({ month: m, amount: reclassified });
     const L = [];
-    const line = (acct, debit, credit, description, group) => L.push({ account: `${acct.number} ${acct.name}`, debit: debit ? r2(debit) : null, credit: credit ? r2(credit) : null, description, group });
+    const line = (acct, debit, credit, description, group, arAccount) => L.push({ account: `${acct.number} ${acct.name}`, debit: debit ? r2(debit) : null, credit: credit ? r2(credit) : null, description, group, ...(arAccount ? { ar_account: arAccount } : {}) });
     const restate = QB.accrual_presentation === 'restate';
     // — cash lines (Beau's entry) —
     line(A.stripe_fee_income, T.payouts, 0, 'Stripe payouts to bank (gross deposits)', 'cash');
@@ -854,22 +859,22 @@ if (BT?.months) {
       if (adj > 0) line(A.accounts_receivable, adj, 0, 'Accrual: subscription billed not yet collected (Δ AR incl. tax on unpaid)', 'accrual');
       else if (adj < 0) line(A.accounts_receivable, 0, -adj, 'Accrual: prior-period AR collected this month', 'accrual');
     } else if (adj > 0) {
-      line(A.accounts_receivable, adj, 0, 'Accrual: subscription billed not yet collected (Δ AR incl. tax on unpaid)', 'accrual');
-      line(A.subscription, 0, adj, 'Accrual: recognize billed subscription revenue', 'accrual');
+      line(A.accounts_receivable, adj, 0, 'Accrual: subscription billed not yet collected (Δ AR incl. tax on unpaid)', 'accrual', 'subscription');
+      line(A.subscription, 0, adj, 'Accrual: recognize billed subscription revenue', 'accrual', 'subscription');
     } else if (adj < 0) {
-      line(A.subscription, -adj, 0, 'Accrual: reverse cash-basis revenue for prior-period AR collected', 'accrual');
-      line(A.accounts_receivable, 0, -adj, 'Accrual: relieve AR collected this month', 'accrual');
+      line(A.subscription, -adj, 0, 'Accrual: reverse cash-basis revenue for prior-period AR collected', 'accrual', 'subscription');
+      line(A.accounts_receivable, 0, -adj, 'Accrual: relieve subscription AR collected this month', 'accrual', 'subscription');
     }
     const NS_LABEL = { services: 'services', customdomain: 'custom domain', operatortokens: 'operator token' };
     for (const t of NONSUB) {
       const v = adjNS[t]; const acct = A[t];
       if (!v || !acct) continue;
       if (v > 0) {
-        line(A.accounts_receivable, v, 0, `Accrual: ${NS_LABEL[t]} billed not yet collected (Δ AR)`, 'accrual');
-        line(acct, 0, v, `Accrual: recognize billed ${NS_LABEL[t]} revenue`, 'accrual');
+        line(A.accounts_receivable, v, 0, `Accrual: ${NS_LABEL[t]} billed not yet collected (Δ AR)`, 'accrual', t);
+        line(acct, 0, v, `Accrual: recognize billed ${NS_LABEL[t]} revenue`, 'accrual', t);
       } else {
-        line(acct, -v, 0, `Accrual: reverse cash-basis ${NS_LABEL[t]} revenue for prior-period AR collected`, 'accrual');
-        line(A.accounts_receivable, 0, -v, 'Accrual: relieve AR collected this month', 'accrual');
+        line(acct, -v, 0, `Accrual: reverse cash-basis ${NS_LABEL[t]} revenue for prior-period AR collected`, 'accrual', t);
+        line(A.accounts_receivable, 0, -v, `Accrual: relieve ${NS_LABEL[t]} AR collected this month`, 'accrual', t);
       }
     }
     // ── AR BRIDGE: every dollar of the posted 1200 movement, itemized (Beau, 2026-11-09:
@@ -897,7 +902,25 @@ if (BT?.months) {
       const lineTotal = (i.lines || []).reduce((s2, l) => s2 + (l.a || 0), 0);
       const exShare = lineTotal + (i.tax || 0) > 0 ? lineTotal / (lineTotal + (i.tax || 0)) : 1;
       const cashEx = r2(cash * exShare), cashTax = r2(cash - cashEx);
-      const base = { allmoxy_customer_id: meta.aid, name: meta.name, invoice_id: id, invoice_date: i.d, status: i.status, paid_at: i.paid_at || null };
+      // Split this invoice's movement by account, the same way the posted lines are built:
+      // each account gets its lines (+ its tax share) less its share of the cash; sales tax
+      // billed on the invoice sits on 4000 net of the non-subscription tax shares.
+      const by_account = {};
+      {
+        const mixI = invoiceMix.get(id) || {};
+        const taxFrac = lineTotal + (i.tax || 0) > 0 ? (i.tax || 0) / (lineTotal + (i.tax || 0)) : 0;
+        const bt = billedByInvType.get(id)?.[m] || {};
+        let nsTax = 0;
+        for (const t of NONSUB) nsTax += bt[t]?.tax || 0;
+        for (const t of ['subscription', ...NONSUB]) {
+          const cashT = cash * (mixI[t] || 0), cashTaxT = cashT * taxFrac;
+          const linesT = bt[t]?.lines || 0;
+          const taxT = t === 'subscription' ? billedTax - nsTax : (bt[t]?.tax || 0);
+          const amt = r2(linesT - (cashT - cashTaxT)), tx = r2(taxT - cashTaxT);
+          if (Math.abs(amt) >= 0.005 || Math.abs(tx) >= 0.005) by_account[t] = { amount: amt, tax: tx };
+        }
+      }
+      const base = { allmoxy_customer_id: meta.aid, name: meta.name, invoice_id: id, invoice_date: i.d, status: i.status, paid_at: i.paid_at || null, by_account };
       if (meta.aid != null && ANNUAL.has(meta.aid)) {
         otherRows.push({ ...base, category: 'annual_prepayment', label: 'Annual prepayment received (booked on 4100 separately)', amount: delta });
       } else if (billedEx + billedTax > 0 && cash < billedEx + billedTax - 0.005 && monthOf(i.d) <= m && billedTax + billedEx > 0 && (monthOf(i.d) === m || !cash)) {

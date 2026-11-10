@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-10T02:28:43.553Z",
+  "fetched_at": "2026-11-10T02:37:14.733Z",
   "comment": "5-signal health scoring model (per allmoxy-monthly-dashboard skill) applied to every customer in the canonical customer base (active_today). Signal 1 = order volume YoY (orders_verified.json). Signals 2-5 = launch, recency, risk keywords, tenure (at_risk_hubspot_signals.json). Tier thresholds adapt to which data is loaded. Matrix is 3×3 (tier × MRR band). Attack list sorted by ARR at risk descending.",
   "scoring_mode": "full",
   "totals": {

@@ -24,11 +24,13 @@ type MonthRow = {
 };
 type ArRow = { allmoxy_customer_id: number | null; name: string; invoice_id: string | null; invoice_date: string; service_month: string; amount: number; status: 'open' | 'uncollectible'; age_days: number; collectible?: boolean };
 type DetailRow = { allmoxy_customer_id: number; name: string; month: string; basis: 'invoice' | 'charge'; recognized: number; collected_in_period: number; collected_after_period: number; still_open: number; unbilled_carry?: number; outstanding_at_period_end: number };
-type JeLine = { account: string; debit: number | null; credit: number | null; description: string; group: 'cash' | 'tax' | 'accrual' | 'writeoff' };
+type ArAcct = 'subscription' | 'services' | 'customdomain' | 'operatortokens';
+type JeLine = { account: string; debit: number | null; credit: number | null; description: string; group: 'cash' | 'tax' | 'accrual' | 'writeoff'; ar_account?: ArAcct };
 type BalanceReport = { period_tz: string; starting_balance: number | null; charges_gross: number; refunds: number; connect_earnings: number; connect_refunds: number; stripe_fees: number; other_activity: number; net_activity: number; payouts: number; ending_balance: number | null; anchored: boolean };
-type ArDetailRow = { allmoxy_customer_id: number | null; name: string; invoice_id: string | null; invoice_date: string; amount: number; tax: number; status: string; paid_at: string | null; resolution?: string };
-type ArOtherRow = { allmoxy_customer_id: number | null; name: string; category: string; label: string; amount: number; invoice_id?: string | null };
-type ArDetail = { new_ar_rows: ArDetailRow[]; prior_ar_rows: ArDetailRow[]; other_rows?: ArOtherRow[]; other_total?: number; new_ar_ex_tax: number; new_ar_tax: number; prior_ar_collected: number; residual: number; total: number };
+type AcctPart = { amount: number; tax: number };
+type ArDetailRow = { allmoxy_customer_id: number | null; name: string; invoice_id: string | null; invoice_date: string; amount: number; tax: number; status: string; paid_at: string | null; resolution?: string; by_account?: Partial<Record<ArAcct, AcctPart>> };
+type ArOtherRow = { allmoxy_customer_id: number | null; name: string; category: string; label: string; amount: number; tax?: number; invoice_id?: string | null; by_account?: Partial<Record<ArAcct, AcctPart>> };
+type ArDetail = { new_ar_rows: ArDetailRow[]; prior_ar_rows: ArDetailRow[]; other_rows?: ArOtherRow[]; other_total?: number; new_ar_ex_tax: number; new_ar_tax: number; prior_ar_collected: number; residual: number; total: number; by_account?: Partial<Record<ArAcct, number>> };
 type JournalEntry = {
   lines: JeLine[]; debits: number; credits: number; balanced: boolean; memo: string[];
   balance_report?: BalanceReport; ar_detail?: ArDetail;
@@ -71,10 +73,11 @@ const GROUP_LABEL: Record<JeLine['group'], [string, 'neutral' | 'warning' | 'err
   cash: ['Stripe activity', 'neutral', 'Your existing entry, ties to the Stripe API to the penny'],
   tax: ['Sales tax', 'warning', 'Backed out of 4000 into the payable accounts, by state'],
   writeoff: ['Bad debt', 'error', 'Receivables marked uncollectible this month'],
-  accrual: ['Accrual adjustment', 'info', 'Invoice basis: 1200 AR against 4000'],
+  accrual: ['Accrual adjustment', 'info', 'Invoice basis: 1200 AR against each revenue account (click an account for its invoices)'],
 };
 
-type Sheet = { kind: 'col'; key: ColKey | 'all' } | { kind: 'ar' } | { kind: 'arAging' };
+type Sheet = { kind: 'col'; key: ColKey | 'all' } | { kind: 'ar'; account?: ArAcct } | { kind: 'arAging' };
+const AR_ACCT_LABEL: Record<ArAcct, string> = { subscription: '4000 Monthly Subscription', services: '4300 Services', customdomain: '4420 Custom Domain', operatortokens: '4410 Operator Tokens' };
 
 export default function RevenueRecognitionDS() {
   const navigate = useNavigate();
@@ -149,12 +152,42 @@ export default function RevenueRecognitionDS() {
     arRows.map((r) => [r.name, r.invoice_date, r.service_month, r.amount, r.status, r.age_days, r.collectible === false ? 'no' : 'yes']));
 
   // ---- side sheet content
-  const sheetTitle = !sheet ? '' : sheet.kind === 'ar' ? `Accounts receivable line · ${ml}` : sheet.kind === 'arAging' ? 'AR aging · every invoice' : sheet.key === 'all' ? `Every subscription · ${ml}` : `${COLS.find((c) => c.k === sheet.key)!.label} · ${ml}`;
+  const sheetTitle = !sheet ? '' : sheet.kind === 'ar' ? `Accounts receivable${sheet.account ? ` · ${AR_ACCT_LABEL[sheet.account]}` : ''} · ${ml}` : sheet.kind === 'arAging' ? 'AR aging · every invoice' : sheet.key === 'all' ? `Every subscription · ${ml}` : `${COLS.find((c) => c.k === sheet.key)!.label} · ${ml}`;
   const sheetBody = (): ReactNode => {
     if (!sheet) return null;
     if (sheet.kind === 'ar') {
-      const d = je?.ar_detail;
-      if (!d) return <p className="am-card__text">No receivable detail for this month.</p>;
+      const full = je?.ar_detail;
+      if (!full) return <p className="am-card__text">No receivable detail for this month.</p>;
+      // One account clicked: keep only that account's share of each row, so the 4300 line shows
+      // services items and the 4000 line shows subscription items. Rows without a split (the
+      // non-invoice items) are all subscription.
+      const acct = sheet.account;
+      const pick = <T extends { amount: number; tax?: number; by_account?: Partial<Record<ArAcct, AcctPart>> }>(r: T): T | null => {
+        if (!acct) return r;
+        if (!r.by_account) return acct === 'subscription' ? r : null;
+        const part = r.by_account[acct];
+        return part ? { ...r, amount: part.amount, tax: part.tax } : null;
+      };
+      const keep = <T,>(rows: Array<T | null>) => rows.filter((r): r is T => r != null);
+      const newRows = keep(full.new_ar_rows.map(pick));
+      const priorRows = keep(full.prior_ar_rows.map((r) => {
+        // prior rows store collected amounts as positives; their split is the (negative) movement
+        if (!acct) return r;
+        if (!r.by_account) return acct === 'subscription' ? r : null;
+        const part = r.by_account[acct];
+        return part ? { ...r, amount: -part.amount, tax: -part.tax } : null;
+      }));
+      const otherRows = keep((full.other_rows ?? []).map((r) => {
+        const x = pick(r); return x ? { ...x, amount: r.by_account && acct ? x.amount + (x.tax ?? 0) : x.amount } : null;
+      }));
+      const d = {
+        ...full,
+        new_ar_rows: newRows, prior_ar_rows: priorRows, other_rows: otherRows,
+        new_ar_ex_tax: sum(newRows, (r) => r.amount), new_ar_tax: sum(newRows, (r) => r.tax),
+        prior_ar_collected: sum(priorRows, (r) => r.amount + r.tax), other_total: sum(otherRows, (r) => r.amount),
+        total: acct ? (full.by_account?.[acct] ?? 0) : full.total,
+      };
+      d.residual = Math.round((d.total - (d.new_ar_ex_tax + d.new_ar_tax - d.prior_ar_collected + d.other_total)) * 100) / 100;
       const bridge: Array<[string, number]> = [
         [`New AR: billed, unpaid at month-end (${d.new_ar_rows.length} invoice${d.new_ar_rows.length === 1 ? '' : 's'})`, d.new_ar_ex_tax],
         ['New AR: sales tax on those invoices', d.new_ar_tax],
@@ -178,7 +211,8 @@ export default function RevenueRecognitionDS() {
         );
       };
       return <>
-        <DataTable label="AR bridge" cols={[['Part', false], ['Amount', true]]} rows={bridge.map(([l, v]) => [l, money(v)])} foot={['Δ Accounts Receivable (posted)', money(d.total)]} />
+        <DataTable label="AR bridge" cols={[['Part', false], ['Amount', true]]} rows={bridge.map(([l, v]) => [l, money(v)])} foot={[acct ? `Δ Accounts Receivable · ${AR_ACCT_LABEL[acct]} (posted)` : 'Δ Accounts Receivable (posted)', money(d.total)]} />
+        {acct && <p className="am-card__text">Only the {AR_ACCT_LABEL[acct]} share of each invoice is shown. <button className="am-btn am-btn--text" onClick={() => setSheet({ kind: 'ar' })}>Show every account</button></p>}
         {invTable(`Billed in ${ml}, unpaid at month-end: new AR`, d.new_ar_rows, false)}
         {!!d.prior_ar_rows.length && invTable('Prior-month invoices collected this month: relieves AR', d.prior_ar_rows, true)}
         {!!d.other_rows?.length && <>
@@ -314,9 +348,9 @@ export default function RevenueRecognitionDS() {
               rows={je.lines.flatMap((l, i) => {
                 const head = i === 0 || je.lines[i - 1].group !== l.group;
                 const [word, tone, note] = GROUP_LABEL[l.group];
-                const isAr = l.group === 'accrual' && l.account.startsWith('1200');
+                const isAr = l.group === 'accrual' && (l.account.startsWith('1200') || !!l.ar_account);
                 const line: ReactNode[] = [String(i + 1),
-                  isAr && je.ar_detail ? <button key="ar" className="am-btn am-btn--text" onClick={() => setSheet({ kind: 'ar' })}>{l.account}<Icon name="open_in_new" /></button> : l.account,
+                  isAr && je.ar_detail ? <button key="ar" className="am-btn am-btn--text" onClick={() => setSheet({ kind: 'ar', account: l.ar_account })}>{l.account}<Icon name="open_in_new" /></button> : l.account,
                   l.debit != null ? usd2(l.debit) : '', l.credit != null ? usd2(l.credit) : '', l.description];
                 return head ? [['', tag(word, tone), '', '', note], line] : [line];
               })}
