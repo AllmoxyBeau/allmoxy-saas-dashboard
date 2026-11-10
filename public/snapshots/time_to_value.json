@@ -1,10 +1,10 @@
 {
-  "fetched_at": "2026-11-10T01:53:12.513Z",
+  "fetched_at": "2026-11-10T02:13:53.004Z",
   "comment": "Time to Value — for each customer in the canonical customer base (less HubSpot Cancelled / Pause Granted, listed in cohort_excluded), classifies whether they are getting product value via verified order data. Categories: gym_member (never launched, no orders), never_launched_some_orders (orders but no Live Date — hygiene), launched_dormant (Live Date but no current-year orders), declining (orders down >50% YoY), healthy (launched + running orders). \"Wasted to date\" = subscription $ paid without realized value. \"Annualized burn\" = current MRR × 12 if they never realize value going forward.",
   "as_of_year": 2026,
-  "cohort_size": 194,
-  "cohort_base_size": 198,
-  "cohort_base_mrr": 231104.61,
+  "cohort_size": 195,
+  "cohort_base_size": 199,
+  "cohort_base_mrr": 233104.61,
   "cohort_excluded": [
     {
       "allmoxy_customer_id": 111,
@@ -45,10 +45,10 @@
   ],
   "summary": {
     "total_wasted_to_date": 304252.08,
-    "total_annualized_burn_at_risk": 378358.8,
-    "at_risk_count": 60,
-    "at_risk_mrr": 31529.9,
-    "at_risk_no_data_count": 13,
+    "total_annualized_burn_at_risk": 402358.8,
+    "at_risk_count": 61,
+    "at_risk_mrr": 33529.9,
+    "at_risk_no_data_count": 14,
     "gym_member_count": 20,
     "launched_dormant_count": 22,
     "declining_count": 5,
@@ -119,10 +119,10 @@
     },
     "no_data": {
       "label": "No order data on file",
-      "count": 13,
-      "current_mrr_sum": 4048,
+      "count": 14,
+      "current_mrr_sum": 6048,
       "wasted_to_date_sum": 0,
-      "annualized_burn_sum": 48576
+      "annualized_burn_sum": 72576
     },
     "unknown": {
       "label": "Unknown",
@@ -2107,6 +2107,32 @@
       "wasted_to_date": 0,
       "current_burn_annualized": 24000,
       "has_order_data": true,
+      "is_bid_only": false
+    },
+    {
+      "allmoxy_customer_id": 2120,
+      "name": "Glacier Millworks",
+      "hubspot_company_id": "57940490836",
+      "owner_id": null,
+      "owner_name": "Jon",
+      "primary_segment": "Millwork",
+      "sub_segment": "Architectural Millwork",
+      "first_payment_date": null,
+      "months_paying": null,
+      "years_with_us": null,
+      "current_subscription_mrr": 2000,
+      "lifetime_subscription": 6620,
+      "is_launched": false,
+      "live_date": null,
+      "months_to_launch": null,
+      "lifetime_orders": 0,
+      "monthly_avg_current_year": 0,
+      "monthly_avg_prior_year": 0,
+      "category": "no_data",
+      "waste_label": "No verified order data on file — needs join review",
+      "wasted_to_date": 0,
+      "current_burn_annualized": 24000,
+      "has_order_data": false,
       "is_bid_only": false
     },
     {

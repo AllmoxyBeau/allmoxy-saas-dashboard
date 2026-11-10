@@ -1,6 +1,6 @@
 {
   "tab": "connect_volume",
-  "fetchedAt": "2026-11-10T01:54:51.348Z",
+  "fetchedAt": "2026-11-10T02:15:22.295Z",
   "stripe_fetchedAt": "2026-11-09T20:39:33.874Z",
   "window": {
     "since": "incremental"
@@ -21,9 +21,9 @@
   "attach": {
     "definition": "Base members (customer_base, active_today) with any Connect fee in the last 3 complete months ÷ base members.",
     "connected_accounts": 101,
-    "active_customers": 198,
+    "active_customers": 199,
     "active_customers_on_connect": 66,
-    "attach_rate": 0.333,
+    "attach_rate": 0.332,
     "customers_with_mapped_account": 57
   },
   "scenarios": [
@@ -840,12 +840,12 @@
     "unknown": 1
   },
   "penetration": {
-    "active_customers": 198,
+    "active_customers": 199,
     "processing_now": 66,
-    "attach_rate": 0.333,
+    "attach_rate": 0.332,
     "lapsed": 16,
-    "never": 116,
-    "not_processing": 132,
+    "never": 117,
+    "not_processing": 133,
     "attach_target_order_volume": 177837655,
     "attach_target_fee_potential": 523220,
     "attach_capture_assumption": 0.588,
@@ -3962,6 +3962,22 @@
       "status": "active",
       "primary_segment": "Distribution / Wholesale",
       "subscription_mrr": 200,
+      "is_launched": null,
+      "connect_status": "never",
+      "ever_processed": false,
+      "annual_order_volume": 0,
+      "connect_gmv_annual": 0,
+      "connect_attach_rate": null,
+      "annual_connect_fee": 0,
+      "est_annual_connect_fee": 0,
+      "lapsed_note": null
+    },
+    {
+      "allmoxy_customer_id": 2120,
+      "name": "Glacier Millworks",
+      "status": "active",
+      "primary_segment": "Millwork",
+      "subscription_mrr": 2000,
       "is_launched": null,
       "connect_status": "never",
       "ever_processed": false,

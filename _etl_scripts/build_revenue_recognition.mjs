@@ -224,10 +224,28 @@ const directPending = new Map();      // aid -> { month: $ }  additive ONLY if n
 const directServices = {};            // month -> $           retyped subscription→services by override (JE 4300)
 const directUnmapped = {};            // month -> $           no profile; JE only
 const directAdjustments = [];         // audit trail for the snapshot
+const directAddOnNonSub = {};         // month -> $  direct token / custom-domain add-ons inside recognized (cash → 4410/4420)
+// One-off charges with no invoice and no tag, split by Beau in charge_revenue_overrides.json.
+// Their SUBSCRIPTION share is that month's software revenue (Glacier Millworks paid $4,600 on
+// 2026-10-02 = $2,000 Core Software + $2,600 services, before its subscription invoices began).
+const OVERRIDE_SUB_SHARE = (() => {
+  try {
+    const o = JSON.parse(fs.readFileSync(path.join(ROOT, '_etl_scripts/charge_revenue_overrides.json'), 'utf8')).overrides || {};
+    const out = {};
+    for (const [k, v] of Object.entries(o)) out[k] = (v.lines || []).filter((l) => l.revenue_type === 'subscription').reduce((s, l) => s + (l.amount || 0), 0);
+    return out;
+  } catch { return {}; }
+})();
 if (BT?.months) {
   for (const [m, bm] of Object.entries(BT.months)) {
-    for (const r of (bm.rows || [])) {
-      if (r.cat !== 'charge' || r.tt !== 'subscription' || r.inv) continue; // invoice-backed handled by the invoice pass
+    for (const r0 of (bm.rows || [])) {
+      if (r0.cat !== 'charge' || r0.inv) continue; // invoice-backed handled by the invoice pass
+      let r = r0;
+      if (r0.tt !== 'subscription') {
+        const subShare = r0.tt ? 0 : (OVERRIDE_SUB_SHARE[r0.charge] ?? OVERRIDE_SUB_SHARE[r0.id] ?? 0);
+        if (!(subShare > 0)) continue;
+        r = { ...r0, amount: r2(subShare), forceRecurring: true };
+      }
       const prof = r.cust ? custToProf.get(r.cust) : null;
       let aid = prof?.allmoxy_customer_id;
       // Match an override on month + amount, scoped to either the customer it should
@@ -252,7 +270,8 @@ if (BT?.months) {
       if (aid == null) { directUnmapped[m] = r2((directUnmapped[m] || 0) + r.amount); continue; }
       if (ANNUAL.has(aid)) continue;                 // annual prepay → 4100, booked separately
       if (!invCustomers.has(aid)) continue;          // charge-basis customer: already in monthly_history
-      const bucket = RECURRING_DIRECT.test(String(r.desc || '')) ? directRecurring : directPending;
+      const bucket = (r.forceRecurring || RECURRING_DIRECT.test(String(r.desc || ''))) ? directRecurring : directPending;
+      if (bucket === directRecurring && /ai tokens|custom\s*dom/i.test(String(r.desc || ''))) directAddOnNonSub[m] = r2((directAddOnNonSub[m] || 0) + r.amount);
       if (!bucket.has(aid)) bucket.set(aid, {});
       const o = bucket.get(aid); o[m] = r2((o[m] || 0) + r.amount);
     }
@@ -547,6 +566,55 @@ if (unmappedProducts.size) {
   for (const [pid, amt] of unmappedProducts) console.error(`    ${pid}  $${amt}`);
 }
 
+// ── ALL REVENUE LINES REACH AR (Beau, 2026-11-09: "All revenue items need to reach the AR
+// … if unpaid") ──
+// An invoice is a bill for its whole amount, so every unpaid line is a receivable, not just
+// the subscription lines. The accrual adjustment is therefore worked out PER ACCOUNT —
+// billed this month minus collected this month — for 4000, 4300 Services, 4420 Custom Domain
+// and 4410 Operator Tokens, all through one 1200 AR. Sales tax stays on 4000/4050 as before.
+// The tax share of non-subscription lines travels with them (cash credits are allocated
+// gross of tax), so it is taken off the 4000 side to keep the entry whole.
+const NONSUB = ['services', 'customdomain', 'operatortokens'];
+const lineType = (l) => (l.prod && PRODUCTS[l.prod]?.revenue_type) || (l.rec ? 'subscription' : 'services');
+const billedNS = {};      // month -> { type: billed incl. tax share }
+const taxNS = {};         // month -> tax share of non-subscription lines billed
+const recNonSubInR = {};  // month -> custom-domain / token lines that sit inside recognized (R)
+const subOutsideR = {};   // month -> subscription-type lines R does not carry (one-time lines)
+const bump = (o, m, v) => { o[m] = r2((o[m] || 0) + v); };
+for (const [cid, cust] of Object.entries(INV.by_customer || {})) {
+  const prof = custToProf.get(cid); const aid = prof ? prof.allmoxy_customer_id : null;
+  for (const inv of (cust.invoices || [])) {
+    if (!RECOGNIZED_STATUS.has(inv.status)) continue;
+    const lines = inv.lines || [];
+    const lineTotal = lines.reduce((s, l) => s + (l.a || 0), 0);
+    if (!(lineTotal > 0)) continue;
+    const knownBad = isKnownBadDebt(inv);
+    const paidShare = inv.due > 0 ? Math.min(1, (inv.paid || 0) / inv.due) : 1;
+    for (const l of lines) {
+      if (!l.a) continue;
+      const t = lineType(l);
+      const inR = l.rec && l.ps && l.pe && l.ps !== l.pe && !(l.prod && SERVICE_PRODUCTS.has(l.prod));
+      let spread;
+      if (l.ps && l.pe && l.ps !== l.pe) {
+        const months = Math.max(1, Math.round(((new Date(l.pe) - new Date(l.ps)) / 86400000) / 30.44));
+        spread = months <= 1 ? [[monthOf(l.ps), l.a]] : Array.from({ length: months }, (_, k) => [addMonths(monthOf(l.ps), k), l.a / months]);
+      } else spread = [[monthOf(inv.d), l.a]];
+      for (const [m, v0] of spread) {
+        const keep = knownBad && inNoRec(m) ? paidShare : 1;   // known bad debt in the audit window: unpaid part never recognized
+        const v = v0 * keep;
+        if (!v) continue;
+        const taxPart = (inv.tax || 0) * (v0 / lineTotal) * keep;
+        // Annual prepayers (B&B Door, Mid Michigan) are booked on 4100 in a separate entry — left as they were.
+        if (t === 'subscription') { if (!inR && !(aid != null && ANNUAL.has(aid))) bump(subOutsideR, m, v); continue; }
+        if (inR) { if (aid != null && !ANNUAL.has(aid)) bump(recNonSubInR, m, v); }
+        if (!billedNS[m]) billedNS[m] = {};
+        billedNS[m][t] = r2((billedNS[m][t] || 0) + v + taxPart);
+        bump(taxNS, m, taxPart);
+      }
+    }
+  }
+}
+
 const journal_entries = {};
 const reclassLog = [];   // months where untagged charges were recovered by description
 if (BT?.months) {
@@ -617,14 +685,17 @@ if (BT?.months) {
     // accounts it always did.
     const splitOn = SPLIT_START && m >= SPLIT_START;
     const byType = Object.fromEntries(REV_TYPES.map((t) => [t, 0]));
+    const invCash = Object.fromEntries(REV_TYPES.map((t) => [t, 0]));   // cash against INVOICES, by type
     let unsplit = 0;
     if (splitOn) {
       for (const r of chargeRows) {
-        const mix = (r.inv ? invoiceMix.get(r.inv) : null) || chargeOverrideMix(r);
+        const invMix = r.inv ? invoiceMix.get(r.inv) : null;
+        const mix = invMix || chargeOverrideMix(r);
         if (mix) {
           for (const [t, share] of Object.entries(mix)) {
             if (byType[t] == null) byType[t] = 0;
             byType[t] += r.amount * share;
+            if (invMix) invCash[t] = (invCash[t] || 0) + r.amount * share;
           }
         } else {
           // No invoice to read lines from. A standalone AI-token upgrade is apitokens;
@@ -692,7 +763,15 @@ if (BT?.months) {
     const taxUsed = QB.sales_tax_basis === 'cash' ? taxCash : taxInv;
     const taxTotal = r2(Object.values(taxUsed).reduce((s, v) => s + v, 0));
     const R = r2((by_month[m]?.recognized || 0) + direct);
-    const adj = r2(R + taxTotal - subGross);
+    // Per-account accrual. Non-subscription accounts: billed (incl. tax share) − collected on
+    // invoices. 4000: subscription revenue only — R carries custom-domain and token lines whose
+    // cash credits 4420/4410, so they come out here and accrue on their own accounts.
+    const adjNS = {};
+    for (const t of NONSUB) adjNS[t] = splitOn ? r2((billedNS[m]?.[t] || 0) - (invCash[t] || 0)) : 0;
+    const adj = splitOn
+      ? r2(R - (recNonSubInR[m] || 0) - (directAddOnNonSub[m] || 0) + (subOutsideR[m] || 0) + taxTotal - (taxNS[m] || 0) - subGross)
+      : r2(R + taxTotal - subGross);
+    const adjTotal = r2(adj + NONSUB.reduce((s2, t) => s2 + adjNS[t], 0));
     if (reclassified > 0.01) reclassLog.push({ month: m, amount: reclassified });
     const L = [];
     const line = (acct, debit, credit, description, group) => L.push({ account: `${acct.number} ${acct.name}`, debit: debit ? r2(debit) : null, credit: credit ? r2(credit) : null, description, group });
@@ -744,6 +823,18 @@ if (BT?.months) {
       line(A.subscription, -adj, 0, 'Accrual: reverse cash-basis revenue for prior-period AR collected', 'accrual');
       line(A.accounts_receivable, 0, -adj, 'Accrual: relieve AR collected this month', 'accrual');
     }
+    const NS_LABEL = { services: 'services', customdomain: 'custom domain', operatortokens: 'operator token' };
+    for (const t of NONSUB) {
+      const v = adjNS[t]; const acct = A[t];
+      if (!v || !acct) continue;
+      if (v > 0) {
+        line(A.accounts_receivable, v, 0, `Accrual: ${NS_LABEL[t]} billed not yet collected (Δ AR)`, 'accrual');
+        line(acct, 0, v, `Accrual: recognize billed ${NS_LABEL[t]} revenue`, 'accrual');
+      } else {
+        line(acct, -v, 0, `Accrual: reverse cash-basis ${NS_LABEL[t]} revenue for prior-period AR collected`, 'accrual');
+        line(A.accounts_receivable, 0, -v, 'Accrual: relieve AR collected this month', 'accrual');
+      }
+    }
     // ── AR detail: itemize Δ AR so the 1200 line is auditable ──
     // Δ AR = [invoices BILLED this month, unpaid at month-end (ex-tax + their tax)]
     //      − [invoices billed in PRIOR months, paid this month (incl. tax)]  + residual.
@@ -755,10 +846,11 @@ if (BT?.months) {
       if (aid != null && ANNUAL.has(aid)) continue;
       const name = aid != null ? nameOf(aid) : cid;
       for (const i of (cust.invoices || [])) {
-        if (!RECOGNIZED_STATUS.has(i.status) || !(i.sub > 0)) continue;
+        const exTax = r2((i.sub || 0) + (i.svc || 0));            // every line reaches AR, not just subscription
+        if (!RECOGNIZED_STATUS.has(i.status) || !(exTax > 0)) continue;
         const billedM = monthOf(i.d), paidM = i.paid_at ? monthOf(i.paid_at) : null;
         const paidByCutoff = paidM != null && paidM <= m;
-        const rowBase = { allmoxy_customer_id: aid, name, invoice_id: i.id || null, invoice_date: i.d, amount: r2(i.sub), tax: r2(i.tax || 0), status: i.status, paid_at: i.paid_at || null };
+        const rowBase = { allmoxy_customer_id: aid, name, invoice_id: i.id || null, invoice_date: i.d, amount: exTax, tax: r2(i.tax || 0), status: i.status, paid_at: i.paid_at || null };
         if (billedM === m && !paidByCutoff && !(isKnownBadDebt(i) && inNoRec(m))) newArRows.push({ ...rowBase, resolution: i.paid_at ? `paid ${i.paid_at}` : i.status === 'uncollectible' ? 'uncollectible' : 'still open' });
         if (billedM < m && paidM === m) priorArRows.push(rowBase);
       }
@@ -766,7 +858,7 @@ if (BT?.months) {
     newArRows.sort((a, b) => (b.amount + b.tax) - (a.amount + a.tax)); priorArRows.sort((a, b) => (b.amount + b.tax) - (a.amount + a.tax));
     const newArExTax = r2(newArRows.reduce((s, r) => s + r.amount, 0)), newArTax = r2(newArRows.reduce((s, r) => s + r.tax, 0));
     const priorArCollectedInclTax = r2(priorArRows.reduce((s, r) => s + r.amount + r.tax, 0));
-    const ar_detail = { new_ar_rows: newArRows, prior_ar_rows: priorArRows, new_ar_ex_tax: newArExTax, new_ar_tax: newArTax, prior_ar_collected: priorArCollectedInclTax, residual: r2(adj - (newArExTax + newArTax - priorArCollectedInclTax)), total: adj };
+    const ar_detail = { new_ar_rows: newArRows, prior_ar_rows: priorArRows, new_ar_ex_tax: newArExTax, new_ar_tax: newArTax, prior_ar_collected: priorArCollectedInclTax, residual: r2(adjTotal - (newArExTax + newArTax - priorArCollectedInclTax)), total: adjTotal, by_account: { subscription: adj, ...adjNS } };
 
     // Safety net: if Stripe introduces a balance-transaction category we don't map, the
     // entry would silently come up short (a $417 chargeback + $15 fee did exactly that).
@@ -790,7 +882,7 @@ if (BT?.months) {
         charge_fees: T.charge_fees, other_fees: T.other_fees, untagged_gross: T.untagged_gross,
         recognized_ex_tax: R, recognized_invoice_basis: by_month[m]?.recognized || 0, direct_subscription_charges: direct, direct_rows: directRows,
         tax_by_state_invoice: taxInv, tax_by_state_cash: taxCash, tax_basis_used: QB.sales_tax_basis, tax_total_used: taxTotal,
-        accrual_adjustment: adj, annual_deferred_memo: by_month[m]?.annual_deferred || 0, balance_txn_rows: T.row_count,
+        accrual_adjustment: adj, accrual_adjustment_total: adjTotal, accrual_adjustment_by_account: { subscription: adj, ...adjNS }, annual_deferred_memo: by_month[m]?.annual_deferred || 0, balance_txn_rows: T.row_count,
       },
       memo: [
         `4100 Annual Deferred Monthly $${(by_month[m]?.annual_deferred || 0).toFixed(2)} (B&B Door, Mid Michigan) is booked separately — not part of this entry.`,

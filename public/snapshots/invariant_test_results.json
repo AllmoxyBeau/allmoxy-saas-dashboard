@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-10T01:55:16.967Z",
+  "fetched_at": "2026-11-10T02:13:59.375Z",
   "total": 39,
   "passed": 35,
   "errors": 1,
@@ -200,28 +200,28 @@
       "name": "customer base: MRR equals the sum of the counted members",
       "severity": "error",
       "passed": true,
-      "detail": "198 customers reconcile to $231,105 MRR (ARPA $1,167)",
+      "detail": "199 customers reconcile to $233,105 MRR (ARPA $1,171)",
       "examples": []
     },
     {
       "name": "customer base: no customer is counted twice",
       "severity": "error",
       "passed": true,
-      "detail": "198 distinct customers, no duplicates",
+      "detail": "199 distinct customers, no duplicates",
       "examples": []
     },
     {
       "name": "customer base: every counted customer traces to invoiced or annual revenue",
       "severity": "error",
       "passed": true,
-      "detail": "all 198 trace to a source (196 invoiced, 2 annual_amortized)",
+      "detail": "all 199 trace to a source (197 invoiced, 2 annual_amortized)",
       "examples": []
     },
     {
       "name": "customer base MRR reconciles to the accrual waterfall",
       "severity": "warn",
       "passed": true,
-      "detail": "$231,105 = waterfall $227,932 + $3,173 annual amortization",
+      "detail": "$233,105 = waterfall $229,932 + $3,173 annual amortization",
       "examples": []
     },
     {
@@ -263,14 +263,14 @@
       "name": "Revenue Recognition recognized = accrual series (no revenue outside the customer base)",
       "severity": "error",
       "passed": true,
-      "detail": "2026-10: recognized $223344.61 + bad debt not recognized $4677 vs accrual series $228021.61",
+      "detail": "2026-10: recognized $225344.61 + bad debt not recognized $4677 vs accrual series $230021.61",
       "examples": []
     },
     {
       "name": "Current Month opens at the canonical base MRR",
       "severity": "error",
       "passed": true,
-      "detail": "current month starting $231104.61 vs base $231104.61",
+      "detail": "current month starting $233104.61 vs base $233104.61",
       "examples": []
     },
     {
@@ -291,7 +291,7 @@
       "name": "Customer Detail MRR and active flag = canonical base",
       "severity": "error",
       "passed": true,
-      "detail": "198 members aligned",
+      "detail": "199 members aligned",
       "examples": []
     },
     {

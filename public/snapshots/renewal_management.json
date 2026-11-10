@@ -1,16 +1,16 @@
 {
   "tab": "renewal_management",
-  "fetchedAt": "2026-11-10T01:53:12.628Z",
-  "cachedUntil": "2026-11-10T01:58:12.628Z",
+  "fetchedAt": "2026-11-10T02:13:53.099Z",
+  "cachedUntil": "2026-11-10T02:18:53.099Z",
   "source": "HubSpot Instance custom object (2-39181518) joined to customer_profiles + orders_verified + churn_risk_matrix. Multi-key join cascade: installer_id → allmoxy_customer_id → stripe_subscription_id → stripe_company_id → installer_url subdomain → normalized name. Population = the canonical customer base (customer_base.members), one row per customer (best production Instance: HubSpot-active status, then has a renewal date). Join indexes prefer base members over duplicate records. MRR = customer_base MRR.",
   "aggregates": {
-    "total_instances": 197,
-    "customers": 197,
-    "base_customers": 198,
+    "total_instances": 198,
+    "customers": 198,
+    "base_customers": 199,
     "base_as_of": "2026-10",
     "base_customers_without_instance": 1,
-    "active_instances_not_in_base": 16,
-    "duplicate_instances_dropped": 4,
+    "active_instances_not_in_base": 14,
+    "duplicate_instances_dropped": 5,
     "with_renewal_date": 164,
     "unjoined_active_count": 0,
     "skipped_sandbox_count": 25,
@@ -22,7 +22,7 @@
     "renewals_in_next_12mo_arr": 838749.24,
     "expansion_opportunities": 33,
     "contraction_risks": 70,
-    "watch": 13,
+    "watch": 14,
     "stable": 79,
     "paused": 2,
     "median_cost_ratio_lifetime_pct": 1.17,
@@ -44499,6 +44499,65 @@
       "quotes": []
     },
     {
+      "instance_id": "63209755225",
+      "account_name": "Glacier Millworks",
+      "allmoxy_customer_id": 2120,
+      "join_via": "installer_id",
+      "customer_name": "Glacier Millworks",
+      "renewal_date": null,
+      "days_to_renewal": null,
+      "calculated_renewal_date": null,
+      "renewal_date_manual": null,
+      "contract_status": "No",
+      "contract_length_months": null,
+      "monthly_flat_fee_hubspot": 2000,
+      "arr_up_for_renewal": 24000,
+      "last_renewal_expansion": null,
+      "last_no_expansion_reason": null,
+      "payment_start_date": null,
+      "payment_pause_date": null,
+      "instance_creation": "2026-10-05",
+      "merchant_connect_date": null,
+      "last_payment_date_hubspot": null,
+      "goal_launch_date": null,
+      "is_launched": null,
+      "pay_status": "Active",
+      "cs_pulse": null,
+      "health_score_status": null,
+      "health_score": null,
+      "vip_legacy": null,
+      "implementation_status": null,
+      "hubspot_owner_id": null,
+      "owner_name": "Jon",
+      "current_mrr": 2000,
+      "current_arr": 24000,
+      "lifetime_subscription": 6620,
+      "lifetime_orders_dollars": 0,
+      "orders_monthly_avg_current_year": 0,
+      "orders_monthly_avg_prior_year": 0,
+      "orders_yoy_pct": null,
+      "cost_ratio_lifetime_pct": null,
+      "cost_ratio_annualized_pct": null,
+      "monthly_trend": [
+        {
+          "month": "2026-10",
+          "subscription": 4600,
+          "orders_dollars": 0,
+          "orders_source": "yearly_avg",
+          "cost_ratio_pct": null
+        }
+      ],
+      "dropoff_pct": null,
+      "risk_tier": "yellow",
+      "risk_score": 0,
+      "is_bid_only": false,
+      "action_tag": "Watch",
+      "action_reason": "Health tier YELLOW — monitor through renewal",
+      "customer_entered_orders_prev_billing_period": null,
+      "customer_closed_lost": null,
+      "quotes": []
+    },
+    {
       "instance_id": "64409068808",
       "account_name": "Contour Panel Components",
       "allmoxy_customer_id": 2123,
@@ -44781,20 +44840,6 @@
       "allmoxy_customer_id": 2046,
       "status": "Active",
       "customer_status": "churned"
-    },
-    {
-      "id": "63104319564",
-      "account_name": "Glacier Millworks",
-      "allmoxy_customer_id": 2120,
-      "status": "Active",
-      "customer_status": "active"
-    },
-    {
-      "id": "63209755225",
-      "account_name": "Glacier Millworks",
-      "allmoxy_customer_id": 2120,
-      "status": "Active",
-      "customer_status": "active"
     }
   ],
   "duplicate_instances_dropped": [
@@ -44821,6 +44866,12 @@
       "account_name": "Martin Wood Products",
       "allmoxy_customer_id": 111,
       "status": "Cancelled"
+    },
+    {
+      "id": "63104319564",
+      "account_name": "Glacier Millworks",
+      "allmoxy_customer_id": 2120,
+      "status": "Active"
     }
   ],
   "unjoined_active_instances": [],

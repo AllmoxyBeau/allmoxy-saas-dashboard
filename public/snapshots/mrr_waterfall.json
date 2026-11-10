@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-11-10T01:53:08.436Z",
-  "cachedUntil": "2026-11-10T01:58:08.436Z",
+  "fetchedAt": "2026-11-10T02:13:48.550Z",
+  "cachedUntil": "2026-11-10T02:18:48.550Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -29,7 +29,7 @@
     "2026-07": 99.2,
     "2026-08": 100.1,
     "2026-09": 97.4,
-    "2026-10": 97.6,
+    "2026-10": 98.5,
     "2026-11": 102.4
   },
   "monthly": [
@@ -26039,7 +26039,7 @@
       "month": "2026-10",
       "partial": false,
       "starting_mrr": 229751.27,
-      "new_mrr": 1550,
+      "new_mrr": 3550,
       "reactivated_mrr": 0,
       "recovered_mrr": 0,
       "paused_mrr": 250,
@@ -26048,9 +26048,9 @@
       "churn_mrr": 2715.45,
       "voided_mrr": 199,
       "delinquent_mrr": 0,
-      "ending_mrr": 227931.61,
-      "net_new_mrr": -1819.66,
-      "new_logos": 3,
+      "ending_mrr": 229931.61,
+      "net_new_mrr": 180.34,
+      "new_logos": 4,
       "reactivated_logos": 0,
       "churned_logos": 4,
       "voided_logos": 1,
@@ -26062,9 +26062,14 @@
       "expansion_rate_monthly": 0.0018,
       "grr_monthly": 0.9835,
       "nrr_monthly": 0.9853,
-      "quick_ratio": 0.59,
+      "quick_ratio": 1.19,
       "details": {
         "new": [
+          {
+            "name": "Glacier Millworks",
+            "id": 2120,
+            "mrr": 2000
+          },
           {
             "name": "Sommers Wood N Door",
             "id": 2126,
@@ -26224,19 +26229,19 @@
     {
       "month": "2026-11",
       "partial": true,
-      "starting_mrr": 227931.61,
-      "new_mrr": 2670,
+      "starting_mrr": 229931.61,
+      "new_mrr": 650,
       "reactivated_mrr": 0,
       "recovered_mrr": 0,
       "paused_mrr": 0,
-      "expansion_mrr": 0,
+      "expansion_mrr": 20,
       "contraction_mrr": 3834,
       "churn_mrr": 0,
       "voided_mrr": 0,
       "delinquent_mrr": 137547.36,
       "ending_mrr": 89220.25,
-      "net_new_mrr": -138711.36,
-      "new_logos": 2,
+      "net_new_mrr": -140711.36,
+      "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
@@ -26244,18 +26249,13 @@
       "recovered_logos": 0,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0168,
-      "expansion_rate_monthly": 0,
-      "grr_monthly": 0.3797,
-      "nrr_monthly": 0.3797,
-      "quick_ratio": 0.7,
+      "net_churn_rate_monthly": 0.0166,
+      "expansion_rate_monthly": 0.0001,
+      "grr_monthly": 0.3851,
+      "nrr_monthly": 0.3852,
+      "quick_ratio": 0.17,
       "details": {
         "new": [
-          {
-            "name": "Glacier Millworks",
-            "id": 2120,
-            "mrr": 2020
-          },
           {
             "name": "Clement Custom Doors",
             "id": 2129,
@@ -26264,7 +26264,15 @@
         ],
         "reactivated": [],
         "recovered": [],
-        "expansion": [],
+        "expansion": [
+          {
+            "name": "Glacier Millworks",
+            "id": 2120,
+            "prev_mrr": 2000,
+            "new_mrr": 2020,
+            "delta": 20
+          }
+        ],
         "contraction": [
           {
             "name": "New York Door & Drawer",
@@ -27239,8 +27247,8 @@
     "windowEnd": "2026-10",
     "months": 12,
     "starting_mrr": 227195.78,
-    "ending_mrr": 227931.61,
-    "new_mrr": 23201,
+    "ending_mrr": 229931.61,
+    "new_mrr": 25201,
     "reactivated_mrr": 0,
     "expansion_mrr": 19858.69,
     "contraction_mrr": 21779.41,
@@ -27249,12 +27257,12 @@
     "churn_mrr": 19732.45,
     "voided_mrr": 199,
     "delinquent_mrr": 0,
-    "net_new_mrr": 735.83,
+    "net_new_mrr": 2735.83,
     "gross_mrr_churn_ttm": 0.0869,
     "annual_gross_churn_rate": 0.0824,
     "annual_grr": 0.8309,
     "annual_nrr": 0.9077,
-    "quick_ratio": 1.04
+    "quick_ratio": 1.09
   },
   "notes": "MRR waterfall on two bases. CASH (monthly/ttm) = customer_profiles.monthly_history — what cleared Stripe, boundary-slip corrected, full history; use for bank reconciliation. ACCRUAL (monthly_accrual/ttm_accrual) = revenue_recognition.accrual_series — what was BILLED by invoice date, so a card failure is an open receivable rather than churn; use for retention metrics. Accrual starts 2025-08 because Stripe-invoice coverage before mid-2025 is 4–28% of actual revenue (Allmoxy migrated to invoicing then). New = customer first appears with MRR > 0. THE CHURN RULE (churn_rules.mjs, 2026-11-09): Churn = confirmed (Stripe subscription canceled, HubSpot Cancelled / churn reason, or 3 months unbilled), dated to the first un-invoiced month; Reactivated = back after 3+ unbilled months; Recovered = back sooner (a lapse, never churn); Paused = HubSpot Pay Status \"Pause Granted\" (never churn). GRR/NRR count every dollar that stopped (churn + contraction + voided + delinquent + paused) and credit recovered lapses back; annualized as mean monthly rate ^12. Voided = dropped to $0 with a VOIDED invoice for the period — billing intentionally canceled, nothing owed (not dunning). Delinquent = dropped to $0, still billable, did not clear (card failure / non-payment) — may still pay. All three reduce ending MRR but are reported separately. Sales tax is EXCLUDED on both bases: it is a pass-through liability, not revenue. Accrual sums pre-tax invoice lines; cash has collected tax subtracted by the invoice paid month (~1.5% of gross, ~$3.4K/mo). Services and Connect revenue are NOT included — subscription only.",
   "sales_tax_excluded": true

@@ -1,37 +1,37 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-11-10T01:53:17.144Z",
-  "cachedUntil": "2026-11-10T01:58:17.144Z",
+  "fetchedAt": "2026-11-10T02:13:56.622Z",
+  "cachedUntil": "2026-11-10T02:18:56.622Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
   "latestMonth": "2026-10",
   "concentration": {
-    "total_active_customers": 198,
-    "total_mrr": 231104.61,
+    "total_active_customers": 199,
+    "total_mrr": 233104.61,
     "top1": {
       "n": 1,
       "customers": 1,
       "mrr": 7459.2,
-      "pct": 0.0323
+      "pct": 0.032
     },
     "top5": {
       "n": 5,
       "customers": 5,
       "mrr": 30182.2,
-      "pct": 0.1306
+      "pct": 0.1295
     },
     "top10": {
       "n": 10,
       "customers": 10,
       "mrr": 52900.2,
-      "pct": 0.2289
+      "pct": 0.2269
     },
     "top20": {
       "n": 20,
       "customers": 20,
       "mrr": 87661.1,
-      "pct": 0.3793
+      "pct": 0.3761
     }
   },
   "distribution": [
@@ -1361,8 +1361,8 @@
     },
     {
       "bucket": "$2K–$5K",
-      "customers": 30,
-      "mrr": 92582.29,
+      "customers": 31,
+      "mrr": 94582.29,
       "customers_list": [
         {
           "name": "Greyloch, LLC.",
@@ -1602,6 +1602,14 @@
           "current_mrr": 2000,
           "lifetime_revenue": 121211.6,
           "years_with_us": 3.9,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Customer 2120",
+          "allmoxy_customer_id": 2120,
+          "current_mrr": 2000,
+          "lifetime_revenue": 9220,
+          "years_with_us": 0.1,
           "failed_3mo": 0
         }
       ]
@@ -2151,6 +2159,14 @@
       "current_mrr": 2000,
       "lifetime_revenue": 121211.6,
       "years_with_us": 3.9,
+      "failed_3mo": 0
+    },
+    {
+      "name": "Customer 2120",
+      "allmoxy_customer_id": 2120,
+      "current_mrr": 2000,
+      "lifetime_revenue": 9220,
+      "years_with_us": 0.1,
       "failed_3mo": 0
     },
     {
@@ -3635,5 +3651,5 @@
     "failed_attempts": 102,
     "failed_attempts_amount": 118499.42
   },
-  "notes": "Per-customer MRR from the canonical customer base (198 customers with MRR > $0 in 2026-10). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue joined from Stripe Sync (20K+ classified transactions). Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); $ at risk = their MRR, failed-attempt $ counts every retry."
+  "notes": "Per-customer MRR from the canonical customer base (199 customers with MRR > $0 in 2026-10). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue joined from Stripe Sync (20K+ classified transactions). Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); $ at risk = their MRR, failed-attempt $ counts every retry."
 }
