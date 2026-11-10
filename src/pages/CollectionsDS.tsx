@@ -55,6 +55,8 @@ const FILTER_WORD: Record<Filter, string> = { chase: 'Chasing', writeoff: 'Writt
 // Sort keys and values exactly as the classic page; defaults are the direction you want on
 // first pick: biggest money and oldest invoices first, names A to Z.
 type SortKey = 'name' | 'invoice_date' | 'amount' | 'age_days' | 'customer' | 'owner' | 'source' | 'decision';
+// Table column → sort key, in column order.
+const COL_SORT: SortKey[] = ['name', 'invoice_date', 'amount', 'age_days', 'customer', 'owner', 'source', 'decision'];
 const SORTS: Array<{ key: SortKey; label: string; defaultDesc: boolean; value: (r: DecoratedRow) => string | number }> = [
   { key: 'amount', label: 'Amount', defaultDesc: true, value: (r) => r.amount },
   { key: 'age_days', label: 'Age', defaultDesc: true, value: (r) => r.age_days },
@@ -280,7 +282,7 @@ export default function CollectionsDS() {
         {isLoading ? <p className="am-card__text">Loading invoices…</p> : (
           <div style={{ overflowX: 'auto' }}>
             <DataTable label="Open invoices"
-              cols={[['Customer', false], ['Invoice', false], ['Amount', true], ['Age', true], ['Customer state', false], ['Instance owner', false], ['Source', false], ['Decision', false]]}
+              cols={[['Customer', false], ['Invoice date', false], ['Amount', true], ['Age', true], ['Customer state', false], ['Instance owner', false], ['Source', false], ['Decision', false]]}
               rows={list.map((r) => {
                 const off = r.effective === 'uncollectible';
                 const old = r.age_days > (threshold ?? 90);
@@ -314,6 +316,9 @@ export default function CollectionsDS() {
                   </span>,
                 ];
               })}
+              // Headers drive the same sort as the Sort by menu (and the CSV), one key per column.
+              sortedBy={{ col: COL_SORT.indexOf(sortKey), dir: sortDesc ? 'desc' : 'asc' }}
+              onHeaderSort={(c) => pickSort(COL_SORT[c])}
               clickable={(c) => c === 0}
               onCell={(i) => {
                 const r = list[i];

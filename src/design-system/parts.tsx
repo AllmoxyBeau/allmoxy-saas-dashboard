@@ -244,7 +244,7 @@ export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, on
  *  header becomes a sort control (the design system's rule: every column sorts). `onCell` always
  *  receives the ORIGINAL row index, so callers never see the sorted order. `clickable(col, row)`
  *  may decide per row. */
-export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable, sortValues, defaultSort, limit, onSortChange }: {
+export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable, sortValues, defaultSort, limit, onSortChange, sortedBy, onHeaderSort }: {
   cols: Array<[string, boolean]>; rows: Array<Array<ReactNode>>; label: string;
   onCell?: (row: number, col: number) => void; clickable?: (col: number, row: number) => boolean;
   foot?: Array<ReactNode>; onFoot?: (col: number) => void; footClickable?: (col: number) => boolean;
@@ -253,6 +253,9 @@ export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, 
   limit?: number;
   /** Told the sorted order (original indices) whenever it changes, so a CSV can follow it. */
   onSortChange?: (order: number[], sort: { col: number; dir: 'asc' | 'desc' } | null) => void;
+  /** Controlled sorting: the page sorts `rows` itself; headers call onHeaderSort(col) and show sortedBy's arrow. */
+  sortedBy?: { col: number; dir: 'asc' | 'desc' } | null;
+  onHeaderSort?: (col: number) => void;
 }) {
   const [sort, setSort] = useState<{ col: number; dir: 'asc' | 'desc' } | null>(defaultSort ?? null);
   const order = useMemo(() => {
@@ -278,16 +281,18 @@ export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, 
     onSortChange?.(order, sort);
   }, [order, sort]); // eslint-disable-line react-hooks/exhaustive-deps
   const shownOrder = limit != null ? order.slice(0, limit) : order;
-  const clickSort = (j: number) => setSort((s) => (s && s.col === j ? { col: j, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { col: j, dir: cols[j][1] ? 'desc' : 'asc' }));
+  const controlled = !!onHeaderSort;
+  const shownSort = controlled ? (sortedBy ?? null) : sort;
+  const clickSort = (j: number) => controlled ? onHeaderSort!(j) : setSort((s) => (s && s.col === j ? { col: j, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { col: j, dir: cols[j][1] ? 'desc' : 'asc' }));
   return (
     <table className="am-table" aria-label={label}>
       <thead><tr>{cols.map(([c, n], j) => (
         <th key={c} className={n ? 'am-table__num' : undefined} style={{ whiteSpace: 'nowrap' }}
-          aria-sort={sort?.col === j ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}>
-          {sortValues ? (
+          aria-sort={shownSort?.col === j ? (shownSort.dir === 'asc' ? 'ascending' : 'descending') : undefined}>
+          {sortValues || controlled ? (
             <span className="am-table__sort" role="button" tabIndex={0} onClick={() => clickSort(j)}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); clickSort(j); } }}>
-              {c}<span className="am-table__sortarrow" aria-hidden="true">{sort?.col === j && sort.dir === 'asc' ? '▲' : '▼'}</span>
+              {c}<span className="am-table__sortarrow" aria-hidden="true">{shownSort?.col === j && shownSort.dir === 'asc' ? '▲' : '▼'}</span>
             </span>
           ) : c}
         </th>
