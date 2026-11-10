@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-10T01:43:58.503Z",
+  "fetched_at": "2026-11-10T01:55:16.967Z",
   "total": 39,
   "passed": 35,
   "errors": 1,
@@ -263,7 +263,7 @@
       "name": "Revenue Recognition recognized = accrual series (no revenue outside the customer base)",
       "severity": "error",
       "passed": true,
-      "detail": "2026-10: recognized $228021.61 vs accrual series $228021.61",
+      "detail": "2026-10: recognized $223344.61 + bad debt not recognized $4677 vs accrual series $228021.61",
       "examples": []
     },
     {

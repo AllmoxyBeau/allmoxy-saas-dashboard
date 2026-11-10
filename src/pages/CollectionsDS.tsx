@@ -8,7 +8,7 @@
  * The page is an action list: the invoices still worth chasing, biggest money first, each with
  * its Chase / Write off call.
  */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSheetTab } from '../hooks/useSheetTab';
 import { DataTable, DsPage, Icon, KpiCard, Segmented, Select, SideSheet, addMonths, downloadCsv, mlabel, mshort, usd } from '../design-system/parts';
@@ -86,6 +86,19 @@ export default function CollectionsDS() {
   const { data, isLoading, error } = useSheetTab('revenue_recognition');
   const snap = data as unknown as Snap | undefined;
   const [pending, setPending] = useState<PendingMap>(() => readPending());
+  // Once a pending decision has been applied (the snapshot now carries the same decision),
+  // drop it from the browser so the row reads Decided, not Pending.
+  useEffect(() => {
+    if (!snap?.ar_aging) return;
+    const committed = new Map(snap.ar_aging.map((r) => [r.invoice_id, r.decision]));
+    const next: PendingMap = {};
+    let dropped = 0;
+    for (const [id, p] of Object.entries(pending)) {
+      if (committed.get(id) === p.decision) dropped++;
+      else next[id] = p;
+    }
+    if (dropped) { setPending(next); writePending(next); }
+  }, [snap]); // eslint-disable-line react-hooks/exhaustive-deps
   const [filter, setFilterRaw] = useState<Filter>('chase');
   const [ownerFilter, setOwnerFilterRaw] = useState<string>('');
   const [sortKey, setSortKey] = useState<SortKey>('amount');

@@ -700,8 +700,12 @@ test('Revenue Recognition recognized = accrual series (no revenue outside the cu
   const rr = readJson(path.join(SNAP, 'revenue_recognition.json'));
   if (!rr?.by_month?.[lastCompleteMonth]) return { passed: true, detail: 'not built — skipped' };
   const series = round2((rr.accrual_series || []).reduce((s, r) => s + ((r.months || {})[lastCompleteMonth] || 0), 0));
-  const rec = rr.by_month[lastCompleteMonth].recognized;
-  return { passed: Math.abs(series - rec) <= 1, detail: `${lastCompleteMonth}: recognized $${rec} vs accrual series $${series}` };
+  // The accrual series is BILLED MRR; known bad debt in the audit window (Jan–Oct 2026) is
+  // billed but deliberately not recognized, so add it back before comparing.
+  const bm = rr.by_month[lastCompleteMonth];
+  const nr = bm.bad_debt_not_recognized || 0;
+  const rec = round2(bm.recognized + nr);
+  return { passed: Math.abs(series - rec) <= 1, detail: `${lastCompleteMonth}: recognized $${bm.recognized} + bad debt not recognized $${nr} vs accrual series $${series}` };
 });
 
 test('Current Month opens at the canonical base MRR', 'error', () => {
