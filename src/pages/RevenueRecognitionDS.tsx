@@ -9,7 +9,7 @@
  * Only the UI changed: the trend is a grouped column chart (recognized, cash received, new AR)
  * instead of lines over bars, and every summable table ends in a Total row that opens its rows.
  */
-import { useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSheetTab } from '../hooks/useSheetTab';
 import {
@@ -114,6 +114,9 @@ export default function RevenueRecognitionDS() {
   const range = useMonthRange(trendMonths);
 
   const [sheet, setSheet] = useState<Sheet | null>(null);
+  // Journal-entry accrual line expanded in place: the line index and the account it shows.
+  const [arOpen, setArOpen] = useState<{ line: number; account?: ArAcct } | null>(null);
+  useEffect(() => { setArOpen(null); }, [selMonth]);   // a line number means nothing in another month
   const [showAllDetail, setShowAllDetail] = useState(false);
   const [showAllAr, setShowAllAr] = useState(false);
   const [arFilter, setArFilter] = useState<'all' | 'collectible' | 'closed'>('all');
@@ -153,15 +156,15 @@ export default function RevenueRecognitionDS() {
 
   // ---- side sheet content
   const sheetTitle = !sheet ? '' : sheet.kind === 'ar' ? `Accounts receivable${sheet.account ? ` · ${AR_ACCT_LABEL[sheet.account]}` : ''} · ${ml}` : sheet.kind === 'arAging' ? 'AR aging · every invoice' : sheet.key === 'all' ? `Every subscription · ${ml}` : `${COLS.find((c) => c.k === sheet.key)!.label} · ${ml}`;
-  const sheetBody = (): ReactNode => {
-    if (!sheet) return null;
-    if (sheet.kind === 'ar') {
+  // AR breakdown for one account (or every account): shown inline under the journal-entry line
+  // that was clicked, and in the side sheet when opened from the bridge above.
+  const arView = (acct: ArAcct | undefined, onShowAll: () => void): ReactNode => {
+    {
       const full = je?.ar_detail;
       if (!full) return <p className="am-card__text">No receivable detail for this month.</p>;
       // One account clicked: keep only that account's share of each row, so the 4300 line shows
       // services items and the 4000 line shows subscription items. Rows without a split (the
       // non-invoice items) are all subscription.
-      const acct = sheet.account;
       const pick = <T extends { amount: number; tax?: number; by_account?: Partial<Record<ArAcct, AcctPart>> }>(r: T): T | null => {
         if (!acct) return r;
         if (!r.by_account) return acct === 'subscription' ? r : null;
@@ -212,7 +215,7 @@ export default function RevenueRecognitionDS() {
       };
       return <>
         <DataTable label="AR bridge" cols={[['Part', false], ['Amount', true]]} rows={bridge.map(([l, v]) => [l, money(v)])} foot={[acct ? `Δ Accounts Receivable · ${AR_ACCT_LABEL[acct]} (posted)` : 'Δ Accounts Receivable (posted)', money(d.total)]} />
-        {acct && <p className="am-card__text">Only the {AR_ACCT_LABEL[acct]} share of each invoice is shown. <button className="am-btn am-btn--text" onClick={() => setSheet({ kind: 'ar' })}>Show every account</button></p>}
+        {acct && <p className="am-card__text">Only the {AR_ACCT_LABEL[acct]} share of each invoice is shown. <button className="am-btn am-btn--text" onClick={onShowAll}>Show every account</button></p>}
         {invTable(`Billed in ${ml}, unpaid at month-end: new AR`, d.new_ar_rows, false)}
         {!!d.prior_ar_rows.length && invTable('Prior-month invoices collected this month: relieves AR', d.prior_ar_rows, true)}
         {!!d.other_rows?.length && <>
@@ -224,6 +227,10 @@ export default function RevenueRecognitionDS() {
         <p className="am-card__text">Every open invoice across all history is in the AR aging table ({snap ? usd(snap.ar_total) : '—'} collectible).</p>
       </>;
     }
+  };
+  const sheetBody = (): ReactNode => {
+    if (!sheet) return null;
+    if (sheet.kind === 'ar') return arView(sheet.account, () => setSheet({ kind: 'ar' }));
     if (sheet.kind === 'arAging') {
       return <DataTable label="AR aging, all invoices" cols={[['Customer', false], ['Service month', false], ['Amount', true], ['Status', false], ['Age (days)', true]]}
         rows={arShown.map((r) => [custCell(r.allmoxy_customer_id, r.name), mlabel(r.service_month), usd2(r.amount), arStatus(r), r.age_days.toLocaleString()])}
@@ -344,17 +351,32 @@ export default function RevenueRecognitionDS() {
             {je.balanced ? tag(`Balanced · ${usd2(je.debits)}`, 'success') : tag(`Out of balance · Dr ${usd2(je.debits)} / Cr ${usd2(je.credits)}`, 'error')}
           </div>
           <div style={{ overflowX: 'auto' }}>
-            <DataTable label="QuickBooks journal entry" cols={[['#', false], ['Account', false], ['Debits', true], ['Credits', true], ['Description', false]]}
-              rows={je.lines.flatMap((l, i) => {
+            {(() => {
+              const rowLine: number[] = [];   // table row -> JE line index (-1 for group headings)
+              const tRows = je.lines.flatMap((l, i) => {
                 const head = i === 0 || je.lines[i - 1].group !== l.group;
                 const [word, tone, note] = GROUP_LABEL[l.group];
                 const isAr = l.group === 'accrual' && (l.account.startsWith('1200') || !!l.ar_account);
+                const open = arOpen?.line === i;
                 const line: ReactNode[] = [String(i + 1),
-                  isAr && je.ar_detail ? <button key="ar" className="am-btn am-btn--text" onClick={() => setSheet({ kind: 'ar', account: l.ar_account })}>{l.account}<Icon name="open_in_new" /></button> : l.account,
+                  isAr && je.ar_detail
+                    ? <button key="ar" className="am-btn am-btn--text" aria-expanded={open}
+                        onClick={() => setArOpen(open ? null : { line: i, account: l.ar_account })}>{l.account}<Icon name={open ? 'expand_less' : 'expand_more'} /></button>
+                    : l.account,
                   l.debit != null ? usd2(l.debit) : '', l.credit != null ? usd2(l.credit) : '', l.description];
+                if (head) rowLine.push(-1);
+                rowLine.push(i);
                 return head ? [['', tag(word, tone), '', '', note], line] : [line];
-              })}
+              });
+              return (
+            <DataTable label="QuickBooks journal entry" cols={[['#', false], ['Account', false], ['Debits', true], ['Credits', true], ['Description', false]]}
+              rows={tRows}
+              expandedRow={(r) => (arOpen && rowLine[r] === arOpen.line
+                ? arView(arOpen.account, () => setArOpen({ line: arOpen.line }))
+                : null)}
               foot={['', 'Totals', usd2(je.debits), usd2(je.credits), je.balanced ? tag('Balanced', 'success') : tag(`Off by ${usd2(Math.abs(je.debits - je.credits))}`, 'error')]} />
+              );
+            })()}
           </div>
           {je.memo.map((m, i) => <p key={i} className="am-card__text">• {m}</p>)}
           <p className="am-card__text">

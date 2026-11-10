@@ -244,7 +244,7 @@ export function KpiCard({ label, value, hint, tag, tagTone, spark, sparkTone, on
  *  header becomes a sort control (the design system's rule: every column sorts). `onCell` always
  *  receives the ORIGINAL row index, so callers never see the sorted order. `clickable(col, row)`
  *  may decide per row. */
-export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable, sortValues, defaultSort, limit, onSortChange, sortedBy, onHeaderSort }: {
+export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, footClickable, sortValues, defaultSort, limit, onSortChange, sortedBy, onHeaderSort, expandedRow }: {
   cols: Array<[string, boolean]>; rows: Array<Array<ReactNode>>; label: string;
   onCell?: (row: number, col: number) => void; clickable?: (col: number, row: number) => boolean;
   foot?: Array<ReactNode>; onFoot?: (col: number) => void; footClickable?: (col: number) => boolean;
@@ -256,6 +256,8 @@ export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, 
   /** Controlled sorting: the page sorts `rows` itself; headers call onHeaderSort(col) and show sortedBy's arrow. */
   sortedBy?: { col: number; dir: 'asc' | 'desc' } | null;
   onHeaderSort?: (col: number) => void;
+  /** Content shown in a full-width row directly under row i (original index), or null. */
+  expandedRow?: (row: number) => ReactNode | null;
 }) {
   const [sort, setSort] = useState<{ col: number; dir: 'asc' | 'desc' } | null>(defaultSort ?? null);
   const order = useMemo(() => {
@@ -297,12 +299,15 @@ export function DataTable({ cols, rows, label, onCell, clickable, foot, onFoot, 
           ) : c}
         </th>
       ))}</tr></thead>
-      <tbody>{shownOrder.map((i) => { const r = rows[i]; return (
-        <tr key={i}>{r.map((v, j) => (
-          <td key={j} className={cols[j][1] ? 'am-table__num' : undefined} style={cols[j][1] ? { whiteSpace: 'nowrap' } : undefined}>
-            {onCell && (clickable ? clickable(j, i) : j > 0) && v !== '—' ? <button className="am-btn am-btn--text" onClick={() => onCell(i, j)}>{v}</button> : v}
-          </td>
-        ))}</tr>
+      <tbody>{shownOrder.map((i) => { const r = rows[i]; const ex = expandedRow?.(i); return (
+        <Fragment key={i}>
+          <tr>{r.map((v, j) => (
+            <td key={j} className={cols[j][1] ? 'am-table__num' : undefined} style={cols[j][1] ? { whiteSpace: 'nowrap' } : undefined}>
+              {onCell && (clickable ? clickable(j, i) : j > 0) && v !== '—' ? <button className="am-btn am-btn--text" onClick={() => onCell(i, j)}>{v}</button> : v}
+            </td>
+          ))}</tr>
+          {ex != null && <tr><td colSpan={cols.length} style={{ whiteSpace: 'normal' }}><div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--am-space-3, 12px)', padding: 'var(--am-space-2, 8px) 0' }}>{ex}</div></td></tr>}
+        </Fragment>
       ); })}</tbody>
       {foot && (
         <tfoot><tr>{foot.map((v, j) => (
