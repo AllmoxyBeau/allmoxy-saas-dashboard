@@ -42,6 +42,20 @@ if (!TICKETS.length) {
 }
 
 const monthOf = (iso) => (iso ? String(iso).slice(0, 7) : null);
+
+// OPEN = what the HubSpot Help Desk shows as open (Beau, 2026-11-11): tickets in the
+// help desk pipelines, created since the help desk went live. Everything else that is
+// "not closed" — Implementation (IPA) catalog projects, Customer Success - Admin, and
+// CS - Dev tickets untouched since 2021–2023 — is not in the help desk queue.
+const HELP_DESK = {
+  pipelines: { '910993337': 'Customer Success', '953931040': 'Solution Architect', '47100751': 'CS - Dev' },
+  live_from: '2026-10-22',
+};
+// Stage ids of those pipelines, for a snapshot synced before pipeline_id was stored.
+const HELP_DESK_STAGES = new Set(['1383366703', '1383366704', '1383366705', '1472847752', '97829134', '97802785', '97802779', '97802778', '97802781', '97802780']);
+const inHelpDesk = (t) => (t.pipeline_id ? !!HELP_DESK.pipelines[String(t.pipeline_id)] : HELP_DESK_STAGES.has(String(t.pipeline_stage_id)))
+  && String(t.created || '').slice(0, 10) >= HELP_DESK.live_from;
+const isOpen = (t) => !t.is_closed && inHelpDesk(t);
 const nowMonth = new Date().toISOString().slice(0, 7);
 
 // HubSpot company id → customer profile, so ticket load can sit next to revenue.
@@ -143,7 +157,7 @@ function group(keyFn, { since = null } = {}) {
     if (!m.has(k)) m.set(k, { key: k, tickets: 0, open: 0, closed: 0, durations: [] });
     const e = m.get(k);
     e.tickets++;
-    if (t.is_closed) e.closed++; else e.open++;
+    if (t.is_closed) e.closed++; else if (isOpen(t)) e.open++;
     const ms = resolutionMs(t);
     if (ms != null && ms > INSTANT_MS) e.durations.push(ms / 864e5);
   }
@@ -175,7 +189,7 @@ for (const t of TICKETS) {
   }
   const e = byCustomer.get(aid);
   e.tickets++;
-  if (!t.is_closed) e.open++;
+  if (isOpen(t)) e.open++;
   if ((monthOf(t.created) || '') >= ttmStart) e.ttm++;
   const ms = resolutionMs(t);
   if (ms != null && ms > INSTANT_MS) e.durations.push(ms / 864e5);
@@ -211,7 +225,8 @@ const out = {
   window: { first_month: months[0], last_month: months[months.length - 1], ttm_start: ttmStart },
   totals: {
     tickets: TICKETS.length,
-    open: TICKETS.filter((t) => !t.is_closed).length,
+    open: TICKETS.filter(isOpen).length,
+    not_closed_outside_help_desk: TICKETS.filter((t) => !t.is_closed && !isOpen(t)).length,
     closed: TICKETS.filter((t) => t.is_closed).length,
     customers_with_tickets: customers.length,
     unattributed_tickets: TICKETS.filter((t) => !profileFor(t)).length,
@@ -247,7 +262,8 @@ const out = {
   by_category: group((t) => t.category || '(uncategorized)'),
   by_priority: group((t) => t.priority || '(none)'),
   customers,
-  open_tickets: TICKETS.filter((t) => !t.is_closed)
+  help_desk: HELP_DESK,
+  open_tickets: TICKETS.filter(isOpen)
     .map((t) => {
       const p = profileFor(t);
       return {

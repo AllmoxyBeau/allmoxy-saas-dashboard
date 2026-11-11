@@ -349,6 +349,8 @@ async function pullTicketStages() {
       for (const s of p.stages || []) {
         map[String(s.id)] = {
           label: s.label || String(s.id),
+          pipelineId: String(p.id),
+          pipelineLabel: p.label ? String(p.label).trim() : String(p.id),
           isClosed: String(s.metadata?.ticketState || '').toUpperCase() === 'CLOSED',
         };
       }
@@ -382,6 +384,8 @@ async function pullTickets(stageMap) {
         content: p.content ? String(p.content).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 500) : null,
         priority: p.hs_ticket_priority || null,
         category: p.hs_ticket_category || null,
+        pipeline_id: p.hs_pipeline ? String(p.hs_pipeline) : (stage?.pipelineId || null),
+        pipeline_label: stage?.pipelineLabel || null,
         pipeline_stage_id: p.hs_pipeline_stage || null,
         stage_label: stage?.label || p.hs_pipeline_stage || null,
         is_closed: stage ? stage.isClosed : !!p.closed_date,

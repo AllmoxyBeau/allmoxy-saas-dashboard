@@ -194,7 +194,7 @@ export default function ServiceTicketsDS() {
       {error ? <p className="am-card__text">Failed to load service_tickets: {String(error)}</p> : null}
 
       <KpiGrid>
-        <KpiCard label="Open now" value={isLoading ? '…' : N0.format(totals?.open ?? 0)} hint={`of ${N0.format(totals?.tickets ?? 0)} ever raised`}
+        <KpiCard label="Open now" value={isLoading ? '…' : N0.format(totals?.open ?? 0)} hint="In the help desk queue, as HubSpot shows it"
           tag={(totals?.open ?? 0) > 200 ? 'High backlog' : 'Under control'} tagTone={(totals?.open ?? 0) > 200 ? 'warning' : 'success'}
           onOpen={() => openRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
         <KpiCard label="Tickets / month" value={isLoading ? '…' : N0.format(Math.round(t?.per_month ?? 0))} hint="Trailing 12 months" />
@@ -222,7 +222,7 @@ export default function ServiceTicketsDS() {
         <div className="am-row am-row--spread">
           <div className="am-chart__head">
             <span className="am-chart__title">Open tickets · {N0.format(openAll.length)}</span>
-            <span className="am-chart__caption">Everything still in the queue, oldest first. Age is days since creation, so the top of this list is the backlog that has been sitting longest.</span>
+            <span className="am-chart__caption">The help desk queue (Customer Success, Solution Architect and CS - Dev tickets since the help desk went live on Oct 22, 2026), oldest first. Implementation (IPA) projects and older unclosed tickets outside the help desk are left out. Age is days since creation.</span>
           </div>
           <button className="am-btn am-btn--text" onClick={csvOpen} disabled={!openAll.length}><Icon name="download" />CSV</button>
         </div>
