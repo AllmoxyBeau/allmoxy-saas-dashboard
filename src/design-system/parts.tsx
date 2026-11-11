@@ -514,8 +514,10 @@ type Theme = 'dark' | 'light';
 const THEME_KEY = 'am-theme';
 const readTheme = (): Theme => { try { return localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark'; } catch { return 'dark'; } };
 
-const SECTIONS: Array<{ name: string; icon: string; financial?: boolean; pages: Array<[string, string]> }> = [
-  { name: 'Customers', icon: 'group', pages: [['Customers', '/customers'], ['Customer Health', '/customer-health'], ['Customer Detail', '/customer-detail'], ['Renewal Management', '/renewal-management'], ['Contracts', '/contracts'], ['Time to Value', '/time-to-value'], ['Activation', '/activation'], ['Rep Dashboard', '/rep-dashboard'], ['Custom Report', '/custom-report']] },
+// `also`: pages reached only by link (not listed in the menu) that still light up their section.
+const SECTIONS: Array<{ name: string; icon: string; financial?: boolean; pages: Array<[string, string]>; also?: string[] }> = [
+  // Customer Detail is opened from a customer's name (Customers table or any customer link), not the menu.
+  { name: 'Customers', icon: 'group', also: ['/customer-detail'], pages: [['Customers', '/customers'], ['Customer Health', '/customer-health'], ['Renewal Management', '/renewal-management'], ['Contracts', '/contracts'], ['Time to Value', '/time-to-value'], ['Activation', '/activation'], ['Rep Dashboard', '/rep-dashboard'], ['Custom Report', '/custom-report']] },
   { name: 'Revenue', icon: 'attach_money', pages: [['Current Month', '/current-month'], ['Revenue Waterfall', '/revenue-waterfall'], ['Revenue Recognition', '/revenue-recognition'], ['AR Adjustments', '/ar-adjustments'], ['Collections', '/collections'], ['Services', '/services'], ['Stripe Connect', '/stripe-connect-revenue'], ['Payments Opportunity', '/payments-opportunity'], ['Sales Budget', '/sales-budget']] },
   { name: 'Retention', icon: 'timeline', pages: [['Logo Waterfall', '/logo-waterfall'], ['Cohort Retention', '/cohort-retention'], ['Net Revenue Retention', '/net-revenue-retention'], ['Churn Timeline', '/churn-timeline'], ['Churn Patterns', '/churn-patterns'], ['Churn Investigator', '/churn-investigator'], ['Churn Risk Matrix', '/churn-risk-matrix']] },
   { name: 'Operations', icon: 'construction', pages: [['Implementation', '/implementation'], ['Implementation Schedule', '/implementation-schedule'], ['Service Tickets', '/service-tickets'], ['Orders Verified', '/orders-verified'], ['Features', '/features'], ['Bug Report', '/bug-report'], ['Project Candidates', '/project-candidates'], ['Data Cleanup', '/data-cleanup']] },
@@ -527,7 +529,7 @@ function NavSection({ s, current }: { s: (typeof SECTIONS)[number]; current?: st
   const [open, setOpen] = useState(false);
   const ref = useDismiss(open, () => setOpen(false));
   const navigate = useNavigate();
-  const active = !!current && s.pages.some(([, p]) => p === current);
+  const active = !!current && (s.pages.some(([, p]) => p === current) || !!s.also?.includes(current));
   return (
     <div ref={ref} className={`am-menu-anchor${open ? ' is-open' : ''}`}>
       <button className="am-appnav__btn" aria-label={s.name} aria-haspopup="true" aria-expanded={open} {...(active ? { 'aria-current': 'page' as const } : {})} onClick={() => setOpen(!open)}>

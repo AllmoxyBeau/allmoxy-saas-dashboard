@@ -14,7 +14,7 @@ Before starting a refresh:
 2. **You are signed into a Google account with access to** all Sheets listed in
    §Source Sheets below (the primary Sheet is owned by `beaulewis1@gmail.com`).
 3. You are running Claude Code from this directory:
-   `/Users/beaulewis/Desktop/2 - Allmoxy - CFO/allmoxy-saas-dashboard/`
+   `/Users/beaulewis/projects/2 - Allmoxy - CFO/allmoxy-saas-dashboard/`
 
 If you don't have access to the Sheets, the alternative is to re-download
 the XLSX exports (`Allmoxy - Meta Data Reconcile Tool.xlsx` and
@@ -109,7 +109,7 @@ Start a new Claude Code session in this directory, then paste this prompt:
 If Google Drive MCP isn't available:
 
 1. Open each Sheet in a browser, `File → Download → Microsoft Excel (.xlsx)`.
-2. Drop the files in `/Users/beaulewis/Desktop/2 - Allmoxy - CFO/`.
+2. Drop the files in `/Users/beaulewis/projects/2 - Allmoxy - CFO/`.
 3. Ask Claude to run the ETL scripts against those XLSX files. Most of the
    scripts in `_etl_scripts/` start with `parse_xlsx.mjs`-style loaders and
    can be adapted. Expect 15–30 minutes of adjustment; the Drive MCP path is
