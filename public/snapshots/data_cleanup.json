@@ -1,7 +1,7 @@
 {
   "tab": "data_cleanup",
-  "fetchedAt": "2026-11-11T15:24:41.302Z",
-  "cachedUntil": "2026-11-11T15:29:41.303Z",
+  "fetchedAt": "2026-11-11T17:42:31.729Z",
+  "cachedUntil": "2026-11-11T17:47:31.729Z",
   "source": "Derived from hubspot_instances.json + hubspot_companies.json + customer_profiles.json + connect_customer_overrides.json + connect_by_customer_month.json. Detects: missing Instance allmoxy_customer_id (active customers), ghost HubSpot Company IDs in customer profiles, Connect mapping orphans (no longer in source xlsx), and pay-status drift between HubSpot and xlsx Sync Sheet.",
   "aggregates": {
     "total_issues": 18,
@@ -143,12 +143,12 @@
       "category_label": "HubSpot Instance missing Allmoxy Customer ID",
       "severity": "low",
       "instance_id": "63209755225",
-      "account_name": "Glacier Millworks",
+      "account_name": "Gm Doors Llc Dba Pine Door Manufacturing (Original)",
       "installer_id": "2173",
       "pay_status": "Active",
       "suggested_aid": 2120,
       "suggested_customer_name": "Glacier Millworks",
-      "action": "Open HubSpot Instance \"Glacier Millworks\", set Allmoxy Customer ID = 2120"
+      "action": "Open HubSpot Instance \"Gm Doors Llc Dba Pine Door Manufacturing (Original)\", set Allmoxy Customer ID = 2120"
     },
     {
       "category": "hubspot_company_id_ghost",
