@@ -1,0 +1,89 @@
+{
+  "_comment": "The onboarding program, as the customer sees it on their instance's Onboarding tab (Allmoxy Onboarding artifact, 2026-11-11). Loaded into ob_phase / ob_step / ob_role / ob_document_type / ob_training_session. Self-build customers skip Phase 3 (Validate).",
+  "phases": [
+    { "phase_id": 1, "phase_key": "kickoff", "name": "Phase 1: Kick-Off", "plans": "full,self", "description": "Identify roles and send the documents the build needs." },
+    { "phase_id": 2, "phase_key": "initial_settings", "name": "Phase 2: Initial Settings", "plans": "full,self", "description": "Theme, order settings, pricing tiers, payment gateway and terms, optional custom domain." },
+    { "phase_id": 3, "phase_key": "validate", "name": "Phase 3: Validate (10-order proof)", "plans": "full", "description": "Ten real past orders priced in Allmoxy and approved by the customer." },
+    { "phase_id": 4, "phase_key": "configure", "name": "Phase 4: Configure", "plans": "full,self", "description": "Order workflow, triggers, shipping, accounting, API, production lines, team training." },
+    { "phase_id": 5, "phase_key": "go_live", "name": "Phase 5: Go-Live", "plans": "full,self", "description": "Soft launch with a few customers, ten live orders, then invite everyone." },
+    { "phase_id": 6, "phase_key": "grow", "name": "Phase 6: Grow", "plans": "full,self", "description": "Add-ons and quarterly reviews, ongoing." }
+  ],
+  "steps": [
+    { "step_key": "identify_roles", "phase_id": 1, "name": "Identify Roles", "owner": "customer" },
+    { "step_key": "upload_documents", "phase_id": 1, "name": "Upload Documents", "owner": "customer" },
+
+    { "step_key": "set_up_theme", "phase_id": 2, "name": "Set Up Theme", "owner": "customer", "settings_area": "Theme" },
+    { "step_key": "set_order_settings", "phase_id": 2, "name": "Set Order Settings", "owner": "customer", "settings_area": "Order Settings" },
+    { "step_key": "pricing_tiers", "phase_id": 2, "name": "Pricing Tiers", "owner": "customer", "settings_area": "Price Adjustments" },
+    { "step_key": "connect_payment_gateway", "phase_id": 2, "name": "Connect Payment Gateway", "owner": "customer", "settings_area": "Financial" },
+    { "step_key": "set_payment_terms", "phase_id": 2, "name": "Set Payment Terms", "owner": "customer", "settings_area": "Payment Terms" },
+    { "step_key": "set_up_custom_domain", "phase_id": 2, "name": "Set Up Custom Domain", "owner": "both", "optional": true },
+
+    { "step_key": "validation_orders", "phase_id": 3, "name": "Approve 10 Test Orders", "owner": "both", "target_count": 10 },
+
+    { "step_key": "map_order_workflow", "phase_id": 4, "name": "Map Order Workflow", "owner": "customer" },
+    { "step_key": "workflow_triggers", "phase_id": 4, "name": "Workflow Triggers", "owner": "customer", "settings_area": "Triggers" },
+    { "step_key": "set_up_shipping", "phase_id": 4, "name": "Set Up Shipping", "owner": "customer", "settings_area": "Shipping" },
+    { "step_key": "connect_accounting", "phase_id": 4, "name": "Connect Accounting", "owner": "customer", "settings_area": "Accounting" },
+    { "step_key": "webhooks_api", "phase_id": 4, "name": "Set Up Webhooks and API", "owner": "customer", "settings_area": "API", "optional": true },
+    { "step_key": "production_lines", "phase_id": 4, "name": "Set Up Production Lines", "owner": "customer", "settings_area": "Production Lines" },
+    { "step_key": "train_your_team", "phase_id": 4, "name": "Train Your Team", "owner": "both" },
+
+    { "step_key": "pick_soft_launch_customers", "phase_id": 5, "name": "Pick Soft-Launch Customers", "owner": "customer" },
+    { "step_key": "train_soft_launch_customers", "phase_id": 5, "name": "Train Soft-Launch Customers", "owner": "customer" },
+    { "step_key": "run_10_live_orders", "phase_id": 5, "name": "Run 10 Live Orders", "owner": "customer", "target_count": 10 },
+    { "step_key": "invite_all_customers", "phase_id": 5, "name": "Invite All Customers", "owner": "customer" },
+
+    { "step_key": "add_operator", "phase_id": 6, "name": "Add Operator", "owner": "customer", "optional": true },
+    { "step_key": "add_importer", "phase_id": 6, "name": "Add Importer", "owner": "customer", "optional": true },
+    { "step_key": "track_inventory", "phase_id": 6, "name": "Track Inventory", "owner": "customer", "optional": true },
+    { "step_key": "add_production_scanning", "phase_id": 6, "name": "Add Production Scanning", "owner": "customer", "optional": true },
+    { "step_key": "add_advanced_triggers", "phase_id": 6, "name": "Add Advanced Triggers", "owner": "customer", "optional": true },
+    { "step_key": "quarterly_review", "phase_id": 6, "name": "Hold Quarterly Review", "owner": "allmoxy" }
+  ],
+  "roles": [
+    { "role_key": "project_champion", "name": "Project Champion", "description": "One point of contact. Answers questions and signs off validation orders" },
+    { "role_key": "owner_manager", "name": "Owner / Manager", "description": "Final say on pricing, terms, and go-live. Approves the build" },
+    { "role_key": "sales", "name": "Sales", "description": "Quotes and bids, customer accounts, pricing tiers, and portal access" },
+    { "role_key": "customer_service", "name": "Customer Service", "description": "Enters and manages orders and answers customers" },
+    { "role_key": "designer_drafter", "name": "Designer / Drafter", "description": "Owns the design files (Cabinet Vision, Mozaik) that feed the Importer" },
+    { "role_key": "production_operations", "name": "Production / Operations", "description": "Runs the floor: partlists, labels, progress, and shipping" },
+    { "role_key": "catalog_owner", "name": "Catalog Owner", "description": "Keeps products, options, and pricing current after launch" },
+    { "role_key": "finance", "name": "Finance", "description": "Invoices, deposits, payments, and the accounting sync" },
+    { "role_key": "it_integrations", "name": "IT / Integrations", "description": "Logins, the payment gateway, and connections to other software" }
+  ],
+  "documents": [
+    { "doc_key": "product_specifications", "name": "Product specifications", "description": "Box lines, door and finish options, modifications, accessories" },
+    { "doc_key": "design_catalog_backup", "name": "Design software catalog backup", "description": "Full catalog from Cabinet Vision, Mozaik, Closet Pro, or similar" },
+    { "doc_key": "pricing", "name": "Pricing and price adjustments", "description": "List pricing, plus tiers or multipliers by customer" },
+    { "doc_key": "order_forms_past_orders", "name": "Current order forms and past orders", "description": "How customers order today; 20 to 30 past orders" },
+    { "doc_key": "design_job_files", "name": "Design software job files", "description": "Example jobs so the import can be matched" },
+    { "doc_key": "cutlist_cnc_samples", "name": "Cutlist and CNC file samples", "description": "Builds the partlist pages and the CNC exporter" },
+    { "doc_key": "output_pages_exports", "name": "Output pages and exports you use today", "description": "Invoices, partlists, labels, and exports another system reads" },
+    { "doc_key": "rules_exclusions", "name": "Rules and exclusions", "description": "Combinations not built or warrantied, size limits, disclaimers" },
+    { "doc_key": "supplier_hardware_catalogs", "name": "Supplier and hardware catalogs", "description": "Hinges, slides, and outside components priced or offered" },
+    { "doc_key": "brand_kit", "name": "Brand kit", "description": "Logos, fonts, imagery, form wording, product photos" }
+  ],
+  "training_sessions": [
+    { "session_key": "welcome_platform_overview", "phase_id": 1, "name": "Welcome & Platform Overview", "covers": "How an order flows from customer to production and invoicing", "audience": "Owner / Manager" },
+    { "session_key": "allmoxy_terminology", "phase_id": 1, "name": "Allmoxy Terminology", "covers": "Bids vs. orders, attributes, output pages, how products are built", "audience": "Owner / Manager" },
+    { "session_key": "how_to_get_help", "phase_id": 1, "name": "How to Get Help", "covers": "The knowledge base, your CSM, and how support works", "audience": "Owner / Manager" },
+    { "session_key": "how_customers_order", "phase_id": 2, "name": "How Your Customers Order", "covers": "The portal from the customer's side, login to confirmation", "audience": "Owner and Sales" },
+    { "session_key": "placing_managing_orders", "phase_id": 2, "name": "Placing & Managing Orders", "covers": "Entering orders for customers, bids, and order statuses", "audience": "Sales / Customer Service" },
+    { "session_key": "managing_customers", "phase_id": 2, "name": "Managing Your Customers", "covers": "Customer accounts, pricing tiers, and portal access", "audience": "Owner and Sales" },
+    { "session_key": "account_settings_review", "phase_id": 2, "name": "Account Settings Review", "covers": "Permissions, branding, order workflow, and financial defaults", "audience": "Owner / Manager" },
+    { "session_key": "full_customer_experience", "phase_id": 4, "name": "The Full Customer Experience", "covers": "The whole team walks an order from portal to completion", "audience": "Everyone" },
+    { "session_key": "automation_order_flow", "phase_id": 4, "name": "Automation & Order Flow", "covers": "Every automated email, when it fires, how to change it", "audience": "Owner and Customer Service" },
+    { "session_key": "production_shipping", "phase_id": 4, "name": "Production & Shipping", "covers": "Receiving jobs, partlists and labels, marking progress, shipping", "audience": "Production / Operations" },
+    { "session_key": "finance_payments", "phase_id": 4, "name": "Finance & Payments", "covers": "Invoices, payments through the gateway, AR, accounting export", "audience": "Finance / Owner" },
+    { "session_key": "catalog_maintenance", "phase_id": 4, "name": "Catalog Maintenance", "covers": "Adding options, materials, and price changes without a ticket", "audience": "Catalog Owner" },
+    { "session_key": "launch_preparation", "phase_id": 4, "name": "Launch Preparation", "covers": "The launch checklist and soft-launch customers", "audience": "Everyone" },
+    { "session_key": "first_live_order", "phase_id": 5, "name": "Your First Live Order", "covers": "A real order from placement to invoice, every department", "audience": "Everyone" },
+    { "session_key": "production_go_live_handoff", "phase_id": 5, "name": "Production Go-Live Handoff", "covers": "The floor runs live jobs on its own", "audience": "Production / Operations" },
+    { "session_key": "onboarding_your_customers", "phase_id": 5, "name": "Onboarding Your Customers", "covers": "Inviting customers to the portal and their first order", "audience": "Sales" },
+    { "session_key": "thirty_day_check_in", "phase_id": 5, "name": "30-Day Check-In", "covers": "What's working, recurring questions, adjustments", "audience": "Owner / Manager" },
+    { "session_key": "reporting_insights", "phase_id": 6, "name": "Reporting & Business Insights", "covers": "Sales, throughput, AR aging, order history", "audience": "Owner / Finance" },
+    { "session_key": "inventory_materials", "phase_id": 6, "name": "Inventory & Materials", "covers": "Stock, allocation, purchase orders", "audience": "Operations / Owner" },
+    { "session_key": "quarterly_business_review", "phase_id": 6, "name": "Quarterly Business Review", "covers": "How Allmoxy is used and goals for next quarter", "audience": "Owner / Manager" }
+  ]
+}

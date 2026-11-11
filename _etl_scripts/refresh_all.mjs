@@ -808,6 +808,13 @@ console.log('\n[7/5] Implementation (JIRA + Harvest, optional)');
   }
 }
 
+// Onboarding (Beau, 2026-11-11): where every customer is in the six-phase program,
+// reverse-engineered from HubSpot / Jira / Harvest / Stripe / orders until the instance
+// Onboarding tab records it. Writes onboarding.json + onboarding/seed.sql (Aurora load is
+// manual: load_onboarding_to_aurora.mjs).
+console.log('\n[onboarding] Onboarding phases');
+try { runScript('build_onboarding.mjs', null); } catch (e) { console.log('  ⚠ onboarding build failed (kept previous snapshot):', e.message); }
+
 // Features (DEV board, optional). DEV tickets tagged with customers, weighted by
 // each tagged customer's revenue — a CS→Dev prioritization signal. Needs only
 // JIRA creds; build_features joins against the customer_profiles built above.
