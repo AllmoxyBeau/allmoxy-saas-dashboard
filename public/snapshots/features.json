@@ -1,17 +1,17 @@
 {
   "tab": "features",
-  "fetchedAt": "2026-11-10T03:00:44.733Z",
-  "jira_fetchedAt": "2026-11-10T03:00:22.029Z",
+  "fetchedAt": "2026-11-11T15:26:38.760Z",
+  "jira_fetchedAt": "2026-11-11T15:25:57.513Z",
   "note": "DEV-board tickets tagged with customers (Customer labels field), joined to customer revenue. Revenue weight = sum of tagged customers' current MRR. A CS→Dev prioritization signal.",
   "aggregates": {
-    "total_tickets": 4601,
-    "open_tickets": 889,
-    "done_tickets": 3712,
-    "tickets_with_matched_customer": 2318,
-    "open_mrr_at_stake": 102283.47,
-    "open_customers_distinct": 90,
-    "open_mrr_ticket_weighted": 2754570.28,
-    "distinct_customers_tagged": 154,
+    "total_tickets": 4604,
+    "open_tickets": 891,
+    "done_tickets": 3713,
+    "tickets_with_matched_customer": 2320,
+    "open_mrr_at_stake": 106449.47,
+    "open_customers_distinct": 91,
+    "open_mrr_ticket_weighted": 2758736.28,
+    "distinct_customers_tagged": 155,
     "unmatched_labels": [
       "2020",
       "AWIHawaii",
@@ -15122,7 +15122,7 @@
         }
       ],
       "created": "2026-06-22",
-      "updated": "2026-11-09",
+      "updated": "2026-11-10",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-12225",
       "tag_count": 2,
@@ -16235,6 +16235,44 @@
         "NovaSouth",
         "StanisciDesign",
         "netley"
+      ]
+    },
+    {
+      "key": "DEV-14482",
+      "summary": "Premiere Eurocase - Orders list tag filter does not narrow results (example tag: Cabinets)",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 816,
+      "customers": [
+        {
+          "allmoxy_customer_id": 161,
+          "name": "Premier EuroCase",
+          "mrr": 5000,
+          "lifetime": 488691.11,
+          "status": "active"
+        },
+        {
+          "allmoxy_customer_id": 26,
+          "name": "Rehau Inc.",
+          "mrr": 3148.95,
+          "lifetime": 220907.1,
+          "status": "active"
+        }
+      ],
+      "created": "2026-11-10",
+      "updated": "2026-11-10",
+      "resolved": "2026-11-10",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14482",
+      "tag_count": 3,
+      "customer_count": 2,
+      "active_customer_count": 2,
+      "total_mrr": 8148.95,
+      "total_arr": 97787.4,
+      "total_lifetime": 709598.21,
+      "unmatched_labels": [
+        "fryburgdoor"
       ]
     },
     {
@@ -41095,7 +41133,7 @@
     {
       "key": "DEV-13566",
       "summary": "Sales reps: Rep filter, Rep column and restricted-rep scoping on existing reports",
-      "status": "Ready For QA",
+      "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "Medium",
@@ -41110,9 +41148,75 @@
         }
       ],
       "created": "2026-10-01",
-      "updated": "2026-11-09",
+      "updated": "2026-11-10",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-13566",
+      "tag_count": 4,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 5000,
+      "total_arr": 60000,
+      "total_lifetime": 557305.75,
+      "unmatched_labels": [
+        "NationalWood",
+        "Paragon",
+        "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-14313",
+      "summary": "Sales Rep mode: sub rep roles (nest a rep type under another) with a manager override",
+      "status": "In QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "Medium",
+      "issue_score": 178,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5000,
+          "lifetime": 557305.75,
+          "status": "active"
+        }
+      ],
+      "created": "2026-10-30",
+      "updated": "2026-11-10",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14313",
+      "tag_count": 4,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 5000,
+      "total_arr": 60000,
+      "total_lifetime": 557305.75,
+      "unmatched_labels": [
+        "NationalWood",
+        "Paragon",
+        "mykitch"
+      ]
+    },
+    {
+      "key": "DEV-13493",
+      "summary": "Security: four holes found while building Sales reps (payments search, order contact, individual tags, payments import)",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 212,
+      "customers": [
+        {
+          "allmoxy_customer_id": 176,
+          "name": "Primary Kitchen",
+          "mrr": 5000,
+          "lifetime": 557305.75,
+          "status": "active"
+        }
+      ],
+      "created": "2026-09-29",
+      "updated": "2026-11-10",
+      "resolved": "2026-11-09",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13493",
       "tag_count": 4,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -41146,39 +41250,6 @@
       "updated": "2026-11-09",
       "resolved": "2026-10-30",
       "url": "https://allmoxy.atlassian.net/browse/DEV-1357",
-      "tag_count": 4,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 5000,
-      "total_arr": 60000,
-      "total_lifetime": 557305.75,
-      "unmatched_labels": [
-        "NationalWood",
-        "Paragon",
-        "mykitch"
-      ]
-    },
-    {
-      "key": "DEV-13493",
-      "summary": "Security: four holes found while building Sales reps (payments search, order contact, individual tags, payments import)",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 212,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5000,
-          "lifetime": 557305.75,
-          "status": "active"
-        }
-      ],
-      "created": "2026-09-29",
-      "updated": "2026-11-09",
-      "resolved": "2026-11-09",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13493",
       "tag_count": 4,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -41245,39 +41316,6 @@
       "updated": "2026-11-09",
       "resolved": "2026-11-05",
       "url": "https://allmoxy.atlassian.net/browse/DEV-14444",
-      "tag_count": 4,
-      "customer_count": 1,
-      "active_customer_count": 1,
-      "total_mrr": 5000,
-      "total_arr": 60000,
-      "total_lifetime": 557305.75,
-      "unmatched_labels": [
-        "NationalWood",
-        "Paragon",
-        "mykitch"
-      ]
-    },
-    {
-      "key": "DEV-14313",
-      "summary": "Sales Rep mode: sub rep roles (nest a rep type under another) with a manager override",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "Medium",
-      "issue_score": 178,
-      "customers": [
-        {
-          "allmoxy_customer_id": 176,
-          "name": "Primary Kitchen",
-          "mrr": 5000,
-          "lifetime": 557305.75,
-          "status": "active"
-        }
-      ],
-      "created": "2026-10-30",
-      "updated": "2026-11-09",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-14313",
       "tag_count": 4,
       "customer_count": 1,
       "active_customer_count": 1,
@@ -48096,6 +48134,35 @@
       ]
     },
     {
+      "key": "DEV-14484",
+      "summary": "Timberline Cabinet Doors - Orders with supplier Got Drawers fail with \"Supplier gotdrawers was unable to process its portion of this order\"",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [
+        {
+          "allmoxy_customer_id": 13,
+          "name": "Timberline Doors",
+          "mrr": 4166,
+          "lifetime": 335025.81,
+          "status": "active"
+        }
+      ],
+      "created": "2026-11-10",
+      "updated": "2026-11-10",
+      "resolved": "2026-11-10",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14484",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 1,
+      "total_mrr": 4166,
+      "total_arr": 49992,
+      "total_lifetime": 335025.81,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-4939",
       "summary": "Labels per line vs per item",
       "status": "Resolved",
@@ -48192,7 +48259,7 @@
         }
       ],
       "created": "2025-01-07",
-      "updated": "2026-11-06",
+      "updated": "2026-11-11",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-9433",
       "tag_count": 3,
@@ -55016,7 +55083,7 @@
         }
       ],
       "created": "2026-10-05",
-      "updated": "2026-11-06",
+      "updated": "2026-11-10",
       "resolved": "2026-10-12",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13602",
       "tag_count": 2,
@@ -63023,7 +63090,7 @@
     {
       "key": "DEV-7408",
       "summary": "Edit Purchase Orders",
-      "status": "Ready To Release",
+      "status": "In Progress",
       "stage_category": "In Progress",
       "issue_type": "New Feature",
       "priority": "High",
@@ -63045,7 +63112,7 @@
         }
       ],
       "created": "2023-11-30",
-      "updated": "2026-11-06",
+      "updated": "2026-11-10",
       "resolved": "2026-10-08",
       "url": "https://allmoxy.atlassian.net/browse/DEV-7408",
       "tag_count": 4,
@@ -63296,7 +63363,7 @@
     {
       "key": "DEV-14158",
       "summary": "Mid Michigan Wood - Orders list printable PDF prints 25 orders per page where an earlier printout fit 47",
-      "status": "In Progress",
+      "status": "Ready for Staging QA",
       "stage_category": "In Progress",
       "issue_type": "Bug",
       "priority": "Highest",
@@ -63311,7 +63378,7 @@
         }
       ],
       "created": "2026-10-26",
-      "updated": "2026-11-09",
+      "updated": "2026-11-10",
       "resolved": null,
       "url": "https://allmoxy.atlassian.net/browse/DEV-14158",
       "tag_count": 1,
@@ -70864,6 +70931,35 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-13364",
+      "summary": "Settings › E-commerce › Order Settings",
+      "status": "In Progress",
+      "stage_category": "In Progress",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 212,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-09-24",
+      "updated": "2026-11-10",
+      "resolved": "2026-09-24",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-13364",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
       "key": "DEV-13379",
       "summary": "Settings › Integrations › Zapier",
       "status": "In Progress",
@@ -70881,9 +70977,38 @@
         }
       ],
       "created": "2026-09-24",
-      "updated": "2026-11-09",
+      "updated": "2026-11-10",
       "resolved": "2026-09-24",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13379",
+      "tag_count": 1,
+      "customer_count": 1,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 252,
+      "unmatched_labels": []
+    },
+    {
+      "key": "DEV-14198",
+      "summary": "Connect Triage to Investigate and Bug Verification",
+      "status": "Ready for Dev",
+      "stage_category": "To Do",
+      "issue_type": "Task",
+      "priority": "Medium",
+      "issue_score": 193,
+      "customers": [
+        {
+          "allmoxy_customer_id": 4,
+          "name": "Allmoxy",
+          "mrr": 0,
+          "lifetime": 252,
+          "status": "churned"
+        }
+      ],
+      "created": "2026-10-28",
+      "updated": "2026-11-09",
+      "resolved": "2026-10-28",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14198",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -71009,35 +71134,6 @@
       "unmatched_labels": []
     },
     {
-      "key": "DEV-13364",
-      "summary": "Settings › E-commerce › Order Settings",
-      "status": "In Progress",
-      "stage_category": "In Progress",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 212,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-09-24",
-      "updated": "2026-11-09",
-      "resolved": "2026-09-24",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-13364",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
       "key": "DEV-13371",
       "summary": "Settings › Integrations › Accounting",
       "status": "Ready for Dev",
@@ -71087,35 +71183,6 @@
       "updated": "2026-11-06",
       "resolved": "2026-09-24",
       "url": "https://allmoxy.atlassian.net/browse/DEV-13370",
-      "tag_count": 1,
-      "customer_count": 1,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 252,
-      "unmatched_labels": []
-    },
-    {
-      "key": "DEV-14198",
-      "summary": "Connect Triage to Investigate and Bug Verification",
-      "status": "Ready for Dev",
-      "stage_category": "To Do",
-      "issue_type": "Task",
-      "priority": "Medium",
-      "issue_score": 193,
-      "customers": [
-        {
-          "allmoxy_customer_id": 4,
-          "name": "Allmoxy",
-          "mrr": 0,
-          "lifetime": 252,
-          "status": "churned"
-        }
-      ],
-      "created": "2026-10-28",
-      "updated": "2026-11-06",
-      "resolved": "2026-10-28",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-14198",
       "tag_count": 1,
       "customer_count": 1,
       "active_customer_count": 0,
@@ -80910,16 +80977,39 @@
       "unmatched_labels": []
     },
     {
+      "key": "DEV-5453",
+      "summary": "Always show readonly still show shipping method",
+      "status": "Ready For QA",
+      "stage_category": "In Progress",
+      "issue_type": "New Feature",
+      "priority": "High",
+      "issue_score": 277,
+      "customers": [],
+      "created": "2022-12-06",
+      "updated": "2026-11-11",
+      "resolved": null,
+      "url": "https://allmoxy.atlassian.net/browse/DEV-5453",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "ciminos"
+      ]
+    },
+    {
       "key": "DEV-14441",
       "summary": "Lewis Cabinet / Cimino's - Report and company Orders page usability feedback (7 items)",
-      "status": "Ready For QA",
+      "status": "In QA",
       "stage_category": "In Progress",
       "issue_type": "Task",
       "priority": "Medium",
       "issue_score": 178,
       "customers": [],
       "created": "2026-11-05",
-      "updated": "2026-11-09",
+      "updated": "2026-11-10",
       "resolved": "2026-11-06",
       "url": "https://allmoxy.atlassian.net/browse/DEV-14441",
       "tag_count": 2,
@@ -80931,6 +81021,52 @@
       "unmatched_labels": [
         "ciminos",
         "lewiscabinet"
+      ]
+    },
+    {
+      "key": "DEV-14483",
+      "summary": "Mullwoods (Fryburg Door) - Legacy Shipping report omits three In Progress Customer Pickup orders with November 2026 ship dates",
+      "status": "New",
+      "stage_category": "To Do",
+      "issue_type": "Investigate",
+      "priority": "Medium",
+      "issue_score": null,
+      "customers": [],
+      "created": "2026-11-10",
+      "updated": "2026-11-10",
+      "resolved": "2026-11-10",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14483",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "fryburgdoor"
+      ]
+    },
+    {
+      "key": "DEV-14256",
+      "summary": "Shipping Report (Legacy) - Active Method \"Select All\" not saving",
+      "status": "In Production",
+      "stage_category": "Done",
+      "issue_type": "Bug",
+      "priority": "Highest",
+      "issue_score": 719,
+      "customers": [],
+      "created": "2026-10-29",
+      "updated": "2026-11-10",
+      "resolved": "2026-11-02",
+      "url": "https://allmoxy.atlassian.net/browse/DEV-14256",
+      "tag_count": 1,
+      "customer_count": 0,
+      "active_customer_count": 0,
+      "total_mrr": 0,
+      "total_arr": 0,
+      "total_lifetime": 0,
+      "unmatched_labels": [
+        "DCDrawers"
       ]
     },
     {
@@ -82200,29 +82336,6 @@
       ]
     },
     {
-      "key": "DEV-14256",
-      "summary": "Shipping Report (Legacy) - Active Method \"Select All\" not saving",
-      "status": "In Production",
-      "stage_category": "Done",
-      "issue_type": "Bug",
-      "priority": "Highest",
-      "issue_score": 719,
-      "customers": [],
-      "created": "2026-10-29",
-      "updated": "2026-11-02",
-      "resolved": "2026-11-02",
-      "url": "https://allmoxy.atlassian.net/browse/DEV-14256",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "DCDrawers"
-      ]
-    },
-    {
       "key": "DEV-11876",
       "summary": "API - new export class system",
       "status": "Resolved",
@@ -82857,29 +82970,6 @@
       "updated": "2026-10-23",
       "resolved": "2025-12-19",
       "url": "https://allmoxy.atlassian.net/browse/DEV-11231",
-      "tag_count": 1,
-      "customer_count": 0,
-      "active_customer_count": 0,
-      "total_mrr": 0,
-      "total_arr": 0,
-      "total_lifetime": 0,
-      "unmatched_labels": [
-        "ciminos"
-      ]
-    },
-    {
-      "key": "DEV-5453",
-      "summary": "Always show readonly still show shipping method",
-      "status": "Ready For QA",
-      "stage_category": "In Progress",
-      "issue_type": "New Feature",
-      "priority": "High",
-      "issue_score": 277,
-      "customers": [],
-      "created": "2022-12-06",
-      "updated": "2026-10-23",
-      "resolved": null,
-      "url": "https://allmoxy.atlassian.net/browse/DEV-5453",
       "tag_count": 1,
       "customer_count": 0,
       "active_customer_count": 0,

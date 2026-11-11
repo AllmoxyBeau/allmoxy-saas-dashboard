@@ -10,6 +10,7 @@
  *   3. Engagement Recency   — up to 20 pts (notes_last_contacted)
  *   4. Explicit Risk Signals — up to -20 pts penalty (note keyword scan)
  *   5. Tenure × Launch Traj — up to -15 pts penalty (gym-member detection)
+ *   7. Usage Trend          — up to -35 pts penalty (verified-order $ trend, all customers)
  *
  * Tier thresholds:
  *   With order data (100pt max):  red <40, yellow 40-69, green 70+
@@ -65,6 +66,39 @@ function lookupOwner(profile) {
 // status is carried on each row, not used to drop a paying customer from the risk view.
 const cohort = (profiles?.rows || []).filter((r) => r.active_today === true);
 console.log(`Paying customer cohort (canonical customer base, active_today): ${cohort.length} customers · $${round2(cohort.reduce((s, r) => s + (r.current_subscription_mrr || 0), 0)).toLocaleString()} MRR`);
+
+// ── SIGNAL 7: USAGE TREND (Beau, 2026-11-11) ────────────────────────────────────
+// Cabredo cancelled after verified orders went $3.9M (2023) → $1.9M (2024) → $0 (2025)
+// and scored GREEN 80, because nothing looked at the trend. This compares verified-order
+// dollars in the last 12 complete months with the 12 before, from the Aurora warehouse,
+// for EVERY customer — bid-only ones included (a bid-only label must not hide a collapse).
+//   down ≥80% vs prior 12 months → −35     down ≥50% → −20
+//   otherwise, last 12 months ≥80% below the best calendar year since 2022 → −25
+// Only when the earlier base is material (prior 12 months ≥ $20K, or peak year ≥ $100K),
+// so small accounts don't swing on a single order.
+const USAGE_MONTHLY = readJson(path.join(ROOT, '_etl_scripts/cache/aurora_orders_verified_monthly.json'))?.by_customer || {};
+const USAGE_MIN_PRIOR = 20000, USAGE_MIN_PEAK = 100000;
+const usageAddMonths = (m, k) => { const [y, mo] = m.split('-').map(Number); const d = new Date(Date.UTC(y, mo - 1 + k, 1)); return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`; };
+const USAGE_END = usageAddMonths(new Date().toISOString().slice(0, 7), -1);   // last complete month
+const USAGE_TTM_FROM = usageAddMonths(USAGE_END, -11), USAGE_PRIOR_FROM = usageAddMonths(USAGE_END, -23), USAGE_PRIOR_TO = usageAddMonths(USAGE_END, -12);
+function scoreSignal7(aid) {
+  const o = USAGE_MONTHLY[String(aid)];
+  const win = (a, b) => Object.entries(o || {}).filter(([m]) => m >= a && m <= b).reduce((s, [, v]) => s + (v?.usd || 0), 0);
+  const ttm = win(USAGE_TTM_FROM, USAGE_END), prior = win(USAGE_PRIOR_FROM, USAGE_PRIOR_TO);
+  const firstYear = 2022, lastYear = Number(USAGE_END.slice(0, 4));
+  let peak = 0, peakYear = null;
+  for (let y = firstYear; y <= lastYear; y++) { const v = win(`${y}-01`, `${y}-12`); if (v > peak) { peak = v; peakYear = y; } }
+  const r = (v) => Math.round(v);
+  const base = { usage_ttm_usd: r(ttm), usage_prior_usd: r(prior), usage_peak_usd: r(peak), usage_peak_year: peakYear, usage_window: `${USAGE_TTM_FROM}..${USAGE_END}` };
+  if (!o) return { ...base, score: 0, label: 'no_usage_data', detail: 'No verified-order history in the warehouse' };
+  const drop = prior > 0 ? 1 - ttm / prior : null;
+  const fromPeak = peak > 0 ? 1 - ttm / peak : null;
+  const usd = (v) => `$${r(v).toLocaleString('en-US')}`;
+  if (prior >= USAGE_MIN_PRIOR && drop >= 0.8) return { ...base, usage_drop_pct: Math.round(drop * 100), score: -35, label: 'collapsing', detail: `Verified orders ${usd(ttm)} in the last 12 months vs ${usd(prior)} the 12 before (−${Math.round(drop * 100)}%)` };
+  if (prior >= USAGE_MIN_PRIOR && drop >= 0.5) return { ...base, usage_drop_pct: Math.round(drop * 100), score: -20, label: 'declining', detail: `Verified orders ${usd(ttm)} in the last 12 months vs ${usd(prior)} the 12 before (−${Math.round(drop * 100)}%)` };
+  if (peak >= USAGE_MIN_PEAK && fromPeak >= 0.8) return { ...base, usage_drop_pct: Math.round(fromPeak * 100), score: -25, label: 'far_below_peak', detail: `Verified orders ${usd(ttm)} in the last 12 months vs ${usd(peak)} in ${peakYear} (−${Math.round(fromPeak * 100)}% from peak)` };
+  return { ...base, usage_drop_pct: drop != null ? Math.round(drop * 100) : null, score: 0, label: 'steady', detail: prior > 0 ? `Verified orders ${usd(ttm)} in the last 12 months vs ${usd(prior)} the 12 before` : `Verified orders ${usd(ttm)} in the last 12 months` };
+}
 
 const ordersByCustomer = new Map();
 for (const [k, v] of Object.entries(orders?.by_customer || {})) ordersByCustomer.set(Number(k), v);
@@ -336,7 +370,11 @@ function scoreCustomer(c) {
   const s6 = scoreSignal6(c);
   const signal_6_pulse = s6.score;
 
-  const total = signal_1_orders + signal_2_launch + signal_3_recency + signal_4_risk + signal_5_tenure + signal_6_pulse;
+  // Signal 7: usage trend — applies to every customer, bid-only included.
+  const s7 = scoreSignal7(c.allmoxy_customer_id);
+  const signal_7_usage = s7.score;
+
+  const total = signal_1_orders + signal_2_launch + signal_3_recency + signal_4_risk + signal_5_tenure + signal_6_pulse + signal_7_usage;
 
   // Determine tier + scoring-data status. We ALWAYS assign a tier — never
   // 'unscored' — because the page needs every cohort customer in one of the
@@ -392,7 +430,8 @@ function scoreCustomer(c) {
     || s2to5?.tier_override_reason === 'hard_override_red'
     || s2to5?.gym_member_cliff
     || s2to5?.launch_status === 'cancelled'
-    || signal_6_pulse < 0; // CS rep explicitly set Pulse=red — trust them over grace
+    || signal_6_pulse < 0 // CS rep explicitly set Pulse=red — trust them over grace
+    || signal_7_usage < 0;
   if (isGracePeriod && !hasNegativeSignals) {
     tier = 'green';
   }
@@ -435,6 +474,8 @@ function scoreCustomer(c) {
   if (launchState === 'cancelled') driverCandidates.push([100, 'Cancellation in motion', 'HubSpot shows this account as cancelled/closing — they are actively on their way out.']);
   if (riskSigCount > 0 || signal_4_risk < 0) driverCandidates.push([90, 'Explicit dissatisfaction', `${riskSigCount || 'Risk'} risk signal(s) in HubSpot notes — churn language or dissatisfaction has surfaced in conversations.`]);
   if (signal_6_pulse < 0) driverCandidates.push([85, 'CS flagged unhealthy', s6.detail ? `CS Health Pulse is RED — ${s6.detail}` : 'The CS rep set this account’s Health Pulse to RED.']);
+  if (signal_7_usage <= -25) driverCandidates.push([82, 'Usage collapsing', `${s7.detail} — they are running far less work through Allmoxy and may be moving to something else.`]);
+  else if (signal_7_usage < 0) driverCandidates.push([72, 'Declining usage', `${s7.detail} — likely getting less value from Allmoxy or shifting work elsewhere.`]);
   if (s1.label === 'stopped') driverCandidates.push([80, 'Orders stopped', 'Verified orders have stopped — they are no longer running production volume through Allmoxy, so they may not see ongoing value.']);
   else if (s1.label === 'declining' || (yoyPctVal != null && yoyPctVal <= -0.25)) driverCandidates.push([70, 'Declining usage', `Order volume is down${yoyPctVal != null ? ` ${Math.round(yoyPctVal * 100)}% YoY` : ''} — likely getting less value from Allmoxy or shifting work elsewhere.`]);
   if (failedCount > 0) driverCandidates.push([65, 'Billing friction', `${failedCount} failed charge(s) in the last 90 days — card/payment problems are creating friction and a reason to reconsider the spend.`]);
@@ -489,6 +530,15 @@ function scoreCustomer(c) {
     signal_5_override_applied,
     // Signal 6: CS Health Pulse (HubSpot rep judgment, +25 / 0 / -25)
     signal_6_pulse,
+    signal_7_usage,
+    usage_label: s7.label,
+    usage_detail: s7.detail,
+    usage_ttm_usd: s7.usage_ttm_usd,
+    usage_prior_usd: s7.usage_prior_usd,
+    usage_peak_usd: s7.usage_peak_usd,
+    usage_peak_year: s7.usage_peak_year,
+    usage_drop_pct: s7.usage_drop_pct ?? null,
+    usage_window: s7.usage_window,
     pulse_color: s6.color,
     pulse_label: s6.label,
     pulse_detail: s6.detail,

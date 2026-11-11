@@ -42,6 +42,7 @@ type ScoredCustomer = {
   signal_4_risk: number;
   signal_5_tenure: number;
   signal_6_pulse?: number;
+  signal_7_usage?: number; usage_label?: string; usage_detail?: string; usage_drop_pct?: number | null;
   pulse_color?: 'green' | 'yellow' | 'red' | null;
   pulse_label?: string;
   pulse_detail?: string | null;
@@ -192,7 +193,7 @@ export default function ChurnRiskMatrixDS() {
       if (effectiveBidOnly === c.is_bid_only) return c;
       const s1New = effectiveBidOnly ? 35 : (c.is_bid_only ? 0 : c.signal_1_orders);
       const s2New = effectiveBidOnly ? 25 : (c.is_bid_only ? 0 : c.signal_2_launch);
-      const newTotal = s1New + s2New + c.signal_3_recency + c.signal_4_risk + c.signal_5_tenure + (c.signal_6_pulse || 0);
+      const newTotal = s1New + s2New + c.signal_3_recency + c.signal_4_risk + c.signal_5_tenure + (c.signal_6_pulse || 0) + (c.signal_7_usage || 0);
       let newTier: typeof c.tier;
       if (effectiveBidOnly) {
         if (newTotal >= 70) newTier = 'green';
@@ -325,7 +326,7 @@ export default function ChurnRiskMatrixDS() {
       ['primary_segment', 'Primary Segment'], ['sub_segment', 'Sub Segment'], ['orders_label', 'Order State'], ['orders_current_year', 'Orders YTD'],
       ['orders_prior_year', 'Orders Prior Yr'], ['launch_status', 'Launch Status'], ['days_since_last_contact', 'Days Since Contact'],
       ['failed_3mo_count', 'Failed Charges (3mo)'], ['signal_1_orders', 'S1 Orders'], ['signal_2_launch', 'S2 Launch'], ['signal_3_recency', 'S3 Recency'],
-      ['signal_4_risk', 'S4 Risk'], ['signal_5_tenure', 'S5 Tenure'], ['narrative', 'Narrative'], ['hubspot_company_id', 'HubSpot ID'],
+      ['signal_4_risk', 'S4 Risk'], ['signal_5_tenure', 'S5 Tenure'], ['signal_6_pulse', 'S6 Pulse'], ['signal_7_usage', 'S7 Usage trend'], ['usage_detail', 'Usage trend detail'], ['narrative', 'Narrative'], ['hubspot_company_id', 'HubSpot ID'],
     ];
     downloadCsv(`churn_risk_matrix_${new Date().toISOString().slice(0, 10)}`, cols.map(([, l]) => l),
       filtered.map((c) => cols.map(([k]) => { const v = c[k]; return v == null ? '' : typeof v === 'object' ? JSON.stringify(v) : (v as string | number); })));
@@ -401,6 +402,7 @@ export default function ChurnRiskMatrixDS() {
           ['5 · Tenure × Launch', detail.years_with_us != null ? `${detail.years_with_us.toFixed(1)}y tenure, ${detail.launch_status}` : '—', String(detail.signal_5_tenure)],
           [<span key="p" className="am-row am-row--tight">6 · CS Health Pulse{detail.pulse_color && <span className={`am-tag am-tag--${pulseWord(detail.pulse_color)[1]}`}>{pulseWord(detail.pulse_color)[0]}</span>}</span>,
             <W key="v">{detail.pulse_detail ?? 'Not set in HubSpot'}</W>, `${(detail.signal_6_pulse ?? 0) > 0 ? '+' : ''}${detail.signal_6_pulse ?? 0}`],
+          ['7 · Usage Trend', <W key="u">{detail.usage_detail ?? '—'}</W>, String(detail.signal_7_usage ?? 0)],
         ]}
         foot={['Total', '', String(detail.total_score)]} />
       <span className="am-chart__title">Quick facts</span>
@@ -438,7 +440,7 @@ export default function ChurnRiskMatrixDS() {
     <DsPage
       path="/churn-risk-matrix"
       title="Churn Risk Matrix"
-      subtitle="Every customer in the canonical customer base (live subscription, scored at current subscription MRR) on a health model built from orders, launch, contact recency, risk signals, tenure and the CS pulse. The customers most likely to churn come first, sorted by ARR at risk."
+      subtitle="Every customer in the canonical customer base (live subscription, scored at current subscription MRR) on a health model built from orders, launch, contact recency, risk signals, tenure, the CS pulse and the 12-month usage trend (verified orders vs the prior 12 months). The customers most likely to churn come first, sorted by ARR at risk."
       actions={<>
         <button className="am-btn am-btn--text" onClick={() => setHelp(true)}><Icon name="info" />How the score works</button>
         <button className="am-btn am-btn--outlined" onClick={exportCsv} disabled={!filtered.length}><Icon name="download" />Export risk matrix</button>
