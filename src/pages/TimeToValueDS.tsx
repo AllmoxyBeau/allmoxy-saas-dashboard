@@ -259,7 +259,6 @@ export default function TimeToValueDS() {
             rows={filtered.map((c) => [
               <span key="n" style={{ display: 'block', minWidth: 160, maxWidth: 250 }}>
                 <button className="am-btn am-btn--text" style={{ whiteSpace: 'normal', textAlign: 'left', height: 'auto' }} onClick={() => navigate(`/customer-detail?id=${encodeURIComponent(String(c.allmoxy_customer_id))}`)}>{c.name}</button>
-                {c.primary_segment && <span className="am-card__text" style={{ display: 'block' }}>{c.primary_segment}{c.sub_segment ? ` · ${c.sub_segment}` : ''}</span>}
               </span>,
               catTag(c.category),
               c.owner_name || 'Unassigned',
