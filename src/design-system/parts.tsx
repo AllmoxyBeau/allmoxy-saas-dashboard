@@ -514,16 +514,22 @@ type Theme = 'dark' | 'light';
 const THEME_KEY = 'am-theme';
 const readTheme = (): Theme => { try { return localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark'; } catch { return 'dark'; } };
 
+// Menu by team (Beau, 2026-11-11): who opens the page decides where it lives.
 // `also`: pages reached only by link (not listed in the menu) that still light up their section.
-const SECTIONS: Array<{ name: string; icon: string; financial?: boolean; pages: Array<[string, string]>; also?: string[] }> = [
+const SECTIONS: Array<{ name: string; icon: string; pages: Array<[string, string]>; also?: string[] }> = [
+  { name: 'Sales', icon: 'trending_up', pages: [['Sales Budget', '/sales-budget'], ['Payments Opportunity', '/payments-opportunity'], ['Project Candidates', '/project-candidates'], ['Segments', '/segments']] },
+  { name: 'Implementation', icon: 'rocket_launch', pages: [['Implementation', '/implementation'], ['Implementation Schedule', '/implementation-schedule'], ['Activation', '/activation'], ['Time to Value', '/time-to-value']] },
   // Customer Detail is opened from a customer's name (Customers table or any customer link), not the menu.
-  { name: 'Customers', icon: 'group', also: ['/customer-detail'], pages: [['Customers', '/customers'], ['Customer Health', '/customer-health'], ['Time to Value', '/time-to-value'], ['Activation', '/activation'], ['Rep Dashboard', '/rep-dashboard'], ['Custom Report', '/custom-report']] },
-  { name: 'Revenue', icon: 'attach_money', pages: [['Current Month', '/current-month'], ['Revenue Waterfall', '/revenue-waterfall'], ['Revenue Recognition', '/revenue-recognition'], ['AR Adjustments', '/ar-adjustments'], ['Collections', '/collections'], ['Services', '/services'], ['Stripe Connect', '/stripe-connect-revenue'], ['Payments Opportunity', '/payments-opportunity'], ['Sales Budget', '/sales-budget']] },
-  { name: 'Retention', icon: 'timeline', pages: [['Logo Waterfall', '/logo-waterfall'], ['Cohort Retention', '/cohort-retention'], ['Net Revenue Retention', '/net-revenue-retention'], ['Churn Timeline', '/churn-timeline'], ['Churn Patterns', '/churn-patterns'], ['Churn Investigator', '/churn-investigator'], ['Churn Risk Matrix', '/churn-risk-matrix'], ['Renewal Management', '/renewal-management'], ['Contracts', '/contracts']] },
-  { name: 'Operations', icon: 'construction', pages: [['Implementation', '/implementation'], ['Implementation Schedule', '/implementation-schedule'], ['Service Tickets', '/service-tickets'], ['Orders Verified', '/orders-verified'], ['Features', '/features'], ['Bug Report', '/bug-report'], ['Project Candidates', '/project-candidates'], ['Data Cleanup', '/data-cleanup']] },
-  { name: 'Finance', icon: 'insert_chart', financial: true, pages: [['Unit Economics', '/unit-economics'], ['Efficiency', '/efficiency'], ['Segments', '/segments'], ['Profit & Loss', '/profit-loss'], ['EBITDA Bridge', '/ebitda-bridge'], ['Stripe and QB Reconciliation', '/stripe-qb-reconciliation']] },
-  { name: 'M&A', icon: 'verified', financial: true, pages: [['Scorecard', '/scorecard'], ['CIM Packet', '/cim-packet'], ['Banker Handoff', '/banker-handoff'], ['Adjustments Register', '/adjustments-register'], ['Annual Amortization', '/annual-amortization-evidence'], ['Definitions', '/definitions'], ['Invariant Tests', '/invariant-tests']] },
+  { name: 'Customer Success', icon: 'support_agent', also: ['/customer-detail'], pages: [['Customers', '/customers'], ['Customer Health', '/customer-health'], ['Churn Risk Matrix', '/churn-risk-matrix'], ['Rep Dashboard', '/rep-dashboard'], ['Renewal Management', '/renewal-management'], ['Contracts', '/contracts'], ['Service Tickets', '/service-tickets'], ['Custom Report', '/custom-report']] },
+  { name: 'Product', icon: 'widgets', pages: [['Orders Verified', '/orders-verified'], ['Features', '/features'], ['Bug Report', '/bug-report']] },
+  { name: 'Revenue & Retention', icon: 'attach_money', pages: [['Current Month', '/current-month'], ['Revenue Waterfall', '/revenue-waterfall'], ['Logo Waterfall', '/logo-waterfall'], ['Net Revenue Retention', '/net-revenue-retention'], ['Cohort Retention', '/cohort-retention'], ['Churn Timeline', '/churn-timeline'], ['Churn Patterns', '/churn-patterns'], ['Churn Investigator', '/churn-investigator'], ['Services', '/services'], ['Stripe Connect', '/stripe-connect-revenue']] },
+  { name: 'Finance', icon: 'account_balance', pages: [['Revenue Recognition', '/revenue-recognition'], ['AR Adjustments', '/ar-adjustments'], ['Collections', '/collections'], ['Profit & Loss', '/profit-loss'], ['EBITDA Bridge', '/ebitda-bridge'], ['Stripe and QB Reconciliation', '/stripe-qb-reconciliation'], ['Unit Economics', '/unit-economics'], ['Efficiency', '/efficiency']] },
+  { name: 'M&A', icon: 'verified', pages: [['Scorecard', '/scorecard'], ['CIM Packet', '/cim-packet'], ['Banker Handoff', '/banker-handoff'], ['Adjustments Register', '/adjustments-register'], ['Annual Amortization', '/annual-amortization-evidence'], ['Definitions', '/definitions'], ['Invariant Tests', '/invariant-tests'], ['Data Cleanup', '/data-cleanup']] },
 ];
+// Admin-only pages: the same set App.tsx registers only when showFinancialTabs is on. Gating is
+// per page, so a team tab can mix open and admin-only pages; a tab with nothing visible is hidden.
+const FINANCIAL_PAGES = new Set(['/segments', '/profit-loss', '/ebitda-bridge', '/stripe-qb-reconciliation', '/unit-economics', '/efficiency',
+  '/scorecard', '/cim-packet', '/banker-handoff', '/adjustments-register', '/annual-amortization-evidence', '/definitions', '/invariant-tests']);
 
 function NavSection({ s, current }: { s: (typeof SECTIONS)[number]; current?: string }) {
   const [open, setOpen] = useState(false);
@@ -572,7 +578,7 @@ export function DsPage({ path, title, subtitle, actions, children, overlays }: {
             </a>
             <span className="am-tooltip__tip">Overview</span>
           </span>
-          {SECTIONS.filter((s) => !s.financial || showFinancialTabs).map((s) => <NavSection key={s.name} s={s} current={path} />)}
+          {SECTIONS.map((s) => ({ ...s, pages: s.pages.filter(([, p]) => showFinancialTabs || !FINANCIAL_PAGES.has(p)) })).filter((s) => s.pages.length).map((s) => <NavSection key={s.name} s={s} current={path} />)}
         </nav>
         <span className="am-appnav__spacer" />
         <div className="am-appnav__group">
