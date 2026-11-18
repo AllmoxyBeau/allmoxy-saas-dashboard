@@ -1,6 +1,13 @@
 {
-  "note": "Restart dates for customers who paused (for external reasons) then reactivated. When set, tenure / time-to-launch / SLA-aging / grace-period are measured from the restart date instead of the original sign-up — so a returning customer isn't scored as a long-tenured churn risk while they're effectively starting over. Keyed by allmoxy_customer_id → ISO date. Cohort/acquisition year stays on the original sign-up. Add a row when a paused customer comes back.",
+  "note": "Restart dates for customers who paused (for external reasons) then reactivated. When set, tenure / time-to-launch / SLA-aging / grace-period are measured from the restart date instead of the original sign-up \u2014 so a returning customer isn't scored as a long-tenured churn risk while they're effectively starting over. Keyed by allmoxy_customer_id \u2192 ISO date. Cohort/acquisition year stays on the original sign-up. Add a row when a paused customer comes back.",
   "overrides": {
-    "535": { "restart_date": "2026-06-25", "reason": "Couldn't get power to their new factory; paused Nov 2025–May 2026, resumed paying 2026-06-25." }
+    "535": {
+      "restart_date": "2026-06-25",
+      "reason": "Couldn't get power to their new factory; paused Nov 2025\u2013May 2026, resumed paying 2026-06-25."
+    },
+    "111": {
+      "restart_date": "2026-09-17",
+      "reason": "Martin Wood Products signed back up: old HubSpot instance (installer 981) Cancelled after a Nov 2024 pause; new instance (installer 2171, Stripe cus_VHMbDfdPPue9XX) created and paying from 2026-09-17. Jon Richardson is the new rep."
+    }
   }
 }

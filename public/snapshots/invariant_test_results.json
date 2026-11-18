@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-11T17:50:29.841Z",
+  "fetched_at": "2026-11-18T16:16:38.869Z",
   "total": 39,
   "passed": 36,
   "errors": 0,
@@ -189,7 +189,7 @@
       "name": "every paid Stripe invoice has a matching charge in the cash cache",
       "severity": "error",
       "passed": true,
-      "detail": "3103 paid invoices since 2025-08 all reconcile to a cached charge",
+      "detail": "3145 paid invoices since 2025-08 all reconcile to a cached charge",
       "examples": []
     },
     {

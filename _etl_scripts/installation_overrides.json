@@ -1,5 +1,5 @@
 {
-  "note": "installation_id → allmoxy_customer_id overrides for Aurora order attribution. A company has MANY installer_ids (installations); Aurora customers.installer_id only holds ONE, so extra/legacy/migrated installations are mapped here. Seeded 2026-07-07 from Orders Verified Data.xlsx Raw Data (installation_id→subdomain) matched to roster installer_directory + HubSpot installer_url. Add rows for any future unmapped installation (see aurora_orders.unmapped_instances).",
+  "note": "installation_id \u2192 allmoxy_customer_id overrides for Aurora order attribution. A company has MANY installer_ids (installations); Aurora customers.installer_id only holds ONE, so extra/legacy/migrated installations are mapped here. Seeded 2026-07-07 from Orders Verified Data.xlsx Raw Data (installation_id\u2192subdomain) matched to roster installer_directory + HubSpot installer_url. Add rows for any future unmapped installation (see aurora_orders.unmapped_instances).",
   "generated": "2026-07-07",
   "overrides": {
     "168": {
@@ -199,6 +199,12 @@
       "name": "Prorustics",
       "subdomain": null,
       "via": "hubspot_installer"
+    },
+    "2171": {
+      "aid": 111,
+      "name": "Martin Wood Products",
+      "subdomain": "martinwoodproducts",
+      "via": "re-signup 2026-09-17: new installation for the same customer (old installation 981)"
     }
   }
 }
