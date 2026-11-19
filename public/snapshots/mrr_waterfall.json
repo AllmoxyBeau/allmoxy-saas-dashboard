@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-11-18T16:07:45.424Z",
-  "cachedUntil": "2026-11-18T16:12:45.424Z",
+  "fetchedAt": "2026-11-19T14:19:14.352Z",
+  "cachedUntil": "2026-11-19T14:24:14.352Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -30,7 +30,7 @@
     "2026-08": 100.1,
     "2026-09": 97.4,
     "2026-10": 98.5,
-    "2026-11": 102.7
+    "2026-11": 102.6
   },
   "monthly": [
     {
@@ -23203,24 +23203,24 @@
       "recovered_mrr": 3068,
       "paused_mrr": 0,
       "expansion_mrr": 365.42,
-      "contraction_mrr": 8671,
+      "contraction_mrr": 8351,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 60211.89,
-      "ending_mrr": 163584.14,
-      "net_new_mrr": -64799.47,
+      "delinquent_mrr": 50780.64,
+      "ending_mrr": 173335.39,
+      "net_new_mrr": -55048.22,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 65,
+      "delinquent_logos": 59,
       "recovered_logos": 2,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0364,
+      "net_churn_rate_monthly": 0.035,
       "expansion_rate_monthly": 0.0016,
-      "grr_monthly": 0.7118,
-      "nrr_monthly": 0.7134,
+      "grr_monthly": 0.7545,
+      "nrr_monthly": 0.7561,
       "quick_ratio": 0.12,
       "details": {
         "new": [
@@ -23289,18 +23289,18 @@
             "delta": 1970
           },
           {
-            "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
-            "id": 457,
-            "prev_mrr": 818,
-            "new_mrr": 20,
-            "delta": 798
-          },
-          {
             "name": "Formations",
             "id": 2060,
             "prev_mrr": 750,
             "new_mrr": 99,
             "delta": 651
+          },
+          {
+            "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
+            "id": 457,
+            "prev_mrr": 818,
+            "new_mrr": 419,
+            "delta": 399
           },
           {
             "name": "Fryburg Door - Mullwood",
@@ -23324,6 +23324,13 @@
             "delta": 99
           },
           {
+            "name": "Thomas Creek",
+            "id": 318,
+            "prev_mrr": 2709.3,
+            "new_mrr": 2610.3,
+            "delta": 99
+          },
+          {
             "name": "Greyloch, LLC.",
             "id": 136,
             "prev_mrr": 4732,
@@ -23342,13 +23349,6 @@
             "id": 17,
             "prev_mrr": 2643,
             "new_mrr": 2623,
-            "delta": 20
-          },
-          {
-            "name": "Advanced Hardware Supply",
-            "id": 525,
-            "prev_mrr": 219,
-            "new_mrr": 199,
             "delta": 20
           },
           {
@@ -23405,20 +23405,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Thomas Creek",
-            "id": 318,
-            "mrr": 2709.3,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Wizzwood DBA - Quality Kitchens Inc.",
-            "id": 330,
-            "mrr": 2650,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
             "name": "Peterman Lumber",
             "id": 329,
             "mrr": 1756,
@@ -23440,30 +23426,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Bww Closets",
-            "id": 262,
-            "mrr": 1375,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "M2M components",
-            "id": 97,
-            "mrr": 1343,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Quadro Cabinets",
             "id": 84,
             "mrr": 1305,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "IFCC Inc - Imminik Finishing",
-            "id": 186,
-            "mrr": 1153.95,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23781,13 +23746,6 @@
             "mrr": 250,
             "status": "active",
             "pay_status": null
-          },
-          {
-            "name": "Adentra",
-            "id": 2032,
-            "mrr": 200,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Specialty Forest Products",
@@ -25718,17 +25676,17 @@
             "delta": 106.72
           },
           {
-            "name": "BTJ Cabinet Door Company",
-            "id": 256,
-            "prev_mrr": 3695,
-            "new_mrr": 3794,
-            "delta": 99
-          },
-          {
             "name": "Thomas Creek",
             "id": 318,
             "prev_mrr": 2610.3,
             "new_mrr": 2709.3,
+            "delta": 99
+          },
+          {
+            "name": "BTJ Cabinet Door Company",
+            "id": 256,
+            "prev_mrr": 3695,
+            "new_mrr": 3794,
             "delta": 99
           },
           {
@@ -25856,24 +25814,24 @@
       "recovered_mrr": 0,
       "paused_mrr": 0,
       "expansion_mrr": 385.42,
-      "contraction_mrr": 6637,
+      "contraction_mrr": 6317,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 56300.89,
-      "ending_mrr": 168029.14,
-      "net_new_mrr": -61902.47,
+      "delinquent_mrr": 46869.64,
+      "ending_mrr": 177780.39,
+      "net_new_mrr": -52151.22,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 61,
+      "delinquent_logos": 55,
       "recovered_logos": 0,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0272,
+      "net_churn_rate_monthly": 0.0258,
       "expansion_rate_monthly": 0.0017,
-      "grr_monthly": 0.7263,
-      "nrr_monthly": 0.728,
+      "grr_monthly": 0.7687,
+      "nrr_monthly": 0.7704,
       "quick_ratio": 0.16,
       "details": {
         "new": [
@@ -25945,11 +25903,11 @@
             "delta": 651
           },
           {
-            "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
-            "id": 457,
-            "prev_mrr": 419,
-            "new_mrr": 20,
-            "delta": 399
+            "name": "Thomas Creek",
+            "id": 318,
+            "prev_mrr": 2709.3,
+            "new_mrr": 2610.3,
+            "delta": 99
           },
           {
             "name": "Fryburg Door - Mullwood",
@@ -26006,13 +25964,6 @@
             "prev_mrr": 2643,
             "new_mrr": 2623,
             "delta": 20
-          },
-          {
-            "name": "Advanced Hardware Supply",
-            "id": 525,
-            "prev_mrr": 219,
-            "new_mrr": 199,
-            "delta": 20
           }
         ],
         "churn": [],
@@ -26054,20 +26005,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Thomas Creek",
-            "id": 318,
-            "mrr": 2709.3,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Wizzwood DBA - Quality Kitchens Inc.",
-            "id": 330,
-            "mrr": 2650,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
             "name": "Peterman Lumber",
             "id": 329,
             "mrr": 1756,
@@ -26089,30 +26026,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Bww Closets",
-            "id": 262,
-            "mrr": 1375,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "M2M components",
-            "id": 97,
-            "mrr": 1343,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Quadro Cabinets",
             "id": 84,
             "mrr": 1305,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "IFCC Inc - Imminik Finishing",
-            "id": 186,
-            "mrr": 1153.95,
             "status": "active",
             "pay_status": "Active"
           },
@@ -26414,13 +26330,6 @@
             "name": "Conquest Cabinetry",
             "id": 539,
             "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Adentra",
-            "id": 2032,
-            "mrr": 200,
             "status": "active",
             "pay_status": "Active"
           },

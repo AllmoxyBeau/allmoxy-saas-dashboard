@@ -1,7 +1,7 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-11-18T16:07:51.368Z",
-  "cachedUntil": "2026-11-18T16:12:51.368Z",
+  "fetchedAt": "2026-11-19T14:19:21.829Z",
+  "cachedUntil": "2026-11-19T14:24:21.829Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -787,7 +787,7 @@
           "allmoxy_customer_id": 528,
           "current_mrr": 834,
           "lifetime_revenue": 19665,
-          "years_with_us": 1.7,
+          "years_with_us": 1.8,
           "failed_3mo": 0
         },
         {
@@ -803,7 +803,7 @@
           "allmoxy_customer_id": 514,
           "current_mrr": 799,
           "lifetime_revenue": 21926.25,
-          "years_with_us": 2,
+          "years_with_us": 2.1,
           "failed_3mo": 0
         },
         {
@@ -876,7 +876,7 @@
           "current_mrr": 699,
           "lifetime_revenue": 33731.11,
           "years_with_us": 3.8,
-          "failed_3mo": 16
+          "failed_3mo": 15
         },
         {
           "name": "Cabinetry Concepts",
@@ -1202,7 +1202,7 @@
           "allmoxy_customer_id": 18,
           "current_mrr": 1318,
           "lifetime_revenue": 87018.16,
-          "years_with_us": 13,
+          "years_with_us": 13.1,
           "failed_3mo": 0
         },
         {
@@ -1425,7 +1425,7 @@
           "allmoxy_customer_id": 43,
           "current_mrr": 3693.95,
           "lifetime_revenue": 218056.2,
-          "years_with_us": 9.9,
+          "years_with_us": 10,
           "failed_3mo": 0
         },
         {
@@ -1473,7 +1473,7 @@
           "allmoxy_customer_id": 72,
           "current_mrr": 3099,
           "lifetime_revenue": 144791,
-          "years_with_us": 9.8,
+          "years_with_us": 9.9,
           "failed_3mo": 0
         },
         {
@@ -1780,7 +1780,7 @@
       "allmoxy_customer_id": 43,
       "current_mrr": 3693.95,
       "lifetime_revenue": 218056.2,
-      "years_with_us": 9.9,
+      "years_with_us": 10,
       "failed_3mo": 0
     },
     {
@@ -1828,7 +1828,7 @@
       "allmoxy_customer_id": 72,
       "current_mrr": 3099,
       "lifetime_revenue": 144791,
-      "years_with_us": 9.8,
+      "years_with_us": 9.9,
       "failed_3mo": 0
     },
     {
@@ -1982,7 +1982,7 @@
       "allmoxy_customer_id": 43,
       "current_mrr": 3693.95,
       "lifetime_revenue": 218056.2,
-      "years_with_us": 9.9,
+      "years_with_us": 10,
       "failed_3mo": 0
     },
     {
@@ -2030,7 +2030,7 @@
       "allmoxy_customer_id": 72,
       "current_mrr": 3099,
       "lifetime_revenue": 144791,
-      "years_with_us": 9.8,
+      "years_with_us": 9.9,
       "failed_3mo": 0
     },
     {
@@ -2302,7 +2302,7 @@
       "allmoxy_customer_id": 18,
       "current_mrr": 1318,
       "lifetime_revenue": 87018.16,
-      "years_with_us": 13,
+      "years_with_us": 13.1,
       "failed_3mo": 0
     },
     {
@@ -2558,7 +2558,7 @@
       "allmoxy_customer_id": 528,
       "current_mrr": 834,
       "lifetime_revenue": 19665,
-      "years_with_us": 1.7,
+      "years_with_us": 1.8,
       "failed_3mo": 0
     },
     {
@@ -2574,7 +2574,7 @@
       "allmoxy_customer_id": 514,
       "current_mrr": 799,
       "lifetime_revenue": 21926.25,
-      "years_with_us": 2,
+      "years_with_us": 2.1,
       "failed_3mo": 0
     },
     {
@@ -2647,7 +2647,7 @@
       "current_mrr": 699,
       "lifetime_revenue": 33731.11,
       "years_with_us": 3.8,
-      "failed_3mo": 16
+      "failed_3mo": 15
     },
     {
       "name": "Cabinetry Concepts",
@@ -3568,8 +3568,8 @@
       "allmoxy_customer_id": 437,
       "current_mrr": 699,
       "in_customer_base": true,
-      "failed_3mo": 16,
-      "failed_3mo_amount": 11975.84
+      "failed_3mo": 15,
+      "failed_3mo_amount": 11227.35
     },
     {
       "name": "Bella Imc",
@@ -3664,8 +3664,8 @@
     "total_dunning_customers": 24,
     "total_at_risk_amount": 31427.7,
     "mrr_at_risk": 31427.7,
-    "failed_attempts": 105,
-    "failed_attempts_amount": 119653.2
+    "failed_attempts": 104,
+    "failed_attempts_amount": 118904.71
   },
   "notes": "Per-customer MRR from the canonical customer base (199 customers with MRR > $0 in 2026-10). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue joined from Stripe Sync (20K+ classified transactions). Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); $ at risk = their MRR, failed-attempt $ counts every retry."
 }
