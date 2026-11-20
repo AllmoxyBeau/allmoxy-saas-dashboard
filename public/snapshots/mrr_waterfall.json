@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-11-19T14:19:14.352Z",
-  "cachedUntil": "2026-11-19T14:24:14.352Z",
+  "fetchedAt": "2026-11-20T15:49:59.943Z",
+  "cachedUntil": "2026-11-20T15:54:59.943Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -30,7 +30,7 @@
     "2026-08": 100.1,
     "2026-09": 97.4,
     "2026-10": 98.5,
-    "2026-11": 102.6
+    "2026-11": 102.7
   },
   "monthly": [
     {
@@ -22928,7 +22928,7 @@
             "id": 310,
             "mrr": 525,
             "status": "at_risk",
-            "pay_status": "Active"
+            "pay_status": "Active - Card Failure"
           },
           {
             "name": "KSC Sales Inc.",
@@ -23203,25 +23203,25 @@
       "recovered_mrr": 3068,
       "paused_mrr": 0,
       "expansion_mrr": 365.42,
-      "contraction_mrr": 8351,
+      "contraction_mrr": 11351,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 50780.64,
-      "ending_mrr": 173335.39,
-      "net_new_mrr": -55048.22,
+      "delinquent_mrr": 36955.64,
+      "ending_mrr": 184160.39,
+      "net_new_mrr": -44223.22,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 59,
+      "delinquent_logos": 50,
       "recovered_logos": 2,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.035,
+      "net_churn_rate_monthly": 0.0481,
       "expansion_rate_monthly": 0.0016,
-      "grr_monthly": 0.7545,
-      "nrr_monthly": 0.7561,
-      "quick_ratio": 0.12,
+      "grr_monthly": 0.8019,
+      "nrr_monthly": 0.8035,
+      "quick_ratio": 0.09,
       "details": {
         "new": [
           {
@@ -23267,6 +23267,13 @@
           }
         ],
         "contraction": [
+          {
+            "name": "Roy's Wood Products, Inc.",
+            "id": 130,
+            "prev_mrr": 3119,
+            "new_mrr": 99,
+            "delta": 3020
+          },
           {
             "name": "Glacier Millworks",
             "id": 2120,
@@ -23345,13 +23352,6 @@
             "delta": 20
           },
           {
-            "name": "Closet City",
-            "id": 17,
-            "prev_mrr": 2643,
-            "new_mrr": 2623,
-            "delta": 20
-          },
-          {
             "name": "Five Cabinetry",
             "id": 2056,
             "prev_mrr": 270,
@@ -23362,13 +23362,6 @@
         "churn": [],
         "voided": [],
         "delinquent": [
-          {
-            "name": "Fleetwoods",
-            "id": 2058,
-            "mrr": 4200,
-            "status": "active",
-            "pay_status": "Active"
-          },
           {
             "name": "Keystone Wood Specialties",
             "id": 523,
@@ -23382,13 +23375,6 @@
             "mrr": 3299,
             "status": "at_risk",
             "pay_status": "Cancelled"
-          },
-          {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "mrr": 3119,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Brushy Creek Custom Doors, LLC",
@@ -23405,23 +23391,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Peterman Lumber",
-            "id": 329,
-            "mrr": 1756,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Kitch Components Inc.",
             "id": 73,
             "mrr": 1599,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Eldorado Plywood",
-            "id": 20,
-            "mrr": 1575,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23468,13 +23440,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Royal Plywood Co.",
-            "id": 354,
-            "mrr": 956,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Phoenix-LLC",
             "id": 475,
             "mrr": 899,
@@ -23503,13 +23468,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Drawer Box Solutions",
-            "id": 427,
-            "mrr": 769,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
             "name": "Cascade Distribution Group",
             "id": 387,
             "mrr": 754,
@@ -23531,13 +23489,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Trimart",
-            "id": 19,
-            "mrr": 650,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Sommers Wood N Door",
             "id": 2126,
             "mrr": 650,
@@ -23548,13 +23499,6 @@
             "name": "Hogan's Cabinetry & Millwork",
             "id": 338,
             "mrr": 618,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Cullman Cabinet Supply",
-            "id": 162,
-            "mrr": 550,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23570,7 +23514,7 @@
             "id": 310,
             "mrr": 525,
             "status": "at_risk",
-            "pay_status": "Active"
+            "pay_status": "Active - Card Failure"
           },
           {
             "name": "CP&W",
@@ -23659,13 +23603,6 @@
           {
             "name": "Arizona Cabinet Door Store / Cutting Edge Foil Fin",
             "id": 108,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Conquest Cabinetry",
-            "id": 539,
             "mrr": 250,
             "status": "active",
             "pay_status": "Active"
@@ -25814,25 +25751,25 @@
       "recovered_mrr": 0,
       "paused_mrr": 0,
       "expansion_mrr": 385.42,
-      "contraction_mrr": 6317,
+      "contraction_mrr": 9317,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 46869.64,
-      "ending_mrr": 177780.39,
-      "net_new_mrr": -52151.22,
+      "delinquent_mrr": 32519.64,
+      "ending_mrr": 189130.39,
+      "net_new_mrr": -40801.22,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 55,
+      "delinquent_logos": 45,
       "recovered_logos": 0,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0258,
+      "net_churn_rate_monthly": 0.0388,
       "expansion_rate_monthly": 0.0017,
-      "grr_monthly": 0.7687,
-      "nrr_monthly": 0.7704,
-      "quick_ratio": 0.16,
+      "grr_monthly": 0.818,
+      "nrr_monthly": 0.8197,
+      "quick_ratio": 0.11,
       "details": {
         "new": [
           {
@@ -25874,6 +25811,13 @@
           }
         ],
         "contraction": [
+          {
+            "name": "Roy's Wood Products, Inc.",
+            "id": 130,
+            "prev_mrr": 3119,
+            "new_mrr": 99,
+            "delta": 3020
+          },
           {
             "name": "New York Door & Drawer",
             "id": 198,
@@ -25957,38 +25901,17 @@
             "prev_mrr": 4620,
             "new_mrr": 4600,
             "delta": 20
-          },
-          {
-            "name": "Closet City",
-            "id": 17,
-            "prev_mrr": 2643,
-            "new_mrr": 2623,
-            "delta": 20
           }
         ],
         "churn": [],
         "voided": [],
         "delinquent": [
           {
-            "name": "Fleetwoods",
-            "id": 2058,
-            "mrr": 4200,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Cabredo LLC",
             "id": 164,
             "mrr": 3299,
             "status": "at_risk",
             "pay_status": "Cancelled"
-          },
-          {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "mrr": 3119,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Brushy Creek Custom Doors, LLC",
@@ -26005,23 +25928,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Peterman Lumber",
-            "id": 329,
-            "mrr": 1756,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Kitch Components Inc.",
             "id": 73,
             "mrr": 1599,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Eldorado Plywood",
-            "id": 20,
-            "mrr": 1575,
             "status": "active",
             "pay_status": "Active"
           },
@@ -26068,13 +25977,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Royal Plywood Co.",
-            "id": 354,
-            "mrr": 956,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Phoenix-LLC",
             "id": 475,
             "mrr": 899,
@@ -26100,13 +26002,6 @@
             "id": 514,
             "mrr": 799,
             "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Drawer Box Solutions",
-            "id": 427,
-            "mrr": 769,
-            "status": "at_risk",
             "pay_status": "Active"
           },
           {
@@ -26145,23 +26040,9 @@
             "pay_status": null
           },
           {
-            "name": "Trimart",
-            "id": 19,
-            "mrr": 650,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Hogan's Cabinetry & Millwork",
             "id": 338,
             "mrr": 618,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Cullman Cabinet Supply",
-            "id": 162,
-            "mrr": 550,
             "status": "active",
             "pay_status": "Active"
           },
@@ -26177,13 +26058,6 @@
             "id": 83,
             "mrr": 525,
             "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Empyre Designs",
-            "id": 310,
-            "mrr": 525,
-            "status": "at_risk",
             "pay_status": "Active"
           },
           {
@@ -26325,13 +26199,6 @@
             "mrr": 250,
             "status": "active",
             "pay_status": null
-          },
-          {
-            "name": "Conquest Cabinetry",
-            "id": 539,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Specialty Forest Products",
