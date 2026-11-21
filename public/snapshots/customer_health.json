@@ -1,7 +1,7 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-11-20T15:50:07.368Z",
-  "cachedUntil": "2026-11-20T15:55:07.368Z",
+  "fetchedAt": "2026-11-21T14:22:02.381Z",
+  "cachedUntil": "2026-11-21T14:27:02.381Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -364,7 +364,7 @@
           "allmoxy_customer_id": 550,
           "current_mrr": 250,
           "lifetime_revenue": 5304.5,
-          "years_with_us": 1.2,
+          "years_with_us": 1.3,
           "failed_3mo": 0
         },
         {
@@ -571,7 +571,7 @@
           "name": "Customer 2123",
           "allmoxy_customer_id": 2123,
           "current_mrr": 250,
-          "lifetime_revenue": 250,
+          "lifetime_revenue": 500,
           "years_with_us": 0.1,
           "failed_3mo": 0
         },
@@ -739,7 +739,7 @@
           "allmoxy_customer_id": 475,
           "current_mrr": 899,
           "lifetime_revenue": 40586.8,
-          "years_with_us": 3.1,
+          "years_with_us": 3.2,
           "failed_3mo": 0
         },
         {
@@ -876,7 +876,7 @@
           "current_mrr": 699,
           "lifetime_revenue": 33731.11,
           "years_with_us": 3.8,
-          "failed_3mo": 15
+          "failed_3mo": 16
         },
         {
           "name": "Cabinetry Concepts",
@@ -1298,7 +1298,7 @@
           "allmoxy_customer_id": 278,
           "current_mrr": 1099,
           "lifetime_revenue": 55381.05,
-          "years_with_us": 6,
+          "years_with_us": 6.1,
           "failed_3mo": 0
         },
         {
@@ -1465,7 +1465,7 @@
           "allmoxy_customer_id": 130,
           "current_mrr": 3119,
           "lifetime_revenue": 142787.33,
-          "years_with_us": 8.2,
+          "years_with_us": 8.3,
           "failed_3mo": 0
         },
         {
@@ -1820,7 +1820,7 @@
       "allmoxy_customer_id": 130,
       "current_mrr": 3119,
       "lifetime_revenue": 142787.33,
-      "years_with_us": 8.2,
+      "years_with_us": 8.3,
       "failed_3mo": 0
     },
     {
@@ -2022,7 +2022,7 @@
       "allmoxy_customer_id": 130,
       "current_mrr": 3119,
       "lifetime_revenue": 142787.33,
-      "years_with_us": 8.2,
+      "years_with_us": 8.3,
       "failed_3mo": 0
     },
     {
@@ -2398,7 +2398,7 @@
       "allmoxy_customer_id": 278,
       "current_mrr": 1099,
       "lifetime_revenue": 55381.05,
-      "years_with_us": 6,
+      "years_with_us": 6.1,
       "failed_3mo": 0
     },
     {
@@ -2510,7 +2510,7 @@
       "allmoxy_customer_id": 475,
       "current_mrr": 899,
       "lifetime_revenue": 40586.8,
-      "years_with_us": 3.1,
+      "years_with_us": 3.2,
       "failed_3mo": 0
     },
     {
@@ -2647,7 +2647,7 @@
       "current_mrr": 699,
       "lifetime_revenue": 33731.11,
       "years_with_us": 3.8,
-      "failed_3mo": 15
+      "failed_3mo": 16
     },
     {
       "name": "Cabinetry Concepts",
@@ -3134,7 +3134,7 @@
       "allmoxy_customer_id": 550,
       "current_mrr": 250,
       "lifetime_revenue": 5304.5,
-      "years_with_us": 1.2,
+      "years_with_us": 1.3,
       "failed_3mo": 0
     },
     {
@@ -3341,7 +3341,7 @@
       "name": "Customer 2123",
       "allmoxy_customer_id": 2123,
       "current_mrr": 250,
-      "lifetime_revenue": 250,
+      "lifetime_revenue": 500,
       "years_with_us": 0.1,
       "failed_3mo": 0
     },
@@ -3568,8 +3568,8 @@
       "allmoxy_customer_id": 437,
       "current_mrr": 699,
       "in_customer_base": true,
-      "failed_3mo": 15,
-      "failed_3mo_amount": 11227.35
+      "failed_3mo": 16,
+      "failed_3mo_amount": 11975.84
     },
     {
       "name": "Bella Imc",
@@ -3593,7 +3593,7 @@
       "current_mrr": 525,
       "in_customer_base": true,
       "failed_3mo": 11,
-      "failed_3mo_amount": 6197.86
+      "failed_3mo_amount": 6198.91
     },
     {
       "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
@@ -3664,8 +3664,8 @@
     "total_dunning_customers": 24,
     "total_at_risk_amount": 31427.7,
     "mrr_at_risk": 31427.7,
-    "failed_attempts": 104,
-    "failed_attempts_amount": 118479.82
+    "failed_attempts": 105,
+    "failed_attempts_amount": 119229.36
   },
   "notes": "Per-customer MRR from the canonical customer base (199 customers with MRR > $0 in 2026-10). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue joined from Stripe Sync (20K+ classified transactions). Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); $ at risk = their MRR, failed-attempt $ counts every retry."
 }
