@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-11-21T14:21:56.526Z",
-  "cachedUntil": "2026-11-21T14:26:56.526Z",
+  "fetchedAt": "2026-11-23T14:21:26.987Z",
+  "cachedUntil": "2026-11-23T14:26:26.987Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -30,7 +30,7 @@
     "2026-08": 100.1,
     "2026-09": 97.4,
     "2026-10": 98.5,
-    "2026-11": 102.6
+    "2026-11": 102.5
   },
   "monthly": [
     {
@@ -23202,26 +23202,26 @@
       "reactivated_mrr": 0,
       "recovered_mrr": 3068,
       "paused_mrr": 0,
-      "expansion_mrr": 365.42,
-      "contraction_mrr": 7401,
+      "expansion_mrr": 464.42,
+      "contraction_mrr": 6710,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 35580.64,
-      "ending_mrr": 189485.39,
-      "net_new_mrr": -38898.22,
+      "delinquent_mrr": 30783.64,
+      "ending_mrr": 195072.39,
+      "net_new_mrr": -33311.22,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 46,
+      "delinquent_logos": 38,
       "recovered_logos": 2,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0308,
-      "expansion_rate_monthly": 0.0016,
-      "grr_monthly": 0.8252,
-      "nrr_monthly": 0.8268,
-      "quick_ratio": 0.14,
+      "net_churn_rate_monthly": 0.0273,
+      "expansion_rate_monthly": 0.002,
+      "grr_monthly": 0.8493,
+      "nrr_monthly": 0.8513,
+      "quick_ratio": 0.17,
       "details": {
         "new": [
           {
@@ -23259,6 +23259,13 @@
             "delta": 99
           },
           {
+            "name": "Formations",
+            "id": 2060,
+            "prev_mrr": 750,
+            "new_mrr": 849,
+            "delta": 99
+          },
+          {
             "name": "Raumplus",
             "id": 7,
             "prev_mrr": 20.77,
@@ -23280,13 +23287,6 @@
             "prev_mrr": 4600,
             "new_mrr": 2020,
             "delta": 2580
-          },
-          {
-            "name": "Formations",
-            "id": 2060,
-            "prev_mrr": 750,
-            "new_mrr": 99,
-            "delta": 651
           },
           {
             "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
@@ -23336,20 +23336,6 @@
             "prev_mrr": 4732,
             "new_mrr": 4687,
             "delta": 45
-          },
-          {
-            "name": "Corona Millworks",
-            "id": 300,
-            "prev_mrr": 4620,
-            "new_mrr": 4600,
-            "delta": 20
-          },
-          {
-            "name": "Five Cabinetry",
-            "id": 2056,
-            "prev_mrr": 270,
-            "new_mrr": 250,
-            "delta": 20
           }
         ],
         "churn": [],
@@ -23384,13 +23370,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Kitch Components Inc.",
-            "id": 73,
-            "mrr": 1599,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Quadro Cabinets",
             "id": 84,
             "mrr": 1305,
@@ -23408,13 +23387,6 @@
             "name": "Drawer Works",
             "id": 505,
             "mrr": 1099,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Nexis3",
-            "id": 304,
-            "mrr": 1050,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23464,13 +23436,6 @@
             "name": "Cascade Distribution Group",
             "id": 387,
             "mrr": 754,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Hartley Group Coatings",
-            "id": 400,
-            "mrr": 749,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23531,25 +23496,11 @@
             "pay_status": "Active"
           },
           {
-            "name": "Jerome J. Brezniski & Assoc., Ltd.",
-            "id": 399,
-            "mrr": 349,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Kci Storage Manufacturing",
             "id": 555,
             "mrr": 320,
             "status": "active",
             "pay_status": "Cancelled"
-          },
-          {
-            "name": "Jim Chambers Architectural Products",
-            "id": 289,
-            "mrr": 300,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Elite Cabinets",
@@ -23608,20 +23559,6 @@
             "pay_status": "Active - Card Failure"
           },
           {
-            "name": "Capital Millwork",
-            "id": 550,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Rise Up Labels",
-            "id": 2019,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Dimitrios & Company",
             "id": 2045,
             "mrr": 250,
@@ -23633,13 +23570,6 @@
             "id": 2037,
             "mrr": 250,
             "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Top Design Closets",
-            "id": 2059,
-            "mrr": 250,
-            "status": "active",
             "pay_status": "Active"
           },
           {
@@ -24316,6 +24246,11 @@
             "mrr": 400
           },
           {
+            "name": "Rise Up Labels",
+            "id": 2019,
+            "mrr": 250
+          },
+          {
             "name": "Hempston Home",
             "id": 2046,
             "mrr": 250
@@ -24323,11 +24258,6 @@
           {
             "name": "Dimitrios & Company",
             "id": 2045,
-            "mrr": 250
-          },
-          {
-            "name": "Rise Up Labels",
-            "id": 2019,
             "mrr": 250
           },
           {
@@ -24637,13 +24567,13 @@
             "mrr": 250
           },
           {
-            "name": "Batesville Cabinet Company",
-            "id": 2052,
+            "name": "Top Design Closets",
+            "id": 2059,
             "mrr": 250
           },
           {
-            "name": "Top Design Closets",
-            "id": 2059,
+            "name": "Batesville Cabinet Company",
+            "id": 2052,
             "mrr": 250
           },
           {
@@ -25715,26 +25645,26 @@
       "reactivated_mrr": 0,
       "recovered_mrr": 0,
       "paused_mrr": 0,
-      "expansion_mrr": 385.42,
-      "contraction_mrr": 5367,
+      "expansion_mrr": 484.42,
+      "contraction_mrr": 4676,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 31144.64,
-      "ending_mrr": 194455.39,
-      "net_new_mrr": -35476.22,
+      "delinquent_mrr": 26347.64,
+      "ending_mrr": 200042.39,
+      "net_new_mrr": -29889.22,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 41,
+      "delinquent_logos": 33,
       "recovered_logos": 0,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0217,
-      "expansion_rate_monthly": 0.0017,
-      "grr_monthly": 0.8412,
-      "nrr_monthly": 0.8429,
-      "quick_ratio": 0.19,
+      "net_churn_rate_monthly": 0.0182,
+      "expansion_rate_monthly": 0.0021,
+      "grr_monthly": 0.8651,
+      "nrr_monthly": 0.8672,
+      "quick_ratio": 0.24,
       "details": {
         "new": [
           {
@@ -25752,6 +25682,13 @@
             "prev_mrr": 250,
             "new_mrr": 500,
             "delta": 250
+          },
+          {
+            "name": "Formations",
+            "id": 2060,
+            "prev_mrr": 750,
+            "new_mrr": 849,
+            "delta": 99
           },
           {
             "name": "Cabinartny",
@@ -25789,13 +25726,6 @@
             "prev_mrr": 929,
             "new_mrr": 49,
             "delta": 880
-          },
-          {
-            "name": "Formations",
-            "id": 2060,
-            "prev_mrr": 750,
-            "new_mrr": 99,
-            "delta": 651
           },
           {
             "name": "Mountain Showcase Group, Inc.",
@@ -25845,20 +25775,6 @@
             "prev_mrr": 4732,
             "new_mrr": 4687,
             "delta": 45
-          },
-          {
-            "name": "Five Cabinetry",
-            "id": 2056,
-            "prev_mrr": 270,
-            "new_mrr": 250,
-            "delta": 20
-          },
-          {
-            "name": "Corona Millworks",
-            "id": 300,
-            "prev_mrr": 4620,
-            "new_mrr": 4600,
-            "delta": 20
           }
         ],
         "churn": [],
@@ -25886,13 +25802,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Kitch Components Inc.",
-            "id": 73,
-            "mrr": 1599,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Quadro Cabinets",
             "id": 84,
             "mrr": 1305,
@@ -25910,13 +25819,6 @@
             "name": "Drawer Works",
             "id": 505,
             "mrr": 1099,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Nexis3",
-            "id": 304,
-            "mrr": 1050,
             "status": "active",
             "pay_status": "Active"
           },
@@ -25977,13 +25879,6 @@
             "pay_status": "Active - Card Failure"
           },
           {
-            "name": "Hartley Group Coatings",
-            "id": 400,
-            "mrr": 749,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Ecodomo",
             "id": 2044,
             "mrr": 667,
@@ -26029,20 +25924,6 @@
             "name": "Stolbek",
             "id": 2018,
             "mrr": 400,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Jerome J. Brezniski & Assoc., Ltd.",
-            "id": 399,
-            "mrr": 349,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Jim Chambers Architectural Products",
-            "id": 289,
-            "mrr": 300,
             "status": "active",
             "pay_status": "Active"
           },
@@ -26108,27 +25989,6 @@
             "mrr": 250,
             "status": "active",
             "pay_status": "Cancelled"
-          },
-          {
-            "name": "Capital Millwork",
-            "id": 550,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Rise Up Labels",
-            "id": 2019,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Top Design Closets",
-            "id": 2059,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Specialty Forest Products",
