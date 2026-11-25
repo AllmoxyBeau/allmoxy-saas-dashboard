@@ -1,37 +1,37 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-11-24T16:13:47.380Z",
-  "cachedUntil": "2026-11-24T16:18:47.380Z",
+  "fetchedAt": "2026-11-25T16:15:55.287Z",
+  "cachedUntil": "2026-11-25T16:20:55.287Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
   "latestMonth": "2026-10",
   "concentration": {
-    "total_active_customers": 199,
-    "total_mrr": 233104.61,
+    "total_active_customers": 200,
+    "total_mrr": 234004.61,
     "top1": {
       "n": 1,
       "customers": 1,
       "mrr": 7459.2,
-      "pct": 0.032
+      "pct": 0.0319
     },
     "top5": {
       "n": 5,
       "customers": 5,
       "mrr": 30182.2,
-      "pct": 0.1295
+      "pct": 0.129
     },
     "top10": {
       "n": 10,
       "customers": 10,
       "mrr": 52900.2,
-      "pct": 0.2269
+      "pct": 0.2261
     },
     "top20": {
       "n": 20,
       "customers": 20,
       "mrr": 87661.1,
-      "pct": 0.3761
+      "pct": 0.3746
     }
   },
   "distribution": [
@@ -540,7 +540,7 @@
           "allmoxy_customer_id": 39,
           "current_mrr": 250,
           "lifetime_revenue": 24880,
-          "years_with_us": 10.2,
+          "years_with_us": 10.3,
           "failed_3mo": 0
         },
         {
@@ -652,7 +652,7 @@
           "allmoxy_customer_id": 34,
           "current_mrr": 120.75,
           "lifetime_revenue": 9095.5,
-          "years_with_us": 10.3,
+          "years_with_us": 10.4,
           "failed_3mo": 0
         },
         {
@@ -683,8 +683,8 @@
     },
     {
       "bucket": "$500–$1K",
-      "customers": 47,
-      "mrr": 33881.05,
+      "customers": 48,
+      "mrr": 34781.05,
       "customers_list": [
         {
           "name": "Rta Cabinetry Inc",
@@ -724,6 +724,14 @@
           "current_mrr": 900,
           "lifetime_revenue": 44295,
           "years_with_us": 9.3,
+          "failed_3mo": 0
+        },
+        {
+          "name": "Slide A Shelf",
+          "allmoxy_customer_id": 2036,
+          "current_mrr": 900,
+          "lifetime_revenue": 11821.5,
+          "years_with_us": 1,
           "failed_3mo": 0
         },
         {
@@ -779,7 +787,7 @@
           "allmoxy_customer_id": 489,
           "current_mrr": 849,
           "lifetime_revenue": 21975,
-          "years_with_us": 2.9,
+          "years_with_us": 3,
           "failed_3mo": 0
         },
         {
@@ -819,7 +827,7 @@
           "allmoxy_customer_id": 427,
           "current_mrr": 769,
           "lifetime_revenue": 35080.4,
-          "years_with_us": 3.8,
+          "years_with_us": 3.9,
           "failed_3mo": 2
         },
         {
@@ -1003,7 +1011,7 @@
           "allmoxy_customer_id": 2077,
           "current_mrr": 580,
           "lifetime_revenue": 1283,
-          "years_with_us": 0.5,
+          "years_with_us": 0.6,
           "failed_3mo": 0
         },
         {
@@ -1052,7 +1060,7 @@
           "current_mrr": 525,
           "lifetime_revenue": 33243.66,
           "years_with_us": 5.7,
-          "failed_3mo": 11
+          "failed_3mo": 10
         },
         {
           "name": "Dovetail Wood Traditions",
@@ -1632,7 +1640,7 @@
           "allmoxy_customer_id": 38,
           "current_mrr": 6024,
           "lifetime_revenue": 441803,
-          "years_with_us": 10.2,
+          "years_with_us": 10.3,
           "failed_3mo": 0
         },
         {
@@ -1684,7 +1692,7 @@
       "allmoxy_customer_id": 38,
       "current_mrr": 6024,
       "lifetime_revenue": 441803,
-      "years_with_us": 10.2,
+      "years_with_us": 10.3,
       "failed_3mo": 0
     },
     {
@@ -1886,7 +1894,7 @@
       "allmoxy_customer_id": 38,
       "current_mrr": 6024,
       "lifetime_revenue": 441803,
-      "years_with_us": 10.2,
+      "years_with_us": 10.3,
       "failed_3mo": 0
     },
     {
@@ -2498,6 +2506,14 @@
       "failed_3mo": 0
     },
     {
+      "name": "Slide A Shelf",
+      "allmoxy_customer_id": 2036,
+      "current_mrr": 900,
+      "lifetime_revenue": 11821.5,
+      "years_with_us": 1,
+      "failed_3mo": 0
+    },
+    {
       "name": "Countryside Cabinets",
       "allmoxy_customer_id": 511,
       "current_mrr": 899,
@@ -2550,7 +2566,7 @@
       "allmoxy_customer_id": 489,
       "current_mrr": 849,
       "lifetime_revenue": 21975,
-      "years_with_us": 2.9,
+      "years_with_us": 3,
       "failed_3mo": 0
     },
     {
@@ -2590,7 +2606,7 @@
       "allmoxy_customer_id": 427,
       "current_mrr": 769,
       "lifetime_revenue": 35080.4,
-      "years_with_us": 3.8,
+      "years_with_us": 3.9,
       "failed_3mo": 2
     },
     {
@@ -2774,7 +2790,7 @@
       "allmoxy_customer_id": 2077,
       "current_mrr": 580,
       "lifetime_revenue": 1283,
-      "years_with_us": 0.5,
+      "years_with_us": 0.6,
       "failed_3mo": 0
     },
     {
@@ -2823,7 +2839,7 @@
       "current_mrr": 525,
       "lifetime_revenue": 33243.66,
       "years_with_us": 5.7,
-      "failed_3mo": 11
+      "failed_3mo": 10
     },
     {
       "name": "Dovetail Wood Traditions",
@@ -3310,7 +3326,7 @@
       "allmoxy_customer_id": 39,
       "current_mrr": 250,
       "lifetime_revenue": 24880,
-      "years_with_us": 10.2,
+      "years_with_us": 10.3,
       "failed_3mo": 0
     },
     {
@@ -3422,7 +3438,7 @@
       "allmoxy_customer_id": 34,
       "current_mrr": 120.75,
       "lifetime_revenue": 9095.5,
-      "years_with_us": 10.3,
+      "years_with_us": 10.4,
       "failed_3mo": 0
     },
     {
@@ -3592,8 +3608,8 @@
       "allmoxy_customer_id": 310,
       "current_mrr": 525,
       "in_customer_base": true,
-      "failed_3mo": 11,
-      "failed_3mo_amount": 6199.96
+      "failed_3mo": 10,
+      "failed_3mo_amount": 5636.9
     },
     {
       "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
@@ -3664,8 +3680,8 @@
     "total_dunning_customers": 24,
     "total_at_risk_amount": 31427.7,
     "mrr_at_risk": 31427.7,
-    "failed_attempts": 104,
-    "failed_attempts_amount": 118481.92
+    "failed_attempts": 103,
+    "failed_attempts_amount": 117918.86
   },
-  "notes": "Per-customer MRR from the canonical customer base (199 customers with MRR > $0 in 2026-10). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue joined from Stripe Sync (20K+ classified transactions). Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); $ at risk = their MRR, failed-attempt $ counts every retry."
+  "notes": "Per-customer MRR from the canonical customer base (200 customers with MRR > $0 in 2026-10). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue joined from Stripe Sync (20K+ classified transactions). Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); $ at risk = their MRR, failed-attempt $ counts every retry."
 }

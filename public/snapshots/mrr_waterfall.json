@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-11-24T16:13:41.516Z",
-  "cachedUntil": "2026-11-24T16:18:41.516Z",
+  "fetchedAt": "2026-11-25T16:15:48.907Z",
+  "cachedUntil": "2026-11-25T16:20:48.907Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -29,8 +29,8 @@
     "2026-07": 99.2,
     "2026-08": 100.1,
     "2026-09": 97.4,
-    "2026-10": 98.5,
-    "2026-11": 102.7
+    "2026-10": 98.9,
+    "2026-11": 102.5
   },
   "monthly": [
     {
@@ -22959,24 +22959,24 @@
       "paused_mrr": 250,
       "expansion_mrr": 1289.48,
       "contraction_mrr": 4585.93,
-      "churn_mrr": 2715.45,
+      "churn_mrr": 1815.45,
       "voided_mrr": 0,
-      "delinquent_mrr": 4568,
+      "delinquent_mrr": 5468,
       "ending_mrr": 228383.61,
       "net_new_mrr": -4064.9,
       "new_logos": 4,
       "reactivated_logos": 1,
-      "churned_logos": 4,
+      "churned_logos": 3,
       "voided_logos": 0,
-      "delinquent_logos": 3,
+      "delinquent_logos": 4,
       "recovered_logos": 1,
       "paused_logos": 1,
-      "gross_churn_rate_monthly": 0.0117,
-      "net_churn_rate_monthly": 0.0259,
+      "gross_churn_rate_monthly": 0.0078,
+      "net_churn_rate_monthly": 0.022,
       "expansion_rate_monthly": 0.0055,
       "grr_monthly": 0.9501,
       "nrr_monthly": 0.9557,
-      "quick_ratio": 1.03,
+      "quick_ratio": 1.18,
       "details": {
         "new": [
           {
@@ -23139,11 +23139,6 @@
         ],
         "churn": [
           {
-            "name": "Slide A Shelf",
-            "id": 2036,
-            "mrr": 900
-          },
-          {
             "name": "Precision Millwork Utah",
             "id": 513,
             "mrr": 815.45
@@ -23176,6 +23171,13 @@
             "pay_status": "Active - Card Failure"
           },
           {
+            "name": "Slide A Shelf",
+            "id": 2036,
+            "mrr": 900,
+            "status": "active",
+            "pay_status": "Active"
+          },
+          {
             "name": "Global Cabinet Supply",
             "id": 275,
             "mrr": 399,
@@ -23200,28 +23202,28 @@
       "starting_mrr": 228383.61,
       "new_mrr": 650,
       "reactivated_mrr": 0,
-      "recovered_mrr": 3068,
+      "recovered_mrr": 4268,
       "paused_mrr": 0,
       "expansion_mrr": 464.42,
-      "contraction_mrr": 6710,
+      "contraction_mrr": 3730,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 29267.64,
-      "ending_mrr": 196588.39,
-      "net_new_mrr": -31795.22,
+      "delinquent_mrr": 23694.64,
+      "ending_mrr": 206341.39,
+      "net_new_mrr": -22042.22,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 34,
-      "recovered_logos": 2,
+      "delinquent_logos": 30,
+      "recovered_logos": 3,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0273,
+      "net_churn_rate_monthly": 0.0143,
       "expansion_rate_monthly": 0.002,
-      "grr_monthly": 0.8559,
-      "nrr_monthly": 0.8579,
-      "quick_ratio": 0.17,
+      "grr_monthly": 0.8986,
+      "nrr_monthly": 0.9006,
+      "quick_ratio": 0.3,
       "details": {
         "new": [
           {
@@ -23236,6 +23238,11 @@
             "name": "Martin Wood Products",
             "id": 111,
             "mrr": 2669
+          },
+          {
+            "name": "Slide A Shelf",
+            "id": 2036,
+            "mrr": 1200
           },
           {
             "name": "Global Cabinet Supply",
@@ -23274,13 +23281,6 @@
           }
         ],
         "contraction": [
-          {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "prev_mrr": 3119,
-            "new_mrr": 99,
-            "delta": 3020
-          },
           {
             "name": "Glacier Millworks",
             "id": 2120,
@@ -23336,6 +23336,20 @@
             "prev_mrr": 4732,
             "new_mrr": 4687,
             "delta": 45
+          },
+          {
+            "name": "Roy's Wood Products, Inc.",
+            "id": 130,
+            "prev_mrr": 3119,
+            "new_mrr": 3099,
+            "delta": 20
+          },
+          {
+            "name": "Quadro Cabinets",
+            "id": 84,
+            "prev_mrr": 1305,
+            "new_mrr": 1285,
+            "delta": 20
           }
         ],
         "churn": [],
@@ -23356,23 +23370,9 @@
             "pay_status": "Cancelled"
           },
           {
-            "name": "Brushy Creek Custom Doors, LLC",
-            "id": 72,
-            "mrr": 3099,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Midwest Floor Coverings",
             "id": 211,
             "mrr": 2977.64,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Quadro Cabinets",
-            "id": 84,
-            "mrr": 1305,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23433,13 +23433,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Cascade Distribution Group",
-            "id": 387,
-            "mrr": 754,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Sommers Wood N Door",
             "id": 2126,
             "mrr": 650,
@@ -23473,13 +23466,6 @@
             "mrr": 500,
             "status": "active",
             "pay_status": "Active - Pause Granted"
-          },
-          {
-            "name": "RJM Cabinets",
-            "id": 339,
-            "mrr": 415,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Kci Storage Manufacturing",
@@ -23596,15 +23582,15 @@
     "contraction_mrr": 35296.61,
     "recovered_mrr": 17879.4,
     "paused_mrr": 613,
-    "churn_mrr": 22060.45,
+    "churn_mrr": 21160.45,
     "voided_mrr": 0,
-    "delinquent_mrr": 18461,
+    "delinquent_mrr": 19361,
     "net_new_mrr": -1576.09,
-    "gross_mrr_churn_ttm": 0.0959,
-    "annual_gross_churn_rate": 0.0922,
+    "gross_mrr_churn_ttm": 0.092,
+    "annual_gross_churn_rate": 0.0886,
     "annual_grr": 0.7482,
     "annual_nrr": 0.8705,
-    "quick_ratio": 0.99
+    "quick_ratio": 1.01
   },
   "monthly_accrual": [
     {
@@ -25428,24 +25414,24 @@
       "paused_mrr": 250,
       "expansion_mrr": 423.72,
       "contraction_mrr": 628.93,
-      "churn_mrr": 2715.45,
+      "churn_mrr": 1815.45,
       "voided_mrr": 199,
       "delinquent_mrr": 0,
-      "ending_mrr": 229931.61,
-      "net_new_mrr": 180.34,
+      "ending_mrr": 230831.61,
+      "net_new_mrr": 1080.34,
       "new_logos": 4,
       "reactivated_logos": 0,
-      "churned_logos": 4,
+      "churned_logos": 3,
       "voided_logos": 1,
       "delinquent_logos": 0,
       "recovered_logos": 0,
       "paused_logos": 1,
-      "gross_churn_rate_monthly": 0.0118,
-      "net_churn_rate_monthly": 0.0127,
+      "gross_churn_rate_monthly": 0.0079,
+      "net_churn_rate_monthly": 0.0088,
       "expansion_rate_monthly": 0.0018,
-      "grr_monthly": 0.9835,
-      "nrr_monthly": 0.9853,
-      "quick_ratio": 1.19,
+      "grr_monthly": 0.9874,
+      "nrr_monthly": 0.9893,
+      "quick_ratio": 1.63,
       "details": {
         "new": [
           {
@@ -25568,11 +25554,6 @@
         ],
         "churn": [
           {
-            "name": "Slide A Shelf",
-            "id": 2036,
-            "mrr": 900
-          },
-          {
             "name": "Precision Millwork Utah",
             "id": 513,
             "mrr": 815.45
@@ -25612,31 +25593,31 @@
     {
       "month": "2026-11",
       "partial": true,
-      "starting_mrr": 229931.61,
+      "starting_mrr": 230831.61,
       "new_mrr": 650,
       "reactivated_mrr": 0,
       "recovered_mrr": 0,
       "paused_mrr": 0,
-      "expansion_mrr": 484.42,
-      "contraction_mrr": 4676,
+      "expansion_mrr": 784.42,
+      "contraction_mrr": 1696,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 24581.64,
-      "ending_mrr": 201808.39,
-      "net_new_mrr": -28123.22,
+      "delinquent_mrr": 19008.64,
+      "ending_mrr": 211561.39,
+      "net_new_mrr": -19270.22,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 28,
+      "delinquent_logos": 24,
       "recovered_logos": 0,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0182,
-      "expansion_rate_monthly": 0.0021,
-      "grr_monthly": 0.8728,
-      "nrr_monthly": 0.8749,
-      "quick_ratio": 0.24,
+      "net_churn_rate_monthly": 0.0039,
+      "expansion_rate_monthly": 0.0034,
+      "grr_monthly": 0.9103,
+      "nrr_monthly": 0.9137,
+      "quick_ratio": 0.85,
       "details": {
         "new": [
           {
@@ -25648,6 +25629,13 @@
         "reactivated": [],
         "recovered": [],
         "expansion": [
+          {
+            "name": "Slide A Shelf",
+            "id": 2036,
+            "prev_mrr": 900,
+            "new_mrr": 1200,
+            "delta": 300
+          },
           {
             "name": "Metro Drawer Boxes",
             "id": 217,
@@ -25685,13 +25673,6 @@
           }
         ],
         "contraction": [
-          {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "prev_mrr": 3119,
-            "new_mrr": 99,
-            "delta": 3020
-          },
           {
             "name": "Dot Custom Cabinets LLC",
             "id": 385,
@@ -25747,6 +25728,20 @@
             "prev_mrr": 4732,
             "new_mrr": 4687,
             "delta": 45
+          },
+          {
+            "name": "Quadro Cabinets",
+            "id": 84,
+            "prev_mrr": 1305,
+            "new_mrr": 1285,
+            "delta": 20
+          },
+          {
+            "name": "Roy's Wood Products, Inc.",
+            "id": 130,
+            "prev_mrr": 3119,
+            "new_mrr": 3099,
+            "delta": 20
           }
         ],
         "churn": [],
@@ -25760,23 +25755,9 @@
             "pay_status": "Cancelled"
           },
           {
-            "name": "Brushy Creek Custom Doors, LLC",
-            "id": 72,
-            "mrr": 3099,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Midwest Floor Coverings",
             "id": 211,
             "mrr": 2977.64,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Quadro Cabinets",
-            "id": 84,
-            "mrr": 1305,
             "status": "active",
             "pay_status": "Active"
           },
@@ -25837,13 +25818,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Cascade Distribution Group",
-            "id": 387,
-            "mrr": 754,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Smart Custom Closets",
             "id": 480,
             "mrr": 749,
@@ -25877,13 +25851,6 @@
             "mrr": 500,
             "status": "active",
             "pay_status": "Active - Pause Granted"
-          },
-          {
-            "name": "RJM Cabinets",
-            "id": 339,
-            "mrr": 415,
-            "status": "active",
-            "pay_status": "Active"
           },
           {
             "name": "Elite Cabinets",
@@ -25958,22 +25925,22 @@
     "windowEnd": "2026-10",
     "months": 12,
     "starting_mrr": 227195.78,
-    "ending_mrr": 229931.61,
+    "ending_mrr": 230831.61,
     "new_mrr": 25201,
     "reactivated_mrr": 0,
     "expansion_mrr": 19858.69,
     "contraction_mrr": 21779.41,
     "recovered_mrr": 0,
     "paused_mrr": 613,
-    "churn_mrr": 19732.45,
+    "churn_mrr": 18832.45,
     "voided_mrr": 199,
     "delinquent_mrr": 0,
-    "net_new_mrr": 2735.83,
-    "gross_mrr_churn_ttm": 0.0869,
-    "annual_gross_churn_rate": 0.0824,
-    "annual_grr": 0.8309,
-    "annual_nrr": 0.9077,
-    "quick_ratio": 1.09
+    "net_new_mrr": 3635.83,
+    "gross_mrr_churn_ttm": 0.0829,
+    "annual_gross_churn_rate": 0.0788,
+    "annual_grr": 0.8342,
+    "annual_nrr": 0.9114,
+    "quick_ratio": 1.11
   },
   "notes": "MRR waterfall on two bases. CASH (monthly/ttm) = customer_profiles.monthly_history — what cleared Stripe, boundary-slip corrected, full history; use for bank reconciliation. ACCRUAL (monthly_accrual/ttm_accrual) = revenue_recognition.accrual_series — what was BILLED by invoice date, so a card failure is an open receivable rather than churn; use for retention metrics. Accrual starts 2025-08 because Stripe-invoice coverage before mid-2025 is 4–28% of actual revenue (Allmoxy migrated to invoicing then). New = customer first appears with MRR > 0. THE CHURN RULE (churn_rules.mjs, 2026-11-09): Churn = confirmed (Stripe subscription canceled, HubSpot Cancelled / churn reason, or 3 months unbilled), dated to the first un-invoiced month; Reactivated = back after 3+ unbilled months; Recovered = back sooner (a lapse, never churn); Paused = HubSpot Pay Status \"Pause Granted\" (never churn). GRR/NRR count every dollar that stopped (churn + contraction + voided + delinquent + paused) and credit recovered lapses back; annualized as mean monthly rate ^12. Voided = dropped to $0 with a VOIDED invoice for the period — billing intentionally canceled, nothing owed (not dunning). Delinquent = dropped to $0, still billable, did not clear (card failure / non-payment) — may still pay. All three reduce ending MRR but are reported separately. Sales tax is EXCLUDED on both bases: it is a pass-through liability, not revenue. Accrual sums pre-tax invoice lines; cash has collected tax subtracted by the invoice paid month (~1.5% of gross, ~$3.4K/mo). Services and Connect revenue are NOT included — subscription only.",
   "sales_tax_excluded": true
