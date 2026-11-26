@@ -1,7 +1,7 @@
 {
   "tab": "customer_health",
-  "fetchedAt": "2026-11-25T16:15:55.287Z",
-  "cachedUntil": "2026-11-25T16:20:55.287Z",
+  "fetchedAt": "2026-11-26T14:21:24.945Z",
+  "cachedUntil": "2026-11-26T14:26:24.945Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -357,7 +357,7 @@
           "current_mrr": 250,
           "lifetime_revenue": 4250,
           "years_with_us": 1.9,
-          "failed_3mo": 4
+          "failed_3mo": 5
         },
         {
           "name": "Capital Millwork",
@@ -412,7 +412,7 @@
           "allmoxy_customer_id": 2029,
           "current_mrr": 250,
           "lifetime_revenue": 2000,
-          "years_with_us": 1,
+          "years_with_us": 1.1,
           "failed_3mo": 0
         },
         {
@@ -636,7 +636,7 @@
           "allmoxy_customer_id": 2106,
           "current_mrr": 169,
           "lifetime_revenue": 757,
-          "years_with_us": 0.2,
+          "years_with_us": 0.3,
           "failed_3mo": 0
         },
         {
@@ -884,7 +884,7 @@
           "current_mrr": 699,
           "lifetime_revenue": 33731.11,
           "years_with_us": 3.8,
-          "failed_3mo": 15
+          "failed_3mo": 16
         },
         {
           "name": "Cabinetry Concepts",
@@ -899,7 +899,7 @@
           "allmoxy_customer_id": 292,
           "current_mrr": 675,
           "lifetime_revenue": 42925,
-          "years_with_us": 5.8,
+          "years_with_us": 5.9,
           "failed_3mo": 0
         },
         {
@@ -2663,7 +2663,7 @@
       "current_mrr": 699,
       "lifetime_revenue": 33731.11,
       "years_with_us": 3.8,
-      "failed_3mo": 15
+      "failed_3mo": 16
     },
     {
       "name": "Cabinetry Concepts",
@@ -2678,7 +2678,7 @@
       "allmoxy_customer_id": 292,
       "current_mrr": 675,
       "lifetime_revenue": 42925,
-      "years_with_us": 5.8,
+      "years_with_us": 5.9,
       "failed_3mo": 0
     },
     {
@@ -3143,7 +3143,7 @@
       "current_mrr": 250,
       "lifetime_revenue": 4250,
       "years_with_us": 1.9,
-      "failed_3mo": 4
+      "failed_3mo": 5
     },
     {
       "name": "Capital Millwork",
@@ -3198,7 +3198,7 @@
       "allmoxy_customer_id": 2029,
       "current_mrr": 250,
       "lifetime_revenue": 2000,
-      "years_with_us": 1,
+      "years_with_us": 1.1,
       "failed_3mo": 0
     },
     {
@@ -3422,7 +3422,7 @@
       "allmoxy_customer_id": 2106,
       "current_mrr": 169,
       "lifetime_revenue": 757,
-      "years_with_us": 0.2,
+      "years_with_us": 0.3,
       "failed_3mo": 0
     },
     {
@@ -3584,8 +3584,8 @@
       "allmoxy_customer_id": 437,
       "current_mrr": 699,
       "in_customer_base": true,
-      "failed_3mo": 15,
-      "failed_3mo_amount": 11227.35
+      "failed_3mo": 16,
+      "failed_3mo_amount": 11975.84
     },
     {
       "name": "Bella Imc",
@@ -3628,16 +3628,16 @@
       "failed_3mo_amount": 399
     },
     {
-      "name": "Ashby's Cabinetry, Inc",
-      "allmoxy_customer_id": 33,
-      "current_mrr": 250,
-      "in_customer_base": true,
-      "failed_3mo": 4,
-      "failed_3mo_amount": 1000
-    },
-    {
       "name": "Cabinet Doors NJ Llc",
       "allmoxy_customer_id": 521,
+      "current_mrr": 250,
+      "in_customer_base": true,
+      "failed_3mo": 5,
+      "failed_3mo_amount": 1250
+    },
+    {
+      "name": "Ashby's Cabinetry, Inc",
+      "allmoxy_customer_id": 33,
       "current_mrr": 250,
       "in_customer_base": true,
       "failed_3mo": 4,
@@ -3680,8 +3680,8 @@
     "total_dunning_customers": 24,
     "total_at_risk_amount": 31427.7,
     "mrr_at_risk": 31427.7,
-    "failed_attempts": 103,
-    "failed_attempts_amount": 117918.86
+    "failed_attempts": 105,
+    "failed_attempts_amount": 118917.35
   },
   "notes": "Per-customer MRR from the canonical customer base (200 customers with MRR > $0 in 2026-10). Concentration = top-N current MRR share of subscription MRR total. Lifetime revenue joined from Stripe Sync (20K+ classified transactions). Dunning = customers with failed charge attempts in the trailing 3 months, from customer_profiles (live Stripe); $ at risk = their MRR, failed-attempt $ counts every retry."
 }

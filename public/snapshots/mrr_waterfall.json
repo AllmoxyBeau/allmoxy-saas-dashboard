@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-11-25T16:15:48.907Z",
-  "cachedUntil": "2026-11-25T16:20:48.907Z",
+  "fetchedAt": "2026-11-26T14:21:18.969Z",
+  "cachedUntil": "2026-11-26T14:26:18.969Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -30,7 +30,7 @@
     "2026-08": 100.1,
     "2026-09": 97.4,
     "2026-10": 98.9,
-    "2026-11": 102.5
+    "2026-11": 102
   },
   "monthly": [
     {
@@ -23204,26 +23204,26 @@
       "reactivated_mrr": 0,
       "recovered_mrr": 4268,
       "paused_mrr": 0,
-      "expansion_mrr": 464.42,
-      "contraction_mrr": 3730,
+      "expansion_mrr": 1457.02,
+      "contraction_mrr": 3690,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 23694.64,
-      "ending_mrr": 206341.39,
-      "net_new_mrr": -22042.22,
+      "delinquent_mrr": 21410.39,
+      "ending_mrr": 209658.24,
+      "net_new_mrr": -18725.37,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 30,
+      "delinquent_logos": 27,
       "recovered_logos": 3,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0143,
-      "expansion_rate_monthly": 0.002,
-      "grr_monthly": 0.8986,
-      "nrr_monthly": 0.9006,
-      "quick_ratio": 0.3,
+      "net_churn_rate_monthly": 0.0098,
+      "expansion_rate_monthly": 0.0064,
+      "grr_monthly": 0.9088,
+      "nrr_monthly": 0.9152,
+      "quick_ratio": 0.57,
       "details": {
         "new": [
           {
@@ -23252,11 +23252,32 @@
         ],
         "expansion": [
           {
+            "name": "Formations",
+            "id": 2060,
+            "prev_mrr": 750,
+            "new_mrr": 1228.5,
+            "delta": 478.5
+          },
+          {
+            "name": "Red Rock Milling LLC",
+            "id": 396,
+            "prev_mrr": 1674,
+            "new_mrr": 1995,
+            "delta": 321
+          },
+          {
             "name": "Metro Drawer Boxes",
             "id": 217,
             "prev_mrr": 250,
             "new_mrr": 500,
             "delta": 250
+          },
+          {
+            "name": "Cullman Cabinet Supply",
+            "id": 162,
+            "prev_mrr": 550,
+            "new_mrr": 700,
+            "delta": 150
           },
           {
             "name": "Cabinartny",
@@ -23266,11 +23287,25 @@
             "delta": 99
           },
           {
-            "name": "Formations",
-            "id": 2060,
-            "prev_mrr": 750,
-            "new_mrr": 849,
-            "delta": 99
+            "name": "Crown Door & Drawer",
+            "id": 2028,
+            "prev_mrr": 350,
+            "new_mrr": 408.5,
+            "delta": 58.5
+          },
+          {
+            "name": "LINDSEY DOORS",
+            "id": 502,
+            "prev_mrr": 2099,
+            "new_mrr": 2148.5,
+            "delta": 49.5
+          },
+          {
+            "name": "Drawer Box Specialties",
+            "id": 36,
+            "prev_mrr": 6000,
+            "new_mrr": 6034.1,
+            "delta": 34.1
           },
           {
             "name": "Raumplus",
@@ -23336,20 +23371,6 @@
             "prev_mrr": 4732,
             "new_mrr": 4687,
             "delta": 45
-          },
-          {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "prev_mrr": 3119,
-            "new_mrr": 3099,
-            "delta": 20
-          },
-          {
-            "name": "Quadro Cabinets",
-            "id": 84,
-            "prev_mrr": 1305,
-            "new_mrr": 1285,
-            "delta": 20
           }
         ],
         "churn": [],
@@ -23405,23 +23426,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Phoenix-LLC",
-            "id": 475,
-            "mrr": 899,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Advanced Cabinet Doors",
             "id": 131,
             "mrr": 850,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Island Custom Cabinetry Ltd",
-            "id": 355,
-            "mrr": 849,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23443,13 +23450,6 @@
             "name": "Hogan's Cabinetry & Millwork",
             "id": 338,
             "mrr": 618,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Wurth LAC",
-            "id": 113,
-            "mrr": 536.25,
             "status": "active",
             "pay_status": "Active"
           },
@@ -25599,25 +25599,25 @@
       "recovered_mrr": 0,
       "paused_mrr": 0,
       "expansion_mrr": 784.42,
-      "contraction_mrr": 1696,
+      "contraction_mrr": 1656,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 19008.64,
-      "ending_mrr": 211561.39,
-      "net_new_mrr": -19270.22,
+      "delinquent_mrr": 16724.39,
+      "ending_mrr": 213885.64,
+      "net_new_mrr": -16945.97,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 24,
+      "delinquent_logos": 21,
       "recovered_logos": 0,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0039,
+      "net_churn_rate_monthly": 0.0038,
       "expansion_rate_monthly": 0.0034,
-      "grr_monthly": 0.9103,
-      "nrr_monthly": 0.9137,
-      "quick_ratio": 0.85,
+      "grr_monthly": 0.9204,
+      "nrr_monthly": 0.9238,
+      "quick_ratio": 0.87,
       "details": {
         "new": [
           {
@@ -25728,20 +25728,6 @@
             "prev_mrr": 4732,
             "new_mrr": 4687,
             "delta": 45
-          },
-          {
-            "name": "Quadro Cabinets",
-            "id": 84,
-            "prev_mrr": 1305,
-            "new_mrr": 1285,
-            "delta": 20
-          },
-          {
-            "name": "Roy's Wood Products, Inc.",
-            "id": 130,
-            "prev_mrr": 3119,
-            "new_mrr": 3099,
-            "delta": 20
           }
         ],
         "churn": [],
@@ -25790,23 +25776,9 @@
             "pay_status": "Active"
           },
           {
-            "name": "Phoenix-LLC",
-            "id": 475,
-            "mrr": 899,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Advanced Cabinet Doors",
             "id": 131,
             "mrr": 850,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Island Custom Cabinetry Ltd",
-            "id": 355,
-            "mrr": 849,
             "status": "active",
             "pay_status": "Active"
           },
@@ -25835,13 +25807,6 @@
             "name": "Hogan's Cabinetry & Millwork",
             "id": 338,
             "mrr": 618,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Wurth LAC",
-            "id": 113,
-            "mrr": 536.25,
             "status": "active",
             "pay_status": "Active"
           },

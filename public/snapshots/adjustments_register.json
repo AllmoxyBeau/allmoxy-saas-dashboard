@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-25T16:15:51.568Z",
+  "fetched_at": "2026-11-26T14:21:21.549Z",
   "comment": "Canonical Adjustments Register — every override / adjustment made to raw source data, consolidated from 9 underlying source files. Built by _etl_scripts/build_adjustments_register.mjs. A QoE reviewer should be able to answer \"give me every adjustment you made to the raw data\" from this single file. Drill into the source_file column to see the underlying config.",
   "totals": {
     "source_files": [
@@ -13,7 +13,7 @@
       "src/data/connect_customer_overrides.json",
       "_etl_scripts/apply_never_paid_classification.mjs"
     ],
-    "distinct_customers": 30,
+    "distinct_customers": 31,
     "by_category": {
       "annual_payer_flag": 2,
       "amortization": 1,
@@ -21,15 +21,15 @@
       "reclassification": 3,
       "hygiene_stripe_id": 6,
       "synthetic_transaction": 1,
-      "status_override": 16,
+      "status_override": 17,
       "hygiene_connect_mapping": 1,
       "never_paid_classification": 1
     },
     "by_severity": {
-      "monetary": 26,
+      "monetary": 27,
       "hygiene": 8
     },
-    "total": 34
+    "total": 35
   },
   "adjustments": [
     {
@@ -543,6 +543,22 @@
       "evidence": "HubSpot Instance Sync Sheet pay_status=Cancelled. No MRR since Jan 2026. Last payment $778/mo on 2026-01-13.",
       "source_file": "_etl_scripts/customer_status_overrides.json",
       "added_by": "Beau, 2026-06-15"
+    },
+    {
+      "id": "status-override-164",
+      "category": "status_override",
+      "severity": "monetary",
+      "customer_name": "Cabredo LLC",
+      "customer_id": 164,
+      "period": null,
+      "txn_date": null,
+      "before": null,
+      "after": 0,
+      "delta": null,
+      "reason": "Forced status='undefined' (cancellation_requested). Customer has requested to cancel (Beau, 2026-11-25). Still billing until the cancellation takes effect; HubSpot pay status is Cancelled. Evidence: (none on file)",
+      "evidence": null,
+      "source_file": "_etl_scripts/customer_status_overrides.json",
+      "added_by": "Beau Lewis"
     },
     {
       "id": "hygiene-connect-mappings",
