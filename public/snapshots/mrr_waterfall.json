@@ -1,7 +1,7 @@
 {
   "tab": "mrr_waterfall",
-  "fetchedAt": "2026-11-26T14:21:18.969Z",
-  "cachedUntil": "2026-11-26T14:26:18.969Z",
+  "fetchedAt": "2026-11-28T14:20:50.016Z",
+  "cachedUntil": "2026-11-28T14:25:50.016Z",
   "columns": [],
   "rows": [],
   "rowCount": 0,
@@ -30,7 +30,7 @@
     "2026-08": 100.1,
     "2026-09": 97.4,
     "2026-10": 98.9,
-    "2026-11": 102
+    "2026-11": 102.1
   },
   "monthly": [
     {
@@ -21307,7 +21307,7 @@
             "name": "NuDoors DBA - Spayce Integrated LLC",
             "id": 440,
             "mrr": 1100,
-            "status": "at_risk",
+            "status": "active",
             "pay_status": "Active"
           },
           {
@@ -22563,7 +22563,7 @@
             "id": 2037,
             "mrr": 250,
             "status": "at_risk",
-            "pay_status": "Active"
+            "pay_status": "Active - Card Failure"
           },
           {
             "name": "Quick Kitchens",
@@ -23205,25 +23205,25 @@
       "recovered_mrr": 4268,
       "paused_mrr": 0,
       "expansion_mrr": 1457.02,
-      "contraction_mrr": 3690,
+      "contraction_mrr": 5397.23,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 21410.39,
-      "ending_mrr": 209658.24,
-      "net_new_mrr": -18725.37,
+      "delinquent_mrr": 15313.75,
+      "ending_mrr": 214047.65,
+      "net_new_mrr": -14335.96,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 27,
+      "delinquent_logos": 20,
       "recovered_logos": 3,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0098,
+      "net_churn_rate_monthly": 0.0173,
       "expansion_rate_monthly": 0.0064,
-      "grr_monthly": 0.9088,
-      "nrr_monthly": 0.9152,
-      "quick_ratio": 0.57,
+      "grr_monthly": 0.928,
+      "nrr_monthly": 0.9344,
+      "quick_ratio": 0.39,
       "details": {
         "new": [
           {
@@ -23324,6 +23324,20 @@
             "delta": 2580
           },
           {
+            "name": "Midwest Floor Coverings",
+            "id": 211,
+            "prev_mrr": 2977.64,
+            "new_mrr": 1423.41,
+            "delta": 1554.23
+          },
+          {
+            "name": "NuDoors DBA - Spayce Integrated LLC",
+            "id": 440,
+            "prev_mrr": 1100,
+            "new_mrr": 650,
+            "delta": 450
+          },
+          {
             "name": "Modern Fronts DBA - Wildwood Cabinets Incorporated",
             "id": 457,
             "prev_mrr": 818,
@@ -23338,31 +23352,10 @@
             "delta": 270
           },
           {
-            "name": "Fryburg Door - Mullwood",
-            "id": 10,
-            "prev_mrr": 5699,
-            "new_mrr": 5600,
-            "delta": 99
-          },
-          {
             "name": "Panhandle Door Inc.",
             "id": 38,
             "prev_mrr": 6024,
             "new_mrr": 5925,
-            "delta": 99
-          },
-          {
-            "name": "BTJ Cabinet Door Company",
-            "id": 256,
-            "prev_mrr": 3794,
-            "new_mrr": 3695,
-            "delta": 99
-          },
-          {
-            "name": "Thomas Creek",
-            "id": 318,
-            "prev_mrr": 2709.3,
-            "new_mrr": 2610.3,
             "delta": 99
           },
           {
@@ -23391,20 +23384,6 @@
             "pay_status": "Cancelled"
           },
           {
-            "name": "Midwest Floor Coverings",
-            "id": 211,
-            "mrr": 2977.64,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "NuDoors DBA - Spayce Integrated LLC",
-            "id": 440,
-            "mrr": 1100,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
             "name": "Drawer Works",
             "id": 505,
             "mrr": 1099,
@@ -23426,25 +23405,11 @@
             "pay_status": "Active"
           },
           {
-            "name": "Advanced Cabinet Doors",
-            "id": 131,
-            "mrr": 850,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Cabinet Parts to Go",
             "id": 514,
             "mrr": 799,
             "status": "active",
             "pay_status": "Active"
-          },
-          {
-            "name": "Sommers Wood N Door",
-            "id": 2126,
-            "mrr": 650,
-            "status": "active",
-            "pay_status": null
           },
           {
             "name": "Hogan's Cabinetry & Millwork",
@@ -23478,13 +23443,6 @@
             "name": "Elite Cabinets",
             "id": 360,
             "mrr": 288.75,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Crest Cabinets",
-            "id": 21,
-            "mrr": 250,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23535,26 +23493,12 @@
             "id": 2037,
             "mrr": 250,
             "status": "at_risk",
-            "pay_status": "Active"
+            "pay_status": "Active - Card Failure"
           },
           {
             "name": "Fox Creek Cabinets",
             "id": 2092,
             "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Criscott Properies",
-            "id": 2106,
-            "mrr": 169,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "National Wood Products, Inc",
-            "id": 224,
-            "mrr": 100,
             "status": "active",
             "pay_status": "Active"
           },
@@ -23902,6 +23846,11 @@
             "mrr": 400
           },
           {
+            "name": "Lane Industries",
+            "id": 2037,
+            "mrr": 250
+          },
+          {
             "name": "Albritton Custom Cabinetry",
             "id": 2031,
             "mrr": 250
@@ -23909,11 +23858,6 @@
           {
             "name": "Fletcher Design Co",
             "id": 2029,
-            "mrr": 250
-          },
-          {
-            "name": "Lane Industries",
-            "id": 2037,
             "mrr": 250
           },
           {
@@ -25440,13 +25384,13 @@
             "mrr": 2000
           },
           {
-            "name": "Gm Doors Llc Dba Pine Door Manufacturing",
-            "id": 2122,
+            "name": "Sommers Wood N Door",
+            "id": 2126,
             "mrr": 650
           },
           {
-            "name": "Sommers Wood N Door",
-            "id": 2126,
+            "name": "Gm Doors Llc Dba Pine Door Manufacturing",
+            "id": 2122,
             "mrr": 650
           },
           {
@@ -25599,25 +25543,25 @@
       "recovered_mrr": 0,
       "paused_mrr": 0,
       "expansion_mrr": 784.42,
-      "contraction_mrr": 1656,
+      "contraction_mrr": 3363.23,
       "churn_mrr": 0,
       "voided_mrr": 0,
-      "delinquent_mrr": 16724.39,
-      "ending_mrr": 213885.64,
-      "net_new_mrr": -16945.97,
+      "delinquent_mrr": 10377.75,
+      "ending_mrr": 218525.05,
+      "net_new_mrr": -12306.56,
       "new_logos": 1,
       "reactivated_logos": 0,
       "churned_logos": 0,
       "voided_logos": 0,
-      "delinquent_logos": 21,
+      "delinquent_logos": 13,
       "recovered_logos": 0,
       "paused_logos": 0,
       "gross_churn_rate_monthly": 0,
-      "net_churn_rate_monthly": 0.0038,
+      "net_churn_rate_monthly": 0.0112,
       "expansion_rate_monthly": 0.0034,
-      "grr_monthly": 0.9204,
-      "nrr_monthly": 0.9238,
-      "quick_ratio": 0.87,
+      "grr_monthly": 0.9405,
+      "nrr_monthly": 0.9439,
+      "quick_ratio": 0.43,
       "details": {
         "new": [
           {
@@ -25674,6 +25618,13 @@
         ],
         "contraction": [
           {
+            "name": "Midwest Floor Coverings",
+            "id": 211,
+            "prev_mrr": 2977.64,
+            "new_mrr": 1423.41,
+            "delta": 1554.23
+          },
+          {
             "name": "Dot Custom Cabinets LLC",
             "id": 385,
             "prev_mrr": 929,
@@ -25681,32 +25632,18 @@
             "delta": 880
           },
           {
+            "name": "NuDoors DBA - Spayce Integrated LLC",
+            "id": 440,
+            "prev_mrr": 1100,
+            "new_mrr": 650,
+            "delta": 450
+          },
+          {
             "name": "Mountain Showcase Group, Inc.",
             "id": 500,
             "prev_mrr": 1990,
             "new_mrr": 1720,
             "delta": 270
-          },
-          {
-            "name": "Thomas Creek",
-            "id": 318,
-            "prev_mrr": 2709.3,
-            "new_mrr": 2610.3,
-            "delta": 99
-          },
-          {
-            "name": "Fryburg Door - Mullwood",
-            "id": 10,
-            "prev_mrr": 5699,
-            "new_mrr": 5600,
-            "delta": 99
-          },
-          {
-            "name": "BTJ Cabinet Door Company",
-            "id": 256,
-            "prev_mrr": 3794,
-            "new_mrr": 3695,
-            "delta": 99
           },
           {
             "name": "Panhandle Door Inc.",
@@ -25741,20 +25678,6 @@
             "pay_status": "Cancelled"
           },
           {
-            "name": "Midwest Floor Coverings",
-            "id": 211,
-            "mrr": 2977.64,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "NuDoors DBA - Spayce Integrated LLC",
-            "id": 440,
-            "mrr": 1100,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
             "name": "Drawer Works",
             "id": 505,
             "mrr": 1099,
@@ -25776,13 +25699,6 @@
             "pay_status": "Active"
           },
           {
-            "name": "Advanced Cabinet Doors",
-            "id": 131,
-            "mrr": 850,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
             "name": "Cabinet Parts to Go",
             "id": 514,
             "mrr": 799,
@@ -25795,13 +25711,6 @@
             "mrr": 749,
             "status": "at_risk",
             "pay_status": "Active - Card Failure"
-          },
-          {
-            "name": "Sommers Wood N Door",
-            "id": 2126,
-            "mrr": 650,
-            "status": "active",
-            "pay_status": null
           },
           {
             "name": "Hogan's Cabinetry & Millwork",
@@ -25849,34 +25758,6 @@
             "name": "KOA Komponents",
             "id": 546,
             "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Crest Cabinets",
-            "id": 21,
-            "mrr": 250,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Lane Industries",
-            "id": 2037,
-            "mrr": 250,
-            "status": "at_risk",
-            "pay_status": "Active"
-          },
-          {
-            "name": "Criscott Properies",
-            "id": 2106,
-            "mrr": 169,
-            "status": "active",
-            "pay_status": "Active"
-          },
-          {
-            "name": "National Wood Products, Inc",
-            "id": 224,
-            "mrr": 100,
             "status": "active",
             "pay_status": "Active"
           }
